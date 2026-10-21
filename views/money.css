@@ -607,3 +607,4 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-prog b{font:500 13px/18px var(--sans)}.iv-prog small{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
 @media (max-width:700px){.iv-prog{padding:12px}.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
+.iv-labrow{display:flex;align-items:baseline;gap:8px}.iv-labrow .iv-edit{margin:0;font-size:12px;line-height:16px}
