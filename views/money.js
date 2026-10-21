@@ -49,7 +49,7 @@ const foot=t=>`<p class="m-foot">${t}</p>`;
 /* Figma "Tabs": tab row + 1 px rule; each Tab is inner (label, count) over a 2 px indicator */
 const tabsRow=items=>`<div class="m-tabsw"><div class="m-tabs" role="tablist">${items.map(([on,attrs,l,c,cl=''])=>`<button role="tab" aria-selected="${on}" class="${on?'on':''}" ${attrs}><span class="in"><span>${l}</span>${c!=null?`<span class="c"${cl}>${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div><i class="m-tabrule"></i></div>`;
 L.mTabsRow=tabsRow;
-const tabsBar=t=>{const counts={owed:3,invoices:12,expenses:t==='expenses'?M.ex.length:null,payouts:S.booking.settled?null:1};
+const tabsBar=t=>{const counts={owed:3,invoices:S.invoices.length,expenses:t==='expenses'?M.ex.length:null,payouts:S.booking.settled?null:1};
  return tabsRow([['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>[t===k,`data-mtab="${k}"`,l,counts[k]]));};
 
 /* ---------- Owed to you ---------- */
@@ -103,8 +103,26 @@ function owedEmpty(){
 }
 
 /* ---------- Invoices tab ---------- */
-const invoices=()=>`<div class="table-wrap m-table"><table><thead><tr><th>No.</th><th>To</th><th>For</th><th>Due</th><th>Status</th><th class="num">DKK</th></tr></thead><tbody>${S.invoices.map(r=>`<tr data-go="invoice" data-id="${r[0]}" tabindex="0"><td class="mono t-label">${r[0]}</td><td><span class="title-cell"><img class="thumb s" src="${IMG(V(r[7]).img)}" alt="">${esc(r[1])}</span></td><td class="muted">${esc(r[2])}</td><td class="muted">${r[3]}</td><td>${tag(r[4],r[5])}</td><td class="num mono">${r[6]}</td></tr>`).join('')}</tbody></table></div>
- <p class="m-foot m-nopad">Showing ${S.invoices.length} of ${Math.max(12,S.invoices.length)}, newest first. Open one to see its lines, reminders and history.</p>`;
+/* Invoices list (Vit 21 Oct: "no action on this? and invoices"): Table rows that open the invoice, the next action in the
+   row (Approve a draft, Remind a late one), filters with counts, search, select for PDFs and export, totals. */
+const ivRow=r=>{const st=r[0]==='2026-031'?(late()?'late':'paid'):r[5]==='Draft'?'draft':r[5]==='Paid'?'paid':'open';
+ const amt=num(r[6]);return {r,st,amt,label:{draft:'Draft',open:'Sent',late:'Overdue, 6 days',paid:'Paid'}[st],cls:{draft:'draft',open:'confirmed',late:'attention',paid:'paid'}[st],
+  when:st==='paid'?(r[0]==='2026-031'?'paid 16 Oct':r[3]):st==='late'?'due 12 Oct':r[3]};};
+M.ivf??='all';M.ivq??='';M.ivsel??=[];
+const invoices=()=>{const all=S.invoices.map(ivRow),q=M.ivq.trim().toLowerCase();
+ const rows=all.filter(x=>(M.ivf==='all'||x.st===M.ivf||(M.ivf==='open'&&x.st==='late'))&&(!q||[x.r[0],x.r[1],x.r[2]].join(' ').toLowerCase().includes(q)));
+ const sum=f=>all.filter(f).reduce((a,x)=>a+x.amt,0),cnt=f=>all.filter(f).length,sel=M.ivsel.filter(id=>rows.some(x=>x.r[0]===id));
+ const tiles=kpis([kpi('Open',L.kr(sum(x=>x.st==='open'||x.st==='late'))+' DKK',`${cnt(x=>x.st==='open'||x.st==='late')} invoices sent, not paid`,'muted'),kpi('Overdue',L.kr(sum(x=>x.st==='late'))+' DKK',cnt(x=>x.st==='late')?`${cnt(x=>x.st==='late')} invoice, Hotel Royal`:'nothing late',cnt(x=>x.st==='late')?'att':'ok'),kpi('Paid, October',L.kr(sum(x=>x.st==='paid'))+' DKK',`${cnt(x=>x.st==='paid')} invoices`,'ok'),kpi('Drafts',String(cnt(x=>x.st==='draft')),cnt(x=>x.st==='draft')?'waiting for your approval':'none','muted')]);
+ const bar=sel.length?`<div class="ex-bar ex-selbar" role="toolbar" aria-label="Selected invoices"><b>${sel.length} selected</b>${ghostBtn('Download PDFs','data-act="ivbulkpdf"','download')}${rows.some(x=>sel.includes(x.r[0])&&x.st==='late')?ghostBtn('Send påmindelse','data-act="mnyremind"','mail'):''}${ghostBtn('Export for the bookkeeper','data-act="mnyexport"','upload')}<span class="grow"></span>${ghostBtn('Clear','data-act="ivclear"','x')}</div>`
+  :`<div class="ex-bar"><div class="ex-fs">${[['all','All',all.length],['draft','Drafts',cnt(x=>x.st==='draft')],['open','Open',cnt(x=>x.st==='open'||x.st==='late')],['late','Overdue',cnt(x=>x.st==='late')],['paid','Paid',cnt(x=>x.st==='paid')]].map(([k,l,n])=>`<button class="chip ${M.ivf===k?'on':''}" data-act="ivfilter" data-f="${k}" aria-pressed="${M.ivf===k}">${l}<span class="c">${n}</span></button>`).join('')}</div><label class="search ex-search">${ic('search','s')}<input class="input" id="ivq" placeholder="Number, venue, gig" value="${esc(M.ivq)}" aria-label="Search invoices"></label></div>`;
+ const act=x=>x.st==='draft'?`<button class="btn secondary s" data-act="mnyinvsend" data-id="${x.r[0]}">Approve</button>`:x.st==='late'?`<button class="btn secondary s" data-act="mnyremind">Remind</button>`:x.st==='open'?`<button class="btn ghost s" data-act="mnycopylink">${ic('copy','s')}Link</button>`:`<button class="btn ghost s" data-act="mnypdf" data-id="${x.r[0]}">${ic('filetext','s')}PDF</button>`;
+ const head=`<div class="bk-tr bk-th iv-r" role="row">${exBox(sel.length&&sel.length===rows.length,'data-act="ivselall"','Select all')}<span>No.</span><span>Venue and gig</span><span>Due</span><span>Status</span><span class="n">Amount, DKK</span><span></span></div>`;
+ const row=(x,i)=>`<div class="bk-tr iv-r ${sel.includes(x.r[0])?'sel':''}" role="row" tabindex="0" data-go="invoice" data-id="${x.r[0]}" style="--i:${i}">${exBox(sel.includes(x.r[0]),`data-act="ivsel" data-id="${x.r[0]}"`,'Select '+x.r[0])}
+  <span class="mono m">${x.r[0]}</span><span class="ex-tt po-gt"><img class="bk-thumb" src="${IMG(V(x.r[7]).img)}" alt=""><span class="ex-tt"><b>${esc(x.r[1])}</b><small>${esc(x.r[2])}</small></span></span>
+  <span class="m ${x.st==='late'?'c-bad':''}">${x.when}</span><span>${tag(x.cls,x.label)}</span><span class="n mono">${x.r[6]}</span><span class="n">${act(x)}</span></div>`;
+ const tot=rows.reduce((a,x)=>a+x.amt,0);
+ return `${tiles}${bar}<div class="bk-table iv-table" role="table" aria-label="Invoices">${head}${rows.length?rows.map(row).join('')+`<div class="bk-tr iv-r ex-tot" role="row"><span></span><span></span><span>${rows.length===all.length?`${all.length} invoices`:`${rows.length} of ${all.length}`}</span><span></span><span class="m">Total</span><span class="n mono">${L.kr(tot)}</span><span></span></div>`:`<div class="ex-empty"><b>No invoices match</b>${btn('secondary s','Show all','data-act="ivfilter" data-f="all"')}</div>`}</div>
+ <p class="m-foot m-nopad">Open an invoice to see it as the venue gets it, its pay page, reminders and history. Drafts keep their number reserved until you approve them.</p>`;};
 
 /* ---------- Expenses tab ---------- */
 /* What a band does here: see what went out and for which gig, get every receipt in, pay back whoever paid
@@ -788,4 +806,10 @@ A.mnydup=()=>{S.overlay=null;L.render();L.toast('Copied as a new draft, 2026-033
 A.mnyedit=()=>{S.overlay=L.DR.newinvoice?L.DR.newinvoice():null;L.render();};
 A.mnydeldraft=()=>{S.overlay=null;L.go('money');L.toast('Draft deleted, the number is free again',()=>{});};
 A.ivnote=()=>{const i=document.getElementById('ivnote');if(!i||!i.value.trim()){i?.focus();return;}L.toast('Note added for the band');i.value='';};
+A.ivfilter=el=>{M.ivf=el.dataset.f;M.ivsel=[];L.render();};
+A.ivsel=el=>{const id=el.dataset.id;M.ivsel=M.ivsel.includes(id)?M.ivsel.filter(x=>x!==id):[...M.ivsel,id];L.render();};
+A.ivselall=()=>{const ids=S.invoices.map(r=>r[0]);M.ivsel=M.ivsel.length===ids.length?[]:ids;L.render();};
+A.ivclear=()=>{M.ivsel=[];L.render();};
+A.ivbulkpdf=()=>{const n=M.ivsel.length;M.ivsel=[];L.render();L.toast(`${n} invoices ready as one PDF`);};
+L.INPUT.push(t=>{if(t.id==='ivq'){M.ivq=t.value;const p=t.selectionStart;L.render();const n=document.getElementById('ivq');if(n){n.focus();n.setSelectionRange(p,p);}return true;}return false;});
 })();

@@ -555,3 +555,17 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 @media (max-width:1180px){.iv-grid{grid-template-columns:1fr}.iv-side{position:static}.iv-paper{max-width:none}}
 @media (max-width:700px){.iv-steps{margin-bottom:16px}.iv-steps li{padding-right:4px}.iv-steps b{font-size:12px;line-height:16px}.iv-steps small{display:none}.iv-steps li:is(.att,.now) small{display:block;font-size:12px;line-height:16px;white-space:nowrap}
  .iv-paper{padding:24px 20px;gap:20px}.iv-meta,.iv-pf{grid-template-columns:1fr}.iv-tot{width:100%}.iv-ph{flex-direction:column}.iv-pt{text-align:left}}
+/* Invoices list, Table row recipe */
+.bk-tr.iv-r{grid-template-columns:20px 84px minmax(240px,1fr) 120px 150px 110px 110px;column-gap:16px;min-width:960px}
+.bk-tr.iv-r.sel{background:var(--state-hover,var(--hover))}
+.iv-table .n{text-align:right;justify-self:end}.iv-table .mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
+.c-bad{color:var(--bad)!important}
+/* the invoice paper keeps A4 proportions, 210 × 297 (Vit 21 Oct); the footer sits at the bottom like on the printed page */
+.iv-paper{aspect-ratio:210/297;width:100%;max-width:760px;box-sizing:border-box;justify-self:center}
+.iv-paper .iv-pf{margin-top:auto}
+@media (max-width:700px){.iv-paper{aspect-ratio:auto}}
+/* the paper ignores the app's table and link colours: it is the printed page in every theme */
+.iv-paper :is(table,thead,tbody,tr,th,td){background:transparent!important;color:inherit}
+.iv-paper .iv-lines td{color:#1a1a1a}.iv-paper .iv-lines td.muted,.iv-paper .iv-lines th{color:#6b6b66}
+.iv-paper .iv-lines tr:hover td{background:transparent!important}
+.iv-paper .link{color:#1a1a1a;text-decoration-color:#1a1a1a80}
