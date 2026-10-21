@@ -131,8 +131,8 @@
 :is(.bk-nbd,.bk-form) .field.w-280>:is(.input,.bk-lead,.bk-sel){max-width:280px}:is(.bk-nbd,.bk-form) .field.w-240>:is(.input,.bk-lead,.bk-sel){max-width:240px}
 :is(.bk-nbd,.bk-form) .field.w-400>:is(.input,.bk-lead,.bk-sel){max-width:400px}:is(.bk-nbd,.bk-form) .field.w-200>:is(.input,.bk-lead,.bk-sel){max-width:200px}
 .bk-describe{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-radius:12px;background:var(--canvas);border:1px solid var(--accent)}
-.bk-describe .r{display:flex;align-items:center;gap:8px;font:400 15px/22px var(--sans);color:var(--ink)}
-.bk-describe .m{display:flex;align-items:center;gap:8px;font:400 12px/16px var(--sans);color:var(--muted)}
+.bk-describe .r{display:flex;align-items:flex-start;gap:8px;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-describe .m{display:flex;align-items:flex-start;gap:8px;font:400 12px/16px var(--sans);color:var(--muted)}
 .bk-describe .m svg.i{width:14px;height:14px}
 .bk-lead{position:relative;display:block}
 .bk-lead>svg.i{position:absolute;left:12px;top:10px;color:var(--ink);pointer-events:none}
@@ -250,3 +250,8 @@
  .bk-abar .rec,.bk-abar .btn.ghost{display:none}
  .bk-foot{flex-wrap:wrap}
 }
+
+/* icons sit on the first line of the text, not the middle of a wrapped block (Vit 21 Oct) */
+.bk-describe .r>svg.i{margin-top:3px;flex:none}.bk-describe .m>svg.i{margin-top:1px;flex:none}
+/* the assistant bar on New booking matches every other page: 720 wide, centred (was full width) */
+.bk-ebar2{padding:0 8px 16px}.bk-abar{max-width:720px;margin:0 auto}

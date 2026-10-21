@@ -293,7 +293,7 @@
 .bd-sx{display:flex}.bd-sx a.btn{text-decoration:none;color:var(--ink)}
 .bd-sx .btn.secondary{background:var(--surface);font:500 13px/18px var(--sans)}
 .btn.bd-act.lead{padding:8px 12px 8px 0}
-.bd-open{flex:1;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:var(--bad-tint);color:var(--bad)}
+.bd-open{flex:1;display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;background:var(--bad-tint);color:var(--bad)}
 .bd-open>span{flex:1;min-width:0;font:400 15px/22px var(--sans)}
 .bd-open .btn{color:var(--ink)}
 .bd-tin{height:30px;padding:0 6px;font-size:13px;width:64px}
@@ -327,3 +327,4 @@
 /* section headers: the action's label ends on the section's right edge, like the heading starts on its left (Vit 21 Oct, "alignment") */
 .bd-bk .bd-sec>.bd-sh>.btn.bd-act{padding:8px 0 8px 12px}
 /* side panel: 12 px + the rows' own 12 px = 24 px, the same inset as the main blocks */
+.bd-open>svg.i{margin-top:3px;flex:none} /* icon on the first line when the text wraps */
