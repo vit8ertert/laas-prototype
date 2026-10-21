@@ -422,3 +422,7 @@ button.d-kpi:hover{background:var(--raised)}
 @media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}}
 .d-busy{flex-direction:row!important;align-items:center;gap:12px!important}.d-busylogo{display:inline-flex;color:var(--ink)}.d-busylogo svg{width:72px;height:auto;--logo-bg:var(--canvas)}
 .d-comp.d-pulse{animation:d-pulse .9s ease-out}@keyframes d-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 10px transparent}}@media (prefers-reduced-motion:reduce){.d-comp.d-pulse{animation:none}}
+/* calendar event chip with the venue thumbnail; text on the plain day, full contrast */
+.d-ev{display:flex;align-items:center;gap:6px;min-width:0}
+.d-ev .d-evth{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none;margin-left:-4px}
+.d-ev>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
