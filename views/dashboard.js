@@ -173,7 +173,9 @@ function moveChat(){const a=['plan','done','cancelled'].includes(S.asst)?S.asst:
  <div class="d-turn"><div class="d-ah">${ic('ai','s')}<b>Saturday 25 Oct is free. I can move it and draft the mail.</b></div>
  <div class="d-checked"><span class="faint">I checked</span>${['Calendar, 25 Oct has no booking, rehearsal at 14:00 ends 16:00','Booking LT-0041, confirmed, fee 4.500 DKK, deposit not yet invoiced','Contacts, Hotel Skov has two contacts: Mette (booking) and Jonas (bar)'].map(t=>`<span>${ic('check','s')}${t}</span>`).join('')}</div>${plan}</div>`;}
 const extra=id=>(S.asstLog[id]||[]).map(([q,r])=>`<div class="d-user">${esc(q)}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>${r}</span></div></div>`).join('');
-function chatBody(id){if(id==='move')return moveChat();if(id==='q')return `<div class="d-user">${esc(S.asstQ||'')}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>Here is where ${bn()} stands: 3 loose ends today, 8.500 DKK owed to you, and the next gig is tonight at Hotel Skov.</span></div><div class="d-chips left"><button class="d-chip" data-go="gigday">Open day sheet</button><button class="d-chip" data-go="money">See what is owed</button></div></div>`;
+/* while the assistant works on a new question: the logo loader and what it is checking (Vit 21 Oct, logo motion) */
+const asstWork=()=>{S.asstBusy=true;clearTimeout(asstWork.t);asstWork.t=setTimeout(()=>{S.asstBusy=false;if(S.view==='assistant')L.render();},1400);};
+function chatBody(id){if(id==='move')return moveChat();if(id==='q'&&S.asstBusy)return `<div class="d-user">${esc(S.asstQ||'')}</div><div class="d-turn d-busy" role="status"><span class="d-busylogo">${L.logoMotion?L.logoMotion('loader','Working'):''}</span><span class="muted">Looking through bookings, money and mail…</span></div>`;if(id==='q')return `<div class="d-user">${esc(S.asstQ||'')}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>Here is where ${bn()} stands: 3 loose ends today, 8.500 DKK owed to you, and the next gig is tonight at Hotel Skov.</span></div><div class="d-chips left"><button class="d-chip" data-go="gigday">Open day sheet</button><button class="d-chip" data-go="money">See what is owed</button></div></div>`;
  const c=CHAT_BODY[id];return `<div class="d-user">${c[0]}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>${c[1]}</span></div><div class="d-chips left">${c[2].map(([t,a])=>`<button class="d-chip" ${a}>${t}</button>`).join('')}</div></div>`;}
 function record(id){
  if(id==='move'||id==='setlist'||id==='q')return `<aside class="d-record"><div class="d-rh"><span class="mono d-id">LT-0041</span><b class="t-heading">Saturday hotel gig</b>${tag('confirmed','Confirmed')}</div>${[['When','Fri 24 Oct 2026, 20:00, 75 min'],['Where','Hotel Skov, Aarhus, cap. 300'],['Contact','Mette Krogh, booking, +45 …'],['Fee','4.500 DKK, deposit 1.500 not invoiced'],['People','Full band, 4, driver: Jonas'],['Files','Rider v3, Stage plot, Contract (signed)']].map(([k,v])=>`<div class="d-kvr"><small>${k}</small><span>${v}</span></div>`).join('')}<span style="flex:1"></span><button class="btn secondary" data-go="booking" data-id="b1">Open booking</button></aside>`;
@@ -261,11 +263,11 @@ const A=L.ACTIONS;
 A.ask=(t)=>{const el=document.getElementById('ask');const q=(el?.value||'').trim();
  if(S.view==='booking'){S.booking.sheet=true;L.render();return;}
  if(S.view==='assistant'&&S.asst!=='new'){if(!q){el?.focus();return;}const id=S.asst==='q'?'q':S.asstChat;(S.asstLog[id]??=[]).push([q,id==='move'?'Noted. I added it to the plan above; nothing changes until you press Confirm.':'I looked at it. Nothing is changed without your OK; say “do it” and I will make a plan.']);L.render();setTimeout(()=>{const c=document.querySelector('.main');if(c)c.scrollTop=c.scrollHeight;document.getElementById('ask')?.focus();},30);return;}
- if(q){S.asst='q';S.asstQ=q;}else if(S.view==='assistant'){el?.focus();return;}
+ if(q){S.asst='q';S.asstQ=q;asstWork();}else if(S.view==='assistant'){el?.focus();return;}
  L.go('assistant');};
 A.asksugg=t=>{const k=t.dataset.q;if(k==='plan'){S.asst='plan';S.asstMove='plan';S.asstChat='move';S.asstWho=null;if(S.view==='assistant')L.render();else L.go('assistant');}else if(k==='nudge'){S.booking.state='offer';S.booking.cancelled=false;L.go('booking');S.booking.sheet=true;L.render();}else L.go(k);};
-A.askq=t=>{S.asst='q';S.asstQ=t.dataset.q;L.go('assistant');};
-A.palask=t=>{S.asst='q';S.asstQ=t.dataset.q||'Ask about '+curBand().name;L.go('assistant');};
+A.askq=t=>{S.asst='q';S.asstQ=t.dataset.q;asstWork();L.go('assistant');};
+A.palask=t=>{S.asst='q';S.asstQ=t.dataset.q||'Ask about '+curBand().name;asstWork();L.go('assistant');};
 A.palnew=()=>{S.overlay=L.DR.newbooking(S.overlay?.q||'');L.render();};
 A.addctx=(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['A booking','ctxpick'],['A contact or venue','ctxpick'],['A file or photo','ctxpick'],['An email thread','ctxpick']]});
 A.ctxpick=t=>{L.close();L.toast('Added as context: '+t.textContent.trim());};

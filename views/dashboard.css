@@ -409,3 +409,7 @@ button.d-kpi:hover{background:var(--raised)}
    (Vit 21 Oct: the lilac text was not visible) */
 .d-tonight .d-k{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font:400 13px/18px var(--sans);color:#fff;
   background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* Electronic light: the scan lines over the aurora are much lighter, so text on top stays readable (Vit 21 Oct) */
+:root[data-genre="electronic"][data-theme="light"]{--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}
+@media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}}
+.d-busy{flex-direction:row!important;align-items:center;gap:12px!important}.d-busylogo{display:inline-flex;color:var(--ink)}.d-busylogo svg{width:72px;height:auto;--logo-bg:var(--canvas)}

@@ -133,3 +133,5 @@
 .pop{max-height:calc(100vh - 16px);overflow-y:auto;overscroll-behavior:contain}
 /* status tags on photos keep their colour but sit on dark glass, so they read on any image */
 :is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* inputs inside a composed field (search boxes, composers) show focus on the field, not a second ring inside it */
+:is(input,textarea):not(.input):focus-visible{outline:none!important}

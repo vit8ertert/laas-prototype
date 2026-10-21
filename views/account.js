@@ -464,7 +464,7 @@ function obSteps(st){const ob=S.onboarding;
   <div class="acc-two acc-flex">${fsel('acc-bco','Country',COUNTRIES,0,'Sets currency, VAT and time zone')}${fld('acc-bc','Home city','Odense',0,'Travel distances start here')}</div>
   <div class="field"><span class="acc-lbl">What do you play?</span>
    <div class="acc-gsearch">${ic('search','s')}<input id="acc-gq" placeholder="Search genres" aria-label="Search genres" autocomplete="off"></div>
-   <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${GENRES.map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${g}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. Pick the closest one.</span></div>
+   <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${[...GENRES,...obGenres().filter(g=>!GENRES.includes(g))].map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${esc(g)}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. <button class="link" data-act="accgadd">Add “<span id="acc-gnew"></span>”</button></span></div>
    <span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
   <div class="field"><span class="acc-lbl">How many of you?</span><div class="seg acc-size">${['Just me','2','3–4','5+'].map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>
   <div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
@@ -472,7 +472,8 @@ function obSteps(st){const ob=S.onboarding;
   const desc={label:'The LAAS look, lilac on dark',metal:'Black and bone, hard type',electronic:'Electric navy and lime',classical:'Ivory, gold and burgundy'};
   /* Vit 21 Oct: genre and band size are asked on "Your band"; this step is the look only (Figma 443:19646 still has the older version) */
   /* Vit 21 Oct: "too much info on this step". One line of copy, appearance, two buttons; the looks are picked under the big preview on the right */
-  return head('Pick your look',match==='label'?'Change it any time in Settings.':`${TNAME[match]} fits ${ob.genre.toLowerCase()}. Change it any time in Settings.`)
+  /* Vit 21 Oct: the old line read strangely; point at the looks on the right */
+  return head('Pick your look',match==='label'?'Choose one of the looks on the right. You can change it any time in Settings.':`Choose one of the looks on the right. We suggest ${TNAME[match]} for ${ob.genre.toLowerCase()}.`)
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
   <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
   <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
@@ -508,7 +509,9 @@ L.INPUT.push(t=>{
 });
 AC.accbgenre=t=>{const g=t.dataset.g,l=A.genres;const i=l.indexOf(g);if(i>=0){if(l.length===1)return L.toast('Keep at least one genre');l.splice(i,1);}else l.push(g);L.render();L.toast('Genres saved');};
 AC.accgall=()=>{A.allGenres=!A.allGenres;L.render();};
+/* a genre that is not in the list can be added from the search (Vit 21 Oct) */
+AC.accgadd=()=>{const q=(document.getElementById('acc-gq')?.value||'').trim();if(!q)return;const v=q.charAt(0).toUpperCase()+q.slice(1);const l=obGenres();if(!l.includes(v))l.push(v);S.onboarding.genre=l[0];L.render();L.toast(`Added ${v}`);};
 /* genre search filters the chips in place, so typing keeps focus */
 L.INPUT.push(t=>{if(t.id!=='acc-gq')return;const q=t.value.trim().toLowerCase(),list=document.getElementById('acc-glist');if(!list)return true;
- list.classList.toggle('q',!!q);let n=0;list.querySelectorAll('.acc-gc').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q);b.classList.toggle('hit',!!q&&hit);b.classList.toggle('miss',!!q&&!hit);if(hit)n++;});list.classList.toggle('nohit',!!q&&!n);return true;});
+ list.classList.toggle('q',!!q);let n=0;list.querySelectorAll('.acc-gc').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q);b.classList.toggle('hit',!!q&&hit);b.classList.toggle('miss',!!q&&!hit);if(hit)n++;});list.classList.toggle('nohit',!!q&&!n);const nw=document.getElementById('acc-gnew');if(nw)nw.textContent=t.value.trim();return true;});
 })();
