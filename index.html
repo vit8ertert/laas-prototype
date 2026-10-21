@@ -190,6 +190,8 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .abar-mini{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:var(--raised);border:1px solid var(--rule-strong);color:var(--ink);font:500 15px/18px var(--sans);box-shadow:0 8px 24px rgba(0,0,0,.25);animation:pop-in .2s cubic-bezier(.2,.8,.2,1) both}
 .abar-mini:hover{background:var(--top)}
 @media (max-width:860px){.abar-mini-wrap{padding:0 16px 16px}}
+/* sticky side columns keep the page's top padding (24 px) when they stick */
+.acc-nav,.bk-idx,.bk-live,.d-hist,.d-record,.tl-side,.ml-panel{top:24px!important}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
 ::view-transition-old(main){animation:vt-out .14s ease-in both}
