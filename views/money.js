@@ -13,12 +13,14 @@ L.P.filetext=L.P.filetext||'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2
 
 /* state */
 S.money??={empty:false,done:{},seen:false,reminded:false,askedMette:false,showTable:false,
- exp:[['26 Oct','Travel, 2 cars Odense–Aarhus, Hotel gig','paid by Jonas, personal card','Travel',1,'640'],
-      ['22 Oct','Rehearsal room, Studio B, 4 h','paid from the band account','Rehearsal',1,'800'],
-      ['18 Oct','Merch, 50 tote bags, Print House','paid by Mette, to be refunded','Merch',1,'1.000'],
-      ['9 Oct','Strings, 2 sets','paid by Mette, cash','Gear',0,'240'],
-      ['3 Oct','Pre-save link, Feature.fm, October','band card, recurring','Promotion',1,'89'],
-      ['1 Oct','LAAS, October','band card, recurring','Software',1,'149']],
+ /* expenses, October 2026 (Vit 21 Oct: a real table, rows that open, what an artist does here) */
+ ex:[{id:'e1',d:26,what:'Travel, 2 cars Odense–Aarhus',shop:'Mileage, 284 km',for:'Saturday hotel gig',by:'Jonas',how:'personal card',cat:'Travel',rc:1,rf:'to',amt:640},
+     {id:'e2',d:22,what:'Rehearsal room, 4 h',shop:'Studio B',for:'Band, general',by:'Band',how:'band card',cat:'Rehearsal',rc:1,rf:'',amt:800},
+     {id:'e3',d:18,what:'Merch, 50 tote bags',shop:'Print House',for:'Release show',by:'Mette',how:'personal card',cat:'Merch',rc:1,rf:'to',amt:1000},
+     {id:'e4',d:9,what:'Strings, 2 sets',shop:'4Sound Odense',for:'Club night',by:'Mette',how:'cash',cat:'Gear',rc:0,rf:'done',amt:240},
+     {id:'e5',d:3,what:'Pre-save link, October',shop:'Feature.fm',for:'Band, general',by:'Band',how:'band card, monthly',cat:'Promotion',rc:1,rf:'',amt:89},
+     {id:'e6',d:1,what:'LAAS, October',shop:'LAAS',for:'Band, general',by:'Band',how:'band card, monthly',cat:'Software',rc:1,rf:'',amt:149}],
+ exf:'all',exq:'',exfor:'',exby:'',exsel:[],
  added:0,inv:{lines:2,m2:'',incl:false,remind:true,interest:false}};
 const M=S.money;
 const num=s=>+String(s).replace(/\./g,'').replace(/[^\d-]/g,'')||0;
@@ -47,7 +49,7 @@ const foot=t=>`<p class="m-foot">${t}</p>`;
 /* Figma "Tabs": tab row + 1 px rule; each Tab is inner (label, count) over a 2 px indicator */
 const tabsRow=items=>`<div class="m-tabsw"><div class="m-tabs" role="tablist">${items.map(([on,attrs,l,c,cl=''])=>`<button role="tab" aria-selected="${on}" class="${on?'on':''}" ${attrs}><span class="in"><span>${l}</span>${c!=null?`<span class="c"${cl}>${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div><i class="m-tabrule"></i></div>`;
 L.mTabsRow=tabsRow;
-const tabsBar=t=>{const counts={owed:3,invoices:12,expenses:t==='expenses'?M.exp.length:null,payouts:S.booking.settled?null:1};
+const tabsBar=t=>{const counts={owed:3,invoices:12,expenses:t==='expenses'?M.ex.length:null,payouts:S.booking.settled?null:1};
  return tabsRow([['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>[t===k,`data-mtab="${k}"`,l,counts[k]]));};
 
 /* ---------- Owed to you ---------- */
@@ -105,13 +107,41 @@ const invoices=()=>`<div class="table-wrap m-table"><table><thead><tr><th>No.</t
  <p class="m-foot m-nopad">Showing ${S.invoices.length} of ${Math.max(12,S.invoices.length)}, newest first. Open one to see its lines, reminders and history.</p>`;
 
 /* ---------- Expenses tab ---------- */
+/* What a band does here: see what went out and for which gig, get every receipt in, pay back whoever paid
+   from their own pocket, fix a category, hand it all to the bookkeeper. Page list = Table row (DS "Which row where"). */
+const EXCATS=['Travel','Rehearsal','Merch','Gear','Promotion','Software','Food','Other'];
+const EXFOR=['Saturday hotel gig','Release show','Club night','Band, general'];
+const EXWHO={Mette:'Mette Ravn',Sofie:'Sofie Lund',Jonas:'Jonas Holm',Band:'Band account'};
+const exDate=d=>`${d} Oct`;
+const exList=()=>M.ex.slice().sort((a,b)=>b.d-a.d);
+const exShown=()=>{const q=M.exq.trim().toLowerCase();return exList().filter(e=>(M.exf==='all'||(M.exf==='rcpt'&&!e.rc)||(M.exf==='back'&&e.rf==='to'))&&(!M.exfor||e.for===M.exfor)&&(!M.exby||e.by===M.exby)&&(!q||[e.what,e.shop,e.for,e.cat,EXWHO[e.by]].join(' ').toLowerCase().includes(q)));};
+const exOwed=()=>{const o={};for(const e of M.ex)if(e.rf==='to')o[e.by]=(o[e.by]||0)+e.amt;return o;};
+const exWho=e=>`<span class="ex-who"><span class="ex-av ${e.by==='Band'?'band':''}">${e.by==='Band'?ic('money','s'):e.by[0]}</span><span class="ex-wt"><span>${e.by==='Band'?'Band account':e.by}</span><small>${esc(e.how)}</small></span></span>`;
+const exBox=(on,attrs,label)=>`<button class="ex-cb ${on?'on':''}" role="checkbox" aria-checked="${on}" aria-label="${label}" ${attrs}>${on?ic('check','s'):''}</button>`;
 function expenses(){
- const miss=M.exp.filter(e=>!e[4]);const n=M.exp.length;
- return `${miss.length?banner(`One expense has no receipt, ${miss[0][1].split(',')[0].toLowerCase()}, ${miss[0][5]} DKK, ${(miss[0][2].match(/paid by \w+/)||['paid by the band'])[0]} ${miss[0][0]}`,'The books accept it, but a bookkeeper will ask. Snap it or mark "no receipt" with a reason.',M.askedMette?btn('secondary s','Asked','disabled'):btn('secondary s',`Ask ${(miss[0][2].match(/paid by (\w+)/)||[0,'the band'])[1]}`,'data-act="mnyaskmette"')):''}
- ${kpis([kpi('This month',L.kr(2140+M.added)+' DKK',`${n} expenses`,'muted'),kpi('Paid privately','1.640 DKK','Jonas 640, Mette 1.000, owed back','att'),
-  kpi('Receipts',`${n-miss.length} of ${n}`,miss.length?`${miss.length} missing`:'all in',miss.length?'att':'ok'),kpi('Suggested accounts',`${n} of ${n}`,'all accepted by you','ok')])}
- <div class="m-exp">${M.exp.map((e,i)=>`<div class="m-erow"><span class="m-ed">${e[0]}</span><span class="m-tx"><span>${esc(e[1])}</span><small>${esc(e[2])}</small></span><button class="chip m-chip" data-act="mnyacct" data-i="${i}">${esc(e[3])}</button><span class="m-eend">${e[4]?tag('confirmed','Receipt'):`<button class="tag attention" data-act="mnyrcpt" data-i="${i}" title="Mark the receipt as in">No receipt</button>`}</span><span class="m-eamt mono">${e[5]}</span></div>`).join('')}</div>
- <p class="m-foot m-nopad m-row">${'The account chip is the assistant\'s suggestion in plain words (Travel, Rehearsal, Merch…), accepted with one tap; the chart of accounts sits behind it in Books. "Paid by" a member creates what the band owes them.'}</p>`;
+ const all=exList(),rows=exShown(),miss=all.filter(e=>!e.rc),owed=exOwed(),owedT=Object.values(owed).reduce((a,b)=>a+b,0);
+ const tot=all.reduce((a,e)=>a+e.amt,0),shownT=rows.reduce((a,e)=>a+e.amt,0),sel=M.exsel.filter(id=>rows.some(e=>e.id===id));
+ const m0=miss[0];
+ const bar=sel.length?`<div class="ex-bar ex-selbar" role="toolbar" aria-label="Selected expenses"><b>${sel.length} selected</b>${ghostBtn('Change category','data-act="exbulkcat"','pencil')}${ghostBtn('Link to a gig','data-act="exbulkfor"','calendar')}${rows.some(e=>sel.includes(e.id)&&e.rf==='to')?ghostBtn('Mark paid back','data-act="exbulkpaid"','check'):''}${ghostBtn('Export','data-act="exbulkexp"','upload')}<span class="grow"></span>${ghostBtn('Clear','data-act="exclear"','x')}</div>`
+  :`<div class="ex-bar"><div class="ex-fs">${[['all','All',all.length],['rcpt','Missing receipt',miss.length],['back','To pay back',all.filter(e=>e.rf==='to').length]].map(([k,l,n])=>`<button class="chip ${M.exf===k?'on':''}" data-act="exfilter" data-f="${k}" aria-pressed="${M.exf===k}">${l}<span class="c">${n}</span></button>`).join('')}<span class="ex-sep"></span><button class="chip" data-act="exformenu">${M.exfor?esc(M.exfor):'For: all'}${ic('down','s')}</button><button class="chip" data-act="exbymenu">${M.exby?'Paid by: '+(M.exby==='Band'?'band account':M.exby):'Paid by: anyone'}${ic('down','s')}</button></div><label class="search ex-search">${ic('search','s')}<input class="input" id="exq" placeholder="What, shop, gig" value="${esc(M.exq)}" aria-label="Search expenses"></label></div>`;
+ const head=`<div class="bk-tr bk-th ex-r" role="row">${exBox(sel.length&&sel.length===rows.length,'data-act="exselall"','Select all')}<span>Date</span><span>Expense</span><span>Paid by</span><span>Category</span><span>Receipt</span><span>Pay back</span><span class="n">Amount, DKK</span></div>`;
+ const row=(e,i)=>`<div class="bk-tr ex-r ${sel.includes(e.id)?'sel':''}" role="row" tabindex="0" data-act="exopen" data-id="${e.id}" style="--i:${i}">
+  ${exBox(sel.includes(e.id),`data-act="exsel" data-id="${e.id}"`,'Select '+esc(e.what))}
+  <span class="m">${exDate(e.d)}</span>
+  <span class="ex-tt"><b>${esc(e.what)}</b><small>${esc(e.shop)}, for ${esc(e.for)}</small></span>
+  ${exWho(e)}
+  <span><button class="ex-cat" data-act="excatmenu" data-id="${e.id}" aria-label="Category ${e.cat}, change">${esc(e.cat)}${ic('down','s')}</button></span>
+  <span>${e.rc?`<span class="ex-rc">${ic('clip','s')}Receipt</span>`:`<button class="tag attention ex-add" data-act="exrcpt" data-id="${e.id}">${ic('plus','s')}Add receipt</button>`}</span>
+  <span>${e.rf==='to'?tag('attention','To pay back'):e.rf==='done'?tag('paid','Paid back'):'<span class="faint">Band paid</span>'}</span>
+  <span class="n mono">${L.kr(e.amt)}</span></div>`;
+ const foot=`<div class="bk-tr ex-r ex-tot" role="row"><span></span><span></span><span>${rows.length===all.length?`${all.length} expenses, October`:`${rows.length} of ${all.length} expenses`}</span><span></span><span></span><span></span><span class="m">Total</span><span class="n mono">${L.kr(shownT)}</span></div>`;
+ const empty=`<div class="ex-empty"><b>${M.exf==='rcpt'?'Every receipt is in':M.exf==='back'?'Nobody is waiting to be paid back':'Nothing matches'}</b><span class="muted">${M.exf==='all'?'Try another search or clear the filters.':'Good, the books are clean for October.'}</span>${btn('secondary s','Show all','data-act="exreset"')}</div>`;
+ return `${miss.length&&M.exf!=='rcpt'?banner(miss.length===1?`${m0.what.split(',')[0]}, ${L.kr(m0.amt)} DKK, has no receipt`:`${miss.length} expenses have no receipt`,`${EXWHO[m0.by]} paid ${exDate(m0.d)}. The books accept it, but a bookkeeper will ask. Add a photo, or ask ${m0.by==='Band'?'the band':m0.by}.`,M.askedMette?btn('secondary s','Asked','disabled'):btn('secondary s',`Ask ${m0.by==='Band'?'the band':m0.by}`,`data-act="mnyaskmette" data-who="${m0.by}"`)):''}
+ ${kpis([kpi('October',L.kr(tot)+' DKK',`${all.length} expenses`,'muted'),kpi('To pay back',L.kr(owedT)+' DKK',Object.entries(owed).map(([k,v])=>`${k} ${L.kr(v)}`).join(', ')||'nobody',owedT?'att':'ok'),kpi('Receipts',`${all.length-miss.length} of ${all.length}`,miss.length?`${miss.length} missing`:'all in',miss.length?'att':'ok')])}
+ ${owedT&&M.exf==='back'?`<div class="ex-owe">${ic('users','s')}<span><b>${Object.entries(owed).map(([k,v])=>`${EXWHO[k]} ${L.kr(v)} DKK`).join(', ')}</b> paid from their own pocket. It goes on their next payout, or mark it paid back if you already sent it.</span>${btn('secondary s','Settle up','data-act="expayout"')}</div>`:''}
+ ${bar}
+ <div class="bk-table ex-table" role="table" aria-label="Expenses, October 2026">${head}${rows.length?rows.map(row).join('')+foot:empty}</div>
+ <p class="m-foot m-nopad">Categories are the assistant's suggestion in plain words, change one from its row; the chart of accounts sits behind them in Books. Open an expense to see its receipt, the gig it belongs to and its history.</p>`;
 }
 
 /* ---------- Payouts tab ---------- */
@@ -172,7 +202,7 @@ const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% 
 
 /* ---------- views ---------- */
 L.VIEWS.money=()=>{const t=S.mtab||'owed';
- const h=t==='expenses'?head('Expenses',`October 2026, ${L.kr(2140+M.added)} DKK, ${M.exp.length} receipts, ${M.exp.filter(e=>!e[4]).length} missing, paid by 3 people`,btn('secondary','Snap a receipt','data-act="addexpense"','upload')+btn('accent','Add expense','data-act="addexpense"','plus')+more('mnymore'))
+ const h=t==='expenses'?head('Expenses',`October 2026, what the band spent, who paid and which receipts are in`,btn('secondary','Snap a receipt','data-act="addexpense"','upload')+btn('accent','Add expense','data-act="addexpense"','plus')+more('mnymore'))
   :head('Money',M.empty?'Nothing owed, nothing late, the first booking with a fee starts the books':'October 2026, 8.500 DKK owed to you, 9.000 DKK in this month, books up to date as of yesterday',btn('secondary','Add expense','data-act="addexpense"','upload')+btn('accent','New invoice','data-act="newinvoice"','plus')+more('mnymore'));
  const body={owed:M.empty?owedEmpty:owed,invoices,expenses,payouts,reports:()=>`<div class="m-ledger">${chart()}${reportsRow()}</div>`,books:()=>`${ledgerBody()}<div class="ml-links">${btn('secondary s','Open the ledger','data-go="ledger"','ext')}${btn('secondary s','Journal','data-go="journal"','filetext')}${btn('secondary s','Chart of accounts','data-go="accounts"','list')}${btn('secondary s','Reports','data-go="ledgerreport"','chart')}</div>`}[t]||owed;
  const ph=t==='expenses'?'Ask — add 320 DKK petrol paid by Sofie yesterday, what did merch cost this year, who is owed money':'Ask about money — who owes us, what did we net in October, draft the balance invoice for Club Mono';
@@ -306,9 +336,7 @@ A.mnyremind=()=>{S.fullmsg=false;S.overlay={type:'mnyrem'};L.render();};
 A.mnysendrem=()=>{S.overlay=null;M.reminded=true;M.done.send=true;S.sentReminder=true;L.render();L.toast('Påmindelse sent to Hotel Royal',()=>{M.reminded=false;M.done.send=false;S.sentReminder=false;});};
 A.mnyapprove=()=>{S.booking.depositPaid=true;M.done.approve=true;if(S.checklist)S.checklist['Deposit received']=true;L.render();L.toast('1.470 DKK matched to invoice 2026-031',()=>{S.booking.depositPaid=false;M.done.approve=false;if(S.checklist)S.checklist['Deposit received']=false;});};
 A.mnymove=()=>{M.done.move=true;L.render();L.toast('Recorded: 5.000 DKK moved from Mads to the band account',()=>{M.done.move=false;});};
-A.mnyaskmette=el=>{const who=el.textContent.replace('Ask ','');M.askedMette=true;L.render();L.toast(`Asked ${who} for the receipt`,()=>{M.askedMette=false;});};
-A.mnyrcpt=el=>{const i=+el.dataset.i;M.exp[i][4]=1;L.render();L.toast('Receipt added to '+M.exp[i][1].split(',')[0],()=>{M.exp[i][4]=0;});};
-A.mnyacct=el=>{const i=+el.dataset.i;L.toast(`${M.exp[i][3]} accepted for "${M.exp[i][1].split(',')[0]}"`);};
+A.mnyaskmette=el=>{const who=el.dataset.who||el.textContent.replace('Ask ','');M.askedMette=true;L.render();L.toast(`Asked ${who} for the receipt`,()=>{M.askedMette=false;});};
 A.mnytable=()=>{M.showTable=!M.showTable;L.render();};
 A.mnyreport=el=>L.toast(`${el.dataset.r}, Jan–Oct 2026, ready as PDF`);
 A.mnyyear=()=>L.toast('Showing this year, Jan–Oct 2026');
@@ -328,11 +356,11 @@ A.mnyinvapprove=()=>{const missing=[...document.querySelectorAll('.m-dr .m-moms'
  if(missing.length){missing[0].focus();missing[0].classList.add('m-err');return;}
  const r=S.invoices.find(x=>x[0]==='2026-032');const old=r?r.slice():null;if(r){r[3]='sends 18 Oct';r[4]='confirmed';r[5]='Approved';r[6]=document.getElementById('mi-ti')?.textContent||r[6];}
  S.overlay=null;S.mtab='invoices';L.go('money');L.toast('Invoice 2026-032 approved, it sends on 18 Oct',()=>{if(r&&old)r.splice(0,r.length,...old);});};
-A.saveexpense=()=>{const v=id=>(document.getElementById(id)||{}).value||'';const what=v('exw'),amt=v('exa'),by=v('exb');
- const acct=/park|diesel|petrol|train|ferry|car/i.test(what)?'Travel':/string|stick|cable|gear/i.test(what)?'Gear':/rehears/i.test(what)?'Rehearsal':/merch|tote|shirt/i.test(what)?'Merch':'Other';
- M.exp.unshift(['21 Oct',what,by==='Band account'?'paid from the band account':`paid by ${by}`,acct,S.rcpt?1:0,amt]);M.added+=num(amt);
- S.expenses?.unshift(['21 Oct',what,v('exf'),by,amt]);S.overlay=null;S.mtab='expenses';L.go('money');
- L.toast('Expense saved',()=>{M.exp.shift();M.added-=num(amt);S.expenses?.shift();});};
+A.saveexpense=()=>{const v=id=>(document.getElementById(id)||{}).value||'';const what=v('exw'),amt=num(v('exa')),by=v('exb');
+ const cat=/park|diesel|petrol|train|ferry|car/i.test(what)?'Travel':/string|stick|cable|gear/i.test(what)?'Gear':/rehears/i.test(what)?'Rehearsal':/merch|tote|shirt/i.test(what)?'Merch':'Other';
+ const e={id:'n'+Date.now(),d:21,what,shop:/park/i.test(what)?'Q-Park':'Added by hand',for:v('exf'),by:by==='Band account'?'Band':by,how:by==='Band account'?'band card':'personal card',cat,rc:S.rcpt?1:0,rf:by==='Band account'?'':'to',amt,log:[['21 Oct','Added by Vital'+(S.rcpt?', from a photo':'')],['21 Oct',`Category ${cat}, suggested by the assistant`]]};
+ M.ex.push(e);S.expenses?.unshift(['21 Oct',what,v('exf'),by,String(amt)]);S.overlay=null;S.mtab='expenses';M.exf='all';L.go('money');
+ L.toast('Expense saved',()=>{M.ex=M.ex.filter(x=>x!==e);S.expenses?.shift();L.render();});};
 
 /* ================= Ledger depth: journal, chart of accounts, ledger reports (LaaS 0.5 /ledger/…) ================= */
 L.P.list=L.P.list||'<path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/>';
@@ -600,4 +628,61 @@ function saveEntry(st){const ls=readLines().filter(l=>l[0]||l[1]||l[2]||l[3]);co
 /* reports chips on Ledger and Reports: open the report page for the three ledger reports */
 A.mnyreport=el=>{const k={'Profit and loss':'pl','Balance sheet':'bs','Trial balance':'tb'}[el.dataset.r];if(k){M.rep=k;L.go('ledgerreport');}else L.toast(`${el.dataset.r}, Jan–Oct 2026, ready as PDF`);};
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.ml-tr[data-act],.ml-rep tr[data-act]')){e.preventDefault();e.target.click();}});
+
+/* ================= Expenses: filters, selection, row menus, detail drawer ================= */
+const exById=id=>M.ex.find(e=>e.id===id);
+const exUndo=(msg,snap)=>L.toast(msg,()=>{M.ex=snap;L.render();});
+const exSnap=()=>M.ex.map(e=>({...e,log:e.log?e.log.slice():undefined}));
+const exLog=(e,t)=>{(e.log??=[]).push(['21 Oct',t]);};
+A.exfilter=el=>{M.exf=el.dataset.f;M.exsel=[];L.render();};
+A.exreset=()=>{M.exf='all';M.exq='';M.exfor='';M.exby='';L.render();};
+A.exsel=el=>{const id=el.dataset.id;M.exsel=M.exsel.includes(id)?M.exsel.filter(x=>x!==id):[...M.exsel,id];L.render();};
+A.exselall=()=>{const ids=exShown().map(e=>e.id);M.exsel=M.exsel.length===ids.length?[]:ids;L.render();};
+A.exclear=()=>{M.exsel=[];L.render();};
+A.exformenu=el=>menu(el,[['All gigs','exsetfor','data-v=""'],...EXFOR.map(g=>[esc(g),'exsetfor',`data-v="${esc(g)}"`])]);
+A.exsetfor=el=>{M.exfor=el.dataset.v;S.overlay=null;L.render();};
+A.exbymenu=el=>menu(el,[['Anyone','exsetby','data-v=""'],...Object.entries(EXWHO).map(([k,v])=>[v,'exsetby',`data-v="${k}"`])]);
+A.exsetby=el=>{M.exby=el.dataset.v;S.overlay=null;L.render();};
+A.excatmenu=el=>{const e=exById(el.dataset.id);menu(el,EXCATS.map(c=>[`${c}${c===e.cat?' (now)':''}`,'exsetcat',`data-id="${e.id}" data-v="${c}"`]));};
+A.exsetcat=el=>{const snap=exSnap();const ids=el.dataset.id?[el.dataset.id]:M.exsel;for(const id of ids){const e=exById(id);if(e&&e.cat!==el.dataset.v){e.cat=el.dataset.v;exLog(e,`Category changed to ${e.cat} by Vital`);}}S.overlay=null;M.exsel=el.dataset.id?M.exsel:[];L.render();exUndo(ids.length>1?`${ids.length} expenses moved to ${el.dataset.v}`:`Category: ${el.dataset.v}`,snap);};
+A.exbulkcat=el=>menu(el,EXCATS.map(c=>[c,'exsetcat',`data-v="${c}"`]));
+A.exbulkfor=el=>menu(el,EXFOR.map(g=>[esc(g),'exsetforsel',`data-v="${esc(g)}"`]));
+A.exsetforsel=el=>{const snap=exSnap();for(const id of M.exsel){const e=exById(id);e.for=el.dataset.v;exLog(e,`Linked to ${e.for} by Vital`);}const n=M.exsel.length;M.exsel=[];S.overlay=null;L.render();exUndo(`${n} linked to ${el.dataset.v}`,snap);};
+const paidBack=list=>{for(const e of list){e.rf='done';exLog(e,`Marked paid back to ${EXWHO[e.by]} by Vital`);}};
+A.exbulkpaid=()=>{const snap=exSnap();const l=M.exsel.map(exById).filter(e=>e.rf==='to');paidBack(l);M.exsel=[];L.render();exUndo(`${l.length} marked paid back`,snap);};
+A.exbulkexp=()=>{const n=M.exsel.length;M.exsel=[];L.render();L.toast(`${n} expenses exported, CSV with receipts`);};
+A.expayout=()=>{const snap=exSnap();const o=exOwed();paidBack(M.ex.filter(e=>e.rf==='to'));L.render();exUndo(`Added to the next payout: ${Object.entries(o).map(([k,v])=>`${k} ${L.kr(v)}`).join(', ')} DKK`,snap);};
+A.exrcpt=el=>{const e=exById(el.dataset.id);const snap=exSnap();e.rc=1;e.none='';exLog(e,'Receipt added by Vital, photo');if(S.overlay&&S.overlay.exid)S.overlay=L.DR.expense(e.id);L.render();exUndo('Receipt added to '+e.what.split(',')[0],snap);};
+A.exnorc=()=>{const id=S.overlay&&S.overlay.exid;const e=exById(id);const r=(document.getElementById('exnr')||{}).value||'';if(!r.trim()){document.getElementById('exnr')?.focus();return;}const snap=exSnap();e.rc=1;e.none=r.trim();exLog(e,`No receipt, reason: ${e.none}`);S.overlay=L.DR.expense(id);L.render();exUndo('Marked as no receipt, the reason is kept for the bookkeeper',snap);};
+A.exnoform=()=>{const w=document.getElementById('exnrw');if(w){w.hidden=false;document.getElementById('exnr')?.focus();}};
+A.exopen=el=>{S.overlay=L.DR.expense(el.dataset.id);L.render();};
+A.exdpaid=()=>{const e=exById(S.overlay.exid);const snap=exSnap();paidBack([e]);S.overlay=L.DR.expense(e.id);L.render();exUndo(`Marked paid back to ${EXWHO[e.by]}`,snap);};
+A.exsplit=()=>L.toast('Split: pick the gigs and the share for each, the receipt stays on both');
+A.exdel=()=>{const id=S.overlay.exid;const snap=exSnap();M.ex=M.ex.filter(e=>e.id!==id);S.overlay=null;L.render();exUndo('Expense deleted',snap);};
+A.exsave=()=>{const e=exById(S.overlay.exid);const v=id=>(document.getElementById(id)||{}).value;const snap=exSnap();
+ const what=v('exdw'),amt=num(v('exda')),f=v('exdf'),c=v('exdc'),n=v('exdn');
+ if(what&&what!==e.what){e.what=what;}if(e.rf!=='done'&&amt&&amt!==e.amt){exLog(e,`Amount changed from ${L.kr(e.amt)} to ${L.kr(amt)}`);e.amt=amt;}
+ if(f&&f!==e.for){e.for=f;exLog(e,`Linked to ${f}`);}if(c&&c!==e.cat){e.cat=c;exLog(e,`Category changed to ${c}`);}e.note=n||'';
+ S.overlay=null;L.render();exUndo('Expense saved',snap);};
+const exReceipt=e=>e.rc&&!e.none?`<div class="ex-paper" aria-label="Receipt from ${esc(e.shop)}"><b>${esc(e.shop.split(',')[0])}</b><span>${exDate(e.d)} 2026, ${e.d%2?'14:12':'09:40'}</span><hr><div><span>${esc(e.what)}</span><span>${L.kr(e.amt)}</span></div><div class="faint"><span>Moms 25 %</span><span>${L.kr(Math.round(e.amt*0.2))}</span></div><hr><div><b>Total DKK</b><b>${L.kr(e.amt)}</b></div><span class="faint">${e.how.includes('cash')?'Cash':'Card ****'+(e.by==='Band'?'4410':'7731')}</span></div>`
+ :e.none?`<div class="ex-nor">${ic('filetext','s')}<span><b>No receipt</b><br><span class="muted">${esc(e.none)}</span></span></div>`
+ :`<div class="ex-drop"><label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong">Add a photo or PDF of the receipt</b><span class="t-meta muted">Drop it here, or take a photo with your phone. We read the date and amount.</span><input type="file" accept="image/*,.pdf" hidden data-exrcpt="${e.id}"></label>
+  <div class="ex-dropacts">${btn('secondary s','Use a sample photo',`data-act="exrcpt" data-id="${e.id}"`,'upload')}${e.by!=='Band'?btn('secondary s',`Ask ${e.by}`,`data-act="mnyaskmette" data-who="${e.by}"`):''}${ghostBtn('No receipt','data-act="exnoform"')}</div>
+  <div class="field" id="exnrw" hidden><label for="exnr">Why is there no receipt?</label><input class="input" id="exnr" placeholder="Parking meter, no receipt printed"><span class="help">The reason goes to the bookkeeper with the expense.</span>${btn('secondary s','Save reason','data-act="exnorc"')}</div></div>`;
+L.DR.expense=id=>{const e=exById(id);const locked=e.rf==='done';
+ const log=[[exDate(e.d),e.by==='Band'?'Paid with the band card':`Paid by ${EXWHO[e.by]}, ${e.how}`],[exDate(e.d),`Category ${e.cat}, suggested by the assistant, accepted`],...(e.log||[])];
+ return {type:'mnydrawer',exid:id,title:esc(e.what),sub:`${exDate(e.d)} 2026, ${esc(e.shop)}, ${L.kr(e.amt)} DKK`,
+ body:`<section class="ex-dsec">${exReceipt(e)}</section>
+ ${e.by!=='Band'?`<div class="ex-dpay ${e.rf}">${ic(e.rf==='done'?'check':'users','s')}<span>${e.rf==='done'?`Paid back to ${EXWHO[e.by]}. Amount and payer are locked.`:`${EXWHO[e.by]} paid ${L.kr(e.amt)} DKK from their own pocket. It goes on their next payout.`}</span>${e.rf==='to'?btn('secondary s','Mark paid back','data-act="exdpaid"'):''}</div>`:''}
+ ${field('exdw','What',`<input class="input" id="exdw" value="${esc(e.what)}">`)}
+ <div class="ex-d2">${field('exda','Amount, DKK',`<input class="input mono" id="exda" inputmode="decimal" value="${L.kr(e.amt)}" ${locked?'disabled':''}>`)}${field('exdd','Date',`<input class="input" id="exdd" value="${exDate(e.d)} 2026">`)}</div>
+ <div class="ex-d2">${field('exdf','For',`<select class="input" id="exdf">${EXFOR.map(g=>`<option ${g===e.for?'selected':''}>${esc(g)}</option>`).join('')}</select>`,'Counts in the gig\'s result on settle.')}${field('exdc','Category',`<select class="input" id="exdc">${EXCATS.map(c=>`<option ${c===e.cat?'selected':''}>${c}</option>`).join('')}</select>`,'Books it to the matching account.')}</div>
+ ${field('exdb','Paid by',`<input class="input" id="exdb" value="${e.by==='Band'?'Band account':EXWHO[e.by]}, ${esc(e.how)}" disabled>`)}
+ ${ghostBtn('Split across gigs','data-act="exsplit"','plus')}
+ ${field('exdn','Note',`<textarea class="input" id="exdn" rows="2" placeholder="For the band or the bookkeeper">${esc(e.note||'')}</textarea>`)}
+ <section class="ex-hist"><h3 class="t-label muted">History</h3>${log.map(([d,t])=>`<div><span class="faint">${d}</span><span>${esc(t)}</span></div>`).join('')}</section>`,
+ foot:`${ghostBtn('Delete','data-act="exdel"','x')}<span style="flex:1"></span>${btn('secondary','Cancel','data-act="close"')}${btn('accent','Save','data-act="exsave"')}`};};
+L.INPUT.push(t=>{if(t.id==='exq'){M.exq=t.value;const p=t.selectionStart;L.render();const n=document.getElementById('exq');if(n){n.focus();n.setSelectionRange(p,p);}return true;}return false;});
+L.CHANGE.push(t=>{if(t.dataset&&t.dataset.exrcpt){A.exrcpt({dataset:{id:t.dataset.exrcpt}});return true;}return false;});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.ex-r[data-act="exopen"]')){e.preventDefault();A.exopen(e.target);}});
 })();

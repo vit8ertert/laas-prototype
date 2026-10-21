@@ -375,3 +375,56 @@ button.ml-ltr:hover{background:var(--raised)}
    have no inset, like "In this month" already did (Vit 21 Oct, "alignment" on Gigs to settle) */
 .m-sec .m-body>.m-line{padding:12px;margin:0 -12px;width:calc(100% + 24px)}
 .m-sec .m-body>.m-foot{padding-inline:0}
+
+/* ---------- Expenses table (Vit 21 Oct: header, rows that open, amounts under their header) ---------- */
+.ex-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ex-kpi{text-align:left;cursor:pointer;font:inherit;color:inherit}
+.ex-kpi.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.ex-owe{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);margin-bottom:16px;font:400 14px/20px var(--sans);color:var(--muted)}
+.ex-owe>span{flex:1}.ex-owe b{color:var(--ink);font-weight:500}.ex-owe>.i{color:var(--muted);flex:none}.ex-owe>.btn{align-self:center}
+.ex-bar{display:flex;align-items:center;gap:8px;min-height:38px;margin-bottom:16px}
+.ex-fs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1}
+.ex-fs .chip .c{margin-left:6px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ex-fs .chip .i{margin-left:4px}
+.ex-sep{width:1px;height:20px;background:var(--rule);margin:0 4px}
+.ex-search{width:280px;flex:none;position:relative}
+.ex-search svg{position:absolute;left:12px;top:10px;width:18px;height:18px;color:var(--muted)}
+.ex-search .input{padding:8px 12px 8px 38px;background-image:none}
+.ex-selbar{padding:0 8px 0 16px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.ex-selbar>b{font-weight:500;margin-right:8px}.ex-selbar .grow{flex:1}
+.bk-tr.ex-r{grid-template-columns:20px 56px minmax(220px,1fr) 170px 124px 130px 116px 104px;column-gap:16px;min-width:1060px}
+.bk-tr.ex-r.sel{background:var(--state-hover,var(--hover))}
+.ex-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ex-tt b{font:500 15px/22px var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ex-tt small,.ex-wt small{font:400 13px/18px var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ex-who{display:flex;align-items:center;gap:8px;min-width:0}
+.ex-wt{display:flex;flex-direction:column;min-width:0;font:400 14px/20px var(--sans)}
+.ex-av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--well);color:var(--ink);font:500 12px/1 var(--sans)}
+.ex-av.band .i{width:14px;height:14px}
+.ex-cat{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 6px 0 10px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);font:400 13px/18px var(--sans);color:var(--ink)}
+.ex-cat .i{width:14px;height:14px;color:var(--muted)}.ex-cat:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+.ex-rc{display:inline-flex;align-items:center;gap:6px;font:400 14px/20px var(--sans);color:var(--muted)}.ex-rc .i{width:14px;height:14px}
+.ex-add{display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ex-add .i{width:12px;height:12px}
+.bk-tr.ex-r .n{text-align:right;justify-self:end}
+.bk-tr.ex-r .mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
+.ex-tot{background:var(--canvas)!important;min-height:0;padding-top:10px;padding-bottom:10px;cursor:default;font:400 14px/20px var(--sans)}
+.ex-tot>span:nth-child(3){color:var(--muted)}.ex-tot .mono{font-weight:500}
+.ex-cb{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--rule-strong);background:var(--surface);color:var(--on-accent)}
+.ex-cb.on{background:var(--accent);box-shadow:none}.ex-cb .i{width:12px;height:12px}
+.ex-cb:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}.ex-cb.on:hover{box-shadow:none}
+.ex-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:40px 16px;text-align:center}
+/* drawer */
+.ex-dsec{margin-bottom:4px}
+.ex-paper{width:240px;margin:0 auto;padding:16px 18px;background:#fbfaf6;color:#1a1a1a;border-radius:4px;box-shadow:0 1px 0 rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.12);font:400 12px/18px var(--mono);display:flex;flex-direction:column;gap:4px;transform:rotate(-1deg)}
+.ex-paper>b{font:500 14px/20px var(--sans);text-align:center}.ex-paper>span{text-align:center}
+.ex-paper hr{border:0;border-top:1px dashed #bbb;margin:6px 0;width:100%}
+.ex-paper div{display:flex;justify-content:space-between;gap:8px}.ex-paper .faint{color:#777}
+.ex-nor{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-radius:var(--r-md);background:var(--well)}
+.ex-drop{display:flex;flex-direction:column;gap:12px}
+.ex-dropacts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ex-dpay{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--attention-tint,var(--well));font:400 14px/20px var(--sans)}
+.ex-dpay.done{background:var(--well)}.ex-dpay>span{flex:1}.ex-dpay>.i{flex:none}
+.ex-d2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ex-hist{display:flex;flex-direction:column;gap:8px;padding-top:8px;border-top:1px solid var(--rule)}
+.ex-hist>div{display:grid;grid-template-columns:56px 1fr;gap:12px;font:400 13px/18px var(--sans)}
+@media (max-width:860px){.ex-kpis{grid-template-columns:1fr}.ex-bar{flex-wrap:wrap}.ex-search{width:100%}.ex-d2{grid-template-columns:1fr}.ex-owe{flex-wrap:wrap}}
