@@ -172,7 +172,7 @@ VIEWS.social=()=>{
   :so.net.length?`<div class="bk-empty"><div class="hd"><h2 class="t-title">Nothing matches this filter</h2><p>Accounts: ${esc(so.net.join(', '))}. Try another account, or clear the filter.</p></div><div class="acts"><button class="btn ghost" data-act="soclear">Clear filter</button></div></div>`
   :`<div class="bk-empty"><div class="hd"><h2 class="t-title">${so.tab==='draft'?'No drafts':'Nothing scheduled'}</h2><p>${so.tab==='draft'?'Ask the assistant for a draft, or start one yourself.':'Schedule a post and it shows here until it goes out.'}</p></div><div class="acts"><button class="btn secondary" data-act="sonewpost">${ic('plus')}New post</button></div></div>`;
  return page('',`${header('Social posts',sub,btns)}
- ${aiDrafts&&!so.bannerOff&&so.tab!=='draft'?banner('info','sparkles',`The assistant drafted ${aiDrafts} post${aiDrafts>1?'s':''} for you to check`,'From the Hotel Skov booking and the Late Shift release plan. Nothing posts until you press Publish.','<button class="btn secondary s" data-act="sotab" data-k="draft">Review drafts</button>','sobannerx'):''}
+ ${aiDrafts&&!so.bannerOff&&so.tab!=='draft'?banner('info','ai',`The assistant drafted ${aiDrafts} post${aiDrafts>1?'s':''} for you to check`,'From the Hotel Skov booking and the Late Shift release plan. Nothing posts until you press Publish.','<button class="btn secondary s" data-act="sotab" data-k="draft">Review drafts</button>','sobannerx'):''}
  ${tabs([['scheduled','Scheduled',n('scheduled')],['draft','Drafts',n('draft')],['published','Published',n('published')]],so.tab,'sotab')}
  <div class="bk-content">${accountsStrip()}
  <div class="bk-filters">${chip('net','Accounts',so.net)}<span class="sp"></span>${search('sosearch','Name or caption',so.q,'Search posts')}</div>
@@ -215,7 +215,7 @@ VIEWS.post=()=>{
  <button class="btn ghost s flush bd-back" data-act="soback">${ic('left','s')}Social posts</button>
  <div class="hero bd-hero"><img src="${IMG(p.img)}" alt=""><div class="tx"><span class="k">${nets(p.nets)} post, ${p.code}</span><h1>${esc(p.name)}</h1><div class="facts"><span>${p.when}</span>${st==='published'?`<span>Reach ${p.reach}</span><span>${p.com} comments</span>`:`<span>${p.nets.length} account${p.nets.length>1?'s':''}</span>`}</div></div></div>
  <div class="bd-bar"><span class="tag ${STAT[st][0]}">${STAT[st][1]}</span><span class="grow"></span>${btns}<button class="btn ghost icon" aria-label="More" data-act="somore" data-id="${p.id}">${ic('more')}</button></div>
- ${ai?banner('info','sparkles',`Drafted by the assistant from ${esc(p.from[0])}. Check it.`,`Times and places come from ${p.from[1]==='bookings'?'the booking':'the release plan'}. Nothing posts until you press ${st==='scheduled'?'Publish now or the scheduled time comes':'Publish'}.`,`<button class="btn secondary s" data-act="sofrom" data-v="${p.from[1]}">Open the source</button>`,`soaix" data-id="${p.id}`):''}
+ ${ai?banner('info','ai',`Drafted by the assistant from ${esc(p.from[0])}. Check it.`,`Times and places come from ${p.from[1]==='bookings'?'the booking':'the release plan'}. Nothing posts until you press ${st==='scheduled'?'Publish now or the scheduled time comes':'Publish'}.`,`<button class="btn secondary s" data-act="sofrom" data-v="${p.from[1]}">Open the source</button>`,`soaix" data-id="${p.id}`):''}
  <div class="bd-grid"><div class="bd-main">${main}</div>${panel}</div>
  </div>${L.abar(p.name,'Make it shorter, move it to Saturday')}`;
 };
@@ -245,7 +245,7 @@ function commentRow(c,q){
 function replyBox(c){
  const txt=S.so.rtext[c.id]??c.sug;
  return `<div class="so-reply"><label class="so-rl" for="sor-${c.id}">Reply as ${esc(NET[c.net].h)}</label><textarea class="input" id="sor-${c.id}" rows="3">${esc(txt)}</textarea>
- ${c.sug?`<span class="so-rn">${ic('sparkles','s')}Drafted by the assistant from the post and your earlier replies. Nothing posts until you press Reply.</span>`:''}
+ ${c.sug?`<span class="so-rn">${ic('ai','s')}Drafted by the assistant from the post and your earlier replies. Nothing posts until you press Reply.</span>`:''}
  <div class="so-rf"><button class="btn ghost" data-act="soreplyx">Cancel</button><span class="grow"></span><button class="btn accent" data-act="soreplysend" data-id="${c.id}">${ic('send','s')}Reply</button></div></div>`;
 }
 VIEWS.comments=()=>{
@@ -331,14 +331,14 @@ DR.sopost=()=>{const n=S.so.np;const edit=!!n.id;const sel=SOCIAL.filter(k=>n.ne
  const label={schedule:`${ic('clock')}Schedule post`,now:`${ic('send')}Publish now`,draft:'Save draft'}[n.mode];
  return {type:'drawer',title:edit?'Edit post':'New post',sub:'Saving never posts anything',
  body:`<div class="so-dr so-np">
- <div class="bk-describe"><div class="r">${n.drafted?ic('sparkles','s'):''}<span>${n.drafted?'Drafted from Hotel Skov gig, LT-0043':'Start from Hotel Skov gig, Fri 24 Oct'}</span>${n.drafted?'':`<span class="grow"></span><button class="btn ghost s" data-act="sodraft">${ic('sparkles','s')}Draft it for me</button>`}</div>
+ <div class="bk-describe"><div class="r">${n.drafted?ic('ai','s'):''}<span>${n.drafted?'Drafted from Hotel Skov gig, LT-0043':'Start from Hotel Skov gig, Fri 24 Oct'}</span>${n.drafted?'':`<span class="grow"></span><button class="btn ghost s" data-act="sodraft">${ic('ai','s')}Draft it for me</button>`}</div>
   <div class="m">${ic(n.drafted?'check':'info','s')}<span>${n.drafted?'Time, venue and hashtags from the booking. Edit freely; nothing posts until you press Publish.':'The assistant drafts from the booking. You check it before anything goes out.'}</span></div></div>
  <div class="field"><label>Post to</label><div class="bk-people">${SOCIAL.map(k=>S.so.acc[k]?`<button class="bk-cb" role="checkbox" aria-checked="${!!n.nets[k]}" data-act="sonpnet" data-n="${k}"><span class="box ${n.nets[k]?'on':''}">${n.nets[k]?ic('check'):''}</span>${NET[k].n}</button>`:`<span class="so-off">${NET[k].n}, <button class="link" data-act="soconnect" data-n="${k}" data-np="1">connect</button></span>`).join('')}</div>${sel.length?'':'<span class="help err">Pick at least one account</span>'}</div>
  <div class="field"><label for="sonptext">Caption</label><textarea class="input" id="sonptext" rows="6" placeholder="What do you want to say?">${esc(n.text)}</textarea><span class="help" id="sonpcount">${countTxt(n.text)}</span></div>
  <div class="field"><label>Photo or video</label><div class="so-picks">${['hotel-skov','stagedive','band-collage','rehearsal'].map(im=>`<button class="${n.img===im?'on':''}" data-act="sonpimg" data-img="${im}" aria-pressed="${n.img===im}" aria-label="Use this photo"><img src="${IMG(im)}" alt=""></button>`).join('')}<label class="so-up" aria-label="Upload a photo or video">${ic('upload')}<input type="file" accept="image/*,video/*" hidden data-soupload></label></div><span class="help">From the Hotel Skov booking and your photos</span></div>
  <div class="field"><label>When</label><div class="so-seg" role="radiogroup">${[['schedule','Schedule'],['now','Publish now'],['draft','Keep as draft']].map(([k,l])=>`<button role="radio" aria-checked="${n.mode===k}" class="${n.mode===k?'on':''}" data-act="sonpmode" data-k="${k}">${l}</button>`).join('')}</div></div>
  ${n.mode==='schedule'?`<div class="so-when"><div class="field so-w240"><label for="sonpdate">Date</label><span class="bk-lead">${ic('calendar')}<input class="input" id="sonpdate" value="${esc(n.date)}"></span></div><div class="field so-w160"><label for="sonptime">Time</label><input class="input mono" id="sonptime" value="${esc(n.time)}" inputmode="numeric"></div></div><span class="help so-best">${ic('clock','s')}Your followers are most active Fridays around 18:00</span>`:''}
- <div class="bk-what">${ic('sparkles','s')}<span>${n.mode==='now'?'Publishing asks once more and shows exactly what goes out.':n.mode==='draft'?'Drafts never post. Find it under Drafts.':'Scheduled posts go out at the time you set. You can change or stop them until then.'}</span></div></div>`,
+ <div class="bk-what">${ic('ai','s')}<span>${n.mode==='now'?'Publishing asks once more and shows exactly what goes out.':n.mode==='draft'?'Drafts never post. Find it under Drafts.':'Scheduled posts go out at the time you set. You can change or stop them until then.'}</span></div></div>`,
  foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button>${n.mode==='draft'?'':`<button class="btn secondary" data-act="sonpsave" data-k="draft">Save draft</button>`}<button class="btn accent" data-act="sonpsave" data-k="${n.mode}" ${sel.length?'':'disabled'}>${label}</button>`};};
 
 /* add keyword */
