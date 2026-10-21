@@ -396,8 +396,8 @@ button.acc-si:hover{background:var(--hover)}
 @media (max-width:600px){.aud-kpis{grid-template-columns:minmax(0,1fr)}.aud-acts{flex-wrap:wrap;flex:1 1 100%}}
 
 /* Onboarding layout (Vit 21 Oct: smaller photo, wider form side with more air on the sides):
-   form side takes the larger share with a centred 480 px column; photo panel max 560 wide, inset 24 with radius 16 */
-.acc-ob{grid-template-columns:minmax(0,1fr) minmax(0,min(40vw,560px));padding:24px 24px 24px 0}
+   form side takes the larger share with a centred 480 px column; photo panel max 672 wide (20 % wider, Vit 21 Oct), inset 24 with radius 16 */
+.acc-ob{grid-template-columns:minmax(0,1fr) minmax(0,min(48vw,672px));padding:24px 24px 24px 0}
 .acc-ob .l,.acc-ob.snd .l{padding:48px clamp(48px,8vw,128px);align-items:center}
 .acc-ob .l>*{width:100%;max-width:480px}
 .acc-obform{width:480px}
