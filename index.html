@@ -3,7 +3,7 @@
 <title>LAAS Prototype</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="tokens.css">
 <style>
 /* Layout: app shell from the LAAS Figma (top bar, sidebar, main with sticky assistant bar). Dark first; Light and genre themes as token overrides. */
@@ -153,8 +153,10 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .d-choice small{margin-top:0!important}.d-choice b{line-height:22px}
 @media (max-width:640px){.choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-auto-flow:row}}
 /* edge alignment: text links at the start or end of a row sit flush on the content edge */
-.sec-h>.btn.ghost:last-child,.ph>.btn.ghost:last-child,[class$="-foot"]>.btn.ghost:last-child,[class*="-foot "]>.btn.ghost:last-child,.cv-link,
-.btn.ghost[class*="-back"],.btn.ghost.flush{padding-inline:0!important;background:none!important}
+/* end of a row: Figma ghost S padding 8 0 8 12 (right edge flush, left padding kept); back links: left edge flush (Vit) */
+.sec-h>.btn.ghost:last-child,.ph>.btn.ghost:last-child,[class$="-foot"]>.btn.ghost:last-child,[class*="-foot "]>.btn.ghost:last-child,.cv-link{padding-right:0!important;background:none!important}
+.btn.ghost[class*="-back"]{padding-left:0!important;background:none!important}
+.btn.ghost.flush{padding-inline:0!important;background:none!important}
 .sec-h>.btn.ghost:last-child:hover,.ph>.btn.ghost:last-child:hover,[class$="-foot"]>.btn.ghost:last-child:hover,.cv-link:hover,.btn.ghost[class*="-back"]:hover{text-decoration:underline;text-underline-offset:3px}
 /* banners: text on the left (lines capped at 65ch), actions pushed to the banner's right edge */
 :is([class$="banner"],[class*="banner "])>.tx+:is(.btn,button,a){margin-left:auto}
@@ -420,7 +422,8 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 /* ---------- shell ---------- */
 function sidebar(){
  const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social',booking:'bookings',gigday:'bookings'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
- const area=LAAS.areaOf(v);
+ /* outside any group (dashboard, assistant, settings) Gigs shows open, as on every Figma screen */
+ const area=LAAS.areaOf(v)||'gigs';
  const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
   ${(()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'};return `<button class="band" data-act="bandmenu"><span class="sq">${b.logo?`<img src="${b.logo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:esc(b.ini||'LT')}</span><div><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></div>${ic('down','s')}</button>`})()}

@@ -62,7 +62,7 @@ function header(){
  <button class="btn secondary" data-act="export">Export</button><button class="btn accent" data-act="newbooking">${ic('plus')}New booking</button></div>`;
 }
 function tabs(){
- return `<div class="bk-tabs" role="tablist">${[['up','Upcoming'],['need','Needs you'],['draft','Drafts'],['past','Past']].map(([k,l])=>`<button role="tab" aria-selected="${S.bookTab===k}" class="${S.bookTab===k?'on':''}" data-tab="${k}"><span class="l">${l}</span><span class="c">${COUNTS[k]}</span></button>`).join('')}</div>`;
+ return `<div class="bk-tabs" role="tablist">${[['up','Upcoming'],['need','Needs you'],['draft','Drafts'],['past','Past']].map(([k,l])=>`<button role="tab" aria-selected="${S.bookTab===k}" class="${S.bookTab===k?'on':''}" data-tab="${k}"><span class="in"><span class="l">${l}</span><span class="c">${COUNTS[k]}</span></span></button>`).join('')}</div>`;
 }
 function filters(){
  const chip=k=>{const v=F(k);return `<button class="bk-chip ${v.length?'on':''}" data-act="bkfilter" data-key="${k}" aria-haspopup="dialog">${FILTERS[k].label}: ${v.length?esc(v.join(', ')):'all'}</button>`;};
@@ -152,7 +152,7 @@ function venueField(){
  const list=NBV.filter(x=>!q||(x.name+' '+x.city).toLowerCase().includes(q));
  return `<div class="field bk-vf"><label for="nbvenue">Venue</label><span class="bk-lead ${v?'':'err'}">${ic('search')}<input class="input" id="nbvenue" placeholder="Search venues" value="${esc(v?v.name+', '+v.city:S.nb.vq)}" autocomplete="off" aria-expanded="${S.nb.pick}"></span>
  ${S.nb.pick?`<div class="bk-vlist" role="listbox">${list.length?list.map(x=>`<button role="option" data-act="nbpick" data-v="${x.id}"><img src="${IMG(x.img)}" alt=""><span><b>${esc(x.name)}</b><small>${esc(x.city)}, ${esc(x.kind)}, capacity ${x.cap}</small></span></button>`).join(''):`<div class="none">No venue called “${esc(S.nb.vq)}”</div>`}<button data-act="nbaddvenue" class="add">${ic('plus','s')}Add ${esc(S.nb.vq?cap(S.nb.vq):'Hotel Skov')} as a new venue</button></div>`:''}
- <span class="help ${v?'':'err'}">${v?`Matched, ${esc(v.kind)}, capacity ${v.cap}`:'No venue, pick one or add Hotel Skov'}</span></div>`;
+ <span class="help ${v?'':'err'}">${v?`Matched, ${esc(v.kind)}, capacity ${v.cap}`:'No venue — pick one or add Hotel Skov'}</span></div>`;
 }
 function gigCard(){
  const v=S.nb.venue;const title=esc(S.nb.title||'Saturday hotel gig');

@@ -29,17 +29,20 @@ const more=act=>`<button class="btn secondary icon m-more" data-act="${act}" ari
 const head=(title,sub,actions)=>`<div class="m-ph"><div class="m-tb"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
 const kpi=(label,value,delta,tone='',stroke='')=>`<div class="m-kpi ${stroke}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span></div>`;
 const kpis=list=>`<div class="m-kpis">${list.join('')}</div>`;
-const banner=(title,body,action)=>`<div class="m-banner">${ic('alert','s')}<div class="tx"><span>${title}</span><small>${body}</small></div>${action}</div>`;
+const banner=(title,body,action)=>`<div class="banner attention m-banner">${ic('alert','s')}<div class="tx"><span>${title}</span><small>${body}</small></div>${action}</div>`;
 const tag=(cls,label)=>cls?`<span class="tag ${cls}">${label}</span>`:'';
 const secHead=(title,action='')=>`<div class="m-sh"><h2 class="t-title">${title}</h2>${action}</div>`;
 const ghostBtn=(label,attrs,icon)=>`<button class="btn ghost s m-gb" ${attrs}>${icon?ic(icon,'s'):''}${label}</button>`;
 const thumb=v=>v?`<img class="m-th" src="${IMG(V(v).img)}" alt="">`:`<span class="m-th m-thp">${ic('pin','s')}</span>`;
-const line=({img,label,note,tg,amt,attrs='',cls=''})=>`<${attrs?'button':'div'} class="m-line ${cls}" ${attrs}>${img!==undefined?thumb(img):''}<span class="m-tx"><span>${label}</span>${note?`<small>${note}</small>`:''}</span>${tg!==undefined?`<span class="m-end">${tg}</span>`:''}<span class="m-amt mono">${amt}</span></${attrs?'button':'div'}>`;
+const line=({img,label,note,tg,amt,attrs='',cls=''})=>`<${attrs?'button':'div'} class="m-line ${cls}" ${attrs}>${img!==undefined?thumb(img):''}<span class="m-tx">${note?`<span>${label}</span><small>${note}</small>`:label}</span>${tg!==undefined?`<span class="m-end">${tg}</span>`:''}<span class="m-amt mono">${amt}</span></${attrs?'button':'div'}>`;
 const kvRow=(k,v)=>`<div class="m-kvr"><span>${k}</span><span>${v}</span></div>`;
 const ev=(icon,well,t,s)=>`<div class="m-ev"><span class="m-well ${well}">${ic(icon,'s')}</span><span class="m-tx"><span>${t}</span><small>${s}</small></span></div>`;
 const foot=t=>`<p class="m-foot">${t}</p>`;
+/* Figma "Tabs": tab row + 1 px rule; each Tab is inner (label, count) over a 2 px indicator */
+const tabsRow=items=>`<div class="m-tabsw"><div class="m-tabs" role="tablist">${items.map(([on,attrs,l,c,cl=''])=>`<button role="tab" aria-selected="${on}" class="${on?'on':''}" ${attrs}><span class="in"><span>${l}</span>${c!=null?`<span class="c"${cl}>${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div><i class="m-tabrule"></i></div>`;
+L.mTabsRow=tabsRow;
 const tabsBar=t=>{const counts={owed:3,invoices:12,expenses:t==='expenses'?M.exp.length:null,payouts:S.booking.settled?null:1};
- return `<div class="m-tabs" role="tablist">${[['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>`<button role="tab" aria-selected="${t===k}" class="${t===k?'on':''}" data-mtab="${k}"><span>${l}</span>${counts[k]!=null?`<span class="c">${counts[k]}</span>`:''}</button>`).join('')}</div>`;};
+ return tabsRow([['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>[t===k,`data-mtab="${k}"`,l,counts[k]]));};
 
 /* ---------- Owed to you ---------- */
 const late=()=>!S.booking.depositPaid;
@@ -72,7 +75,7 @@ function owed(){
   </div>
   <aside class="m-right">
    <section class="m-sec">${secHead('Needs you')}
-    <div class="m-body m-g12">${tasks.length?tasks.map(([k,t,s,b,a])=>`<div class="m-task"><div class="m-task-h">${ic('ai','s')}<span>${t}</span></div><p>${s}</p><div>${btn('secondary s',b,`data-act="${a}"`,'check')}</div></div>`).join(''):`<p class="m-foot m-nopad">Nothing needs you. New items show up here when money moves.</p>`}</div></section>
+    <div class="m-body m-g12">${tasks.length?tasks.map(([k,t,s,b,a])=>`<div class="m-task"><div class="m-task-h">${ic('ai','s')}<span>${t}</span></div><p>${s}</p><div class="m-tacts">${btn('secondary s',b,`data-act="${a}"`,'check')}</div></div>`).join(''):`<p class="m-foot m-nopad">Nothing needs you. New items show up here when money moves.</p>`}</div></section>
    <section class="m-sec">${secHead('Payouts',ghostBtn('Settle a gig','data-go="settle"','plus'))}
     <div class="m-body">
      ${line({label:'Odense Live',tg:tag('attention','Attention'),amt:'5.360',attrs:'data-go="settle"'})}
@@ -101,8 +104,8 @@ function expenses(){
  return `${miss.length?banner(`One expense has no receipt, ${miss[0][1].split(',')[0].toLowerCase()}, ${miss[0][5]} DKK, ${(miss[0][2].match(/paid by \w+/)||['paid by the band'])[0]} ${miss[0][0]}`,'The books accept it, but a bookkeeper will ask. Snap it or mark "no receipt" with a reason.',M.askedMette?btn('secondary s','Asked','disabled'):btn('secondary s',`Ask ${(miss[0][2].match(/paid by (\w+)/)||[0,'the band'])[1]}`,'data-act="mnyaskmette"')):''}
  ${kpis([kpi('This month',L.kr(2140+M.added)+' DKK',`${n} expenses`,'muted'),kpi('Paid privately','1.640 DKK','Jonas 640, Mette 1.000, owed back','att'),
   kpi('Receipts',`${n-miss.length} of ${n}`,miss.length?`${miss.length} missing`:'all in',miss.length?'att':'ok'),kpi('Suggested accounts',`${n} of ${n}`,'all accepted by you','ok')])}
- <div class="m-exp">${M.exp.map((e,i)=>`<div class="m-erow"><span class="m-ed">${e[0]}</span><span class="m-tx"><span>${esc(e[1])}</span><small>${esc(e[2])}</small></span><button class="m-chip" data-act="mnyacct" data-i="${i}">${esc(e[3])}</button><span class="m-eend">${e[4]?tag('confirmed','Receipt'):`<button class="tag attention" data-act="mnyrcpt" data-i="${i}" title="Mark the receipt as in">No receipt</button>`}</span><span class="m-eamt mono">${e[5]}</span></div>`).join('')}</div>
- ${foot('The account chip is the assistant\'s suggestion in plain words (Travel, Rehearsal, Merch…), accepted with one tap; the chart of accounts sits behind it in Books. "Paid by" a member creates what the band owes them.')}`;
+ <div class="m-exp">${M.exp.map((e,i)=>`<div class="m-erow"><span class="m-ed">${e[0]}</span><span class="m-tx"><span>${esc(e[1])}</span><small>${esc(e[2])}</small></span><button class="chip m-chip" data-act="mnyacct" data-i="${i}">${esc(e[3])}</button><span class="m-eend">${e[4]?tag('confirmed','Receipt'):`<button class="tag attention" data-act="mnyrcpt" data-i="${i}" title="Mark the receipt as in">No receipt</button>`}</span><span class="m-eamt mono">${e[5]}</span></div>`).join('')}</div>
+ <p class="m-foot m-nopad m-row">${'The account chip is the assistant\'s suggestion in plain words (Travel, Rehearsal, Merch…), accepted with one tap; the chart of accounts sits behind it in Books. "Paid by" a member creates what the band owes them.'}</p>`;
 }
 
 /* ---------- Payouts tab ---------- */
@@ -118,12 +121,12 @@ function chartTable(){const ytd=CH.slice(2);const fit=(i,total)=>{const s=ytd.re
  return `<div class="table-wrap"><table class="m-dt"><thead><tr><th>Month</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Result</th></tr></thead><tbody>${CH.map((r,i)=>`<tr><td>${r[0]} ${i<2?2025:2026}</td><td class="num mono">${L.kr(inc[i])}</td><td class="num mono">${L.kr(out[i])}</td><td class="num mono">${L.kr(inc[i]-out[i])}</td></tr>`).join('')}</tbody></table></div>`;}
 const chart=()=>`<section class="m-chart"><div class="m-chh"><h3 class="t-heading">Income and expenses, last 12 months</h3><span class="m-leg"><i class="inc"></i>Income<i class="exp"></i>Expenses</span>${ghostBtn(M.showTable?'Show chart':'Show data table','data-act="mnytable"')}</div>
  ${M.showTable?chartTable():`<div class="m-bars">${CH.map(([m,a,b])=>`<div><span class="m-bp"><i class="inc" style="height:${a}px"></i><i class="exp" style="height:${b}px"></i></span><small>${m}</small></div>`).join('')}</div>`}</section>`;
-const breakdown=(title,total,rows)=>`<div class="m-bd"><div class="m-bdh"><h3 class="t-heading">${title}</h3><span>${total}</span></div><div class="m-bdl">${rows.map(([n,s,w,a])=>`<div class="m-bdr"><span class="m-tx"><span>${n}</span><small>${s}</small></span><span class="m-track"><i style="width:${w}px"></i></span><span class="mono">${a}</span></div>`).join('')}</div></div>`;
-const reportsRow=()=>`<div class="m-reports"><span>Reports</span>${['Profit and loss','Balance sheet','Trial balance','VAT period'].map(r=>`<button class="m-chip" data-act="mnyreport" data-r="${r}">${r}</button>`).join('')}</div>`;
+const breakdown=(title,total,rows,cls='')=>`<div class="m-bd ${cls}"><div class="m-bdh"><h3 class="t-heading">${title}</h3><span>${total}</span></div><div class="m-bdl">${rows.map(([n,s,w,a])=>`<div class="m-bdr"><span class="m-tx"><span>${n}</span><small>${s}</small></span><span class="m-track"><i style="width:${w}px"></i></span><span class="mono">${a}</span></div>`).join('')}</div></div>`;
+const reportsRow=()=>`<div class="m-reports"><span>Reports</span>${['Profit and loss','Balance sheet','Trial balance','VAT period'].map(r=>`<button class="chip m-chip" data-act="mnyreport" data-r="${r}">${r}</button>`).join('')}</div>`;
 const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% vs 2025 to date','ok','rule'),kpi('Expenses','121.950','−4% vs 2025 to date','muted','rule'),kpi('Result','64.450','before tax','muted','rule'),kpi('Cash at bank','112.300','13.500 invoiced, not paid','att','att')])}
  ${chart()}
  <div class="m-bdcols">${breakdown('Where money came from','186.400 DKK',[['Live fees','31 gigs',91,'142.000'],['Streaming payouts','Spotify, YouTube',12,'18.900'],['Merch','shows and web',10,'14.300'],['Grants','KODA, 1 application',7,'11.200']])}
- ${breakdown('Where it went','121.950 DKK',[['Travel and van','fuel, hire, ferries',41,'41.200'],['Rehearsal space','Studio B, monthly',29,'28.800'],['Gear and repairs','9 purchases',22,'22.450'],['Recording','Late Shift EP',18,'18.000'],['Fees and VAT','distribution, accountant',11,'11.500']])}</div>
+ ${breakdown('Where it went','121.950 DKK',[['Travel and van','fuel, hire, ferries',41,'41.200'],['Rehearsal space','Studio B, monthly',29,'28.800'],['Gear and repairs','9 purchases',22,'22.450'],['Recording','Late Shift EP',18,'18.000'],['Fees and VAT','distribution, accountant',11,'11.500']],'out')}</div>
  ${reportsRow()}</div>`;
 
 /* ---------- views ---------- */
@@ -134,7 +137,7 @@ L.VIEWS.money=()=>{const t=S.mtab||'owed';
  const ph=t==='expenses'?'Ask — add 320 DKK petrol paid by Sofie yesterday, what did merch cost this year, who is owed money':'Ask about money — who owes us, what did we net in October, draft the balance invoice for Club Mono';
  return `<div class="page m-page">${h}${tabsBar(t)}${body()}</div>${L.abar('',ph)}`;};
 
-L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, DKK, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
+L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, DKK, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="chip m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
 
 /* invoice detail */
 function invoiceData(id){
@@ -155,14 +158,14 @@ L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Mat
   ['msg',M.reminded?'acc':'','Påmindelse by hand, free, any time',M.reminded?'21 Oct, sent by you':'proposed, waiting for you'],['money','','Rykker 1, 100 DKK fee, inkasso not mentioned','possible from 22 Oct, 10 days after due'],['money','','Rykker 2, 100 DKK, 10 days later','possible from 1 Nov'],['money','','Rykker 3, 100 DKK, with inkasso warning','possible from 11 Nov, last one allowed']];
  const hist=d.rich?[...(M.reminded?[['msg','acc','Påmindelse sent by you','21 Oct, just now']]:[]),...(d.paid?[['check','','Payment of 1.470 DKK approved','16 Oct, matched by the bank']]:[]),['filetext','','Opened by Mette Kjær','15 Oct, 10:02'],['ai','acc','Reminder 3 days after due sent','15 Oct, 09:00'],['filetext','','Opened by Mette Kjær','13 Oct, 08:41'],['ai','acc','Reminder on the due date sent','12 Oct, 09:00'],['money','','Sent with the offer, number 2026-031 locked','7 Oct, 11:02, by you']]
   :[['money','',`Created from the booking, number ${d.r[0]} reserved`,'by you']];
- return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail">
- <button class="btn ghost s m-back" data-go="money" data-mt="invoices">${ic('left','s')}Invoices</button>
+ return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail m-inv">
+ <button class="btn ghost s m-up" data-go="money" data-mt="invoices">${ic('left','s')}Invoices</button>
  <div class="m-ph"><div class="m-tb"><div class="m-tr"><i class="m-dot"></i><h1 class="t-display">${d.title}</h1>${d.tg}</div><p>${d.sub}</p></div><div class="m-acts">${btn('secondary','PDF','data-act="mnypdf" data-id="'+d.r[0]+'"','filetext')}${primary}${more('mnyinvmore')}</div></div>
  <div class="m-strip">${d.steps.map(([t,s,ok])=>`<div class="m-step ${ok==='att'?'att':ok?'ok':'todo'}"><span><i></i>${t}</span><small>${s}</small></div>`).join('')}</div>
  <div class="m-cols m-cols-d"><div class="m-left">
   <section class="m-sec">${secHead('Lines')}<div class="m-body m-g12">
-   ${d.lines.map(([a,b,c])=>line({label:a,note:b,amt:c,cls:'m-flush'})).join('')}<hr class="m-hr">
-   ${line({label:'Excl. moms',amt:L.kr(d.excl),cls:'m-flush'})}${line({label:'Moms 25 %',amt:L.kr(moms),cls:'m-flush'})}${line({label:'To pay, incl. moms',amt:L.kr(d.excl+moms),cls:'m-flush'})}
+   ${d.lines.map(([a,b,c])=>line({label:a,note:b,amt:c,cls:'m-fl'})).join('')}<hr class="m-hr">
+   ${line({label:'Excl. moms',amt:L.kr(d.excl),cls:'m-fl'})}${line({label:'Moms 25 %',amt:L.kr(moms),cls:'m-fl'})}${line({label:'To pay, incl. moms',amt:L.kr(d.excl+moms),cls:'m-fl'})}
    <p class="m-foot m-nopad">Totals always show excl., moms, incl. The VAT code is per line and never guessed: "25 %" or "Momsfri" is your call when you approve.</p></div></section>
   ${d.rich?`<section class="m-sec">${secHead('Reminder ladder',ghostBtn('Settings','data-go="settings-money"','settings'))}<div class="m-body m-g12">${ladder.map(([i,w,t,s])=>ev(i,w,t,s)).join('')}
    ${foot('Danish rules built in: at most 100 DKK per letter, at most 3 fee letters, at least 10 days apart, none before the due date. Steps that are not allowed yet are simply not offered.')}</div></section>`:''}
@@ -181,21 +184,21 @@ const SPLIT={Equal:[[1453,'equal share'],[1453,'equal share'],[2094,'equal share
 L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mode];const mx=Math.max(...sp.map(x=>x[0]));const mem=[['MR','Mette Ravn'],['SL','Sofie Lund'],['JH','Jonas Holm']];
  const checks=[['All invoices paid',1],['All receipts in, 1 of 1',1],['Split adds up to 100 %',1],['Everyone has seen the split, 2 of 3',M.seen?1:0,'mnyseen']];
  return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail">
- <button class="btn ghost s m-back" data-go="money" data-mt="payouts">${ic('left','s')}Payouts</button>
+ <button class="btn ghost s m-up" data-go="money" data-mt="payouts">${ic('left','s')}Payouts</button>
  ${head('Settle the Saturday hotel gig','Sat 25 Oct, Hotel Royal, all money in 27 Oct, Settle locks this gig\'s money',btn('secondary','Export PDF','data-act="mnysettlepdf"')+(S.booking.settled?btn('accent','Settled','disabled','check'):btn('accent','Settle 4.360 DKK','data-act="dosettle"','check'))+more('mnysettlemore'))}
  ${kpis([kpi('In','5.000 DKK','fee, deposit 16 Oct, balance 27 Oct','ok'),kpi('Out','640 DKK','travel, 1 receipt, paid by Jonas','muted'),kpi('Commission','0 DKK','no agent on this gig','muted'),kpi('Net to split','4.360 DKK',`3 members, ${mode==='Equal'?'equal after travel':mode.toLowerCase()+' after travel'}`,'muted')])}
  <div class="m-cols m-cols-d"><div class="m-left">
   <section class="m-sec">${secHead('Settlement')}<div class="m-body">
-   ${line({label:'Fee agreed in the offer',note:'both invoices paid',tg:tag('paid','Paid'),amt:'5.000',cls:'m-flush'})}
-   ${line({label:'Travel, 2 cars from Odense',note:'paid by Jonas, receipt',tg:tag('confirmed','Confirmed'),amt:'-640',cls:'m-flush'})}
-   ${line({label:'Hotel, 2 rooms',note:'venue paid',tg:'',amt:'0',cls:'m-flush'})}
-   ${line({label:'Commission',note:'no agent',tg:'',amt:'0',cls:'m-flush'})}<hr class="m-hr">
-   ${line({label:'Net to split',tg:'',amt:'4.360',cls:'m-flush'})}
+   ${line({label:'Fee agreed in the offer',note:'both invoices paid',tg:tag('paid','Paid'),amt:'5.000',cls:'m-fl'})}
+   ${line({label:'Travel, 2 cars from Odense',note:'paid by Jonas, receipt',tg:tag('confirmed','Confirmed'),amt:'-640',cls:'m-fl'})}
+   ${line({label:'Hotel, 2 rooms',note:'venue paid',tg:'',amt:'0',cls:'m-fl'})}
+   ${line({label:'Commission',note:'no agent',tg:'',amt:'0',cls:'m-fl'})}<hr class="m-hr">
+   ${line({label:'Net to split',tg:'',amt:'4.360',cls:'m-fl'})}
    <p class="m-foot m-nopad">Gross → costs → commission → net, in one stack, like a promoter's settlement. Each line links to its invoice or receipt.</p></div></section>
   <section class="m-sec">${secHead('Split',ghostBtn('Change mode','data-act="mnymode"','pencil'))}<div class="m-body m-g8">
-   <div class="m-modes">${Object.keys(SPLIT).map(k=>`<button class="m-chip ${mode===k?'on':''}" data-split="${k}">${k}</button>`).join('')}</div>
+   <div class="m-modes">${Object.keys(SPLIT).map(k=>`<button class="chip m-chip ${mode===k?'on':''}" data-split="${k}">${k}</button>`).join('')}</div>
    <p class="m-foot m-nopad">Equal after travel is refunded first. "Adjustment": one person gets a fixed extra, the rest split equally. Shares: "Jonas 2, others 1".</p>
-   ${mem.map(([i,n],k)=>`<div class="m-mem"><span class="m-av">${i}</span><span class="m-tx"><span>${n}</span><small>${sp[k][1]}</small></span><span class="m-sbar"><i style="width:${Math.round(sp[k][0]/mx*97)}%"></i></span><span class="mono m-amt">${L.kr(sp[k][0])} DKK</span></div>`).join('')}
+   ${mem.map(([i,n],k)=>`<div class="m-mem"><span class="m-av">${i}</span><span class="m-tx"><span>${n}</span><small>${sp[k][1]}</small></span><span class="m-sbar"><i style="width:${(sp[k][0]/mx*300/308*100).toFixed(2)}%"></i></span><span class="mono m-amt">${L.kr(sp[k][0])} DKK</span></div>`).join('')}
    <p class="m-foot m-nopad">Totals 5.000 DKK = 4.360 net + 640 travel. Green bars grow with what each person is owed; red would grow left for someone who owes the kitty.</p></div></section>
  </div>
  <aside class="m-right">
@@ -206,29 +209,30 @@ L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mod
  </aside></div></div>${L.abar('Settle, Hotel gig','Ask — give Jonas 300 more for driving, what did each of us net this year, remind Mads to move the money')}`;};
 
 /* ---------- drawers ---------- */
-L.OVERLAYS.mnydrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
+L.OVERLAYS.mnydrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s m-close" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
 L.OVERLAYS.mnymenu=o=>`<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop m-menu" style="top:${o.y}px;right:${o.r}px">${o.items.map(([l,a,x])=>`<button class="it" data-act="${a}" ${x||''}>${l}</button>`).join('')}</div>`;
 L.OVERLAYS.mnyrem=()=>`<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true">${L.sendPreview('reminder').replace(/data-act="sendreminder"/g,'data-act="mnysendrem"')}</div>`;
 
 const field=(id,label,ctl,help,cls='')=>`<div class="field ${cls}"><label for="${id}">${label}</label>${ctl}${help?`<span class="help" ${help.id?`id="${help.id}"`:''}>${help.t||help}</span>`:''}</div>`;
-const invLine=(i,desc,amt,m)=>`<div class="m-iline" data-line="${i}">${field('mi-d'+i,'Description',`<input class="input" id="mi-d${i}" value="${esc(desc)}">`)}
- <div class="m-irow">${field('mi-a'+i,'Excl. moms',`<input class="input mono m-amtin" id="mi-a${i}" inputmode="decimal" value="${amt}">`,'','m-w160')}
- ${field('mi-m'+i,'Moms',`<select class="input m-moms ${m===''?'m-err':''}" id="mi-m${i}"><option value="" ${m===''?'selected':''}>—</option><option value="25" ${m==='25'?'selected':''}>25 %</option><option value="0" ${m==='0'?'selected':''}>Momsfri</option></select>`,m===''?{t:'Pick 25 % or Momsfri',id:'mi-e'+i}:'','m-w160')}</div></div>`;
+/* Figma: one row per line, Description fills (2 lines, 60 px), Excl. moms and Moms 110 px each, gap 8 */
+const invLine=(i,desc,amt,m)=>`<div class="m-iline" data-line="${i}">${field('mi-d'+i,'Description',`<span class="m-ifld"><textarea class="m-fin" id="mi-d${i}" rows="2">${esc(desc)}</textarea></span>`,'','m-fd')}
+ ${field('mi-a'+i,'Excl. moms',`<input class="input m-amtin" id="mi-a${i}" inputmode="decimal" value="${amt}">`,'','m-w110')}
+ ${field('mi-m'+i,'Moms',`<select class="input m-moms ${m===''?'m-err':''}" id="mi-m${i}"><option value="" ${m===''?'selected':''}>—</option><option value="25" ${m==='25'?'selected':''}>25 %</option><option value="0" ${m==='0'?'selected':''}>Momsfri</option></select>`,m===''?{t:'Pick 25 % or Momsfri',id:'mi-e'+i}:'','m-w110')}</div>`;
 const toggle=(k,label)=>`<button class="m-tg" data-act="mnytg" data-k="${k}" role="switch" aria-checked="${!!M.inv[k]}"><span class="m-track2"><i></i></span><span>${label}</span></button>`;
 L.DR.newinvoice=()=>{M.inv={lines:2,m2:'',incl:false,remind:true,interest:false};return {type:'mnydrawer',title:'New balance invoice',sub:'From Saturday hotel gig, 2026-032 is reserved, locked when you approve',
  body:`${field('mi-b','For booking',`<select class="input" id="mi-b"><option>Saturday hotel gig, 25 Oct, Hotel Royal</option><option>Club night, 15 Nov, Club Mono</option><option>Support slot, 28 Nov, Odense Live</option></select>`,'Lines, bill-to and due date come from the booking and your house terms')}
  ${field('mi-to','Bill to',`<select class="input" id="mi-to"><option>Hotel Royal A/S, CVR 12 34 56 78</option><option>Mette Kjær, private</option></select>`,'Sent to faktura@hotelroyal.dk (invoice address), cc Mette')}
- <div class="m-lines" id="mi-lines"><span class="m-ll">Lines</span>${invLine(1,'Balance, fee for 25 Oct, 70 %','2.800','25')}${invLine(2,'Travel, 2 cars from Odense','512','')}</div>
- <div class="m-add">${ghostBtn('Add line','data-act="mnyaddline"','plus')}${ghostBtn('Add from receipts','data-act="mnyaddrcpt"')}</div>
- <div class="m-tot"><div class="m-line m-tl"><span class="m-tx"><span>Excl. moms</span></span><span class="m-amt mono" id="mi-tx">3.312</span></div>
+ <div class="m-lines"><span class="m-ll">Lines</span><div class="m-lines" id="mi-lines">${invLine(1,'Balance, fee for 25 Oct, 70 %','2.800','25')}${invLine(2,'Travel, 2 cars from Odense','512','')}</div>
+ <div class="m-add">${ghostBtn('Add line','data-act="mnyaddline"','plus')}${ghostBtn('Add from receipts','data-act="mnyaddrcpt"')}</div></div>
+ <div class="m-tot"><div class="m-line m-tl"><span class="m-tx">Excl. moms</span><span class="m-amt mono" id="mi-tx">3.312</span></div>
   <div class="m-line m-tl"><span class="m-tx"><span>Moms</span><small id="mi-tn">travel line has no code yet</small></span><span class="m-amt mono" id="mi-tm">700</span></div>
-  <div class="m-line m-tl"><span class="m-tx"><span>To pay, incl. moms</span></span><span class="m-amt mono" id="mi-ti">4.012</span></div>
+  <div class="m-line m-tl"><span class="m-tx">To pay, incl. moms</span><span class="m-amt mono" id="mi-ti">4.012</span></div>
   <button class="m-sw" data-act="mnyincl" id="mi-sw">Prices shown excl. moms, switch</button></div>
- <div class="m-dates">${field('mi-due','Due',`<span class="m-ifld">${ic('calendar','s')}<input class="input" id="mi-due" value="25 Oct 2026, on the gig date"></span>`,'House default, Net 7 for other invoices')}
- ${field('mi-send','Send on',`<span class="m-ifld">${ic('calendar','s')}<input class="input" id="mi-send" value="18 Oct 2026"></span>`,'7 days before due')}</div>
+ <div class="m-dates">${field('mi-due','Due',`<span class="m-ifld">${ic('calendar')}<textarea class="m-fin" id="mi-due" rows="2">25 Oct 2026, on the gig date</textarea></span>`,'House default, Net 7 for other invoices')}
+ ${field('mi-send','Send on',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="mi-send" value="18 Oct 2026"></span>`,'7 days before due')}</div>
  ${toggle('remind','Reminders, 7 days before, on the day, 3 days after, then by hand')}${toggle('interest','Late interest, reference rate + 8 %')}
  <p class="m-foot m-nopad">Approve books the invoice and locks number 2026-032. Send is a separate step, so you can approve now and send on 18 Oct.</p>`,
- foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('secondary','Save draft','data-act="mnydraft"')}${btn('accent','Approve','data-act="mnyinvapprove"','check')}`};};
+ foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('secondary','Save draft','data-act="mnydraft"')}${btn('accent','Approve','data-act="mnyinvapprove"','check').replace("class=\"i s\"","class=\"i\"")}`};};
 function recalc(){const d=document.querySelector('.m-dr');if(!d)return;let ex=0,mo=0,miss=0;
  d.querySelectorAll('.m-iline').forEach(l=>{const a=num(l.querySelector('.m-amtin').value);const m=l.querySelector('.m-moms').value;ex+=a;if(m==='25')mo+=Math.round(a*.25);if(m==='')miss++;});
  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
@@ -340,7 +344,7 @@ const drafts=()=>M.je.filter(e=>e.st==='draft').length;
 const kr0=v=>v?L.kr(v):'';
 
 /* shared: ledger section tabs, header */
-L.ledgerTabs=cur=>{const nd=drafts();return `<div class="m-tabs" role="tablist">${[['ledger','Overview'],['journal','Journal'],['accounts','Chart of accounts'],['ledgerreport','Reports']].map(([k,l])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?'on':''}" data-go="${k}"><span>${l}</span>${k==='journal'&&nd?`<span class="c" aria-label="${nd} drafts">${nd}</span>`:''}</button>`).join('')}</div>`;};
+L.ledgerTabs=cur=>{const nd=drafts();return tabsRow([['ledger','Overview'],['journal','Journal'],['accounts','Chart of accounts'],['ledgerreport','Reports']].map(([k,l])=>[cur===k,`data-go="${k}"`,l,k==='journal'&&nd?nd:null,` aria-label="${nd} drafts"`]));};
 const lhead=(title,sub,actions)=>`<div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
 const search=(id,ph,val,label)=>`<label class="ml-search">${ic('search','s')}<input id="${id}" placeholder="${ph}" value="${esc(val)}" aria-label="${label}" autocomplete="off"></label>`;
 const ledAbar=()=>L.abar('','Ask about the books — post the drafts, what is in 5000 Travel, why is the bank 30 short');
@@ -351,7 +355,7 @@ function jRows(){const q=M.jq.trim().toLowerCase();
 const jSummary=e=>{const d=e.lines.filter(l=>l[2]&&l[0]).map(l=>l[0]),c=e.lines.filter(l=>l[3]&&l[0]).map(l=>l[0]);return `debit ${d.join(', ')||'—'}, credit ${c.join(', ')||'—'}`;};
 L.VIEWS.journal=()=>{const list=jRows();const q=M.jq.trim();const nd=drafts();const total=OLDER+M.je.length;
  const counts={all:total,posted:total-nd,draft:nd};
- const chips=`<div class="ml-tools"><div class="m-modes">${[['all','All'],['posted','Posted'],['draft','Drafts']].map(([k,l])=>`<button class="m-chip ${M.jf===k?'on':''}" data-act="jfilt" data-f="${k}" aria-pressed="${M.jf===k}">${l}<span class="ml-cc">${counts[k]}</span></button>`).join('')}</div><span class="sp"></span>${search('jsearch','Text, reference, account, contact',M.jq,'Search the journal')}</div>`;
+ const chips=`<div class="ml-tools"><div class="m-modes">${[['all','All'],['posted','Posted'],['draft','Drafts']].map(([k,l])=>`<button class="chip m-chip ${M.jf===k?'on':''}" data-act="jfilt" data-f="${k}" aria-pressed="${M.jf===k}">${l}<span class="ml-cc">${counts[k]}</span></button>`).join('')}</div><span class="sp"></span>${search('jsearch','Text, reference, account, contact',M.jq,'Search the journal')}</div>`;
  const rows=list.map((e,i)=>`<div class="ml-tr ml-j" role="row" tabindex="0" data-act="jopen" data-no="${e.no}" style="--i:${i}"><span class="ml-d">${e.date}</span><span class="mono ml-no">${e.no}</span><span class="ml-tt"><b>${L.hl(e.desc,q)}</b><small>${e.cp?L.hl(e.cp,q)+', ':''}${jSummary(e)}${e.src.startsWith('Proposed')?`, <span class="ml-pair">${ic('link','s')}paired with Gear</span>`:''}</small></span><span class="mono ml-m">${L.hl(e.ref,q)}</span><span class="ml-att" ${e.att?`title="${esc(e.att)}"`:''}>${e.att?ic('clip','s'):'<span class="ml-none">none</span>'}</span><span>${e.st==='draft'?tag('draft','Draft'):tag('confirmed','Posted')}</span><span class="n mono">${L.kr(jTotal(e))}</span></div>`).join('');
  const table=`<div class="ml-table" role="table" aria-label="Journal entries"><div class="ml-tr ml-th ml-j" role="row"><span>Date</span><span>No.</span><span>Description</span><span>Reference</span><span>File</span><span>Status</span><span class="n">DKK</span></div>${rows}</div>`;
  const filtered=q||M.jf!=='all';
@@ -386,20 +390,20 @@ const accOpts=v=>`<option value="0" ${!v?'selected':''}>Pick an account</option>
 let jl=0;
 const jLine=l=>{const i=++jl;return `<div class="ml-jl" data-l="${i}"><div class="ml-jl1">${field('jd-a'+i,'Account',`<select class="input ml-acc" id="jd-a${i}">${accOpts(l[0])}</select>`,'','ml-grow')}<button class="btn ghost s icon ml-rm" data-act="jrmline" aria-label="Remove line">${ic('x','s')}</button></div>
  <div class="ml-jl2">${field('jd-t'+i,'Text',`<input class="input" id="jd-t${i}" value="${esc(l[1])}">`,'','ml-grow')}${field('jd-d'+i,'Debit',`<input class="input mono ml-dr" id="jd-d${i}" inputmode="decimal" value="${kr0(l[2])}" placeholder="0">`,'','ml-w120')}${field('jd-c'+i,'Credit',`<input class="input mono ml-cr" id="jd-c${i}" inputmode="decimal" value="${kr0(l[3])}" placeholder="0">`,'','ml-w120')}</div></div>`;};
-const paidSeg=()=>M.jd.tpl==='gear'?`<div class="field"><label>Paid with</label><div class="m-modes">${PAID.map(([n,l])=>`<button class="m-chip ${M.jd.paid===n?'on':''}" data-act="jpaid" data-n="${n}" aria-pressed="${M.jd.paid===n}">${l}</button>`).join('')}</div><span class="help">Debit 1500 Equipment, credit ${M.jd.paid} ${esc(accName(M.jd.paid))}. Adding the item to Gear proposes this entry for you, same date.</span></div>`:'';
+const paidSeg=()=>M.jd.tpl==='gear'?`<div class="field"><label>Paid with</label><div class="m-modes">${PAID.map(([n,l])=>`<button class="chip m-chip ${M.jd.paid===n?'on':''}" data-act="jpaid" data-n="${n}" aria-pressed="${M.jd.paid===n}">${l}</button>`).join('')}</div><span class="help">Debit 1500 Equipment, credit ${M.jd.paid} ${esc(accName(M.jd.paid))}. Adding the item to Gear proposes this entry for you, same date.</span></div>`:'';
 L.DR.jnew=(pre={})=>{M.jd={tpl:pre.tpl||'blank',paid:1000,editNo:pre.editNo||null,att:pre.att||''};const e=pre.entry;
  const lines=e?e.lines:tplLines(M.jd.tpl,M.jd.paid);
  return {type:'mldrawer',cls:'ml-wide',title:e&&pre.editNo?`Edit draft ${e.no}`:'New journal entry',sub:e&&pre.editNo?'Still a draft, nothing is booked until you post':`Gets number ${Math.max(...M.je.map(x=>x.no))+1} when saved, every entry must balance`,
- body:`${pre.editNo?'':`<div class="field"><label>Start from</label><div class="m-modes">${Object.entries(TPL).map(([k,[l]])=>`<button class="m-chip ${M.jd.tpl===k?'on':''}" data-act="jtpl" data-t="${k}" aria-pressed="${M.jd.tpl===k}">${l}</button>`).join('')}</div><span class="help">Paired entries: the usual two sides are filled, you add the amount</span></div>`}
+ body:`${pre.editNo?'':`<div class="field"><label>Start from</label><div class="m-modes">${Object.entries(TPL).map(([k,[l]])=>`<button class="chip m-chip ${M.jd.tpl===k?'on':''}" data-act="jtpl" data-t="${k}" aria-pressed="${M.jd.tpl===k}">${l}</button>`).join('')}</div><span class="help">Paired entries: the usual two sides are filled, you add the amount</span></div>`}
  <div id="jd-paid">${paidSeg()}</div>
- <div class="m-dates">${field('jd-date','Date',`<span class="m-ifld">${ic('calendar','s')}<input class="input" id="jd-date" value="${esc(e?e.date+' 2026':'21 Oct 2026')}"></span>`)}${field('jd-ref','Reference',`<input class="input mono" id="jd-ref" value="${esc(e?e.ref:'')}" placeholder="Receipt or invoice no.">`)}</div>
+ <div class="m-dates">${field('jd-date','Date',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="jd-date" value="${esc(e?e.date+' 2026':'21 Oct 2026')}"></span>`)}${field('jd-ref','Reference',`<input class="input mono" id="jd-ref" value="${esc(e?e.ref:'')}" placeholder="Receipt or invoice no.">`)}</div>
  ${field('jd-desc','Description',`<input class="input" id="jd-desc" value="${esc(e?e.desc:pre.desc||TPL[M.jd.tpl][1])}" placeholder="What happened, in plain words">`)}
  ${field('jd-cp','Counterparty',`<select class="input m-w320" id="jd-cp">${CP.map(c=>`<option ${e&&e.cp===c?'selected':''}>${c}</option>`).join('')}</select>`,'A contact or venue, optional')}
  <label class="drop ml-drop">${ic('clip','s')}<span class="ml-tt"><b id="jd-att">${M.jd.att?esc(M.jd.att):'Attach a receipt or invoice'}</b><small>Image or PDF, kept with the entry for the bookkeeper</small></span><input type="file" accept="image/*,.pdf" hidden data-jfile></label>
  <div class="m-lines"><span class="m-ll">Lines</span><div id="jd-lines" class="ml-jls">${lines.map(jLine).join('')}</div></div>
  <div class="m-add">${ghostBtn('Add line','data-act="jaddline"','plus')}</div>
- <div class="m-tot"><div class="m-line m-tl"><span class="m-tx"><span>Debit</span></span><span class="m-amt mono" id="jd-td">0</span></div>
-  <div class="m-line m-tl"><span class="m-tx"><span>Credit</span></span><span class="m-amt mono" id="jd-tc">0</span></div>
+ <div class="m-tot"><div class="m-line m-tl"><span class="m-tx">Debit</span><span class="m-amt mono" id="jd-td">0</span></div>
+  <div class="m-line m-tl"><span class="m-tx">Credit</span><span class="m-amt mono" id="jd-tc">0</span></div>
   <p class="ml-bal" id="jd-st" aria-live="polite"></p></div>
  <p class="m-foot m-nopad">Post books the entry and locks it. Save draft keeps it out of the reports, it may be off while you work on it. If you do not know the amount or how it was paid, leave it as a draft rather than guessing.</p>`,
  foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('secondary','Save draft','data-act="jsave"')}${btn('accent','Post','data-act="jpostnew"','check')}`};};
@@ -477,9 +481,9 @@ L.VIEWS.ledgerreport=()=>{const p=PER[M.per]?M.per:'ytd',r=REP[M.rep]?M.rep:'pl'
  const note={pl:`Income and expenses for ${PER[p].label.toLowerCase().replace(/^this year, |^last year, /,'')}, compared with ${PER[p].cmp}. Open an account to see its entries.`,
   bs:`What the band owns and owes at the end of the period. The result so far is part of equity until the year is closed.`,
   tb:`Every account with a balance at the end of the period. If debit and credit ever differ, an entry is wrong; posting blocks that.`}[r];
- return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,`<button class="m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button>`+btn('accent','Export','data-act="lexport" data-what="report"','download'))}
+ return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,`<button class="chip m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button>`+btn('accent','Export','data-act="lexport" data-what="report"','download'))}
  ${L.ledgerTabs('ledgerreport')}
- <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
+ <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="chip m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
  <div class="table-wrap ml-repw">${{pl:repPL,bs:repBS,tb:repTB}[r](p)}</div>
  ${foot(note)}</div></div>${ledAbar()}`;};
 

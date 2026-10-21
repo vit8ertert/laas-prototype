@@ -24,23 +24,28 @@ S.bdd??={bannerOff:{},invoiceSent:false,refunded:false,actOpen:{},venuePaid:fals
   paid:{'Agreement signed':true,'Deposit received':true,'Rider sent to venue':false,'Invoice for balance sent':false,'Set list shared with band':false},
   completed:{'Settle and record payouts':false,'Thank the venue, ask for a photo':false,'Add to the live history':true},
   cancelled:{'Refund the deposit':false,'Send the credit note':false,'Offer a new date':false,'Tell the band':true}}};
+S.bdd.check.overdue??={'Agreement signed':true,'Deposit received':false,'Rider sent to venue':false,'Balance invoice sent, 18 Oct':false,'Day sheet to the band':false};
 S.rating.tags=S.rating.tags||[];
 
 const VEN=L.V('royal');
 /* key of the Figma screen this booking state shows */
 const keyOf=()=>{const b=S.booking;if(b.cancelled)return 'cancelled';if(b.state==='confirmed')return b.depositPaid?'paid':'overdue';return b.state;};
 
-/* ---------- small parts ---------- */
+/* ---------- small parts (Figma components: Section 298:5025, Banner 299:5129, Status chip 301:5098, rows 299:5064 / 299:5019) ---------- */
 const act=(icon,label,a,extra='')=>`<button class="btn ghost s bd-act" data-act="${a}" ${extra}>${ic(icon,'s')}${label}</button>`;
 const goAct=(icon,label,view,extra='')=>`<button class="btn ghost s bd-act" data-go="${view}" ${extra}>${ic(icon,'s')}${label}</button>`;
-const sec=(title,action,body,foot)=>`<section class="bd-sec"><div class="bd-sh"><h2 class="t-title">${title}</h2>${action||''}</div>${body}${foot?`<p class="bd-foot">${foot}</p>`:''}</section>`;
-const kv=rows=>`<dl class="bd-kv">${rows.map(([l,v])=>`<dt>${l}</dt><dd>${v}</dd>`).join('')}</dl>`;
-const money=rows=>`<div class="bd-rows">${rows.map(([l,n,tag,amt])=>`<div class="bd-mrow"><span class="tx"><span>${l}</span>${n?`<small>${n}</small>`:''}</span><span class="st">${tag?`<span class="tag ${tag[0]}">${tag[1]}</span>`:''}</span><span class="amt mono">${amt}</span></div>`).join('')}</div>`;
+/* section: head (title + action), body (kind sets the gap: kv 12, money 4, list 0, flat 12 without side padding) */
+const sec=(title,action,body,foot,kind='kv')=>`<section class="bd-sec"><div class="bd-sh"><h2 class="t-title">${title}</h2>${action||''}</div><div class="bd-body ${kind}">${body}${foot?`<p class="bd-foot">${foot}</p>`:''}</div></section>`;
+/* key-value: one row per pair (Figma "Row": label 140, gap 16, pad 0 12), the list stacks rows 12 apart */
+const kv=rows=>`<dl class="bd-kv">${rows.map(([l,v])=>`<div><dt>${l}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
+const money=rows=>rows.map(([l,n,tag,amt])=>`<div class="bd-mrow"><span class="tx">${n?`<span>${l}</span><small>${n}</small>`:l}</span><span class="st">${tag?`<span class="tag ${tag[0]}">${tag[1]}</span>`:''}</span><span class="amt mono">${amt}</span></div>`).join('');
 const av=(ini,cls='')=>`<span class="bd-av ${cls}">${ini}</span>`;
-const people=rows=>`<div class="bd-rows">${rows.map(([ini,n,note,right,cls])=>`<div class="bd-prow">${av(ini,cls)}<span class="tx"><span>${n}</span><small>${note}</small></span>${right||''}</div>`).join('')}</div>`;
-const banner=(kind,icon,title,body,btn,id)=>id&&S.bdd.bannerOff[id]?'':`<div class="bd-banner ${kind}">${ic(icon,'s')}<div class="tx"><b>${title}</b><span>${body}</span></div>${btn||''}${id?`<button class="btn ghost icon s bd-x" data-act="bdbannerx" data-id="${id}" aria-label="Dismiss">${ic('x','s')}</button>`:''}</div>`;
-const pill=(cls,label,menu=true,dot=menu)=>`<button class="tag ${cls} bd-pill" data-act="statusmenu2" title="Change status">${dot?'<i></i>':''}${label}${menu?ic('down','s'):''}</button>`;
-const checklist=(k,list)=>`<div class="bd-check">${Object.entries(list).map(([t,on])=>`<label><input type="checkbox" ${on?'checked':''} data-bdcheck="${esc(k)}|${esc(t)}"><span>${t}</span></label>`).join('')}</div>`;
+const people=rows=>`<div class="bd-rows">${rows.map(([ini,n,note,right,cls])=>`<div class="bd-prow">${ini?av(ini,cls):''}<span class="tx"><span>${n}</span><small>${note}</small></span>${right||''}</div>`).join('')}</div>`;
+const BICON={info:'ai',attention:'alert',success:'check'};
+const banner=(kind,icon,title,body,btn,id)=>id&&S.bdd.bannerOff[id]?'':`<div class="bd-banner ${kind}">${ic(BICON[kind]||icon)}<div class="tx"><b>${title}</b><span>${body}</span></div>${btn||''}${id?`<button class="bd-x" data-act="bdbannerx" data-id="${id}" aria-label="Dismiss">${ic('x','s')}</button>`:''}</div>`;
+/* status chip: dot, label, chevron opens the status menu; plain = the Tag the Confirmed detail screens use */
+const pill=(cls,label,menu=true,dot=menu)=>menu?`<button class="bd-pill ${cls}" data-act="statusmenu2" title="Change status">${dot?'<i></i>':''}${label}${ic('down','s')}</button>`:`<span class="tag ${cls} bd-pill plain ${dot?'dot':''}">${dot?'<i></i>':''}${label}</span>`;
+const checklist=(k,list)=>`<div class="bd-check">${Object.entries(list).map(([t,on])=>`<label><input type="checkbox" ${on?'checked':''} data-bdcheck="${esc(k)}|${esc(t)}"><span class="bx">${ic('check','s')}</span><span>${t}</span></label>`).join('')}</div>`;
 const ACTS={
  enquiry:[['6 Oct','Mail from Mette Kjær read by the assistant'],['6 Oct','Booking created as Enquiry'],['6 Oct','Reply drafted for you to check']],
  hold:[['8 Oct','Jonas reminded in the band app'],['6 Oct','Date held until Fri 10 Oct'],['6 Oct','Band asked who can play'],['6 Oct','Enquiry from Mette by email']],
@@ -51,9 +56,8 @@ const ACTS={
  cancelled:[['14 Oct','Cancelled by Mette Kjær by email'],['14 Oct','Band told, 3 of 3 seen'],['14 Oct','Date freed in the calendar']],
 };
 const activity=k=>{const ev=ACTS[k];const open=S.bdd.actOpen[k]??(k==='paid');
- return `<div class="bd-pgroup"><button class="bd-acth" data-act="bdact" data-k="${k}" aria-expanded="${open}"><h2 class="t-title">Activity, ${ev.length} events</h2></button>${open?`<div class="bd-acts">${ev.map(([d,t])=>`<div><span class="d">${d}</span><span>${t}</span></div>`).join('')}</div>`:''}</div>`;};
-const panel=(k,top)=>`<aside class="bd-panel">${top||`<div class="bd-pgroup"><h2 class="t-title">Next up</h2>${k==='overdue'?checklistCore():checklist(k,S.bdd.check[k])}</div>`}${activity(k)}</aside>`;
-const checklistCore=()=>`<div class="bd-check">${Object.entries(S.checklist).map(([t,on])=>`<label><input type="checkbox" ${on?'checked':''} data-check="${esc(t)}"><span>${t}</span></label>`).join('')}</div>`;
+ return `<div class="bd-pgroup bd-actg ${open?'open':''}"><button class="bd-acth bd-sh" data-act="bdact" data-k="${k}" aria-expanded="${open}"><h2 class="t-title">Activity, ${ev.length} events</h2></button>${open?`<div class="bd-acts">${ev.map(([d,t])=>`<div><span class="d">${d}</span><span>${t}</span></div>`).join('')}</div>`:''}</div>`;};
+const panel=(k,top)=>`<aside class="bd-panel">${top||`<div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Next up</h2></div>${checklist(k,S.bdd.check[k])}</div>`}${activity(k)}</aside>`;
 
 function bdAbar(ph){
  return L.abar('Saturday hotel gig',ph)
@@ -63,37 +67,39 @@ function bdAbar(ph){
 const hero=(kicker,facts)=>`<div class="hero bd-hero"><img src="${IMG(VEN.img)}" alt=""><div class="tx"><span class="k">${kicker}</span><h1>Saturday hotel gig</h1><div class="facts">${facts.map(f=>`<span>${f}</span>`).join('')}</div></div></div>`;
 
 /* ---------- booking states ---------- */
+const hb=(cls,icon,label,a)=>`<button class="btn ${cls}" data-act="${a}">${icon?ic(icon):''}${label}</button>`;
+const tones=()=>`<div class="bd-tones">${['Friendlier','Shorter','In Danish'].map(t=>`<button class="btn secondary s" data-act="bdtone" data-t="${t}">${t}</button>`).join('')}</div>`;
 const STATES={
  enquiry:()=>({
-  pill:pill('draft','Enquiry'),
-  btns:`<button class="btn secondary" data-act="hold">Hold a date</button><button class="btn accent" data-act="reply">${ic('mail','s')}Reply</button>`,
+  pill:pill('enquiry','Enquiry'),
+  btns:hb('secondary','','Hold a date','hold')+hb('accent','mail','Reply','reply'),
   banner:banner('info','sparkles','The assistant read the email and filled this in. Check it.','Venue, contact and the two dates come from Mette Kjær’s mail of 6 Oct. Fee and set length are guesses from the text and are marked.','<button class="btn secondary s" data-go="mail">Open the email</button>','enq'),
   main:sec('What they asked for',act('pencil','Edit','bdedit'),kv([['From','Mette Kjær, booking@hotelroyal.dk'],['Where','Hotel Royal, hotel bar, Aarhus'],['When','Fri 24 or Sat 25 Oct, 2 × 45 min, from 21:00'],['Budget','"around 5.000", check this'],['Audience','Hotel guests and walk-ins, about 80']]),'"Check this" fields were read from the email and not confirmed by anyone yet.')
-   +sec('Draft reply',act('pencil','Edit','bdedit'),`<p class="bd-prose">${S.bdd.replyTone||'Hi Mette, thanks for asking. Sat 25 Oct works for us; Fri 24 we are already booked. For 2 × 45 min in the bar our fee is 5.000 DKK plus travel from Odense. If that suits, I will hold the date for you until Friday and send an offer you can sign online.'}</p><div class="bd-tones">${['Friendlier','Shorter','In Danish'].map(t=>`<button class="qtag" data-act="bdtone" data-t="${t}">${t}</button>`).join('')}</div>`,'Drafted by the assistant from your last three replies. Nothing is sent until you press Reply.'),
+   +sec('Draft reply',act('pencil','Edit','bdedit'),`<p class="bd-prose">${S.bdd.replyTone||'Hi Mette, thanks for asking. Sat 25 Oct works for us; Fri 24 we are already booked. For 2 × 45 min in the bar our fee is 5.000 DKK plus travel from Odense. If that suits, I will hold the date for you until Friday and send an offer you can sign online.'}</p>${tones()}`,'Drafted by the assistant from your last three replies. Nothing is sent until you press Reply.','flat'),
   panel:panel('enquiry',`<div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">History with Hotel Royal</h2>${goAct('arrowUpRight','Open venue','venue','data-id="royal"')}</div>${people([['HR','Spring hotel gig','Apr 2025, 4.000 DKK, paid 12 days after','<span class="tag paid">Paid</span>','obj'],['HR','Summer party enquiry','Jun 2024, no reply from us','<span class="tag draft">Draft</span>','obj']])}</div>`),
   ph:'Ask about this enquiry — reply, hold 25 Oct, what did we charge them last time'}),
  hold:()=>({
   pill:pill('attention','Hold'),
-  btns:`<button class="btn secondary" data-act="release">Release hold</button><button class="btn accent" data-act="sendoffer">${ic('send','s')}Send offer</button>`,
+  btns:hb('secondary','','Release hold','release')+hb('accent','send','Send offer','sendoffer'),
   banner:banner('attention','alert',S.bdd.extended?'Held until Fri 17 Oct, 18:00, 11 days left':'Held until Fri 10 Oct, 18:00, 4 days left','The date releases itself unless an offer goes out. 2 of 3 members have said yes; Jonas has not answered. No other booking on 25 Oct.',`<button class="btn secondary s" data-act="bdextend">${S.bdd.extended?'Undo extend':'Extend hold'}</button>`),
-  main:sec('Who can play on 25 Oct?',act('send','Ask again','bdaskband'),people([['MR','Mette Ravn','vocals, guitar, answered 6 Oct','<span class="tag confirmed">Confirmed</span>'],['SL','Sofie Lund','synth, answered 6 Oct','<span class="tag confirmed">Confirmed</span>'],['JH','Jonas Holm',S.bdd.askedBand?'drums, asked 6 Oct, reminded today':'drums, asked 6 Oct, reminded 8 Oct','<span class="tag attention">Attention</span>']]),'Answers come from the band app: Yes, If need be, No. The hold is released if two say no.')
+  main:sec('Who can play on 25 Oct?',act('send','Ask again','bdaskband'),people([['MR','Mette Ravn','vocals, guitar, answered 6 Oct','<span class="tag confirmed">Confirmed</span>'],['SL','Sofie Lund','synth, answered 6 Oct','<span class="tag confirmed">Confirmed</span>'],['JH','Jonas Holm',S.bdd.askedBand?'drums, asked 6 Oct, reminded today':'drums, asked 6 Oct, reminded 8 Oct','<span class="tag attention">Attention</span>']]),'Answers come from the band app: Yes, If need be, No. The hold is released if two say no.','list')
    +sec('Draft offer',act('pencil','Edit','bdedit'),kv([['Fee','Not set, venue mentioned "around 5.000"'],['Deposit','30 % on signing, balance on the gig date'],['Travel','Included up to 100 km, from Odense'],['Expiry','Same as the hold, Fri 10 Oct, 18:00'],['Cancellation','House terms, deposit kept inside 14 days']]),'One link for the venue: see the offer, sign, pay the deposit. Signing moves this booking to Confirmed.'),
-  panel:panel('hold',`<div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Details</h2>${act('pencil','Edit','bdedit')}</div><dl class="bd-stack"><dt>Venue</dt><dd>Hotel Royal, Aarhus</dd><dt>Contact</dt><dd>Mette Kjær</dd><dt>Asked for</dt><dd>Fri 24 or Sat 25 Oct, hotel bar, 2 × 45 min</dd></dl></div>`),
+  panel:panel('hold',`<div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Details</h2>${act('pencil','Edit','bdedit')}</div><dl class="bd-stack rows"><div><dt>Venue</dt><dd>Hotel Royal, Aarhus</dd></div><div><dt>Contact</dt><dd>Mette Kjær</dd></div><div><dt>Asked for</dt><dd>Fri 24 or Sat 25 Oct, hotel bar, 2 × 45 min</dd></div></dl></div>`),
   ph:'Ask about this hold — extend it, chase Jonas, draft the offer at 5.000'}),
  offer:()=>({
-  pill:pill('paid','Offer out'),
-  btns:`<button class="btn secondary" data-act="copy">${ic('copy','s')}Copy link</button><button class="btn accent" data-act="bdresend">${ic('send','s')}Resend</button>`,
+  pill:pill('offer','Offer out'),
+  btns:hb('secondary','copy','Copy link','copy')+hb('accent','send','Resend','bdresend'),
   banner:banner('info','sparkles','Offer sent 7 Oct, opened by Mette Kjær 8 Oct, 09:14, not signed yet','One link: see the offer, sign, pay the 1.500 deposit. When it is signed this booking moves to Confirmed by itself. It expires with the hold on Fri 10 Oct.','<button class="btn secondary s" data-act="nudge">Send a nudge</button>'),
   main:sec('Offer sent 7 Oct',goAct('arrowUpRight','View as venue','paypage'),kv([['Set','2 × 45 min, from 21:00, hotel bar'],['Fee','5.000 DKK, plus travel 640 DKK'],['Deposit','1.500 DKK on signing, MobilePay or bank'],['Balance','3.500 DKK on 25 Oct, invoice sent 7 days before'],['Cancellation','Free until 11 Oct, deposit kept after'],['Signed by','Nobody yet']]),'Changing anything here makes a new version and sends a new link. The old link stops working.')
-   +sec('Link activity','',money([['Sent to booking@hotelroyal.dk','7 Oct, 11:02',['draft','Draft'],''],['Opened','8 Oct, 09:14, from Aarhus',['confirmed','Confirmed'],''],['Signed','not yet',['draft','Draft'],''],['Deposit paid','not yet',['draft','Draft'],'']]).replace(/<span class="amt mono"><\/span>/g,'')),
+   +sec('Link activity','',people([['','Sent to booking@hotelroyal.dk','7 Oct, 11:02','<span class="tag draft">Draft</span>'],['','Opened','8 Oct, 09:14, from Aarhus','<span class="tag confirmed">Confirmed</span>'],['','Signed','not yet','<span class="tag draft">Draft</span>'],['','Deposit paid','not yet','<span class="tag draft">Draft</span>']]),'','list'),
   panel:panel('offer'),
   ph:'Ask about this offer — nudge Mette, extend the expiry, change the deposit'}),
  overdue:()=>({
   pill:pill('confirmed','Confirmed'),
-  btns:`<button class="btn secondary" data-act="record">${ic('money','s')}Record a payment</button>`,
+  btns:hb('secondary','money','Record a payment','record'),
   banner:banner('attention','alert','Deposit 1.500 DKK is 6 days late, the venue opened the invoice twice','Step 1 is a free, friendly påmindelse. A rykker with a 100 DKK fee is allowed from 22 Oct (10 days after the due date), at most three, 10 days apart. Nothing is sent until you confirm.','<button class="btn secondary s" data-act="bdrules">Why these rules?</button>'),
   before:S.sentReminder?banner('info','check','Påmindelse sent to Hotel Royal today','Accounts and Mette got it. If nothing comes in, a rykker is allowed from 22 Oct.'):L.sendPreview('reminder'),
-  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee agreed in the offer','signed 9 Oct',['confirmed','Confirmed'],'5.000'],['Deposit, invoice 2026-031','due 12 Oct, opened 2×',['attention','Attention'],'1.500'],['Balance, invoice 2026-032','draft, sends 18 Oct',['draft','Draft'],'3.500'],['Travel, 2 cars from Odense','estimate','','-640']]),'Reminder ladder for 2026-031: 7 days before (sent), on the due date (sent), 3 days after (sent), now a påmindelse by hand, rykker 1 possible from 22 Oct.')
+  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee agreed in the offer','signed 9 Oct',['confirmed','Confirmed'],'5.000'],['Deposit, invoice 2026-031','due 12 Oct, opened 2×',['attention','Attention'],'1.500'],['Balance, invoice 2026-032','draft, sends 18 Oct',['draft','Draft'],'3.500'],['Travel, 2 cars from Odense','estimate','','-640']]),'Reminder ladder for 2026-031: 7 days before (sent), on the due date (sent), 3 days after (sent), now a påmindelse by hand, rykker 1 possible from 22 Oct.','money')
    +sec('How the venue pays',goAct('arrowUpRight','Open pay page','paypage'),kv([['Pay page','laas.dk/pay/hr-2026-031, opened twice, not marked paid'],['Bank','Reg 1234, konto 0012345678, reference 2026-031'],['MobilePay','Business 12345, same reference'],['Who holds the money','Your business account, LAAS never holds money']]),'When Mette presses "I have paid" you get a card to approve it. If the amount differs you choose: leave open, rounding, bank fee, bad debt.'),
   panel:panel('overdue'),
   ph:'Ask about this booking — who else can I send the invoice to, split the deposit, what happens if they never pay'}),
@@ -102,25 +108,25 @@ const STATES={
   const sizes=['l','m','l','m','l','l'];
   return {
   pill:pill('confirmed','Confirmed',false),
-  btns:`<span class="bd-save" id="bdsave" aria-live="polite"></span><button class="btn secondary" data-act="edit">${ed?'Done':'Edit'}</button>${sent?`<button class="btn accent" data-act="day">${ic('fileText','s')}Open day sheet</button>`:`<button class="btn accent" data-act="bdinvoice">${ic('send','s')}Send invoice</button>`}`,
-  main:sec('Details',ed?`<button class="btn ghost s bd-act" data-act="edit">Done</button>`:act('pencil','Edit','edit'),ed?`<div class="bd-form">${det.map(([l,v],i)=>`<div class="field bd-f-${sizes[i]}"><label for="bded${i}">${l}</label><input class="input" id="bded${i}" value="${esc(v)}" data-bdautosave></div>`).join('')}</div>`:kv(det))
-   +sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee','',['confirmed','Confirmed'],'4.500'],['Deposit, invoice 2026-031','',['paid','Paid'],'1.500'],[sent?'Balance, invoice 2026-032':'Balance, invoice not sent',sent?'sent today, due 25 Oct':'',sent?['draft','Sent']:['draft','Draft'],'3.000'],['Travel, 2 cars from Odense','estimated','','-640'],['Hotel, 2 rooms','venue pays','','0']])),
+  btns:`<span class="bd-save" id="bdsave" aria-live="polite"></span>${hb('secondary','','Edit','edit')}${sent?hb('accent','fileText','Open day sheet','day'):hb('accent','send','Send invoice','bdinvoice')}`,
+  main:`<section class="bd-sec bd-details"><div class="bd-sh"><h2 class="t-title">Details</h2>${ed?`<button class="btn ghost s bd-act" data-act="edit">Done</button>`:act('pencil','Edit','edit')}</div>${ed?det.map(([l,v],i)=>`<div class="field bd-f-${sizes[i]}"><label for="bded${i}">${l}</label><input class="input" id="bded${i}" value="${esc(v)}" data-bdautosave></div>`).join(''):kv(det)}</section>`
+   +sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee','',['confirmed','Confirmed'],'4.500'],['Deposit, invoice 2026-031','',['paid','Paid'],'1.500'],[sent?'Balance, invoice 2026-032':'Balance, invoice not sent',sent?'sent today, due 25 Oct':'',sent?['draft','Sent']:['draft','Draft'],'3.000'],['Travel, 2 cars from Odense','estimated','','-640'],['Hotel, 2 rooms','venue pays','','0']]),'','money'),
   panel:panel('paid'),
   ph:'Ask about this booking — send the balance invoice, move the date, draft a reply'};},
  completed:()=>{const st=S.booking.settled;return {
-  pill:pill('draft','Completed'),
-  btns:st?`<button class="btn secondary" data-act="settle">See the split</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}Book again</button>`:`<button class="btn secondary" data-act="newbooking">Book again</button><button class="btn accent" data-act="settle">Settle 4.360 DKK</button>`,
+  pill:pill('completed','Completed'),
+  btns:st?hb('secondary','','See the split','settle')+hb('accent','plus','Book again','newbooking'):hb('secondary','','Book again','newbooking')+hb('accent','','Settle 4.360 DKK','settle'),
   banner:st?banner('success','check','Settled, 4.360 DKK split three ways','Payouts are recorded. Mette and Sofie are paid, Jonas tomorrow.'):banner('success','check','Everything is paid, 5.000 DKK in, 640 DKK out','Settling locks this gig’s money and splits 4.360 DKK between 3 members by your house split (equal, travel to Jonas). Reopening later asks for a reason.','<button class="btn secondary s" data-act="settle">See the split</button>'),
   before:S.booking.rated?'':rateCard(),
-  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee','agreed 9 Oct',['confirmed','Confirmed'],'5.000'],['Deposit, 2026-031','paid 16 Oct, 4 days late',['paid','Paid'],'1.500'],['Balance, 2026-032','paid 27 Oct, bank',['paid','Paid'],'3.500'],['Travel, 2 cars','receipt, Jonas','','-640'],['Net to split','after travel','','4.360']]))
-   +sec(st?'Split':'Proposed split',act('pencil','Edit split','settle'),people([['MR','Mette Ravn','equal share','<span class="amt mono">1.453 DKK</span>'],['SL','Sofie Lund','equal share','<span class="amt mono">1.453 DKK</span>'],['JH','Jonas Holm','equal share + 640 travel','<span class="amt mono">2.094 DKK</span>']]),'Totals 5.000 DKK. Payouts are recorded, not moved: LAAS shows who owes whom, the bank app does the transfer.'),
+  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Fee','agreed 9 Oct',['confirmed','Confirmed'],'5.000'],['Deposit, 2026-031','paid 16 Oct, 4 days late',['paid','Paid'],'1.500'],['Balance, 2026-032','paid 27 Oct, bank',['paid','Paid'],'3.500'],['Travel, 2 cars','receipt, Jonas','','-640'],['Net to split','after travel','','4.360']]),'','money')
+   +sec(st?'Split':'Proposed split',act('pencil','Edit split','settle'),`<div class="bd-split">${[['MR','Mette Ravn','equal share','1.453 DKK'],['SL','Sofie Lund','equal share','1.453 DKK'],['JH','Jonas Holm','equal share + 640 travel','2.094 DKK']].map(([i,n,d,a])=>`<div class="bd-srow"><div class="bd-prow">${av(i)}<span class="tx"><span>${n}</span><small>${d}</small></span></div><span class="amt mono">${a}</span></div>`).join('')}</div>`,'Totals 5.000 DKK. Payouts are recorded, not moved: LAAS shows who owes whom, the bank app does the transfer.','flat'),
   panel:panel('completed'),
   ph:'Ask about this gig — settle it, what did we net, send a thank-you to Mette'};},
  cancelled:()=>{const rf=S.bdd.refunded;return {
-  pill:pill('draft','Cancelled'),
-  btns:`<button class="btn secondary" data-act="uncancel">Reopen</button>${rf?`<button class="btn accent" data-act="newbooking">${ic('plus','s')}Offer a new date</button>`:`<button class="btn accent" data-act="bdrefund">Refund 1.500 DKK</button>`}`,
+  pill:pill('cancelled','Cancelled'),
+  btns:hb('secondary','','Reopen','uncancel')+(rf?hb('accent','plus','Offer a new date','newbooking'):hb('accent','','Refund 1.500 DKK','bdrefund')),
   banner:banner('info','sparkles','Cancelled 14 Oct by the venue, "bar closed for renovation"','Inside 14 days the deposit is kept by your house terms, but you chose to refund it. The date is free again in the calendar; the band has been told.','<button class="btn secondary s" data-act="bdterms">Change terms</button>'),
-  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Agreed fee','voided 14 Oct',['draft','Draft'],'0'],['Deposit, 2026-031',rf?'paid 16 Oct, refunded today':'paid 16 Oct, refund',rf?['paid','Refunded']:['attention','Attention'],'1.500'],['Credit note, 2026-031-K',rf?'sent with the refund':'draft, with refund',rf?['confirmed','Sent']:['draft','Draft'],'-1.500']]),'A refund records a payout from your account; a credit note keeps the books right. Both wait for Confirm.')
+  main:sec('Money',goAct('arrowUpRight','Open in Ledger','money'),money([['Agreed fee','voided 14 Oct',['draft','Draft'],'0'],['Deposit, 2026-031',rf?'paid 16 Oct, refunded today':'paid 16 Oct, refund',rf?['paid','Refunded']:['attention','Attention'],'1.500'],['Credit note, 2026-031-K',rf?'sent with the refund':'draft, with refund',rf?['confirmed','Sent']:['draft','Draft'],'-1.500']]),'A refund records a payout from your account; a credit note keeps the books right. Both wait for Confirm.','money')
    +sec('Why',act('pencil','Edit','bdedit'),kv([['Reason','Venue cancelled, bar closed for renovation'],['Who','Mette Kjær, by email, 14 Oct'],['Terms','Inside 14 days, deposit non-refundable, you waived it'],['Members','Told 14 Oct, 3 of 3 seen']])),
   panel:panel('cancelled'),
   ph:'Ask about this cancellation — refund, offer a new date, keep the deposit'};},
@@ -135,10 +141,10 @@ function rateCard(){const r=S.rating;const words=['','Never again','Only if need
  <div class="bd-rf"><button class="btn ghost" data-act="skiprate">Skip</button><button class="btn secondary" data-act="saverate">Save rating</button></div></section>`;}
 
 L.VIEWS.booking=()=>{const k=keyOf();const s=STATES[k]();
- return `<div class="page bd-page"><div class="bd-tint" data-obj="royal"></div>
+ return `<div class="page bd-page bd-bk"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="bookings">${ic('left','s')}Bookings</button>
  ${hero('Concert at Hotel Royal, Aarhus',['Sat 25 Oct','Doors 20:00','On stage 21:30','Fee 4.500 DKK'])}
- <div class="bd-bar">${s.pill}<span class="grow"></span>${s.btns}<button class="btn ghost icon" aria-label="More" data-act="bookingmore">${ic('more')}</button></div>
+ <div class="bd-bar hd"><div class="bd-tb">${s.pill}</div><div class="bd-hacts">${s.btns}<button class="btn ghost icon bd-more" aria-label="More" data-act="bookingmore">${ic('more')}</button></div></div>
  ${s.banner||''}${s.before||''}
  <div class="bd-grid"><div class="bd-main">${s.main}</div>${s.panel}</div>
  </div>${bdAbar(S.booking.sheet?'Ask a follow-up, or say “send it”':s.ph)}`;};
@@ -160,15 +166,15 @@ L.OVERLAYS.bdsend=o=>`<div class="scrim bd-scrim" data-act="close"></div><div cl
 /* ---------- record a payment (dialog, 560) ---------- */
 S.bdd.gap??=1;
 L.OVERLAYS.bdrecord=()=>{const opts=[['Leave 30 DKK open','The invoice stays partly paid; the reminder ladder keeps running for the rest.'],['Bank fee','Books 30 DKK as a bank cost. The invoice is settled in full.'],['Rounding, settle anyway','Writes off 30 DKK. The invoice is settled in full.'],['Bad debt','Writes off 30 DKK as a loss and closes the claim.']];
- return `<div class="scrim" data-act="close"></div><div class="modal bd-modal w560 bd-rec" role="dialog" aria-modal="true" aria-label="Record a payment">
- <div class="bd-mh"><div><h2 class="t-title">Record a payment</h2><span class="t-label muted">Invoice 2026-031, deposit, 1.500 DKK due 12 Oct, Hotel Royal</span></div><button class="btn ghost icon s" data-act="close" aria-label="Close">${ic('x','s')}</button></div>
- <div class="bd-note">${ic('sparkles','s')}<div><b>The bank shows 1.470 DKK from HOTEL ROYAL A/S on 16 Oct</b><span>Matched by the assistant to this invoice (high confidence: same reference). The amount is 30 DKK short.</span></div></div>
- <div class="bd-2col"><div class="field"><label for="ra">Amount received</label><input class="input mono" id="ra" value="1.470" inputmode="decimal"><span class="help">DKK, invoice says 1.500</span></div>
- <div class="field"><label for="rd">Received on</label><div class="bd-ic-in">${ic('calendar','s')}<input class="input" id="rd" value="16 Oct 2026"></div></div>
+ return `<div class="scrim bd-scrim55" data-act="close"></div><div class="modal bd-modal w560 bd-rec" role="dialog" aria-modal="true" aria-label="Record a payment">
+ <div class="bd-mh"><div><h2 class="t-title">Record a payment</h2><span class="t-label muted">Invoice 2026-031, deposit, 1.500 DKK due 12 Oct, Hotel Royal</span></div><button class="btn ghost s bd-mx" data-act="close" aria-label="Close">${ic('x','s')}</button></div>
+ <div class="bd-banner info">${ic('ai')}<div class="tx"><b>The bank shows 1.470 DKK from HOTEL ROYAL A/S on 16 Oct</b><span>Matched by the assistant to this invoice (high confidence: same reference). The amount is 30 DKK short.</span></div></div>
+ <div class="bd-2col"><div class="field"><label for="ra">Amount received</label><input class="input" id="ra" value="1.470" inputmode="decimal"><span class="help">DKK, invoice says 1.500</span></div>
+ <div class="field"><label for="rd">Received on</label><div class="bd-ic-in">${ic('calendar')}<input class="input" id="rd" value="16 Oct 2026"></div></div>
  <div class="field"><label for="rh">How</label><select class="input" id="rh"><option>Bank transfer, business account</option><option>MobilePay</option><option>Cash</option></select></div>
  <div class="field"><label for="ri">Into</label><select class="input" id="ri"><option>Band account, Danske Bank</option><option>Mette Ravn, private MobilePay</option></select><span class="help">or a member’s private MobilePay</span></div></div>
- <div class="bd-gapq"><b class="strong">30 DKK is missing. What is it?</b>${opts.map(([t,d],i)=>`<button class="radio ${S.bdd.gap===i?'on':''}" data-act="bdgap" data-i="${i}"><i></i><span><span>${t}</span><br><span class="t-meta muted">${d}</span></span></button>`).join('')}</div>
- <div class="bd-mf"><span class="t-meta muted">Undo later records a correction; it does not take back the money.</span><button class="btn ghost" data-act="close">Cancel</button><button class="btn accent" data-act="recorded">${ic('check','s')}Record 1.470 DKK</button></div></div>`;};
+ <div class="bd-gapq" role="radiogroup" aria-label="30 DKK is missing. What is it?"><p>30 DKK is missing. What is it?</p>${opts.map(([t,d],i)=>`<button class="bd-opt ${S.bdd.gap===i?'on':''}" role="radio" aria-checked="${S.bdd.gap===i}" data-act="bdgap" data-i="${i}"><i></i><span><span>${t}</span><small>${d}</small></span></button>`).join('')}</div>
+ <div class="bd-mf"><span>Undo later records a correction; it does not take back the money.</span><button class="btn ghost" data-act="close">Cancel</button><button class="btn accent" data-act="recorded">${ic('check')}Record 1.470 DKK</button></div></div>`;};
 
 /* ---------- pay page (what Mette sees) ---------- */
 L.VIEWS.paypage=()=>{const paid=S.bdd.venuePaid;
@@ -176,15 +182,15 @@ L.VIEWS.paypage=()=>{const paid=S.bdd.venuePaid;
  <div class="bd-prev"><button class="btn ghost s flush" data-go="booking">${ic('left','s')}Saturday hotel gig</button><span class="t-label muted">Preview of what Mette Kjær sees from the pay link</span></div>
  <article class="bd-pay">
   <div class="bd-payhead"><span class="bd-logo">${L.LOGO}</span><span class="t-label muted">Low Tide, band</span></div>
-  <div><h1 class="t-display">Deposit for the Saturday hotel gig, 25 Oct</h1><p class="muted bd-paysub">Invoice 2026-031 from Low Tide, due 12 Oct 2026, you are 4 days late, no fee has been added</p></div>
+  <div class="bd-payhero"><h1 class="t-display">Deposit for the Saturday hotel gig, 25 Oct</h1><p class="muted">Invoice 2026-031 from Low Tide, due 12 Oct 2026, you are 4 days late, no fee has been added</p></div>
   <section class="bd-amount"><div class="bd-amt"><span class="n">1.500</span><span class="c">DKK</span><span class="grow"></span><button class="btn secondary s" data-act="bdcopy" data-text="1500">${ic('copy','s')}Copy amount</button></div>
-   ${[['Bank','Reg 1234, 0012345678','1234 0012345678'],['Reference','2026-031','2026-031'],['MobilePay','12345. Low Tide','12345']].map(([l,v,c])=>`<div class="bd-payrow"><span class="l">${l}</span><span class="mono">${v}</span><button class="btn ghost s" data-act="bdcopy" data-text="${c}">${ic('copy','s')}Copy</button></div>`).join('')}</section>
-  <section class="bd-told">${paid?`<h2 class="t-title">Thanks, Low Tide has been told</h2><p class="muted">They see “paid on 16 Oct by bank transfer” and approve it on their side. You can close this page.</p><button class="btn secondary s" data-act="bdunpaid" style="align-self:flex-start">${ic('undo','s')}I made a mistake</button>`
+   ${[['Bank','Reg 1234, 0012345678','1234 0012345678'],['Reference','2026-031','2026-031'],['MobilePay','12345. Low Tide','12345']].map(([l,v,c])=>`<div class="bd-payrow"><span class="l">${l}</span><span class="v mono">${v}</span><button class="btn ghost s bd-act" data-act="bdcopy" data-text="${c}">${ic('copy','s')}Copy</button></div>`).join('')}</section>
+  <section class="bd-told">${paid?`<h2 class="t-title">Thanks, Low Tide has been told</h2><p class="muted">They see “paid on 16 Oct by bank transfer” and approve it on their side. You can close this page.</p><div class="bd-btns"><button class="btn secondary" data-act="bdunpaid">${ic('undo')}I made a mistake</button></div>`
   :`<h2 class="t-title">Already paid? Tell the band.</h2><p class="muted">Pick a date and how you paid. Low Tide approves it on their side; nothing is charged here and no card is needed.</p>
-   <div class="bd-2col"><div class="field"><label for="pp-d">Paid on</label><div class="bd-ic-in">${ic('calendar','s')}<input class="input" id="pp-d" value="16 Oct 2026"></div></div><div class="field"><label for="pp-h">How</label><select class="input" id="pp-h"><option>Bank transfer</option><option>MobilePay</option></select></div></div>
-   <div class="bd-btns"><label class="btn secondary">${ic('upload','s')}<span id="bdrcpt">Attach receipt</span><input type="file" data-bdreceipt hidden></label><button class="btn accent" data-act="bdvenuepaid">${ic('check','s')}I have paid</button></div>
-   <p class="t-label muted">Or plan it: "I will pay on 20 Oct" — the band sees the date and stops reminding you until then.</p>`}</section>
-  <footer class="t-label muted">This page is made by LAAS for Low Tide. LAAS never holds money: the amount goes straight to the band’s own account. Questions: hello@lowtide.dk<br><button class="link bd-acc" data-act="toast2">Download PDF invoice</button>, <button class="link bd-acc" data-act="bdoffer">See the offer you signed</button></footer>
+   <div class="bd-2col"><div class="field"><label for="pp-d">Paid on</label><div class="bd-ic-in">${ic('calendar')}<input class="input" id="pp-d" value="16 Oct 2026"></div></div><div class="field"><label for="pp-h">How</label><select class="input" id="pp-h"><option>Bank transfer</option><option>MobilePay</option></select></div></div>
+   <div class="bd-btns"><label class="btn secondary">${ic('upload')}<span id="bdrcpt">Attach receipt</span><input type="file" data-bdreceipt hidden></label><button class="btn accent" data-act="bdvenuepaid">${ic('check')}I have paid</button></div>
+   <p class="bd-plan">Or plan it: "I will pay on 20 Oct" — the band sees the date and stops reminding you until then.</p>`}</section>
+  <footer><p>This page is made by LAAS for Low Tide. LAAS never holds money: the amount goes straight to the band’s own account. Questions: hello@lowtide.dk</p><p><button class="link bd-acc" data-act="toast2">Download PDF invoice</button>, <button class="link bd-acc" data-act="bdoffer">See the offer you signed</button></p></footer>
  </article></div>`;};
 
 /* ---------- gig day: timeline ---------- */
@@ -193,38 +199,39 @@ L.VIEWS.gigday=()=>{const H0=14,HN=11,X=t=>((t-H0)/HN*100);
  const col={travel:'var(--travel)',work:'var(--work)',break:'var(--break)',doors:'var(--doors)',stage:'var(--accent)'};
  const pk=S.parkingDone,ml=S.bdd.mealOk,open=(pk?0:1)+(ml?0:1);
  const T=(c,l)=>`<span class="tag ${c}">${l}</span>`;
+ const lact=(icon,label,a)=>`<button class="btn ghost s bd-act lead" data-act="${a}">${ic(icon,'s')}${label}</button>`;
  const steps=[
-  ['14:30','Leave Odense','Two cars. Mette drives Sofie, Jonas drives the gear. 118 km, about 1 h 40.','travel',[T('paid','In 10 min')],'next','<a class="btn secondary s" href="https://www.google.com/maps/dir/Odense/Hotel+Royal,+Store+Torv+4,+8000+Aarhus" target="_blank" rel="noopener">'+ic('pin','s')+'Open route</a>'],
-  ['17:00','Load-in','Back entrance on Kannikegade, 2 steps, trolley there. 2 parking spaces in the yard.','work',[T('confirmed','Confirmed')],'',pk?'':`<div class="openitem bd-open">${ic('alert','s')}<span>Parking code missing, needed at load-in 17:00 today. Asked 18 Oct.</span><button class="btn ghost s" data-act="bdcall">${ic('messageSquare','s')}Call Kasper</button></div>`],
+  ['14:30','Leave Odense','Two cars. Mette drives Sofie, Jonas drives the gear. 118 km, about 1 h 40.','travel',[T('accent','In 10 min')],'next','<a class="btn secondary s" href="https://www.google.com/maps/dir/Odense/Hotel+Royal,+Store+Torv+4,+8000+Aarhus" target="_blank" rel="noopener">'+ic('pin','s')+'Open route</a>'],
+  ['17:00','Load-in','Back entrance on Kannikegade, 2 steps, trolley there. 2 parking spaces in the yard.','work',[T('confirmed','Confirmed')],'',pk?'':`<div class="bd-open">${ic('alert','s')}<span>Parking code missing, needed at load-in 17:00 today. Asked 18 Oct.</span><button class="btn ghost s bd-act" data-act="bdcall">${ic('messageSquare','s')}Call Kasper</button></div>`],
   ['17:45','Soundcheck','Kasper Holm on sound, +45 30 99 86 77. Stage 6 × 4 m, 40 cm riser. PA and drums in house; bring 2 guitar amps and a DI.','work',[T('draft','Moved from 18:30'),T('confirmed','Confirmed')]],
   [ml?'19:00':'~19:00','Band meal',ml?'Hotel restaurant, 19:00, confirmed with the venue.':'Hotel restaurant. The venue said “around seven”.','break',[ml?T('confirmed','Confirmed'):T('attention','Approximate')],ml?'':'approx'],
-  ['20:00','Doors','Guest list of 6 names, send by 20:00: Mette’s partner, Sofie’s parents, 2 friends of Jonas.','doors',[T('confirmed','Confirmed')],'',act('send',S.bdd.guestSent?'Guest list sent':'Send guest list','bdguest')],
-  ['21:30','Set 1, 45 min','Set list v3, 12 songs, edited by Sofie yesterday.','stage',[T('confirmed','Confirmed')],'',act('fileText','Open set list','bdsetlist')],
+  ['20:00','Doors','Guest list of 6 names, send by 20:00: Mette’s partner, Sofie’s parents, 2 friends of Jonas.','doors',[T('confirmed','Confirmed')],'',lact('send',S.bdd.guestSent?'Guest list sent':'Send guest list','bdguest')],
+  ['21:30','Set 1, 45 min','Set list v3, 12 songs, edited by Sofie yesterday.','stage',[T('confirmed','Confirmed')],'',lact('fileText','Open set list','bdsetlist')],
   ['22:30','Set 2, 45 min','Encore only if the room asks for it; curfew is hard.','stage',[T('confirmed','Confirmed')]],
   ['00:30','Curfew, PA off','Load-out after curfew, the time is still to be decided. Asked 18 Oct.','work',[T('attention','Load-out TBD')],'approx'],
   ['After','Sleep at Hotel Royal','2 rooms, check-in from 15:00, breakfast 07–10. Bags can go in at load-in.','travel',[T('confirmed','Confirmed')]]];
- const stepHtml=([t,h,d,c,tags,kind,extra],i)=>`<div class="bd-step ${kind==='next'?'next':''}">${S.editTimes?`<input class="input mono bd-tin" value="${t}" aria-label="Time for ${esc(h)}">`:`<span class="time">${t}</span>`}<span class="spine"><i class="${kind==='approx'?'approx':''}" style="--c:${col[c]}"></i>${i<steps.length-1?'<b></b>':''}</span><div class="content"><div class="bd-sth"><h4>${h}</h4>${tags.join('')}</div><span class="muted">${d}</span>${extra?`<div class="bd-sx">${extra}</div>`:''}</div></div>`;
- return `<div class="page bd-page"><div class="bd-tint" data-obj="royal"></div>
+ const stepHtml=([t,h,d,c,tags,kind,extra],i)=>`<div class="bd-step ${kind||''}">${S.editTimes?`<input class="input mono bd-tin" value="${t}" aria-label="Time for ${esc(h)}">`:`<span class="time">${t}</span>`}<span class="spine"><i style="--c:${col[c]}"></i>${i<steps.length-1?'<b></b>':''}</span><div class="content"><div class="bd-sth"><h4>${h}</h4>${tags.join('')}</div><p>${d}</p>${extra?`<div class="bd-sx">${extra}</div>`:''}</div></div>`;
+ return `<div class="page bd-page bd-bk bd-gd"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="booking">${ic('left','s')}Saturday hotel gig</button>
  ${hero('Day sheet, Saturday 25 Oct',['Load-in 17:00','On stage 21:30','Curfew 00:30','118 km from Odense'])}
- <div class="bd-bar">${pill('confirmed','Confirmed',false,true)}<span class="grow"></span><button class="btn secondary" data-act="bdpdf">${ic('fileText','s')}PDF</button><button class="btn accent" data-act="bdsendday">${ic('send','s')}Send to band</button><button class="btn ghost icon" aria-label="More" data-act="bddaymore">${ic('more')}</button></div>
+ <div class="bd-bar hd"><div class="bd-tb">${pill('confirmed','Confirmed',false,true)}</div><div class="bd-hacts">${hb('secondary','fileText','PDF','bdpdf')}${hb('accent','send','Send to band','bdsendday')}<button class="btn ghost icon bd-more" aria-label="More" data-act="bddaymore">${ic('more')}</button></div></div>
  ${S.bdd.gigBanner?banner('info','sparkles','Soundcheck moved 18:30 → 17:45, venue confirmed this morning','Jonas and Sofie were told at 09:12 with just this change. Mette has not opened it yet.',`<button class="btn secondary s" data-act="bdnudgemette">Nudge Mette</button>`,'gig'):''}
- <section class="strip bd-strip"><div class="bd-nowr"><span class="mono bd-now">Now 14:20</span><span>Leave Odense in 10 min, then load-in 17:00</span><span class="grow"></span><span class="t-meta muted">Curfew 00:30</span></div>
-  <div class="track">${Array.from({length:HN+1},(_,h)=>`<span class="h ${h===HN?'last':''}" style="left:${X(H0+h)}%">${String((H0+h)%24).padStart(2,'0')}</span><span class="tick" style="left:${X(H0+h)}%"></span>`).join('')}
-  ${blocks.map(([a,b,l,c,ap])=>`<span class="blk ${c==='stage'?'stage':''} ${ap?'ap':''}" style="--c:${col[c]};left:${X(a)}%;width:calc(${X(b)-X(a)}% - 2px)">${l}</span>`).join('')}
+ <section class="strip bd-strip"><div class="bd-nowr"><span class="bd-now">Now 14:20</span><b>Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
+  <div class="track">${Array.from({length:HN+1},(_,h)=>`<span class="h ${h===HN?'last':''}" style="left:${X(H0+h)}%">${String((H0+h)%24).padStart(2,'0')}</span><span class="tick ${h===HN?'last':''}" style="left:${X(H0+h)}%"></span>`).join('')}
+  ${blocks.map(([a,b,l,c,ap])=>`<span class="blk ${c==='stage'?'stage':''} ${ap?'ap':''}" style="--c:${col[c]};left:${X(a)}%;width:calc(${X(b)-X(a)}% - 2px)"><span>${l}</span></span>`).join('')}
   <span class="curfew" style="left:${X(24.5)}%"></span><span class="now" style="left:${X(14+20/60)}%"></span></div>
-  <div class="legend"><span><i style="background:var(--travel)"></i>Travel</span><span><i style="background:var(--work)"></i>Band work</span><span><i style="background:var(--break)"></i>Break</span><span><i style="background:var(--doors)"></i>Audience in</span><span><i style="background:var(--accent)"></i>On stage</span><span>${ic('circleDashed','s')}Not confirmed</span></div></section>
- <div class="bd-grid"><section class="bd-card bd-tl"><div class="bd-sh"><h3 class="t-heading">Timeline</h3>${act(S.editTimes?'check':'pencil',S.editTimes?'Done':'Edit times','edittimes')}</div>
-  <div class="bd-steps"><div class="bd-step nowrow"><span class="time bd-now">14:20</span><span class="spine"><i class="nowdot"></i><b></b></span><div class="content"><div class="bd-sth"><span class="tag bd-nowtag">Now</span><span class="muted">Leave in 10 min. Everything before this line is done.</span></div></div></div>${steps.map(stepHtml).join('')}</div>
+  <div class="legend"><span><i style="background:var(--travel)"></i>Travel</span><span><i style="background:var(--work)"></i>Band work</span><span><i style="background:var(--break)"></i>Break</span><span><i style="background:var(--doors)"></i>Audience in</span><span><i style="background:var(--accent)"></i>On stage</span><span><i class="nc"></i>Not confirmed</span></div></section>
+ <div class="bd-gdgrid"><section class="bd-card bd-tl"><div class="bd-sh"><h3 class="t-heading">Timeline</h3>${act(S.editTimes?'check':'pencil',S.editTimes?'Done':'Edit times','edittimes')}</div>
+  <div class="bd-steps"><div class="bd-step nowrow"><span class="time">14:20</span><span class="spine"><i class="nowdot"></i></span><span class="tag bd-nowtag">Now</span><span class="muted">Leave in 10 min. Everything before this line is done.</span></div>${steps.map(stepHtml).join('')}</div>
   <p class="bd-foot">Times are exact unless marked ~ or TBD. Dashed means the venue has not confirmed. A change is sent to the band as the change itself, not the whole sheet.</p></section>
  <aside class="bd-panel bd-rail">
   <div class="bd-openbox ${open?'':'done'}"><div class="bd-sh"><h3 class="t-heading">${open?`${open===2?'2 things':'1 thing'} still open`:'Nothing still open'}</h3>${goAct('arrowUpRight','See advance','booking')}</div>
-   ${pk?'':`<div class="bd-oi"><div class="bd-sth"><span>Parking code</span>${T('danger','Needed by 17:00')}</div><span class="t-meta muted">Asked Kasper 18 Oct, no reply. Needed by load-in 17:00.</span>${act('send','Ask again','parking')}</div>`}
-   ${ml?'':`<div class="bd-oi"><div class="bd-sth"><span>Meal time</span>${T('paid','Answered')}</div><span class="t-meta muted">Venue answered "around seven". Confirm or ask for a time.</span>${act('check','Confirm ~19:00','bdmeal')}</div>`}
-   <p class="bd-foot">${6+(pk?1:0)+(ml?1:0)} of 8 confirmed: set times, load-in, backline, sound engineer, rooms, guest list${pk?', parking':''}${ml?', meal':''}.</p></div>
-  <div class="bd-pgroup"><h2 class="t-title">People</h2>${people([['MR','Mette Ravn','vocals, guitar, drives car 1, +45 20 11 22 33'],['SL','Sofie Lund','synth, with Mette'],['JH','Jonas Holm','drums, drives car 2 with gear, +45 20 44 55 66'],['MK','Mette Kjær','venue, booker, +45 86 12 00 00'],['KH','Kasper Holm','venue, sound, +45 30 99 88 77']])}</div>
-  <div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Files</h2>${act('plus','Add','bdaddfile')}</div><div class="bd-rows">${[['Stage plot, Low Tide 2026.pdf','sent to Kasper 14 Oct'],['Set list, 25 Oct.txt','edited by Sofie yesterday'],['Agreement, Hotel Royal.pdf',`${ic('lock','s')}owner and admins only`]].map(([n,m])=>`<button class="bd-frow" data-act="bdfile" data-n="${esc(n)}"><span class="tx"><span>${n}</span><small>${m}</small></span>${ic('right','s')}</button>`).join('')}</div>
-   <p class="bd-foot">Fee, deposit and invoices are never on the day sheet, not even for admins. Money lives on the booking.</p></div>
+   ${pk?'':`<div class="bd-oi"><div class="bd-sth"><span>Parking code</span>${T('danger','Needed by 17:00')}</div><span class="t-meta muted">Asked Kasper 18 Oct, no reply. Needed by load-in 17:00.</span>${lact('send','Ask again','parking')}</div>`}
+   ${ml?'':`<div class="bd-oi"><div class="bd-sth"><span>Meal time</span>${T('paid','Answered')}</div><span class="t-meta muted">Venue answered "around seven". Confirm or ask for a time.</span>${lact('check','Confirm ~19:00','bdmeal')}</div>`}
+   <p class="t-meta muted">${6+(pk?1:0)+(ml?1:0)} of 8 confirmed: set times, load-in, backline, sound engineer, rooms, guest list${pk?', parking':''}${ml?', meal':''}.</p></div>
+  <div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">People</h2></div>${people([['MR','Mette Ravn','vocals, guitar, drives car 1, +45 20 11 22 33'],['SL','Sofie Lund','synth, with Mette'],['JH','Jonas Holm','drums, drives car 2 with gear, +45 20 44 55 66'],['MK','Mette Kjær','venue, booker, +45 86 12 00 00'],['KH','Kasper Holm','venue, sound, +45 30 99 88 77']])}</div>
+  <div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Files</h2>${act('plus','Add','bdaddfile')}</div><div class="bd-body list"><div class="bd-rows">${[['Stage plot, Low Tide 2026.pdf','sent to Kasper 14 Oct'],['Set list, 25 Oct.txt','edited by Sofie yesterday'],['Agreement, Hotel Royal.pdf',`${ic('lock','s')}owner and admins only`]].map(([n,m])=>`<button class="bd-frow" data-act="bdfile" data-n="${esc(n)}"><span class="tx"><span>${n}</span><small>${m}</small></span>${ic('right','s')}</button>`).join('')}</div>
+   <p class="bd-foot">Fee, deposit and invoices are never on the day sheet, not even for admins. Money lives on the booking.</p></div></div>
  </aside></div>
  </div>${L.abar('Sat 25 Oct, Hotel Royal','Ask about the day — when do we leave, what is still open with the venue, send the guest list')}`;};
 
@@ -240,7 +247,7 @@ Object.assign(A,{
  editmsg:()=>{S.editMsg=!S.editMsg;rerenderSend();if(!S.editMsg)T('Text saved for this message');},
  record:()=>{S.overlay={type:'bdrecord'};L.render();},
  bdgap:t=>{S.bdd.gap=+t.dataset.i;L.render();},
- recorded:()=>{const g=S.bdd.gap;S.overlay=null;S.booking.depositPaid=g!==0;S.checklist['Deposit received']=g!==0;S.bdd.check.paid['Deposit received']=true;L.render();T(g===0?'1.470 DKK recorded, 30 DKK left open on 2026-031':'1.470 DKK recorded on invoice 2026-031',()=>{S.booking.depositPaid=false;S.checklist['Deposit received']=false;});},
+ recorded:()=>{const g=S.bdd.gap;S.overlay=null;S.booking.depositPaid=g!==0;S.checklist['Deposit received']=g!==0;S.bdd.check.paid['Deposit received']=true;S.bdd.check.overdue['Deposit received']=g!==0;L.render();T(g===0?'1.470 DKK recorded, 30 DKK left open on 2026-031':'1.470 DKK recorded on invoice 2026-031',()=>{S.booking.depositPaid=false;S.checklist['Deposit received']=false;});},
  sendreminder:()=>{S.editMsg=false;S.toEdit=false;S.sentReminder=true;L.render();T('Påmindelse sent to Hotel Royal',()=>{S.sentReminder=false;});},
  bdresend:()=>T('Offer sent again to Mette Kjær',()=>{}),
  bdextend:()=>{S.bdd.extended=!S.bdd.extended;L.render();if(S.bdd.extended)T('Hold extended to Fri 17 Oct, Mette is told',()=>{S.bdd.extended=false;});},
