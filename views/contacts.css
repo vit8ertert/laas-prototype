@@ -265,3 +265,5 @@ button.cv-irow:hover b{text-decoration:underline}
 
 /* an icon inside help text sits on the text's middle, not its top */
 .help>svg.i{width:13px;height:13px;vertical-align:-2px;margin-right:2px}
+/* inline section edit: every field in a section is the same width (Vit 21 Oct: "some inputs longer than others") */
+.cv-form .field{max-width:640px!important}

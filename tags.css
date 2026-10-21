@@ -144,3 +144,5 @@
 .sidebar .nav.sub :is(.count,.alert){margin-right:32px}
 /* banners: icon and text start at the top, the action button sits in the vertical middle (Vit 21 Oct) */
 .banner>.btn,.banner>.ml-bact,.banner>div:last-child:has(>.btn){align-self:center}
+/* text fields show focus once: their own 2 px inner ring, no outer outline on top (Vit 21 Oct: "two focus borders") */
+:is(.input,input,textarea,select):focus-visible{outline:none!important}
