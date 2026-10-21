@@ -184,6 +184,12 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 /* banners: text on the left (lines capped at 65ch), actions pushed to the banner's right edge */
 :is([class$="banner"],[class*="banner "])>.tx+:is(.btn,button,a){margin-left:auto}
 :is([class$="banner"],[class*="banner "])>:is(.btn,button,a){flex:none}
+/* assistant bar can be hidden for now: a small Ask button stays in the corner */
+.abar-hide{width:32px;height:32px;margin-left:-4px}.abar-hide svg{width:16px;height:16px}
+.abar-mini-wrap{position:sticky;bottom:16px;flex:none;display:flex;justify-content:flex-end;padding:0 32px 16px;pointer-events:none;z-index:20}
+.abar-mini{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:var(--raised);border:1px solid var(--rule-strong);color:var(--ink);font:500 15px/18px var(--sans);box-shadow:0 8px 24px rgba(0,0,0,.25);animation:pop-in .2s cubic-bezier(.2,.8,.2,1) both}
+.abar-mini:hover{background:var(--top)}
+@media (max-width:860px){.abar-mini-wrap{padding:0 16px 16px}}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
 ::view-transition-old(main){animation:vt-out .14s ease-in both}
@@ -450,7 +456,8 @@ function topbar(){
  <button class="me" data-go="account"><span class="avatar-you">V</span><span class="nm">Vital</span>${ic('down','s')}</button></header>`;
 }
 function abar(ctx,ph){
- return `${S.booking.sheet?assistantSheet():''}<div class="abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent s" data-act="ask">Ask</button></div>`;
+ if(S.abarHidden)return `<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" title="Show the assistant bar (⌘J)">${ic('ai','s')}<span>Ask</span></button></div>`;
+ return `${S.booking.sheet?assistantSheet():''}<div class="abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent s" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" title="Hide until you open it again (⌘J)">${ic('down','s')}</button></div>`;
 }
 
 /* ---------- views ---------- */
@@ -896,6 +903,8 @@ document.addEventListener('click',e=>{
   asstnew:()=>{S.asst='new';S.asstEdit=false;render();},asstcancel:()=>{S.asst='cancelled';render();},asstedit:()=>{S.asstEdit=!S.asstEdit;render();},
   asstconfirm:()=>{S.asst='done';S.asstEdit=false;render();toast('3 changes made',()=>{S.asst='plan'});},
   asksugg:()=>{const k=t.dataset.q;if(k==='plan'){S.asst='plan';render();}else if(k==='nudge'){S.booking.state='offer';S.booking.cancelled=false;go('booking');S.booking.sheet=true;render();}else go(k);},
+  abarhide:()=>{S.abarHidden=true;render();toast('Assistant bar hidden. Press Ask or ⌘J to bring it back',()=>{S.abarHidden=false});},
+  abarshow:()=>{S.abarHidden=false;render();setTimeout(()=>document.getElementById('ask')?.focus(),50);},
   abarctxoff:()=>{S.abarCtxOff=S.view;render();},
   abarnew:()=>{S.asst='new';S.asstEdit=false;go('assistant');},
   readall:()=>{S.notifs.forEach(n=>n.unread=false);render();},
@@ -928,6 +937,7 @@ document.addEventListener('change',e=>{const t=e.target;
 });
 document.addEventListener('keydown',e=>{
  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open('palette',{q:'',sel:0});return;}
+ if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='j'){e.preventDefault();S.abarHidden=!S.abarHidden;render();if(!S.abarHidden)setTimeout(()=>document.getElementById('ask')?.focus(),50);return;}
  if((e.metaKey||e.ctrlKey)&&e.key==='\\'){e.preventDefault();S.collapsed=!S.collapsed;render();return;}
  if(e.key==='Escape'){if(S.overlay)close();else if(S.booking.sheet){S.booking.sheet=false;render();}else if(S.flowsOpen){S.flowsOpen=false;render();}return;}
  if(S.overlay&&S.overlay.type==='palette'){const items=[...document.querySelectorAll('.pal .it')];if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();S.overlay.sel=(S.overlay.sel+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;render();}if(e.key==='Enter'){e.preventDefault();items[S.overlay.sel]?.click();}}
