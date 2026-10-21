@@ -595,3 +595,15 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 @media (max-width:640px){.m-wide .m-iline{grid-template-columns:1fr 1fr}.m-wide .m-iline .m-fd{grid-column:1/-1}.m-wide .m-dates{grid-template-columns:1fr}}
 .m-wide .m-iline+.m-iline .field>label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.m-wide #mi-lines{gap:8px}
 .m-wide .m-tot{gap:0;padding:8px 4px}.m-wide .m-tot .m-line{padding:8px 12px}
+/* invoice progress, segmented (replaces the dots and lines) */
+.iv-prog{padding:16px 20px 14px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);margin-bottom:24px;display:flex;flex-direction:column;gap:14px}
+.iv-ph1{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font:400 14px/20px var(--sans)}.iv-ph1 b{font-weight:500}.iv-ph1 .muted{font-size:13px;white-space:nowrap}
+.iv-prog ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.iv-prog li{display:flex;flex-direction:column;gap:2px;min-width:0}
+.iv-prog i{height:6px;border-radius:3px;background:var(--well);margin-bottom:8px;position:relative;overflow:hidden}
+.iv-prog li.done i{background:var(--ok)}
+.iv-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
+.iv-prog li.att i{background:var(--bad)}
+.iv-prog b{font:500 13px/18px var(--sans)}.iv-prog small{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
+@media (max-width:700px){.iv-prog{padding:12px}.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}

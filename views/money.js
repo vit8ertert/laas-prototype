@@ -281,12 +281,17 @@ const BAND={name:'Low Tide I/S',addr:'Nørregade 12, 5000 Odense C',cvr:'CVR 41 
 const invMore=d=>{const k=d.r[5];return k==='Draft'?[['Edit lines','mnyedit'],['Delete draft','mnydeldraft']]:[['Duplicate','mnydup'],['Credit note','mnycredit'],...(d.paid?[]:[['Stop reminders','mnystoprem']]),['Open the booking','mnybooking']];};
 const invState=d=>{const t=d.excl+Math.round(d.excl*.25);const paidAmt=d.rich?(d.paid?1470:0):(d.paid?t:0);return {t,paidAmt,due:Math.max(0,d.paid&&!d.rich?0:t-paidAmt),short:d.rich&&d.paid?t-paidAmt:0};};
 L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Math.round(d.excl*.25);const st=invState(d);const draft=d.r[5]==='Draft';const over=d.rich&&!d.paid;
- const dueTxt=d.rich?'12 Oct 2026':(d.r[3].replace(/^(due|paid|sends) /,'')+' 2026');const issued=d.rich?'7 Oct 2026':draft?'not issued yet':'14 days before due';
+ const dueTxt=d.rich?'12 Oct 2026':d.r[0]==='2026-032'?'25 Oct 2026':(d.r[3].replace(/^(due|paid|sends) /,'')+' 2026');const issued=d.rich?'7 Oct 2026':draft?'not issued yet':'14 days before due';
  const primary=draft?btn('accent','Approve and send',`data-act="mnyinvsend" data-id="${d.r[0]}"`,'send'):d.paid?btn('secondary','Receipt','data-act="mnypdf" data-id="'+d.r[0]+'"','filetext'):btn('accent','Record payment',`data-act="invpay" data-id="${d.r[0]}"`,'check');
  const second=over?btn('secondary','Send påmindelse','data-act="mnyremind"','mail'):'';
  /* lifecycle: done steps carry their date, the current one says what happens next */
  const cur=d.steps.findIndex(x=>x[2]!==1);
- const steps=`<ol class="iv-steps" aria-label="Invoice status">${d.steps.map(([t,sub,ok],i)=>`<li class="${ok===1?'done':ok==='att'?'att':i===cur?'now':'todo'}"><i aria-hidden="true">${ok===1?ic('check','s'):''}</i><span><b>${t.replace(', number locked','')}</b><small>${ok==='att'?`${late()?'6 days late':sub}`:sub}</small></span></li>`).join('')}</ol>`;
+ /* lifecycle as a segmented progress line (Vit 21 Oct: "make it nicer"): one bar per step, done = filled, current = half,
+    late = red; under it only what is known (a date, or the plan), never "not yet"; a line on top says what happens next */
+ const plan={Approved:draft?'when you approve':'',Sent:draft?(d.r[3].startsWith('sends')?d.r[3].replace('sends ','planned ')+'':''):'',Viewed:'',Paid:draft||!d.paid?`due ${dueTxt.replace(' 2026','')}`:''};
+ const nextTxt=draft?`Approve to lock number ${d.r[0]}, then it sends ${d.r[3].replace('sends ','on ')}`:over?'6 days late. Send a reminder, or record the payment if it came in':d.paid?(st.short?'Paid, 30 DKK short':'Paid in full, nothing left to do'):'Sent, waiting for the venue to pay';
+ const doneN=d.steps.filter(x=>x[2]===1).length;
+ const steps=`<section class="iv-prog" aria-label="Invoice status"><div class="iv-ph1"><b>${nextTxt}</b><span class="muted">${doneN} of ${d.steps.length} done</span></div><ol>${d.steps.map(([t,sub,ok],i)=>{const k=ok===1?'done':ok==='att'?'att':i===cur?'now':'todo';const name=t.replace(', number locked','');const sb=ok==='att'?'6 days late':ok===1?(sub==='done'?'':sub):(plan[name]||'');return `<li class="${k}" ${k==='now'?'aria-current="step"':''}><i aria-hidden="true"></i><b>${name}</b><small>${sb||'&nbsp;'}</small></li>`;}).join('')}</ol></section>`;
  const paper=`<article class="iv-paper" aria-label="Invoice ${d.r[0]} as sent">
   <header class="iv-ph"><div><span class="iv-logo" aria-hidden="true">LT</span><b>${BAND.name}</b><small>${BAND.addr}<br>${BAND.cvr}</small></div><div class="iv-pt"><span class="iv-kind">Faktura</span><b class="mono">${d.r[0]}</b></div></header>
   <div class="iv-meta"><div><span class="iv-lab">Bill to</span><b>${d.company}</b><small>${d.addr}<br>${d.to}</small>${draft?`<button class="link iv-edit" data-go="venue" data-id="${d.r[7]}">Change</button>`:''}</div>
