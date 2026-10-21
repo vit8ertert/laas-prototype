@@ -135,3 +135,7 @@
 :is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 /* inputs inside a composed field (search boxes, composers) show focus on the field, not a second ring inside it */
 :is(input,textarea):not(.input):focus-visible{outline:none!important}
+/* sidebar numbers (Vit 21 Oct: some stuck out over the hover fill, alignment differed): every count and alert
+   ends on the row's 8 px padding, the same line as the chevrons; same 20 px height, at least 24 wide, digits centred,
+   so 1, 12 and 123 sit on one right edge. Grey = how many; lilac = needs you (unread mail, a catalogue problem). */
+.sidebar .nav .count,.sidebar .nav .alert{margin-right:0;box-sizing:border-box;min-width:24px;height:20px;padding:2px 7px;justify-content:center;text-align:center;font-variant-numeric:tabular-nums;flex:none}

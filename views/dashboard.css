@@ -396,10 +396,11 @@ button.d-kpi:hover{background:var(--raised)}
 .d-hg.miss,.d-hi.miss{display:none}
 .d-hnone{margin:12px 0 0;padding:0 12px;font-size:13px;line-height:18px}
 .d-hfoot{margin-top:12px}
-/* collapsed: a 48 px rail with the toggle, search and new conversation */
-.d-asst:has(.d-hist.col){grid-template-columns:48px minmax(0,1fr)}
-.d-asst.withrec:has(.d-hist.col){grid-template-columns:48px minmax(0,1fr) 360px}
-.d-hist.col{padding-right:8px}
+/* collapsed: a narrow rail with the toggle, search and new conversation */
+/* rail = a 36 px icon column with 32 px to the divider, the same as the page edge on the left (Vit 21 Oct) */
+.d-asst:has(.d-hist.col){grid-template-columns:69px minmax(0,1fr)}
+.d-asst.withrec:has(.d-hist.col){grid-template-columns:69px minmax(0,1fr) 360px}
+.d-hist.col{padding-right:32px}
 .d-hist.col .d-hh{flex-direction:column;margin:0}.d-hist.col .d-hh .grow{display:none}
 .d-hist.col>:not(.d-hh){display:none}
 /* Assistant conversation, one spacing system (Vit 21 Oct audit):
