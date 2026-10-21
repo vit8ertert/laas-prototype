@@ -441,3 +441,7 @@ button.acc-si:hover{background:var(--hover)}
 /* sign-up: the email CTA sits 24 px under the email field (Vit 21 Oct: "space on top of the CTA") */
 .acc-obstack>.field+.btn{margin-top:12px}
 .acc-obtop .logo{display:flex;align-items:center;gap:10px} /* logo with "label as a service" beside it, as in the top bar */
+/* sign-up (Vit 21 Oct: "social buttons look exactly like input fields"): sign-in buttons are a soft solid fill with no border,
+   fields keep the border; onboarding fields are 48 high like the buttons, text centred */
+.acc-obstack .btn.secondary.lg{background:color-mix(in srgb,var(--ink) 11%,var(--canvas))!important;box-shadow:none!important;border:0!important}
+.acc-ob .field :is(input.input,select.input){height:48px;padding-block:0;padding-inline:16px;line-height:normal}
