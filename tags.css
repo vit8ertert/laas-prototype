@@ -146,3 +146,10 @@
 .banner>.btn,.banner>.ml-bact,.banner>div:last-child:has(>.btn){align-self:center}
 /* text fields show focus once: their own 2 px inner ring, no outer outline on top (Vit 21 Oct: "two focus borders") */
 :is(.input,input,textarea,select):focus-visible{outline:none!important}
+/* table headers one step darker (Vit 21 Oct): labels move from muted towards ink, and in light mode the header row sits
+   one shade down (sunken instead of canvas); dark mode keeps canvas, a step darker would read as a black bar */
+:root{--th-ink:color-mix(in srgb,var(--ink) 55%,var(--muted));--th-bg:var(--canvas)}
+:root[data-theme="light"]{--th-bg:var(--sunken)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--th-bg:var(--sunken)}}
+:is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr){background:var(--th-bg)!important}
+:is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr,.cv-table thead tr th),:is(.bk-th,.ml-th,.ec-th,.ml-lth)>span,table:not(.iv-lines) th{color:var(--th-ink)!important}
