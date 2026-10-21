@@ -436,6 +436,9 @@ function mini(g=S.genre){const h={metal:'What are we unleashing first?',classica
  <div class="chips">${['Add our next gig','Import my calendar','Who still owes us an invoice?','Show me a sample band'].map(c=>`<span>${ic('ai','s')}${c}</span>`).join('')}</div>
  <h4>Or start by hand</h4><p class="sm">Create the first booking, import a calendar, or look around a sample band marked as test.</p>
  <div class="cards">${[['odense-live','Create a booking','Date, venue, fee, people'],['notebook','Import calendar','Google, Microsoft 365 or .ics'],['studio-b','Sample band','Marked as test, delete any time']].map(([im,t,s])=>`<span><img src="${IMG(im)}" alt=""><b>${t}</b><small>${s}</small></span>`).join('')}</div></div></div></div>`;}
+/* theme options as compact swatch cards: three colours and the name; "Fits your genre" in the top right corner */
+const lookOrder=()=>{const match=GENRE_THEME[S.onboarding.genre]||'label';return [match,...['label','metal','electronic','classical'].filter(x=>x!==match)];};
+function lookPicker(order=lookOrder(),match=order[0]){return `<div class="acc-looks" role="radiogroup" aria-label="Look">${order.map(id=>{const t=L.THEMES.find(x=>x[0]===id)||[id,TNAME[id],'',[]];return `<button class="acc-look ${S.genre===id?'on':''}" role="radio" data-genre="${id}" aria-checked="${S.genre===id}"><span class="sw">${t[3].slice(0,3).map(c=>`<i style="background:${c}"></i>`).join('')}</span><span class="nm">${TNAME[id]}</span>${id===match&&match!=='label'?'<span class="fits">Fits your genre</span>':''}</button>`;}).join('')}</div>`;}
 function fitWin(){document.querySelectorAll('.acc-win').forEach(w=>{const s=w.clientWidth/1456;w.style.setProperty('--k',s);w.style.height=(910*s)+'px';});}
 addEventListener('resize',fitWin);
 
@@ -465,11 +468,11 @@ function obSteps(st){const ob=S.onboarding;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
   const desc={label:'The LAAS look, lilac on dark',metal:'Black and bone, hard type',electronic:'Electric navy and lime',classical:'Ivory, gold and burgundy'};
   /* Vit 21 Oct: genre and band size are asked on "Your band"; this step is the look only (Figma 443:19646 still has the older version) */
-  return head('Pick your look',match==='label'?`The default look fits ${ob.genre.toLowerCase()}. Switch any time in Settings.`:`We picked ${TNAME[match]} for ${ob.genre.toLowerCase()}. Switch any time in Settings, or keep the default.`)
-  +`<span class="acc-lbl">Look</span><div class="acc-obthemes">${order.map(id=>`<button class="acc-obth ${S.genre===id?'on':''}" data-genre="${id}" aria-pressed="${S.genre===id}"><span class="pv tok-${id}-${id==='classical'?'light':'dark'}">${mini(id)}${id===match&&match!=='label'?'<span class="fits">Fits your genre</span>':''}</span><span class="nm">${TNAME[id]}</span><span class="d">${desc[id]}</span></button>`).join('')}</div>
-  <div class="field"><span class="acc-lbl">Appearance</span>${appearSeg()}<span class="help">Every theme has a light and a dark version. Match system follows your phone or computer.</span></div>
-  <p class="acc-obfoot">Money, contracts and anything a venue sees always stay in the plain LAAS style.</p>
-  <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${TNAME[S.genre]}</button></div>`;}
+  /* Vit 21 Oct: "too much info on this step". One line of copy, appearance, two buttons; the looks are picked under the big preview on the right */
+  return head('Pick your look',match==='label'?'Change it any time in Settings.':`${TNAME[match]} fits ${ob.genre.toLowerCase()}. Change it any time in Settings.`)
+  +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
+  <div class="field"><span class="acc-lbl">Appearance</span>${appearSeg()}</div>
+  <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
  case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
   +`<div class="acc-obinv">${rows.map(([m,r],i)=>`<div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div>`).join('')}</div>
@@ -483,7 +486,7 @@ function obSteps(st){const ob=S.onboarding;
  }}
 L.ONBOARDING=function(){const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;
  queueMicrotask(()=>{fitWin();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
- const right=st===4?`<div class="r acc-live"><div class="acc-win">${mini()}</div><span class="cap">Preview: Low Tide in ${TNAME[S.genre]}</span></div>`:`<div class="r"><img src="${IMG(photo)}" alt=""></div>`;
+ const right=st===4?`<div class="r acc-live"><div class="acc-win">${mini()}</div>${lookPicker()}</div>`:`<div class="r"><img src="${IMG(photo)}" alt=""></div>`;
  return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.LOGO}</span><span style="flex:1"></span>${prog?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${L.flowBtnInline()}</div>
  ${prog?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}
  <div class="acc-obform">${obSteps(st)}</div></div>${right}</div>`;};

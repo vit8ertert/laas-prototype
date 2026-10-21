@@ -142,7 +142,7 @@ function chartPlot(){const D=chartData(),n=D.length,ts=[];for(let t=0;t<=(n-1)*C
  const edges=[ts.map(()=>0)];f.forEach((g,k)=>edges.push(ts.map((t,j)=>edges[k][j]+Math.max(0,g(t)))));
  const pts=e=>ts.map((t,j)=>`${cx(t).toFixed(1)},${cy(e[j]).toFixed(1)}`);
  const areas=SER.map((s,k)=>`<path class="m-a ${s[0]}" d="M${pts(edges[k+1]).join('L')}L${pts(edges[k]).reverse().join('L')}Z"/>`).join('');
- const gaps=SER.slice(0,-1).map((s,k)=>`<path class="m-gap" d="M${pts(edges[k+1]).join('L')}"/>`).join('');
+ const gaps=SER.map((s,k)=>`<path class="m-edge ${s[0]}" d="M${pts(edges[k+1]).join('L')}"/>`).join('');
  const exp=`<path class="m-exp" d="M${ts.map(t=>`${cx(t).toFixed(1)},${cy(fo(t)).toFixed(1)}`).join('L')}"/>`;
  /* direct labels in the right gutter, at the middle of each band in the last month, nudged 18 px apart */
  const last=D[n-1];let acc=0;const lab=SER.map(s=>{const v=last[s[0]],mid=acc+v/2;acc+=v;return {s,y:cy(mid)/CHH*220};});

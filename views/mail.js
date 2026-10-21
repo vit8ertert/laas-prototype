@@ -138,8 +138,8 @@ const rowActs=(t,f)=>{const st=M.starred.includes(t.id);
  if(f==='spam')return iconBtn('inbox','Not spam','mailnotspam',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
  if(f==='trash')return iconBtn('undo','Restore','mailrestore',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
  const ar=M.archived.includes(t.id);
- return iconBtn('star',st?'Unstar':'Star','mailstar',t.id,`aria-pressed="${st}"`)
-  +(f==='sent'?'':iconBtn(t.unread?'check':'mail',t.unread?'Mark read':'Mark unread','mailread',t.id))
+ /* Vit 21 Oct: two stars on hover confused; the star lives only in the status column now */
+ return (f==='sent'?'':iconBtn(t.unread?'check':'mail',t.unread?'Mark read':'Mark unread','mailread',t.id))
   +(f==='sent'?'':iconBtn(ar?'inbox':'archive',ar?'Move to inbox':'Archive','mailarchive',t.id))
   +iconBtn('trash','Move to Trash','mailtrash',t.id);};
 const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].reverse().find(m=>m.me):null,unread=!sent&&t.unread,st=M.starred.includes(t.id);
@@ -149,7 +149,7 @@ const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].rever
  <span class="ml-from">${sent?'To: ':''}${L.hl(t.from,q)}${t.org?`<small>${L.hl(t.org,q)}</small>`:''}</span>
  <span class="ml-text"><b>${L.hl(t.subject,q)}</b><span>${L.hl(sent?lastMe.body:t.excerpt,q)}</span></span>
  <span class="ml-linkcol">${linkChip(t,'button')}</span>
- <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}${st&&f!=='starred'?`<span class="ml-star" title="Starred">${ic('star','s')}</span>`:''}</span>
+ <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}${f==='spam'||f==='trash'?'':`<button class="ml-star ${st?'on':''}" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Unstar':'Star'}" title="${st?'Unstar':'Star'}">${ic('star','s')}</button>`}</span>
  <span class="ml-time">${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
  <span class="ml-acts">${rowActs(t,f)}</span>
 </div>`;};

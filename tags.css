@@ -39,3 +39,6 @@
 .facts-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
 .facts-dl dd{margin:0;font:400 15px/22px var(--sans);overflow-wrap:anywhere}
 .facts-h{margin:8px 0 0;font:500 13px/18px var(--sans);color:var(--muted)}
+
+/* one underline for the whole app (Vit 21 Oct: "this default underline looks bad"): 1 px, half-strength colour, clear of the descenders */
+*{text-decoration-thickness:1px;text-underline-offset:.3em;text-decoration-color:color-mix(in srgb,currentColor 55%,transparent)}
