@@ -38,7 +38,8 @@ const NET={
 };
 const SOCIAL=['ig','fb','tt'],DELIV=['yt','sc'];
 const nets=list=>{const n=list.map(k=>NET[k].n);return n.length<3?n.join(' and '):n.slice(0,-1).join(', ')+' and '+n[n.length-1];};
-const av=k=>`<span class="so-av" aria-hidden="true">${NET[k].a}</span>`;
+/* service logos instead of letters (Vit 21 Oct: "use logos of SoMe"), views/brands.js */
+const av=k=>L.brand(NET[k].n,28);
 
 /* ---------- data ---------- */
 const POSTS=[
@@ -304,8 +305,8 @@ VIEWS.deliveries=()=>{
  return page('',`${header('Deliveries',`Push a track’s audio to YouTube or SoundCloud. ${cap(sub)}`,btns)}
  ${failed&&!so.dbannerOff?banner('attention','alert',`${esc(failed.track)} was rejected by ${NET[failed.dest].n}`,esc(failed.why),`<button class="btn secondary s" data-act="soretry" data-id="${failed.id}">${ic('refreshCw','s')}Retry with 44.1 kHz</button>`,'sodbannerx'):''}
  <div class="bk-content"><div class="bk-filters">${chip('dnet','Destination',so.dnet)}</div>
- ${list.length?`<div class="bk-table" role="table" aria-label="Deliveries"><div class="bk-tr so-d bk-th" role="row"><span>Track</span><span>Destination</span><span>Visibility</span><span>When</span><span>Status</span><span class="n">Plays</span></div>
- ${list.map((d,i)=>`<div class="bk-tr so-d" role="row" tabindex="0" data-act="sodel" data-id="${d.id}" style="--i:${i}"><span class="tt"><img class="bk-thumb" src="${IMG(d.img)}" alt=""><b>${esc(d.track)}</b></span><span class="m">${NET[d.dest].n}</span><span class="m">${d.vis}</span><span class="w">${d.when}</span><span>${d.st==='processing'?`<span class="so-st"><span class="tag paid">Processing</span><span class="so-prog" aria-label="${d.pct} percent"><i style="width:${d.pct}%"></i></span></span>`:`<span class="tag ${DSTAT[d.st][0]}">${DSTAT[d.st][1]}</span>`}</span><span class="n mono">${d.plays}</span></div>`).join('')}</div>
+ ${list.length?`<div class="bk-table" role="table" aria-label="Deliveries"><div class="bk-tr so-d bk-th" role="row"><span>Track</span><span>Destination</span><span>Format</span><span>Visibility</span><span>When</span><span>Status</span><span class="n">Plays</span></div>
+ ${list.map((d,i)=>`<div class="bk-tr so-d" role="row" tabindex="0" data-act="sodel" data-id="${d.id}" style="--i:${i}"><span class="tt"><img class="bk-thumb" src="${IMG(d.img)}" alt=""><b>${esc(d.track)}</b></span><span class="m so-dest">${L.brand(NET[d.dest].n,24)}${NET[d.dest].n}</span><span><span class="trk-fmt t-meta" title="${esc(d.file)}">${L.fmtShort(d.file)}</span></span><span class="m">${d.vis}</span><span class="w">${d.when}</span><span>${d.st==='processing'?`<span class="so-st"><span class="tag paid">Processing</span><span class="so-prog" aria-label="${d.pct} percent"><i style="width:${d.pct}%"></i></span></span>`:`<span class="tag ${DSTAT[d.st][0]}">${DSTAT[d.st][1]}</span>`}</span><span class="n mono">${d.plays}</span></div>`).join('')}</div>
  <div class="bk-foot"><span>Showing ${list.length}. The audio file stays in Catalogue; taking a video down never deletes it.</span>${so.dnet.length?'<button class="btn ghost s bk-fb" data-act="soclear">Show all</button>':''}</div>`
  :`<div class="bk-empty"><div class="hd"><h2 class="t-title">Nothing delivered to ${esc(so.dnet.join(', '))} yet</h2><p>Push a track from Catalogue and it shows here with its status.</p></div><div class="acts"><button class="btn ghost" data-act="soclear">Clear filter</button></div></div>`}</div>`);
 };
@@ -368,6 +369,8 @@ DR.sodel=(id)=>{const d=S.so.dels.find(x=>x.id===id);const s=DSTAT[d.st];
  body:`<div class="so-dr"><div class="so-dst"><span class="tag ${s[0]}">${s[1]}${d.st==='processing'?` ${d.pct} %`:''}</span>${d.st==='processing'?`<span class="so-prog wide"><i style="width:${d.pct}%"></i></span>`:''}</div>
  ${d.st==='failed'?`<div class="bd-banner attention">${ic('alert','s')}<div class="tx"><b>Rejected on ${d.when}</b><span>${esc(d.why)}</span></div></div>`:''}
  <dl class="bd-stack"><dt>Title</dt><dd>${esc(d.title)}</dd><dt>File</dt><dd>${d.file}</dd><dt>Account</dt><dd>${NET[d.dest].n}, ${esc(NET[d.dest].h)}</dd><dt>Visibility</dt><dd>${d.vis}</dd><dt>${d.st==='queued'?'Goes up':'Started'}</dt><dd>${d.when}</dd>${d.st==='live'?`<dt>Plays</dt><dd class="mono">${d.plays}</dd>`:''}</dl>
+ <h4 class="facts-h">File</h4>${L.factsDl(L.fileFacts(d.file))}
+ <h4 class="facts-h">Royalties</h4>${L.factsDl(L.rights(d.track))}
  <div class="bk-what">${ic('lock','s')}<span>${d.st==='live'?'Taking it down removes it from '+NET[d.dest].n+'. The file stays in Catalogue.':'The audio file stays in Catalogue whatever happens here.'}</span></div></div>`,foot};};
 
 /* =====================================================================
