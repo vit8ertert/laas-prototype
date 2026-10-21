@@ -164,7 +164,14 @@ document.addEventListener('pointermove',e=>{const p=e.target.closest&&e.target.c
 const chart=()=>`<section class="m-chart"><div class="m-chh"><h3 class="t-heading">Income and expenses, last 12 months</h3>${ghostBtn(M.showTable?'Show chart':'Show data table','data-act="mnytable"')}</div>
  <div class="m-leg">${SER.map(s=>`<span><i class="${s[0]}"></i>${s[1]}</span>`).join('')}<span><i class="exp"></i>Expenses</span></div>
  ${M.showTable?chartTable():chartPlot()}</section>`;
-const breakdown=(title,total,rows,cls='')=>`<div class="m-bd ${cls}"><div class="m-bdh"><h3 class="t-heading">${title}</h3><span>${total}</span></div><div class="m-bdl">${rows.map(([n,s,w,a])=>`<div class="m-bdr"><span class="m-tx"><span>${n}</span><small>${s}</small></span><span class="m-track"><i style="width:${w}px"></i></span><span class="mono">${a}</span></div>`).join('')}</div></div>`;
+/* where money came from / went: a donut with the total in the middle, rows as its legend (Vit 21 Oct: "pie charts? donut charts?").
+   Income slices wear the chart colours (same series as the Reports chart); spending is one neutral ramp, so the two never read as the same thing.
+   Slices are separated by a 2 px gap; hovering a row lifts its slice. */
+const donut=(vals,keys)=>{const R=52,C=2*Math.PI*R,tot=vals.reduce((a,b)=>a+b,0);let off=0;
+ return `<svg class="m-donut" viewBox="0 0 140 140" aria-hidden="true"><g transform="rotate(-90 70 70)">${vals.map((v,i)=>{const len=v/tot*C,seg=`<circle class="m-seg ${keys[i]}" data-i="${i}" cx="70" cy="70" r="${R}" stroke-dasharray="${Math.max(0,len-2).toFixed(2)} ${C}" stroke-dashoffset="${(-off).toFixed(2)}"/>`;off+=len;return seg;}).join('')}</g></svg>`;};
+const breakdown=(title,total,rows,cls='')=>{const vals=rows.map(r=>+r[3].replace(/\./g,'')),tot=vals.reduce((a,b)=>a+b,0),keys=cls==='out'?rows.map((r,i)=>'n'+i):['gig','stream','merch','grant'];
+ return `<div class="m-bd ${cls}"><div class="m-bdh"><h3 class="t-heading">${title}</h3></div><div class="m-bdl"><div class="m-dn">${donut(vals,keys)}<span class="m-dnc"><b class="mono">${total.replace(' DKK','')}</b><small>DKK ${cls==='out'?'out':'in'}</small></span></div>
+ <div class="m-bdrs">${rows.map(([n,sub],i)=>`<div class="m-bdr" data-i="${i}"><i class="m-sw ${keys[i]}"></i><span class="m-tx"><span>${n}</span><small>${sub}</small></span><span class="m-pc">${Math.round(vals[i]/tot*100)} %</span><span class="mono">${rows[i][3]}</span></div>`).join('')}</div></div></div>`;};
 const reportsRow=()=>`<div class="m-reports"><span>Reports</span>${['Profit and loss','Balance sheet','Trial balance','VAT period'].map(r=>`<button class="chip m-chip" data-act="mnyreport" data-r="${r}">${r}</button>`).join('')}</div>`;
 const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% vs 2025 to date','ok','rule'),kpi('Expenses','121.950','−4% vs 2025 to date','muted','rule'),kpi('Result','64.450','before tax','muted','rule'),kpi('Cash at bank','112.300','13.500 invoiced, not paid','att','att')])}
  ${chart()}
