@@ -178,3 +178,6 @@
 .m-kvr{padding:0!important}
 .cv-fn{padding-left:0!important;padding-right:0!important}
 .bd-panel .bd-stack,.bd-stack.rows>div{padding:0!important}
+/* page-level More is always the bordered secondary icon button, same height as its neighbours (Vit 21 Oct); a More
+   inside a row (mail accounts, calendar sync) stays a small ghost, it belongs to the row, not the page */
+.btn.icon:is(.bd-more,.cv-more,.cat-more,.m-more,.aud-more){width:52px;justify-content:center}

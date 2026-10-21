@@ -189,7 +189,7 @@ L.VIEWS.contact=()=>{editScope();
  return `<div class="m-tint" aria-hidden="true"></div><div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="contacts">${ic('left','s')}Contacts</button>
  <div class="hero cv-hero"><img src="${IMG(d.img)}" alt=""><div class="tx"><span class="k">${esc(d.kind)} at ${esc(d.org)}</span><h1>${esc(d.name)}</h1><div class="facts"><span>${esc(d.where)}</span><span>${d.n} bookings together</span><span>Last contact ${esc(d.last)}</span></div></div></div>
- <div class="cv-actions"><span class="cv-av">${d.ini}</span><div class="cv-who"><span class="tag accent">${esc(d.kind)}</span></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn ghost cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
+ <div class="cv-actions"><span class="cv-av">${d.ini}</span><div class="cv-who"><span class="tag accent">${esc(d.kind)}</span></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('Bookings together',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${rows.map(r=>bookRow(r,'HR')).join('')||'<p class="muted cv-in">None yet</p>'}</div></section>
   <section class="cv-sec">${secHead('Details',editBtn('details'))}${kvSec('details',d.details)}</section>
@@ -209,7 +209,7 @@ L.VIEWS.venue=()=>{editScope();
  return `<div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="venues">${ic('left','s')}Venues</button>
  <div class="hero cv-hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${esc(v.name)}</h1><div class="facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div></div></div>
- <div class="cv-actions cv-vact"><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="stage">Edit</button><button class="btn accent" data-act="newbooking">New booking here</button><button class="btn ghost cv-more" data-act="cvmore" data-m="venue" aria-label="More">${ic('more','s')}</button></div></div>
+ <div class="cv-actions cv-vact"><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="stage">Edit</button><button class="btn accent" data-act="newbooking">New booking here</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="venue" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('On stage',editBtn('stage'))}${kvSec('stage',(VDET[v.id]||VDET.royal).stage)}</section>
   <section class="cv-sec">${secHead('Getting there',editBtn('getting'))}${kvSec('getting',(VDET[v.id]||VDET.royal).getting,'<p class="cv-fn">Written once, reused in every day sheet for this venue. Members see it; venues and the calendar feed do not.</p>')}</section>

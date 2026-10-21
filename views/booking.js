@@ -144,7 +144,7 @@ L.VIEWS.booking=()=>{const k=keyOf();const s=STATES[k]();
  return `<div class="page bd-page bd-bk"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="bookings">${ic('left','s')}Bookings</button>
  ${hero('Concert at Hotel Royal, Aarhus',['Sat 25 Oct','Doors 20:00','On stage 21:30','Fee 4.500 DKK'])}
- <div class="bd-bar hd"><div class="bd-tb">${s.pill}</div><div class="bd-hacts">${s.btns}<button class="btn ghost icon bd-more" aria-label="More" data-act="bookingmore">${ic('more')}</button></div></div>
+ <div class="bd-bar hd"><div class="bd-tb">${s.pill}</div><div class="bd-hacts">${s.btns}<button class="btn secondary icon bd-more" aria-label="More" data-act="bookingmore">${ic('more')}</button></div></div>
  ${s.banner||''}${s.before||''}
  <div class="bd-grid"><div class="bd-main">${s.main}</div>${s.panel}</div>
  </div>${bdAbar(S.booking.sheet?'Ask a follow-up, or say “send it”':s.ph)}`;};
@@ -214,7 +214,7 @@ L.VIEWS.gigday=()=>{const H0=14,HN=11,X=t=>((t-H0)/HN*100);
  return `<div class="page bd-page bd-bk bd-gd"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="booking">${ic('left','s')}Saturday hotel gig</button>
  ${hero('Day sheet, Saturday 25 Oct',['Load-in 17:00','On stage 21:30','Curfew 00:30','118 km from Odense'])}
- <div class="bd-bar hd"><div class="bd-tb">${pill('confirmed','Confirmed',false,true)}</div><div class="bd-hacts">${hb('secondary','fileText','PDF','bdpdf')}${hb('accent','send','Send to band','bdsendday')}<button class="btn ghost icon bd-more" aria-label="More" data-act="bddaymore">${ic('more')}</button></div></div>
+ <div class="bd-bar hd"><div class="bd-tb">${pill('confirmed','Confirmed',false,true)}</div><div class="bd-hacts">${hb('secondary','fileText','PDF','bdpdf')}${hb('accent','send','Send to band','bdsendday')}<button class="btn secondary icon bd-more" aria-label="More" data-act="bddaymore">${ic('more')}</button></div></div>
  ${S.bdd.gigBanner?banner('info','ai','Soundcheck moved 18:30 → 17:45, venue confirmed this morning','Jonas and Sofie were told at 09:12 with just this change. Mette has not opened it yet.',`<button class="btn secondary s" data-act="bdnudgemette">Nudge Mette</button>`,'gig'):''}
  <section class="strip bd-strip"><div class="bd-nowr"><span class="bd-now">Now 14:20</span><b>Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
   <div class="track">${Array.from({length:HN+1},(_,h)=>`<span class="h ${h===HN?'last':''}" style="left:${X(H0+h)}%">${String((H0+h)%24).padStart(2,'0')}</span><span class="tick ${h===HN?'last':''}" style="left:${X(H0+h)}%"></span>`).join('')}

@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=77a2619">
+<link rel="stylesheet" href="tokens.css?v=4a99682">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -315,19 +315,19 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=77a2619">
-<link rel="stylesheet" href="views/tour.css?v=77a2619">
-<link rel="stylesheet" href="views/dashboard.css?v=77a2619">
-<link rel="stylesheet" href="views/bookings.css?v=77a2619">
-<link rel="stylesheet" href="views/booking.css?v=77a2619">
-<link rel="stylesheet" href="views/contacts.css?v=77a2619">
-<link rel="stylesheet" href="views/money.css?v=77a2619">
-<link rel="stylesheet" href="views/catalogue.css?v=77a2619">
-<link rel="stylesheet" href="views/account.css?v=77a2619">
-<link rel="stylesheet" href="views/mail.css?v=77a2619">
-<link rel="stylesheet" href="views/social.css?v=77a2619">
-<link rel="stylesheet" href="views/logomotion.css?v=77a2619">
-<link rel="stylesheet" href="tags.css?v=77a2619">
+<link rel="stylesheet" href="components.css?v=4a99682">
+<link rel="stylesheet" href="views/tour.css?v=4a99682">
+<link rel="stylesheet" href="views/dashboard.css?v=4a99682">
+<link rel="stylesheet" href="views/bookings.css?v=4a99682">
+<link rel="stylesheet" href="views/booking.css?v=4a99682">
+<link rel="stylesheet" href="views/contacts.css?v=4a99682">
+<link rel="stylesheet" href="views/money.css?v=4a99682">
+<link rel="stylesheet" href="views/catalogue.css?v=4a99682">
+<link rel="stylesheet" href="views/account.css?v=4a99682">
+<link rel="stylesheet" href="views/mail.css?v=4a99682">
+<link rel="stylesheet" href="views/social.css?v=4a99682">
+<link rel="stylesheet" href="views/logomotion.css?v=4a99682">
+<link rel="stylesheet" href="tags.css?v=4a99682">
 
 <div id="app"></div>
 
@@ -656,7 +656,7 @@ VIEWS.release=()=>{const R=S.release;const created=R.stage==='created',up=R.stag
  const primary=created?['Add tracks','addtracks','upload']:up?['Uploading…','',null]:blk?['Fix 1 blocker','fixblocker','wrench']:R.stage==='delivered'?['Delivered','',null]:['Deliver to DistroKid','deliver','send'];
  return `<div class="page"><button class="btn ghost s flush" data-go="catalogue" style="align-self:flex-start">${ic('left','s')}Releases</button>
  <div class="row" style="align-items:flex-end;gap:28px"><img src="${IMG('cover-late-shift')}" alt="" style="width:176px;height:176px;border-radius:8px;object-fit:cover;${created?'filter:grayscale(1) brightness(.4)':''}"><div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:6px"><span class="t-label muted">EP, ${R.tracks?R.tracks+' tracks':'no tracks yet'}${up?', uploading':''}</span><h1 class="t-display">${R.title}</h1><div class="row"><span class="tag ${ready?'confirmed':created||up?'draft':'accent'}">${created||up?'Draft':R.stage==='delivered'?'Delivered':'Scheduled'}</span><span class="muted">Out Fri 14 Nov, in 25 days</span></div>
- <div class="row" style="padding-top:10px">${primary[1]||!primary[2]?`<button class="btn accent" ${primary[1]?`data-act="${primary[1]}"`:'disabled'}>${primary[2]?ic(primary[2],'s'):''}${primary[0]}</button>`:''}<button class="btn secondary" data-act="previewlinks">Preview links</button><button class="btn ghost icon" aria-label="More" data-act="releasemore">${ic('more')}</button></div></div></div>
+ <div class="row" style="padding-top:10px">${primary[1]||!primary[2]?`<button class="btn accent" ${primary[1]?`data-act="${primary[1]}"`:'disabled'}>${primary[2]?ic(primary[2],'s'):''}${primary[0]}</button>`:''}<button class="btn secondary" data-act="previewlinks">Preview links</button><button class="btn secondary icon" aria-label="More" data-act="releasemore">${ic('more')}</button></div></div></div>
  <section class="card" style="padding:0;overflow:hidden;border:1px solid var(--rule)"><div class="row" style="padding:14px 20px"><b class="t-heading">Before delivery</b><span class="muted" style="flex:1">${created?'Checks run when tracks and a cover are in':up?`Checking… ${Math.round(R.progress/100*14)} of 14 rules`:blk?'1 blocker, 4 to check, 9 passed':'Ready. 4 to check (optional), 10 passed'}</span>${blk||ready?`<span class="meter"><i style="width:${ready?80:72}px;background:var(--ok)"></i><i style="width:32px;background:var(--att)"></i>${blk?'<i style="width:8px;background:var(--bad)"></i>':''}</span>`:''}</div>
  ${blk?`<div class="row" style="padding:12px 20px;border-top:1px solid var(--rule)"><span style="color:var(--bad)">${ic('alert')}</span><span style="flex:1">Cover says “LATE SHIFT”, the title is “Late Shift EP”<br><span class="t-label muted">Stores reject a release when the cover text and the title differ.</span></span><button class="btn secondary s" data-act="fixblocker">Fix</button></div>`:''}
  ${blk||ready?`<details style="border-top:1px solid var(--rule);padding:12px 20px"><summary class="muted" style="cursor:pointer">4 to check: track 3 title, a writer name, ISRCs, explicit flag on track 2</summary><ul class="muted">${['Track 3 has “(Original Mix)”, Beatport rejects it','Writer “Jonas H.” is not a legal name','No ISRCs yet, the distributor assigns them','Explicit flag empty on track 2'].map(x=>`<li>${x}</li>`).join('')}</ul></details><div class="row" style="padding:12px 20px;border-top:1px solid var(--rule)"><span style="color:var(--ok)">${ic('check')}</span><span>${ready?10:9} passed</span></div>`:''}</section>
@@ -981,17 +981,17 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=77a2619"></script>
-<script src="views/bookings.js?v=77a2619"></script>
-<script src="views/booking.js?v=77a2619"></script>
-<script src="views/contacts.js?v=77a2619"></script>
-<script src="views/money.js?v=77a2619"></script>
-<script src="views/catalogue.js?v=77a2619"></script>
-<script src="views/brands.js?v=77a2619"></script>
-<script src="views/account.js?v=77a2619"></script>
-<script src="views/mail.js?v=77a2619"></script>
-<script src="views/social.js?v=77a2619"></script>
-<script src="views/tour.js?v=77a2619"></script>
-<script src="views/motion.js?v=77a2619"></script>
-<script src="views/logomotion.js?v=77a2619"></script>
+<script src="views/dashboard.js?v=4a99682"></script>
+<script src="views/bookings.js?v=4a99682"></script>
+<script src="views/booking.js?v=4a99682"></script>
+<script src="views/contacts.js?v=4a99682"></script>
+<script src="views/money.js?v=4a99682"></script>
+<script src="views/catalogue.js?v=4a99682"></script>
+<script src="views/brands.js?v=4a99682"></script>
+<script src="views/account.js?v=4a99682"></script>
+<script src="views/mail.js?v=4a99682"></script>
+<script src="views/social.js?v=4a99682"></script>
+<script src="views/tour.js?v=4a99682"></script>
+<script src="views/motion.js?v=4a99682"></script>
+<script src="views/logomotion.js?v=4a99682"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

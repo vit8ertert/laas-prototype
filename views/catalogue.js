@@ -179,7 +179,7 @@ L.VIEWS.release=()=>{const r=R();
  const acts=created?[['just now','Vital created the release']]:[['yesterday','Sofie added track notes'],['3 Oct','Mette, Sofie and Jonas signed the splits'],['1 Oct','Jonas uploaded the cover'],['28 Sep','Vital created the release']];
  return `<div class="page cat-page cat-detail">${back('Releases','catalogue')}
  <div class="cat-rhead">${coverHtml('cat-cover')}<div class="id"><span class="t-label muted">${meta}</span><h1 class="t-display">${esc(r.title)}</h1><div class="sl">${tg}<span class="muted">Out Fri 14 Nov, in 25 days</span></div>
-  <div class="acts">${primary}${second}<button class="btn ghost icon" aria-label="More" data-act="releasemore">${ic('more')}</button></div></div></div>
+  <div class="acts">${primary}${second}<button class="btn secondary icon" aria-label="More" data-act="releasemore">${ic('more')}</button></div></div></div>
  ${checks()}
  ${tabs([['overview','Overview'],['tracks','Tracks',r.tracks||''],['credits','Credits and splits'],['earnings','Earnings'],['stores','Stores']],S.rtab,'data-rtab')}
  ${S.rtab==='overview'?`<div class="grid2 cat-ov"><div class="cat-col">

@@ -214,7 +214,7 @@ VIEWS.post=()=>{
  return `<div class="page bd-page so-post">
  <button class="btn ghost s flush bd-back" data-act="soback">${ic('left','s')}Social posts</button>
  <div class="hero bd-hero"><img src="${IMG(p.img)}" alt=""><div class="tx"><span class="k">${nets(p.nets)} post, ${p.code}</span><h1>${esc(p.name)}</h1><div class="facts"><span>${p.when}</span>${st==='published'?`<span>Reach ${p.reach}</span><span>${p.com} comments</span>`:`<span>${p.nets.length} account${p.nets.length>1?'s':''}</span>`}</div></div></div>
- <div class="bd-bar"><span class="tag ${STAT[st][0]}">${STAT[st][1]}</span><span class="grow"></span>${btns}<button class="btn ghost icon" aria-label="More" data-act="somore" data-id="${p.id}">${ic('more')}</button></div>
+ <div class="bd-bar"><span class="tag ${STAT[st][0]}">${STAT[st][1]}</span><span class="grow"></span>${btns}<button class="btn secondary icon" aria-label="More" data-act="somore" data-id="${p.id}">${ic('more')}</button></div>
  ${ai?banner('info','ai',`Drafted by the assistant from ${esc(p.from[0])}. Check it.`,`Times and places come from ${p.from[1]==='bookings'?'the booking':'the release plan'}. Nothing posts until you press ${st==='scheduled'?'Publish now or the scheduled time comes':'Publish'}.`,`<button class="btn secondary s" data-act="sofrom" data-v="${p.from[1]}">Open the source</button>`,`soaix" data-id="${p.id}`):''}
  <div class="bd-grid"><div class="bd-main">${main}</div>${panel}</div>
  </div>${L.abar(p.name,'Make it shorter, move it to Saturday')}`;
