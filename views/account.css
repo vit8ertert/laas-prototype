@@ -236,7 +236,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-gc.on{background:var(--well);border:1px solid var(--ink);box-shadow:inset 0 0 0 .5px var(--ink);padding:8.5px 14.5px;color:var(--ink)}
 .acc-obinv{display:flex;flex-direction:column;gap:12px}
 .acc-obinv .acc-two{gap:12px;flex-wrap:nowrap}
-.btn.s.acc-add{align-self:stretch;justify-content:flex-start;padding-left:0}
+.btn.s.acc-add{align-self:flex-start;padding:8px 12px;margin-left:-12px} /* hugs its label; bleeds 12 px so the plus lines up with the fields (Vit 21 Oct) */
 .acc-join{display:flex;gap:16px;align-items:center}
 .acc-join img{width:64px;height:64px;border-radius:12px;object-fit:cover}
 .acc-join div{display:flex;flex-direction:column;gap:4px}

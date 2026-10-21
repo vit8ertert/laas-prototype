@@ -69,3 +69,7 @@
    so the soft underline is forced here (Vit 21 Oct: "still default underline on hover"). Mail subjects keep their fade-in. */
 *:not(.ml-text>b){text-decoration-thickness:1px!important;text-underline-offset:.3em!important;text-decoration-color:color-mix(in srgb,currentColor 50%,transparent)!important}
 .ml-text>b{text-decoration-thickness:1px!important;text-underline-offset:.3em!important}
+
+/* ghost buttons that sit flush to a page or card edge (no padding on that side) say "hover" with an underline, not a fill,
+   so the fill never touches their text (Vit 21 Oct, "Add another") */
+.btn.ghost:is(.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.cat-storelist .btn.ghost.s:hover,.m-chh .btn.ghost:hover{background:none!important;text-decoration:underline}
