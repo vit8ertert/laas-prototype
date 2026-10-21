@@ -173,8 +173,10 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .d-record .d-rh:has(.d-id){display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 12px}
 .d-record .d-rh:has(.d-id) .tag{justify-self:end}
 .d-record .d-rh:has(.d-id)>b{grid-column:1/-1;grid-row:2}
-/* empty-state start cards: 240–360 px each, centred as a group (never left-aligned with empty columns) */
-.choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-template-columns:repeat(auto-fit,minmax(240px,360px))!important;justify-content:center}
+/* empty-state start cards (Figma Empty state 140:373): equal columns that fill the box, 16 px apart; one column on phones */
+.choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:16px;justify-content:stretch;width:100%}
+.d-choice small{margin-top:0!important}.d-choice b{line-height:22px}
+@media (max-width:640px){.choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-auto-flow:row}}
 /* edge alignment: text links at the start or end of a row sit flush on the content edge */
 .sec-h>.btn.ghost:last-child,.ph>.btn.ghost:last-child,[class$="-foot"]>.btn.ghost:last-child,[class*="-foot "]>.btn.ghost:last-child,.cv-link,
 .btn.ghost[class*="-back"],.btn.ghost.flush{padding-inline:0!important;background:none!important}
