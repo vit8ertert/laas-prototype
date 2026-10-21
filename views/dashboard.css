@@ -180,8 +180,8 @@ button.d-kpi:hover{background:var(--raised)}
 
 /* assistant */
 .main>.page.d-asst{max-width:none;margin:0}
-.d-asst{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
-.d-asst.withrec{grid-template-columns:260px minmax(0,1fr) 360px}
+.d-asst{display:grid;grid-template-columns:280px minmax(0,1fr);gap:24px;align-items:start}
+.d-asst.withrec{grid-template-columns:280px minmax(0,1fr) 360px}
 .d-hist{position:sticky;top:0;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 120px);overflow:auto;padding-right:16px;border-right:1px solid var(--rule)}
 .d-newchat{justify-content:flex-start;align-self:flex-start}
 .d-hg{display:flex;flex-direction:column;gap:2px}.d-hg>span{font-size:12px;line-height:16px;padding:4px 12px}
@@ -348,7 +348,7 @@ button.d-kpi:hover{background:var(--raised)}
 @media (max-width:860px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 6px}
  .d-add{top:3px;right:2px;width:18px;height:18px;border:0;background:transparent;color:var(--muted);border-radius:4px}.d-add svg.i.s{width:12px;height:12px}.d-day.photo .d-add{color:var(--ink)}.cs-cal .cs-role{display:none}.cs-log>span{flex-direction:column;gap:0}.tl-f{align-self:stretch;flex-wrap:nowrap}.tl-f button{flex:1;padding:0 8px}}
 
-@media (max-width:1280px){.d-asst.withrec{grid-template-columns:260px minmax(0,1fr)}.d-asst .d-record,.d-ahd [data-act="asstpanel"]{display:none}}
+@media (max-width:1280px){.d-asst.withrec{grid-template-columns:280px minmax(0,1fr)}.d-asst .d-record,.d-ahd [data-act="asstpanel"]{display:none}}
 @media (max-width:1100px){.d-grid{grid-template-columns:1fr}.d-cols{grid-template-columns:1fr}}
 @media (max-width:860px){
  .d-asst,.d-asst.withrec{grid-template-columns:1fr}
@@ -377,9 +377,10 @@ button.d-kpi:hover{background:var(--raised)}
 
 /* Assistant history panel (Vit 21 Oct: collapsible with toggle and search; one spacing system).
    Text line 12 px in: group labels, chat titles, New conversation and the What it can do card share it;
-   the header icons sit on the fill edge. Items 8 12 padding, 2 px apart; 16 px between groups. */
-.d-hist{gap:4px;padding-right:12px}
-.d-hh{display:flex;align-items:center;gap:4px;margin:0 -8px 4px 0}.d-hh .grow{flex:1}
+   the header icons sit on that line too. Items 8 12 padding, 2 px apart; 16 px between groups. */
+/* 32 px from the divider, the same as the page edge on the left (Vit 21 Oct); the column grows by 20 so the list keeps its width */
+.d-hist{gap:4px;padding-right:32px}
+.d-hh{display:flex;align-items:center;gap:4px;margin:0 0 4px 0}.d-hh .grow{flex:1}
 .d-hh .btn.on{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 .d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:8px 12px!important;margin-bottom:4px}
 .d-hsearch{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--faint);margin-bottom:4px}
