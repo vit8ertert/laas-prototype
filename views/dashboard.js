@@ -193,7 +193,7 @@ L.VIEWS.assistant=()=>{
  const conv=isNew?`<div class="d-newc"><h2 class="t-title">What do you need?</h2><p class="muted">Ask about gigs, contacts or money. Nothing is sent without your OK.</p><div class="d-chips">${sugg.map(([q,k])=>`<button class="d-chip" data-act="asksugg" data-q="${k}">${ic('ai','s')}${q}</button>`).join('')}</div></div>`:chatBody(id)+extra(id);
  const rec=isNew?'':record(id);
  return `<div class="page d-page d-asst ${rec&&S.asstPanel?'withrec':''}">${aurora()}${hist}
- <div class="d-center"><div class="d-ahd"><button class="btn secondary s d-histbtn" data-act="assthist">${ic('msgs','s')}Chats</button><div class="grow"><h1 class="t-display">Assistant</h1><p class="muted t-body">Conversation, ${bn()}, remembered for you</p></div>${rec?`<button class="btn ghost s icon" data-act="asstpanel" aria-label="${S.asstPanel?'Hide':'Show'} the record">${ic('panel','s')}</button>`:''}</div>
+ <div class="d-center"><div class="d-ahd"><button class="btn secondary s d-histbtn" data-act="assthist">${ic('msgs','s')}Chats</button>${isNew?'<span class="grow"></span>':`<div class="grow"><h1 class="t-title">${esc((list.find(c=>c[0]===id)||[])[2]||'Conversation')}</h1><p class="muted t-body">${esc((list.find(c=>c[0]===id)||[])[3]||bn())}, remembered for you</p></div>`}${rec?`<button class="btn ghost s icon" data-act="asstpanel" aria-label="${S.asstPanel?'Hide':'Show'} the record">${ic('panel','s')}</button>`:''}</div>
   <div class="d-conv">${conv}</div>
   <div class="d-dock">${composer(id==='move'&&!isNew?'Reply, or ask about this booking…':`Ask about ${bn()}: gigs, contacts, gear, money`,isNew?null:ctx)}</div></div>
  ${rec&&S.asstPanel?rec:''}</div>`;};

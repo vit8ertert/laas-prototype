@@ -402,3 +402,6 @@ button.d-kpi:hover{background:var(--raised)}
 .d-confirm{padding:16px}
 .d-change{padding:12px 16px}
 .d-record{padding:16px;border-radius:16px}
+/* new chat: no page title; "What do you need?" is the heading in the middle. In a chat the header names it (Vit 21 Oct) */
+.d-asst .d-ahd:not(:has(.grow h1)):not(:has(.btn:not(.d-histbtn))){display:none}
+@media (max-width:860px){.d-asst .d-ahd{display:flex!important}}
