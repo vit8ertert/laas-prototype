@@ -374,3 +374,31 @@ button.d-kpi:hover{background:var(--raised)}
 
 /* group count says what it counts and ends on the same edge as the rows' arrows (Vit 21 Oct: "4 and 5 look misleading") */
 .tl-sec .acc-sh h2{flex:1}.tl-count{margin-left:auto;margin-right:12px}
+
+/* Assistant history panel (Vit 21 Oct: collapsible with toggle and search; one spacing system).
+   Text line 12 px in: group labels, chat titles, New conversation and the What it can do card share it;
+   the header icons sit on the fill edge. Items 8 12 padding, 2 px apart; 16 px between groups. */
+.d-hist{gap:4px;padding-right:12px}
+.d-hh{display:flex;align-items:center;gap:4px;margin:0 -8px 4px 0}.d-hh .grow{flex:1}
+.d-hh .btn.on{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+.d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:8px 12px!important;margin-bottom:4px}
+.d-hsearch{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--faint);margin-bottom:4px}
+.d-hsearch input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font:400 14px/20px var(--sans)}
+.d-hsearch:focus-within{box-shadow:inset 0 0 0 1px var(--ink)}
+.d-hg{gap:2px;margin-top:12px}.d-hg .d-hgl{padding:0 12px 4px}
+.d-hg.miss,.d-hi.miss{display:none}
+.d-hnone{margin:12px 0 0;padding:0 12px;font-size:13px;line-height:18px}
+.d-hfoot{margin-top:12px}
+/* collapsed: a 48 px rail with the toggle, search and new conversation */
+.d-asst:has(.d-hist.col){grid-template-columns:48px minmax(0,1fr)}
+.d-asst.withrec:has(.d-hist.col){grid-template-columns:48px minmax(0,1fr) 360px}
+.d-hist.col{padding-right:8px}
+.d-hist.col .d-hh{flex-direction:column;margin:0}.d-hist.col .d-hh .grow{display:none}
+.d-hist.col>:not(.d-hh){display:none}
+/* Assistant conversation, one spacing system (Vit 21 Oct audit):
+   large boxes (confirm card, composer, record panel) 16 padding, radius 16; messages and notes 12 16, radius 12;
+   change rows 12 16; 24 px between turns, 12 px inside a turn */
+.d-conv{gap:24px}.d-turn{gap:12px}
+.d-confirm{padding:16px}
+.d-change{padding:12px 16px}
+.d-record{padding:16px;border-radius:16px}

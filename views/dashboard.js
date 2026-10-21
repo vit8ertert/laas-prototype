@@ -184,7 +184,10 @@ L.VIEWS.assistant=()=>{
  const isNew=S.asst==='new';const id=S.asst==='q'?'q':S.asstChat;
  const list=(S.asstQ&&S.asst!=='new'?[['q','Today',S.asstQ,'']]:[]).concat(CHATS);
  const groups=['Today','Yesterday','Earlier'].map(g=>[g,list.filter(c=>c[1]===g)]);
- const hist=`<nav class="d-hist ${S.asstHist?'open':''}" aria-label="Chats"><button class="btn secondary d-newchat" data-act="asstnew">${ic('plus')}New conversation</button>${groups.map(([g,cs])=>`<div class="d-hg"><span class="faint">${g}</span>${cs.map(([cid,,t,link])=>`<button class="d-hi ${!isNew&&cid===id?'on':''}" data-act="asstchat" data-id="${cid}"><span>${esc(t)}</span>${link?`<small>${link}</small>`:''}</button>`).join('')}</div>`).join('')}<span class="d-hsp"></span><button class="d-hfoot" data-go="tools">${ic('help','s')}<span><b>What it can do</b><small>17 look-ups, 11 changes it proposes</small></span></button></nav>`;
+ /* Vit 21 Oct: the history panel collapses to a rail (toggle) and can be searched */
+ const col=S.asstCol,sq=S.asstSearch;
+ const hist=`<nav class="d-hist ${S.asstHist?'open':''} ${col?'col':''}" aria-label="Chats"><div class="d-hh"><button class="btn ghost icon s" data-act="asstcol" aria-label="${col?'Show chats':'Hide chats'}" title="${col?'Show chats':'Hide chats'}">${ic('panel','s')}</button><span class="grow"></span><button class="btn ghost icon s ${sq?'on':''}" data-act="asstsearch" aria-label="Search chats" title="Search chats" aria-pressed="${!!sq}">${ic('search','s')}</button>${col?`<button class="btn ghost icon s" data-act="asstnew" aria-label="New conversation" title="New conversation">${ic('plus','s')}</button>`:''}</div>
+ ${sq&&!col?`<div class="d-hsearch">${ic('search','s')}<input id="asstq" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></div>`:''}<button class="btn secondary d-newchat" data-act="asstnew">${ic('plus','s')}New conversation</button>${groups.map(([g,cs])=>`<div class="d-hg"><span class="faint d-hgl">${g}</span>${cs.map(([cid,,t,link])=>`<button class="d-hi ${!isNew&&cid===id?'on':''}" data-act="asstchat" data-id="${cid}"><span>${esc(t)}</span>${link?`<small>${link}</small>`:''}</button>`).join('')}</div>`).join('')}<p class="d-hnone faint" hidden>No chat matches.</p><span class="d-hsp"></span><button class="d-hfoot" data-go="tools">${ic('help','s')}<span><b>What it can do</b><small>17 look-ups, 11 changes it proposes</small></span></button></nav>`;
  const ctx=id==='move'&&!isNew&&!S.asstCtxOff.move?'LT-0041, Hotel gig':id==='parking'&&!S.asstCtxOff.parking?'Hotel Skov':null;
  const sugg=[['Move the hotel gig to Saturday 25 Oct and tell the venue','plan'],['Who still owes us money?','money'],['What is left before Saturday?','gigday'],['Nudge Mette about the offer','nudge']];
  const conv=isNew?`<div class="d-newc"><h2 class="t-title">What do you need?</h2><p class="muted">Ask about gigs, contacts or money. Nothing is sent without your OK.</p><div class="d-chips">${sugg.map(([q,k])=>`<button class="d-chip" data-act="asksugg" data-q="${k}">${ic('ai','s')}${q}</button>`).join('')}</div></div>`:chatBody(id)+extra(id);
@@ -293,6 +296,11 @@ A.asstreply=t=>{const k=t.dataset.k;if(k==='mail'){L.open('modal',{html:`<h2 cla
  (S.asstLog.move??=[]).push(k==='also'?['Also move the rehearsal','The rehearsal on 25 Oct at 14:00 would clash with load-in. I can move it to Sunday 26 Oct, 14:00. It is in the plan as a 4th change when you confirm.']:['What does Mette usually reply?','Mette replies within a day, usually before noon. She said yes to the last two date changes.']);L.render();};
 A.asstctxoff=()=>{S.asstCtxOff[S.asstChat]=true;L.render();};
 A.assthist=()=>{S.asstHist=!S.asstHist;L.render();};
+A.asstcol=()=>{S.asstCol=!S.asstCol;if(S.asstCol)S.asstSearch=false;L.render();};
+A.asstsearch=()=>{if(S.asstCol){S.asstCol=false;S.asstSearch=true;}else S.asstSearch=!S.asstSearch;L.render();setTimeout(()=>document.getElementById('asstq')?.focus(),30);};
+/* chat search filters the list in place, so typing keeps focus */
+L.INPUT.push(t=>{if(t.id!=='asstq')return;const q=t.value.trim().toLowerCase();document.querySelectorAll('.d-hg').forEach(g=>{let n=0;g.querySelectorAll('.d-hi').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q);b.classList.toggle('miss',!hit);if(hit)n++;});g.classList.toggle('miss',!n);});
+ const none=document.querySelector('.d-hnone');const any=[...document.querySelectorAll('.d-hi')].some(b=>!b.classList.contains('miss'));if(none)none.hidden=any;return true;});
 A.asstpanel=()=>{S.asstPanel=!S.asstPanel;L.render();};
 A.asstcan=()=>L.go('tools');
 A.notifs=(t,r)=>L.open('notifs',{f:'all',right:Math.max(8,Math.round(innerWidth-r.right))});
