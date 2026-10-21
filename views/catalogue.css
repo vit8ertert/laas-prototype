@@ -243,3 +243,24 @@ button.cat-chk:hover{background:var(--raised)}
 .trk-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
 .trk-dl dd{margin:0;font:400 15px/22px var(--sans);overflow-wrap:anywhere}
 @media (max-width:860px){.trk-fmt{display:none}.trk-tl,.trk-dl{padding-left:0}.trk-dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* status badge on the artwork's top-right corner (Vit 21 Oct); tile padding 12 + 8 inset */
+.cat-tilewrap{position:relative}
+.cat-tilewrap .st{position:absolute;top:20px;right:20px;padding:0;pointer-events:none}
+.cat-tilewrap .st .tag{box-shadow:0 2px 8px #00000059}
+
+/* platforms list on an imported release */
+.cat-stores{display:flex;flex-direction:column;gap:8px}
+.cat-storelist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cat-storelist li{display:flex;align-items:center;gap:8px;min-height:34px;font:400 15px/22px var(--sans)}
+.cat-storelist li>span:first-of-type{flex:1}
+.cat-storelist li i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
+.cat-storelist li.missing i{background:none;box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.cat-storelist li.missing>span:first-of-type{color:var(--muted)}
+.cat-storelist li.pending i{background:var(--att)}
+.cat-storelist .btn.ghost.s{padding:8px 0 8px 12px}
+.cat-stores>.btn{align-self:flex-start}
+/* platform picker in the drawer */
+.cat-storepick{display:flex;flex-direction:column;gap:12px}
+.cat-storepick .check{display:flex;align-items:center;gap:8px;font:400 15px/18px var(--sans);cursor:pointer}
+.cat-storepick input{width:18px;height:18px;accent-color:var(--ink);margin:0}

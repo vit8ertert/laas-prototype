@@ -187,6 +187,7 @@ L.VIEWS.pastrelease=()=>{const r=PASTC.find(x=>x.id===S.params.id)||PASTC[0];con
  <div class="grid2 cat-ov"><div class="cat-col"><section class="cat-sec"><div class="hd"><h3 class="t-heading cat-h">Tracks</h3></div>
   <div class="trk-list">${r.tracks.map((t,i)=>L.trow(i+1,t[0],t[1],r.title,{sub:t[2]?`<small class="c-att">${t[2]}</small>`:''})).join('')}</div></section></div>
  <aside class="cat-panel"><div class="grp"><h3 class="t-heading cat-h">Earning</h3>${[['Streams',`<span class="mono">${r.streams}</span>`],['Paid out',`<span class="mono">${r.earn}</span> DKK`],['Koda',r.koda],['Distributor',r.distributor]].map(([a,b])=>`<div class="fact"><span class="t-label muted">${a}</span><span>${b}</span></div>`).join('')}</div>
+  ${L.storesPanel(r)}
   <div class="grp tight"><h3 class="t-heading cat-h">Credits and splits</h3><span class="cat-avs">${PEOPLE.map(p=>`<span title="${p[1]}">${p[0]}</span>`).join('')}</span><span class="t-label muted">40 / 30 / 30, imported from the distributor.</span></div></aside></div></div>${L.abar(r.title)}`;};
 
 /* ---------- Gear ---------- */
@@ -219,7 +220,7 @@ L.DR.newrelease=()=>({type:'drawer',title:'New release',sub:'The plan counts bac
  <div class="field cat-f"><label for="rdate">Release date</label><input class="input cat-w240" id="rdate" value="Fri 14 Nov 2026"><span class="help">25 days away. 28 recommended; Spotify needs 7 for a pitch, Apple 10.</span></div>
  <div class="field cat-f"><label for="rdist">Distributor</label><select class="input cat-w320" id="rdist"><option>DistroKid</option><option>CD Baby</option><option>TuneCore</option></select><span class="help">Connected in Integrations</span></div>
  <label class="cat-coverdrop"><span class="ph">${S.newCover?`<img src="${IMG('cover-late-shift')}" alt="">`:ic('disc')}</span><span class="tx"><b>${S.newCover?esc(S.newCover):'Cover, optional now'}</b><span class="t-label muted">${S.newCover?'Cover added. Delivery checks read the text on it.':'3000 × 3000 JPG or PNG. You can add it later; delivery checks wait for it.'}</span></span><input type="file" accept="image/png,image/jpeg" hidden data-relcover></label>
- <p class="muted cat-dnote">Tracks come next, on the release page: drop WAV files there.</p>`,foot:foot('createrelease','Create release')});
+ <label class="cat-coverdrop cat-trackdrop"><span class="ph">${ic(S.newTracks?'check':'upload')}</span><span class="tx"><b>${S.newTracks?`${S.newTracks} tracks ready to upload`:'Tracks, optional now'}</b><span class="t-label muted">${S.newTracks?'They upload as soon as you create the release; checks run on each file.':'Drop WAV or FLAC files here, or click to browse. 16 or 24-bit, 44.1 kHz or more. You can also add them on the release page.'}</span></span><input type="file" accept=".wav,.flac,audio/wav,audio/flac" multiple hidden data-reltracks></label>`,foot:foot('createrelease','Create release')});
 L.DR.fixblocker=()=>({type:'drawer',title:'Fix: cover and title',sub:'The one thing blocking delivery',body:`<div class="cat-problem"><img src="${IMG('cover-late-shift')}" alt=""><div><span class="muted">Cover says</span><b>LATE SHIFT</b><span class="muted">Release title</span><b class="c-bad">${esc(S.release.title)}</b></div></div>
  <p class="muted cat-ptext">Spotify, Apple Music and DistroKid reject a release when the cover text and the title differ. Pick one way to make them match.</p>
  <div class="cat-opts">${[['Rename the release to “Late Shift”','Recommended. Matches the cover; “EP” is shown by the stores from the track count.'],['Upload a new cover',`Cover must say “${esc(S.release.title)}”, 3000 × 3000, RGB.`],['Keep both and explain to the distributor','Manual review, usually 3 to 5 days. The plan moves.']].map(([t,s],i)=>`<button class="radio ${S.fixChoice===i?'on':''}" data-fix="${i}"><i></i><span><b>${t}</b><small>${s}</small></span></button>`).join('')}</div>`,
@@ -244,7 +245,8 @@ const A=L.ACTIONS;const open=o=>{S.overlay=o;L.render();};
 const menu=(r,items)=>{L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items});};
 A.newrelease=()=>{S.newCover=null;open(L.DR.newrelease());};
 A.createrelease=()=>{const v=(document.getElementById('rt')||{}).value;const r=S.release;r.title=(v||'Late Shift EP').trim();r.stage='created';r.tracks=0;r.progress=0;r.cover=!!S.newCover;S.rtab='overview';S.allSteps=false;S.rel={check:false,passed:false,activity:false};
- S.overlay=null;L.go('release');L.toast('Release created. The plan counts back from 14 Nov');};
+ S.overlay=null;const withTracks=S.newTracks;S.newTracks=0;L.go('release');
+ if(withTracks){setTimeout(()=>A.addtracks(),60);L.toast(`Release created. ${withTracks} tracks uploading`);}else L.toast('Release created. The plan counts back from 14 Nov');};
 A.addcover=()=>{S.release.cover=true;L.render();L.toast('Cover added: late-shift-cover.jpg',()=>{S.release.cover=false});};
 let ticking=false;
 A.addtracks=()=>{const r=S.release;if(r.stage==='uploading'){L.toast('Tracks are still uploading');return;}
@@ -314,7 +316,7 @@ function details(title,dur,i,release){const d=secs(dur),kb=Math.round(d*2304/8/1
   const lufs=(-14+((i*7)%9)/10-0.4).toFixed(1),tp=(-1-((i*3)%5)/10).toFixed(1);
   return [['Format','WAV, stereo'],['Bit depth and sample rate','24-bit, 48 kHz'],['Bitrate','2.304 kbps'],['Length',dur],
     ['Loudness',`${lufs} LUFS integrated`],['True peak',`${tp} dBTP`],['ISRC',`DK-LT1-${release==='Untitled LP'?'25':'26'}-${String(i+1).padStart(5,'0')}`],
-    ['File size',`${kb.toLocaleString('da-DK')} MB`]];}
+    ['File size',`${kb.toLocaleString('da-DK')} MB`]].concat((()=>{const st=L.storesOf&&L.storesOf(release);return st?[['Live on',`${st.live.length} platforms: ${st.live.slice(0,3).join(', ')}${st.live.length>3?` and ${st.live.length-3} more`:''}`]]:[];})());}
 // a waveform made of 64 bars, deterministic per track
 function wave(key){let h=0;for(const c of key)h=(h*31+c.charCodeAt(0))>>>0;
   return Array.from({length:64},(_,k)=>{h=(h*1103515245+12345)>>>0;const v=.25+((h>>>16)%75)/100;return `<i style="height:${Math.round(v*100)}%"></i>`;}).join('');}
@@ -347,4 +349,32 @@ document.addEventListener('click',e=>{
 },true);
 // stop playback when leaving the catalogue
 addEventListener('hashchange',()=>{if(!/catalogue|release|pastrelease/.test(location.hash)){S.player.playing=false;clearInterval(timer);timer=null;}});
+})();
+
+(function(){const L=window.LAAS,S=L.S,ic=L.ic,A=L.ACTIONS,PASTC=L.PASTC;
+/* tracks picked in the New release drawer (Vit 21 Oct: "where do I see how to upload tracks") */
+document.addEventListener('change',e=>{const i=e.target.closest('[data-reltracks]');if(!i)return;S.newTracks=Math.max(1,Math.min(i.files.length||4,12));L.S.overlay=L.DR.newrelease();L.render();},true);
+document.addEventListener('drop',e=>{const z=e.target.closest('.cat-trackdrop');if(!z)return;e.preventDefault();S.newTracks=Math.max(1,Math.min(e.dataTransfer.files.length||4,12));L.S.overlay=L.DR.newrelease();L.render();},true);
+document.addEventListener('dragover',e=>{if(e.target.closest('.cat-trackdrop'))e.preventDefault();},true);
+
+/* ---------- platforms per release (Vit 21 Oct: "on what platforms is the track, and how to add it to more") ----------
+   Platforms are reached through the distributor; LAAS shows where each release is live and sends add requests there. */
+const STORES=['Spotify','Apple Music','YouTube Music','Amazon Music','Deezer','Tidal','TikTok and Instagram','Pandora','Beatport','Shazam'];
+S.stores??={lt:{missing:['Beatport']},fl:{missing:['Tidal','Pandora','Beatport']},lp:{missing:['Tidal','TikTok and Instagram','Pandora','Beatport']}};
+const storeState=(id,name)=>{const x=S.stores[id]||{missing:[]};return (x.pending||[]).includes(name)?'pending':x.missing.includes(name)?'missing':'live';};
+L.storesOf=title=>{const r=PASTC.find(x=>x.title===title);if(!r)return null;const live=STORES.filter(n=>storeState(r.id,n)==='live');return {r,live};};
+L.storesPanel=r=>{const live=STORES.filter(n=>storeState(r.id,n)==='live'),rest=STORES.filter(n=>storeState(r.id,n)!=='live');
+ return `<div class="grp cat-stores"><h3 class="t-heading cat-h">Platforms</h3><span class="t-label muted">Live on ${live.length} of ${STORES.length}, delivered by ${r.distributor}</span>
+  <ul class="cat-storelist">${STORES.map(n=>{const st=storeState(r.id,n);return `<li class="${st}"><i></i><span>${n}</span>${st==='live'?'<span class="t-meta muted">Live</span>':st==='pending'?'<span class="t-meta c-att">Requested</span>':`<button class="btn ghost s" data-act="addstores" data-id="${r.id}" data-store="${n}">Add</button>`}</li>`;}).join('')}</ul>
+  ${rest.some(n=>storeState(r.id,n)==='missing')?`<button class="btn secondary s" data-act="addstores" data-id="${r.id}">${ic('plus','s')}Add to more platforms</button>`:''}</div>`;};
+L.DR.addstores=(id,pre)=>{const r=PASTC.find(x=>x.id===id)||PASTC[0];const miss=STORES.filter(n=>storeState(r.id,n)==='missing');
+ return {type:'drawer',title:'Add to more platforms',sub:`${r.title}, through ${r.distributor}`,body:`<p class="muted cat-dnote" style="margin:0">Platforms are added by your distributor. LAAS sends the request to ${r.distributor}; the platforms you are already on do not change.</p>
+  <div class="cat-storepick">${miss.map(n=>`<label class="check"><input type="checkbox" data-storepick value="${n}" ${!pre||pre===n?'checked':''}><span>${n}</span></label>`).join('')}</div>
+  <p class="t-label muted" style="margin:0">Usually live in 1 to 3 days. Beatport takes electronic releases only; ${r.distributor} may decline it for other genres.</p>`,
+  foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="addstoresgo" data-id="${r.id}">Send to ${r.distributor}</button>`};};
+A.addstores=t=>{S.overlay=L.DR.addstores(t.dataset.id,t.dataset.store);L.render();};
+A.addstoresgo=t=>{const id=t.dataset.id,picked=[...document.querySelectorAll('[data-storepick]:checked')].map(x=>x.value);if(!picked.length){L.toast('Pick at least one platform');return;}
+ const x=S.stores[id];x.pending=[...(x.pending||[]),...picked];S.overlay=null;L.render();
+ L.toast(`Sent to ${(PASTC.find(r=>r.id===id)||{}).distributor||'the distributor'}: ${picked.join(', ')}. Usually live in 1 to 3 days`,()=>{x.pending=x.pending.filter(n=>!picked.includes(n));});};
+
 })();
