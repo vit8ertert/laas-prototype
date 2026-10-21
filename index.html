@@ -64,14 +64,8 @@ svg.i.s{width:16px;height:16px}
 .body{display:grid;grid-template-columns:236px 1fr;min-height:0}
 .body.collapsed{grid-template-columns:64px 1fr}
 .body{position:relative}
-.body.collapsed .sidebar{box-shadow:inset -1px 0 0 var(--rule-strong)}
-.edge-toggle{position:absolute;top:18px;left:224px;z-index:6;width:24px;height:24px;border-radius:50%;background:var(--overlay);border:1px solid var(--rule-strong);color:var(--ink);display:grid;place-items:center;opacity:0;transition:opacity .15s,background .15s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.edge-toggle svg{width:14px;height:14px}
-.edge-toggle:hover{background:var(--top)}
-.sidebar:hover~.edge-toggle,.edge-toggle:hover,.edge-toggle:focus-visible,.collapsed .edge-toggle{opacity:1}
-.collapsed .edge-toggle{left:52px}
-.sidebar:hover{box-shadow:inset -1px 0 0 var(--rule)}
-.body.collapsed .sidebar:hover{box-shadow:inset -1px 0 0 var(--rule-strong)}
+.sidebar{box-shadow:inset -1px 0 0 var(--rule-strong)}
+
 .sidebar{display:flex;flex-direction:column;gap:2px;padding:8px;overflow:auto;min-height:0}
 .band{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;margin-bottom:10px}
 .band .sq{width:34px;height:34px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans)}
@@ -249,7 +243,7 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 @media (max-width:1100px){.grid2,.grid2.aud{grid-template-columns:1fr}.ob{grid-template-columns:1fr}.ob .r{display:none}.ob .l{padding:32px max(16px,env(safe-area-inset-left,0px))}}
 @media (max-width:860px){
   .body{grid-template-columns:1fr}.sidebar{position:fixed;inset:58px auto 0 0;width:260px;background:var(--canvas);z-index:35;transform:translateX(-100%);transition:transform .2s;padding-left:max(8px,env(safe-area-inset-left,0px))}
-  .sidebar.open{transform:none}.edge-toggle{display:none}.menu-btn{display:grid!important}
+  .sidebar.open{transform:none}.menu-btn{display:grid!important}
   .fl,.search-pill span,.search-pill kbd,.me .nm,.logo small{display:none}.search-pill{width:38px;padding:0;justify-content:center}
   .page{padding:16px max(16px,env(safe-area-inset-left,0px)) 24px max(16px,env(safe-area-inset-right,0px))}
   .abar,.sheet{width:calc(100% - 32px)}
@@ -335,7 +329,7 @@ const CONTACTS=[
 const STATUS={enquiry:['draft','Enquiry'],hold:['accent','Hold'],offer:['paid','Offer out'],confirmed:['confirmed','Confirmed'],completed:['paid','Completed'],draft:['draft','Draft'],attention:['attention','Attention'],paid:['paid','Paid']};
 
 /* ---------- state ---------- */
-const S={view:'dashboard',params:{},collapsed:false,sidebarOpen:false,overlay:null,toast:null,
+const S={view:'onboarding',params:{},collapsed:false,sidebarOpen:false,overlay:null,toast:null,
  booking:{state:'confirmed',depositPaid:false,settled:false,rated:false,sheet:false},
  search:'',bookTab:'up',statusFilter:[],contactSearch:'',
  notifs:[{t:'Hotel Royal’s deposit is 8 days late',m:'1.500 DKK for Saturday hotel gig. A påmindelse is drafted for you to check.',time:'09:12',v:'royal',go:['booking',{}],unread:true},{t:'Kasper hasn’t sent the parking code',m:'Saturday hotel gig, load-in 17:00. Asked 18 Oct.',time:'08:00',v:'studiob',go:['gigday',{}],unread:true},{t:'Club Mono opened your offer',m:'Club night, 15 Nov. Opened twice, not signed yet.',time:'07:45',v:'mono',go:['bookings',{}],unread:true},{t:'Sofie edited the set list',m:'Set list v3, 12 songs, for 25 Oct.',time:'Yesterday',v:'studiob',go:['gigday',{}],unread:false},{t:'Deposit received from Odense Live',m:'750 DKK for Support slot, 28 Nov.',time:'Mon',v:'odense',go:['money',{}],unread:false}],
@@ -722,7 +716,7 @@ function render(){
  const prevFocus=document.activeElement&&document.activeElement.id;const selStart=document.activeElement&&document.activeElement.selectionStart;
  const mainScroll=document.querySelector('.main')?.scrollTop||0;
  if(S.view==='onboarding'){app.innerHTML=onboarding()+overlay()+toastHtml()+flowBtn();}
- else app.innerHTML=`<div class="app">${topbar()}<div class="body ${S.collapsed?'collapsed':''}">${sidebar()}<main class="main" id="main">${(VIEWS[S.view]||VIEWS.dashboard)()}</main><button class="edge-toggle" data-act="collapse" aria-label="${S.collapsed?'Expand menu':'Collapse menu'}" title="${S.collapsed?'Expand menu':'Collapse menu'} (⌘\\)">${ic(S.collapsed?'right':'chevl')}</button></div></div>${overlay()}${toastHtml()}${flowBtn()}`;
+ else app.innerHTML=`<div class="app">${topbar()}<div class="body ${S.collapsed?'collapsed':''}">${sidebar()}<main class="main" id="main">${(VIEWS[S.view]||VIEWS.dashboard)()}</main></div></div>${overlay()}${toastHtml()}${flowBtn()}`;
  const m=document.querySelector('.main');if(m)m.scrollTop=mainScroll;
  if(prevFocus){const el=document.getElementById(prevFocus);if(el){el.focus();try{if(selStart!=null)el.setSelectionRange(selStart,selStart)}catch(e){}}}
  if(S.overlay&&S.overlay.type==='palette'){const q=document.getElementById('palq');if(q&&document.activeElement!==q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
@@ -873,6 +867,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Enter'&&e.target.id==='ask'){document.querySelector('[data-act="ask"]').click();}
 });
 window.__laas={S,go,render,DR,VIEWS};
+{const h=decodeURIComponent(location.hash.slice(1));if(h&&(VIEWS[h]||h==='onboarding'))S.view=h;}
 render();
 })();
 </script>
