@@ -161,7 +161,7 @@ L.VIEWS.contact=()=>{editScope();
    notes:'No notes yet. What you write here stays with the band.',ask:`Ask about ${nm.split(' ')[0]} — what did we charge last time, when did we last talk`};})();
  S.cv.notes??={};const notes=S.cv.notes[id]??d.notes;
  const rows=id==='c1'?BOOK_ROWS:L.BOOKINGS.filter(b=>b.venue===v.id).slice(0,3).map(b=>[b.title,b.when+(b.fee?`, ${L.kr(b.fee)} DKK`:''),STATUS[b.status][0],STATUS[b.status][1],b.id]);
- return `<div class="page cv cv-detail"><div class="cv-tint" style="--tint:var(--doors);--tint-a:26%;--tint-h:320px"></div>
+ return `<div class="m-tint" aria-hidden="true"></div><div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="contacts">${ic('left','s')}Contacts</button>
  <div class="hero cv-hero"><img src="${IMG(d.img)}" alt=""><div class="tx"><span class="k">${esc(d.kind)} at ${esc(d.org)}</span><h1>${esc(d.name)}</h1><div class="facts"><span>${esc(d.where)}</span><span>${d.n} bookings together</span><span>Last contact ${esc(d.last)}</span></div></div></div>
  <div class="cv-actions"><span class="cv-av">${d.ini}</span><div class="cv-who"><span class="tag accent">${esc(d.kind)}</span></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn ghost cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
@@ -181,7 +181,7 @@ L.VIEWS.venue=()=>{editScope();
  const brows=royal?VENUE_BOOK_ROWS:L.BOOKINGS.filter(b=>b.venue===v.id).map(b=>[b.title,b.when+(b.fee?`, ${L.kr(b.fee)} DKK`:''),STATUS[b.status][0],STATUS[b.status][1],b.id]);
  const people=royal?PEOPLE_HERE:[];
  S.cv.notes??={};const nid='v-'+v.id;const notes=S.cv.notes[nid]??(royal?'Good room when the bar is full, dead on a quiet Tuesday. Keep the first set low. The desk\'s channel 7 hums; bring a DI.':'No notes yet. Write what the next gig here should know.');
- return `<div class="page cv cv-detail"><div class="cv-tint" style="--tint:${v.tint};--tint-a:70%;--tint-h:520px"></div>
+ return `<div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="venues">${ic('left','s')}Venues</button>
  <div class="hero cv-hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${esc(v.name)}</h1><div class="facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div></div></div>
  <div class="cv-actions cv-vact"><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="stage">Edit</button><button class="btn accent" data-act="newbooking">New booking here</button><button class="btn ghost cv-more" data-act="cvmore" data-m="venue" aria-label="More">${ic('more','s')}</button></div></div>
