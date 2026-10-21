@@ -188,14 +188,15 @@ L.VIEWS.contact=()=>{editScope();
  const rows=id==='c1'?BOOK_ROWS:L.BOOKINGS.filter(b=>b.venue===v.id).slice(0,3).map(b=>[b.title,b.when+(b.fee?`, ${L.kr(b.fee)} DKK`:''),STATUS[b.status][0],STATUS[b.status][1],b.id]);
  return `<div class="m-tint" aria-hidden="true"></div><div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="contacts">${ic('left','s')}Contacts</button>
- <div class="hero cv-hero"><img src="${IMG(d.img)}" alt=""><div class="tx"><span class="k">${esc(d.kind)} at ${esc(d.org)}</span><h1>${esc(d.name)}</h1><div class="facts"><span>${esc(d.where)}</span><span>${d.n} bookings together</span><span>Last contact ${esc(d.last)}</span></div></div></div>
- <div class="cv-actions"><span class="cv-av">${d.ini}</span><div class="cv-who"><span class="tag accent">${esc(d.kind)}</span></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
+ <!-- a contact page is about the person, not the venue photo (Vit 21 Oct) -->
+ <div class="cv-actions cv-person"><span class="cv-av cv-av-l">${d.ini}</span><div class="cv-who"><h1 class="t-display">${esc(d.name)}</h1><p class="cv-role">${esc(d.kind)} at <button class="link" data-act="cvgo" data-v="venue" data-id="${v.id}">${esc(d.org)}</button></p><div class="cv-facts"><span class="tag">${esc(d.where)}</span><span class="tag">${d.n} bookings together</span><span class="tag">Last contact ${esc(d.last)}</span></div></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('Bookings together',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${rows.map(r=>bookRow(r,'HR')).join('')||'<p class="muted cv-in">None yet</p>'}</div></section>
   <section class="cv-sec">${secHead('Details',editBtn('details'))}${kvSec('details',d.details)}</section>
  </div>
  <aside class="cv-panel"><section class="cv-sec">${secHead('Notes',editBtn('notes'))}<div class="cv-pbody">${S.cv.edit==='notes'?`<textarea class="input cv-notes-in" id="cvnotes" data-cvsave data-nid="${id}" rows="5">${esc(notes)}</textarea>`:`<p class="cv-note">${esc(notes)}</p>`}${lock('Band only, never in offers, invoices or the calendar feed')}</div></section>
-  <section class="cv-sec">${secHead('Activity, 4 events')}</section></aside></div></div>${L.abar(d.name,d.ask)}`;
+  <section class="cv-sec">${(()=>{const ev=[['2 days ago','Mette replied about the deposit, paying Thursday'],['7 Oct','Offer for Saturday hotel gig sent to Mette'],['6 Oct','Enquiry from Mette read by the assistant'],['14 Apr 2025','Spring hotel gig paid, 12 days after']];const o=!!S.cv.actOpen;
+   return `<div class="bd-pgroup bd-actg ${o?'open':''}"><button class="bd-acth bd-sh" data-act="cvact" aria-expanded="${o}"><h2 class="t-title">Activity, ${ev.length} events</h2><span class="bd-chev" aria-hidden="true">${ic(o?'down':'right','s')}</span></button>${o?`<div class="bd-acts">${ev.map(([d2,t])=>`<div><span class="d">${d2}</span><span>${esc(t)}</span></div>`).join('')}</div>`:''}</div>`;})()}</section></aside></div></div>${L.abar(d.name,d.ask)}`;
 };
 
 /* ---------- Venue detail ---------- */
@@ -282,6 +283,7 @@ Object.assign(L.ACTIONS,{
  cvall:()=>{S.cv.all=!S.cv.all;L.render();},
  cvclear:()=>{if(S.view==='venues'||(S.view==='contacts'&&S.cv.tab==='venues')){S.cv.vq='';S.filters.vplayed=[];S.filters.vcity=[];S.filters.vpa=[];}else{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];}L.render();},
  clearcsearch:()=>{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];L.render();},
+ cvact:()=>{S.cv.actOpen=!S.cv.actOpen;L.render();},
  cvmap:()=>{S.cv.vmap=!S.cv.vmap;L.render();},cvmapcity:el=>{S.cv.mapCity=el.dataset.c;L.render();},
  cvfrommail:()=>{L.go('mail');L.toast('Pick the threads, the assistant finds the bookers');},
  cvsamples:()=>{S.cv.empty=false;L.render();L.toast('3 sample contacts added',()=>{S.cv.empty=true;});},

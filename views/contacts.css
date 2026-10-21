@@ -281,3 +281,12 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-maph{display:flex;align-items:baseline;justify-content:space-between;padding:12px 16px;background:var(--th-bg,var(--canvas));font:500 15px/22px var(--sans)}.cv-maph .muted{font:400 13px/18px var(--sans)}
 .cv-mapl .cv-vrow{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;box-shadow:inset 0 1px 0 var(--rule);text-align:left;position:relative}
 @media (max-width:900px){.cv-map{grid-template-columns:1fr}}
+/* contact header: the person, not a venue photo */
+.cv-person{align-items:flex-start;gap:20px;margin:8px 0 8px}
+.cv-av.cv-av-l{width:72px;height:72px;font:400 28px/36px var(--sans)}
+.cv-person .cv-who{gap:4px}.cv-person h1{margin:0}
+.cv-role{margin:0;font:400 15px/22px var(--sans);color:var(--muted)}.cv-role .link{color:var(--ink)}
+.cv-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.cv-person .cv-acts{align-self:center}
+/* a lock or icon before two lines of text sits on the first line */
+.cv-lock{align-items:flex-start!important}.cv-lock svg.i{margin-top:2px!important}
