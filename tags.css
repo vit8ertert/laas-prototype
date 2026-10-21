@@ -191,3 +191,6 @@
 .list-row:is(button,a,[data-go],[data-act]):not([style*="cursor:default"]){padding:12px 16px!important;margin-inline:-16px;width:calc(100% + 32px)!important;border-radius:8px;box-sizing:border-box}
 /* calendar days with a photo: their event chips use the Filled tag too (Vit 21 Oct: "badge not visible here too") */
 .d-day.photo .d-ev.d-ev{background:linear-gradient(color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent),color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent)),var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 1px 3px #00000033,inset 0 0 0 1px color-mix(in srgb,var(--tc,var(--muted)) 24%,transparent)!important}
+/* key-value lists in dialogs and cards start on the text edge, label on the value's baseline (Vit 21 Oct) */
+.bk-chg{padding:0!important;background:none!important;align-items:baseline}
+.kv{align-items:baseline}
