@@ -167,7 +167,9 @@
    dashboard): padding 24, radius 12, surface; sections 32 apart; section heading 18 / 24 medium with its action on the
    right; 12 px from heading to content; content starts on the heading's left edge (rows bleed 16 and pad 16). */
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){padding:24px!important;display:flex;flex-direction:column;gap:32px;border-radius:12px}
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right)>*{padding:0!important;margin:0!important}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right)>:is(section,.sec,.cv-sec,.m-sec,.bd-pgroup,.d-sec,div:not([class])):not(.bd-openbox){padding:0!important;margin:0!important}
+/* boxed things inside a side card keep their own padding (Vit 21 Oct: the open-items box lost it) */
+.bd-openbox{padding:16px!important;border-radius:12px}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(h2,h3):not(.ex-empty h3){font:500 18px/24px var(--sans)!important;letter-spacing:0!important;margin:0!important}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:0;align-items:center}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}
