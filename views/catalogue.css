@@ -231,13 +231,14 @@ button.cat-chk:hover{background:var(--raised)}
 .trk-info:hover,.trk.open .trk-info{background:var(--hover);color:var(--ink)}
 .trk-fmt{flex:none;padding:2px 8px;border-radius:var(--r-pill);background:var(--well);color:var(--muted)}
 .trk-d{flex:none;width:44px;text-align:right}
-/* timeline: elapsed, waveform you can click to jump, length */
+/* timeline: elapsed, a thin line you can click or drag to jump, length (Vit 21 Oct: a line, not a waveform) */
 .trk-tl{display:flex;align-items:center;gap:12px;padding:0 0 12px 80px}
 .trk-now{width:36px;color:var(--ink)}
-.trk-wave{position:relative;flex:1;height:32px;cursor:pointer}
-.trk-bars{position:absolute;inset:0;display:flex;align-items:center;gap:2px}
-.trk-bars i{flex:1;min-width:2px;border-radius:2px;background:var(--rule-strong)}
-.trk-done i{background:var(--accent-strong)}
+.trk-wave{position:relative;flex:1;height:20px;cursor:pointer}
+.trk-wave::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--rule-strong)}
+.trk-done{position:absolute;left:0;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--accent-strong)}
+.trk-knob{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--surface);opacity:0;transition:opacity .12s}
+.trk-wave:hover .trk-knob,.trk-wave:focus-visible .trk-knob{opacity:1}
 /* file details */
 .trk-dl{margin:0;padding:4px 0 16px 80px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
 .trk-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}

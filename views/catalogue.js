@@ -320,9 +320,6 @@ function details(title,dur,i,release){const d=secs(dur),kb=Math.round(d*2304/8/1
   return [['Format','WAV, stereo'],['Bit depth and sample rate','24-bit, 48 kHz'],['Bitrate','2.304 kbps'],['Length',dur],
     ['Loudness',`${lufs} LUFS integrated`],['True peak',`${tp} dBTP`],['ISRC',`DK-LT1-${release==='Untitled LP'?'25':'26'}-${String(i+1).padStart(5,'0')}`],
     ['File size',`${kb.toLocaleString('da-DK')} MB`]].concat((()=>{const st=L.storesOf&&L.storesOf(release);return st?[['Live on',`${st.live.length} platforms: ${st.live.slice(0,3).join(', ')}${st.live.length>3?` and ${st.live.length-3} more`:''}`]]:[];})());}
-// a waveform made of 64 bars, deterministic per track
-function wave(key){let h=0;for(const c of key)h=(h*31+c.charCodeAt(0))>>>0;
-  return Array.from({length:64},(_,k)=>{h=(h*1103515245+12345)>>>0;const v=.25+((h>>>16)%75)/100;return `<i style="height:${Math.round(v*100)}%"></i>`;}).join('');}
 L.trow=(n,title,dur,release,opts={})=>{const key=slug(release+'-'+title),P=S.player,on=P.key===key,open=P.open===key;
   const d=secs(dur),pct=on?Math.min(100,P.t/d*100):0;
   return `<div class="trk ${on?'on':''} ${open?'open':''}" data-trk="${key}" data-dur="${d}">
@@ -334,12 +331,12 @@ L.trow=(n,title,dur,release,opts={})=>{const key=slug(release+'-'+title),P=S.pla
     <span class="mono muted trk-d">${dur}</span>
     <button class="trk-info" data-tinfo="${key}" aria-expanded="${open}" aria-label="File details for ${esc(title)}">${ic('info','s')}</button>
    </div>
-   ${on?`<div class="trk-tl"><span class="mono t-meta trk-now">${mmss(P.t)}</span><div class="trk-wave" data-tseek="${key}" role="slider" aria-label="Position" aria-valuemin="0" aria-valuemax="${d}" aria-valuenow="${Math.round(P.t)}"><div class="trk-bars">${wave(key)}</div><div class="trk-bars trk-done" style="clip-path:inset(0 ${100-pct}% 0 0)">${wave(key)}</div></div><span class="mono t-meta faint">${dur}</span></div>`:''}
+   ${on?`<div class="trk-tl"><span class="mono t-meta trk-now">${mmss(P.t)}</span><div class="trk-wave" data-tseek="${key}" role="slider" aria-label="Position" aria-valuemin="0" aria-valuemax="${d}" aria-valuenow="${Math.round(P.t)}"><i class="trk-done" style="width:${pct}%"></i><b class="trk-knob" style="left:${pct}%"></b></div><span class="mono t-meta faint">${dur}</span></div>`:''}
    ${open?`<dl class="trk-dl">${details(title,dur,n-1,release).map(([a,b])=>`<div><dt class="t-label muted">${a}</dt><dd>${b}</dd></div>`).join('')}</dl><div class="trk-roy"><h4 class="facts-h">Royalties</h4>${L.factsDl(L.rights(release||title))}</div>`:''}
   </div>`;};
 let timer=null;
 function paint(){const P=S.player,el=document.querySelector(`[data-trk="${P.key}"]`);if(!el)return;const d=+el.dataset.dur;
-  const w=el.querySelector('.trk-done');if(w)w.style.clipPath=`inset(0 ${100-P.t/d*100}% 0 0)`;const n=el.querySelector('.trk-now');if(n)n.textContent=mmss(P.t);
+  const pc=P.t/d*100,w=el.querySelector('.trk-done'),k=el.querySelector('.trk-knob');if(w)w.style.width=pc+'%';if(k)k.style.left=pc+'%';const n=el.querySelector('.trk-now');if(n)n.textContent=mmss(P.t);
   const sl=el.querySelector('[data-tseek]');if(sl)sl.setAttribute('aria-valuenow',Math.round(P.t));}
 function tick(){const P=S.player;if(!P.playing)return;const el=document.querySelector(`[data-trk="${P.key}"]`);const d=el?+el.dataset.dur:0;
   P.t+=.25;if(d&&P.t>=d){P.t=d;P.playing=false;clearInterval(timer);timer=null;L.render();return;}paint();}
