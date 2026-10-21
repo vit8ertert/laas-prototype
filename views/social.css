@@ -139,8 +139,8 @@
 }
 
 /* post detail: prose, tones and notes share the 12 px inset of the rows (one left edge) */
-.so-post .bd-main .bd-prose,.so-post .bd-main .bd-tones{padding-inline:12px}
-.so-post .bd-main .so-stats{margin-inline:12px}
+.so-post .bd-main .bd-prose,.so-post .bd-main .bd-tones{padding-inline:0}
+.so-post .bd-main .so-stats{margin-inline:0}
 /* Connect on an account card: even padding, pulled 8 px into the card's right padding (Vit 21 Oct: "fix connect button") */
 .so-acc .btn.bd-act{padding:8px 12px!important;margin-right:-8px;flex:none}
 .so-acc .btn.bd-act:hover{background:var(--hover)!important}

@@ -209,3 +209,6 @@ html.gated body>*:not(.gate){display:none!important}
 @keyframes scrim-out{from{opacity:1}to{opacity:0}}
 /* banner icon centred on the 22 px title line (Vit 21 Oct: "better align the icon and the text") */
 .banner>svg.i:first-child{margin-top:2px}
+
+/* sidebar Theme item: half page colour, half accent, so it shows both the theme and the mode */
+.th-dot{width:14px;height:14px;border-radius:50%;margin:0 2px;flex:none;background:linear-gradient(135deg,var(--canvas) 0 50%,var(--accent) 50% 100%);box-shadow:0 0 0 1px var(--rule-strong)}

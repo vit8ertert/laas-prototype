@@ -47,3 +47,17 @@
    too little depth for open sections, which dark mode gets from its panel contrast (Vit 21 Oct: "not blocked content on light theme") */
 :root[data-theme="light"] .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}}
+
+/* light versions of Metal and Electronic (Vit 21 Oct: "metal theme used but no difference whether light or dark").
+   Figma's Light values for these two were copies of Default light (lilac on paper), so switching mode lost the theme.
+   Metal light = ink on bone paper, monochrome like its dark; Electronic light = navy on cool white with the lime accent.
+   Pending in Figma (LAAS · Theme variables, Light mode). Same selectors as tokens.css, loaded later, so these win. */
+:root[data-genre="metal"][data-theme="light"]{--sunken:#e6e2da;--canvas:#efece6;--surface:#faf8f4;--raised:#faf8f4;--overlay:#faf8f4;--top:#faf8f4;--hover:#e9e5dd;--well:#e4e0d7;--rule:#dcd7cd;--rule-strong:#c2bcb0;--ink:#0a0a0a;--muted:#5f5a52;--faint:#958f85;--on-dark:#faf8f4;--accent:#161616;--accent-strong:#0a0a0a;--accent-tint:#e4e0d7;--accent-ink:#0a0a0a;--on-accent:#f3eee4;--draft-tint:#e9e5dd;--draft:#5f5a52}
+@media (prefers-color-scheme: light){:root[data-genre="metal"]:not([data-theme="dark"]){--sunken:#e6e2da;--canvas:#efece6;--surface:#faf8f4;--raised:#faf8f4;--overlay:#faf8f4;--top:#faf8f4;--hover:#e9e5dd;--well:#e4e0d7;--rule:#dcd7cd;--rule-strong:#c2bcb0;--ink:#0a0a0a;--muted:#5f5a52;--faint:#958f85;--on-dark:#faf8f4;--accent:#161616;--accent-strong:#0a0a0a;--accent-tint:#e4e0d7;--accent-ink:#0a0a0a;--on-accent:#f3eee4;--draft-tint:#e9e5dd;--draft:#5f5a52}}
+:root[data-genre="electronic"][data-theme="light"]{--sunken:#e3e9f5;--canvas:#eef2fa;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f3f6fc;--well:#e3e9f5;--rule:#d8e0ef;--rule-strong:#b9c5dc;--ink:#0a1020;--muted:#55627d;--faint:#8c97ad;--on-dark:#ffffff;--accent:#d9f25a;--accent-strong:#b6cf2e;--accent-tint:#f1f8c8;--accent-ink:#4a5a00;--on-accent:#0a1020;--draft-tint:#e6ebf5;--draft:#55627d}
+@media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--sunken:#e3e9f5;--canvas:#eef2fa;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f3f6fc;--well:#e3e9f5;--rule:#d8e0ef;--rule-strong:#b9c5dc;--ink:#0a1020;--muted:#55627d;--faint:#8c97ad;--on-dark:#ffffff;--accent:#d9f25a;--accent-strong:#b6cf2e;--accent-tint:#f1f8c8;--accent-ink:#4a5a00;--on-accent:#0a1020;--draft-tint:#e6ebf5;--draft:#55627d}}
+
+/* detail sections: text and rows line up with the section heading (Vit 21 Oct: "alignment is bad").
+   Rows keep 12 px inside for their hover box and bleed 12 px out; plain text and footnotes have no inset */
+.bd-sec :is(.bd-prow,.bd-mrow){margin-inline:-12px}
+.bd-sec>:is(.bd-prose,.bd-foot),.bd-sec .bd-body>:is(.bd-prose,.bd-foot){padding-inline:0}
