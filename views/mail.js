@@ -150,7 +150,7 @@ const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].rever
  <span class="ml-text"><b>${L.hl(t.subject,q)}</b><span>${L.hl(sent?lastMe.body:t.excerpt,q)}</span></span>
  <span class="ml-linkcol">${linkChip(t,'button')}</span>
  <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}${st&&f!=='starred'?`<span class="ml-star" title="Starred">${ic('star','s')}</span>`:''}</span>
- <span class="ml-time">${sent?lastMe.time:t.time}</span>
+ <span class="ml-time">${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
  <span class="ml-acts">${rowActs(t,f)}</span>
 </div>`;};
 const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
@@ -266,7 +266,6 @@ L.VIEWS.compose=()=>{if(!M.cmp)M.cmp=blank();const c=M.cmp;const accs=M.accounts
  <button class="btn ghost s flush" data-act="mlback" style="align-self:flex-start">${ic('left','s')}${th?'Thread':'Mail'}</button>
  <div class="acc-ph ml-cmph"><div class="grow"><h1 class="t-display">${th?'Reply':c.fresh?'New mail':'Draft'}</h1><p>${th?`Re: ${esc(th.subject)}, to ${esc(th.from)}`:c.fresh?'Starts saving as soon as you type':`Saved in Drafts, ${esc(c.time.toLowerCase())}`}</p></div>${cmpSave()}</div>
  <div class="ml-cmpw">
- ${errBanner()}
  <div class="ml-ed">
   <div class="ml-cf"><label class="ml-cl" for="ml-from">From</label><select class="input ml-fromsel" id="ml-from">${accs.map(a=>`<option value="${a.id}" ${a.id===c.from?'selected':''} ${a.state==='error'?'disabled':''}>${esc(a.email)}, ${KIND[a.kind]}${a.state==='error'?', sign-in failed':''}</option>`).join('')}</select></div>
   ${recipField('to','To')}
@@ -290,7 +289,7 @@ L.VIEWS.compose=()=>{if(!M.cmp)M.cmp=blank();const c=M.cmp;const accs=M.accounts
 /* ---------- mail accounts ---------- */
 const logo=k=>`<span class="ml-logo" aria-hidden="true">${k==='gmail'?GOOGLE:k==='m365'?MSFT:ic('server','s')}</span>`;
 const mtg=(k,label)=>`<button class="acc-tg ${M.tg[k]?'on':''}" role="switch" aria-checked="${!!M.tg[k]}" aria-label="${esc(label)}" data-act="mltg" data-k="${k}"><i></i></button>`;
-const aRow=(label,desc,ctl)=>`<div class="acc-row"><div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
+const aRow=(label,desc,ctl,lead='')=>`<div class="acc-row ${lead?'ml-lead':''}">${lead}<div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
 const aSec=(title,inner,action='',cls='')=>`<section class="acc-sec ${cls}"><div class="acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
 const accSave=()=>{const on=Date.now()<M.savedUntil;return `<span class="acc-save ${on?'on':''}" id="ml-asave" role="status" aria-live="polite">${on?ic('check','s')+'Saved':''}</span>`;};
 const accRow=a=>`<div class="acc-li ml-accrow">${logo(a.kind)}<span class="tx"><span>${esc(a.email)}${a.def?'':''}</span><small class="${a.state==='error'?'ml-errtx':''}">${esc(KIND[a.kind])}. ${esc(a.state==='error'?a.err:a.meta)}</small></span>
@@ -301,9 +300,9 @@ L.VIEWS.mailaccounts=()=>{const acc=M.accounts.filter(a=>a.state!=='off'),ok=okA
  <div class="ml-col">
  ${aSec('Connected',acc.length?`<div class="acc-list">${acc.map(accRow).join('')}</div>`:`<p class="acc-foot">No mail connected. Add an account below and LAAS links your threads to bookings.</p>`,'','pad')}
  ${aSec('Add an account',`<div class="acc-rows">
-  ${aRow(`<span class="ml-prov">${logo('gmail')}Gmail</span>`,'Sign in with Google. Includes Google Workspace addresses',`<button class="btn secondary s" data-act="mloauth" data-kind="gmail">${hasG?'Add another':'Connect'}</button>`)}
-  ${aRow(`<span class="ml-prov">${logo('m365')}Microsoft 365</span>`,'Outlook, Hotmail and work accounts on Exchange',`<button class="btn secondary s" data-act="mloauth" data-kind="m365">${hasM?'Add another':'Connect'}</button>`)}
-  ${aRow(`<span class="ml-prov">${logo('smtp')}Other mail</span>`,'Any provider with SMTP and IMAP, such as one.com, Simply or your web host',`<button class="btn secondary s" data-act="mlsmtp">Set up</button>`)}</div>
+  ${aRow('Gmail','Sign in with Google. Includes Google Workspace addresses',`<button class="btn secondary s" data-act="mloauth" data-kind="gmail">${hasG?'Add another':'Connect'}</button>`,logo('gmail'))}
+  ${aRow('Microsoft 365','Outlook, Hotmail and work accounts on Exchange',`<button class="btn secondary s" data-act="mloauth" data-kind="m365">${hasM?'Add another':'Connect'}</button>`,logo('m365'))}
+  ${aRow('Other mail','Any provider with SMTP and IMAP, such as one.com, Simply or your web host',`<button class="btn secondary s" data-act="mlsmtp">Set up</button>`,logo('smtp'))}</div>
   <p class="acc-foot">${ic('lock','s')}<span>Google and Microsoft sign you in on their own page; LAAS never sees that password.</span></p>`)}
  ${aSec('How LAAS uses mail',`<div class="acc-rows">
   ${aRow('Threads LAAS reads','Only people in Contacts keeps private mail out of LAAS',`<select class="input acc-sel" aria-label="Threads LAAS reads" data-mlsave><option>Only people in Contacts</option><option>Everything in the inbox</option></select>`)}
@@ -335,7 +334,7 @@ L.DR.mailsmtp=()=>{const id=M.smtp.id,a=id&&M.accounts.find(x=>x.id===id),F={...
  <div class="ml-srv"><b class="strong">Outgoing, SMTP</b><div class="row" style="align-items:flex-start;gap:12px">${fld('smtp','Server',280,'','text','smtp.example.com')}${fld('sport','Port',96)}${secSel('ssec','Security')}</div></div>
  ${fld('user','Username',400,'Usually the full email address')}${fld('pw','Password',320,'Stored encrypted, used only to read and send','password','Password or app password')}
  <div class="row" style="gap:12px"><button class="btn secondary" data-act="mlsmtptest" ${t==='wait'?'disabled':''}>${ic('refresh','s')}${t==='wait'?'Testing…':'Test connection'}</button>
- ${t==='ok'?`<span class="ml-okmsg">${ic('check','s')}Signed in. IMAP found 1.204 messages, SMTP accepted the login and sent nothing.</span>`:t==='err'?`<span class="ml-errmsg" style="margin:0">${ic('alertc','s')}${esc(M.smtp.msg)}</span>`:''}</div>
+ ${t==='ok'?`<span class="ml-okmsg">${ic('check','s')}Signed in. IMAP found 1.204 messages, SMTP accepted the login and sent nothing.</span>`:t==='err'?`<span class="ml-errmsg inl">${ic('alertc','s')}${esc(M.smtp.msg)}</span>`:''}</div>
  <p class="t-meta muted" style="margin:0">Saving never sends anything.</p>`,
  foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="mlsmtpsave">${a?'Save and reconnect':'Save account'}</button>`};};
 
@@ -405,7 +404,7 @@ A.mlrm=el=>{const k=el.dataset.k,i=+el.dataset.i,c=M.cmp,r=c[k][i];c[k].splice(i
 A.mlshow=el=>{const c=M.cmp;c[el.dataset.k==='cc'?'showCc':'showBcc']=true;R();const i=document.getElementById('ml-'+el.dataset.k);if(i)i.focus();};
 A.mlattrm=el=>{const c=M.cmp,i=+el.dataset.i,a=c.att[i];c.att.splice(i,1);R();touched();L.toast(`Removed ${a.name}`,()=>{c.att.splice(i,0,a)});};
 A.mlattadd=el=>{const c=M.cmp,n=el.dataset.n;c.att.push({name:n,size:n.endsWith('.jpg')?'2,4 MB':['148 KB','182 KB','96 KB','64 KB'][c.att.length%4]});R();touched();};
-A.mlwrite=()=>{const c=M.cmp,prev={b:c.body,s:c.subj};const r=c.to[0],first=r&&r.name?r.name.split(/[ ,]/)[0]:'';const b=L.BOOKINGS.find(x=>x.id===c.booking);
+A.mlwrite=()=>{const c=M.cmp,prev={b:c.body,s:c.subj};const r=c.to[0],first=r&&r.name&&!/team|accounts/i.test(r.name)?r.name.split(/[ ,]/)[0]:'';const b=L.BOOKINGS.find(x=>x.id===c.booking);
  const hi=first?`Hej ${first}`:'Hej';
  if(c.body.trim())c.body=c.body.replace(/\s+/g,' ').trim().split('. ').slice(0,2).join('. ').replace(/\.?$/,'.')+' Venlig hilsen, Vital, Low Tide';
  else c.body=b?`${hi}, about ${b.title.toLowerCase()} on ${b.when}: can you confirm the load-in time and where we can park? Venlig hilsen, Vital, Low Tide`
@@ -489,38 +488,3 @@ document.addEventListener('keydown',e=>{const t=e.target;
    if(m)addRecip(k,m);else if(q.includes('@'))addRecip(k,{name:'',email:q});}
   else if(e.key==='Backspace'&&!t.value&&M.cmp[k].length){M.cmp[k].pop();R();touched();}}});
 })();
-/*MLTEST-START*/(function(){const p=new URLSearchParams(location.search);const sc=p.get('mlt');if(!sc)return;const L=window.LAAS;const errs=[];
-window.addEventListener('error',e=>errs.push(e.message+' @'+(e.filename||'').split('/').pop()+':'+e.lineno));
-const w=ms=>new Promise(r=>setTimeout(r,ms));const q=s=>document.querySelector(s);
-const click=async s=>{const el=typeof s==='string'?q(s):s;if(!el){errs.push('MISSING '+s);return;}el.click();await w(150);};
-const type=async(s,v)=>{const el=q(s);if(!el){errs.push('MISSING '+s);return;}el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));await w(150);};
-const S={
- sent:async()=>click('[data-act=mailfolder][data-f=sent]'),drafts:async()=>click('[data-act=mailfolder][data-f=drafts]'),
- spam:async()=>click('[data-act=mailfolder][data-f=spam]'),trash:async()=>click('[data-act=mailfolder][data-f=trash]'),
- starred:async()=>click('[data-act=mailfolder][data-f=starred]'),archive:async()=>click('[data-act=mailfolder][data-f=archive]'),
- compose:async()=>{await click('[data-act=mailnew]');await type('#ml-to','sar');},
- draft:async()=>{await click('[data-act=mailfolder][data-f=drafts]');await click('[data-act=maildraft][data-id=d1]');},
- noto:async()=>{await click('[data-act=mailnew]');await type('#ml-subj','Hello');await click('[data-act=mlsend]');},
- sendnew:async()=>{await click('[data-act=mailnew]');await type('#ml-to','posten');const e=q('#ml-to');e.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));await w(150);await click('[data-act=mlshow][data-k=cc]');await type('#ml-cc','kasper');await click('[data-act=mladd]');await click('[data-act=mlwrite]');await click('[data-act=mlattadd]');await click('[data-act=mlsend]');},
- royal:async()=>{await click('[data-act=openthread][data-id=royal]');await w(300);},
- accounts:async()=>click('[data-go=mailaccounts]'),
- fix:async()=>{await click('[data-go=mailaccounts]');await click('[data-act=mlfix]');await click('[data-act=mlsmtptest]');},
- fixok:async()=>{await click('[data-go=mailaccounts]');await click('[data-act=mlfix]');await type('#ml-s-pw','test-app-pw');await click('[data-act=mlsmtptest]');await w(1100);},
- fixsave:async()=>{await click('[data-go=mailaccounts]');await click('[data-act=mlfix]');await type('#ml-s-pw','test-app-pw');await click('[data-act=mlsmtpsave]');},
- oauth:async()=>{await click('[data-go=mailaccounts]');await click('[data-act=mloauth][data-kind=m365]');},
- oauthgo:async()=>{await click('[data-go=mailaccounts]');await click('[data-act=mloauth][data-kind=m365]');await click('[data-act=mloauthgo]');await w(1400);},
- spamthread:async()=>{await click('[data-act=mailfolder][data-f=spam]');await click('[data-act=openthread][data-id=fest]');},
- smoke:async()=>{for(const f of ['inbox','starred','sent','drafts','archive','spam','trash']){await click(`[data-act=mailfolder][data-f=${f}]`);await type('#mlsearch','zzz');await type('#mlsearch','');}
-  await click('[data-act=mailfolder][data-f=inbox]');await click('[data-act=mailstar][data-id=skov]');await click('[data-act=mailtrash][data-id=mono]');await click('[data-act=undo]');
-  await click('[data-act=mailarchive][data-id=studiob]');await click('[data-act=mailfolder][data-f=archive]');await click('[data-act=openthread][data-id=studiob]');await w(200);await click('[data-go=mail]');await w(200);
-  await click('[data-act=mailfolder][data-f=trash]');await click('[data-act=mailrestore][data-id=news]');await click('[data-act=mailfolder][data-f=spam]');await click('[data-act=mailnotspam][data-id=promo]');
-  await click('[data-act=maildelete][data-id=fest]');await click('[data-act=maildeleteok]');
-  await click('[data-act=mailfolder][data-f=inbox]');await click('[data-act=openthread][data-id=royal]');await w(200);await click('[data-act=mailreplyfull]');await w(200);await click('[data-act=mlsend]');await w(200);
-  await click('.ml-page [data-go=mail]');await w(200);await click('[data-act=openthread][data-id=odense]');await w(200);await click('[data-act=mailnotnow]');await w(200);await click('[data-act=mailfolder][data-f=drafts]');
-  await click('[data-act=maildraftdel][data-id=d2]');await click('[data-act=undo]');await click('[data-act=maildraft][data-id=d2]');await w(200);await click('[data-act=mlattrm]');await click('[data-act=mldiscard]');await w(200);
-  await click('[data-go=mailaccounts]');await w(200);await click('[data-act=mltg]');await click('[data-act=mlaccmenu][data-id=gmail]');await click('[data-act=mlaccsync]');await click('[data-act=mlaccmenu][data-id=onecom]');await click('[data-act=mlaccdisc]');await click('[data-act=mlaccdiscok]');
-  await click('[data-act=mlsmtp]');await click('[data-act=mlsmtpsave]');await click('[data-act=close]');
-  await click('[data-act=mlaccmenu][data-id=gmail]');await click('[data-act=mlaccdisc]');await click('[data-act=mlaccdiscok]');await click('[data-go=mail]');await w(200);}
-};
-setTimeout(async()=>{if(p.get('light'))L.S.appearance='light';L.render();await w(100);try{for(const s of sc.split(','))await S[s]();}catch(e){errs.push('THROW '+e.message);}await w(300);
- const m=document.querySelector('.main');const out=document.createElement('pre');out.id='mlt-out';out.textContent='RESULT view='+L.S.view+' errs='+JSON.stringify(errs)+' docOverflow='+(document.documentElement.scrollWidth-document.documentElement.clientWidth)+' mainOverflow='+(m?m.scrollWidth-m.clientWidth:'-')+' toast='+(L.S.toast&&L.S.toast.msg);out.style.cssText='position:fixed;left:0;bottom:0;z-index:999;background:#000;color:#0f0;font-size:10px;max-width:100%;white-space:pre-wrap';document.body.appendChild(out);},400);})();/*MLTEST-END*/

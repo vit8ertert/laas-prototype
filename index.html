@@ -415,7 +415,7 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 
 /* ---------- shell ---------- */
 function sidebar(){
- const v=S.view;const ALIAS={thread:'mail',contact:'contacts',venue:'venues',post:'social'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
+ const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
  const area=LAAS.areaOf(v);
  const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">

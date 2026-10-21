@@ -112,8 +112,8 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-sug .tx b{font-weight:500;font-size:14px}
 .ml-sug .tx small{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-ccb{display:flex;gap:12px;flex:none}
-.ml-fromsel{border:0;background-color:transparent;height:38px;padding-left:0;width:auto;max-width:100%;flex:1}
-.ml-body{display:block;width:100%;min-height:280px;padding:16px;border:0;background:transparent;color:var(--ink);font:400 15px/24px var(--sans);resize:vertical;outline:none}
+.ml-fromsel{border:0;background-color:transparent;height:38px;padding-left:0;width:100%;min-width:0;flex:1 1 0;text-overflow:ellipsis}
+.ml-body{display:block;width:100%;min-height:220px;padding:16px;border:0;background:transparent;color:var(--ink);font:400 15px/24px var(--sans);resize:vertical;outline:none}
 .ml-attrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--rule)}
 .ml-file{display:inline-flex;align-items:center;gap:6px;height:32px;max-width:100%;padding:0 4px 0 10px;border-radius:8px;background:var(--well);font-size:13px}
 .ml-file .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
@@ -123,6 +123,8 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-attsug{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 16px 14px}
 .ml-attsug .chip{height:30px;background:var(--well)}
 .ml-errmsg{display:flex;align-items:center;gap:6px;margin:0;padding:8px 16px;font-size:13px;line-height:18px;color:var(--bad);border-bottom:1px solid var(--rule)}
+.ml-errmsg.inl{border:0;padding:0;display:inline-flex}
+.acc-row.ml-lead{gap:12px}.acc-row.ml-lead .ctl{margin-left:12px}
 .ml-okmsg{display:inline-flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:var(--ok);max-width:65ch}
 .ml-lk{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:16px}
 .ml-lkr{display:flex;flex-wrap:wrap;gap:16px}
@@ -149,6 +151,10 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
  .ml-cl{width:44px}
  .ml-accrow{flex-wrap:wrap}
  .ml-accend{width:100%;padding-left:44px}
+ .acc-row.ml-lead .ctl{margin-left:0;padding-left:44px}
  .ml-cfoot .ml-lock{flex:1 1 100%}
  .ml-lkr .field{width:100%}
+}
+@media (max-width:600px){
+ .ml-banner{flex-wrap:wrap}.ml-banner .tx{flex:1 1 calc(100% - 40px)}.ml-banner>.btn{margin-left:32px}
 }
