@@ -30,15 +30,16 @@
   --travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;color-scheme:light}
 :root[data-theme="dark"]{color-scheme:dark}
 /* genre themes (dark) */
-:root[data-genre="metal"]:not([data-theme="light"]){--canvas:#0a0a0a;--surface:#161616;--raised:#202020;--overlay:#272727;--top:#313131;--well:#1e1c19;--rule:#262420;--rule-strong:#3a3731;--ink:#e8e2d6;--muted:#a29b91;--accent:#e8e2d6;--accent-strong:#e8e2d6;--accent-tint:#2a2722;--accent-ink:#e8e2d6}
-:root[data-genre="electronic"]:not([data-theme="light"]){--canvas:#0a1020;--surface:#161c2b;--raised:#202634;--overlay:#272d3b;--top:#313644;--well:#16203a;--rule:#1d2942;--rule-strong:#2c3b5c;--ink:#eaf1ff;--muted:#93a3c4;--accent:#d9f25a;--accent-strong:#d9f25a;--accent-tint:#2a3012;--accent-ink:#e4f77a}
-:root[data-genre="classical"]:not([data-theme="light"]){--canvas:#16130f;--surface:#221f1b;--raised:#2b2825;--overlay:#322f2c;--top:#3b3935;--well:#2a241c;--rule:#2e281f;--rule-strong:#453c2e;--ink:#f3ecdd;--muted:#b5aa96;--accent:#df8f9e;--accent-strong:#df8f9e;--accent-tint:#3a1f25;--accent-ink:#f0b8c2}
-:root[data-genre="classical"][data-theme="light"]{--canvas:#f6f1e7;--surface:#fffdf8;--well:#efe8da;--accent:#6e1f2b;--accent-strong:#6e1f2b;--accent-tint:#f3e3e5;--accent-ink:#6e1f2b;--on-accent:#fffdf8}
+:root[data-genre="metal"]:not([data-theme="light"]){--sunken:#000;--canvas:#0a0a0a;--surface:#161616;--raised:#202020;--overlay:#272727;--top:#313131;--well:#1e1c19;--rule:#262420;--rule-strong:#3a3731;--ink:#e8e2d6;--muted:#a29b91;--accent:#e8e2d6;--accent-strong:#e8e2d6;--accent-tint:#2a2722;--accent-ink:#e8e2d6}
+:root[data-genre="electronic"]:not([data-theme="light"]){--sunken:#050912;--canvas:#0a1020;--surface:#161c2b;--raised:#202634;--overlay:#272d3b;--top:#313644;--well:#16203a;--rule:#1d2942;--rule-strong:#2c3b5c;--ink:#eaf1ff;--muted:#93a3c4;--accent:#d9f25a;--accent-strong:#d9f25a;--accent-tint:#2a3012;--accent-ink:#e4f77a}
+:root[data-genre="classical"]:not([data-theme="light"]){--sunken:#0e0c09;--canvas:#16130f;--surface:#221f1b;--raised:#2b2825;--overlay:#322f2c;--top:#3b3935;--well:#2a241c;--rule:#2e281f;--rule-strong:#453c2e;--ink:#f3ecdd;--muted:#b5aa96;--accent:#df8f9e;--accent-strong:#df8f9e;--accent-tint:#3a1f25;--accent-ink:#f0b8c2}
+:root[data-genre="classical"][data-theme="light"]{--sunken:#ebe3d4;--canvas:#f6f1e7;--surface:#fffdf8;--well:#efe8da;--accent:#6e1f2b;--accent-strong:#6e1f2b;--accent-tint:#f3e3e5;--accent-ink:#6e1f2b;--on-accent:#fffdf8}
 html,body{height:100%;margin:0}
-body{background:var(--canvas);color:var(--ink);font:400 15px/22px var(--sans);-webkit-font-smoothing:antialiased}
+body{background:var(--sunken);color:var(--ink);font:400 15px/22px var(--sans);-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
 input,select,textarea{font:inherit;color:inherit}
+select.input{appearance:none;-webkit-appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .muted{color:var(--muted)}.faint{color:var(--faint)}
@@ -53,7 +54,7 @@ svg.i.s{width:16px;height:16px}
 
 /* shell */
 .app{display:grid;grid-template-rows:58px 1fr;grid-template-columns:minmax(0,1fr);height:100%}
-.topbar{display:flex;align-items:center;gap:16px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px));background:var(--canvas)}
+.topbar{background:var(--sunken);display:flex;align-items:center;gap:16px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px))}
 .logo{display:flex;align-items:center;gap:10px}.logo svg{width:90px;height:24px;fill:var(--ink)}
 .search-pill{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:40vw;height:34px;padding:0 10px;border-radius:999px;background:var(--surface);color:var(--faint);font-size:13px}
 .search-pill kbd{margin-left:auto;font:400 12px var(--mono);color:var(--faint)}
@@ -61,10 +62,10 @@ svg.i.s{width:16px;height:16px}
 .bell .n{position:absolute;top:2px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
 .me{display:flex;align-items:center;gap:8px;font-size:14px}
 .avatar-you{width:28px;height:28px;border-radius:50%;background:var(--you);color:#000;display:grid;place-items:center;font:500 14px var(--sans)}
-.body{display:grid;grid-template-columns:236px 1fr;min-height:0}
+.body{display:grid;grid-template-columns:236px 1fr;gap:8px;padding:0 8px 8px;min-height:0}
 .body.collapsed{grid-template-columns:64px 1fr}
 .body{position:relative}
-.sidebar{box-shadow:inset -1px 0 0 var(--rule-strong)}
+.sidebar{background:var(--canvas);border-radius:12px}
 
 .sidebar{display:flex;flex-direction:column;gap:2px;padding:8px;overflow:auto;min-height:0}
 .band{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;margin-bottom:10px}
@@ -81,7 +82,7 @@ svg.i.s{width:16px;height:16px}
 .collapsed .sidebar .nav span,.collapsed .sidebar .nav .count,.collapsed .sidebar .band div,.collapsed .sidebar .chev,.collapsed .sidebar .nav.sub{display:none}
 .collapsed .sidebar .nav{justify-content:center;padding:0}
 .collapsed .sidebar .nav .alert{position:absolute;margin:0;min-width:8px;height:8px;padding:0;font-size:0;transform:translate(10px,-10px)}
-.main{min-width:0;overflow:auto;background:var(--canvas);border-top-left-radius:16px;position:relative;display:flex;flex-direction:column}
+.main{min-width:0;overflow:auto;background:var(--canvas);border-radius:12px;position:relative;display:flex;flex-direction:column}
 .main>.page{flex:1 0 auto;width:100%}
 .page{max-width:1440px;margin:0;padding:24px 32px 32px;display:flex;flex-direction:column;gap:24px}
 .ph{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}.ph .grow{flex:1;min-width:240px}
@@ -136,7 +137,7 @@ td{padding:12px 16px;border-top:1px solid var(--rule)}
 tbody tr{cursor:pointer}tbody tr:hover td{background:var(--raised)}
 th.num,td.num{text-align:right}
 .title-cell{display:flex;align-items:center;gap:12px;font-weight:500}
-mark{background:none;color:var(--accent);font-weight:500}
+mark{background:none;color:var(--accent-ink);font-weight:500}
 .empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:48px 24px;border:1px dashed var(--rule-strong);border-radius:var(--r-lg)}
 .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;width:100%;margin-top:12px}
 .choice{background:var(--surface);border-radius:var(--r-md);overflow:hidden;text-align:left}
@@ -242,7 +243,7 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 
 @media (max-width:1100px){.grid2,.grid2.aud{grid-template-columns:1fr}.ob{grid-template-columns:1fr}.ob .r{display:none}.ob .l{padding:32px max(16px,env(safe-area-inset-left,0px))}}
 @media (max-width:860px){
-  .body{grid-template-columns:1fr}.sidebar{position:fixed;inset:58px auto 0 0;width:260px;background:var(--canvas);z-index:35;transform:translateX(-100%);transition:transform .2s;padding-left:max(8px,env(safe-area-inset-left,0px))}
+  .body{grid-template-columns:1fr;padding:0;gap:0}.sidebar{position:fixed;inset:58px auto 0 0;width:260px;background:var(--canvas);z-index:35;transform:translateX(-100%);transition:transform .2s;padding-left:max(8px,env(safe-area-inset-left,0px));border-radius:0}
   .sidebar.open{transform:none}.menu-btn{display:grid!important}
   .fl,.search-pill span,.search-pill kbd,.me .nm,.logo small{display:none}.search-pill{width:38px;padding:0;justify-content:center}
   .page{padding:16px max(16px,env(safe-area-inset-left,0px)) 24px max(16px,env(safe-area-inset-right,0px))}
@@ -491,13 +492,13 @@ VIEWS.gigday=()=>{const H0=14,HN=11,X=t=>((t-H0)/HN*100);
  return `<div class="page">
  <button class="btn ghost s flush" data-go="booking" style="align-self:flex-start">${ic('left','s')}Saturday hotel gig</button>
  <div class="hero"><img src="${IMG('hotel-royal')}" alt=""><div class="tx"><span class="k">Day sheet, Saturday 25 Oct</span><h1>Saturday hotel gig</h1><div class="facts"><span>Load-in 17:00</span><span>On stage 21:30</span><span>Curfew 00:30</span><span>118 km from Odense</span></div></div></div>
- <div class="strip"><div class="row"><span class="mono" style="color:var(--accent)">Now 14:20</span><b class="strong" style="flex:1">Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
+ <div class="strip"><div class="row"><span class="mono" style="color:var(--accent-ink)">Now 14:20</span><b class="strong" style="flex:1">Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
   <div class="track">${Array.from({length:HN+1},(_,h)=>`<span class="h" style="left:${Math.min(X(H0+h),97)}%">${String((H0+h)%24).padStart(2,'0')}</span><span class="tick" style="left:${X(H0+h)}%"></span>`).join('')}
   ${blocks.map(([a,b,l,c,ap])=>`<span class="blk" style="left:${X(a)}%;width:calc(${X(b)-X(a)}% - 2px);${c==='stage'?`background:${col[c]};color:var(--on-accent)`:ap?`border:1px dashed ${col[c]};color:${col[c]};background:color-mix(in srgb, ${col[c]} 14%, transparent)`:`background:color-mix(in srgb, ${col[c]} 32%, transparent)`}">${l}</span>`).join('')}
   <span class="tick" style="left:${X(24.5)}%;background:var(--bad);width:2px"></span><span class="now" style="left:${X(14+20/60)}%"></span></div>
   <div class="legend"><span><i style="background:var(--travel)"></i>Travel</span><span><i style="background:var(--work)"></i>Band work</span><span><i style="background:var(--break)"></i>Break</span><span><i style="background:var(--doors)"></i>Audience in</span><span><i style="background:var(--accent)"></i>On stage</span><span><i style="border:1px dashed var(--muted)"></i>Not confirmed</span></div></div>
  <div class="grid2"><section class="card"><div class="sec-h" style="margin-bottom:16px"><h3 class="t-heading">Timeline</h3><button class="btn ghost s flush" data-act="edittimes">${ic(S.editTimes?'check':'pencil','s')}${S.editTimes?'Done':'Edit times'}</button></div>
-  <div class="steps"><div class="step"><span class="time" style="color:var(--accent)">14:20</span><span class="spine"><i style="background:var(--accent);width:8px;height:8px;margin-top:4px"></i></span><div class="content row" style="padding-bottom:16px"><span class="tag accent" style="background:var(--accent);color:var(--on-accent)">Now</span><span class="muted">Leave in 10 min. Everything before this line is done.</span></div></div>
+  <div class="steps"><div class="step"><span class="time" style="color:var(--accent-ink)">14:20</span><span class="spine"><i style="background:var(--accent);width:8px;height:8px;margin-top:4px"></i></span><div class="content" style="padding-bottom:16px;flex-direction:row;align-items:center;flex-wrap:wrap;gap:12px"><span class="tag accent" style="background:var(--accent);color:var(--on-accent)">Now</span><span class="muted">Leave in 10 min. Everything before this line is done.</span></div></div>
   ${steps.map(([t,h,d,c,tag,kind,park],i)=>`<div class="step ${kind==='next'?'next':''}">${S.editTimes?`<input class="input mono" style="height:30px;padding:0 6px;font-size:13px" value="${t}" aria-label="Time for ${h}">`:`<span class="time">${t}</span>`}<span class="spine"><i style="${kind==='approx'?`border:2px dashed ${col[c]};background:var(--surface)`:`background:${col[c]}`}${kind==='next'?`;box-shadow:0 0 0 4px color-mix(in srgb, ${col[c]} 35%, transparent)`:''}"></i>${i<steps.length-1?'<b></b>':''}</span><div class="content"><div class="row"><h4>${h}</h4><span class="tag ${tag[0]}">${tag[1]}</span></div><span class="muted">${d}</span>${park&&!S.parkingDone?`<div class="openitem">${ic('alert','s')}<span style="flex:1">Parking code missing, needed at load-in 17:00 today. Asked 18 Oct.</span><button class="btn ghost s" data-act="parking" style="color:inherit">Ask again</button></div>`:''}${kind==='next'?`<a class="btn secondary s" style="align-self:flex-start;text-decoration:none" href="https://www.google.com/maps/dir/Odense/Hotel+Royal,+Store+Torv+4,+8000+Aarhus" target="_blank" rel="noopener">${ic('pin','s')}Open route</a>`:''}</div></div>`).join('')}</div></section>
  <aside class="panel" style="${S.parkingDone?'':'box-shadow:inset 0 0 0 1px var(--att)'}"><div class="sec"><div class="sec-h"><h3 class="t-heading">${S.parkingDone?'1 thing still open':'2 things still open'}</h3></div>
   ${S.parkingDone?'':`<div class="sec"><div class="row"><b class="strong" style="flex:1">Parking code</b><span class="tag danger">Needed by 17:00</span></div><span class="t-meta muted">Asked Kasper 18 Oct, no reply.</span><button class="btn ghost s flush" style="align-self:flex-start" data-act="parking">${ic('send','s')}Ask again</button></div>`}
