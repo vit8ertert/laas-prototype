@@ -173,6 +173,8 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .d-record .d-rh:has(.d-id){display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 12px}
 .d-record .d-rh:has(.d-id) .tag{justify-self:end}
 .d-record .d-rh:has(.d-id)>b{grid-column:1/-1;grid-row:2}
+/* empty-state start cards: 240–360 px each, centred as a group (never left-aligned with empty columns) */
+.choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-template-columns:repeat(auto-fit,minmax(240px,360px))!important;justify-content:center}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
 ::view-transition-old(main){animation:vt-out .14s ease-in both}
@@ -940,4 +942,4 @@ window.__laas={S,go,render,DR,VIEWS};
 <script src="views/account.js"></script>
 <script src="views/mail.js"></script>
 <script src="views/social.js"></script>
-<script>LAAS.boot();</script>
+<script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

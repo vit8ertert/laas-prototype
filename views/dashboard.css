@@ -232,6 +232,68 @@ button.d-kpi:hover{background:var(--raised)}
 :root[data-role="viewer"] .sidebar .nav[data-go="integrations"],:root[data-role="viewer"] .sidebar .nav[data-go="settings"],
 :root[data-role="viewer"] .sidebar .nav[data-go="money"]+.sb-sub,:root[data-role="viewer"] .sidebar .nav[data-go="audience"]+.sb-sub,:root[data-role="viewer"] .sidebar .nav[data-go="catalogue"]+.sb-sub{display:none}
 
+/* calendar: ＋ per day (hover on pointer devices, always on touch) */
+.d-day{position:relative}
+.d-add{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--rule);color:var(--ink);opacity:0;transition:opacity .12s,background .12s;z-index:2}
+.d-day:hover .d-add,.d-add:focus-visible{opacity:1}
+.d-add:hover{background:var(--raised)}
+@media (hover:none){.d-add{opacity:1}}
+.d-band img.d-sq{object-fit:cover;padding:0}
+
+/* assistant history: link to What it can do */
+.d-hist{min-height:calc(100vh - 120px)}
+.d-hsp{flex:1}
+.d-hfoot{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--rule);text-align:left;width:100%}
+.d-hfoot:hover{background:var(--surface)}.d-hfoot svg{margin-top:3px;flex:none}
+.d-hfoot span{display:flex;flex-direction:column;gap:2px;min-width:0}.d-hfoot b{font-weight:500}.d-hfoot small{font-size:12px;line-height:16px;color:var(--muted)}
+
+/* calendar sync (settings column, 720 px) */
+.cs-page{max-width:784px;gap:16px}
+.cs-back{align-self:flex-start}
+.cs-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.cs-sec .d-lic{width:32px;height:32px}
+.cs-acc{align-items:center}.cs-acc::after{display:none}
+.cs-dir{flex-wrap:nowrap}.cs-dir button{display:inline-flex;align-items:center;gap:6px}
+.cs-sub{padding:4px 12px 0}
+.cs-cal .cs-role{flex:none;white-space:nowrap}
+.cs-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--faint)}
+.cs-dot.gigs{background:var(--accent)}.cs-dot.personal{background:var(--ok)}.cs-dot.rehearse{background:var(--draft)}.cs-dot.mcal{background:var(--paid)}
+.cs-log{display:flex;flex-direction:column;gap:6px;padding:0 12px;font-size:13px;line-height:18px;color:var(--muted)}
+.cs-log>span{display:flex;gap:12px}.cs-log .mono{width:120px;flex:none;font-size:12px}
+.cs-cfs{display:flex;flex-direction:column;gap:12px;padding:0 12px}
+.cs-cf{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:var(--r-lg);border:1px solid var(--att);background:var(--canvas)}
+.cs-cfh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cs-cfh b{font-weight:500;flex:1;min-width:0}.cs-cfh .mono{font-size:13px;color:var(--muted)}
+.cs-sides{display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:18px;color:var(--muted)}
+.cs-sides span{display:flex;gap:8px;align-items:flex-start}.cs-sides svg{margin-top:2px;flex:none}
+.cs-cfa{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cs-pw{margin:0 12px}
+
+/* what it can do (detail layout: main column + 348 side panel, page max 1200) */
+.tl-page{max-width:1200px;gap:16px}
+.tl-grid{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:24px;align-items:start}
+.tl-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.tl-f{align-self:flex-start}.tl-f button .faint{margin-left:4px}
+.tl-sec .acc-sh{gap:12px}.tl-sec .d-lic{width:32px;height:32px}
+.tl-row{align-items:center}.tl-row .tx small{max-width:65ch}
+.tl-id{font:400 12px/16px var(--mono);color:var(--faint);margin-top:2px}
+.tl-row .tag{flex:none}.tl-row>svg{color:var(--muted)}
+.tl-side{position:sticky;top:0;display:flex;flex-direction:column;gap:16px}
+.tl-card{display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--rule)}
+.tl-card:first-child{border-color:var(--accent)}
+.tl-card p{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.tl-card .btn{align-self:flex-start}
+.tl-ch{display:flex;align-items:center;gap:8px}
+.tl-steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:8px}
+.tl-steps li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;column-gap:10px}
+.tl-steps li::before{content:counter(s);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px}
+.tl-steps b,.tl-out b{font-weight:500}.tl-steps small,.tl-out small{font-size:12px;line-height:16px;color:var(--muted)}
+.tl-out{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.tl-out li{display:flex;gap:10px;align-items:flex-start}.tl-out li>svg{margin-top:3px;flex:none;color:var(--bad)}
+.tl-out span{display:flex;flex-direction:column;gap:2px}
+@media (max-width:1100px){.tl-grid{grid-template-columns:1fr}.tl-side{position:static}}
+@media (max-width:860px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 6px}
+ .d-add{top:3px;right:2px;width:18px;height:18px;border:0;background:transparent;color:var(--muted);border-radius:4px}.d-add svg.i.s{width:12px;height:12px}.d-day.photo .d-add{color:var(--ink)}.cs-cal .cs-role{display:none}.cs-log>span{flex-direction:column;gap:0}.tl-f{align-self:stretch;flex-wrap:nowrap}.tl-f button{flex:1;padding:0 8px}}
+
 @media (max-width:1280px){.d-asst.withrec{grid-template-columns:260px minmax(0,1fr)}.d-asst .d-record,.d-ahd [data-act="asstpanel"]{display:none}}
 @media (max-width:1100px){.d-grid{grid-template-columns:1fr}.d-cols{grid-template-columns:1fr}}
 @media (max-width:860px){
