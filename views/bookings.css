@@ -58,7 +58,7 @@
 .bk-thumb{width:32px;height:32px;border-radius:8px;object-fit:cover;flex:none}
 .bk-thumb.none{display:grid;place-items:center;background:var(--well);border-radius:6px;color:var(--ink)}
 .bk-thumb.none svg.i{width:10px;height:10px}
-.main.enter .bk-tr:not(.bk-th){animation:rise .36s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.12s + var(--i,0) * 30ms)}
+.main.enter .bk-tr:not(.bk-th){animation:rise .18s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.12s + var(--i,0) * 30ms)}
 
 /* ---------- footer ---------- */
 .bk-foot{display:flex;align-items:center;gap:8px;min-height:34px}

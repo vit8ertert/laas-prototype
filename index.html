@@ -5,6 +5,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="tokens.css">
+<script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
+(function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
+const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
+document.documentElement.classList.add('gated');
+addEventListener('DOMContentLoaded',()=>{const d=document.createElement('div');d.className='gate';
+d.innerHTML='<form class="gate-card"><h1 class="t-title">LAAS prototype</h1><p class="t-body muted">Enter the password you were given.</p><label class="field"><span>Password</span><input class="input" type="password" autocomplete="current-password" autofocus required></label><p class="gate-err t-label" hidden>That password is not right.</p><button class="btn primary" type="submit">Open</button></form>';
+document.body.appendChild(d);d.querySelector('input').focus();
+d.querySelector('form').addEventListener('submit',async e=>{e.preventDefault();const v=d.querySelector('input').value;
+const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prototype:'+v));const hx=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
+else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
+
 <style>
 /* Layout: app shell from the LAAS Figma (top bar, sidebar, main with sticky assistant bar). Dark first; Light and genre themes as token overrides. */
 :root{--sans:"Host Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
@@ -185,15 +197,15 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .abar [data-act=ask]{height:38px;padding:8px 16px;font:500 15px/22px var(--sans)}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
-::view-transition-old(main){animation:vt-out .14s ease-in both}
-::view-transition-new(main){animation:vt-in .28s cubic-bezier(.2,.8,.2,1) both}
+::view-transition-old(main){animation:vt-out .08s linear both}
+::view-transition-new(main){animation:vt-in .14s cubic-bezier(.2,.8,.2,1) both}
 @keyframes vt-out{to{opacity:0;transform:translateY(-4px)}}
 @keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}}
-.main.enter .page>*{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}
-.main.enter .page>*:nth-child(2){animation-delay:.04s}.main.enter .page>*:nth-child(3){animation-delay:.08s}.main.enter .page>*:nth-child(4){animation-delay:.12s}.main.enter .page>*:nth-child(5){animation-delay:.16s}.main.enter .page>*:nth-child(n+6){animation-delay:.2s}
-.main.tabenter .page>*:not(.ph):not(.tabs):not(.hero){animation:rise .32s cubic-bezier(.2,.8,.2,1) both}
-.main.enter tbody tr,.main.enter .list-row{animation:rise .36s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.12s + var(--i,0) * 30ms)}
+.main.enter .page>*{animation:rise .18s cubic-bezier(.2,.8,.2,1) both}
+.main.enter .page>*:nth-child(2){animation-delay:.015s}.main.enter .page>*:nth-child(3){animation-delay:.03s}.main.enter .page>*:nth-child(4){animation-delay:.045s}.main.enter .page>*:nth-child(5){animation-delay:.06s}.main.enter .page>*:nth-child(n+6){animation-delay:.06s}
+.main.tabenter .page>*:not(.ph):not(.tabs):not(.hero){animation:rise .16s cubic-bezier(.2,.8,.2,1) both}
+.main.enter tbody tr,.main.enter .list-row{animation:rise .18s cubic-bezier(.2,.8,.2,1) both;animation-delay:min(calc(.03s + var(--i,0) * 10ms),.09s)}
 .tabs button{position:relative;transition:color .15s}.tabs button.on{border-color:transparent}
 .tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;border-radius:2px;background:var(--accent);animation:tabline .28s cubic-bezier(.2,.8,.2,1) both}
 @keyframes tabline{from{transform:scaleX(.2);opacity:0}}

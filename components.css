@@ -177,3 +177,18 @@ body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srg
 /* Collapsed rail (466:23760 "Rail"): 64 wide, no fill (on the sunken page), gap 4; band square 36, initials Label 13/18 */
 .collapsed .sidebar{background:none;gap:4px}
 .collapsed .sidebar .band .sq{width:36px;height:36px;font:500 13px/18px var(--sans)}
+
+/* Password gate on the public GitHub Pages copy: card on the sunken page, popover values */
+html.gated body>*:not(.gate){display:none!important}
+.gate{position:fixed;inset:0;display:grid;place-items:center;padding:16px;background:var(--sunken);z-index:100}
+.gate-card{width:min(400px,100%);display:flex;flex-direction:column;gap:16px;padding:32px;border-radius:var(--r-lg);background:var(--canvas);box-shadow:inset 0 0 0 1px var(--rule)}
+.gate-card h1,.gate-card p{margin:0}
+.gate-err{color:var(--bad)}
+.gate-card .btn{align-self:flex-start}
+
+/* Ask (the assistant's own action) in acid green, the theme's signal colour, so it never competes with the lilac page action
+   (Vit 21 Oct: "different colour, not purple, maybe the acid green we have") */
+.btn[data-act=ask],.btn[data-act=nbask]{background:var(--signal);color:var(--on-accent)}
+.btn[data-act=ask]:hover,.btn[data-act=nbask]:hover{filter:brightness(1.06)}
+.abar-mini{background:var(--signal);color:var(--on-accent);border-color:transparent}
+.abar-mini:hover{background:var(--signal);filter:brightness(1.06)}
