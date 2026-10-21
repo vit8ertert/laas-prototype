@@ -307,6 +307,9 @@ A.asstreply=t=>{const k=t.dataset.k;if(k==='mail'){L.open('modal',{html:`<h2 cla
 A.asstctxoff=()=>keepAsk(()=>{S.asstCtxOff[S.asstChat]=true;});
 A.assthist=()=>{S.asstHist=!S.asstHist;L.render();};
 A.asstcol=()=>{S.asstCol=!S.asstCol;if(S.asstCol)S.asstSearch=false;L.render();};
+/* + always does something (Vit 21 Oct: "plus does nothing" when already on a new chat): a clean chat, cursor in the box, a short highlight */
+A.asstnew=()=>{const was=S.asst==='new'&&S.view==='assistant';S.asst='new';S.asstEdit=false;S.askDraft='';S.askCtx=[];if(S.view!=='assistant'){L.go('assistant');}else L.render();
+ setTimeout(()=>{const t=document.getElementById('ask');if(!t)return;t.focus();const c=t.closest('.d-comp');if(c){c.classList.remove('d-pulse');void c.offsetWidth;c.classList.add('d-pulse');}},40);if(was)L.toast('New conversation, ask anything');};
 A.asstsearch=()=>{if(S.asstCol){S.asstCol=false;S.asstSearch=true;}else S.asstSearch=!S.asstSearch;L.render();setTimeout(()=>document.getElementById('asstq')?.focus(),30);};
 /* chat search filters the list in place, so typing keeps focus */
 L.INPUT.push(t=>{if(t.id!=='asstq')return;const q=t.value.trim().toLowerCase();document.querySelectorAll('.d-hg').forEach(g=>{let n=0;g.querySelectorAll('.d-hi').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q);b.classList.toggle('miss',!hit);if(hit)n++;});g.classList.toggle('miss',!n);});

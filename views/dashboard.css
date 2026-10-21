@@ -421,3 +421,4 @@ button.d-kpi:hover{background:var(--raised)}
 :root[data-genre="electronic"][data-theme="light"]{--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}
 @media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}}
 .d-busy{flex-direction:row!important;align-items:center;gap:12px!important}.d-busylogo{display:inline-flex;color:var(--ink)}.d-busylogo svg{width:72px;height:auto;--logo-bg:var(--canvas)}
+.d-comp.d-pulse{animation:d-pulse .9s ease-out}@keyframes d-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 10px transparent}}@media (prefers-reduced-motion:reduce){.d-comp.d-pulse{animation:none}}
