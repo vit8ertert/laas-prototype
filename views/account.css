@@ -430,3 +430,6 @@ button.acc-si:hover{background:var(--hover)}
 .acc-gall{align-self:center;padding:0 4px}
 .acc-genres.q .acc-gall{display:none}
 .acc-gnone{display:none;font:400 13px/18px var(--sans);color:var(--muted)}.acc-genres.nohit .acc-gnone{display:block}
+/* onboarding: the Back / Continue row sits apart from the form, 40 px below the last field on every step (Vit 21 Oct) */
+.acc-obform>.row:last-child{margin-top:20px}
+.acc-ob.snd .acc-obform>.row:last-child{margin-top:26px}
