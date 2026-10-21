@@ -172,3 +172,8 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-row:hover,.ml-row:focus-visible{box-shadow:inset 2px 0 0 var(--accent-strong)}
 .ml-row:focus-visible{outline:none}
 @media (prefers-reduced-motion:reduce){.ml-row .ml-text b::after{transition:none}}
+/* flag at the end of the row, by the time (Vit 21 Oct: stars not intuitive) */
+.ml-flag{display:inline-flex;margin-right:8px;color:var(--att)}.ml-flag .i{width:14px;height:14px;fill:currentColor}
+.ml-time{display:inline-flex;align-items:center;justify-content:flex-end}
+/* the booking chip is a pill: hover outlines it, never underlines (Vit 21 Oct) */
+.ml-link,.ml-link *,.ml-link:hover{text-decoration:none!important}

@@ -108,7 +108,8 @@ M.cmp??=null;M.cmpQ??={};M.cmpErr??=null;M.oauth??={kind:'gmail',wait:false};M.s
 const T=id=>M.threads.find(t=>t.id===id)||M.threads[0];
 
 /* ---------- folders ---------- */
-const FOLDERS=[['inbox','Inbox'],['starred','Starred'],['sent','Sent'],['drafts','Drafts'],['archive','Archive'],['spam','Spam'],['trash','Trash']];
+L.P.flag=L.P.flag||'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/>';
+const FOLDERS=[['inbox','Inbox'],['starred','Flagged'],['sent','Sent'],['drafts','Drafts'],['archive','Archive'],['spam','Spam'],['trash','Trash']];
 const inF=(t,f)=>{const tr=M.trash.includes(t.id),sp=!tr&&M.spam.includes(t.id);
  if(f==='trash')return tr;if(f==='spam')return sp;if(tr||sp)return false;
  const ar=M.archived.includes(t.id);
@@ -138,8 +139,9 @@ const rowActs=(t,f)=>{const st=M.starred.includes(t.id);
  if(f==='spam')return iconBtn('inbox','Not spam','mailnotspam',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
  if(f==='trash')return iconBtn('undo','Restore','mailrestore',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
  const ar=M.archived.includes(t.id);
- /* Vit 21 Oct: two stars on hover confused; the star lives only in the status column now */
- return (f==='sent'?'':iconBtn(t.unread?'check':'mail',t.unread?'Mark read':'Mark unread','mailread',t.id))
+ /* Vit 21 Oct: stars were not intuitive; a flag at the end of the row instead: shown by the time when set,
+    toggled from the row's hover actions */
+ return iconBtn('flag',st?'Remove flag':'Flag','mailstar',t.id)+(f==='sent'?'':iconBtn(t.unread?'check':'mail',t.unread?'Mark read':'Mark unread','mailread',t.id))
   +(f==='sent'?'':iconBtn(ar?'inbox':'archive',ar?'Move to inbox':'Archive','mailarchive',t.id))
   +iconBtn('trash','Move to Trash','mailtrash',t.id);};
 const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].reverse().find(m=>m.me):null,unread=!sent&&t.unread,st=M.starred.includes(t.id);
@@ -149,8 +151,8 @@ const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].rever
  <span class="ml-from">${sent?'To: ':''}${L.hl(t.from,q)}${t.org?`<small>${L.hl(t.org,q)}</small>`:''}</span>
  <span class="ml-text"><b>${L.hl(t.subject,q)}</b><span>${L.hl(sent?lastMe.body:t.excerpt,q)}</span></span>
  <span class="ml-linkcol">${linkChip(t,'button')}</span>
- <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}${f==='spam'||f==='trash'?'':`<button class="ml-star ${st?'on':''}" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Unstar':'Star'}" title="${st?'Unstar':'Star'}">${ic('star','s')}</button>`}</span>
- <span class="ml-time">${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
+ <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}</span>
+ <span class="ml-time">${st?`<span class="ml-flag" title="Flagged" aria-label="Flagged">${ic('flag','s')}</span>`:''}${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
  <span class="ml-acts">${rowActs(t,f)}</span>
 </div>`;};
 const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
@@ -172,10 +174,10 @@ const errAcc=()=>M.accounts.find(a=>a.state==='error');
 const syncConnected=()=>{M.connected=M.accounts.some(a=>a.state!=='off');};
 const errBanner=(fix=true)=>{const a=errAcc();return a?`<div class="banner danger ml-banner">${ic('alertc')}<div class="tx"><b>${esc(a.email)} stopped syncing</b><span class="t-label">${esc(a.err)} New mail to this address is not reaching LAAS.</span></div>${fix?`<button class="btn secondary s" data-go="mailaccounts">Fix in Mail accounts</button>`:`<button class="btn secondary s" data-act="mlfix" data-id="${a.id}">Fix</button>`}</div>`:'';};
 const tabs=()=>`<div class="ml-tabs" role="tablist" aria-label="Mail folders">${FOLDERS.map(([k,l])=>{const n=fcount(k);return `<button role="tab" aria-selected="${M.folder===k}" class="${M.folder===k?'on':''}" data-act="mailfolder" data-f="${k}"><span>${l}</span>${n?`<span class="c">${n}</span>`:''}</button>`}).join('')}</div>`;
-const FNOTE={starred:'Stars are only for you.',sent:'Sent from LAAS or from Gmail, linked to their booking.',drafts:'Drafts save as you type. Saving never sends anything.',archive:'Archived threads stay linked to their booking.',spam:'Spam is never linked to a booking and is deleted after 30 days.',trash:'Threads in Trash are deleted for good after 30 days.'};
+const FNOTE={starred:'Flags are only for you.',sent:'Sent from LAAS or from Gmail, linked to their booking.',drafts:'Drafts save as you type. Saving never sends anything.',archive:'Archived threads stay linked to their booking.',spam:'Spam is never linked to a booking and is deleted after 30 days.',trash:'Threads in Trash are deleted for good after 30 days.'};
 const EMPTY={
  inbox:['No threads here','You are all caught up.'],
- starred:['Nothing starred','Star a thread to keep it here until it is done.'],
+ starred:['Nothing flagged','Flag a thread to keep it here until it is done.'],
  sent:['Nothing sent yet','Mail you send lands here, linked to its booking.'],
  drafts:['No drafts','Start a mail and it saves here as you type. Saving never sends anything.'],
  archive:['Nothing archived','Archived threads stay linked to their booking.'],
@@ -220,7 +222,7 @@ L.VIEWS.thread=()=>{const t=T(L.S.params.id),p=t.panel,fo=folderOf(t),st=M.starr
  const arch=fo==='archive';
  const acts=fo==='spam'?`<button class="btn secondary" data-act="mailnotspam" data-id="${t.id}" data-back="1">${ic('inbox','s')}Not spam</button><button class="btn ghost" data-act="maildelete" data-id="${t.id}">${ic('trash','s')}Delete for good</button>`
   :fo==='trash'?`<button class="btn secondary" data-act="mailrestore" data-id="${t.id}" data-back="1">${ic('undo','s')}Restore</button><button class="btn ghost" data-act="maildelete" data-id="${t.id}">${ic('trash','s')}Delete for good</button>`
-  :`<button class="btn ghost icon" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Unstar':'Star'}" title="${st?'Unstar':'Star'}">${ic('star')}</button><button class="btn ghost icon" data-act="mailtrash" data-id="${t.id}" data-back="1" aria-label="Move to Trash" title="Move to Trash">${ic('trash')}</button><button class="btn ghost" data-act="mailunread" data-id="${t.id}">${ic('mail','s')}Mark unread</button><button class="btn secondary" data-act="mailarchive" data-id="${t.id}" data-back="1">${ic(arch?'inbox':'archive','s')}${arch?'Move to inbox':'Archive'}</button>`;
+  :`<button class="btn ghost icon" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Remove flag':'Flag'}" title="${st?'Remove flag':'Flag'}">${ic('flag')}</button><button class="btn ghost icon" data-act="mailtrash" data-id="${t.id}" data-back="1" aria-label="Move to Trash" title="Move to Trash">${ic('trash')}</button><button class="btn ghost" data-act="mailunread" data-id="${t.id}">${ic('mail','s')}Mark unread</button><button class="btn secondary" data-act="mailarchive" data-id="${t.id}" data-back="1">${ic(arch?'inbox':'archive','s')}${arch?'Move to inbox':'Archive'}</button>`;
  const banner=fo==='spam'?`<div class="banner danger">${ic('shieldalert')}<div class="tx"><b>This looks like a scam</b><span class="t-label">${esc(t.spamWhy||'')} Links and images are off in Spam.</span></div></div>`
   :fo==='trash'?`<div class="banner info">${ic('trash')}<div class="tx"><b>In Trash</b><span class="t-label muted">Deleted for good 30 days after it was moved here. Restore it to keep it.</span></div></div>`:'';
  const panel=p?`<aside class="panel ml-panel ${fo==='spam'?'ml-off':''}"><div class="ml-photo"><img src="${IMG(p.img)}" alt=""><span class="tag ${p.tag[0]}">${p.tag[1]}</span></div>
@@ -354,7 +356,7 @@ A.mailarchive=(el,r,e)=>{e.stopPropagation();const id=el.dataset.id;const t=T(id
  const undo=()=>{M.archived=was?[...M.archived,id]:M.archived.filter(x=>x!==id)};
  if(el.dataset.back)L.go('mail');else R();L.toast(was?`Moved to inbox: ${t.subject}`:`Archived: ${t.subject}`,undo);};
 A.mailstar=(el,r,e)=>{e.stopPropagation();const id=el.dataset.id,was=M.starred.includes(id);
- M.starred=was?M.starred.filter(x=>x!==id):[id,...M.starred];R();L.toast(was?'Star removed':'Starred',()=>{M.starred=was?[id,...M.starred]:M.starred.filter(x=>x!==id)});};
+ M.starred=was?M.starred.filter(x=>x!==id):[id,...M.starred];R();L.toast(was?'Flag removed':'Flagged',()=>{M.starred=was?[id,...M.starred]:M.starred.filter(x=>x!==id)});};
 A.mailtrash=(el,r,e)=>{e.stopPropagation();const id=el.dataset.id,t=T(id);M.trash=[id,...M.trash];
  if(el.dataset.back)L.go('mail');else R();L.toast(`Moved to Trash: ${t.subject}`,()=>{M.trash=M.trash.filter(x=>x!==id)});};
 A.mailrestore=(el,r,e)=>{e.stopPropagation();const id=el.dataset.id,t=T(id);M.trash=M.trash.filter(x=>x!==id);const to=folderOf(t);
