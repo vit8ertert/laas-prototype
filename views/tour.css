@@ -27,3 +27,7 @@
 @media (max-width:860px){.tour-card:not(.tour-center){left:16px!important;right:16px;width:auto;top:auto!important;bottom:16px}.tour-arrow{display:none}}
 .tour-card[data-side=left] .tour-arrow{right:-6px;top:calc(var(--ay) - 6px);box-shadow:inset -1px 1px 0 var(--rule-strong)}
 .tour-card[data-side=inside] .tour-arrow{display:none}
+
+/* skip everything: a quiet text link under the card's buttons */
+.tour-off{align-self:flex-start;margin-top:4px;padding:0;font:400 13px/18px var(--sans);color:var(--muted);text-decoration:underline}
+.tour-off:hover{color:var(--ink)}

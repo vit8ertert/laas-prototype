@@ -134,7 +134,8 @@ const CHMAX=40000;
 /* stacked monthly bars (Vit 21 Oct: the area version "change this"): months are separate amounts, so bars, not a flowing line.
    Income types stack bottom up in the chart colours with a 2 px gap, 4 px rounded top; expenses are an ink tick across each month. */
 function chartPlot(){const D=chartData(),n=D.length,pc=v=>(v/CHMAX*100).toFixed(2);
- const cols=D.map((d,i)=>`<div class="m-mcol" data-i="${i}"><div class="m-stack">${SER.map(s=>d[s[0]]?`<i class="${s[0]}" style="height:${pc(d[s[0]])}%"></i>`:'').join('')}</div><b class="m-tick" style="bottom:${pc(d.out)}%"></b></div>`).join('');
+ /* each segment after the first gives up 2 px for the gap above it, so the stack's top lands exactly on its total */
+ const cols=D.map((d,i)=>{let k=0;return `<div class="m-mcol" data-i="${i}"><div class="m-stack">${SER.map(s=>d[s[0]]?`<i class="${s[0]}" style="height:${k++?`calc(${pc(d[s[0]])}% - 2px)`:pc(d[s[0]])+'%'}"></i>`:'').join('')}</div><b class="m-tick" style="bottom:${pc(d.out)}%"></b></div>`;}).join('');
  /* direct labels beside the last month's segments, nudged 18 px apart */
  const last=D[n-1];let acc=0;const lab=SER.map(s=>{const v=last[s[0]],mid=acc+v/2;acc+=v;return {s,y:220-mid/CHMAX*220};});
  for(let k=1;k<lab.length;k++)if(lab[k-1].y-lab[k].y<18)lab[k].y=lab[k-1].y-18;

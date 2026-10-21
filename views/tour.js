@@ -102,17 +102,19 @@ function el(){
   root=document.createElement('div');root.className='tour';root.setAttribute('role','dialog');root.setAttribute('aria-modal','false');
   document.body.appendChild(root);
   root.addEventListener('click',e=>{e.stopPropagation();const a=e.target.closest('[data-tour]');if(!a)return;const k=a.dataset.tour;
-    if(k==='next')step(i+1);else if(k==='back')step(i-1);else if(k==='skip')end(false);else if(k==='done')end(true);});
+    if(k==='next')step(i+1);else if(k==='back')step(i-1);else if(k==='skip')end(false);else if(k==='done')end(true);else if(k==='off')end(false,true);});
   return root;
 }
 const steps=()=>TOURS[tour]||[];
 const firstReal=()=>steps()[0]&&steps()[0].start?1:0;
+/* Vit 21 Oct: "add ability to skip the whole tour altogether": one link ends this tour and turns off every page guide */
+const offLink=()=>`<button class="tour-off" data-tour="off">Skip the tour and all page guides</button>`;
 function card(s){
   const n=steps().length-firstReal(),k=i-firstReal()+1;
   if(s.start)return `<div class="tour-card tour-center"><div class="tour-mark">${L.ic('ai')}</div><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
-    <div class="tour-foot"><button class="btn ghost s" data-tour="skip">Skip</button><span class="tour-grow"></span><button class="btn primary s" data-tour="next">Show me</button></div></div>`;
+    <div class="tour-foot"><button class="btn ghost s" data-tour="skip">Skip</button><span class="tour-grow"></span><button class="btn primary s" data-tour="next">Show me</button></div>${offLink()}</div>`;
   return `<div class="tour-card"><span class="tour-arrow"></span><span class="t-meta faint">${n>1?`${k} of ${n}`:'Guide'}</span><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
-    <div class="tour-foot">${s.last?'':`<button class="btn ghost s" data-tour="skip">${tour==='first'?'Skip tour':'Skip'}</button>`}<span class="tour-grow"></span>${i>firstReal()?'<button class="btn ghost s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div></div>`;
+    <div class="tour-foot">${s.last?'':`<button class="btn ghost s" data-tour="skip">${tour==='first'?'Skip tour':'Skip'}</button>`}<span class="tour-grow"></span>${i>firstReal()?'<button class="btn ghost s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div>${s.last?'':offLink()}</div>`;
 }
 function place(){
   if(i<0||!root)return;
@@ -149,11 +151,13 @@ function step(k){
   requestAnimationFrame(()=>{place();root.querySelector('.tour-card [data-tour=next],.tour-card [data-tour=done]')?.focus({preventScroll:true});});
   setTimeout(place,120);setTimeout(place,420);
 }
-function end(done){
+function end(done,off){
   const was=tour;i=-1;tour=null;
+  if(off){set('laas-guides','off');set('laas-tour','skipped');}
   if(was==='first')set('laas-tour',done?'done':'skipped');else if(was)set('laas-guide-'+was,'seen');
   if(root){root.remove();root=null;}
-  if(was==='first')L.toast(done?'You are set. Guides open on each page the first time':'Tour skipped. Open it again from Guide in the menu');
+  if(off)L.toast('Tour and page guides are off. Guide in the menu brings them back');
+  else if(was==='first')L.toast(done?'You are set. Guides open on each page the first time':'Tour skipped. Open it again from Guide in the menu');
 }
 function start(name){
   if(!TOURS[name])return;
@@ -162,7 +166,8 @@ function start(name){
   if(name==='first'&&S.view!=='dashboard')L.go('dashboard');
   setTimeout(()=>step(0),name==='first'?180:60);
 }
-L.tour={start,end:()=>end(false)};
+/* opening a guide by hand turns guides back on */
+L.tour={start:n=>{set('laas-guides','on');start(n);},end:()=>end(false)};
 
 // page guides: the first time a page with a guide opens (after the first-run tour), unless something else is open
 let lastView=null;
@@ -172,7 +177,7 @@ function maybeGuide(){
   const g=guideFor(S.view);
   if(!g||S.view==='onboarding'||S.overlay)return;
   const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')return;
-  if(get('laas-guide-'+g))return;
+  if(get('laas-guides')==='off'||get('laas-guide-'+g))return;
   setTimeout(()=>{if(!tour&&guideFor(S.view)===g&&!S.overlay)start(g);},500);
 }
 
