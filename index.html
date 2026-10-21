@@ -1,0 +1,821 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LAAS Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app shell from the LAAS Figma (top bar, sidebar, main with sticky assistant bar). Dark first; Light and genre themes as token overrides. */
+:root{
+  --canvas:#121212;--surface:#1e1e1e;--raised:#272727;--overlay:#2e2e2e;--top:#383838;--sunken:#0b0b0b;--well:#262626;
+  --rule:#2a2a2a;--rule-strong:#3e3e3e;--ink:#e3e3e3;--muted:#a3a3a3;--faint:#828282;
+  --accent:#cdbdff;--accent-strong:#b39bff;--accent-tint:#332b4a;--accent-ink:#d9ccff;--on-accent:#121212;
+  --ok-tint:#163222;--ok:#7ed29a;--paid-tint:#2a2340;--paid:#d9ccff;--att-tint:#3a2010;--att:#ff9b4a;--bad-tint:#3b1218;--bad:#ff6b81;--draft-tint:#26251f;--draft:#b8b5ac;
+  --travel:#6ea4ff;--work:#3ccfc6;--break:#f2b84b;--doors:#ff6fb5;--you:#ff6437;--signal:#d9f25a;
+  --sans:"Host Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r-sm:6px;--r-md:10px;--r-lg:12px;--r-xl:16px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--sunken:#ebe8e5;--well:#ebe8e5;
+  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#8b8b85;
+  --accent:#cdbdff;--accent-strong:#9d84f0;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
+  --ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;
+  --travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;color-scheme:light}}
+:root[data-theme="light"]{
+  --canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--sunken:#ebe8e5;--well:#ebe8e5;
+  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#8b8b85;
+  --accent:#cdbdff;--accent-strong:#9d84f0;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
+  --ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;
+  --travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+/* genre themes (dark) */
+:root[data-genre="metal"]:not([data-theme="light"]){--canvas:#0a0a0a;--surface:#161616;--raised:#202020;--overlay:#272727;--top:#313131;--well:#1e1c19;--rule:#262420;--rule-strong:#3a3731;--ink:#e8e2d6;--muted:#a29b91;--accent:#e8e2d6;--accent-strong:#e8e2d6;--accent-tint:#2a2722;--accent-ink:#e8e2d6}
+:root[data-genre="electronic"]:not([data-theme="light"]){--canvas:#0a1020;--surface:#161c2b;--raised:#202634;--overlay:#272d3b;--top:#313644;--well:#16203a;--rule:#1d2942;--rule-strong:#2c3b5c;--ink:#eaf1ff;--muted:#93a3c4;--accent:#d9f25a;--accent-strong:#d9f25a;--accent-tint:#2a3012;--accent-ink:#e4f77a}
+:root[data-genre="classical"]:not([data-theme="light"]){--canvas:#16130f;--surface:#221f1b;--raised:#2b2825;--overlay:#322f2c;--top:#3b3935;--well:#2a241c;--rule:#2e281f;--rule-strong:#453c2e;--ink:#f3ecdd;--muted:#b5aa96;--accent:#df8f9e;--accent-strong:#df8f9e;--accent-tint:#3a1f25;--accent-ink:#f0b8c2}
+:root[data-genre="classical"][data-theme="light"]{--canvas:#f6f1e7;--surface:#fffdf8;--well:#efe8da;--accent:#6e1f2b;--accent-strong:#6e1f2b;--accent-tint:#f3e3e5;--accent-ink:#6e1f2b;--on-accent:#fffdf8}
+html,body{height:100%}
+body{background:var(--canvas);color:var(--ink);font:400 15px/22px var(--sans);-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}.faint{color:var(--faint)}
+.t-display{font:400 32px/40px var(--sans);letter-spacing:-.5px;text-wrap:balance;margin:0}
+.t-title{font:400 24px/32px var(--sans);margin:0}
+.t-heading{font:500 18px/24px var(--sans);margin:0}
+.t-label{font:400 13px/18px var(--sans)}
+.t-meta{font:400 12px/16px var(--sans)}
+.strong{font-weight:500}
+svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg.i.s{width:16px;height:16px}
+
+/* shell */
+.app{display:grid;grid-template-rows:58px 1fr;grid-template-columns:minmax(0,1fr);height:100%}
+.topbar{display:flex;align-items:center;gap:16px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px));background:var(--canvas)}
+.logo{display:flex;align-items:center;gap:10px}.logo svg{width:90px;height:24px;fill:var(--ink)}
+.search-pill{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:40vw;height:34px;padding:0 10px;border-radius:999px;background:var(--surface);color:var(--faint);font-size:13px}
+.search-pill kbd{margin-left:auto;font:400 12px var(--mono);color:var(--faint)}
+.bell{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:8px;color:var(--ink)}
+.bell .n{position:absolute;top:2px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
+.me{display:flex;align-items:center;gap:8px;font-size:14px}
+.avatar-you{width:28px;height:28px;border-radius:50%;background:var(--you);color:#000;display:grid;place-items:center;font:500 14px var(--sans)}
+.body{display:grid;grid-template-columns:236px 1fr;min-height:0}
+.body.collapsed{grid-template-columns:64px 1fr}
+.sidebar{display:flex;flex-direction:column;gap:2px;padding:8px;overflow:auto;min-height:0}
+.band{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;margin-bottom:10px}
+.band .sq{width:34px;height:34px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans)}
+.band b{font-weight:500;font-size:15px;display:block;line-height:18px}.band small{font-size:12px;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:8px;color:var(--ink);font-size:15px;width:100%;text-align:left}
+.nav:hover{background:var(--surface)}
+.nav.active{background:var(--well);font-weight:500}
+.nav.sub{padding-left:14px}
+.nav .count{margin-left:auto;font-size:12px;color:var(--faint)}
+.nav .alert{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--on-accent);font:500 12px/20px var(--sans);text-align:center}
+.nav .chev{margin-left:auto;color:var(--muted)}
+.sb-gap{height:8px}.sb-spacer{flex:1}
+.collapsed .sidebar .nav span,.collapsed .sidebar .nav .count,.collapsed .sidebar .band div,.collapsed .sidebar .chev,.collapsed .sidebar .nav.sub{display:none}
+.collapsed .sidebar .nav{justify-content:center;padding:0}
+.collapsed .sidebar .nav .alert{position:absolute;margin:0;min-width:8px;height:8px;padding:0;font-size:0;transform:translate(10px,-10px)}
+.main{min-width:0;overflow:auto;background:var(--canvas);border-top-left-radius:16px;position:relative}
+.page{max-width:1116px;margin:0 auto;padding:24px 32px 120px;display:flex;flex-direction:column;gap:24px}
+.ph{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}.ph .grow{flex:1;min-width:240px}
+.ph p{margin:2px 0 0;color:var(--muted)}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;font-weight:500;font-size:15px;white-space:nowrap;transition:filter .12s,background .12s}
+.btn.s{height:34px;padding:0 12px;font-size:13px}
+.btn.accent{background:var(--accent-strong);color:var(--on-accent)}.btn.accent:hover{filter:brightness(1.06)}
+.btn.primary{background:var(--ink);color:var(--canvas)}
+.btn.secondary{border:1px solid var(--rule-strong)}.btn.secondary:hover{background:var(--surface)}
+.btn.ghost:hover{background:var(--surface)}.btn.ghost.flush{padding:0}.btn.ghost.flush:hover{background:none;text-decoration:underline}
+.btn.icon{width:38px;padding:0;justify-content:center}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.tag{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:999px;font-size:13px;white-space:nowrap}
+.tag.confirmed{background:var(--ok-tint);color:var(--ok)}.tag.paid{background:var(--paid-tint);color:var(--paid)}.tag.attention{background:var(--att-tint);color:var(--att)}.tag.danger{background:var(--bad-tint);color:var(--bad)}.tag.draft{background:var(--draft-tint);color:var(--draft)}.tag.accent{background:var(--accent-tint);color:var(--accent-ink)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;background:var(--surface);font-size:13px}
+.chip.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;color:var(--ink)}
+.field .help{font-size:12px;color:var(--muted)}
+.input{height:38px;border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);padding:0 12px;width:100%;color:var(--ink)}
+.input:focus{outline:none;border-color:var(--ink)}
+textarea.input{height:auto;min-height:76px;padding:10px 12px;resize:vertical}
+.search{position:relative;width:280px;max-width:100%}.search svg{position:absolute;left:10px;top:11px;color:var(--faint)}.search .input{padding-left:34px}
+.seg{display:flex;gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
+.seg button{flex:1;height:30px;border-radius:7px;font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);overflow-x:auto}
+.tabs button{height:44px;padding:0 12px;color:var(--muted);display:flex;align-items:center;gap:8px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--ink);font-weight:500;border-color:var(--accent)}
+.tabs .c{font-size:12px;padding:0 6px;border-radius:999px;background:var(--well);color:var(--ink)}
+.card{background:var(--surface);border-radius:var(--r-lg);padding:20px}
+.panel{background:var(--surface);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:28px}
+.sec{display:flex;flex-direction:column;gap:8px}
+.sec-h{display:flex;align-items:center;gap:12px}.sec-h h3{flex:1}
+.list-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--rule);width:100%;text-align:left}
+.list-row:first-of-type{border-top:0}
+.list-row .tx{flex:1;min-width:0}.list-row .tx b{font-weight:400;display:block}.list-row .tx small{color:var(--muted);font-size:13px}
+.thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:var(--well)}
+.thumb.s{width:32px;height:32px;border-radius:6px}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:10px 12px;font-size:15px}.kv dt{color:var(--muted);font-size:13px}.kv dd{margin:0}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:48px;align-items:start}
+.banner{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md)}
+.banner.attention{background:var(--att-tint);color:var(--att)}.banner.danger{background:var(--bad-tint);color:var(--bad)}.banner.info{background:var(--well)}
+.banner .tx{flex:1}.banner b{font-weight:500;display:block}
+.table-wrap{overflow-x:auto;border-radius:var(--r-lg);background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:820px}
+th{font:400 13px var(--sans);color:var(--muted);text-align:left;padding:10px 16px;border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-top:1px solid var(--rule)}
+tbody tr{cursor:pointer}tbody tr:hover td{background:var(--raised)}
+th.num,td.num{text-align:right}
+.title-cell{display:flex;align-items:center;gap:12px;font-weight:500}
+mark{background:none;color:var(--accent);font-weight:500}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:48px 24px;border:1px dashed var(--rule-strong);border-radius:var(--r-lg)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;width:100%;margin-top:12px}
+.choice{background:var(--surface);border-radius:var(--r-md);overflow:hidden;text-align:left}
+.choice img{width:100%;aspect-ratio:11/6;object-fit:cover;display:block}
+.choice div{padding:12px 14px}.choice b{font-weight:500;display:block}.choice small{color:var(--muted);font-size:12px}
+
+/* hero */
+.hero{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:280px;display:flex;align-items:flex-end;color:#fff}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.25) 45%,rgba(0,0,0,.85))}
+.hero .tx{position:relative;z-index:1;padding:0 32px 28px;display:flex;flex-direction:column;gap:10px}
+.hero h1{font:400 clamp(36px,5vw,52px)/1 var(--sans);letter-spacing:-1px;margin:0}
+.hero .k{font-size:13px;opacity:.85}
+.facts{display:flex;gap:8px;flex-wrap:wrap}.facts span{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px}
+
+/* overlays */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;animation:fade .15s}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--top);z-index:41;display:flex;flex-direction:column;animation:slide .2s ease-out;padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer .dh{display:flex;align-items:flex-start;gap:12px;padding:20px 24px}.drawer .dh .grow{flex:1}
+.drawer .db{flex:1;overflow:auto;padding:4px 24px 24px;display:flex;flex-direction:column;gap:20px}
+.drawer .df{display:flex;gap:12px;padding:16px 24px;border-top:1px solid var(--rule);align-items:center}
+.modal{position:fixed;left:50%;top:96px;transform:translateX(-50%);width:min(720px,calc(100% - 32px));max-height:calc(100% - 120px);overflow:auto;background:var(--top);border-radius:var(--r-xl);z-index:41;padding:24px;display:flex;flex-direction:column;gap:16px;animation:pop .18s}
+.pop{position:fixed;z-index:41;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:var(--r-lg);box-shadow:0 16px 48px rgba(0,0,0,.45);animation:pop .14s}
+@keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(30px);opacity:.4}}@keyframes pop{from{transform:translate(var(--tx,0),6px);opacity:0}}
+.modal{--tx:-50%}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+.abar{position:sticky;bottom:16px;margin:0 auto;max-width:1116px;width:calc(100% - 64px);background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-lg);padding:10px 12px;display:flex;align-items:center;gap:10px;z-index:20}
+.abar input{flex:1;background:none;border:0;outline:none;min-width:0;color:var(--ink)}
+.rec{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;border-radius:7px;background:var(--accent-tint);color:var(--accent-ink);font-size:13px;white-space:nowrap}
+.sheet{position:sticky;bottom:84px;margin:0 auto;max-width:1116px;width:calc(100% - 64px);background:var(--top);border:1px solid var(--rule-strong);border-radius:var(--r-lg);padding:20px 24px;display:flex;flex-direction:column;gap:14px;z-index:21;box-shadow:0 16px 48px rgba(0,0,0,.45);max-height:70vh;overflow:auto}
+.bubble{align-self:flex-end;background:var(--well);border-radius:10px;padding:8px 14px;max-width:80%}
+.send{background:var(--surface);border:1px solid var(--rule-strong);border-radius:var(--r-lg);padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.msg{background:var(--well);border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.msg p{margin:0;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.msg.full p{-webkit-line-clamp:unset}
+.link{text-decoration:underline;color:var(--ink);font-size:13px}
+.pal{left:50%;top:96px;width:min(640px,calc(100% - 32px));--tx:-50%;transform:translateX(-50%)}
+.pal .f{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.pal .f input{flex:1;background:none;border:0;outline:none;font-size:16px;color:var(--ink)}
+.pal .g{padding:8px}.pal .gl{font-size:12px;color:var(--faint);padding:8px 12px 4px}
+.pal .it{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:8px;width:100%;text-align:left}
+.pal .it.on,.pal .it:hover{background:var(--well)}
+.pal .ft{display:flex;gap:16px;padding:10px 20px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radius:4px;padding:1px 5px;color:var(--muted)}
+.notif{width:min(432px,calc(100% - 32px));top:64px;right:16px}
+.ni{display:flex;gap:12px;padding:12px 12px 12px 8px;border-radius:10px;width:100%;text-align:left;align-items:flex-start}
+.ni:hover{background:var(--well)}
+.ni .dot{width:8px;height:8px;border-radius:50%;margin-top:16px;flex:none}
+.ni.unread .dot{background:var(--accent)}.ni.unread b{font-weight:500}.ni:not(.unread) b{font-weight:400;color:var(--muted)}
+
+/* gig day */
+.strip{background:var(--surface);border-radius:var(--r-lg);padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.track{position:relative;height:84px}
+.track .h{position:absolute;top:0;font-size:12px;color:var(--faint)}
+.track .tick{position:absolute;top:22px;width:1px;height:52px;background:var(--rule)}
+.track .blk{position:absolute;top:32px;height:32px;border-radius:6px;font-size:12px;padding:0 8px;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+.track .now{position:absolute;top:18px;width:2px;height:60px;background:var(--accent)}
+.track .now:before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-2px}
+.steps{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:64px 16px 1fr;gap:12px}
+.step .time{font:400 14px var(--mono);color:var(--muted);padding-top:1px}
+.step .spine{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.step .spine i{width:12px;height:12px;border-radius:50%;flex:none}
+.step .spine b{flex:1;width:2px;background:var(--rule);margin-top:2px}
+.step .content{padding-bottom:24px;display:flex;flex-direction:column;gap:8px}
+.step.next .time{color:var(--ink)}.step.next h4{font:500 18px/24px var(--sans)}
+.step h4{margin:0;font-weight:500;font-size:15px;flex:1}
+.openitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-md);background:var(--bad-tint);color:var(--bad)}
+/* gig card */
+.gigcard{border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:14px;color:#fff;transition:background .3s}
+.gigcard img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r-md)}
+/* misc */
+.stars{display:flex;gap:6px}.stars button svg{width:32px;height:32px}
+.qtag{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--rule-strong);font-size:13px;color:var(--muted)}
+.qtag.on{border-color:var(--ink);color:var(--ink);background:var(--well)}
+.radio{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);border:1px solid var(--rule-strong);text-align:left;width:100%}
+.radio.on{border:1.5px solid var(--ink)}
+.radio i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--rule-strong);flex:none;margin-top:3px}
+.radio.on i{border:5px solid var(--ink)}
+.drop{border:1px dashed var(--rule-strong);border-radius:var(--r-md);padding:24px;background:var(--sunken);display:flex;flex-direction:column;gap:8px}
+.progress{height:3px;border-radius:2px;background:var(--well);overflow:hidden}.progress b{display:block;height:100%;background:var(--accent);transition:width .3s}
+.meter{display:flex;gap:2px}.meter i{height:6px;border-radius:3px}
+.theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.theme-card{border-radius:var(--r-md);border:1px solid var(--rule);padding:10px;text-align:left;display:flex;flex-direction:column;gap:8px}
+.theme-card.on{border:2px solid var(--ink)}
+.swatch{height:56px;border-radius:6px;display:flex;overflow:hidden}.swatch i{flex:1}
+.ob{display:grid;grid-template-columns:600px 1fr;height:100%;background:var(--canvas)}
+.ob .l{padding:48px 80px;display:flex;flex-direction:column;gap:24px;overflow:auto}
+.ob .r{margin:16px;border-radius:var(--r-xl);overflow:hidden;background:#111}
+.ob .r img{width:100%;height:100%;object-fit:cover}
+.bar4{display:flex;gap:8px}.bar4 i{flex:1;height:4px;border-radius:2px;background:var(--rule)}.bar4 i.on{background:var(--accent)}
+.code{display:flex;gap:8px}.code input{width:56px;height:64px;text-align:center;font:400 24px var(--mono);border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
+.flowbar{display:flex}
+.pop .it:hover{background:var(--well)}
+.bars{display:flex;align-items:flex-end;gap:16px;height:160px;padding-top:8px}.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}.bars .b{display:flex;gap:4px;align-items:flex-end;height:130px}.bars .b i{width:18px;border-radius:4px 4px 0 0}
+.flowmenu{right:16px;top:60px;width:300px;padding:8px}
+.flowmenu button{display:flex;width:100%;text-align:left;padding:10px 12px;border-radius:8px;gap:10px;align-items:center}
+.flowmenu button:hover{background:var(--well)}
+.split{display:grid;grid-template-columns:1fr auto auto;gap:10px 16px;align-items:center}
+
+@media (max-width:1100px){.grid2{grid-template-columns:1fr}.ob{grid-template-columns:1fr}.ob .r{display:none}.ob .l{padding:32px max(16px,env(safe-area-inset-left,0px))}}
+@media (max-width:860px){
+  .body{grid-template-columns:1fr}.sidebar{position:fixed;inset:58px auto 0 0;width:260px;background:var(--canvas);z-index:35;transform:translateX(-100%);transition:transform .2s;padding-left:max(8px,env(safe-area-inset-left,0px))}
+  .sidebar.open{transform:none}.menu-btn{display:grid!important}
+  .fl,.search-pill span,.search-pill kbd,.me .nm,.logo small{display:none}.search-pill{width:38px;padding:0;justify-content:center}
+  .page{padding:16px max(16px,env(safe-area-inset-left,0px)) 120px max(16px,env(safe-area-inset-right,0px))}
+  .abar,.sheet{width:calc(100% - 32px)}
+  .hero .tx{padding:0 20px 20px}.kv{grid-template-columns:100px 1fr}.theme-grid{grid-template-columns:1fr}
+  .main{border-radius:0}
+  .topbar{gap:8px}.logo svg{width:72px}.me>svg{display:none}
+  .setgrid{grid-template-columns:1fr!important}.setgrid>nav{flex-direction:row!important;overflow-x:auto}.setgrid>nav>span{display:none}
+  .ph .btn{flex:none}
+}
+.menu-btn{display:none;width:34px;height:34px;place-items:center}
+</style>
+
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- icons (Lucide paths) ---------- */
+const P={
+ dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+ ai:'<path d="M9.94 14.06 7 22l-2.94-7.94L-3.88 11 4.06 8.06 7 0l2.94 8.06L17.88 11z" transform="translate(4 1) scale(.82)"/><path d="M20 3v4M22 5h-4"/>',
+ file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/>',
+ money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
+ disc:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/>',
+ radio:'<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9C23 8.8 23 15.1 19.1 19"/><circle cx="12" cy="12" r="2"/>',
+ plug:'<path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
+ settings:'<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
+ bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+ search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+ down:'<path d="m6 9 6 6 6-6"/>',right:'<path d="m9 18 6-6-6-6"/>',left:'<path d="m12 19-7-7 7-7M19 12H5"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>',check:'<path d="M20 6 9 17l-5-5"/>',plus:'<path d="M5 12h14M12 5v14"/>',
+ send:'<path d="M14.5 21.7a.5.5 0 0 0 .94-.02l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.93"/>',
+ upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
+ pencil:'<path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"/>',
+ more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+ alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+ pin:'<path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+ copy:'<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+ star:'<path d="M11.53 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.12 2.12 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.12 2.12 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.12 2.12 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.12 2.12 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .29-.9l5.17-.77a2.12 2.12 0 0 0 1.6-1.16z"/>',
+ menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',calendar:'<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ mail:'<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+ panel:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>',flow:'<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/>',
+ eye:'<path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/>',
+ wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+ undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+};
+const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
+const LOGO='<svg viewBox="0 0 90 24" aria-label="LAAS" role="img"><path d="M24.1567 24V6.75583H27.5533V3.39658H30.9125V0H34.7197V3.39658H38.0789V6.75583H41.5128V24H37.7057V17.2442H27.9265V24H24.1567ZM27.9265 13.4743H37.7057V7.12908H34.3464V3.76983H31.2858V7.12908H27.9265V13.4743Z"/><path d="M0 0H13.2156V12.3429H20.4156V24H0V0Z"/><path d="M65.5072 14.2581H72.3459C73.1416 17.3978 74.9588 18.9677 77.7976 18.9677C78.6363 18.9677 79.389 18.8172 80.0556 18.5161C80.7438 18.2151 81.2814 17.828 81.6685 17.3548C82.0771 16.8602 82.2814 16.3226 82.2814 15.7419C82.2814 15.2688 82.1631 14.8817 81.9266 14.5806C81.7115 14.2796 81.3997 14.129 80.9911 14.129C80.7115 14.129 80.4427 14.1935 80.1847 14.3226C79.9481 14.4516 79.6148 14.6989 79.1847 15.0645C78.432 15.7312 77.647 16.0645 76.8298 16.0645C76.2492 16.0645 75.733 15.8602 75.2814 15.4516C74.8513 15.043 74.5287 14.5376 74.3137 13.9355C73.9051 12.7742 73.2277 12.1935 72.2814 12.1935C72.0879 12.1935 71.8943 12.2151 71.7008 12.2581C71.5072 12.3011 71.3029 12.3548 71.0879 12.4194C70.6793 12.5484 70.2384 12.6129 69.7653 12.6129C68.9696 12.6129 68.2277 12.3871 67.5395 11.9355C66.8513 11.4624 66.2922 10.828 65.8621 10.0323C65.4535 9.23656 65.2492 8.33333 65.2492 7.32258C65.2492 5.88172 65.6578 4.6129 66.475 3.51613C67.3137 2.41936 68.4427 1.55914 69.8621 0.935485C71.3029 0.311828 72.9051 0 74.6685 0C76.1309 0 77.4535 0.225807 78.6363 0.67742C79.8406 1.10753 80.9696 1.75269 82.0234 2.6129C82.4105 2.93548 82.7438 3.09677 83.0234 3.09677C83.6255 3.09677 84.0879 2.30108 84.4105 0.709678H89.4427V8.74193H82.604C82.2169 7.49462 81.518 6.51613 80.5072 5.80645C79.4965 5.07527 78.3137 4.70968 76.9589 4.70968C75.647 4.70968 74.561 5 73.7008 5.58065C72.8621 6.16129 72.4427 6.87097 72.4427 7.70968C72.4427 8.11828 72.561 8.46237 72.7976 8.74193C73.0341 9 73.3567 9.12903 73.7653 9.12903C74.3029 9.12903 74.8083 8.89247 75.2814 8.41935C75.7761 7.92473 76.2169 7.56989 76.604 7.35484C76.9911 7.13979 77.4212 7.03226 77.8943 7.03226C78.475 7.03226 78.9588 7.2043 79.3459 7.54839C79.733 7.87097 80.0126 8.29032 80.1847 8.80645C80.6363 10.1398 81.2814 10.8065 82.1201 10.8065C82.4427 10.8065 82.7761 10.7419 83.1201 10.6129C83.4212 10.5054 83.69 10.4409 83.9266 10.4194C84.1847 10.3763 84.4427 10.3548 84.7008 10.3548C85.6255 10.3548 86.4642 10.6129 87.2169 11.129C87.9696 11.6452 88.561 12.3548 88.9911 13.2581C89.4427 14.1613 89.6685 15.2043 89.6685 16.3871C89.6685 17.957 89.2922 19.3118 88.5395 20.4516C87.7868 21.5914 86.7438 22.4731 85.4105 23.0968C84.0771 23.6989 82.5287 24 80.7653 24C79.0449 24 77.5825 23.7742 76.3782 23.3226C75.1954 22.871 74.0664 22.1613 72.9911 21.1935C72.5825 20.828 72.2384 20.6452 71.9588 20.6452C71.3352 20.6452 70.8621 21.5269 70.5395 23.2903H65.5072V14.2581Z"/><path d="M48.3314 24C45.2109 24 44.3882 23.2057 44.3882 19.6312C44.3882 15.1489 45.3811 10.5248 46.913 6.89362C48.6151 2.83688 50.9697 0 53.3811 0C55.7073 0 58.0336 2.7234 59.7357 6.6383C61.3243 10.2979 62.374 15.0071 62.374 19.5745C62.374 23.0922 61.5513 24 58.5442 24H57.4094C55.1683 24 53.9485 23.2057 53.9485 20.6525V19.4043C53.9485 18.6099 53.9485 17.7872 53.3811 17.7872C52.7853 17.7872 52.7853 18.6099 52.7853 19.4043V20.6809C52.7853 23.2057 51.5655 24 49.4662 24H48.3314ZM51.7073 6.49645C51.7073 7.48936 52.5584 7.82979 53.4094 7.82979C54.2605 7.82979 55.0832 7.48936 55.0832 6.49645C55.0832 5.84397 54.374 4.59574 53.3811 4.59574C52.3882 4.59574 51.7073 5.84397 51.7073 6.49645Z"/></svg>';
+const IMG=n=>`img/${n}.jpg`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const kr=n=>n.toLocaleString('da-DK').replace(/ /g,'.');
+
+/* ---------- data (example band: Low Tide) ---------- */
+const VENUES=[
+ {id:'royal',name:'Hotel Royal',city:'Aarhus',kind:'Hotel bar',cap:'120 standing',img:'hotel-royal',tint:'#4a1a1c',played:3,rating:4.3,meta:'Aarhus, hotel bar, 120, PA and drums in house',tag:['confirmed','Booked']},
+ {id:'mono',name:'Club Mono',city:'Copenhagen',kind:'Club',cap:'300',img:'club-mono',tint:'#13235a',played:2,rating:4,meta:'Copenhagen, club, 300, PA',tag:['attention','Owes you']},
+ {id:'studiob',name:'Studio B',city:'Copenhagen',kind:'Rehearsal space',cap:'40',img:'studio-b',tint:'#5a2a12',played:12,rating:4,meta:'Copenhagen, rehearsal space, 40, hourly',tag:['draft','Regular']},
+ {id:'odense',name:'Odense Live',city:'Odense',kind:'Venue',cap:'450',img:'odense-live',tint:'#1a3a40',played:1,rating:4,meta:'Odense, venue, 450, full PA and engineer',tag:['confirmed','Played']},
+ {id:'loppen',name:'Loppen',city:'Copenhagen',kind:'Club',cap:'400',img:'loppen',tint:'#4a1814',played:1,rating:5,meta:'Copenhagen, club, 400',tag:['draft','Enquiry']},
+ {id:'posten',name:'Posten',city:'Odense',kind:'Venue',cap:'600',img:'posten',tint:'#1b2433',played:0,rating:0,meta:'Odense, venue, 600, never played',tag:['draft','New']},
+];
+const V=id=>VENUES.find(v=>v.id===id);
+const BOOKINGS=[
+ {id:'b1',when:'Sat 25 Oct 20:00',title:'Saturday hotel gig',type:'Concert',venue:'royal',status:'confirmed',pay:'Deposit overdue',fee:4500,tab:'up'},
+ {id:'b2',when:'Sat 1 Nov 14:00',title:'Rehearsal',type:'Rehearsal',venue:'studiob',status:'draft',pay:'—',fee:0,tab:'draft'},
+ {id:'b3',when:'Sat 8 Nov 18:00',title:'Private party',type:'Private',venue:null,status:'draft',pay:'No contact',fee:6000,tab:'draft'},
+ {id:'b4',when:'Sat 15 Nov 21:00',title:'Club night',type:'Concert',venue:'mono',status:'attention',pay:'Invoiced, not paid',fee:6000,tab:'need'},
+ {id:'b5',when:'Fri 28 Nov 19:30',title:'Support slot',type:'Concert',venue:'odense',status:'confirmed',pay:'Deposit paid',fee:2500,tab:'up'},
+ {id:'b6',when:'Tue 2 Dec 19:00',title:'Christmas party',type:'Corporate',venue:'posten',status:'paid',pay:'Paid',fee:8000,tab:'up'},
+ {id:'p1',when:'Sat 18 Oct 21:00',title:'Release show',type:'Concert',venue:'loppen',status:'completed',pay:'Settled, rated 5',fee:7000,tab:'past'},
+ {id:'p2',when:'Fri 10 Oct 20:00',title:'Club night',type:'Concert',venue:'mono',status:'completed',pay:'Settled, rated 4',fee:6000,tab:'past'},
+ {id:'p3',when:'Thu 18 Sep 21:00',title:'Support slot',type:'Concert',venue:'odense',status:'completed',pay:'Settled, not rated',fee:2500,tab:'past'},
+];
+const CONTACTS=[
+ {id:'c1',name:'Mette Kjær, Hotel Royal',kind:'Venue booker',where:'Aarhus',last:'2 days ago',status:['confirmed','Confirmed'],n:4,email:'booking@hotelroyal.dk',phone:'+45 86 12 00 00',venue:'royal'},
+ {id:'c2',name:'Jonas Beck, Hotel Royal',kind:'Bar manager',where:'Aarhus',last:'3 weeks ago',status:null,n:1,venue:'royal'},
+ {id:'c3',name:'Studio B',kind:'Rehearsal space',where:'Copenhagen',last:'yesterday',status:['paid','Paid'],n:12,venue:'studiob'},
+ {id:'c4',name:'Club Mono',kind:'Venue',where:'Copenhagen',last:'1 week ago',status:['attention','Attention'],n:2,venue:'mono'},
+ {id:'c5',name:'Sara Lind',kind:'Promoter',where:'Odense',last:'5 weeks ago',status:['draft','Draft'],n:0,venue:'odense'},
+ {id:'c6',name:'Kasper Holm',kind:'Sound engineer',where:'Aarhus',last:'2 months ago',status:null,n:6,venue:'royal'},
+];
+const STATUS={enquiry:['draft','Enquiry'],hold:['accent','Hold'],offer:['paid','Offer out'],confirmed:['confirmed','Confirmed'],completed:['paid','Completed'],draft:['draft','Draft'],attention:['attention','Attention'],paid:['paid','Paid']};
+
+/* ---------- state ---------- */
+const S={view:'dashboard',params:{},collapsed:false,sidebarOpen:false,overlay:null,toast:null,
+ booking:{state:'confirmed',depositPaid:false,settled:false,rated:false,sheet:false},
+ search:'',bookTab:'up',statusFilter:[],contactSearch:'',
+ notifs:[{t:'Hotel Royal’s deposit is 8 days late',m:'1.500 DKK for Saturday hotel gig. A påmindelse is drafted for you to check.',time:'09:12',v:'royal',go:['booking',{}],unread:true},{t:'Kasper hasn’t sent the parking code',m:'Saturday hotel gig, load-in 17:00. Asked 18 Oct.',time:'08:00',v:'studiob',go:['gigday',{}],unread:true},{t:'Club Mono opened your offer',m:'Club night, 15 Nov. Opened twice, not signed yet.',time:'07:45',v:'mono',go:['bookings',{}],unread:true},{t:'Sofie edited the set list',m:'Set list v3, 12 songs, for 25 Oct.',time:'Yesterday',v:'studiob',go:['gigday',{}],unread:false},{t:'Deposit received from Odense Live',m:'750 DKK for Support slot, 28 Nov.',time:'Mon',v:'odense',go:['money',{}],unread:false}],
+ release:{stage:'none',title:'Late Shift EP',tracks:0,progress:0,blocker:true},
+ import:{step:1},
+ appearance:'dark',genre:'label',
+ onboarding:{step:0,genre:'Metal and hardcore',theme:'Metal'},
+ checklist:{'Agreement signed':true,'Deposit received':false,'Rider sent to venue':false,'Balance invoice sent, 18 Oct':true,'Day sheet to the band':false},
+ rating:{stars:4,tags:['Good sound','Great crowd','Paid on time']},
+ split:'Equal',
+ dash:{tonight:true,coming:true,releases:true,cash:true,needs:true},photos:{},msgVal:{},toVal:{},mtab:'owed',rtab:'overview',plan:'band',asst:'plan',catalog:null,filters:{kind:[],pay:[],ckind:[]},fixChoice:0,
+ invoices:[['2026-032','Hotel Royal','Saturday hotel gig, balance','sends 18 Oct','draft','Draft','3.000','royal'],['2026-031','Hotel Royal','Saturday hotel gig, deposit','due 12 Oct','attention','8 days late','1.500','royal'],['2026-030','Club Mono','Club night, balance','due 28 Oct','draft','Sent','4.000','mono'],['2026-029','Studio B','Rehearsal sublet, October','due 31 Oct','confirmed','Sent','3.000','studiob'],['2026-028','Odense Live','Support slot, deposit','paid 6 Oct','paid','Paid','750','odense'],['2026-027','Loppen','Release show','paid 20 Oct','paid','Paid','7.000','loppen']],
+ expenses:[['16 Oct','Diesel, 2 cars','Saturday hotel gig','Mette','640'],['12 Oct','Strings and sticks','Gear','Jonas','310'],['3 Oct','Rehearsal room','Studio B','Band account','1.200']],
+};
+const PAST=[{id:'lt',title:'Low Tide',kind:'Single',year:'2025',img:'band-collage',tracks:[['Low Tide','3:41']],streams:'48.200',earn:'1.930'},{id:'fl',title:'First Light',kind:'Single',year:'2024',img:'rehearsal',tracks:[['First Light','4:05']],streams:'31.900',earn:'1.270'},{id:'hb',title:'Harbour',kind:'EP',year:'2023',img:'notebook',tracks:[['Harbour','3:30'],['Salt','4:12'],['Ferry','3:02']],streams:'12.400',earn:'490'}];
+const ACT=[['12 Oct','Agreement signed by Mette Kjær'],['10 Oct','Deposit invoice 2026-031 sent'],['9 Oct','Offer opened twice by Mette'],['8 Oct','Offer sent by Vital'],['6 Oct','Date held, 3 of 3 said yes'],['5 Oct','Enquiry from Mette by email']];
+const payCat=b=>b.pay==='Deposit overdue'?'Overdue':b.pay==='Invoiced, not paid'?'Invoiced, not paid':b.pay==='Deposit paid'?'Deposit paid':/Paid|Settled/.test(b.pay)?'Paid':'No fee yet';
+const CHIPS={kind:{label:'Kind',opts:['Concert','Rehearsal','Private','Corporate'],n:o=>BOOKINGS.filter(b=>b.type===o).length},pay:{label:'Payment',opts:['Paid','Deposit paid','Invoiced, not paid','Overdue','No fee yet'],n:o=>BOOKINGS.filter(b=>payCat(b)===o).length},ckind:{label:'Kind',opts:[...new Set(CONTACTS.map(c=>c.kind))],n:o=>CONTACTS.filter(c=>c.kind===o).length}};
+const chip=k=>`<button class="chip ${S.filters[k].length?'on':''}" data-act="chipmenu" data-key="${k}">${CHIPS[k].label}: ${S.filters[k].join(', ')||'all'} ${ic('down','s')}</button>`;
+const confirmM=(title,body,no,act,label,danger)=>`<h2 class="t-title">${title}</h2><p class="muted" style="margin:0">${body}</p><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">${no}</button><button class="btn ${danger?'':'accent'}" data-act="${act}" style="${danger?'background:var(--bad);color:#fff':''}">${label}</button></div>`;
+const kvs=pairs=>S.params.edit?`<div style="display:flex;flex-direction:column;gap:14px">${pairs.map(([l,v],i)=>`<div class="field"><label for="kv${l}">${l}</label><input class="input" id="kv${l}" value="${esc(v)}" data-autosave></div>`).join('')}</div>`:`<dl class="kv">${pairs.map(([l,v])=>`<dt>${l}</dt><dd>${v}</dd>`).join('')}</dl>`;
+let lastFocus=null;
+const go=(view,params={})=>{S.view=view;S.params=params;S.overlay=null;S.sidebarOpen=false;S.booking.sheet=false;render();const m=document.querySelector('.main');if(m)m.scrollTop=0;};
+const open=(o,extra={})=>{lastFocus=document.activeElement;S.overlay={type:o,...extra};render();};
+const close=()=>{S.overlay=null;render();if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}};
+const refresh=()=>{if(S.overlay&&S.overlay.kind)S.overlay.html=sendPreview(S.overlay.kind);render();};
+let toastTimer=null;
+const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=setTimeout(()=>{S.toast=null;render()},undo?10000:5000);render();};
+
+/* ---------- shell ---------- */
+function sidebar(){
+ const v=S.view;const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||(S.navAlias===id)?'active':''}" data-go="${id}" title="${label}">${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
+ const area=['bookings','booking','gigday','contacts','contact','venues','venue','calendar'].includes(v)?'gigs':['money','settle'].includes(v)?'money':['catalogue','release'].includes(v)?'catalogue':'';
+ return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
+  <div class="band"><div class="sq">LT</div><div><b>Low Tide</b><small>Owner, 3 members</small></div></div>
+  ${nav('dashboard','Dashboard','dashboard')}${nav('assistant','Assistant','ai')}
+  <div class="sb-gap"></div>
+  <button class="nav" data-toggle="gigs">${ic('file')}<span>Gigs</span><span class="chev">${ic(area==='gigs'?'down':'right','s')}</span></button>
+  ${area==='gigs'?nav('bookings','Bookings','', '<span class="count">12</span>','sub')+nav('gigday','Gig day','','','sub')+nav('contacts','Contacts','','','sub')+nav('venues','Venues','','','sub')+nav('mail','Mail','','<span class="alert">4</span>','sub'):''}
+  <button class="nav ${area==='money'?'':''}" data-go="money">${ic('money')}<span>Money</span><span class="chev">${ic(area==='money'?'down':'right','s')}</span></button>
+  ${area==='money'?nav('money','Owed to you','','','sub')+nav('settle','Payouts','','','sub'):''}
+  <button class="nav" data-go="catalogue">${ic('disc')}<span>Catalogue</span><span class="alert">1</span></button>
+  <button class="nav" data-go="audience">${ic('radio')}<span>Audience</span><span class="chev">${ic('right','s')}</span></button>
+  <div class="sb-spacer"></div>
+  <button class="nav" data-act="thememenu"><i style="width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 2px;flex:none"></i><span>Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
+  ${nav('integrations','Integrations','plug')}${nav('settings','Band settings','settings')}
+  <button class="nav" data-act="collapse" title="${S.collapsed?'Expand menu':'Collapse menu'}">${ic('panel')}<span>${S.collapsed?'Expand':'Collapse menu'}</span><span class="count">⌘\\</span></button>
+ </nav>`;
+}
+function topbar(){
+ const unread=S.notifs.filter(n=>n.unread).length;
+ return `<header class="topbar"><button class="menu-btn" data-act="menu" aria-label="Open menu">${ic('menu')}</button><div class="logo">${LOGO}<small class="faint t-meta">artist platform</small></div>
+ <button class="search-pill" data-act="palette">${ic('search','s')}<span>Search for anything</span><kbd>⌘K</kbd></button>
+ ${flowBtnInline()}<button class="bell" data-act="notifs" aria-label="Notifications">${ic('bell')}${unread?`<span class="n">${unread}</span>`:''}</button>
+ <button class="me" data-go="account"><span class="avatar-you">V</span><span class="nm">Vital</span>${ic('down','s')}</button></header>`;
+}
+function abar(ctx){
+ return `${S.booking.sheet?assistantSheet():''}<div class="abar">${ic('ai','s')}${ctx?`<span class="rec">${esc(ctx)}</span>`:''}<input id="ask" placeholder="${ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'}" aria-label="Ask the assistant"><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent s" data-act="ask">Ask</button></div>`;
+}
+
+/* ---------- views ---------- */
+const VIEWS={};
+VIEWS.dashboard=()=>`<div class="page"><style>${Object.entries(S.dash).filter(([k,v])=>!v).map(([k])=>`[data-sec="${k}"]{display:none!important}`).join('')}</style>
+ <div class="ph"><div class="grow"><h1 class="t-display">Good morning, Vital</h1><p>Show day, Hotel Royal tonight, 3 loose ends</p></div><button class="btn secondary" data-act="customise">Customise</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button></div>
+ <div class="grid2"><div style="display:flex;flex-direction:column;gap:32px">
+  <button class="hero" data-sec="tonight" data-go="gigday" style="min-height:300px;text-align:left"><img src="${IMG('stagedive')}" alt=""><div class="tx"><span class="k">Tonight, LT-0041</span><h1>Hotel gig, Hotel Royal</h1><div class="facts"><span>Load-in 17:00</span><span>On stage 21:30</span><span>Curfew 00:30</span></div><span class="btn accent s" style="align-self:flex-start;margin-top:6px">Open day sheet</span></div></button>
+  <section class="sec" data-sec="coming"><div class="sec-h"><h3 class="t-heading">Coming up</h3><button class="btn ghost s flush" data-go="bookings">All bookings</button></div>
+   ${BOOKINGS.filter(b=>b.tab!=='past').slice(0,4).map(b=>`<button class="list-row" data-go="booking" data-id="${b.id}">${b.venue?`<img class="thumb s" src="${IMG(V(b.venue).img)}" alt="">`:`<span class="thumb s"></span>`}<span class="tx"><b>${esc(b.title)}</b><small class="mono">${b.when}</small> <small>${b.venue?V(b.venue).name:'No venue'}</small></span><span class="tag ${STATUS[b.status][0]}">${STATUS[b.status][1]}</span></button>`).join('')}
+  </section>
+  <section class="sec" data-sec="releases"><h3 class="t-heading">Latest releases</h3><div class="row" style="gap:16px">${['Late Shift EP','Low Tide, single','First Light, single'].map((t,i)=>`<button data-go="catalogue" style="width:150px;text-align:left"><img src="${IMG(['cover-late-shift','band-collage','rehearsal'][i])}" alt="" style="width:150px;height:150px;object-fit:cover;border-radius:10px"><div class="t-label" style="margin-top:6px">${t}</div></button>`).join('')}</div></section>
+ </div>
+ <aside class="panel">
+  <div class="sec" data-sec="cash"><span class="t-label muted">Cash in bank</span><span class="mono" style="font-size:32px;line-height:40px">112.300</span><span class="t-meta muted">DKK, outstanding 13.500</span></div>
+  <div class="sec" data-sec="needs"><div class="sec-h"><h3 class="t-heading">Needs you</h3></div>
+   <button class="list-row" data-go="booking"><img class="thumb s" src="${IMG('hotel-royal')}" alt=""><span class="tx"><b>Deposit 8 days late</b><small>Hotel Royal, 1.500 DKK</small></span><span class="tag attention">Attention</span></button>
+   <button class="list-row" data-go="gigday"><img class="thumb s" src="${IMG('studio-b')}" alt=""><span class="tx"><b>Parking code missing</b><small>Needed at load-in today</small></span><span class="tag danger">Today</span></button>
+   <button class="list-row" data-go="release"><img class="thumb s" src="${IMG('cover-late-shift')}" alt=""><span class="tx"><b>1 blocker before delivery</b><small>Late Shift EP</small></span><span class="tag attention">Fix</span></button>
+  </div>
+ </aside></div></div>${abar()}`;
+
+function filteredBookings(){
+ let list=BOOKINGS.filter(b=>S.bookTab==='need'?b.tab==='need'||b.status==='attention':S.bookTab==='draft'?b.tab==='draft':S.bookTab==='past'?b.tab==='past':b.tab!=='past'&&b.tab!=='draft');
+ if(S.statusFilter.length)list=list.filter(b=>S.statusFilter.includes(STATUS[b.status][1]));
+ if(S.filters.kind.length)list=list.filter(b=>S.filters.kind.includes(b.type));if(S.filters.pay.length)list=list.filter(b=>S.filters.pay.includes(payCat(b)));
+ const q=S.search.trim().toLowerCase();if(q)list=list.filter(b=>(b.title+' '+(b.venue?V(b.venue).name+' '+V(b.venue).city:'')).toLowerCase().includes(q));
+ return list;
+}
+const hl=(t,q)=>{q=q.trim();if(!q)return esc(t);const i=t.toLowerCase().indexOf(q.toLowerCase());if(i<0)return esc(t);return esc(t.slice(0,i))+'<mark>'+esc(t.slice(i,i+q.length))+'</mark>'+esc(t.slice(i+q.length));};
+VIEWS.bookings=()=>{const list=filteredBookings();const q=S.search;const counts={up:BOOKINGS.filter(b=>b.tab==='up'||b.tab==='need').length,need:BOOKINGS.filter(b=>b.tab==='need').length,draft:BOOKINGS.filter(b=>b.tab==='draft').length,past:31};
+ return `<div class="page">
+ <div class="ph"><div class="grow"><h1 class="t-display">Bookings and agreements</h1><p>12 bookings, 2 drafts, 13.500 DKK invoiced, not paid</p></div><button class="btn secondary" data-act="export">Export</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button></div>
+ <div class="tabs" role="tablist">${[['up','Upcoming'],['need','Needs you'],['draft','Drafts'],['past','Past']].map(([k,l])=>`<button role="tab" class="${S.bookTab===k?'on':''}" data-tab="${k}">${l}<span class="c">${counts[k]}</span></button>`).join('')}</div>
+ ${S.bookTab==='past'?`<div class="row" style="gap:16px">${[['loppen','Loppen','Best rated, 5 of 5'],['hotel-royal','3 times','Hotel Royal, most played'],['posten','9.000 DKK','Biggest fee'],['odense-live','1 to rate','Support slot, 18 Sep']].map(([im,b,s])=>`<div class="hero" style="min-height:120px;flex:1;min-width:180px"><img src="${IMG(im)}" alt=""><div class="tx" style="padding:0 16px 14px;gap:2px"><b class="t-heading">${b}</b><span class="t-meta" style="opacity:.8">${s}</span></div></div>`).join('')}</div>`:''}
+ <div class="row"><button class="chip ${S.statusFilter.length?'on':''}" data-act="statusmenu">Status: ${S.statusFilter.length?S.statusFilter.join(', '):'all'} ${ic('down','s')}</button>${chip('kind')}${chip('pay')}<span style="flex:1"></span><label class="search">${ic('search','s')}<input class="input" id="bsearch" placeholder="Title, venue, contact" value="${esc(q)}" aria-label="Search bookings"></label></div>
+ ${list.length?`<div class="table-wrap"><table><thead><tr><th>When</th><th>Title</th><th>Type</th><th>Where</th><th>Status</th><th>Payment</th><th class="num">Fee</th></tr></thead><tbody>
+ ${list.map(b=>{const v=b.venue?V(b.venue):null;return `<tr data-go="${b.id==='p3'?'rate':'booking'}" data-id="${b.id}" tabindex="0"><td class="mono t-label">${b.when}</td><td><span class="title-cell">${v?`<img class="thumb s" src="${IMG(v.img)}" alt="">`:`<span class="thumb s" style="display:grid;place-items:center;color:var(--faint)">${ic('pin','s')}</span>`}${hl(b.title,q)}</span></td><td class="muted">${b.type}</td><td class="muted">${v?hl(v.city,q):'No venue'}</td><td><span class="tag ${STATUS[b.status][0]}">${STATUS[b.status][1]}</span></td><td class="muted">${b.pay}</td><td class="num mono">${b.fee?kr(b.fee):'—'}</td></tr>`}).join('')}
+ </tbody></table></div><div class="row t-meta muted"><span style="flex:1">${q?`${list.length} match “${esc(q)}” in title, venue or city`:`Showing ${list.length}, sorted by date`}</span>${q?'<button class="btn ghost s" data-act="clearsearch">Clear search</button>':''}</div>`
+ :`<div class="empty"><h3 class="t-heading">${q?`No match for “${esc(q)}”`:'Nothing matches these filters'}</h3><p class="muted" style="margin:0">${q?'Nothing in title, venue or city. Check the spelling, clear the filters, or start a booking with that name.':'Try fewer filters, or clear them.'}</p><div class="row">${q?`<button class="btn secondary" data-act="newbooking">${ic('plus','s')}New booking “${esc(q)}”</button>`:''}<button class="btn ghost" data-act="clearfilters">${q?'Clear search':'Clear filters'}</button></div></div>`}
+ </div>${abar()}`;};
+
+/* booking lifecycle */
+const BSTATES=['enquiry','hold','offer','confirmed','completed'];
+VIEWS.booking=()=>{const st=S.booking.state;const s=S.booking.cancelled?['danger','Cancelled']:STATUS[st];const v=V('royal');
+ const banner={
+  enquiry:`<div class="banner info">${ic('mail')}<div class="tx"><b>Mette asked about Saturday 25 Oct</b><span class="t-label muted">From an email yesterday. Hold the date while the band says yes.</span></div></div>`,
+  hold:`<div class="banner info">${ic('calendar')}<div class="tx"><b>Held until Fri 10 Oct</b><span class="t-label muted">3 of 3 members said yes. Send the offer before the hold runs out.</span></div></div>`,
+  offer:`<div class="banner info">${ic('send')}<div class="tx"><b>Offer opened by Mette Kjær, not signed yet</b><span class="t-label muted">One link: she reads, signs and pays the deposit. Hold expires Fri 10 Oct.</span></div><button class="btn secondary s" data-act="nudge">Send a nudge</button></div>`,
+  confirmed:S.booking.depositPaid?`<div class="banner info">${ic('check')}<div class="tx"><b>Deposit received, 1.470 DKK</b><span class="t-label muted">30 DKK short, the bank fee. The balance invoice goes out 18 Oct.</span></div></div>`:`<div class="banner attention">${ic('alert')}<div class="tx"><b>Deposit 1.500 DKK is 8 days late</b><span class="t-label">Two reminders went out. Next step is a påmindelse; a rykker with fee is allowed from 22 Oct.</span></div></div>`,
+  completed:S.booking.settled?`<div class="banner info">${ic('check')}<div class="tx"><b>Settled, 4.360 DKK split three ways</b><span class="t-label muted">Payouts are recorded. Mette and Sofie are paid, Jonas tomorrow.</span></div></div>`:`<div class="banner info">${ic('money')}<div class="tx"><b>Gig played, all invoices paid</b><span class="t-label muted">Settle to split 4.360 DKK between the three of you.</span></div></div>`,
+ }[st];
+ const primary={enquiry:['Hold a date','hold'],hold:['Send offer','sendoffer'],offer:['Mark as signed','signed'],confirmed:S.booking.depositPaid?['Open day sheet','day']:['Send påmindelse','reminder'],completed:S.booking.settled?['Book again','newbooking']:['Settle 4.360 DKK','settle']}[st];
+ const secondary={enquiry:['Reply','reply'],hold:['Release hold','release'],offer:['Copy link','copy'],confirmed:S.booking.depositPaid?['Send invoice','invoice']:['Record a payment','record'],completed:['See the split','settle']}[st];
+ return `<div class="page">
+ <button class="btn ghost s flush" data-go="bookings" style="align-self:flex-start">${ic('left','s')}Bookings</button>
+ <div class="hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Concert at Hotel Royal, Aarhus</span><h1>Saturday hotel gig</h1><div class="facts"><span>Sat 25 Oct</span><span>Doors 20:00</span><span>On stage 21:30</span><span>Fee 4.500 DKK</span></div></div></div>
+ <div class="row"><button class="tag ${s[0]}" data-act="statusmenu2" title="Change status">${s[1]} ${ic('down','s')}</button><span class="t-meta muted">${['Enquiry','Hold','Offer out','Confirmed','Completed'].map((l,i)=>`<span style="${BSTATES[i]===st?'color:var(--ink);font-weight:500':''}">${l}</span>`).join(' → ')}</span><span style="flex:1"></span>${secondary?`<button class="btn secondary" data-act="${secondary[1]}">${secondary[0]}</button>`:''}<button class="btn accent" data-act="${primary[1]}">${primary[0]}</button><button class="btn ghost icon" aria-label="More" data-act="bookingmore">${ic('more')}</button></div>
+ ${S.booking.cancelled?`<div class="banner danger">${ic('alert')}<div class="tx"><b>Cancelled today</b><span class="t-label">Mette got the cancellation mail. The 1.500 DKK deposit goes back within 5 days.</span></div><button class="btn secondary s" data-act="uncancel" style="color:var(--ink)">Restore booking</button></div>`:banner}
+ ${st==='confirmed'&&!S.booking.depositPaid?sendPreview('reminder'):''}
+ ${st==='completed'&&!S.booking.rated?rateCard():''}
+ <div class="grid2"><div style="display:flex;flex-direction:column;gap:40px">
+  <section class="sec"><div class="sec-h"><h3 class="t-heading">Money</h3><button class="btn ghost s flush" data-go="money">Open in Ledger</button></div>
+   ${[['Fee agreed in the offer','signed 9 Oct','confirmed','Confirmed','4.500'],['Deposit, invoice 2026-031','due 12 Oct',S.booking.depositPaid||st==='completed'?'paid':'attention',S.booking.depositPaid||st==='completed'?'Paid':'Attention','1.500'],['Balance, invoice 2026-032','draft, sends 18 Oct',st==='completed'?'paid':'draft',st==='completed'?'Paid':'Draft','3.000'],['Travel, 2 cars from Odense','estimate','','','−640']].map(r=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${r[0]}</b><small>${r[1]}</small></span>${r[2]?`<span class="tag ${r[2]}">${r[3]}</span>`:''}<span class="mono" style="width:96px;text-align:right">${r[4]}</span></div>`).join('')}
+  </section>
+  <section class="sec"><div class="sec-h"><h3 class="t-heading">Details</h3><button class="btn ghost s flush" data-act="edit">${S.params.edit?'Done':'Edit'}</button></div>
+   ${S.params.edit?`<div style="display:flex;flex-direction:column;gap:14px">${[['Venue','Hotel Royal, Store Torv 4, 8000 Aarhus'],['Contact','Mette Kjær, booking@hotelroyal.dk'],['Schedule','Load-in 17:00, soundcheck 18:30, doors 20:00, on stage 21:30, curfew 23:30'],['Line-up','Low Tide (headline), 75 min set']].map(([l,v],i)=>`<div class="field"><label for="ed${i}">${l}</label><input class="input" id="ed${i}" value="${esc(v)}" data-autosave></div>`).join('')}</div>`
+   :`<dl class="kv">${[['Venue','Hotel Royal, Store Torv 4, 8000 Aarhus'],['Contact','Mette Kjær, booking@hotelroyal.dk'],['Schedule','Load-in 17:00, soundcheck 18:30, doors 20:00, on stage 21:30, curfew 23:30'],['Line-up','Low Tide (headline), 75 min set'],['Backline','Venue provides drums and bass amp']].map(([l,v])=>`<dt>${l}</dt><dd>${v}</dd>`).join('')}</dl>`}
+  </section>
+  <div class="sec"><button class="row muted t-label" style="text-align:left" data-act="activity" aria-expanded="${!!S.activityOpen}">${ic(S.activityOpen?'down':'right','s')}Activity, 6 events. Last: agreement signed by Mette Kjær, 12 Oct</button>${S.activityOpen?ACT.map(([d,t])=>`<div class="list-row" style="cursor:default"><span class="mono muted" style="width:64px">${d}</span><span class="tx"><b>${t}</b></span></div>`).join(''):''}</div>
+ </div>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Next up</h3>${Object.entries(S.checklist).map(([k,on])=>`<label class="row" style="gap:10px;cursor:pointer"><input type="checkbox" ${on?'checked':''} data-check="${esc(k)}" style="width:16px;height:16px;accent-color:var(--ink)"> <span class="${on?'muted':''}">${k}</span></label>`).join('')}</div>
+  <div class="sec"><h3 class="t-heading">People</h3>${[['MR','Mette Ravn','vocals, guitar, drives car 1'],['SL','Sofie Lund','synth'],['JH','Jonas Holm','drums, drives car 2']].map(p=>`<div class="row" style="gap:10px"><span class="band" style="margin:0;padding:0"><span class="sq" style="width:28px;height:28px;border-radius:50%;font-size:11px">${p[0]}</span></span><span><span>${p[1]}</span><br><span class="t-meta muted">${p[2]}</span></span></div>`).join('')}</div>
+  <div class="sec"><h3 class="t-heading">Venue</h3><button class="row" data-go="venue" data-id="royal" style="gap:10px;text-align:left"><img class="thumb" src="${IMG('hotel-royal')}" alt=""><span><span>Hotel Royal</span><br><span class="t-meta muted">Band rating 4.3, 3 gigs</span></span></button></div>
+ </aside></div></div>${abar('Saturday hotel gig')}`;};
+
+function sendPreview(kind,inSheet){
+ const d={reminder:{t:'Send a påmindelse to Hotel Royal',s:'Invoice 2026-031, deposit 1.500 DKK, due 12 Oct',to:'Accounts, faktura@hotelroyal.dk, cc Mette Kjær',subj:'Påmindelse: depositum for 25 Oct, faktura 2026-031',body:'Hej, en venlig påmindelse om depositum på 1.500 DKK for koncerten 25. oktober, som forfaldt 12. oktober. I kan betale via det samme link som før: laas.app/pay/LT-2026-031. Ingen gebyr. Venlig hilsen, Low Tide',send:'Send påmindelse',act:'sendreminder'},
+ offer:{t:'Send the offer to Mette Kjær',s:'Saturday hotel gig, 25 Oct, fee 4.500 DKK excl. moms, deposit 30 %',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, Hotel Royal, 25. oktober',body:'Hej Mette, her er vores tilbud på koncerten 25. oktober. I linket kan du se vilkårene, underskrive og betale depositum på 1.500 DKK: laas.app/o/LT-2026-031. Vi holder datoen til fredag den 10. Venlig hilsen, Low Tide',send:'Send offer',act:'offersent'},
+ nudge:{t:'Send a nudge to Mette Kjær',s:'Offer for 25 Oct, opened 8 Oct, not signed',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, 25. oktober',body:'Hej Mette, kort opfølgning på tilbuddet til 25. oktober. Vi holder datoen til fredag den 10. Linket: laas.app/o/LT-2026-031. Venlig hilsen, Low Tide',send:'Send nudge',act:'nudgesent'}}[kind];
+ return `<div class="send"><div><h3 class="t-heading">${d.t}</h3><p class="muted" style="margin:2px 0 0">${d.s}</p></div>
+ <div class="row t-label"><span class="muted">To</span>${S.toEdit?`<input class="input" style="flex:1;min-width:200px;height:32px" id="toedit" data-kind="${kind}" value="${esc(S.toVal[kind]||d.to)}" aria-label="To"><button class="link" data-act="toedit">Done</button>`:`<span style="font-size:15px">${esc(S.toVal[kind]||d.to)}</span><button class="link" data-act="toedit">Change</button>`}</div>
+ <div class="msg ${S.fullmsg?'full':''}"><b class="strong">${d.subj}</b>${S.editMsg?`<textarea class="input" id="msgedit" data-kind="${kind}" rows="5" aria-label="Message">${esc(S.msgVal[kind]||d.body)}</textarea>`:`<p>${esc(S.msgVal[kind]||d.body)}</p>`}<button class="link" style="align-self:flex-start" data-act="fullmsg">${S.fullmsg?'Show less':'Show full message'}</button></div>
+ <div class="row"><button class="btn ghost flush" data-act="${inSheet?'closesheet':kind==='reminder'?'snooze':'close'}">${kind==='reminder'?'Snooze 3 days':'Not now'}</button><span style="flex:1"></span><button class="btn secondary" data-act="editmsg">${ic(S.editMsg?'check':'pencil','s')}${S.editMsg?'Done editing':'Edit text'}</button><button class="btn accent" data-act="${d.act}">${ic('send','s')}${d.send}</button></div></div>`;
+}
+function rateCard(){const r=S.rating;const words=['','Never again','Only if needed','Fine','Good, would play again','Dream venue'];
+ return `<div class="card" style="display:flex;flex-direction:column;gap:16px;border:1px solid var(--rule)"><div class="row"><img class="thumb" style="width:48px;height:48px" src="${IMG('hotel-royal')}" alt=""><div style="flex:1"><h3 class="t-heading">How was Hotel Royal?</h3><span class="t-meta muted">Saturday hotel gig, 25 Oct. Takes 20 seconds, helps the next booking.</span></div></div>
+ <div class="row"><div class="stars" role="radiogroup" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button data-star="${n}" aria-label="${n} stars" style="color:${n<=r.stars?'var(--break)':'var(--faint)'}"><svg class="i" viewBox="0 0 24 24" style="width:32px;height:32px;fill:${n<=r.stars?'var(--break)':'none'}">${P.star}</svg></button>`).join('')}</div><b class="strong">${words[r.stars]}</b></div>
+ <div class="row" style="gap:8px">${['Good sound','Great crowd','Paid on time','Easy load-in','Hard load-in','Late payment'].map(t=>`<button class="qtag ${r.tags.includes(t)?'on':''}" data-qtag="${t}">${t}</button>`).join('')}</div>
+ <div class="field"><label for="rnote">Note for next time</label><input class="input" id="rnote" value="Desk channel 7 hums, bring a DI."><span class="help">🔒 Band only. Shows on Hotel Royal and in the next offer draft for this venue.</span></div>
+ <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="skiprate">Skip</button><button class="btn secondary" data-act="saverate">Save rating</button></div></div>`;}
+function assistantSheet(){return `<div class="sheet" role="dialog" aria-label="Assistant"><div class="row"><span class="rec" style="background:var(--well);color:var(--ink)"><img src="${IMG('hotel-royal')}" style="width:20px;height:20px;border-radius:4px;object-fit:cover" alt="">Saturday hotel gig</span><span style="flex:1"></span><button class="btn ghost s" data-go="assistant">Open in Assistant</button><button class="btn ghost icon" data-act="closesheet" aria-label="Close">${ic('x')}</button></div>
+ <div class="bubble">Mette opened the offer but hasn’t signed. Nudge her?</div><p style="margin:0">She opened it on 8 Oct at 09:14 and hasn’t signed. The hold expires Friday 10 Oct, so a short nudge now is normal. I drafted one that mentions the date.</p>${sendPreview('nudge',true)}</div>`;}
+
+VIEWS.rate=()=>{S.booking.state='completed';return VIEWS.booking();};
+
+VIEWS.gigday=()=>{const H0=14,HN=11,X=t=>((t-H0)/HN*100);
+ const blocks=[[14.5,16.25,'Drive, 118 km','travel'],[17,17.75,'Load-in','work'],[17.75,18.75,'Soundcheck','work'],[19,19.75,'Meal ~','break',1],[20,21.5,'Doors','doors'],[21.5,22.25,'Set 1','stage'],[22.5,23.25,'Set 2','stage'],[23.25,24.5,'Load-out, TBD','work',1]];
+ const col={travel:'var(--travel)',work:'var(--work)',break:'var(--break)',doors:'var(--doors)',stage:'var(--accent)'};
+ const steps=[['14:30','Leave Odense','Two cars. Mette drives Sofie, Jonas drives the gear. 118 km, about 1 h 40.','travel',['accent','In 10 min'],'next'],['17:00','Load-in','Back entrance on Kannikegade, 2 steps, trolley there. 2 parking spaces in the yard.','work',['confirmed','Confirmed'],'','park'],['17:45','Soundcheck','Kasper Holm on sound. Stage 6 × 4 m. PA and drums in house; bring 2 guitar amps and a DI.','work',['confirmed','Confirmed']],['~19:00','Band meal','Hotel restaurant. The venue said “around seven”.','break',['attention','Approximate'],'approx'],['20:00','Doors','Guest list of 6 names, send by 20:00.','doors',['confirmed','Confirmed']],['21:30','Set 1, 45 min','Set list v3, 12 songs, edited by Sofie yesterday.','stage',['confirmed','Confirmed']],['22:30','Set 2, 45 min','Encore only if the room asks for it; curfew is hard.','stage',['confirmed','Confirmed']],['00:30','Curfew, PA off','Load-out after curfew, time still to be decided.','work',['attention','Load-out TBD'],'approx'],['After','Sleep at Hotel Royal','2 rooms, check-in from 15:00, breakfast 07–10.','travel',['confirmed','Confirmed']]];
+ return `<div class="page">
+ <button class="btn ghost s flush" data-go="booking" style="align-self:flex-start">${ic('left','s')}Saturday hotel gig</button>
+ <div class="hero"><img src="${IMG('hotel-royal')}" alt=""><div class="tx"><span class="k">Day sheet, Saturday 25 Oct</span><h1>Saturday hotel gig</h1><div class="facts"><span>Load-in 17:00</span><span>On stage 21:30</span><span>Curfew 00:30</span><span>118 km from Odense</span></div></div></div>
+ <div class="strip"><div class="row"><span class="mono" style="color:var(--accent)">Now 14:20</span><b class="strong" style="flex:1">Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
+  <div class="track">${Array.from({length:HN+1},(_,h)=>`<span class="h" style="left:${Math.min(X(H0+h),97)}%">${String((H0+h)%24).padStart(2,'0')}</span><span class="tick" style="left:${X(H0+h)}%"></span>`).join('')}
+  ${blocks.map(([a,b,l,c,ap])=>`<span class="blk" style="left:${X(a)}%;width:calc(${X(b)-X(a)}% - 2px);${c==='stage'?`background:${col[c]};color:var(--on-accent)`:ap?`border:1px dashed ${col[c]};color:${col[c]};background:color-mix(in srgb, ${col[c]} 14%, transparent)`:`background:color-mix(in srgb, ${col[c]} 32%, transparent)`}">${l}</span>`).join('')}
+  <span class="tick" style="left:${X(24.5)}%;background:var(--bad);width:2px"></span><span class="now" style="left:${X(14+20/60)}%"></span></div>
+  <div class="legend"><span><i style="background:var(--travel)"></i>Travel</span><span><i style="background:var(--work)"></i>Band work</span><span><i style="background:var(--break)"></i>Break</span><span><i style="background:var(--doors)"></i>Audience in</span><span><i style="background:var(--accent)"></i>On stage</span><span><i style="border:1px dashed var(--muted)"></i>Not confirmed</span></div></div>
+ <div class="grid2"><section class="card"><div class="sec-h" style="margin-bottom:16px"><h3 class="t-heading">Timeline</h3><button class="btn ghost s flush" data-act="edittimes">${ic(S.editTimes?'check':'pencil','s')}${S.editTimes?'Done':'Edit times'}</button></div>
+  <div class="steps"><div class="step"><span class="time" style="color:var(--accent)">14:20</span><span class="spine"><i style="background:var(--accent);width:8px;height:8px;margin-top:4px"></i></span><div class="content row" style="padding-bottom:16px"><span class="tag accent" style="background:var(--accent);color:var(--on-accent)">Now</span><span class="muted">Leave in 10 min. Everything before this line is done.</span></div></div>
+  ${steps.map(([t,h,d,c,tag,kind,park],i)=>`<div class="step ${kind==='next'?'next':''}">${S.editTimes?`<input class="input mono" style="height:30px;padding:0 6px;font-size:13px" value="${t}" aria-label="Time for ${h}">`:`<span class="time">${t}</span>`}<span class="spine"><i style="${kind==='approx'?`border:2px dashed ${col[c]};background:var(--surface)`:`background:${col[c]}`}${kind==='next'?`;box-shadow:0 0 0 4px color-mix(in srgb, ${col[c]} 35%, transparent)`:''}"></i>${i<steps.length-1?'<b></b>':''}</span><div class="content"><div class="row"><h4>${h}</h4><span class="tag ${tag[0]}">${tag[1]}</span></div><span class="muted">${d}</span>${park&&!S.parkingDone?`<div class="openitem">${ic('alert','s')}<span style="flex:1">Parking code missing, needed at load-in 17:00 today. Asked 18 Oct.</span><button class="btn ghost s" data-act="parking" style="color:inherit">Ask again</button></div>`:''}${kind==='next'?`<a class="btn secondary s" style="align-self:flex-start;text-decoration:none" href="https://www.google.com/maps/dir/Odense/Hotel+Royal,+Store+Torv+4,+8000+Aarhus" target="_blank" rel="noopener">${ic('pin','s')}Open route</a>`:''}</div></div>`).join('')}</div></section>
+ <aside class="panel" style="${S.parkingDone?'':'box-shadow:inset 0 0 0 1px var(--att)'}"><div class="sec"><div class="sec-h"><h3 class="t-heading">${S.parkingDone?'1 thing still open':'2 things still open'}</h3></div>
+  ${S.parkingDone?'':`<div class="sec"><div class="row"><b class="strong" style="flex:1">Parking code</b><span class="tag danger">Needed by 17:00</span></div><span class="t-meta muted">Asked Kasper 18 Oct, no reply.</span><button class="btn ghost s flush" style="align-self:flex-start" data-act="parking">${ic('send','s')}Ask again</button></div>`}
+  <div class="sec"><div class="row"><b class="strong" style="flex:1">Meal time</b><span class="tag paid">Answered</span></div><span class="t-meta muted">Venue answered “around seven”. Confirm or ask for a time.</span><button class="btn ghost s flush" style="align-self:flex-start" data-act="toast" data-msg="Meal confirmed for ~19:00">${ic('check','s')}Confirm ~19:00</button></div></div>
+  <div class="sec"><h3 class="t-heading">People</h3>${['Mette Ravn, vocals, drives car 1','Sofie Lund, synth','Jonas Holm, drums, drives car 2','Kasper Holm, sound, +45 30 99 86 77'].map(p=>`<span>${p}</span>`).join('')}</div></aside></div>
+ </div>${abar('Sat 25 Oct, Hotel Royal')}`;};
+
+VIEWS.contacts=()=>{const q=S.contactSearch;const list=CONTACTS.filter(c=>(c.name+' '+c.where+' '+c.kind).toLowerCase().includes(q.toLowerCase())&&(!S.filters.ckind.length||S.filters.ckind.includes(c.kind)));
+ return `<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Contacts</h1><p>${S.imported?'222 people, 6 venues, 198 imported today':'24 people, 6 venues, 3 without a booking yet'}</p></div><button class="btn secondary" data-act="import">Import</button><button class="btn accent" data-act="newcontact">${ic('plus','s')}New contact</button></div>
+ <div class="row"><button class="chip on" data-go="contacts">People ${S.imported?222:24}</button><button class="chip" data-go="venues">Venues 6</button>${chip('ckind')}<span style="flex:1"></span><label class="search">${ic('search','s')}<input class="input" id="csearch" placeholder="Name, venue, city" value="${esc(q)}" aria-label="Search contacts"></label></div>
+ ${list.length?`<div class="table-wrap"><table><thead><tr><th>Name</th><th>Kind</th><th>Where</th><th>Last contact</th><th>Status</th><th class="num">Bookings</th></tr></thead><tbody>${list.map(c=>`<tr data-go="contact" data-id="${c.id}" tabindex="0"><td class="strong">${hl(c.name,q)}</td><td class="muted">${c.kind}</td><td class="muted">${hl(c.where,q)}</td><td>${c.last}</td><td>${c.status?`<span class="tag ${c.status[0]}">${c.status[1]}</span>`:''}</td><td class="num mono">${c.n}</td></tr>`).join('')}</tbody></table></div>`
+ :`<div class="empty"><h3 class="t-heading">No match for “${esc(q)}”</h3><p class="muted" style="margin:0">Nothing in name, venue or city. Check the spelling, or add them now.</p><div class="row"><button class="btn secondary" data-act="newcontact">${ic('plus','s')}Add “${esc(q)}” as a contact</button><button class="btn ghost" data-act="clearcsearch">Clear search</button></div></div>`}
+ </div>${abar()}`;};
+VIEWS.contact=()=>{const c=CONTACTS.find(x=>x.id===S.params.id)||CONTACTS[0];const v=V(c.venue);
+ return `<div class="page"><button class="btn ghost s flush" data-go="contacts" style="align-self:flex-start">${ic('left','s')}Contacts</button>
+ <div class="hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">${c.kind} at ${v.name}</span><h1>${esc(c.name.split(',')[0])}</h1><div class="facts"><span>${c.where}</span><span>${c.n} bookings together</span><span>Last contact ${c.last}</span></div></div></div>
+ <div class="row"><span style="flex:1"></span><button class="btn secondary" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button></div>
+ <div class="grid2"><section class="sec"><h3 class="t-heading">Details</h3><dl class="kv"><dt>Kind</dt><dd>${c.kind}</dd><dt>Organisation</dt><dd>${v.name}</dd><dt>Email</dt><dd>${c.email||'—'}</dd><dt>Phone</dt><dd class="mono">${c.phone||'—'}</dd><dt>Language</dt><dd>Danish</dd></dl></section>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Bookings together</h3>${BOOKINGS.filter(b=>b.venue===c.venue).map(b=>`<button class="list-row" data-go="booking"><span class="tx"><b>${b.title}</b><small class="mono">${b.when}</small></span><span class="tag ${STATUS[b.status][0]}">${STATUS[b.status][1]}</span></button>`).join('')||'<span class="muted">None yet</span>'}</div></aside></div></div>${abar(c.name.split(',')[0])}`;};
+VIEWS.venues=()=>`<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Venues</h1><p>6 venues, 3 played, typical fees and stage notes are band only</p></div><button class="btn accent" data-act="newvenue">${ic('plus','s')}New venue</button></div>
+ <div class="card" style="padding:4px 20px">${VENUES.map(v=>`<button class="list-row" data-go="venue" data-id="${v.id}"><img class="thumb" src="${IMG(v.img)}" alt=""><span class="tx"><b class="strong">${v.name}</b><small>${v.meta}</small></span><span class="tag ${v.tag[0]}">${v.tag[1]}</span>${ic('right','s')}</button>`).join('')}</div></div>${abar()}`;
+VIEWS.venue=()=>{const v=V(S.params.id||'royal');return `<div class="page"><button class="btn ghost s flush" data-go="venues" style="align-self:flex-start">${ic('left','s')}Venues</button>
+ <div class="hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${v.name}</h1><div class="facts"><span>${v.kind}</span><span>${v.cap}</span><span>Played ${v.played} times</span></div></div></div>
+ <div class="row"><span style="flex:1"></span><button class="btn secondary" data-act="edit">${S.params.edit?'Done':'Edit'}</button><button class="btn accent" data-act="newbooking">New booking here</button></div>
+ <div class="grid2"><div style="display:flex;flex-direction:column;gap:40px"><section class="sec"><h3 class="t-heading">On stage</h3>${kvs([['Stage','6 × 4 m, 40 cm riser'],['PA','In house, 2 tops, 2 subs'],['Backline','Drums and bass amp'],['Sound','On request, 800 DKK']])}</section>
+ <section class="sec"><h3 class="t-heading">Getting there</h3>${kvs([['Load-in','Back entrance, 2 steps, trolley there'],['Parking','2 spaces in the yard, code from Kasper'],['Stay','2 rooms when you play, breakfast 07–10']])}</section></div>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Notes</h3><p style="margin:0">Good room when the bar is full, dead on a quiet Tuesday. Keep the first set low.</p><span class="t-meta muted">🔒 Band only</span><div class="row" style="gap:6px"><b class="strong">${v.rating||'—'}</b>${[1,2,3,4,5].map(n=>`<svg class="i s" viewBox="0 0 24 24" style="color:var(--break);fill:${n<=Math.round(v.rating)?'var(--break)':'none'}">${P.star}</svg>`).join('')}<span class="t-meta muted">${v.played} gigs</span></div></div></aside></div></div>${abar(v.name)}`;};
+
+VIEWS.money=()=>{const t=S.mtab||'owed';
+ const OWED=`<div class="row" style="gap:12px">${[['Owed to you','8.500 DKK','3 invoices, 1 late'],['Waiting','1.500 DKK','8 days late, Hotel Royal',1],['In this month','9.000 DKK','2 paid'],['Held by members','5.000 DKK','Mads holds band money']].map(([a,b,c,u])=>`<div class="card" style="flex:1;min-width:200px;${u?'box-shadow:inset 0 0 0 1px var(--att)':''}"><span class="t-label muted">${a}</span><div class="mono" style="font-size:28px;line-height:36px;margin-top:6px">${b}</div><span class="t-meta ${u?'':'muted'}" style="${u?'color:var(--att)':''}">${c}</span></div>`).join('')}</div>
+ <div class="grid2"><section class="sec"><div class="sec-h"><h3 class="t-heading">Owed to you</h3><button class="btn ghost s flush" data-mtab="invoices">All invoices</button></div>
+ ${[['royal','Hotel Royal, deposit','2026-031, due 12 Oct','attention','Attention','1.500','booking'],['mono','Club Mono, balance','2026-030, due 28 Oct','draft','Draft','4.000','bookings'],['studiob','Studio B, rehearsals','2026-029, due 31 Oct','confirmed','Confirmed','3.000','money']].map(r=>`<button class="list-row" data-go="${r[6]}"><img class="thumb s" src="${IMG(V(r[0]).img)}" alt=""><span class="tx"><b>${r[1]}</b><small class="mono">${r[2]}</small></span><span class="tag ${r[3]}">${r[4]}</span><span class="mono" style="width:96px;text-align:right">${r[5]}</span></button>`).join('')}</section>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Needs you</h3>
+  <div class="sec" style="gap:6px"><b class="strong">Send a påmindelse to Hotel Royal</b><span class="t-meta muted">Invoice 2026-031, 1.500 DKK, 8 days late.</span><button class="btn secondary s" style="align-self:flex-start" data-go="booking">Review</button></div>
+  <div class="sec" style="gap:6px"><b class="strong">Approve 1.470 DKK from Hotel Royal A/S</b><span class="t-meta muted">Bank shows it on 16 Oct; 30 DKK short, the bank fee.</span><button class="btn secondary s" style="align-self:flex-start" data-act="approve">Approve</button></div></div>
+  <div class="sec"><div class="sec-h"><h3 class="t-heading">Payouts</h3><button class="btn ghost s flush" data-go="settle">Settle a gig</button></div><span class="muted">Odense Live, 5.360 DKK to split</span></div></aside></div>`;
+
+ const INV=`<div class="table-wrap"><table><thead><tr><th>No.</th><th>To</th><th>For</th><th>Due</th><th>Status</th><th class="num">DKK</th></tr></thead><tbody>${S.invoices.map(r=>`<tr data-go="${r[7]==='royal'?'booking':'bookings'}" tabindex="0"><td class="mono t-label">${r[0]}</td><td class="title-cell"><img class="thumb s" src="${IMG(V(r[7]).img)}" alt="">${r[1]}</td><td class="muted">${esc(r[2])}</td><td class="muted">${r[3]}</td><td><span class="tag ${r[4]}">${r[5]}</span></td><td class="num mono">${r[6]}</td></tr>`).join('')}</tbody></table></div>`;
+ const EXP=`<section class="card" style="padding:4px 20px">${S.expenses.map(r=>`<div class="list-row" style="cursor:default"><span class="mono muted" style="width:56px">${r[0]}</span><span class="tx"><b>${esc(r[1])}</b><small>${esc(r[2])}, paid by ${esc(r[3])}</small></span><span class="mono">${r[4]}</span></div>`).join('')}</section>`;
+ const REP=`<div class="grid2"><section class="card sec"><h3 class="t-heading">In and out, last 4 months</h3><div class="bars">${[['Jul',6,2],['Aug',9,3],['Sep',5,4],['Oct',9,2.2]].map(([m,a,b])=>`<div><div class="b"><i style="height:${a*13}px;background:var(--accent)"></i><i style="height:${b*13}px;background:var(--rule-strong)"></i></div><span class="t-meta muted">${m}</span></div>`).join('')}</div><div class="legend"><span><i style="background:var(--accent)"></i>In</span><span><i style="background:var(--rule-strong)"></i>Out</span></div></section><aside class="panel"><div class="sec"><h3 class="t-heading">October</h3><dl class="kv"><dt>In</dt><dd class="mono">9.000</dd><dt>Out</dt><dd class="mono">2.150</dd><dt>Net</dt><dd class="mono">6.850</dd></dl><button class="btn secondary s" style="align-self:flex-start" data-act="toast" data-msg="October sent to Dinero for bookkeeping">Send to bookkeeping</button></div></aside></div>`;
+ return `<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Money</h1><p>October 2026, 8.500 DKK owed to you, books up to date</p></div><button class="btn secondary" data-act="addexpense">Add expense</button><button class="btn accent" data-act="newinvoice">${ic('plus','s')}New invoice</button></div>
+ <div class="tabs" role="tablist">${[['owed','Owed to you',3],['invoices','Invoices',S.invoices.length],['expenses','Expenses',S.expenses.length],['payouts','Payouts',1],['reports','Reports']].map(([k,l,c])=>`<button role="tab" class="${t===k?'on':''}" ${k==='payouts'?'data-go="settle"':`data-mtab="${k}"`}>${l}${c!=null?`<span class="c">${c}</span>`:''}</button>`).join('')}</div>
+ ${t==='owed'?OWED:t==='invoices'?INV:t==='expenses'?EXP:REP}</div>${abar()}`;};
+VIEWS.settle=()=>{const m=[['Mette Ravn','vocals, guitar'],['Sofie Lund','synth'],['Jonas Holm','drums']];const per={Equal:[1453,1453,1454],Shares:[1744,1308,1308],Percent:[1526,1417,1417]}[S.split]||[1453,1453,1454];
+ return `<div class="page"><button class="btn ghost s flush" data-go="money" style="align-self:flex-start">${ic('left','s')}Payouts</button>
+ <div class="ph"><div class="grow"><h1 class="t-display">Settle Saturday hotel gig</h1><p>In 5.000 DKK, out 640 DKK travel, net 4.360 DKK to split</p></div><button class="btn accent" data-act="dosettle" ${S.booking.settled?'disabled':''}>${S.booking.settled?'Settled':'Settle 4.360 DKK'}</button></div>
+ <div class="grid2"><section class="card sec"><div class="row"><h3 class="t-heading" style="flex:1">Split</h3><div class="seg" style="width:320px;max-width:100%">${['Equal','Shares','Percent'].map(s=>`<button class="${S.split===s?'on':''}" data-split="${s}">${s}</button>`).join('')}</div></div>
+ <div class="split" style="margin-top:12px">${m.map((p,i)=>`<span>${p[0]}<br><span class="t-meta muted">${p[1]}</span></span><span class="t-meta muted">${S.split==='Shares'?['4 shares','3 shares','3 shares'][i]:S.split==='Percent'?['35 %','32.5 %','32.5 %'][i]:'1/3'}</span><span class="mono">${kr(per[i])} DKK</span>`).join('')}</div></section>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Before you settle</h3>${['All invoices paid','All receipts in, 1 of 1','Split adds up to 100 %','Everyone has seen the split, 2 of 3'].map((t,i)=>`<span class="row" style="gap:8px">${ic(i<3?'check':'alert','s')}<span class="${i<3?'':'muted'}">${t}</span></span>`).join('')}</div></aside></div></div>${abar()}`;};
+
+/* catalogue + release flow */
+VIEWS.catalogue=()=>S.release.stage==='none'&&!S.catalog?`<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Releases</h1><p>Nothing here yet, the catalogue is where “is every song earning” starts</p></div><button class="btn secondary" data-act="importcat" data-src="Spotify">Import catalogue</button><button class="btn accent" data-act="newrelease">${ic('plus','s')}New release</button></div>
+ <div class="empty"><h3 class="t-heading">No releases yet</h3><p class="muted" style="margin:0">Bring what is already out so the earning check can run, or plan the next one.</p><div class="choices">${[['notebook','Plan a release','A title and a date, the plan counts back','newrelease'],['band-collage','Import from Spotify','Your releases, tracks and ISRCs','importcat'],['rehearsal','Import from a distributor','DistroKid, CD Baby, TuneCore','importcat']].map(c=>`<button class="choice" data-act="${c[3]}" data-src="${c[1].replace('Import from ','').replace('Plan a release','')}"><img src="${IMG(c[0])}" alt=""><div><b>${c[1]}</b><small>${c[2]}</small></div></button>`).join('')}</div></div></div>${abar()}`
+ :`<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Releases</h1><p>${(S.release.stage!=='none'?1:0)+(S.catalog?S.catalog.length:0)} releases</p></div><button class="btn secondary" data-act="importcat" data-src="Spotify">Import catalogue</button><button class="btn accent" data-act="newrelease">${ic('plus','s')}New release</button></div>
+ <div class="card" style="padding:4px 20px">${S.release.stage!=='none'?`<button class="list-row" data-go="release"><img src="${IMG('cover-late-shift')}" class="thumb" style="width:56px;height:56px" alt=""><span class="tx"><b class="strong">${S.release.title}</b><small>EP, ${S.release.tracks} tracks, out Fri 14 Nov</small></span><span class="tag ${S.release.stage==='ready'||S.release.stage==='delivered'?'confirmed':'accent'}">${S.release.stage==='delivered'?'Delivered':S.release.stage==='ready'?'Ready':S.release.stage==='created'?'Draft':'Scheduled'}</span>${ic('right','s')}</button>`:''}
+ ${(S.catalog||[]).map(r=>`<button class="list-row" data-go="pastrelease" data-id="${r.id}"><img src="${IMG(r.img)}" class="thumb" style="width:56px;height:56px" alt=""><span class="tx"><b class="strong">${r.title}</b><small>${r.kind}, ${r.year}, ${r.streams} streams</small></span><span class="tag paid">Out</span>${ic('right','s')}</button>`).join('')}</div></div>${abar()}`;
+VIEWS.pastrelease=()=>{const r=PAST.find(x=>x.id===S.params.id)||PAST[0];return `<div class="page"><button class="btn ghost s flush" data-go="catalogue" style="align-self:flex-start">${ic('left','s')}Releases</button>
+ <div class="row" style="align-items:flex-end;gap:28px"><img src="${IMG(r.img)}" alt="" style="width:176px;height:176px;border-radius:8px;object-fit:cover"><div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:6px"><span class="t-label muted">${r.kind}, ${r.tracks.length} track${r.tracks.length>1?'s':''}, ${r.year}</span><h1 class="t-display">${r.title}</h1><div class="row"><span class="tag paid">Out</span><span class="muted">Imported today</span></div></div></div>
+ <div class="grid2"><section class="sec"><h3 class="t-heading">Tracks</h3>${r.tracks.map((t,i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:24px">${i+1}</span><span class="tx"><b>${t[0]}</b></span><span class="mono muted">${t[1]}</span></div>`).join('')}</section>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Earning</h3><dl class="kv" style="grid-template-columns:104px 1fr"><dt>Streams</dt><dd class="mono">${r.streams}</dd><dt>Paid out</dt><dd class="mono">${r.earn} DKK</dd><dt>Koda</dt><dd>Registered</dd></dl></div></aside></div></div>${abar(r.title)}`;};
+const relTab=(R,tracks,up,ready)=>{const t=S.rtab;
+ if(t==='tracks')return `<section class="card" style="padding:4px 20px">${R.tracks?tracks.map((x,i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:24px">${i+1}</span><span class="tx"><b>${x[0]}</b>${x[2]&&!ready?`<small style="color:var(--att)">${x[2]}</small>`:''}</span><span class="mono muted">${x[1]}</span></div>`).join(''):`<div class="empty" style="margin:16px 0"><b class="t-heading">No tracks yet</b><button class="btn accent" data-act="addtracks">${ic('upload','s')}Add tracks</button></div>`}</section>`;
+ if(t==='credits')return `<section class="card" style="padding:4px 20px">${[['Mette Ravn','Writer, vocals','40 %'],['Sofie Lund','Writer, synth','30 %'],['Jonas Holm','Writer, drums','30 %']].map(p=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${p[0]}</b><small>${p[1]}</small></span><span class="tag ${R.tracks?'confirmed':'draft'}">${R.tracks?'Signed 3 Oct':'Not signed'}</span><span class="mono" style="width:56px;text-align:right">${p[2]}</span></div>`).join('')}</section>`;
+ if(t==='earnings')return `<div class="empty"><h3 class="t-heading">No earnings yet</h3><p class="muted" style="margin:0">The first statement comes about 6 weeks after release day, around late December.</p></div>`;
+ return `<section class="card" style="padding:4px 20px">${[['Bandcamp','Pre-order live','confirmed'],['Spotify','Goes out on delivery',R.stage==='delivered'?'confirmed':'draft'],['Apple Music','Goes out on delivery',R.stage==='delivered'?'confirmed':'draft'],['YouTube Music','Goes out on delivery',R.stage==='delivered'?'confirmed':'draft'],['TikTok','Goes out on delivery',R.stage==='delivered'?'confirmed':'draft']].map(x=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${x[0]}</b><small>${x[2]==='confirmed'&&x[0]!=='Bandcamp'?'Delivered':x[1]}</small></span><span class="tag ${x[2]}">${x[2]==='confirmed'?'Live':'Waiting'}</span></div>`).join('')}</section>`;};
+VIEWS.release=()=>{const R=S.release;const created=R.stage==='created',up=R.stage==='uploading',blk=R.stage==='blocked',ready=R.stage==='ready'||R.stage==='delivered';
+ const tracks=[['Late Shift','4:12'],['Harbour Lights','3:58','Explicit flag not set'],['Low Tide (Original Mix)','4:40','Title flagged by Beatport rules'],['Closing Time','3:52']].slice(0,R.tracks);
+ const primary=created?['Add tracks','addtracks','upload']:up?['Uploading…','',null]:blk?['Fix 1 blocker','fixblocker','wrench']:R.stage==='delivered'?['Delivered','',null]:['Deliver to DistroKid','deliver','send'];
+ return `<div class="page"><button class="btn ghost s flush" data-go="catalogue" style="align-self:flex-start">${ic('left','s')}Releases</button>
+ <div class="row" style="align-items:flex-end;gap:28px"><img src="${IMG('cover-late-shift')}" alt="" style="width:176px;height:176px;border-radius:8px;object-fit:cover;${created?'filter:grayscale(1) brightness(.4)':''}"><div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:6px"><span class="t-label muted">EP, ${R.tracks?R.tracks+' tracks':'no tracks yet'}${up?', uploading':''}</span><h1 class="t-display">${R.title}</h1><div class="row"><span class="tag ${ready?'confirmed':created||up?'draft':'accent'}">${created||up?'Draft':R.stage==='delivered'?'Delivered':'Scheduled'}</span><span class="muted">Out Fri 14 Nov, in 25 days</span></div>
+ <div class="row" style="padding-top:10px">${primary[1]||!primary[2]?`<button class="btn accent" ${primary[1]?`data-act="${primary[1]}"`:'disabled'}>${primary[2]?ic(primary[2],'s'):''}${primary[0]}</button>`:''}<button class="btn secondary" data-act="previewlinks">Preview links</button><button class="btn ghost icon" aria-label="More" data-act="releasemore">${ic('more')}</button></div></div></div>
+ <section class="card" style="padding:0;overflow:hidden;border:1px solid var(--rule)"><div class="row" style="padding:14px 20px"><b class="t-heading">Before delivery</b><span class="muted" style="flex:1">${created?'Checks run when tracks and a cover are in':up?`Checking… ${Math.round(R.progress/100*14)} of 14 rules`:blk?'1 blocker, 4 to check, 9 passed':'Ready. 4 to check (optional), 10 passed'}</span>${blk||ready?`<span class="meter"><i style="width:${ready?80:72}px;background:var(--ok)"></i><i style="width:32px;background:var(--att)"></i>${blk?'<i style="width:8px;background:var(--bad)"></i>':''}</span>`:''}</div>
+ ${blk?`<div class="row" style="padding:12px 20px;border-top:1px solid var(--rule)"><span style="color:var(--bad)">${ic('alert')}</span><span style="flex:1">Cover says “LATE SHIFT”, the title is “Late Shift EP”<br><span class="t-label muted">Stores reject a release when the cover text and the title differ.</span></span><button class="btn secondary s" data-act="fixblocker">Fix</button></div>`:''}
+ ${blk||ready?`<details style="border-top:1px solid var(--rule);padding:12px 20px"><summary class="muted" style="cursor:pointer">4 to check: track 3 title, a writer name, ISRCs, explicit flag on track 2</summary><ul class="muted">${['Track 3 has “(Original Mix)”, Beatport rejects it','Writer “Jonas H.” is not a legal name','No ISRCs yet, the distributor assigns them','Explicit flag empty on track 2'].map(x=>`<li>${x}</li>`).join('')}</ul></details><div class="row" style="padding:12px 20px;border-top:1px solid var(--rule)"><span style="color:var(--ok)">${ic('check')}</span><span>${ready?10:9} passed</span></div>`:''}</section>
+ <div class="tabs" role="tablist">${[['overview','Overview'],['tracks','Tracks',R.tracks||null],['credits','Credits and splits'],['earnings','Earnings'],['stores','Stores']].map(([k,l,c])=>`<button role="tab" class="${S.rtab===k?'on':''}" data-rtab="${k}">${l}${c?`<span class="c">${c}</span>`:''}</button>`).join('')}</div>
+${S.rtab==='overview'?`
+ <div class="grid2"><div style="display:flex;flex-direction:column;gap:32px"><section class="sec"><div class="sec-h"><h3 class="t-heading">Next steps</h3><button class="btn ghost s flush" data-act="allsteps">${S.allSteps?'Show fewer':'Show all 7'}</button></div>
+  ${[['24 Oct','Deliver to the distributor',ready?'In 4 days. Ready, press Deliver.':created?'In 4 days. Needs tracks and a cover.':'In 4 days. Needs the blocker fixed first.'],['24 Oct','Register the 4 works at Koda','Not started'],['4 Nov','Apple Music for Artists pitch','Waits for delivery'],...(S.allSteps?[['31 Oct','Pre-save link goes live','Ready to share'],['7 Nov','Spotify editorial pitch','Needs delivery first'],['14 Nov','Release day','Out everywhere at 00:00'],['21 Nov','First-week check','Streams, saves and playlist adds']]:[])].map((s,i)=>`<div class="list-row" style="cursor:default"><span class="mono" style="width:64px;${i?'color:var(--muted)':''}">${s[0]}</span><span class="tx"><b class="${i?'':'strong'}">${s[1]}</b><small>${s[2]}</small></span></div>`).join('')}</section>
+  <section class="sec"><div class="sec-h"><h3 class="t-heading">Tracks</h3><button class="btn ghost s flush" data-act="addtracks">Add track</button></div>
+  ${R.tracks?tracks.map((t,i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:24px">${i+1}</span><span class="tx"><b>${t[0]}</b>${up?(i===R.tracks-1&&R.progress<100?`<div class="progress" style="margin-top:6px;width:60%"><b style="width:${R.progress}%"></b></div>`:'<small>Checking…</small>'):t[2]&&!ready?`<small style="color:var(--att)">${t[2]}</small>`:''}</span><span class="mono muted">${up&&i===R.tracks-1&&R.progress<100?R.progress+' %':t[1]}</span></div>`).join('')
+  :`<div class="drop" style="flex-direction:row;align-items:center;gap:12px">${ic('upload')}<span style="flex:1">Drop WAV files here, or add tracks one by one<br><span class="t-label muted">Titles come from the file names; you can fix them after.</span></span></div>`}</section></div>
+ <aside class="panel"><div class="sec"><h3 class="t-heading">Facts</h3><dl class="kv" style="grid-template-columns:104px 1fr"><dt>Release date</dt><dd>Fri 14 Nov 2026</dd><dt>Distributor</dt><dd>DistroKid</dd><dt>UPC</dt><dd>${created?'After delivery':'Pending, from DistroKid'}</dd><dt>Catalogue no.</dt><dd class="mono">LT-004</dd></dl></div>
+ <div class="sec"><h3 class="t-heading">Credits and splits</h3><span class="t-label muted">${R.tracks?'40 / 30 / 30 on all songs. Signed by all three on 3 Oct; locks on delivery.':'Added per song when tracks are in. Everyone signs before delivery.'}</span></div>
+ <div class="sec"><h3 class="t-heading">Stores</h3><span class="t-label muted">${R.stage==='delivered'?'Delivered to Spotify, Apple Music, YouTube Music, TikTok and Bandcamp.':'Bandcamp pre-order is live. Spotify, Apple Music, YouTube Music and TikTok go out on delivery.'}</span></div></aside></div>`:relTab(R,tracks,up,ready)}</div>${abar(R.title)}`;};
+
+/* settings */
+const SETNAV=[['You',[['account','Account'],['notifications','Notifications']]],['Low Tide',[['settings','Band'],['members','Members'],['settings-money','Money'],['integrations','Integrations'],['theme','Theme'],['plan','Plan and billing']]]];
+function settingsShell(title,body,sub){return `<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">${title}</h1><p>${sub||''}</p></div><span class="row t-meta muted">${ic('check','s')}<span id="savestatus">Saved</span></span></div>
+ <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:start" class="setgrid"><nav aria-label="Settings" style="display:flex;flex-direction:column;gap:2px">${SETNAV.map(([g,items])=>`<span class="t-meta faint" style="padding:16px 12px 6px">${g}</span>${items.map(([id,l])=>`<button class="nav ${S.view===id?'active':''}" data-go="${id}"><span>${l}</span></button>`).join('')}`).join('')}</nav><div style="display:flex;flex-direction:column;gap:20px;min-width:0">${body}</div></div></div>${abar()}`;}
+const SC=(t,inner,act)=>`<section class="card" style="display:flex;flex-direction:column;gap:16px"><div class="sec-h"><h3 class="t-heading">${t}</h3>${act||''}</div>${inner}</section>`;
+VIEWS.account=()=>settingsShell('Your account',SC('Profile',`<div class="row" style="gap:20px"><img src="${S.photos.you||IMG('booker')}" alt="" style="width:80px;height:80px;border-radius:50%;object-fit:cover"><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label><div><b class="t-heading">Vital Sinkevich</b><div class="t-meta muted">Vocals, guitar. Shown to bandmates and on day sheets.</div></div></div><div class="row" style="align-items:flex-start"><div class="field" style="flex:1;min-width:200px"><label for="an">Name</label><input class="input" id="an" value="Vital Sinkevich" data-autosave></div><div class="field" style="flex:1;min-width:200px"><label for="ap">Phone</label><input class="input" id="ap" value="+45 20 11 22 33" data-autosave><span class="help">Only bandmates see it</span></div></div>`)
+ +SC('Language and region',`<div class="field"><label>Dashboard starts with</label><div class="seg" style="max-width:420px"><button class="on">Overview</button><button>A question (Ask first)</button></div></div>`)
+ +SC('LAAS on your iPhone',`<div class="row" style="gap:20px"><span style="width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,#1f1c29,#09090b);display:grid;place-items:center;flex:none"><svg viewBox="0 0 90 24" style="width:44px;fill:#fff">${LOGO.replace(/<svg[^>]*>|<\/svg>/g,'')}</svg></span><div style="flex:1;min-width:220px"><p style="margin:0 0 10px" class="muted">Day sheets that work offline, a push when times change on gig day, receipts by camera.</p><span style="display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:6px 14px 6px 10px"><svg viewBox="0 0 24 24" style="width:22px;fill:#fff"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span style="line-height:1"><span style="font-size:9px;display:block">Download on the</span><span style="font-size:19px;font-weight:500">App Store</span></span></span></div></div>`),'vital@lowtide.dk, signed in with Google');
+VIEWS.notifications=()=>settingsShell('Notifications',SC('How we reach you',['Email me when a venue opens or signs an offer','A short summary every morning at 08:00','Push on gig day: leave times and changes','Product news, a few times a year'].map((t,i)=>`<label class="row" style="gap:12px;cursor:pointer"><input type="checkbox" ${i<3?'checked':''} data-autosave style="width:18px;height:18px;accent-color:var(--accent-strong)"><span>${t}</span></label>`).join('')));
+VIEWS.settings=()=>settingsShell('Band',SC('Profile',`<div class="row" style="gap:16px"><img src="${S.photos.band||IMG('band-collage')}" alt="" style="width:64px;height:64px;border-radius:12px;object-fit:cover"><div class="field" style="flex:1;min-width:200px"><label for="bn">Band name</label><input class="input" id="bn" value="Low Tide" data-autosave></div></div>`)+SC('House terms',`<dl class="kv"><dt>Deposit</dt><dd>30 % on signing</dd><dt>Payment</dt><dd>Net 7, on the gig date for balances</dd><dt>Late fee</dt><dd>Reference rate + 8 %</dd></dl>`),'Low Tide, Owner: you, 3 members');
+VIEWS.members=()=>settingsShell('Members',SC('Members',[['MR','Mette Ravn','Owner'],['SL','Sofie Lund','Admin'],['JH','Jonas Holm','Member']].map(p=>`<div class="list-row" style="cursor:default"><span class="band" style="margin:0;padding:0"><span class="sq" style="width:32px;height:32px;border-radius:50%;font-size:12px">${p[0]}</span></span><span class="tx"><b>${p[1]}</b><small>${p[2]}</small></span></div>`).join(''),`<button class="btn secondary s" data-act="invite">${ic('plus','s')}Invite</button>`),'3 members, roles: Owner, Admin, Member, Viewer');
+VIEWS['settings-money']=()=>settingsShell('Money',SC('Bookkeeping',`<dl class="kv"><dt>Bank</dt><dd>Danske Bank, connected</dd><dt>Books</dt><dd>Dinero, credentials missing</dd><dt>Moms</dt><dd>Registered, quarterly</dd></dl>`));
+VIEWS.integrations=()=>settingsShell('Integrations',SC('Connected',['Google Calendar, two-way','Gmail, reads threads you pick','Danske Bank, reads payments'].map(t=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${t.split(',')[0]}</b><small>${t.split(',').slice(1).join(',')}</small></span><span class="tag confirmed">Connected</span></div>`).join(''))+SC('Available',['MobilePay Business','Dinero','Spotify for Artists','Bandcamp'].map(t=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${t}</b></span><button class="btn secondary s" data-act="toast" data-msg="Opens ${t} to sign in">Connect</button></div>`).join('')));
+VIEWS.theme=()=>settingsShell('Theme',SC('Pick a theme',`${appearanceSeg()}<div class="theme-grid">${themeCards()}</div><p class="t-meta muted" style="margin:0">Money, contracts and anything a venue sees always stay in the plain LAAS style.</p>`));
+VIEWS.plan=()=>{const cur=S.plan;const name={free:'Free',band:'Band',pro:'Pro'}[cur];
+ const head={free:'Free, 0 DKK. Up to 10 active bookings.',band:'39 DKK a month, billed monthly. Next payment 14 Nov.',pro:'Pro trial, 14 days left. Then 199 DKK a month; cancel any time.'}[cur];
+ const plans=[['free','Free','0 DKK','Trying it out',['10 active bookings','Contacts and venues','Day sheets','1 member']],['band','Band','39 DKK / month','Gigging bands',['Unlimited bookings','Whole band, any size','Calendar feed and import','Assistant']],['pro','Pro','199 DKK / month','Bands that invoice',['Everything in Band','Invoices with a pay link','Reminders and settling','Bookkeeping export']]];
+ return settingsShell('Plan and billing',SC(name,`<p class="muted" style="margin:0">${head}</p><div class="row">${cur!=='pro'?'<button class="btn accent" data-act="trypro">Try Pro free for 14 days</button>':'<button class="btn secondary" data-act="endtrial">End trial</button>'}<button class="btn ghost" data-act="compare">Compare plans</button></div>`)+`<div class="row" id="plancards" style="align-items:stretch;gap:12px">${plans.map(([id,n,p,w,f])=>{const on=id===cur;const a=on?null:id==='free'?['Move to Free','movefree','ghost']:id==='band'?['Move to Band','moveband','ghost']:['Try Pro free','trypro','secondary'];return `<div class="card" style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px;${on?'box-shadow:inset 0 0 0 1.5px var(--accent)':''}"><div class="row"><b class="t-heading" style="flex:1">${n}</b>${on?'<span class="tag accent">Current</span>':''}</div><span class="mono" style="font-size:18px">${p}</span><span class="t-meta muted">${w}</span>${f.map(x=>`<span class="row" style="gap:8px">${ic('check','s')}${x}</span>`).join('')}<span style="flex:1"></span>${a?`<button class="btn ${a[2]} s" style="align-self:flex-start" data-act="${a[1]}">${a[0]}</button>`:'<span class="t-meta muted">Your plan</span>'}</div>`}).join('')}</div>`,`Low Tide is on ${name}`);};
+const THEMES=[['label','Default','The LAAS look, lilac on dark',['#121212','#cdbdff','#ffffff']],['metal','Metal','Black and bone, hard type',['#0a0a0a','#e8e2d6','#161616']],['electronic','Electronic','Electric navy and lime',['#0a1020','#d9f25a','#111a2e']],['classical','Classical','Ivory, gold, burgundy',['#16130f','#d9788a','#b8923a']]];
+const themeCards=()=>THEMES.map(([id,n,d,c])=>`<button class="theme-card ${S.genre===id?'on':''}" data-genre="${id}"><span class="swatch">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="row"><b class="strong" style="flex:1">${n}</b>${S.genre===id?ic('check','s'):''}</span><span class="t-meta muted">${d}</span></button>`).join('');
+const appearanceSeg=()=>`<div class="field"><label>Appearance</label><div class="seg">${[['dark','Dark'],['light','Light'],['system','Match system']].map(([k,l])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${l}</button>`).join('')}</div><span class="help">Every theme has a light and a dark version.</span></div>`;
+VIEWS.assistant=()=>{const a=S.asst;const items=['Move booking: Saturday hotel gig → 25 Oct 20:00','Send mail to venue: Hotel Royal, “New date for the gig”','Notify the band: 3 members get the new day sheet'];
+ const sugg=[['Move the hotel gig to Saturday 25 Oct and tell the venue','plan'],['Who still owes us money?','money'],['What is left before Saturday?','gigday'],['Nudge Mette about the offer','nudge']];
+ const plan=`<div class="bubble">Move the hotel gig to Saturday 25 Oct and tell the venue</div><p style="margin:0">Saturday 25 Oct is free. I can move it and draft the mail. I checked the calendar (rehearsal ends 16:00), the booking (confirmed, fee 4.500 DKK) and the contacts (Mette books, Jonas runs the bar).</p>`
+ +(a==='plan'?`<div class="send"><h3 class="t-heading">I will make 3 changes</h3>${items.map((t,i)=>S.asstEdit?`<input class="input" value="${esc(t)}" aria-label="Change ${i+1}">`:`<span class="row" style="gap:10px">${ic('check','s')}${t}</span>`).join('')}<div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="asstcancel">Cancel</button><button class="btn secondary" data-act="asstedit">${S.asstEdit?'Done editing':'Edit'}</button><button class="btn accent" data-act="asstconfirm">Confirm</button></div></div>`
+  :a==='done'?`<div class="banner info">${ic('check')}<div class="tx"><b>Done, 3 changes made</b><span class="t-label muted">Booking moved, mail sent to Hotel Royal, the band has the new day sheet.</span></div><button class="btn secondary s" data-go="booking">Open booking</button></div>`
+  :`<p class="muted" style="margin:0">Cancelled. Nothing was changed.</p>`);
+ const body=a==='new'?`<div class="empty" style="border:0;padding:24px 8px"><h3 class="t-heading">What do you need?</h3><p class="muted" style="margin:0">Ask about gigs, contacts or money. Nothing is sent without your OK.</p><div class="row" style="justify-content:center;gap:8px">${sugg.map(([q,k])=>`<button class="qtag" data-act="asksugg" data-q="${k}">${q}</button>`).join('')}</div></div>`
+  :a==='q'?`<div class="bubble">${esc(S.asstQ)}</div><p style="margin:0">Here is where Low Tide stands: 3 loose ends today, 8.500 DKK owed to you, and the next gig is tonight at Hotel Royal.</p><div class="row"><button class="btn secondary s" data-go="gigday">Open day sheet</button><button class="btn secondary s" data-go="money">See what is owed</button></div>`:plan;
+ return `<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Assistant</h1><p>Conversation, Low Tide, remembered for you</p></div><button class="btn secondary" data-act="asstnew">New conversation</button></div>
+ <div class="card" style="display:flex;flex-direction:column;gap:14px">${body}</div></div>${abar()}`;};
+VIEWS.audience=()=>`<div class="page"><div class="ph"><div class="grow"><h1 class="t-display">Audience</h1><p>Monthly listeners and figures by hand</p></div></div><div class="hero" style="min-height:220px"><img src="${IMG('stagedive')}" alt=""><div class="tx"><span class="k">Last 28 days</span><h1>2.140 listeners</h1><div class="facts"><span>+14 % on September</span><span>Top city Aarhus</span></div></div></div></div>${abar()}`;
+VIEWS.mail=()=>`<div class="page"><h1 class="t-display">Mail</h1><div class="empty"><h3 class="t-heading">Mail is not part of this prototype</h3><p class="muted" style="margin:0">It is in the action map as not designed yet.</p></div></div>${abar()}`;
+
+/* onboarding (full screen) */
+function onboarding(){const st=S.onboarding.step;const photo=['stagedive','notebook','rehearsal','band-collage','stagedive','stagedive'][st];
+ const steps=[
+  ()=>`<div><h1 class="t-title">Run your band like a label</h1><p class="muted">Gigs, contacts, money and releases in one place. Free for one band, no card needed.</p></div><button class="btn secondary" data-ob="1" style="justify-content:center"><svg viewBox="0 0 48 48" width="20"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>Continue with Google</button><div class="field"><label for="obe">Email</label><input class="input" id="obe" placeholder="you@band.dk"></div><button class="btn accent" data-ob="1" style="justify-content:center">Continue with email</button><p class="t-meta muted">Already have an account? <button class="link" data-act="obexit">Log in</button></p>`,
+  ()=>`<div><h1 class="t-title">Check your inbox</h1><p class="muted">We sent a 6-digit code to vital@lowtide.dk. It works for 15 minutes.</p></div><div class="code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" value="${d}" maxlength="1">`).join('')}</div><div class="row"><button class="btn accent" data-ob="2">Continue</button><button class="btn ghost" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div>`,
+  ()=>`<div><h1 class="t-title">About you</h1><p class="muted">Takes a minute. You can change all of it in Account.</p></div><div class="row"><img src="${S.photos.you||IMG('booker')}" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt=""><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label></div><div class="field"><label for="yn">Your name</label><input class="input" id="yn" value="Vital Sinkevich"></div><div class="field"><label for="yp">You play</label><input class="input" id="yp" value="Vocals, guitar"></div><button class="btn accent" data-ob="3" style="align-self:flex-start">Continue</button>`,
+  ()=>`<div><h1 class="t-title">Your band</h1><p class="muted">One account can run several bands. Start with this one.</p></div><div class="row"><img src="${S.photos.band||IMG('band-collage')}" style="width:96px;height:96px;border-radius:12px;object-fit:cover" alt=""><label class="btn ghost s" style="cursor:pointer">${ic('upload','s')}Replace<input type="file" accept="image/*" hidden data-photo="band"></label></div><div class="field"><label for="bnm">Band name</label><input class="input" id="bnm" value="Low Tide"></div><div class="field"><label for="bc">Home city</label><input class="input" id="bc" value="Odense"></div><div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-ob="4">Continue</button></div>`,
+  ()=>`<div><h1 class="t-title">What do you play?</h1><p class="muted">LAAS dresses itself for your genre: colours, type and the logo. Switch any time, or keep the default.</p></div><div class="row" style="gap:8px">${['Indie and rock','Metal and hardcore','Electronic','Classical','Jazz','Folk','Pop'].map(g=>`<button class="qtag ${S.onboarding.genre===g?'on':''}" data-obgenre="${g}">${g}</button>`).join('')}</div><div class="theme-grid">${themeCards()}</div>${appearanceSeg()}<div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</button></div>`,
+  ()=>`<div><h1 class="t-title">Bring the band</h1><p class="muted">They get an email to join Low Tide. Nobody pays per member.</p></div>${['jonas@lowtide.dk','mia.bass@gmail.com'].map(m=>`<div class="row"><input class="input" style="flex:1" value="${m}" aria-label="Email"><select class="input" style="width:140px" aria-label="Role"><option>Member</option><option>Admin</option><option>Viewer</option></select></div>`).join('')}<p class="t-meta muted">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only.</p><div class="row"><button class="btn ghost" data-act="obdone">Skip for now</button><button class="btn accent" data-act="obdone">${ic('send','s')}Send 2 invites</button></div>`];
+ return `<div class="ob"><div class="l"><div class="row"><div class="logo">${LOGO}</div><span style="flex:1"></span>${st>=2?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}<button class="btn ghost s" data-act="obexit">Exit</button></div>${st>=2?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px">${steps[st]()}</div></div><div class="r"><img src="${IMG(photo)}" alt=""></div></div>`;}
+
+/* ---------- overlays ---------- */
+function overlay(){const o=S.overlay;if(!o)return '';
+ if(o.type==='palette'){const q=(o.q||'').toLowerCase();const res=[];
+  if(!q){res.push(['Recent',[['Saturday hotel gig','Booking, Sat 25 Oct, Hotel Royal','booking',{},'hotel-royal'],['Mette Kjær, Hotel Royal','Contact, venue booker','contact',{id:'c1'},'booker'],['Late Shift EP','Release, out 14 Nov','release',{},'cover-late-shift']]]);res.push(['Jump to',[['Bookings','','bookings',{}],['Money','','money',{}],['Gig day','','gigday',{}]]]);}
+  else{const c=CONTACTS.filter(x=>x.name.toLowerCase().includes(q)).map(x=>[x.name,x.kind+', '+x.where,'contact',{id:x.id},V(x.venue).img]);const b=BOOKINGS.filter(x=>(x.title+' '+(x.venue?V(x.venue).name:'')).toLowerCase().includes(q)).map(x=>[x.title,x.when+', '+(x.venue?V(x.venue).name:'No venue'),'booking',{},x.venue?V(x.venue).img:null]);const v=VENUES.filter(x=>x.name.toLowerCase().includes(q)).map(x=>[x.name,'Venue, '+x.city,'venue',{id:x.id},x.img]);
+   if(c.length)res.push(['Contacts',c.slice(0,3)]);if(b.length)res.push(['Bookings',b.slice(0,3)]);if(v.length)res.push(['Venues',v.slice(0,3)]);res.push(['Actions',[[`New booking “${o.q}”`,'','newbooking',{}],[`Ask the assistant about “${o.q}”`,'','assistant',{}]]]);}
+  let k=0;const sel=o.sel||0;
+  return `<div class="scrim" data-act="close"></div><div class="pop pal" role="dialog" aria-label="Search"><div class="f">${ic('search')}<input id="palq" value="${esc(o.q||'')}" placeholder="Search bookings, people, venues, invoices, mail" aria-label="Search"><kbd class="k">Esc</kbd></div>
+  ${q&&res.length===1?`<div style="padding:16px 20px"><b class="t-heading">No match for “${esc(o.q)}”</b><p class="muted" style="margin:4px 0 0">Nothing in bookings, contacts or venues. Check the spelling, or start from here.</p></div>`:''}
+  ${res.map(([g,items])=>`<div class="g"><div class="gl">${g}</div>${items.map(([t,m,v,p,im])=>{const i=k++;return `<button class="it ${i===sel?'on':''}" data-pgo="${v}" data-pp='${JSON.stringify(p)}'>${im?`<img class="thumb s" src="${IMG(im)}" alt="">`:`<span class="thumb s" style="display:grid;place-items:center">${ic(v==='newbooking'?'plus':v==='assistant'?'ai':'right','s')}</span>`}<span><span>${hl(t,o.q||'')}</span>${m?`<br><span class="t-meta muted">${m}</span>`:''}</span></button>`}).join('')}</div>`).join('')}
+  <div class="ft"><span><kbd class="k">↑↓</kbd> move</span><span><kbd class="k">↵</kbd> open</span><span style="margin-left:auto">Type to search everything</span></div></div>`;}
+ if(o.type==='notifs')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop notif" role="dialog" aria-label="Notifications"><div class="row" style="padding:14px 16px 6px"><b class="t-heading" style="flex:1">Notifications</b><button class="btn ghost s" data-act="readall">${ic('check','s')}Mark all read</button></div>
+  <div class="row" style="padding:0 16px 8px;gap:4px"><button class="chip ${o.f!=='need'?'on':''}" data-nf="all">All</button><button class="chip ${o.f==='need'?'on':''}" data-nf="need">Needs you 2</button></div><div style="padding:0 8px 8px">
+  ${S.notifs.filter((n,i)=>o.f!=='need'||i<2).map((n,i)=>`<button class="ni ${n.unread?'unread':''}" data-ni="${i}"><span class="dot"></span><img class="thumb" src="${IMG(V(n.v).img)}" alt=""><span><b>${n.t}</b><br><span class="t-meta muted">${n.m}</span><br><span class="t-meta faint">${n.time}</span></span></button>`).join('')}</div></div>`;
+ if(o.type==='thememenu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:16px;bottom:120px;width:300px;padding:6px" role="dialog" aria-label="Theme"><div class="t-meta faint" style="padding:6px 10px">Theme for Low Tide</div>${THEMES.map(([id,n,d,c])=>`<button class="it row" style="width:100%;padding:8px 10px;border-radius:8px;${S.genre===id?'background:var(--well)':''}" data-genre="${id}"><span class="swatch" style="width:56px;height:36px">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span style="flex:1;text-align:left"><b class="strong">${n}</b><br><span class="t-meta muted">${d}</span></span>${S.genre===id?ic('check','s'):''}</button>`).join('')}<div style="padding:8px 10px">${appearanceSeg()}</div><button class="it row" style="width:100%;padding:8px 10px" data-genre="label">${ic('undo','s')}Reset to default</button></div>`;
+ if(o.type==='statusmenu'){const opts=['Confirmed','Draft','Attention','Paid','Completed'];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:6px" role="dialog" aria-label="Filter by status"><div class="t-meta faint" style="padding:6px 10px">Status</div>${opts.map(s=>`<label class="row" style="padding:8px 10px;gap:10px;cursor:pointer"><input type="checkbox" data-sf="${s}" ${S.statusFilter.includes(s)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${s}</span><span class="t-meta faint">${BOOKINGS.filter(b=>STATUS[b.status][1]===s).length}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearfilter">Clear</button></div></div>`;}
+ if(o.type==='statusmenu2')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:320px;padding:6px"><div class="t-meta faint" style="padding:6px 10px">Status follows documents</div>${[['enquiry','Enquiry','Someone asked. Reply or hold the date.'],['hold','Hold','Date reserved until an expiry.'],['offer','Offer out','Moves here when the offer link is sent.'],['confirmed','Confirmed','When the offer is signed or the deposit paid.'],['completed','Completed','After the gig date, once you settle.']].map(([k,l,d])=>`<button class="it row" style="width:100%;padding:8px 10px;border-radius:8px;text-align:left;${S.booking.state===k?'background:var(--well)':''}" data-bstate="${k}"><span style="flex:1"><b class="strong">${l}</b><br><span class="t-meta muted">${d}</span></span>${S.booking.state===k?ic('check','s'):''}</button>`).join('')}<div class="t-meta muted" style="padding:8px 10px">Moving by hand is logged with your name.</div></div>`;
+ if(o.type==='chipmenu'){const c=CHIPS[o.key];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:6px" role="dialog" aria-label="Filter by ${c.label}"><div class="t-meta faint" style="padding:6px 10px">${c.label}</div>${c.opts.map(x=>`<label class="row" style="padding:8px 10px;gap:10px;cursor:pointer"><input type="checkbox" data-cf="${o.key}|${x}" ${S.filters[o.key].includes(x)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${x}</span><span class="t-meta faint">${c.n(x)}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearchip" data-key="${o.key}">Clear</button></div></div>`;}
+ if(o.type==='menu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:6px" role="menu">${o.items.map(([l,a,danger,text])=>`<button class="it row" role="menuitem" style="width:100%;padding:8px 10px;border-radius:8px;text-align:left;${danger?'color:var(--bad)':''}" data-act="${a}" ${text?`data-text="${text}"`:''}>${l}</button>`).join('')}</div>`;
+ if(o.type==='modal')return `<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true">${o.html}</div>`;
+ if(o.type==='drawer')return `<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
+ return '';}
+
+/* drawers */
+const DR={
+ newbooking:(name='')=>({type:'drawer',title:'New booking',sub:'Describe it, we fill the fields',body:`<div class="field"><label for="nbw">What</label><input class="input" id="nbw" value="${esc(name||'Hotel gig')}"><span class="help">From your words, edit if wrong</span></div><div class="field"><label for="nbt">When</label><input class="input" id="nbt" value="Fri 24 Oct 2026, 20:00"></div><div class="field"><label for="nbv">Where</label><input class="input" id="nbv" value="Hotel Royal, Aarhus"><span class="help">Matched, capacity 120</span></div>
+  <div class="gigcard" style="background:#4a1a1c"><img src="${IMG('hotel-royal')}" alt=""><div><span class="t-label" style="opacity:.7">Fri 24 Oct, 20:00, 75 min set</span><div style="font-size:24px;line-height:28px;margin-top:4px">${esc(name||'Hotel gig')}</div><div class="t-label" style="opacity:.85;margin-top:8px">${ic('pin','s')} Hotel Royal, Aarhus</div></div><div class="row" style="border-top:1px solid rgba(255,255,255,.16);padding-top:12px;gap:24px"><span><span class="mono" style="font-size:20px">4.500 DKK</span><br><span class="t-meta" style="opacity:.65">fee, invoice 14 days</span></span><span><span style="font-size:18px">3 of 4</span><br><span class="t-meta" style="opacity:.65">people confirmed</span></span></div></div>`,foot:`<button class="btn ghost" data-act="fulleditor">Full editor</button><span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="createbooking">Create booking</button>`}),
+ newcontact:()=>({type:'drawer',title:'New contact',sub:'Only a name is needed',body:`<div class="field"><label>This contact is a</label><div class="seg"><button class="on">Person</button><button>Organisation</button></div></div><div class="field"><label for="ncn">Name</label><input class="input" id="ncn" value="${esc(S.contactSearch||'Mette Kjær')}"></div><div class="field"><label for="nco">Organisation</label><input class="input" id="nco" value="Hotel Royal"></div><div class="field"><label for="nce">Email</label><input class="input" id="nce" value="booking@hotelroyal.dk"></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="createcontact">Create contact</button>`}),
+ newvenue:()=>({type:'drawer',title:'New venue',sub:'From the address we find photos and travel time',body:`<div class="field"><label for="nvn">Name</label><input class="input" id="nvn" value="Hotel Royal"></div><div class="field"><label for="nva">Address</label><input class="input" id="nva" value="Store Torv 4, 8000 Aarhus"><span class="help">118 km from Odense</span></div><div class="field"><label>Photo, found on Google Maps</label><div class="row">${['hotel-royal','posten','odense-live'].map((p,i)=>`<button data-pick style="border-radius:8px;overflow:hidden;${i===0?'box-shadow:0 0 0 2px var(--accent)':''}" aria-label="Use this photo"><img src="${IMG(p)}" style="width:96px;height:96px;object-fit:cover;display:block" alt=""></button>`).join('')}</div><span class="help">Card colour taken from the photo. Photos © their Google Maps contributors.</span></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Hotel Royal added">Create venue</button>`}),
+ import:()=>{const st=S.import.step;return {type:'drawer',title:'Import contacts',sub:`Step ${st} of 3, ${['','where your contacts are now','match the columns','check before saving'][st]}`,
+  body:st===1?`<div class="drop">${ic('upload')}<b class="strong">Drop a CSV, Excel or vCard file here</b><span class="t-meta muted">Exports from Google, Outlook, iPhone or a spreadsheet all work.</span><label class="btn secondary s" style="align-self:flex-start;cursor:pointer">Choose file<input type="file" accept=".csv,.xlsx,.xls,.vcf" hidden data-importfile></label></div><div class="sec"><span class="t-label muted">Or connect an account</span>${['Google Contacts','Outlook or Microsoft 365','From my mail'].map(t=>`<button class="list-row" data-act="importnext" data-file="${t}">${ic('plug')}<span class="tx"><b>${t}</b><small>Reads once, writes nothing back</small></span></button>`).join('')}</div>`
+  :st===2?`<div class="list-row" style="border:1px solid var(--rule-strong);border-radius:10px;padding:12px 14px">${ic('file')}<span class="tx"><b>${esc(S.import.file||'contacts-2026.csv')}</b><small>212 rows, 8 columns, Danish headers</small></span></div><p class="muted" style="margin:0">Each column goes to one LAAS field. We guessed from the headers; change any guess that is wrong.</p>${[['Navn','Name','e.g. Mette Krogh'],['Firma','Organisation','e.g. Hotel Skov'],['E-mail','Email','e.g. mette@hotelskov.dk'],['Telefon','Phone','e.g. 21 43 65 87'],['Fødselsdag','Don’t import','LAAS has no birthday field']].map(([a,b,c])=>`<div class="field"><label>${a}</label><select class="input"><option>${b}</option><option>Name</option><option>Don’t import</option></select><span class="help">${c}</span></div>`).join('')}`
+  :`<dl class="kv"><dt>New contacts</dt><dd class="mono">198</dd><dt>Merged</dt><dd class="mono">9</dd><dt>Skipped</dt><dd class="mono">5</dd></dl><label class="row" style="gap:10px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Merge the 9 duplicates (recommended)</label><div class="banner info">${ic('alert')}<div class="tx"><b>Nothing is sent to anyone</b><span class="t-label muted">Imported contacts get an Imported tag. You can undo the whole import for 7 days.</span></div></div>`,
+  foot:`${st>1?'<button class="btn ghost" data-act="importback">Back</button>':''}<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="${st<3?'importnext':'importdone'}">${st<3?'Continue':'Import 198 contacts'}</button>`};},
+ record:()=>({type:'drawer',title:'Record a payment',sub:'Invoice 2026-031, deposit 1.500 DKK',body:`<div class="field"><label for="ra">Amount received</label><input class="input mono" id="ra" value="1.470"><span class="help">Invoice says 1.500; 30 DKK short, likely the bank fee</span></div><div class="field"><label for="rd">Received on</label><input class="input" id="rd" value="16 Oct 2026"></div><div class="field"><label for="rh">How</label><select class="input" id="rh"><option>Bank transfer, business account</option><option>MobilePay</option><option>Cash</option></select></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="recorded">Record 1.470 DKK</button>`}),
+ newrelease:()=>({type:'drawer',title:'New release',sub:'The plan counts back from the release date',body:`<div class="field"><label for="rt">Title</label><input class="input" id="rt" value="Late Shift EP"><span class="help">As on the cover</span></div><div class="field"><label>Type</label><div class="seg"><button>Single</button><button class="on">EP</button><button>Album</button></div></div><div class="field"><label for="rdate">Release date</label><input class="input" id="rdate" value="Fri 14 Nov 2026"><span class="help">25 days away. 28 recommended; Spotify needs 7 for a pitch, Apple 10.</span></div><div class="field"><label for="rdist">Distributor</label><select class="input" id="rdist"><option>DistroKid</option><option>CD Baby</option></select></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="createrelease">Create release</button>`}),
+ fixblocker:()=>({type:'drawer',title:'Fix: cover and title',sub:'The one thing blocking delivery',body:`<div class="row" style="gap:16px"><img src="${IMG('cover-late-shift')}" style="width:96px;height:96px;border-radius:8px;object-fit:cover" alt=""><div><span class="t-label muted">Cover says</span><div class="t-heading">LATE SHIFT</div><span class="t-label muted">Release title</span><div class="t-heading" style="color:var(--bad)">Late Shift EP</div></div></div><p class="muted" style="margin:0">Spotify, Apple Music and DistroKid reject a release when the cover text and the title differ.</p>${[['Rename the release to “Late Shift”','Recommended. Stores show “EP” from the track count.',1],['Upload a new cover','Cover must say “Late Shift EP”, 3000 × 3000, RGB.'],['Keep both and explain to the distributor','Manual review, usually 3 to 5 days. The plan moves.']].map(([t,s,on],i)=>`<button class="radio ${on?'on':''}" data-fix="${i}"><i></i><span><b class="strong">${t}</b><br><span class="t-label muted">${s}</span></span></button>`).join('')}`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="renamed" id="fixgo">Rename to Late Shift</button>`}),
+ customise:()=>({type:'drawer',title:'Customise dashboard',sub:'Pick what shows on your start page',body:`${[['tonight','Tonight, next gig photo'],['coming','Coming up'],['releases','Latest releases'],['cash','Cash in bank'],['needs','Needs you']].map(([k,l])=>`<label class="row" style="gap:12px;cursor:pointer"><input type="checkbox" data-dash="${k}" ${S.dash[k]?'checked':''} style="width:18px;height:18px;accent-color:var(--accent-strong)">${l}</label>`).join('')}<p class="t-meta muted" style="margin:0">Only for you. Bandmates keep their own layout.</p>`,foot:`<button class="btn ghost" data-act="resetdash">Reset</button><span style="flex:1"></span><button class="btn accent" data-act="close">Done</button>`}),
+ addexpense:()=>({type:'drawer',title:'Add expense',sub:'A photo of the receipt is enough',body:`<label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong" id="rcpt">${S.rcpt?esc(S.rcpt):'Add a photo or PDF of the receipt'}</b><span class="t-meta muted">We read the amount and the date from it.</span><input type="file" accept="image/*,.pdf" hidden data-receipt></label><div class="field"><label for="exa">Amount, DKK</label><input class="input mono" id="exa" value="480"></div><div class="field"><label for="exw">What</label><input class="input" id="exw" value="Parking, Aarhus"></div><div class="field"><label for="exf">For</label><select class="input" id="exf"><option>Saturday hotel gig</option><option>Club night</option><option>Gear</option><option>Band, general</option></select></div><div class="field"><label for="exb">Paid by</label><select class="input" id="exb"><option>Mette</option><option>Sofie</option><option>Jonas</option><option>Band account</option></select><span class="help">If a member paid, it goes on their next payout.</span></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="saveexpense">Save expense</button>`}),
+ newinvoice:()=>({type:'drawer',title:'New invoice',sub:'Sent with a pay link; reminders follow your house terms',body:`<div class="field"><label for="inv-to">To</label><select class="input" id="inv-to">${VENUES.map(v=>`<option value="${v.id}">${v.name}</option>`).join('')}</select></div><div class="field"><label for="inv-for">For</label><input class="input" id="inv-for" value="Saturday hotel gig, extra set"></div><div class="field"><label for="inv-a">Amount, DKK excl. moms</label><input class="input mono" id="inv-a" value="1.200"></div><div class="field"><label>Due</label><div class="seg"><button>7 days</button><button class="on">14 days</button><button>30 days</button></div></div>`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="createinvoice">Create invoice</button>`}),
+ importcat:(src)=>({type:'drawer',title:'Import releases',sub:`From ${src||'Spotify'}, reads once`,body:`<p class="muted" style="margin:0">We found 3 releases for Low Tide. Untick any that are not yours.</p>${PAST.map(r=>`<label class="list-row" style="cursor:pointer"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)"><img class="thumb" src="${IMG(r.img)}" alt=""><span class="tx"><b>${r.title}</b><small>${r.kind}, ${r.year}, ${r.tracks.length} track${r.tracks.length>1?'s':''}</small></span></label>`).join('')}`,foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="importcatdone">Import 3 releases</button>`}),
+ invite:()=>({type:'drawer',title:'Invite to Low Tide',sub:'They get an email and join with one click',body:`<div class="field"><label for="ie">Emails</label><input class="input" id="ie" value="jonas@lowtide.dk, mia.bass@gmail.com"><span class="help">Separate with commas</span></div><div class="field"><label>Role</label>${[['Admin','Everything except deleting the band.'],['Member','Gigs, day sheets and their own payouts.',1],['Viewer','Dates and day sheets only.']].map(([t,s,on])=>`<button class="radio ${on?'on':''}"><i></i><span><b class="strong">${t}</b><br><span class="t-label muted">${s}</span></span></button>`).join('')}</div>`,foot:`<button class="btn ghost" data-act="copytext" data-text="https://laas.app/join/low-tide-7Hq2">${ic('copy','s')}Copy invite link</button><span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="2 invites sent" data-undo="1">${ic('send','s')}Send 2 invites</button>`}),
+};
+
+/* ---------- render ---------- */
+function render(){
+ const root=document.documentElement;
+ if(S.appearance==='system')root.removeAttribute('data-theme');else root.setAttribute('data-theme',S.appearance);
+ if(S.genre==='label')root.removeAttribute('data-genre');else root.setAttribute('data-genre',S.genre);
+ const app=document.getElementById('app');
+ const prevFocus=document.activeElement&&document.activeElement.id;const selStart=document.activeElement&&document.activeElement.selectionStart;
+ const mainScroll=document.querySelector('.main')?.scrollTop||0;
+ if(S.view==='onboarding'){app.innerHTML=onboarding()+overlay()+toastHtml()+flowBtn();}
+ else app.innerHTML=`<div class="app">${topbar()}<div class="body ${S.collapsed?'collapsed':''}">${sidebar()}<main class="main" id="main">${(VIEWS[S.view]||VIEWS.dashboard)()}</main></div></div>${overlay()}${toastHtml()}${flowBtn()}`;
+ const m=document.querySelector('.main');if(m)m.scrollTop=mainScroll;
+ if(prevFocus){const el=document.getElementById(prevFocus);if(el){el.focus();try{if(selStart!=null)el.setSelectionRange(selStart,selStart)}catch(e){}}}
+ if(S.overlay&&S.overlay.type==='palette'){const q=document.getElementById('palq');if(q&&document.activeElement!==q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
+}
+const toastHtml=()=>S.toast?`<div class="toast" role="status">${ic('check','s')}<span>${esc(S.toast.msg)}</span>${S.toast.undo?'<button class="btn ghost s" data-act="undo">Undo</button>':''}</div>`:'';
+const FLOWS=[['First run','Sign up to the dashboard',()=>{S.onboarding.step=0;go('onboarding')}],['Book a gig','Bookings, search, filter, booking',()=>{S.bookTab='up';S.search='';go('bookings')}],['A booking’s life','Enquiry → hold → offer → confirmed → completed',()=>{S.booking={state:'enquiry',depositPaid:false,settled:false,rated:false,sheet:false,cancelled:false};go('booking')}],['Get paid','Overdue deposit, record, settle',()=>{S.booking.state='confirmed';S.booking.depositPaid=false;go('money')}],['Gig day','Timeline, open items',()=>{S.parkingDone=false;go('gigday')}],['Contacts import','Three-step import',()=>{S.imported=false;go('contacts')}],['A release','Empty catalogue to delivery',()=>{S.release={stage:'none',title:'Late Shift EP',tracks:0,progress:0};S.catalog=null;S.rtab='overview';go('catalogue')}],['Themes','Genre themes and light mode',()=>go('theme')],['Settings','Account, members, plan',()=>go('account')]];
+const flowBtnInline=()=>`<div class="flowbar"><button class="btn secondary s" data-act="flows">${ic('flow','s')}<span class="fl">Flows</span></button></div>`;
+const flowBtn=()=>`${S.view==='onboarding'?`<div style="position:fixed;right:16px;top:12px;z-index:30">${flowBtnInline()}</div>`:''}${S.flowsOpen?`<div class="pop flowmenu" role="menu">${FLOWS.map((f,i)=>`<button data-flow="${i}" role="menuitem"><span style="flex:1"><b class="strong">${f[0]}</b><br><span class="t-meta muted">${f[1]}</span></span>${ic('right','s')}</button>`).join('')}</div>`:''}`;
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ const segb=e.target.closest('.seg button');if(segb&&!segb.dataset.split&&!segb.dataset.appearance){segb.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===segb));return;}
+ const rad=e.target.closest('.radio');if(rad){rad.parentElement.querySelectorAll('.radio').forEach(b=>b.classList.toggle('on',b===rad));if(rad.dataset.fix!==undefined){S.fixChoice=+rad.dataset.fix;const g=document.getElementById('fixgo');if(g)g.textContent=['Rename to Late Shift','Use the new cover','Send for manual review'][S.fixChoice];}return;}
+ const pick=e.target.closest('[data-pick]');if(pick){pick.parentElement.querySelectorAll('[data-pick]').forEach(b=>b.style.boxShadow=b===pick?'0 0 0 2px var(--accent)':'none');return;}
+ const t=e.target.closest('[data-go],[data-act],[data-tab],[data-flow],[data-genre],[data-appearance],[data-ob],[data-obgenre],[data-pgo],[data-ni],[data-nf],[data-star],[data-qtag],[data-split],[data-bstate],[data-toggle],[data-mtab],[data-rtab]');
+ if(!t){if(S.flowsOpen&&!e.target.closest('.flowmenu')){S.flowsOpen=false;render();}return;}
+ if(t.dataset.flow!==undefined){S.flowsOpen=false;FLOWS[+t.dataset.flow][2]();return;}
+ if(t.dataset.go){const id=t.dataset.id;if(t.dataset.go==='booking'&&id&&id!=='b1'){const b=BOOKINGS.find(x=>x.id===id);if(b&&b.status==='completed')S.booking.state='completed';}if(t.dataset.go==='rate'){S.booking.state='completed';S.booking.rated=false;return go('booking');}return go(t.dataset.go,id?{id}:{});}
+ if(t.dataset.toggle){return go('bookings');}
+ if(t.dataset.mtab){S.mtab=t.dataset.mtab;return render();}
+ if(t.dataset.rtab){S.rtab=t.dataset.rtab;return render();}
+ if(t.dataset.tab){S.bookTab=t.dataset.tab;return render();}
+ if(t.dataset.genre){const was=S.genre;S.genre=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}toast(`Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}`,was!==S.genre?()=>{S.genre=was}:null);return;}
+ if(t.dataset.appearance){S.appearance=t.dataset.appearance;return render();}
+ if(t.dataset.ob){S.onboarding.step=+t.dataset.ob;return render();}
+ if(t.dataset.obgenre){S.onboarding.genre=t.dataset.obgenre;S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'})[t.dataset.obgenre]||'label';return render();}
+ if(t.dataset.pgo){const v=t.dataset.pgo;const p=JSON.parse(t.dataset.pp||'{}');if(v==='newbooking'){S.overlay=DR.newbooking(S.overlay.q);return render();}return go(v,p);}
+ if(t.dataset.ni){const n=S.notifs[+t.dataset.ni];n.unread=false;return go(n.go[0],n.go[1]);}
+ if(t.dataset.nf){S.overlay.f=t.dataset.nf;return render();}
+ if(t.dataset.star){S.rating.stars=+t.dataset.star;return render();}
+ if(t.dataset.qtag){const q=t.dataset.qtag;S.rating.tags=S.rating.tags.includes(q)?S.rating.tags.filter(x=>x!==q):[...S.rating.tags,q];return render();}
+ if(t.dataset.split){S.split=t.dataset.split;return render();}
+ if(t.dataset.bstate){S.booking.state=t.dataset.bstate;S.overlay=null;toast('Status changed by hand, logged with your name');return;}
+ const a=t.dataset.act;const r=t.getBoundingClientRect();
+ const A={
+  close:()=>{const m=t.dataset.msg;close();if(m)toast(m,t.dataset.undo?()=>{}:null);},
+  palette:()=>open('palette',{q:'',sel:0}),notifs:()=>open('notifs',{f:'all'}),thememenu:()=>open('thememenu'),
+  collapse:()=>{S.collapsed=!S.collapsed;render();},menu:()=>{S.sidebarOpen=!S.sidebarOpen;render();},
+  flows:()=>{S.flowsOpen=!S.flowsOpen;render();},
+  statusmenu:()=>open('statusmenu',{x:Math.min(r.left,innerWidth-276),y:r.bottom+6}),
+  statusmenu2:()=>open('statusmenu2',{x:Math.min(r.left,innerWidth-336),y:r.bottom+6}),
+  clearfilter:()=>{S.statusFilter=[];close();},clearsearch:()=>{S.search='';render();},clearcsearch:()=>{S.contactSearch='';render();},
+  newbooking:()=>{S.overlay=DR.newbooking(S.search);render();},createbooking:()=>{S.overlay=null;S.booking.state='enquiry';go('booking');toast('Booking created, Enquiry',()=>{});},
+  newcontact:()=>{S.overlay=DR.newcontact();render();},createcontact:()=>{S.overlay=null;S.contactSearch='';go('contact',{id:'c1'});toast('Contact created');},
+  newvenue:()=>{S.overlay=DR.newvenue();render();},
+  import:()=>{S.import.step=1;S.overlay=DR.import();render();},importnext:()=>{if(t.dataset.file)S.import.file=t.dataset.file+', 212 contacts';S.import.step++;S.overlay=DR.import();render();},importback:()=>{S.import.step--;S.overlay=DR.import();render();},importdone:()=>{S.overlay=null;S.imported=true;render();toast('198 contacts imported, 9 merged',()=>{S.imported=false});},
+  hold:()=>{S.booking.state='hold';toast('Date held until Fri 10 Oct',()=>{S.booking.state='enquiry'});},
+  reply:()=>{S.booking.state='hold';toast('Reply sent to Mette, date held');},
+  release:()=>{S.booking.state='enquiry';toast('Hold released');},
+  sendoffer:()=>{S.fullmsg=false;open('modal',{html:sendPreview('offer'),kind:'offer'});},
+  offersent:()=>{S.overlay=null;S.editMsg=false;S.toEdit=false;S.booking.state='offer';toast('Offer sent to Mette Kjær',()=>{S.booking.state='hold'});},
+  signed:()=>{S.booking.state='confirmed';S.booking.depositPaid=false;toast('Mette signed. Booking is Confirmed');},
+  nudge:()=>{S.booking.sheet=true;render();setTimeout(()=>document.querySelector('.sheet')?.scrollIntoView({block:'end'}),30);},
+  closesheet:()=>{S.booking.sheet=false;render();},nudgesent:()=>{S.booking.sheet=false;S.editMsg=false;S.toEdit=false;toast('Nudge sent to Mette',()=>{});},
+  fullmsg:()=>{S.fullmsg=!S.fullmsg;refresh();},
+  toedit:()=>{S.toEdit=!S.toEdit;refresh();},editmsg:()=>{S.editMsg=!S.editMsg;refresh();if(!S.editMsg)toast('Text saved for this message');},
+  reminder:()=>{document.querySelector('.send')?.scrollIntoView({behavior:'smooth',block:'center'});document.querySelector('.send .btn.accent')?.focus();},
+  sendreminder:()=>{S.editMsg=false;S.toEdit=false;render();S.booking.depositPaid=false;S.sentReminder=true;toast('Påmindelse sent to Hotel Royal',()=>{});},
+  snooze:()=>toast('Snoozed 3 days. We ask again on Fri 24 Oct',()=>{}),
+  record:()=>{S.overlay=DR.record();render();},recorded:()=>{S.overlay=null;S.booking.depositPaid=true;S.checklist['Deposit received']=true;render();toast('1.470 DKK recorded on invoice 2026-031',()=>{S.booking.depositPaid=false});},
+  day:()=>go('gigday'),invoice:()=>toast('Invoice 2026-032 sent to faktura@hotelroyal.dk',()=>{}),copy:()=>toast('Offer link copied'),
+  settle:()=>go('settle'),dosettle:()=>{S.booking.settled=true;S.booking.state='completed';render();toast('Settled. 4.360 DKK split three ways',()=>{S.booking.settled=false});},
+  saverate:()=>{S.booking.rated=true;render();toast('Rating saved on Hotel Royal');},skiprate:()=>{S.booking.rated=true;render();},
+  edit:()=>{S.params.edit=!S.params.edit;render();if(!S.params.edit)toast('Saved');},
+  parking:()=>{S.parkingDone=true;render();toast('Asked Kasper again by SMS and email',()=>{S.parkingDone=false});},
+  approve:()=>toast('1.470 DKK matched to invoice 2026-031',()=>{}),
+  toast:()=>toast(t.dataset.msg,t.dataset.undo?()=>{}:null),
+  newrelease:()=>{S.overlay=DR.newrelease();render();},createrelease:()=>{S.overlay=null;S.release.stage='created';S.release.tracks=0;go('release');toast('Release created. The plan counts back from 14 Nov');},
+  addtracks:()=>{S.release.stage='uploading';S.release.tracks=4;S.release.progress=0;render();const tick=()=>{if(S.release.stage!=='uploading')return;S.release.progress=Math.min(100,S.release.progress+12);if(S.release.progress>=100){S.release.stage='blocked';toast('Checks done: 1 blocker, 4 to check');return;}if(S.view==='release')render();setTimeout(tick,350);};setTimeout(tick,350);},
+  fixblocker:()=>{S.fixChoice=0;S.overlay=DR.fixblocker();render();},renamed:()=>{const c=S.fixChoice;S.overlay=null;S.release.stage='ready';if(c===0)S.release.title='Late Shift';render();toast(['Renamed to Late Shift. Nothing blocks delivery now','New cover in. Nothing blocks delivery now','Sent for manual review; delivery can take 3 to 5 days'][c],()=>{S.release.stage='blocked';S.release.title='Late Shift EP'});},
+  deliver:()=>{S.release.stage='delivered';render();toast('Delivered to DistroKid');},
+  invite:()=>{S.overlay=DR.invite();render();},
+  customise:()=>{S.overlay=DR.customise();render();},resetdash:()=>{Object.keys(S.dash).forEach(k=>S.dash[k]=true);S.overlay=DR.customise();render();},
+  chipmenu:()=>open('chipmenu',{key:t.dataset.key,x:Math.min(r.left,innerWidth-276),y:r.bottom+6}),
+  clearchip:()=>{S.filters[t.dataset.key]=[];close();},clearfilters:()=>{S.search='';S.statusFilter=[];S.filters.kind=[];S.filters.pay=[];render();},
+  export:()=>open('modal',{html:`<h2 class="t-title">Export bookings</h2><div class="field"><label>Format</label><div class="seg"><button class="on">CSV</button><button>Excel</button><button>PDF</button></div></div><label class="row" style="gap:10px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Only the ${filteredBookings().length} shown now</label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Export ready: ${filteredBookings().length} bookings">Export</button></div>`}),
+  bookingmore:()=>open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Duplicate booking','dupbooking'],['Download agreement PDF','toast2'],['Copy offer link','copytext',0,'https://laas.app/o/LT-2026-031'],[S.booking.cancelled?'Restore booking':'Cancel booking',S.booking.cancelled?'uncancel':'cancelbooking',!S.booking.cancelled]]}),
+  dupbooking:()=>{close();toast('Copy made: Saturday hotel gig (2), as a Draft');},toast2:()=>{close();toast('Agreement PDF is ready, signed 12 Oct');},
+  cancelbooking:()=>{S.overlay={type:'modal',html:confirmM('Cancel Saturday hotel gig?','Mette gets a cancellation mail and the 1.500 DKK deposit is refunded. The band and the day sheet are told.','Keep booking','confirmcancel','Cancel booking',1)};render();},
+  confirmcancel:()=>{S.booking.cancelled=true;S.overlay=null;render();toast('Booking cancelled',()=>{S.booking.cancelled=false});},uncancel:()=>{S.booking.cancelled=false;S.overlay=null;render();toast('Booking restored');},
+  activity:()=>{S.activityOpen=!S.activityOpen;render();},
+  copytext:()=>{try{navigator.clipboard.writeText(t.dataset.text)}catch(e){}if(S.overlay&&S.overlay.type==='menu')S.overlay=null;toast('Link copied');},
+  edittimes:()=>{S.editTimes=!S.editTimes;render();if(!S.editTimes)toast('Times saved. The band gets the new day sheet',()=>{});},
+  emailcontact:()=>{const c=CONTACTS.find(x=>x.id===S.params.id)||CONTACTS[0];open('modal',{html:`<h2 class="t-title">Email ${esc(c.name.split(',')[0])}</h2><div class="field"><label for="em-to">To</label><input class="input" id="em-to" value="${c.email||'booking@hotelroyal.dk'}"></div><div class="field"><label for="em-s">Subject</label><input class="input" id="em-s" value="Low Tide, spring dates"></div><div class="field"><label for="em-b">Message</label><textarea class="input" id="em-b" rows="5">Hej, vi planlægger foråret og vil gerne spille hos jer igen. Har I en lørdag i marts eller april? Venlig hilsen, Low Tide</textarea></div><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Not now</button><button class="btn accent" data-act="close" data-msg="Email sent to ${esc(c.name.split(',')[0])}" data-undo="1">${ic('send','s')}Send</button></div>`});},
+  addexpense:()=>{S.rcpt=null;S.overlay=DR.addexpense();render();},
+  saveexpense:()=>{const v=id=>document.getElementById(id).value;S.expenses.unshift(['21 Oct',v('exw'),v('exf'),v('exb'),v('exa')]);S.overlay=null;S.mtab='expenses';go('money');toast('Expense saved',()=>{S.expenses.shift()});},
+  newinvoice:()=>{S.overlay=DR.newinvoice();render();},
+  createinvoice:()=>{const v=id=>document.getElementById(id).value;const vid=v('inv-to');S.invoices.unshift(['2026-033',V(vid).name,v('inv-for'),'due 4 Nov','draft','Draft',v('inv-a'),vid]);S.overlay=null;S.mtab='invoices';go('money');toast('Invoice 2026-033 created as a draft',()=>{S.invoices.shift()});},
+  trypro:()=>open('modal',{html:confirmM('Try Pro free for 14 days','Invoices with a pay link, reminders, settling and bookkeeping export. No card now; we ask before the trial ends on 4 Nov.','Not now','startpro','Start free trial')}),
+  startpro:()=>{S.plan='pro';S.overlay=null;render();toast('Pro trial started, 14 days');},endtrial:()=>{S.plan='band';render();toast('Back on Band');},
+  movefree:()=>open('modal',{html:confirmM('Move Low Tide to Free?','You keep everything, but only 10 bookings can be active and only 1 member can edit. Takes effect on 14 Nov.','Stay on '+({band:'Band',pro:'Pro'})[S.plan],'confirmfree','Move to Free',1)}),
+  confirmfree:()=>{const was=S.plan;S.plan='free';S.overlay=null;render();toast('Moving to Free on 14 Nov',()=>{S.plan=was});},moveband:()=>{S.plan='band';render();toast('Low Tide is on Band');},
+  compare:()=>document.getElementById('plancards')?.scrollIntoView({behavior:'smooth',block:'center'}),
+  importcat:()=>{S.overlay=DR.importcat(t.dataset.src);render();},importcatdone:()=>{S.catalog=PAST;S.overlay=null;go('catalogue');toast('3 releases imported',()=>{S.catalog=null});},
+  previewlinks:()=>open('modal',{html:`<h2 class="t-title">Links for ${S.release.title}</h2>${[['Pre-save page','laas.app/r/late-shift','Live now'],['Bandcamp pre-order','lowtide.bandcamp.com/album/late-shift','Live now'],['Spotify, Apple Music','After delivery','Waiting']].map(([a,b,c])=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${a}</b><small class="mono">${b}</small></span>${c==='Waiting'?'<span class="tag draft">Waiting</span>':`<button class="btn secondary s" data-act="copytext" data-text="https://${b}">${ic('copy','s')}Copy</button>`}</div>`).join('')}<div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Close</button></div>`}),
+  releasemore:()=>open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Change release date','changedate'],['Duplicate as new release','duprelease'],['Delete this release','deleterelease',1]]}),
+  changedate:()=>{S.overlay={type:'modal',html:`<h2 class="t-title">Change release date</h2><div class="field"><label for="rd2">Release date</label><input class="input" id="rd2" value="Fri 21 Nov 2026"><span class="help">The plan moves with it: delivery, Koda and pitches.</span></div><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Release date moved; the plan moved with it" data-undo="1">Save</button></div>`};render();},
+  duprelease:()=>{close();toast('Copy made as a draft: Late Shift (2)');},
+  deleterelease:()=>{S.overlay={type:'modal',html:confirmM('Delete '+S.release.title+'?','Tracks, credits and the plan are removed. Nothing has gone to stores yet.','Keep it','confirmdelrel','Delete release',1)};render();},
+  confirmdelrel:()=>{S.release={stage:'none',title:'Late Shift EP',tracks:0,progress:0};S.overlay=null;go('catalogue');toast('Release deleted');},
+  allsteps:()=>{S.allSteps=!S.allSteps;render();},
+  resend:()=>{S.resent=true;render();toast('New code sent to vital@lowtide.dk');},
+  fulleditor:()=>{S.overlay=null;S.booking.state='enquiry';S.booking.cancelled=false;go('booking',{edit:true});},
+  asstnew:()=>{S.asst='new';S.asstEdit=false;render();},asstcancel:()=>{S.asst='cancelled';render();},asstedit:()=>{S.asstEdit=!S.asstEdit;render();},
+  asstconfirm:()=>{S.asst='done';S.asstEdit=false;render();toast('3 changes made',()=>{S.asst='plan'});},
+  asksugg:()=>{const k=t.dataset.q;if(k==='plan'){S.asst='plan';render();}else if(k==='nudge'){S.booking.state='offer';S.booking.cancelled=false;go('booking');S.booking.sheet=true;render();}else go(k);},
+  readall:()=>{S.notifs.forEach(n=>n.unread=false);render();},
+  undo:()=>{if(S.toast&&typeof S.toast.undo==='function')S.toast.undo();S.toast=null;render();},
+  ask:()=>{const q=(document.getElementById('ask')?.value||'').trim();if(S.view==='booking'){S.booking.sheet=true;render();}else{if(q){S.asst='q';S.asstQ=q;}go('assistant');}},
+  obdefault:()=>{S.genre='label';S.onboarding.step=5;render();},obdone:()=>{go('dashboard');toast('Welcome to LAAS. 2 invites sent');},obexit:()=>go('dashboard'),
+ };
+ if(A[a]){e.preventDefault();A[a]();}
+});
+document.addEventListener('input',e=>{
+ const t=e.target;
+ if(t.id==='bsearch'){S.search=t.value;render();}
+ else if(t.id==='csearch'){S.contactSearch=t.value;render();}
+ else if(t.id==='toedit'){S.toVal[t.dataset.kind]=t.value;}
+ else if(t.id==='msgedit'){S.msgVal[t.dataset.kind]=t.value;}
+ else if(t.id==='palq'){S.overlay.q=t.value;S.overlay.sel=0;render();}
+ else if(t.dataset.autosave!==undefined){const s=document.getElementById('savestatus');if(s){s.textContent='Saving…';clearTimeout(window.__sv);window.__sv=setTimeout(()=>{s.textContent='Saved'},600);}}
+});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.dataset.cf){const [k,o]=t.dataset.cf.split('|');S.filters[k]=t.checked?[...S.filters[k],o]:S.filters[k].filter(x=>x!==o);render();return;}
+ if(t.dataset.dash){S.dash[t.dataset.dash]=t.checked;S.overlay=DR.customise();render();return;}
+ if(t.dataset.photo!==undefined&&t.files&&t.files[0]){S.photos[t.dataset.photo]=URL.createObjectURL(t.files[0]);render();toast('Photo updated');return;}
+ if(t.dataset.importfile!==undefined&&t.files&&t.files[0]){S.import.file=t.files[0].name;S.import.step=2;S.overlay=DR.import();render();return;}
+ if(t.dataset.receipt!==undefined&&t.files&&t.files[0]){S.rcpt=t.files[0].name;const el=document.getElementById('rcpt');if(el)el.textContent=S.rcpt;return;}
+ if(t.dataset.sf){S.statusFilter=t.checked?[...S.statusFilter,t.dataset.sf]:S.statusFilter.filter(x=>x!==t.dataset.sf);render();}
+ if(t.dataset.check){S.checklist[t.dataset.check]=t.checked;render();toast(t.checked?'Ticked: '+t.dataset.check:'Unticked: '+t.dataset.check,()=>{S.checklist[t.dataset.check]=!t.checked});}
+});
+document.addEventListener('keydown',e=>{
+ if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open('palette',{q:'',sel:0});return;}
+ if((e.metaKey||e.ctrlKey)&&e.key==='\\'){e.preventDefault();S.collapsed=!S.collapsed;render();return;}
+ if(e.key==='Escape'){if(S.overlay)close();else if(S.booking.sheet){S.booking.sheet=false;render();}else if(S.flowsOpen){S.flowsOpen=false;render();}return;}
+ if(S.overlay&&S.overlay.type==='palette'){const items=[...document.querySelectorAll('.pal .it')];if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();S.overlay.sel=(S.overlay.sel+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;render();}if(e.key==='Enter'){e.preventDefault();items[S.overlay.sel]?.click();}}
+ if(e.key==='Enter'&&e.target.matches('tr[data-go]'))e.target.click();
+ if(e.key==='Enter'&&e.target.id==='ask'){document.querySelector('[data-act="ask"]').click();}
+});
+window.__laas={S,go,render,DR,VIEWS};
+render();
+})();
+</script>
