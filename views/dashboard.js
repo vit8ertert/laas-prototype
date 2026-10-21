@@ -179,7 +179,7 @@ function record(id){
  if(id==='parking'||id==='loppen'){const v=L.V(id==='parking'?'royal':'loppen');return `<aside class="d-record"><div class="d-rh"><img class="thumb s" src="${IMG(v.img)}" alt=""><b class="t-heading">${v.name}</b></div>${[['City',v.city],['Kind',v.kind+', '+v.cap],['Played',v.played+' gigs, rated '+v.rating],['Contact',id==='parking'?'Mette Kjær, booking':'Booker, by email']].map(([k,x])=>`<div class="d-kvr"><small>${k}</small><span>${x}</span></div>`).join('')}<span style="flex:1"></span><button class="btn secondary" data-go="venue" data-id="${v.id}" style="justify-content:center">Open venue</button></aside>`;}
  return '';}
 L.VIEWS.assistant=()=>{
- if(!S.__asstOn){S.__asstOn=true;S.__asstPrev=S.collapsed;if(!S.collapsed&&innerWidth>860){S.collapsed=true;setTimeout(()=>L.render(),0);}}
+ /* the menu keeps whatever state the user left it in (Vit, 21 Oct: no auto-collapse on the Assistant) */
  const isNew=S.asst==='new';const id=S.asst==='q'?'q':S.asstChat;
  const list=(S.asstQ&&S.asst!=='new'?[['q','Today',S.asstQ,'']]:[]).concat(CHATS);
  const groups=['Today','Yesterday','Earlier'].map(g=>[g,list.filter(c=>c[1]===g)]);
@@ -465,7 +465,7 @@ let busy=false;
 const after=()=>{if(busy)return;busy=true;try{
  const root=document.documentElement;
  if(S.role==='viewer')root.setAttribute('data-role','viewer');else root.removeAttribute('data-role');
- if(S.view!=='assistant'&&S.__asstOn){S.__asstOn=false;const prev=S.__asstPrev;if(S.collapsed!==prev){S.collapsed=prev;L.render();}}
+
  const sb=document.querySelector('.sidebar');
  if(sb&&S.view==='tools')sb.querySelector('.nav[data-go="assistant"]')?.classList.add('active');
  if(sb&&S.view==='calsync')sb.querySelectorAll('.nav[data-go="calendar"]').forEach(n=>n.classList.add('active'));
