@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=a96a2b5">
+<link rel="stylesheet" href="tokens.css?v=249517f">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -315,19 +315,19 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=a96a2b5">
-<link rel="stylesheet" href="views/tour.css?v=a96a2b5">
-<link rel="stylesheet" href="views/dashboard.css?v=a96a2b5">
-<link rel="stylesheet" href="views/bookings.css?v=a96a2b5">
-<link rel="stylesheet" href="views/booking.css?v=a96a2b5">
-<link rel="stylesheet" href="views/contacts.css?v=a96a2b5">
-<link rel="stylesheet" href="views/money.css?v=a96a2b5">
-<link rel="stylesheet" href="views/catalogue.css?v=a96a2b5">
-<link rel="stylesheet" href="views/account.css?v=a96a2b5">
-<link rel="stylesheet" href="views/mail.css?v=a96a2b5">
-<link rel="stylesheet" href="views/social.css?v=a96a2b5">
-<link rel="stylesheet" href="views/logomotion.css?v=a96a2b5">
-<link rel="stylesheet" href="tags.css?v=a96a2b5">
+<link rel="stylesheet" href="components.css?v=249517f">
+<link rel="stylesheet" href="views/tour.css?v=249517f">
+<link rel="stylesheet" href="views/dashboard.css?v=249517f">
+<link rel="stylesheet" href="views/bookings.css?v=249517f">
+<link rel="stylesheet" href="views/booking.css?v=249517f">
+<link rel="stylesheet" href="views/contacts.css?v=249517f">
+<link rel="stylesheet" href="views/money.css?v=249517f">
+<link rel="stylesheet" href="views/catalogue.css?v=249517f">
+<link rel="stylesheet" href="views/account.css?v=249517f">
+<link rel="stylesheet" href="views/mail.css?v=249517f">
+<link rel="stylesheet" href="views/social.css?v=249517f">
+<link rel="stylesheet" href="views/logomotion.css?v=249517f">
+<link rel="stylesheet" href="tags.css?v=249517f">
 
 <div id="app"></div>
 
@@ -404,7 +404,7 @@ const STATUS={enquiry:['draft','Enquiry'],hold:['accent','Hold'],offer:['paid','
 const S={view:'onboarding',params:{},collapsed:false,sidebarOpen:false,overlay:null,toast:null,
  booking:{state:'confirmed',depositPaid:false,settled:false,rated:false,sheet:false},
  search:'',bookTab:'up',statusFilter:[],contactSearch:'',
- notifs:[{t:'Hotel Royal’s deposit is 8 days late',m:'1.500 DKK for Saturday hotel gig. A påmindelse is drafted for you to check.',time:'09:12',v:'royal',go:['booking',{}],unread:true},{t:'Kasper hasn’t sent the parking code',m:'Saturday hotel gig, load-in 17:00. Asked 18 Oct.',time:'08:00',v:'studiob',go:['gigday',{}],unread:true},{t:'Club Mono opened your offer',m:'Club night, 15 Nov. Opened twice, not signed yet.',time:'07:45',v:'mono',go:['bookings',{}],unread:true},{t:'Sofie edited the set list',m:'Set list v3, 12 songs, for 25 Oct.',time:'Yesterday',v:'studiob',go:['gigday',{}],unread:false},{t:'Deposit received from Odense Live',m:'750 DKK for Support slot, 28 Nov.',time:'Mon',v:'odense',go:['money',{}],unread:false}],
+ notifs:[{t:'Hotel Royal’s deposit is 8 days late',m:'1.500 DKK for Saturday hotel gig. A reminder is drafted for you to check.',time:'09:12',v:'royal',go:['booking',{}],unread:true},{t:'Kasper hasn’t sent the parking code',m:'Saturday hotel gig, load-in 17:00. Asked 18 Oct.',time:'08:00',v:'studiob',go:['gigday',{}],unread:true},{t:'Club Mono opened your offer',m:'Club night, 15 Nov. Opened twice, not signed yet.',time:'07:45',v:'mono',go:['bookings',{}],unread:true},{t:'Sofie edited the set list',m:'Set list v3, 12 songs, for 25 Oct.',time:'Yesterday',v:'studiob',go:['gigday',{}],unread:false},{t:'Deposit received from Odense Live',m:'750 DKK for Support slot, 28 Nov.',time:'Mon',v:'odense',go:['money',{}],unread:false}],
  release:{stage:'none',title:'Late Shift EP',tracks:0,progress:0,blocker:true},
  import:{step:1},
  appearance:'dark',genre:'label',
@@ -520,10 +520,10 @@ VIEWS.booking=()=>{const st=S.booking.state;const s=S.booking.cancelled?['danger
   enquiry:`<div class="banner info">${ic('mail')}<div class="tx"><b>Mette asked about Saturday 25 Oct</b><span class="t-label muted">From an email yesterday. Hold the date while the band says yes.</span></div></div>`,
   hold:`<div class="banner info">${ic('calendar')}<div class="tx"><b>Held until Fri 10 Oct</b><span class="t-label muted">3 of 3 members said yes. Send the offer before the hold runs out.</span></div></div>`,
   offer:`<div class="banner info">${ic('send')}<div class="tx"><b>Offer opened by Mette Kjær, not signed yet</b><span class="t-label muted">One link: she reads, signs and pays the deposit. Hold expires Fri 10 Oct.</span></div><button class="btn secondary s" data-act="nudge">Send a nudge</button></div>`,
-  confirmed:S.booking.depositPaid?`<div class="banner info">${ic('check')}<div class="tx"><b>Deposit received, 1.470 DKK</b><span class="t-label muted">30 DKK short, the bank fee. The balance invoice goes out 18 Oct.</span></div></div>`:`<div class="banner attention">${ic('alert')}<div class="tx"><b>Deposit 1.500 DKK is 8 days late</b><span class="t-label">Two reminders went out. Next step is a påmindelse; a rykker with fee is allowed from 22 Oct.</span></div></div>`,
+  confirmed:S.booking.depositPaid?`<div class="banner info">${ic('check')}<div class="tx"><b>Deposit received, 1.470 DKK</b><span class="t-label muted">30 DKK short, the bank fee. The balance invoice goes out 18 Oct.</span></div></div>`:`<div class="banner attention">${ic('alert')}<div class="tx"><b>Deposit 1.500 DKK is 8 days late</b><span class="t-label">Two reminders went out. Next step is a free reminder by hand; a reminder with a fee is allowed from 22 Oct.</span></div></div>`,
   completed:S.booking.settled?`<div class="banner info">${ic('check')}<div class="tx"><b>Settled, 4.360 DKK split three ways</b><span class="t-label muted">Payouts are recorded. Mette and Sofie are paid, Jonas tomorrow.</span></div></div>`:`<div class="banner info">${ic('money')}<div class="tx"><b>Gig played, all invoices paid</b><span class="t-label muted">Settle to split 4.360 DKK between the three of you.</span></div></div>`,
  }[st];
- const primary={enquiry:['Hold a date','hold'],hold:['Send offer','sendoffer'],offer:['Mark as signed','signed'],confirmed:S.booking.depositPaid?['Open day sheet','day']:['Send påmindelse','reminder'],completed:S.booking.settled?['Book again','newbooking']:['Settle 4.360 DKK','settle']}[st];
+ const primary={enquiry:['Hold a date','hold'],hold:['Send offer','sendoffer'],offer:['Mark as signed','signed'],confirmed:S.booking.depositPaid?['Open day sheet','day']:['Send reminder','reminder'],completed:S.booking.settled?['Book again','newbooking']:['Settle 4.360 DKK','settle']}[st];
  const secondary={enquiry:['Reply','reply'],hold:['Release hold','release'],offer:['Copy link','copy'],confirmed:S.booking.depositPaid?['Send invoice','invoice']:['Record a payment','record'],completed:['See the split','settle']}[st];
  return `<div class="page">
  <button class="btn ghost s flush" data-go="bookings" style="align-self:flex-start">${ic('left','s')}Bookings</button>
@@ -548,7 +548,7 @@ VIEWS.booking=()=>{const st=S.booking.state;const s=S.booking.cancelled?['danger
  </aside></div></div>${abar('Saturday hotel gig')}`;};
 
 function sendPreview(kind,inSheet){
- const d={reminder:{t:'Send a påmindelse to Hotel Royal',s:'Invoice 2026-031, deposit 1.500 DKK, due 12 Oct',to:'Accounts, faktura@hotelroyal.dk, cc Mette Kjær',subj:'Påmindelse: depositum for 25 Oct, faktura 2026-031',body:'Hej, en venlig påmindelse om depositum på 1.500 DKK for koncerten 25. oktober, som forfaldt 12. oktober. I kan betale via det samme link som før: laas.app/pay/LT-2026-031. Ingen gebyr. Venlig hilsen, Low Tide',send:'Send påmindelse',act:'sendreminder'},
+ const d={reminder:{t:'Send a reminder to Hotel Royal',s:'Invoice 2026-031, deposit 1.500 DKK, due 12 Oct',to:'Accounts, faktura@hotelroyal.dk, cc Mette Kjær',subj:'Påmindelse: depositum for 25 Oct, faktura 2026-031',body:'Hej, en venlig påmindelse om depositum på 1.500 DKK for koncerten 25. oktober, som forfaldt 12. oktober. I kan betale via det samme link som før: laas.app/pay/LT-2026-031. Ingen gebyr. Venlig hilsen, Low Tide',send:'Send reminder',act:'sendreminder'},
  offer:{t:'Send the offer to Mette Kjær',s:'Saturday hotel gig, 25 Oct, fee 4.500 DKK excl. moms, deposit 30 %',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, Hotel Royal, 25. oktober',body:'Hej Mette, her er vores tilbud på koncerten 25. oktober. I linket kan du se vilkårene, underskrive og betale depositum på 1.500 DKK: laas.app/o/LT-2026-031. Vi holder datoen til fredag den 10. Venlig hilsen, Low Tide',send:'Send offer',act:'offersent'},
  nudge:{t:'Send a nudge to Mette Kjær',s:'Offer for 25 Oct, opened 8 Oct, not signed',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, 25. oktober',body:'Hej Mette, kort opfølgning på tilbuddet til 25. oktober. Vi holder datoen til fredag den 10. Linket: laas.app/o/LT-2026-031. Venlig hilsen, Low Tide',send:'Send nudge',act:'nudgesent'}}[kind];
  return `<div class="send"><div><h3 class="t-heading">${d.t}</h3><p class="muted" style="margin:2px 0 0">${d.s}</p></div>
@@ -618,7 +618,7 @@ VIEWS.money=()=>{const t=S.mtab||'owed';
  <div class="grid2"><section class="sec"><div class="sec-h"><h3 class="t-heading">Owed to you</h3><button class="btn ghost s flush" data-mtab="invoices">All invoices</button></div>
  ${[['royal','Hotel Royal, deposit','2026-031, due 12 Oct','attention','Attention','1.500','booking'],['mono','Club Mono, balance','2026-030, due 28 Oct','draft','Draft','4.000','bookings'],['studiob','Studio B, rehearsals','2026-029, due 31 Oct','confirmed','Confirmed','3.000','money']].map(r=>`<button class="list-row" data-go="${r[6]}"><img class="thumb s" src="${IMG(V(r[0]).img)}" alt=""><span class="tx"><b>${r[1]}</b><small class="mono">${r[2]}</small></span><span class="tag ${r[3]}">${r[4]}</span><span class="mono" style="width:96px;text-align:right">${r[5]}</span></button>`).join('')}</section>
  <aside class="panel"><div class="sec"><h3 class="t-heading">Needs you</h3>
-  <div class="sec" style="gap:6px"><b class="strong">Send a påmindelse to Hotel Royal</b><span class="t-meta muted">Invoice 2026-031, 1.500 DKK, 8 days late.</span><button class="btn secondary s" style="align-self:flex-start" data-go="booking">Review</button></div>
+  <div class="sec" style="gap:6px"><b class="strong">Send a reminder to Hotel Royal</b><span class="t-meta muted">Invoice 2026-031, 1.500 DKK, 8 days late.</span><button class="btn secondary s" style="align-self:flex-start" data-go="booking">Review</button></div>
   <div class="sec" style="gap:6px"><b class="strong">Approve 1.470 DKK from Hotel Royal A/S</b><span class="t-meta muted">Bank shows it on 16 Oct; 30 DKK short, the bank fee.</span><button class="btn secondary s" style="align-self:flex-start" data-act="approve">Approve</button></div></div>
   <div class="sec"><div class="sec-h"><h3 class="t-heading">Payouts</h3><button class="btn ghost s flush" data-go="settle">Settle a gig</button></div><span class="muted">Odense Live, 5.360 DKK to split</span></div></aside></div>`;
 
@@ -866,7 +866,7 @@ document.addEventListener('click',e=>{
   fullmsg:()=>{S.fullmsg=!S.fullmsg;refresh();},
   toedit:()=>{S.toEdit=!S.toEdit;refresh();},editmsg:()=>{S.editMsg=!S.editMsg;refresh();if(!S.editMsg)toast('Text saved for this message');},
   reminder:()=>{document.querySelector('.send')?.scrollIntoView({behavior:'smooth',block:'center'});document.querySelector('.send .btn.accent')?.focus();},
-  sendreminder:()=>{S.editMsg=false;S.toEdit=false;render();S.booking.depositPaid=false;S.sentReminder=true;toast('Påmindelse sent to Hotel Royal',()=>{});},
+  sendreminder:()=>{S.editMsg=false;S.toEdit=false;render();S.booking.depositPaid=false;S.sentReminder=true;toast('Reminder sent to Hotel Royal',()=>{});},
   snooze:()=>toast('Snoozed 3 days. We ask again on Fri 24 Oct',()=>{}),
   record:()=>{S.overlay=DR.record();render();},recorded:()=>{S.overlay=null;S.booking.depositPaid=true;S.checklist['Deposit received']=true;render();toast('1.470 DKK recorded on invoice 2026-031',()=>{S.booking.depositPaid=false});},
   day:()=>go('gigday'),invoice:()=>toast('Invoice 2026-032 sent to faktura@hotelroyal.dk',()=>{}),copy:()=>toast('Offer link copied'),
@@ -981,17 +981,17 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=a96a2b5"></script>
-<script src="views/bookings.js?v=a96a2b5"></script>
-<script src="views/booking.js?v=a96a2b5"></script>
-<script src="views/contacts.js?v=a96a2b5"></script>
-<script src="views/money.js?v=a96a2b5"></script>
-<script src="views/catalogue.js?v=a96a2b5"></script>
-<script src="views/brands.js?v=a96a2b5"></script>
-<script src="views/account.js?v=a96a2b5"></script>
-<script src="views/mail.js?v=a96a2b5"></script>
-<script src="views/social.js?v=a96a2b5"></script>
-<script src="views/tour.js?v=a96a2b5"></script>
-<script src="views/motion.js?v=a96a2b5"></script>
-<script src="views/logomotion.js?v=a96a2b5"></script>
+<script src="views/dashboard.js?v=249517f"></script>
+<script src="views/bookings.js?v=249517f"></script>
+<script src="views/booking.js?v=249517f"></script>
+<script src="views/contacts.js?v=249517f"></script>
+<script src="views/money.js?v=249517f"></script>
+<script src="views/catalogue.js?v=249517f"></script>
+<script src="views/brands.js?v=249517f"></script>
+<script src="views/account.js?v=249517f"></script>
+<script src="views/mail.js?v=249517f"></script>
+<script src="views/social.js?v=249517f"></script>
+<script src="views/tour.js?v=249517f"></script>
+<script src="views/motion.js?v=249517f"></script>
+<script src="views/logomotion.js?v=249517f"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

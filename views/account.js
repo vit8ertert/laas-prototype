@@ -137,8 +137,8 @@ L.VIEWS['settings-money']=()=>shell('Money','Where payments land, how invoices a
   row('Prices shown','Toggle on every invoice; totals always show excl., moms, incl.',sel('Prices shown',['Excl. moms','Incl. moms'])),
   row('E-invoice (EAN)','Public clients must get e-invoices through a provider',tag('draft','Not set up'))))
  +sec('Reminders',rows(
-  row('Policy','Calm: 7 days before, due date, 3 days after, then by hand. Recommended adds a free påmindelse at +7. Tight adds rykker 1 at +10 automatically (still behind Confirm).',sel('Policy',['Calm','Recommended','Tight'])),
-  row('Fee per rykker','Danish cap is 100 DKK, at most 3 letters, 10 days apart',sel('Fee per rykker',['100 DKK','50 DKK','No fee'])),
+  row('Policy','Calm: 7 days before, due date, 3 days after, then by hand. Recommended adds a free reminder at +7. Tight adds the first fee reminder at +10 automatically (still behind Confirm).',sel('Policy',['Calm','Recommended','Tight'])),
+  row('Fee per reminder','Danish cap is 100 DKK, at most 3 letters, 10 days apart',sel('Fee per reminder',['100 DKK','50 DKK','No fee'])),
   row('Late interest','Reference rate + 8 percentage points, computed only if on',tg('interest','Late interest')),
   row('Business compensation','310 DKK on B2B claims, hidden for private clients',tg('b2b','Business compensation')),
   row('Who approves reminders','Nothing is sent without a tick',sel('Who approves reminders',['Owner and Admins','Owner only']))),
@@ -258,7 +258,7 @@ L.VIEWS.plan=()=>{const cur=S.plan,name={free:'Free',band:'Band',pro:'Pro'}[cur]
 
 /* ---------- Upgrade · invoices are on Pro (435:22438) ---------- */
 L.OVERLAYS.accupgrade=()=>`<div class="scrim acc-scrim" data-act="close"></div><div class="modal acc-upg" role="dialog" aria-modal="true" aria-label="Invoices are on Pro"><h2 class="t-title">Invoices are on Pro</h2><p class="muted">Send this invoice with a pay link, and LAAS chases it for you. Your bookings and data stay the same on any plan.</p>
- ${['Invoices with a card and bank pay link','Automatic påmindelser before and after due','Settle a gig and split the payouts','Export for your bookkeeper'].map(f=>`<span class="acc-f">${ic('check','s')}${f}</span>`).join('')}
+ ${['Invoices with a card and bank pay link','Automatic reminders before and after due','Settle a gig and split the payouts','Export for your bookkeeper'].map(f=>`<span class="acc-f">${ic('check','s')}${f}</span>`).join('')}
  <p class="acc-small">199 DKK a month for the whole band after 14 free days. Cancel any time, you go back to Band.</p>
  <div class="row"><button class="btn ghost" data-act="close">Not now</button><button class="btn accent" data-act="accstartpro">Try Pro free for 14 days</button></div></div>`;
 /* call from any "Send invoice": L.needsPro(() => open the invoice) shows the upgrade when the band is not on Pro */

@@ -157,7 +157,7 @@ L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMon
 /* ---------- assistant (chat app: history, centred column, pinned composer) ---------- */
 const CHATS=[['move','Today','Move the hotel gig to Saturday','Saturday hotel gig'],['owed','Today','Who still owes us money?','Money'],['parking','Yesterday','Parking code for Hotel Skov','Hotel Skov'],['setlist','Yesterday','Set list for Saturday','Saturday hotel gig'],['loppen','Earlier','Spring dates at Loppen','Loppen'],['release','Earlier','Release plan for Late Shift EP','Late Shift EP']];
 const CHAT_BODY={
- owed:['Who still owes us money?','Three invoices are open, 13.500 DKK in all. Hotel Skov’s deposit is the oldest, 8 days late; a påmindelse is drafted.',[['See what is owed','data-go="money" data-mt="owed"'],['Open Hotel Skov booking','data-go="booking" data-id="b1"']]],
+ owed:['Who still owes us money?','Three invoices are open, 13.500 DKK in all. Hotel Skov’s deposit is the oldest, 8 days late; a reminder is drafted.',[['See what is owed','data-go="money" data-mt="owed"'],['Open Hotel Skov booking','data-go="booking" data-id="b1"']]],
  parking:['Did Kasper send the parking code for Hotel Skov?','Not yet. I asked him on 18 Oct by SMS and email. Load-in is 14:00, so I can ask again now.',[['Ask Kasper again','data-act="parking"'],['Open the venue','data-go="venue" data-id="royal"']]],
  setlist:['What is on the set list for Saturday?','Set list v3 from Sofie: 12 songs, about 72 minutes, encore allowed. The day sheet has it.',[['Open day sheet','data-go="gigday"']]],
  loppen:['Can we play Loppen again in spring?','You played Loppen on 18 Oct, rated 5. I can draft a mail to the booker for a Saturday in March or April.',[['Open Loppen','data-go="venue" data-id="loppen"'],['Draft the mail','data-act="toast" data-msg="Draft saved in Mail, nothing sent"']]],
@@ -232,7 +232,7 @@ const OLDER=[{t:'Studio B confirmed the rehearsal',m:'Sat 1 Nov, 14:00 to 17:00.
 const NIMG=['hotel-royal','hotel-skov','club-mono','studio-b','odense-live'];
 L.OVERLAYS.notifs=o=>{const N=S.notifs;const unread=N.filter(n=>n.unread).length;const need=2;
  const item=(n,i,act)=>`<div class="ni d-ni ${n.unread?'unread':''}" data-ni="${i}" role="button" tabindex="0"><span class="dot"></span><img class="thumb" src="${IMG(NIMG[i]||L.V(n.v).img)}" alt=""><span class="d-nt"><b>${n.t}</b><small class="muted">${i===4&&!/Confirmed/.test(n.m)?n.m+' Booking is Confirmed.':n.m}</small><small class="faint">${n.time}</small>${act||''}</span></div>`;
- const acts=[`<button class="btn secondary s" data-act="notifremind">Review påmindelse</button>`,`<button class="btn secondary s" data-act="notifask">Ask again</button>`];
+ const acts=[`<button class="btn secondary s" data-act="notifremind">Review reminder</button>`,`<button class="btn secondary s" data-act="notifask">Ask again</button>`];
  const list=N.map((n,i)=>[n,i]).filter(([n,i])=>o.f!=='need'||i<need);
  const today=list.filter(([n])=>/^\d\d:\d\d$/.test(n.time)),earlier=list.filter(([n])=>!/^\d\d:\d\d$/.test(n.time));
  return `<div class="scrim d-scrim0" data-act="close"></div><div class="pop notif d-notif" style="right:${o.right??16}px" role="dialog" aria-label="Notifications">
