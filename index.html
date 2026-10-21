@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=015a019">
+<link rel="stylesheet" href="tokens.css?v=83a9c87">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -315,19 +315,19 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=015a019">
-<link rel="stylesheet" href="views/tour.css?v=015a019">
-<link rel="stylesheet" href="views/dashboard.css?v=015a019">
-<link rel="stylesheet" href="views/bookings.css?v=015a019">
-<link rel="stylesheet" href="views/booking.css?v=015a019">
-<link rel="stylesheet" href="views/contacts.css?v=015a019">
-<link rel="stylesheet" href="views/money.css?v=015a019">
-<link rel="stylesheet" href="views/catalogue.css?v=015a019">
-<link rel="stylesheet" href="views/account.css?v=015a019">
-<link rel="stylesheet" href="views/mail.css?v=015a019">
-<link rel="stylesheet" href="views/social.css?v=015a019">
-<link rel="stylesheet" href="views/logomotion.css?v=015a019">
-<link rel="stylesheet" href="tags.css?v=015a019">
+<link rel="stylesheet" href="components.css?v=83a9c87">
+<link rel="stylesheet" href="views/tour.css?v=83a9c87">
+<link rel="stylesheet" href="views/dashboard.css?v=83a9c87">
+<link rel="stylesheet" href="views/bookings.css?v=83a9c87">
+<link rel="stylesheet" href="views/booking.css?v=83a9c87">
+<link rel="stylesheet" href="views/contacts.css?v=83a9c87">
+<link rel="stylesheet" href="views/money.css?v=83a9c87">
+<link rel="stylesheet" href="views/catalogue.css?v=83a9c87">
+<link rel="stylesheet" href="views/account.css?v=83a9c87">
+<link rel="stylesheet" href="views/mail.css?v=83a9c87">
+<link rel="stylesheet" href="views/social.css?v=83a9c87">
+<link rel="stylesheet" href="views/logomotion.css?v=83a9c87">
+<link rel="stylesheet" href="tags.css?v=83a9c87">
 
 <div id="app"></div>
 
@@ -438,8 +438,10 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 function sidebar(){
  const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social',booking:'bookings',gigday:'bookings',integrations:'settings'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${(v===id&&!ALIAS[v])||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
  /* a group opens only on its own pages (Vit 21 Oct: Gigs open on the Assistant page looked like the wrong page; Figma draws Gigs open everywhere) */
- const area=LAAS.areaOf(v);
- const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
+ /* clicking the open group's header folds it (Vit 21 Oct); it opens again on a click or when you come back to its pages */
+ const area0=LAAS.areaOf(v);if(S.navShut&&S.navShut!==area0)S.navShut=null;
+ const area=S.navShut===area0&&!S.collapsed?null:area0;
+ const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area0===id?'active':''}" ${area0===id&&!S.collapsed?`data-act="grptoggle" data-g="${id}" aria-expanded="${area===id}"`:`data-go="${go}"`} ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
   ${(()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'};return `<button class="band" data-act="bandmenu"><span class="sq">${b.logo?`<img src="${b.logo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:esc(b.ini||'LT')}</span><div><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></div>${ic('down','s')}</button>`})()}
   ${nav('dashboard','Dashboard','dashboard','','group')}${nav('assistant','Assistant','ai','','group')}
@@ -843,6 +845,7 @@ document.addEventListener('click',e=>{
  const A={
   close:()=>{const m=t.dataset.msg;close();if(m)toast(m,t.dataset.undo?()=>{}:null);},
   palette:()=>open('palette',{q:'',sel:0}),notifs:()=>open('notifs',{f:'all'}),thememenu:()=>open('thememenu'),
+  grptoggle:()=>{S.navShut=S.navShut===t.dataset.g?null:t.dataset.g;render();},
   collapse:()=>{S.collapsed=!S.collapsed;render();},menu:()=>{S.sidebarOpen=!S.sidebarOpen;render();},
   flows:()=>{S.flowsOpen=!S.flowsOpen;render();},
   statusmenu:()=>open('statusmenu',{x:Math.min(r.left,innerWidth-276),y:r.bottom+6}),
@@ -975,17 +978,17 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=015a019"></script>
-<script src="views/bookings.js?v=015a019"></script>
-<script src="views/booking.js?v=015a019"></script>
-<script src="views/contacts.js?v=015a019"></script>
-<script src="views/money.js?v=015a019"></script>
-<script src="views/catalogue.js?v=015a019"></script>
-<script src="views/brands.js?v=015a019"></script>
-<script src="views/account.js?v=015a019"></script>
-<script src="views/mail.js?v=015a019"></script>
-<script src="views/social.js?v=015a019"></script>
-<script src="views/tour.js?v=015a019"></script>
-<script src="views/motion.js?v=015a019"></script>
-<script src="views/logomotion.js?v=015a019"></script>
+<script src="views/dashboard.js?v=83a9c87"></script>
+<script src="views/bookings.js?v=83a9c87"></script>
+<script src="views/booking.js?v=83a9c87"></script>
+<script src="views/contacts.js?v=83a9c87"></script>
+<script src="views/money.js?v=83a9c87"></script>
+<script src="views/catalogue.js?v=83a9c87"></script>
+<script src="views/brands.js?v=83a9c87"></script>
+<script src="views/account.js?v=83a9c87"></script>
+<script src="views/mail.js?v=83a9c87"></script>
+<script src="views/social.js?v=83a9c87"></script>
+<script src="views/tour.js?v=83a9c87"></script>
+<script src="views/motion.js?v=83a9c87"></script>
+<script src="views/logomotion.js?v=83a9c87"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
