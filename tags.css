@@ -19,3 +19,11 @@
 .schip.cancelled{border:0}
 /* fact chips on photos (booking and gig-day heroes): the same recipe in white, so they read on any photo */
 .hero .facts>span,.bd-hero .facts>span{background:rgba(255,255,255,.063)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.19)!important;color:#fff!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* rows that open something say so on hover (Vit 21 Oct, from the Mail list; applied to every list that opens a page):
+   a 2 px lilac bar on the left edge and the row's title underlined */
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line){position:relative}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line)::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--accent-strong);opacity:0;transition:opacity .12s;pointer-events:none}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line):is(:hover,:focus-visible)::before{opacity:1}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line):is(:hover,:focus-visible) b:first-of-type,.cv-table tbody tr[data-go]:hover td:first-child b{text-decoration:underline;text-underline-offset:3px}
+.cv-table tbody tr[data-go]:hover td:first-child{box-shadow:inset 2px 0 0 var(--accent-strong)}
