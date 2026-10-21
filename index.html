@@ -9,7 +9,7 @@
 :root{
   --canvas:#121212;--surface:#1e1e1e;--raised:#272727;--overlay:#2e2e2e;--top:#383838;--sunken:#0b0b0b;--well:#262626;
   --rule:#2a2a2a;--rule-strong:#3e3e3e;--ink:#e3e3e3;--muted:#a3a3a3;--faint:#828282;
-  --accent:#cdbdff;--accent-strong:#b39bff;--accent-tint:#332b4a;--accent-ink:#d9ccff;--on-accent:#121212;
+  --accent:#cdbdff;--accent-strong:#b39bff;--accent-tint:#332b4a;--accent-ink:#dcd0ff;--on-accent:#121212;
   --ok-tint:#163222;--ok:#7ed29a;--paid-tint:#2a2340;--paid:#d9ccff;--att-tint:#3a2010;--att:#ff9b4a;--bad-tint:#3b1218;--bad:#ff6b81;--draft-tint:#26251f;--draft:#b8b5ac;
   --travel:#6ea4ff;--work:#3ccfc6;--break:#f2b84b;--doors:#ff6fb5;--you:#ff6437;--signal:#d9f25a;
   --sans:"Host Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -18,14 +18,14 @@
 }
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
   --canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--sunken:#ebe8e5;--well:#ebe8e5;
-  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#8b8b85;
-  --accent:#cdbdff;--accent-strong:#9d84f0;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
+  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#a3a39d;
+  --accent:#cdbdff;--accent-strong:#a98bff;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
   --ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;
   --travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;color-scheme:light}}
 :root[data-theme="light"]{
   --canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--sunken:#ebe8e5;--well:#ebe8e5;
-  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#8b8b85;
-  --accent:#cdbdff;--accent-strong:#9d84f0;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
+  --rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#a3a39d;
+  --accent:#cdbdff;--accent-strong:#a98bff;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#121212;
   --ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;
   --travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;color-scheme:light}
 :root[data-theme="dark"]{color-scheme:dark}
@@ -433,7 +433,7 @@ function sidebar(){
  const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
   ${(()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'};return `<button class="band" data-act="bandmenu"><span class="sq">${b.logo?`<img src="${b.logo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:esc(b.ini||'LT')}</span><div><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></div>${ic('down','s')}</button>`})()}
-  ${nav('dashboard','Dashboard','dashboard')}${nav('assistant','Assistant','ai')}
+  ${nav('dashboard','Dashboard','dashboard','','group')}${nav('assistant','Assistant','ai','','group')}
   <div class="sb-gap"></div>
   ${grp('gigs','Gigs','file','bookings')}
   ${S.collapsed?`<div class="sb-rail">${[['calendar','Calendar','calendar'],['contacts','Contacts','users'],['mail','Mail','mail']].map(([id,l,i])=>`<button class="nav ${v===id||(id==='contacts'&&['contact','venues','venue'].includes(v))||(id==='mail'&&v==='thread')?'active':''}" data-go="${id}" title="${l}">${ic(i)}<span>${l}</span></button>`).join('')}</div>`:''}
