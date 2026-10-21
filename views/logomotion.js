@@ -11,5 +11,5 @@ L.logoMotion=(mode='idle',label='LAAS')=>`<svg class="lm lm-${mode}" viewBox="0 
 <g class="lm-l"><path d="${P.l}"/></g><g class="lm-pa"><path d="${P.pa}" fill-rule="evenodd"/></g>
 <g class="lm-ba"><path d="${P.ba}"/><path class="lm-eye" d="${P.eye}"/></g><g class="lm-s"><path d="${P.s}"/></g></svg>`;
 /* after the intro has played, the same logo carries on idling */
-document.addEventListener('animationend',e=>{const sv=e.target.closest&&e.target.closest('svg.lm-intro');if(sv&&e.target.classList.contains('lm-s')){sv.classList.remove('lm-intro');sv.classList.add('lm-idle');}});
+document.addEventListener('animationend',e=>{const sv=e.target.closest&&e.target.closest('svg.lm-intro');if(sv&&e.target.classList.contains('lm-s')&&e.animationName==='lm-in-s'){sv.classList.remove('lm-intro');sv.classList.add('lm-idle');}});
 })();
