@@ -482,3 +482,11 @@ const after=()=>{if(busy)return;busy=true;try{
 }finally{busy=false;}};
 new MutationObserver(after).observe(document.getElementById('app'),{childList:true});
 })();
+
+/* Vit 21 Oct: opening the Assistant page always lands on the new-conversation screen ("What do you need?");
+   asking from elsewhere (chips, palette, a question) still opens with that question */
+(function(){const L=window.LAAS,S=L.S;
+  if(!S.asst||S.view!=='assistant')S.asst='new';
+  document.addEventListener('click',e=>{if(e.target.closest('[data-go="assistant"]')){S.asst='new';S.asstHist=false;S.asstEdit=false;}},true);
+  addEventListener('hashchange',()=>{if(decodeURIComponent(location.hash.slice(1))==='assistant')S.asst='new';});
+})();

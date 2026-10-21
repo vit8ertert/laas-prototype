@@ -434,8 +434,8 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 /* ---------- shell ---------- */
 function sidebar(){
  const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social',booking:'bookings',gigday:'bookings',integrations:'settings'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${(v===id&&!ALIAS[v])||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
- /* outside any group (dashboard, assistant, settings) Gigs shows open, as on every Figma screen */
- const area=LAAS.areaOf(v)||'gigs';
+ /* a group opens only on its own pages (Vit 21 Oct: Gigs open on the Assistant page looked like the wrong page; Figma draws Gigs open everywhere) */
+ const area=LAAS.areaOf(v);
  const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
   ${(()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'};return `<button class="band" data-act="bandmenu"><span class="sq">${b.logo?`<img src="${b.logo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:esc(b.ini||'LT')}</span><div><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></div>${ic('down','s')}</button>`})()}
