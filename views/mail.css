@@ -177,3 +177,7 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-time{display:inline-flex;align-items:center;justify-content:flex-end}
 /* the booking chip is a pill: hover outlines it, never underlines (Vit 21 Oct) */
 .ml-link,.ml-link *,.ml-link:hover{text-decoration:none!important}
+/* From is a borderless field like To and Subject (Vit 21 Oct: "fix the email field spacing"); the general field ring
+   drew a box with the text on its edge. The chevron stays; focus shows on the whole row. */
+.ml-cf .ml-fromsel{box-shadow:none!important;background-color:transparent!important;border-radius:0;padding-right:32px;cursor:pointer}
+.ml-cf .ml-fromsel:focus,.ml-cf .ml-fromsel:focus-visible{box-shadow:none!important;outline:none!important}
