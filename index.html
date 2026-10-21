@@ -164,6 +164,15 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .pop{position:fixed;z-index:41;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:var(--r-lg);box-shadow:0 16px 48px rgba(0,0,0,.45);animation:pop .14s}
 @keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(30px);opacity:.4}}@keyframes pop{from{transform:translate(var(--tx,0),6px);opacity:0}}
 .modal{--tx:-50%}
+/* first-visit wash spans the whole main panel, not just the 1440 px page; more air above the heading */
+.main>.page.d-first{position:static}
+.main>.page.d-first>.d-aurora{left:0;right:0;width:auto}
+.main>.page.d-first{padding-top:96px}
+@media (max-width:860px){.main>.page.d-first{padding-top:48px}}
+/* assistant record panel: id and status on one row, the title on its own line so it never wraps mid-name */
+.d-record .d-rh:has(.d-id){display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 12px}
+.d-record .d-rh:has(.d-id) .tag{justify-self:end}
+.d-record .d-rh:has(.d-id)>b{grid-column:1/-1;grid-row:2}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
 ::view-transition-old(main){animation:vt-out .14s ease-in both}
