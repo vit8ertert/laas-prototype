@@ -451,7 +451,7 @@ function sidebar(){
   ${grp('audience','Audience','radio','audience')}
   ${area==='audience'?`<div class="sb-sub">${[['overview','Overview'],['streaming','Streaming'],['hand','Figures by hand'],['releases','Releases']].map(([k,l])=>`<button class="nav sub ${v==='audience'&&S.atab===k?'active':''}" data-go="audience" data-at="${k}"><span>${l}</span></button>`).join('')}${nav('social','Social posts','','','sub')}${nav('comments','Comments','','','sub')}${nav('keywords','Keyword watch','','','sub')}${nav('deliveries','Deliveries','','','sub')}</div>`:''}
   <div class="sb-spacer"></div>
-  <button class="nav" data-act="thememenu" ${tip('Theme')}><i style="width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 2px;flex:none"></i><span>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
+  <button class="nav" data-act="guide" ${tip('Guide')}>${ic('help')}<span>Guide</span></button><button class="nav" data-act="thememenu" ${tip('Theme')}><i style="width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 2px;flex:none"></i><span>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
   ${nav('integrations','Integrations','plug')}${nav('settings','Band settings','settings')}
   ${S.collapsed?`<button class="nav" data-act="collapse" title="Expand menu (⌘\\)">${ic('right')}</button>`:''}
  </nav>`;

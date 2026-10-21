@@ -1,80 +1,192 @@
-/* LAAS prototype · first-run tour (Vit 21 Oct: "a guide the first time, like Slack: little cards you follow, next,
-   next, next or skip"). Starts when sign-up ends on the dashboard; replay from Flows. Cards point at the real parts of
-   the page with a spotlight; Esc skips, arrow keys move. The tour lives outside the app root, so re-renders keep it. */
+/* LAAS prototype · tours and page guides (Vit 21 Oct: "a guide the first time, like Slack: little cards you follow,
+   next, next or skip"; "guides also need to be on different pages"; "a tour link in the menu at the bottom").
+   - First-run tour on the dashboard when sign-up ends.
+   - A short guide on each main page the first time it opens (after the first-run tour is done or skipped).
+   - "Guide" at the bottom of the menu, and Flows, replay the guide for the page you are on.
+   Cards point at the real parts of the page with a spotlight; Esc skips, arrow keys move. The tour lives outside the
+   app root, so re-renders keep it. Never runs in headless Chrome (the Figma audit and compare tools). */
 (function(){
 const L=window.LAAS,S=L.S;
-const KEY='laas-tour';
-const get=()=>{try{return localStorage.getItem(KEY)}catch(e){return null}};
-const set=v=>{try{localStorage.setItem(KEY,v)}catch(e){}};
-const STEPS=[
+L.P.help='<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>';
+const get=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const set=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const HEADLESS=/HeadlessChrome/.test(navigator.userAgent);
+const $=(...sels)=>{for(const s of sels){const e=[...document.querySelectorAll(s)].find(x=>x.getClientRects().length&&x.getBoundingClientRect().width>0);if(e)return e;}return null;};
+const grp=n=>()=>[...document.querySelectorAll('.sidebar .nav.group')].find(e=>new RegExp(n).test(e.textContent));
+
+const TOURS={
+ first:[
   {t:'Welcome to LAAS',b:'A quick look around: five stops, about a minute. You can leave any time.',start:true},
-  {sel:()=>[...document.querySelectorAll('.sidebar .nav.group')].find(e=>/Gigs/.test(e.textContent)),side:'right',t:'Gigs: everything for a show',b:'Bookings, the calendar, venues and mail sit together here, so a gig never lives in five places.'},
-  {sel:()=>document.querySelector('.main [data-act=newbooking]'),t:'Start a booking',b:'Type it the way you would text it. LAAS fills in the date, fee and venue; you check it and save.'},
-  {sel:()=>document.querySelector('.abar'),t:'Ask the assistant',b:'Ask about gigs, contacts or money. It drafts and suggests; nothing is sent without your OK.'},
-  {sel:()=>document.querySelector('.search-pill'),t:'Find anything',b:'Venues, people, invoices and releases in one search. The shortcut is ⌘K.'},
-  {sel:()=>document.querySelector('.bell'),t:'Stay on top',b:'Payments due, replies and changes land here, so you do not have to go looking.',last:true},
-];
-let i=-1,root=null;
-const n=STEPS.length-1;
+  {sel:grp('Gigs'),side:'right',t:'Gigs: everything for a show',b:'Bookings, the calendar, venues and mail sit together here, so a gig never lives in five places.'},
+  {sel:()=>$('.main [data-act=newbooking]'),t:'Start a booking',b:'Type it the way you would text it. LAAS fills in the date, fee and venue; you check it and save.'},
+  {sel:()=>$('.abar'),t:'Ask the assistant',b:'Ask about gigs, contacts or money. It drafts and suggests; nothing is sent without your OK.'},
+  {sel:()=>$('.search-pill'),t:'Find anything',b:'Venues, people, invoices and releases in one search. The shortcut is ⌘K.'},
+  {sel:()=>$('.sidebar [data-act=guide]'),side:'right',t:'Guides on every page',b:'Each page shows a short guide the first time. Open it again any time from here.',last:true},
+ ],
+ bookings:[
+  {sel:()=>$('.main [data-act=newbooking]'),t:'New booking',b:'Start from a sentence or the full form. Drafts save as you go.'},
+  {sel:()=>$('.bk-tabs','.main [class*=tabs]'),t:'Upcoming, needs you, drafts, past',b:'Needs you collects gigs waiting on a reply, a signature or a payment.'},
+  {sel:()=>$('.bk-search','.main .search'),t:'Search and filter',b:'Search by title, venue or contact, then narrow by status, kind or payment.'},
+  {sel:()=>$('.bk-table .bk-tr:not(.bk-th)','.bk-table','.main table'),t:'Open a gig',b:'Each row opens the booking: agreement, money, people and the day sheet.',last:true},
+ ],
+ booking:[
+  {sel:()=>$('.main [data-act=statusmenu2]'),t:'Status follows documents',b:'Sending the offer, a signature or a payment moves the status. You can still move it by hand.'},
+  {sel:()=>$('.bd-sec','.main section'),t:'Agreement and money',b:'Details, fee, deposit and costs in one place. Edit any section where it sits.'},
+  {sel:()=>$('.bd-panel','.main aside'),side:'left',t:'Next up',b:'What is left before the gig, in order. Tick things off or let the documents do it.'},
+  {sel:()=>$('.abar'),t:'Ask about this gig',b:'The assistant already knows this booking: ask it to nudge the venue or draft the invoice.',last:true},
+ ],
+ gigday:[
+  {sel:()=>$('.bd-strip','.main .strip'),t:'The day at a glance',b:'Travel, load-in, soundcheck and the set on one strip. Unconfirmed times are outlined.'},
+  {sel:()=>$('.bd-tl','.main section'),t:'Timeline',b:'Every step with who and where. Change a time and the band sees it.'},
+  {sel:()=>$('.main [data-act=bdsendday]'),t:'Send to the band',b:'One message with the day sheet, the address and the parking code.',last:true},
+ ],
+ calendar:[
+  {sel:()=>$('.d-month','.main [class*=month]'),t:'Your month',b:'Gigs, holds and travel days together. Open a day to see what is booked.'},
+  {sel:()=>$('.main [data-act=calmonth]'),t:'Move through months',b:'Step back and forward, or jump to today.'},
+  {sel:()=>$('.main [data-act=calsub]'),t:'Subscribe',b:'Add LAAS to Google, Apple or Outlook. It updates on its own.',last:true},
+ ],
+ contacts:[
+  {sel:()=>$('.main [data-act=newcontact]'),t:'New contact',b:'Bookers, venues, crew and press. Type a company name to fill it from CVR.'},
+  {sel:()=>$('.main [data-act=import]'),t:'Import',b:'Bring contacts from your mail or a spreadsheet. Duplicates are merged, nothing is sent.'},
+  {sel:()=>$('.cv-search','.main .search'),t:'Search and filter',b:'Find people by name, company or city, and switch between people and venues.',last:true},
+ ],
+ venues:[
+  {sel:()=>$('.main [data-act=newvenue]'),t:'New venue',b:'Stage, PA, load-in and the people there. Filled from CVR when you type the name.'},
+  {sel:()=>$('.cv-vlist','.main [class*=list]'),t:'Every room you played',b:'Open a venue for its history, fees, notes and the next gig there.',last:true},
+ ],
+ mail:[
+  {sel:()=>$('.ml-tabs','.main [class*=tabs]'),t:'Folders',b:'Inbox, starred, sent and the rest, from the band mail you connected.'},
+  {sel:()=>$('.ml-list','.main [class*=list]'),t:'Mail next to the gig',b:'Messages link to their booking and contact, so the thread is never far.'},
+  {sel:()=>$('.main [data-act=mailnew]'),t:'New mail',b:'Write from the band address. The assistant can draft it for you.',last:true},
+ ],
+ money:[
+  {sel:()=>$('.m-tabsw','.main [class*=tabs]'),t:'Money in one place',b:'Owed to you, invoices, expenses, payouts, reports and the books.'},
+  {sel:()=>$('.main [data-act=newinvoice]'),t:'New invoice',b:'From a booking or from scratch. Moms is worked out for you.'},
+  {sel:()=>$('.main [data-act=addexpense]'),t:'Add expense',b:'Snap a receipt and pick the gig. It lands in the settlement.'},
+  {sel:()=>$('.m-sec','.main section'),t:'Who owes what',b:'Overdue first, with a friendly reminder one click away.',last:true},
+ ],
+ ledger:[
+  {sel:()=>$('.m-tabsw','.main [class*=tabs]'),t:'The books',b:'Overview, journal, chart of accounts and reports for your accountant.'},
+  {sel:()=>$('.m-chart','.main section'),t:'In and out',b:'Income and costs month by month. Show the data table for exact numbers.',last:true},
+ ],
+ catalogue:[
+  {sel:()=>$('.main [data-act=newrelease]'),t:'New release',b:'Title, tracks, cover and credits. LAAS checks it before it goes to the distributor.'},
+  {sel:()=>$('.main [data-act=importcat]'),t:'Import your catalogue',b:'Bring releases from your distributor so earnings can be checked.',last:true},
+ ],
+ gear:[
+  {sel:()=>$('.main [data-act=addgear]'),t:'Add gear',b:'Instruments, PA and cases with serial numbers, for insurance and the backline list.'},
+  {sel:()=>$('.cat-table','.main [class*=table]'),t:'Service and value',b:'See what needs a service and what it is worth.'},
+  {sel:()=>$('.main [data-act=logmaint]'),t:'Log maintenance',b:'Note a repair or a restring; the next date is set for you.',last:true},
+ ],
+ audience:[
+  {sel:()=>$('.aud-tabs','.main [class*=tabs]'),t:'Your listeners',b:'Streaming, figures you add by hand, releases and social in one view.'},
+  {sel:()=>$('.main .acc-sec','.main section'),t:'What is moving',b:'Changes since last month, from the services you connected. Nothing is posted from here.',last:true},
+ ],
+ social:[
+  {sel:()=>$('.main [data-act=sonewpost]'),t:'New post',b:'Write once, pick the accounts, schedule it. Nothing goes out without your OK.'},
+  {sel:()=>$('.bk-tabs','.main [class*=tabs]'),t:'Scheduled, drafts, posted',b:'Every post with its status and where it went.'},
+  {sel:()=>$('.bk-table','.main table'),t:'Open a post',b:'See the preview per account, the results and the comments.',last:true},
+ ],
+ settings:[
+  {sel:()=>$('.acc-nav'),side:'right',t:'Band settings',b:'Members, money, calendar feed, integrations, theme and plan.'},
+  {sel:()=>$('.acc-search','.main .search'),t:'Find a setting',b:'Type what you are looking for; it jumps to the row.'},
+  {sel:()=>$('.main .acc-sec'),t:'Saved as you go',b:'Changes save on their own; you see "Saved" after each edit.',last:true},
+ ],
+};
+const PAGE={contact:'contacts',venue:'venues',thread:'mail',invoice:'money',journal:'ledger',accounts:'ledger',ledgerreport:'ledger',release:'catalogue',post:'social',comments:'social',keywords:'social',deliveries:'social'};
+const guideFor=v=>TOURS[v]?v:(PAGE[v]&&TOURS[PAGE[v]]?PAGE[v]:null);
+
+let tour=null,i=-1,root=null;
 function el(){
   if(root)return root;
   root=document.createElement('div');root.className='tour';root.setAttribute('role','dialog');root.setAttribute('aria-modal','false');
   document.body.appendChild(root);
-  root.addEventListener('click',e=>{const a=e.target.closest('[data-tour]');if(!a)return;const k=a.dataset.tour;
+  root.addEventListener('click',e=>{e.stopPropagation();const a=e.target.closest('[data-tour]');if(!a)return;const k=a.dataset.tour;
     if(k==='next')step(i+1);else if(k==='back')step(i-1);else if(k==='skip')end(false);else if(k==='done')end(true);});
   return root;
 }
+const steps=()=>TOURS[tour]||[];
+const firstReal=()=>steps()[0]&&steps()[0].start?1:0;
 function card(s){
-  const ic=L.ic;
-  if(s.start)return `<div class="tour-card tour-center"><div class="tour-mark">${ic('ai')}</div><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
+  const n=steps().length-firstReal(),k=i-firstReal()+1;
+  if(s.start)return `<div class="tour-card tour-center"><div class="tour-mark">${L.ic('ai')}</div><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
     <div class="tour-foot"><button class="btn ghost s" data-tour="skip">Skip</button><span class="tour-grow"></span><button class="btn primary s" data-tour="next">Show me</button></div></div>`;
-  return `<div class="tour-card"><span class="tour-arrow"></span><span class="t-meta faint">${i} of ${n}</span><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
-    <div class="tour-foot">${s.last?'':'<button class="btn ghost s" data-tour="skip">Skip tour</button>'}<span class="tour-grow"></span>${i>1?'<button class="btn ghost s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div></div>`;
+  return `<div class="tour-card"><span class="tour-arrow"></span><span class="t-meta faint">${n>1?`${k} of ${n}`:'Guide'}</span><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
+    <div class="tour-foot">${s.last?'':`<button class="btn ghost s" data-tour="skip">${tour==='first'?'Skip tour':'Skip'}</button>`}<span class="tour-grow"></span>${i>firstReal()?'<button class="btn ghost s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div></div>`;
 }
 function place(){
   if(i<0||!root)return;
-  const s=STEPS[i],t=s.sel&&s.sel(),c=root.querySelector('.tour-card'),spot=root.querySelector('.tour-spot');
+  const s=steps()[i],t=s&&s.sel&&s.sel(),c=root.querySelector('.tour-card'),spot=root.querySelector('.tour-spot');
   if(!c)return;
   if(!t||!t.getClientRects().length){spot.style.display='none';root.classList.add('tour-dim');c.classList.add('tour-center');c.style.left=c.style.top='';return;}
   root.classList.remove('tour-dim');c.classList.remove('tour-center');
   const r=t.getBoundingClientRect(),pad=6,W=innerWidth,H=innerHeight,cw=c.offsetWidth,ch=c.offsetHeight,gap=14;
-  Object.assign(spot.style,{display:'block',left:r.left-pad+'px',top:r.top-pad+'px',width:r.width+pad*2+'px',height:r.height+pad*2+'px'});
-  // prefer below, then above, then right of the target; keep 16 px inside the window
-  let side='below',top=r.bottom+pad+gap,left=r.left+r.width/2-cw/2;
-  if(top+ch>H-16){side='above';top=r.top-pad-gap-ch;}
-  if(top<16||s.side==='right'){side='right';top=r.top+r.height/2-ch/2;left=r.right+pad+gap;}
+  // big targets (a whole table or section) get a spotlight on their visible part only
+  const top0=Math.max(r.top,0),bot0=Math.min(r.bottom,H);
+  Object.assign(spot.style,{display:'block',left:r.left-pad+'px',top:top0-pad+'px',width:r.width+pad*2+'px',height:Math.max(bot0-top0,0)+pad*2+'px'});
+  let side='below',top=bot0+pad+gap,left=r.left+r.width/2-cw/2;
+  if(s.side==='left'){side='left';top=top0+16;left=r.left-pad-gap-cw;}
+  else if(s.side==='right'){side='right';top=top0+(bot0-top0)/2-ch/2;left=r.right+pad+gap;}
+  else{if(top+ch>H-16){side='above';top=top0-pad-gap-ch;}
+    if(top<16){side='inside';top=top0+24;left=r.left+r.width/2-cw/2;}}
   left=Math.max(16,Math.min(left,W-cw-16));top=Math.max(16,Math.min(top,H-ch-16));
   c.style.left=left+'px';c.style.top=top+'px';c.dataset.side=side;
-  const ax=side==='right'?0:Math.max(16,Math.min(r.left+r.width/2-left,cw-16)),ay=side==='right'?Math.max(16,Math.min(r.top+r.height/2-top,ch-16)):0;
+  const ax=Math.max(16,Math.min(r.left+r.width/2-left,cw-16)),ay=Math.max(16,Math.min(top0+(bot0-top0)/2-top,ch-16));
   c.style.setProperty('--ax',ax+'px');c.style.setProperty('--ay',ay+'px');
 }
 function step(k){
-  if(k<0||k>n)return;
-  i=k;const s=STEPS[i];
-  if(s.sel&&!s.sel()&&S.view!=='dashboard'){L.go('dashboard');}
+  if(k<0||k>=steps().length)return;
+  i=k;const s=steps()[i];
+  // bring an off-screen target into view inside the scrolling main panel first
+  const t=s.sel&&s.sel();if(t&&!s.start){const r=t.getBoundingClientRect(),m=t.closest('.main');
+    if(r.top<80||r.top>innerHeight-220){if(m)m.scrollTop+=r.top-140;else t.scrollIntoView({block:'start'});}}
   el().innerHTML=`<div class="tour-spot"></div>${card(s)}`;
   root.classList.toggle('tour-dim',!!s.start);
   requestAnimationFrame(()=>{place();root.querySelector('.tour-card [data-tour=next],.tour-card [data-tour=done]')?.focus({preventScroll:true});});
-  setTimeout(place,120);
+  setTimeout(place,120);setTimeout(place,420);
 }
 function end(done){
-  i=-1;set(done?'done':'skipped');
+  const was=tour;i=-1;tour=null;
+  if(was==='first')set('laas-tour',done?'done':'skipped');else if(was)set('laas-guide-'+was,'seen');
   if(root){root.remove();root=null;}
-  L.toast(done?'You are set. Replay the tour any time from Flows':'Tour skipped. Replay it any time from Flows');
+  if(was==='first')L.toast(done?'You are set. Guides open on each page the first time':'Tour skipped. Open it again from Guide in the menu');
 }
-function start(){if(S.view!=='dashboard')L.go('dashboard');setTimeout(()=>step(0),180);}
+function start(name){
+  if(!TOURS[name])return;
+  if(root){root.remove();root=null;}
+  tour=name;
+  if(name==='first'&&S.view!=='dashboard')L.go('dashboard');
+  setTimeout(()=>step(0),name==='first'?180:60);
+}
 L.tour={start,end:()=>end(false)};
 
-// reposition on resize, scroll and every re-render of the app
+// page guides: the first time a page with a guide opens (after the first-run tour), unless something else is open
+let lastView=null;
+function maybeGuide(){
+  if(HEADLESS||tour||S.view===lastView)return;
+  lastView=S.view;
+  const g=guideFor(S.view);
+  if(!g||S.view==='onboarding'||S.overlay)return;
+  const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')return;
+  if(get('laas-guide-'+g))return;
+  setTimeout(()=>{if(!tour&&guideFor(S.view)===g&&!S.overlay)start(g);},500);
+}
+
+// reposition on resize, scroll and every re-render; look for a page guide after each render
 addEventListener('resize',place);addEventListener('scroll',place,true);
-new MutationObserver(()=>{if(i>=0)requestAnimationFrame(place);}).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>{if(i>=0)requestAnimationFrame(place);maybeGuide();}).observe(document.body,{childList:true,subtree:true});
 addEventListener('keydown',e=>{if(i<0)return;
+  const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'');
   if(e.key==='Escape'){e.preventDefault();end(false);}
-  else if(e.key==='ArrowRight'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))step(Math.min(i+1,n));
-  else if(e.key==='ArrowLeft'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))step(Math.max(i-1,i>1?1:0));},true);
+  else if(e.key==='ArrowRight'&&!typing)step(Math.min(i+1,steps().length-1));
+  else if(e.key==='ArrowLeft'&&!typing)step(Math.max(i-1,firstReal()));},true);
+
+// "Guide" in the menu and in Flows: the guide for this page, the full tour on the dashboard
+L.ACTIONS.guide=()=>{const g=S.view==='dashboard'?'first':guideFor(S.view);if(g)start(g);else{L.toast('No guide for this page yet. Here is the tour');start('first');}};
 
 // first run: when sign-up ends on the dashboard (skip invites or send them)
 for(const a of ['accobskip','accobsend']){const f=L.ACTIONS[a];if(!f)continue;
-  L.ACTIONS[a]=function(){const r=f.apply(this,arguments);if(get()!=='done'&&get()!=='skipped')start();return r;};}
-L.FLOWS.push(['First-run tour','Five cards: Gigs, new booking, assistant, search, alerts',()=>start()]);
+  L.ACTIONS[a]=function(){const r=f.apply(this,arguments);const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')start('first');return r;};}
+L.FLOWS.push(['First-run tour','Welcome, then Gigs, new booking, assistant, search and guides',()=>start('first')]);
+L.FLOWS.push(['Guide for this page','The short guide every main page shows the first time',()=>L.ACTIONS.guide()]);
 })();
