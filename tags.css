@@ -161,3 +161,20 @@
  .main{border-radius:12px 0 0 0!important}
  .m-tint,.cv-tint{border-radius:12px 0 0 0!important}
 }
+
+/* ---------- Side card, one recipe (Vit 21 Oct: "so many places and they look different, audit and align") ----------
+   The right-hand card on detail pages (contact, venue, booking, social post, release, mail thread, money, settle,
+   dashboard): padding 24, radius 12, surface; sections 32 apart; section heading 18 / 24 medium with its action on the
+   right; 12 px from heading to content; content starts on the heading's left edge (rows bleed 16 and pad 16). */
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){padding:24px!important;display:flex;flex-direction:column;gap:32px;border-radius:12px}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right)>*{padding:0!important;margin:0!important}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(h2,h3):not(.ex-empty h3){font:500 18px/24px var(--sans)!important;letter-spacing:0!important;margin:0!important}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:0;align-items:center}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}
+/* empty lines and plain text in a side card start on the heading edge */
+.cv-in{padding:0!important;margin:0;font:400 14px/20px var(--sans)}
+/* key-value lines that open nothing sit on the heading edge too, label on the value's baseline */
+.cv-kv>div{padding:0!important;align-items:baseline}
+.m-kvr{padding:0!important}
+.cv-fn{padding-left:0!important;padding-right:0!important}
+.bd-panel .bd-stack,.bd-stack.rows>div{padding:0!important}
