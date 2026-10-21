@@ -29,6 +29,14 @@ S.acc??={
  conn:{spotify:false,bandcamp:false,mobilepay:false,dinero:false}
 };
 const A=S.acc;
+/* personal assistant prompt (LaaS 0.5 /account/profile/), private to the user, used in every band */
+const PROMPT_EX='I sing and play guitar, and I do most of the booking. Answer me in English, short and plain, numbers first.\nWrite mails to Danish venues in Danish, informal (du), signed with my first name and the band.\nAlways ask before you change a fee or a confirmed date. If something is unclear, ask me one question instead of guessing.';
+A.prompt??=PROMPT_EX;
+/* bands this account runs; the core sidebar and band menu still say Low Tide, see patchBand() below */
+S.bands??=[{id:'lt',name:'Low Tide',ini:'LT',meta:'Owner: 3 members',city:'Odense',country:'Denmark',currency:'DKK',tz:'Europe/Copenhagen',lang:'English'}];
+S.bandId??='lt';
+const curBand=()=>S.bands.find(b=>b.id===S.bandId)||S.bands[0];
+const iniOf=n=>(n.trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2)||'B').toUpperCase();
 const GENRE_THEME={'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'};
 const TNAME={label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'};
 const SLOTNAME={label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'};
@@ -63,8 +71,9 @@ function saved(){
 const NAV=[['You',[['account','Account'],['notifications','Notifications']]],['Low Tide',[['settings','Band'],['members','Members'],['settings-money','Money'],['calendar-feed','Calendar feed'],['integrations','Integrations'],['theme','Theme'],['plan','Plan and billing']]]];
 const ABAR='Ask about settings — change the deposit to 40 %, invite our new drummer, which rules apply to reminders';
 function navHtml(){const q=A.q.trim().toLowerCase();
+ const bn=curBand().name;
  return `<nav class="acc-nav" aria-label="Settings"><label class="acc-search">${ic('search','s')}<input id="acc-q" placeholder="Search settings" aria-label="Search settings" value="${esc(A.q)}"></label>
- ${NAV.map(([g,items])=>{const vis=items.filter(([,l])=>!q||l.toLowerCase().includes(q));return vis.length?`<span class="acc-gl">${g}</span>${vis.map(([id,l])=>`<button class="nav ${S.view===id?'active':''}" data-go="${id}"><span>${l}</span></button>`).join('')}`:''}).join('')}
+ ${NAV.map(([g,items])=>{const vis=items.filter(([,l])=>!q||l.toLowerCase().includes(q));return vis.length?`<span class="acc-gl">${g==='Low Tide'?esc(bn):g}</span>${vis.map(([id,l])=>`<button class="nav ${S.view===id?'active':''}" data-go="${id}"><span>${l}</span></button>`).join('')}`:''}).join('')}
  ${q&&!NAV.some(([,i])=>i.some(([,l])=>l.toLowerCase().includes(q)))?`<span class="acc-gl">No page called “${esc(A.q)}”</span>`:''}</nav>`;}
 function shell(title,sub,body){
  queueMicrotask(markSidebar);
@@ -74,11 +83,12 @@ function shell(title,sub,body){
 function markSidebar(){document.querySelectorAll('.sidebar .nav[data-go="settings"]').forEach(b=>b.classList.add('active'));}
 
 /* ---------- Settings · Band (315:9963) ---------- */
-L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre];
- return shell('Band','Low Tide, Owner: you, 3 members, created 14 Sep 2026',
+L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre],b=curBand(),lt=b.id==='lt';
+ return shell('Band',lt?'Low Tide, Owner: you, 3 members, created 14 Sep 2026':`${esc(b.name)}, Owner: you, just you so far, created ${b.created||'21 Oct 2026'}`,
  sec('Profile',rows(
-  row('Band name','Shown on offers, invoices and the pay page',txt('Band name','Low Tide',320)),
-  row('Home city','Travel is counted from here',txt('Home city','Odense',240)),
+  row('Band name','Shown on offers, invoices and the pay page',txt('Band name',b.name,320)),
+  row('Home city','Travel is counted from here',txt('Home city',b.city||'',240)),
+  ...(lt?[]:[row('Country and currency','Fees and invoices use this currency',tag('draft',`${esc(b.country)}, ${b.currency}`)),row('Time zone','Gig times and reminders follow it',tag('draft',b.tz))]),
   row('Genres','Drive the theme suggestion and the sample copy',sel('Genres',['Indie rock, Shoegaze','Indie rock','Shoegaze','Metal and hardcore','Electronic','Classical'])),
   row('Logo and cover','Used on the pay page and offers, 2 files',`<label class="btn secondary s" style="cursor:pointer">Change<input type="file" accept="image/*" hidden data-photo="band"></label>`)))
  +sec('House terms',rows(
@@ -210,14 +220,17 @@ L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
 const badge=`<button class="acc-store" data-act="acctoast" data-msg="Opens LAAS in the App Store" aria-label="Download on the App Store"><svg viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></button>`;
 const NOTIF=[['n1','Email me when a venue opens or signs an offer'],['n2','A short summary every morning at 08:00'],['n3','Push on gig day: leave times and changes'],['n4','Product news, a few times a year']];
 const card=(title,inner,action='')=>`<section class="acc-card"><div class="acc-ch"><h2 class="t-heading">${title}</h2>${action}</div>${inner}</section>`;
-L.VIEWS.account=()=>shell('Account','vital@lowtide.dk, signed in with Google, member of 1 band',
+L.VIEWS.account=()=>shell('Account',`vital@lowtide.dk, signed in with Google, member of ${S.bands.length} band${S.bands.length===1?'':'s'}`,
  card('Profile',`<div class="acc-prof"><img src="${S.photos.you||IMG('booker')}" alt=""><div><b class="t-heading">Vital Sinkevich</b><span>Vocals, guitar. Shown to bandmates and on day sheets.</span><label class="btn secondary s" style="cursor:pointer;align-self:flex-start">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label></div></div>
   <div class="acc-fields"><div class="field"><label for="acc-an">Name</label><input class="input" id="acc-an" style="width:360px" value="Vital Sinkevich" data-accsave></div><div class="field"><label for="acc-ap">Phone</label><input class="input" id="acc-ap" style="width:240px" value="+45 20 11 22 33" data-accsave><span class="help">Only bandmates see it</span></div></div>`)
  +card('Sign-in',`<div class="acc-signin">${[['mail','vital@lowtide.dk','Email, where sign-in links go',''],['check','Google','Connected 14 Sep 2026',''],['plus','Add a passkey','Sign in with Face ID or a fingerprint, no codes','data-act="accpasskey"']].map(([i,t,m,a])=>`<${a?'button':'div'} class="acc-si" ${a}>${ic(i)}<span class="tx"><span>${t}</span><small>${m}</small></span></${a?'button':'div'}>`).join('')}</div>`)
  +card('Notifications',`<div class="acc-nl">${NOTIF.map(([k,l])=>`<div class="acc-nr">${tg(k,l)}<span>${l}</span></div>`).join('')}</div>`)
  +card('Language and region',`<div class="acc-fields"><div class="field"><label>App language</label>${sel('App language',['English','Dansk'])}</div><div class="field"><label>Mails to venues</label>${sel('Mails to venues',['Dansk','English'])}<span class="help">Drafts are written in this language</span></div></div>
-  <div class="field"><label>Dashboard starts with</label><div class="seg acc-seg2"><button class="on" data-accseg>Overview</button><button data-accseg>A question (Ask first)</button></div><span class="help">Ask first opens the dashboard on the assistant’s question box, with today below it.</span></div>`)
- +card('Your bands',`<button class="acc-band" data-go="settings"><img src="${S.photos.band||IMG('band-collage')}" alt=""><span class="tx"><span>Low Tide</span><small>Owner, 3 members, ${({free:'Free',band:'Band',pro:'Pro'})[S.plan]} plan</small></span></button>`,act('plus','New band','accnewband'))
+  <div class="field"><label>Dashboard starts with</label><div class="seg acc-seg2"><button class="${S.dashStart==='ask'?'':'on'}" data-accseg>Overview</button><button class="${S.dashStart==='ask'?'on':''}" data-accseg>A question (Ask first)</button></div><span class="help">Your landing page after sign-in. Ask first opens the dashboard on the assistant’s question box, with today below it.</span></div>`)
+ +card('Personal assistant prompt',`<p class="acc-small">What the assistant should know about you and how to answer: tone, language, what to always ask first. It is added to every question you ask.</p>
+  <div class="field acc-pp"><label for="acc-pp">About you and how to answer</label><textarea class="input" id="acc-pp" rows="6" maxlength="2000" data-accsave>${esc(A.prompt)}</textarea><span class="acc-pph"><span class="help">${ic('lock','s')}Private to you. Used in every band you are in, bandmates never see it.</span><span class="help mono" id="acc-ppn">${A.prompt.length} / 2000</span></span></div>
+  <div class="row acc-ppact"><button class="btn ghost s" data-act="accppreset" ${A.prompt===PROMPT_EX?'disabled':''}>${ic('rotate','s')}Use the example</button><button class="btn ghost s" data-act="asstcan">What the assistant can do</button></div>`)
+ +card('Your bands',`<div class="acc-bands">${S.bands.map(b=>`<div class="acc-bandrow"><button class="acc-band" data-act="switchband" data-band="${b.id}" data-to="settings">${b.id==='lt'?`<img src="${S.photos.band||IMG('band-collage')}" alt="">`:b.logo?`<img src="${b.logo}" alt="">`:`<span class="acc-bsq">${esc(b.ini)}</span>`}<span class="tx"><span>${esc(b.name)}</span><small>${b.id==='lt'?`Owner, 3 members, ${({free:'Free',band:'Band',pro:'Pro'})[S.plan]} plan`:`Owner, just you, ${esc(b.country)}, ${b.currency}`}</small></span></button>${b.id===S.bandId?tag('accent','Current'):`<button class="btn ghost s" data-act="switchband" data-band="${b.id}">Switch</button>`}</div>`).join('')}</div>`,act('plus','New band','newband'))
  +`<section class="acc-card acc-app"><span class="acc-appicon"><svg viewBox="0 0 90 24">${L.LOGO.replace(/<svg[^>]*>|<\/svg>/g,'')}</svg></span><div><h2 class="t-heading">LAAS on your iPhone</h2><p>Day sheets that work offline, a push when times change on gig day, receipts by camera. Same account, nothing to set up.</p>${badge}</div></section>`
  +card('Leave LAAS',`<p class="acc-small">Deleting your account removes your profile. Low Tide stays with its other owners; you’ll be asked to hand over ownership first.</p><div class="row"><button class="btn secondary" data-act="accsignout">Sign out everywhere</button><button class="btn ghost" data-act="accdelme">Delete my account</button></div>`));
 
@@ -292,7 +305,65 @@ AC.accproposal=el=>L.toast(`${el.dataset.n} is a proposal for later; the four li
 AC.acccal=el=>{const i=+el.dataset.i;L.toast(i===2?'Jonas’ day job refreshed just now':i===0?'Google Calendar synced just now':'Rehearsal calendar refreshed just now');};
 AC.accaddcal=()=>{S.overlay=L.DR.accaddcal();L.render();};
 AC.accpasskey=()=>L.toast('Passkey added for this device');
-AC.accnewband=()=>{S.onboarding.step=3;L.go('onboarding');};
+AC.accnewband=()=>AC.newband();
+AC.accppreset=()=>{const was=A.prompt;A.prompt=PROMPT_EX;L.render();saved();L.toast('Prompt set back to the example',()=>{A.prompt=was;});};
+
+/* ---------- New band (LaaS 0.5 /account/bands/new/): drawer, creates a band and switches to it ----------
+   Open from anywhere with data-act="newband" (the band menu in dashboard.js should call it). */
+const COUNTRY={Denmark:['DKK','Europe/Copenhagen','Dansk'],Norway:['NOK','Europe/Oslo','Norsk'],Sweden:['SEK','Europe/Stockholm','Svenska'],Germany:['EUR','Europe/Berlin','Deutsch'],Finland:['EUR','Europe/Helsinki','Suomi'],'United Kingdom':['GBP','Europe/London','English']};
+const CURR=['DKK','NOK','SEK','EUR','GBP'];
+const TZS=['Europe/Copenhagen','Europe/Oslo','Europe/Stockholm','Europe/Berlin','Europe/Helsinki','Europe/London'];
+const LANGS=['Dansk','English','Norsk','Svenska','Deutsch','Suomi'];
+const opt=(list,v)=>list.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('');
+A.nb??=null;
+function nbDraft(){return A.nb??={name:S.bands.some(b=>b.name==='Nordlys Kvartet')?'':'Nordlys Kvartet',city:'Tromsø',country:'Norway',currency:'NOK',tz:'Europe/Oslo',lang:'Norsk',logo:null};}
+L.DR.newband=()=>{const d=nbDraft();
+ return {type:'drawer',title:'New band',sub:'You become Owner. Nothing from '+esc(curBand().name)+' is copied',
+ body:`<div class="acc-obphoto acc-nblogo"><span class="acc-nbprev" id="acc-nbprev">${d.logo?`<img src="${d.logo}" alt="">`:esc(iniOf(d.name))}</span><div><b class="strong">Logo</b><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}${d.logo?'Replace':'Upload logo'}<input type="file" accept="image/*" hidden data-nblogo></label><span class="help">Square, at least 400 px. Used on offers and the pay page.</span></div></div>
+ <div class="field"><label for="acc-nbn">Band name</label><input class="input" id="acc-nbn" style="width:360px;max-width:100%" value="${esc(d.name)}" placeholder="The band’s name"><span class="help">Shown on offers, invoices and the pay page</span></div>
+ <div class="field"><label for="acc-nbcity">Home city</label><input class="input" id="acc-nbcity" style="width:240px;max-width:100%" value="${esc(d.city)}"><span class="help">Travel distances start here</span></div>
+ <div class="acc-two"><div class="field"><label for="acc-nbc">Country</label><select class="input" id="acc-nbc" style="width:212px">${opt(Object.keys(COUNTRY),d.country)}</select><span class="help">Sets currency, time zone and language</span></div>
+ <div class="field"><label for="acc-nbcur">Currency</label><select class="input" id="acc-nbcur" style="width:120px">${opt(CURR,d.currency)}</select><span class="help">Fees and invoices</span></div></div>
+ <div class="acc-two"><div class="field"><label for="acc-nbtz">Time zone</label><select class="input" id="acc-nbtz" style="width:212px">${opt(TZS,d.tz)}</select><span class="help">Gig times and reminders</span></div>
+ <div class="field"><label for="acc-nbl">Language</label><select class="input" id="acc-nbl" style="width:160px">${opt(LANGS,d.lang)}</select><span class="help">Mails to venues are drafted in it</span></div></div>
+ <p class="acc-small">Each band has its own gigs, contacts, money and members. Your profile and your assistant prompt come with you. Invite the band after it is created.</p>`,
+ foot:`<span style="flex:1"></span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="nbcreate">Create band</button>`};};
+AC.newband=()=>{A.nb=null;S.overlay=L.DR.newband();L.render();setTimeout(()=>document.getElementById('acc-nbn')?.focus(),60);};
+function nbRead(){const d=nbDraft(),v=id=>document.getElementById(id)?.value;
+ d.name=(v('acc-nbn')??d.name);d.city=(v('acc-nbcity')??d.city);d.country=v('acc-nbc')||d.country;d.currency=v('acc-nbcur')||d.currency;d.tz=v('acc-nbtz')||d.tz;d.lang=v('acc-nbl')||d.lang;return d;}
+AC.nbcreate=()=>{const d=nbRead(),name=d.name.trim();
+ if(!name){L.toast('Give the band a name');document.getElementById('acc-nbn')?.focus();return;}
+ if(S.bands.some(b=>b.name.toLowerCase()===name.toLowerCase())){L.toast(`You already have a band called ${name}`);return;}
+ const prev={id:S.bandId,dashFirst:S.dashFirst,view:S.view};
+ const b={id:'b'+Date.now().toString(36),name,ini:iniOf(name),meta:'Owner: just you',city:d.city.trim(),country:d.country,currency:d.currency,tz:d.tz,lang:d.lang,logo:d.logo,created:'21 Oct 2026'};
+ S.bands.push(b);S.bandId=b.id;A.nb=null;S.overlay=null;S.dashFirst=true;L.go('dashboard');
+ L.toast(`${name} created. You are in it now`,()=>{S.bands=S.bands.filter(x=>x.id!==b.id);S.bandId=prev.id;S.dashFirst=prev.dashFirst;L.go(prev.view);});};
+/* switch band (Account → Your bands; the band menu can call data-act="switchband" data-band="<id>") */
+AC.switchband=el=>{const id=el.dataset.band,b=S.bands.find(x=>x.id===id);if(S.overlay)S.overlay=null;
+ if(!b||id===S.bandId){if(el.dataset.to)L.go(el.dataset.to);else L.render();return;}
+ const prev={id:S.bandId,dashFirst:S.dashFirst,view:S.view};S.bandId=id;S.dashFirst=id!=='lt';L.go(el.dataset.to||'dashboard');
+ L.toast(`Switched to ${b.name}`,()=>{S.bandId=prev.id;S.dashFirst=prev.dashFirst;L.go(prev.view);});};
+L.CHANGE.push(t=>{
+ if(t.id==='acc-nbc'){const d=nbRead(),c=COUNTRY[t.value];if(c){[d.currency,d.tz,d.lang]=c;}S.overlay=L.DR.newband();L.render();return true;}
+ if(t.dataset&&t.dataset.nblogo!==undefined&&t.files&&t.files[0]){const d=nbRead();const r=new FileReader();r.onload=()=>{d.logo=r.result;S.overlay=L.DR.newband();L.render();L.toast('Logo added');};r.readAsDataURL(t.files[0]);return true;}
+ if(t.closest&&t.closest('.drawer')&&/^acc-nb/.test(t.id)){nbRead();return true;}
+});
+L.INPUT.push(t=>{if(t.id==='acc-nbn'){const d=nbRead();const p=document.getElementById('acc-nbprev');if(p&&!d.logo)p.textContent=iniOf(t.value);return true;}});
+L.FLOWS.push(['New band','Create a second band and switch to it',()=>{S.bandId='lt';L.go('account');setTimeout(()=>AC.newband(),160);}]);
+
+/* the core sidebar says Low Tide; show the current band there until the core reads S.bands */
+let patching=false;
+function patchBand(){if(patching)return;patching=true;try{const b=curBand();if(b.id==='lt')return;
+ const bt=document.querySelector('.sidebar .band');if(!bt)return;
+ const sq=bt.querySelector('.sq'),nm=bt.querySelector('b'),sm=bt.querySelector('small');
+ if(sq){if(b.logo&&!sq.querySelector('img'))sq.innerHTML=`<img src="${b.logo}" alt="" class="acc-sqimg">`;else if(!b.logo&&sq.textContent!==b.ini)sq.textContent=b.ini;}
+ if(nm&&nm.textContent!==b.name)nm.textContent=b.name;if(sm&&sm.textContent!==b.meta)sm.textContent=b.meta;
+ /* empty dashboard copy for the new band (dashboard.js says Low Tide) */
+ const mn=S.view==='dashboard'&&S.dashFirst&&document.querySelector('.main');
+ if(mn){const w=document.createTreeWalker(mn,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))if(n.nodeValue.includes('Low Tide'))n.nodeValue=n.nodeValue.replaceAll('Low Tide',b.name);
+  mn.querySelectorAll('[placeholder*="Low Tide"]').forEach(x=>x.placeholder=x.placeholder.replaceAll('Low Tide',b.name));}
+}finally{patching=false;}}
+new MutationObserver(patchBand).observe(document.getElementById('app'),{childList:true});
 AC.accsignout=()=>L.open('modal',{html:L.confirmM('Sign out everywhere?','Your phone, this computer and any other browser need a new sign-in link.','Cancel','accsignoutok','Sign out everywhere')});
 AC.accsignoutok=()=>{L.close();S.onboarding.step=0;L.go('onboarding');L.toast('Signed out on 3 devices');};
 AC.accdelme=()=>L.open('modal',{html:L.confirmM('Delete your account?','You are Owner of Low Tide. Hand over ownership first; then your profile is removed and Low Tide stays with the band.','Keep my account','accdelmeok','Hand over and delete',1)});
@@ -303,6 +374,7 @@ AC.accstartpro=()=>{S.plan='pro';S.overlay=null;const n=A.afterPro;A.afterPro=nu
 /* inputs: settings search, autosave status, appearance select */
 L.INPUT.push(t=>{
  if(t.id==='acc-q'){A.q=t.value;const pos=t.selectionStart;const nav=document.querySelector('.acc-nav');if(nav){const tmp=document.createElement('div');tmp.innerHTML=navHtml();nav.replaceWith(tmp.firstElementChild);const q=document.getElementById('acc-q');q.focus();q.setSelectionRange(pos,pos);}return true;}
+ if(t.id==='acc-pp'){A.prompt=t.value;const n=document.getElementById('acc-ppn');if(n)n.textContent=t.value.length+' / 2000';const r=document.querySelector('[data-act="accppreset"]');if(r)r.disabled=t.value===PROMPT_EX;saved();return true;}
  if(t.closest&&t.closest('.acc-set')&&t.matches('input,textarea')){saved();return true;}
  if(t.id==='acc-ie'){const b=document.getElementById('acc-sendinv');if(b)b.innerHTML=ic('send','s')+invLabel(Math.max(1,emails(t.value).length));return true;}
 });

@@ -203,7 +203,7 @@ button.acc-si:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
 .acc-join span{font-size:12px;color:var(--muted)}
 .acc-ob .r{margin:16px 16px 16px 0;border-radius:16px;overflow:hidden;background:var(--sunken)}
 .acc-ob .r img{width:100%;height:100%;object-fit:cover;display:block}
-.acc-live{display:flex;flex-direction:column;justify-content:center;gap:24px;padding:0 48px;background:linear-gradient(160deg,var(--surface),var(--sunken) 70%)!important}
+.acc-live{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px;padding:0 48px;background:linear-gradient(160deg,var(--surface),var(--sunken) 70%)!important}
 .acc-live .cap{font-size:13px;color:var(--muted)}
 .acc-win{--k:.5;position:relative;width:100%;max-width:728px;height:455px;border-radius:12px;overflow:hidden;border:1px solid var(--rule-strong);box-shadow:0 24px 64px rgba(0,0,0,.35)}
 .acc-win>.acc-mini{transform:scale(var(--k));transform-origin:0 0;position:absolute;left:0;top:0}
@@ -276,3 +276,26 @@ button.acc-si:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
  .acc-two{flex-direction:column;gap:12px}.acc-two .field,.acc-two .input{width:100%!important}
  .acc-ob .field .input{width:100%!important}
 }
+
+/* ---------- Account: personal assistant prompt ---------- */
+.acc-pp{max-width:100%}
+.acc-pp textarea{width:100%;min-height:132px;line-height:20px}
+.acc-pph{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.acc-pph .help{display:inline-flex;gap:6px;align-items:center}
+.acc-pph .help svg{flex:none}
+.acc-pph .mono{flex:none}
+.acc-ppact{gap:8px;margin-top:-4px}
+
+/* ---------- Account: your bands ---------- */
+.acc-bands{display:flex;flex-direction:column;gap:12px}
+.acc-bandrow{display:flex;align-items:center;gap:12px}
+.acc-bandrow .acc-band{flex:1;min-width:0;margin:-4px 0}
+.acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:8px;background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:600;overflow:hidden}
+.acc-bsq{width:40px;height:40px;font-size:14px}
+
+/* ---------- New band drawer ---------- */
+.acc-nbprev{width:96px;height:96px;border-radius:12px;font-size:28px}
+.acc-nbprev img{width:100%;height:100%;object-fit:cover}
+.acc-nblogo>div{gap:6px}
+.sidebar .band .sq .acc-sqimg{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+@media (max-width:600px){.acc-nbprev{width:72px;height:72px;font-size:22px}.acc-pph{flex-direction:column;gap:4px}}
