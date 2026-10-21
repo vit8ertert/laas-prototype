@@ -42,3 +42,8 @@
 
 /* one underline for the whole app (Vit 21 Oct: "this default underline looks bad"): 1 px, half-strength colour, clear of the descenders */
 *{text-decoration-thickness:1px;text-underline-offset:.3em;text-decoration-color:color-mix(in srgb,currentColor 55%,transparent)}
+
+/* light theme: detail-page sections (booking, social post, gig day) sit in white blocks. Canvas #f4f3ef on sunken #ebe8e5 gives
+   too little depth for open sections, which dark mode gets from its panel contrast (Vit 21 Oct: "not blocked content on light theme") */
+:root[data-theme="light"] .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}}
