@@ -126,8 +126,9 @@
 .cv-in{margin:0;padding:0 12px}
 .cv-pbody{display:flex;flex-direction:column;gap:12px;padding:0 12px}
 .cv-note{margin:0;font:400 15px/22px var(--sans);color:var(--ink);max-width:65ch}
-.cv-lock{display:block;font:400 13px/18px var(--sans);color:var(--muted)}
-.cv-lock svg{width:12px;height:12px;color:var(--muted);vertical-align:top;margin:3px 4px 0 0}
+/* icon centred on the text line (Vit 21 Oct: "align icon and text") */
+.cv-lock{display:flex;align-items:center;gap:6px;font:400 13px/18px var(--sans);color:var(--muted)}
+.cv-lock svg.i{width:14px!important;height:14px!important;flex:none;color:var(--muted);margin:0}
 .cv-rate{display:flex;align-items:center;gap:8px;font:400 13px/18px var(--sans);color:var(--muted);min-height:18px}
 .cv-stars{display:inline-flex;gap:6px}
 svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-star.on{color:var(--break);fill:var(--break)}
@@ -261,3 +262,6 @@ button.cv-irow:hover b{text-decoration:underline}
 /* one page tint for detail pages (Vit 21 Oct: venue background "not aligned with other pages"): the shared .m-tint, full
    panel width; pages that open on a photo (venue, booking) have none, the photo is the colour */
 .cv-tint{display:none}
+
+/* an icon inside help text sits on the text's middle, not its top */
+.help>svg.i{width:13px;height:13px;vertical-align:-2px;margin-right:2px}
