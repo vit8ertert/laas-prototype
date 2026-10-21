@@ -212,3 +212,34 @@ button.cat-chk:hover{background:var(--raised)}
  .cat-emptystate{padding:32px 16px}
  .cat-banner{align-items:flex-start}.cat-banner .btn{margin-left:30px}
 }
+
+/* ---------- track row with player and file details (tokens only) ---------- */
+.trk{border-top:1px solid var(--rule)}
+.trk-list>.trk:first-child,.cat-rows>.trk:first-child{border-top:0}
+.trk-row{display:flex;align-items:center;gap:16px;padding:12px 0}
+.trk-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/22px var(--sans)}
+.trk-row .tx b{font:400 15px/22px var(--sans)}
+.trk-row .tx small{font:400 13px/18px var(--sans);color:var(--muted)}
+.trk.on .trk-row .tx b{font-weight:500}
+.trk-n{width:16px;text-align:right;flex:none}
+.trk-play,.trk-info{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
+.trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.trk-play:hover{background:var(--hover)}
+.trk.on .trk-play{background:var(--ink);color:var(--on-dark);box-shadow:none}
+.trk-play svg.i{width:14px;height:14px}
+.trk-info{color:var(--muted)}
+.trk-info:hover,.trk.open .trk-info{background:var(--hover);color:var(--ink)}
+.trk-fmt{flex:none;padding:2px 8px;border-radius:var(--r-pill);background:var(--well);color:var(--muted)}
+.trk-d{flex:none;width:44px;text-align:right}
+/* timeline: elapsed, waveform you can click to jump, length */
+.trk-tl{display:flex;align-items:center;gap:12px;padding:0 0 12px 80px}
+.trk-now{width:36px;color:var(--ink)}
+.trk-wave{position:relative;flex:1;height:32px;cursor:pointer}
+.trk-bars{position:absolute;inset:0;display:flex;align-items:center;gap:2px}
+.trk-bars i{flex:1;min-width:2px;border-radius:2px;background:var(--rule-strong)}
+.trk-done i{background:var(--accent-strong)}
+/* file details */
+.trk-dl{margin:0;padding:4px 0 16px 80px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
+.trk-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.trk-dl dd{margin:0;font:400 15px/22px var(--sans);overflow-wrap:anywhere}
+@media (max-width:860px){.trk-fmt{display:none}.trk-tl,.trk-dl{padding-left:0}.trk-dl{grid-template-columns:repeat(2,minmax(0,1fr))}}

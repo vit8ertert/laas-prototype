@@ -102,7 +102,7 @@ function listCounts(){const past=S.catalog||[];const n=(hasRel()?1:0)+past.lengt
 function tabBody(){const c=listCounts();const t=S.cat.tab;
  if(t==='tracks'){const rows=[...(hasRel()?LS_TRACKS.slice(0,R().tracks).map(x=>[...x,R().title]):[]),...c.past.flatMap(r=>r.tracks.map(x=>[x[0],x[1],x[2],r.title]))];
   if(!rows.length)return `<div class="empty cat-empty"><h3 class="t-title">No tracks yet</h3><p class="muted">Tracks come with a release. Add them on the release page.</p></div>`;
-  return `<section class="cat-rows">${rows.map((x,i)=>`<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx"><b>${esc(x[0])}</b><small>${esc(x[3])}</small></span><span class="mono muted">${x[1]}</span></div>`).join('')}</section>`;}
+  return `<section class="cat-rows trk-list">${rows.map((x,i)=>L.trow(i+1,x[0],x[1],x[3])).join('')}</section>`;}
  if(t==='credits')return `<section class="cat-rows">${PEOPLE.map(p=>`<div class="cat-row"><span class="cat-av">${p[0]}</span><span class="tx"><b>${p[1]}</b><small>${p[2]}, on every song</small></span>${tag('confirmed','Signed')}<span class="mono">${p[3]}</span></div>`).join('')}</section><p class="t-label muted cat-note">Splits are the same on all songs. Change them on a release before delivery; after delivery they lock.</p>`;
  if(t==='earning'){const rows=c.past.flatMap(r=>r.tracks.map(x=>[x[0],r.title,x[2]]));
   if(!rows.length)return `<div class="empty cat-empty"><h3 class="t-title">Nothing to check yet</h3><p class="muted">The earning check runs on songs that are out. Import your catalogue to start it.</p><div class="row" style="justify-content:center"><button class="btn secondary" data-act="importcat" data-src="Spotify">${ic('upload','s')}Import catalogue</button></div></div>`;
@@ -143,7 +143,8 @@ const passedList=n=>`<ul class="cat-sub">${['Artwork 3000 × 3000, RGB','No URLs
 function trackRows(){const r=R(),up=r.stage==='uploading',ready=r.stage==='ready'||r.stage==='delivered';
  return LS_TRACKS.slice(0,r.tracks).map((t,i)=>{const last=up&&i===r.tracks-1&&r.progress<100;
   const sub=up?(i===0||last?'':'<small>Checking…</small>'):t[2]&&r.stage!=='delivered'?`<small class="c-att">${t[2]}</small>`:'';
-  return `<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx">${sub||last?`<b>${t[0]}</b>`:t[0]}${sub}${last?`<span class="cat-prog"><i style="width:${r.progress}%"></i></span>`:''}</span><span class="mono muted">${last?r.progress+' %':t[1]}</span></div>`;}).join('');}
+  if(up)return `<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx">${sub||last?`<b>${t[0]}</b>`:t[0]}${sub}${last?`<span class="cat-prog"><i style="width:${r.progress}%"></i></span>`:''}</span><span class="mono muted">${last?r.progress+' %':t[1]}</span></div>`;
+  return L.trow(i+1,t[0],t[1],r.title,{sub});}).join('');}
 
 function relTabBody(){const r=R(),t=S.rtab,st=r.stage;
  if(t==='tracks')return r.tracks?`<section class="cat-rows">${trackRows()}</section>`:`<div class="empty cat-empty"><h3 class="t-title">No tracks yet</h3><p class="muted">Drop WAV files on the Overview tab, or add them one by one.</p><div class="row" style="justify-content:center"><button class="btn secondary" data-act="addtracks">${ic('upload','s')}Add tracks</button></div></div>`;
@@ -184,7 +185,7 @@ L.VIEWS.pastrelease=()=>{const r=PASTC.find(x=>x.id===S.params.id)||PASTC[0];con
  <div class="cat-rhead"><img class="cat-cover" src="${IMG(r.img)}" alt=""><div class="id"><span class="t-label muted">${r.kind}, ${r.tracks.length} track${r.tracks.length>1?'s':''}, ${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}</span><h1 class="t-display">${r.title}</h1><div class="sl">${tag(r.tag[0],r.tag[1])}<span class="muted">Out ${r.date}, imported today</span></div>
   <div class="acts"><button class="btn secondary" data-act="copytext" data-text="https://laas.app/r/${r.id}">${ic('copy','s')}Copy link</button></div></div></div>
  <div class="grid2 cat-ov"><div class="cat-col"><section class="cat-sec"><div class="hd"><h3 class="t-heading cat-h">Tracks</h3></div>
-  ${r.tracks.map((t,i)=>`<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx"><b>${t[0]}</b>${t[2]?`<small class="c-att">${t[2]}</small>`:''}</span><span class="mono muted">${t[1]}</span></div>`).join('')}</section></div>
+  <div class="trk-list">${r.tracks.map((t,i)=>L.trow(i+1,t[0],t[1],r.title,{sub:t[2]?`<small class="c-att">${t[2]}</small>`:''})).join('')}</div></section></div>
  <aside class="cat-panel"><div class="grp"><h3 class="t-heading cat-h">Earning</h3>${[['Streams',`<span class="mono">${r.streams}</span>`],['Paid out',`<span class="mono">${r.earn}</span> DKK`],['Koda',r.koda],['Distributor',r.distributor]].map(([a,b])=>`<div class="fact"><span class="t-label muted">${a}</span><span>${b}</span></div>`).join('')}</div>
   <div class="grp tight"><h3 class="t-heading cat-h">Credits and splits</h3><span class="cat-avs">${PEOPLE.map(p=>`<span title="${p[1]}">${p[0]}</span>`).join('')}</span><span class="t-label muted">40 / 30 / 30, imported from the distributor.</span></div></aside></div></div>${L.abar(r.title)}`;};
 
@@ -295,4 +296,55 @@ L.CHANGE.push(t=>{
  if(t.dataset.wav!==undefined&&t.files&&t.files.length){A.addtracks();return true;}
  if(t.dataset.impcat!==undefined){const n=document.querySelectorAll('[data-impcat]:checked').length;const b=document.querySelector('.drawer [data-act="importcatdone"]');if(b){b.textContent=n?`Import ${n} release${n===1?'':'s'}`:'Import nothing';}return true;}
 });
+})();
+
+/* ---------- track player and file details (Vit 21 Oct: "can a track be played here, a timeline when pressed; more info,
+   bitrate, format; play and info on the release page too"). One row used by the Tracks tab, an imported release and a
+   new release. Playback is simulated: a timer moves the timeline, nothing is streamed. ---------- */
+(function(){const L=window.LAAS,S=L.S,ic=L.ic,esc=L.esc;
+L.P.play??='<path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/>';
+L.P.pause??='<rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/>';
+L.P.info??='<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>';
+S.player??={key:null,t:0,playing:false,open:null};
+const secs=d=>{const [m,s]=String(d).split(':');return (+m||0)*60+(+s||0);};
+const mmss=x=>`${Math.floor(x/60)}:${String(Math.floor(x%60)).padStart(2,'0')}`;
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+// file details: masters are WAV 24-bit / 48 kHz stereo (2.304 kbps); values derived per track so they stay stable
+function details(title,dur,i,release){const d=secs(dur),kb=Math.round(d*2304/8/1024*10)/10;
+  const lufs=(-14+((i*7)%9)/10-0.4).toFixed(1),tp=(-1-((i*3)%5)/10).toFixed(1);
+  return [['Format','WAV, stereo'],['Bit depth and sample rate','24-bit, 48 kHz'],['Bitrate','2.304 kbps'],['Length',dur],
+    ['Loudness',`${lufs} LUFS integrated`],['True peak',`${tp} dBTP`],['ISRC',`DK-LT1-${release==='Untitled LP'?'25':'26'}-${String(i+1).padStart(5,'0')}`],
+    ['File size',`${kb.toLocaleString('da-DK')} MB`]];}
+// a waveform made of 64 bars, deterministic per track
+function wave(key){let h=0;for(const c of key)h=(h*31+c.charCodeAt(0))>>>0;
+  return Array.from({length:64},(_,k)=>{h=(h*1103515245+12345)>>>0;const v=.25+((h>>>16)%75)/100;return `<i style="height:${Math.round(v*100)}%"></i>`;}).join('');}
+L.trow=(n,title,dur,release,opts={})=>{const key=slug(release+'-'+title),P=S.player,on=P.key===key,open=P.open===key;
+  const d=secs(dur),pct=on?Math.min(100,P.t/d*100):0;
+  return `<div class="trk ${on?'on':''} ${open?'open':''}" data-trk="${key}" data-dur="${d}">
+   <div class="trk-row">
+    <button class="trk-play" data-tplay="${key}" aria-label="${on&&P.playing?'Pause':'Play'} ${esc(title)}">${ic(on&&P.playing?'pause':'play','s')}</button>
+    <span class="mono faint trk-n">${n}</span>
+    <span class="tx"><b>${esc(title)}</b>${opts.sub??(release?`<small>${esc(release)}</small>`:'')}</span>
+    <span class="trk-fmt t-meta">WAV 24/48</span>
+    <span class="mono muted trk-d">${dur}</span>
+    <button class="trk-info" data-tinfo="${key}" aria-expanded="${open}" aria-label="File details for ${esc(title)}">${ic('info','s')}</button>
+   </div>
+   ${on?`<div class="trk-tl"><span class="mono t-meta trk-now">${mmss(P.t)}</span><div class="trk-wave" data-tseek="${key}" role="slider" aria-label="Position" aria-valuemin="0" aria-valuemax="${d}" aria-valuenow="${Math.round(P.t)}"><div class="trk-bars">${wave(key)}</div><div class="trk-bars trk-done" style="clip-path:inset(0 ${100-pct}% 0 0)">${wave(key)}</div></div><span class="mono t-meta faint">${dur}</span></div>`:''}
+   ${open?`<dl class="trk-dl">${details(title,dur,n-1,release).map(([a,b])=>`<div><dt class="t-label muted">${a}</dt><dd>${b}</dd></div>`).join('')}</dl>`:''}
+  </div>`;};
+let timer=null;
+function paint(){const P=S.player,el=document.querySelector(`[data-trk="${P.key}"]`);if(!el)return;const d=+el.dataset.dur;
+  const w=el.querySelector('.trk-done');if(w)w.style.clipPath=`inset(0 ${100-P.t/d*100}% 0 0)`;const n=el.querySelector('.trk-now');if(n)n.textContent=mmss(P.t);
+  const sl=el.querySelector('[data-tseek]');if(sl)sl.setAttribute('aria-valuenow',Math.round(P.t));}
+function tick(){const P=S.player;if(!P.playing)return;const el=document.querySelector(`[data-trk="${P.key}"]`);const d=el?+el.dataset.dur:0;
+  P.t+=.25;if(d&&P.t>=d){P.t=d;P.playing=false;clearInterval(timer);timer=null;L.render();return;}paint();}
+function play(key){const P=S.player;if(P.key===key){P.playing=!P.playing;}else{P.key=key;P.t=0;P.playing=true;}
+  clearInterval(timer);timer=P.playing?setInterval(tick,250):null;L.render();}
+document.addEventListener('click',e=>{
+  const p=e.target.closest('[data-tplay]');if(p){e.stopPropagation();play(p.dataset.tplay);return;}
+  const f=e.target.closest('[data-tinfo]');if(f){e.stopPropagation();const k=f.dataset.tinfo;S.player.open=S.player.open===k?null:k;L.render();return;}
+  const w=e.target.closest('[data-tseek]');if(w){e.stopPropagation();const r=w.getBoundingClientRect(),el=w.closest('[data-trk]');S.player.t=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*(+el.dataset.dur);paint();return;}
+},true);
+// stop playback when leaving the catalogue
+addEventListener('hashchange',()=>{if(!/catalogue|release|pastrelease/.test(location.hash)){S.player.playing=false;clearInterval(timer);timer=null;}});
 })();
