@@ -145,10 +145,44 @@ function expenses(){
 }
 
 /* ---------- Payouts tab ---------- */
-const payouts=()=>`<div class="m-cols"><div class="m-left"><section class="m-sec">${secHead('Gigs to settle',ghostBtn('Settle a gig','data-go="settle"','plus'))}<div class="m-body">
- ${[['royal','Saturday hotel gig','25 Oct, net 4.360 DKK, split 3 ways',S.booking.settled?['paid','Settled']:['attention','To settle'],'4.360'],['loppen','Release show','18 Oct, split 3 ways',['paid','Settled'],'6.200'],['mono','Club night','10 Oct, split 3 ways',['paid','Settled'],'5.100']].map(r=>line({img:r[0],label:r[1],note:r[2],tg:tag(r[3][0],r[3][1]),amt:r[4],attrs:'data-go="settle"'})).join('')}
- ${foot('Settle splits a gig\'s net between members. Payouts are recorded here and made in your bank app.')}</div></section></div>
- <aside class="m-right"><section class="m-sec">${secHead('Paid to members, October')}<div class="m-body m-g12">${kvRow('Mette Ravn','<span class="mono">3.520</span>')}${kvRow('Sofie Lund','<span class="mono">3.080</span>')}${kvRow('Jonas Holm','<span class="mono">3.110</span>')}</div></section></aside></div>`;
+/* What a band does here (Vit 21 Oct: "looks very raw"): see what each member is owed (their share of settled gigs plus
+   expenses they paid), pay it in the bank app and record it, settle the gigs that are still open, look back at payouts. */
+const PO_GIGS=[['royal','Saturday hotel gig','25 Oct','Hotel Royal',4360],['loppen','Release show','18 Oct','Loppen',6200],['mono','Club night','10 Oct','Club Mono',5100]];
+const PO_MEM=[['Mette','Mette Ravn','****2210'],['Sofie','Sofie Lund','****8841'],['Jonas','Jonas Holm','****0937']];
+M.po??=[{id:'p6',d:19,who:'Mette',items:[['Release show, share',2067],['Strings, 2 sets, paid back',240]]},{id:'p5',d:19,who:'Sofie',items:[['Release show, share',2067]]},{id:'p4',d:19,who:'Jonas',items:[['Release show, share',2066]]},
+ {id:'p3',d:12,who:'Mette',items:[['Club night, share',1700]]},{id:'p2',d:12,who:'Sofie',items:[['Club night, share',1700]]},{id:'p1',d:12,who:'Jonas',items:[['Club night, share',1700]]}];
+const poSum=p=>p.items.reduce((a,x)=>a+x[1],0);
+const poShare=k=>S.booking.settled&&!M.po.some(p=>p.who===k&&p.items.some(x=>x[0].startsWith('Saturday hotel gig')))?Math.round(4360/3)+(k==='Mette'?1:0):0;
+const poOwed=k=>{const ex=M.ex.filter(e=>e.by===k&&e.rf==='to');const sh=poShare(k);return {ex,sh,t:ex.reduce((a,e)=>a+e.amt,0)+sh};};
+const poPaid=k=>M.po.filter(p=>p.who===k).reduce((a,p)=>a+poSum(p),0);
+const payouts=()=>{const owed=PO_MEM.map(([k])=>poOwed(k)),now=owed.reduce((a,o)=>a+o.t,0),who=owed.filter(o=>o.t).length,paid=M.po.reduce((a,p)=>a+poSum(p),0);
+ const open=PO_GIGS.filter(g=>g[0]==='royal'&&!S.booking.settled);
+ const mem=PO_MEM.map(([k,name,acct],i)=>{const o=owed[i];return `<div class="bk-tr po-m" role="row" tabindex="0" data-act="popay" data-who="${k}" style="--i:${i}"><span class="ex-who"><span class="ex-av">${k[0]}</span><span class="ex-wt"><b class="po-n">${name}</b><small>bank ${acct}</small></span></span>
+  <span class="n mono">${o.sh?L.kr(o.sh):'<span class="faint">0</span>'}</span><span class="n mono">${o.ex.length?L.kr(o.ex.reduce((a,e)=>a+e.amt,0)):'<span class="faint">0</span>'}</span><span class="n mono po-due">${L.kr(o.t)}</span><span class="n mono muted">${L.kr(poPaid(k))}</span>
+  <span class="n">${o.t?`<button class="btn secondary s" data-act="popay" data-who="${k}">Record payout</button>`:tag('paid','Paid up')}</span></div>`;}).join('');
+ const gigs=PO_GIGS.map((g,i)=>{const done=g[0]!=='royal'||S.booking.settled;return `<div class="bk-tr po-g" role="row" tabindex="0" data-go="settle" style="--i:${i}"><span class="ex-tt po-gt"><img class="bk-thumb" src="${IMG(V(g[0]).img)}" alt=""><span class="ex-tt"><b>${g[1]}</b><small>${g[2]}, ${g[3]}</small></span></span><span class="n mono">${L.kr(g[4])}</span><span class="m">3 ways, equal</span><span>${done?tag('paid','Settled'):tag('attention','To settle')}</span><span class="n mono">${L.kr(Math.round(g[4]/3))}</span></div>`;}).join('');
+ const hist=M.po.slice().sort((a,b)=>b.d-a.d).map((p,i)=>`<div class="bk-tr po-h" role="row" tabindex="0" data-act="poview" data-id="${p.id}" style="--i:${i}"><span class="m">${p.d} Oct</span><span class="ex-tt"><b>${EXWHO[p.who]}</b><small>${p.items.map(x=>x[0]).join(', ')}</small></span><span class="m">Bank transfer</span><span class="n mono">${L.kr(poSum(p))}</span></div>`).join('');
+ return `${kpis([kpi('To pay out now',L.kr(now)+' DKK',who?`${who} ${who===1?'member':'members'}, shares and expenses`:'everyone is paid up',now?'att':'ok'),kpi('Paid out, October',L.kr(paid)+' DKK',`${M.po.length} payouts to 3 members`,'muted'),kpi('Gigs to settle',open.length?`${open.length} ${open.length===1?'gig':'gigs'}`:'None',open.length?`${open[0][1]}, ${L.kr(open[0][4])} DKK net`:'all gigs are settled',open.length?'att':'ok')])}
+ ${open.length?banner(`${open[0][1]} is not settled yet`,`Net ${L.kr(open[0][4])} DKK after costs. Settle it to give each member their share, then pay it out here.`,btn('secondary s','Settle the gig','data-go="settle"')):''}
+ <section class="po-sec">${secHead('Members',ghostBtn('Export for the bookkeeper','data-act="mnyexport"','upload'))}
+ <div class="bk-table po-t" role="table" aria-label="What each member is owed"><div class="bk-tr bk-th po-m" role="row"><span>Member</span><span class="n">Gig shares</span><span class="n">Expenses paid</span><span class="n">To pay out</span><span class="n">Paid, October</span><span></span></div>${mem}
+ <div class="bk-tr po-m ex-tot" role="row"><span class="m">3 members</span><span></span><span></span><span class="n mono">${L.kr(now)}</span><span class="n mono">${L.kr(paid)}</span><span></span></div></div></section>
+ <section class="po-sec">${secHead('Gigs',ghostBtn('Settle a gig','data-go="settle"','plus'))}
+ <div class="bk-table po-t" role="table" aria-label="Gigs and their split"><div class="bk-tr bk-th po-g" role="row"><span>Gig</span><span class="n">Net, DKK</span><span>Split</span><span>Status</span><span class="n">Each, DKK</span></div>${gigs}</div></section>
+ <section class="po-sec">${secHead('Payout history')}
+ <div class="bk-table po-t" role="table" aria-label="Payouts"><div class="bk-tr bk-th po-h" role="row"><span>Date</span><span>Paid to</span><span>How</span><span class="n">Amount, DKK</span></div>${hist}</div></section>
+ <p class="m-foot m-nopad">LAAS records payouts; the money moves in your bank app. A payout clears the member's shares and the expenses they paid, and books it from the band account.</p>`;};
+L.DR.popay=k=>{const o=poOwed(k);const m=PO_MEM.find(x=>x[0]===k);const items=[...(o.sh?[['Saturday hotel gig, share',o.sh]]:[]),...o.ex.map(e=>[`${e.what}, paid back`,e.amt])];
+ return {type:'mnydrawer',title:`Pay out to ${m[1]}`,sub:`${L.kr(o.t)} DKK, to bank ${m[2]}`,
+ body:items.length?`<div class="ml-lt po-lines" role="table" aria-label="What the payout covers"><div class="ml-ltr ml-lth" role="row"><span>For</span><span></span><span class="n">DKK</span></div>${items.map(x=>`<div class="ml-ltr" role="row"><span>${esc(x[0])}</span><span></span><span class="n mono">${L.kr(x[1])}</span></div>`).join('')}<div class="ml-ltr ml-ltt" role="row"><span>Total</span><span></span><span class="n mono">${L.kr(o.t)}</span></div></div>
+  <div class="ml-facts"><div class="ml-fact"><span>From</span><span>Band account, Danske Bank</span></div><div class="ml-fact"><span>To</span><span>${m[1]}, bank ${m[2]}</span></div><div class="ml-fact"><span>Date</span><span>21 Oct 2026</span></div><div class="ml-fact"><span>Booked as</span><span>Owed to members, from Bank account</span></div></div>
+  <p class="m-foot m-nopad">Make the transfer in your bank app first, then record it here. Recording marks the expenses paid back and writes the entry to the journal.</p>`
+  :`<p class="muted">${m[1]} is paid up. Nothing to pay out.</p>`,
+ foot:`<span style="flex:1"></span>${btn('secondary','Cancel','data-act="close"')}${items.length?btn('accent',`Record ${L.kr(o.t)} DKK`,`data-act="porecord" data-who="${k}"`,'check'):''}`};};
+L.DR.poview=id=>{const p=M.po.find(x=>x.id===id);return {type:'mnydrawer',title:`Payout to ${EXWHO[p.who]}`,sub:`${p.d} Oct 2026, bank transfer, ${L.kr(poSum(p))} DKK`,
+ body:`<div class="ml-lt po-lines" role="table"><div class="ml-ltr ml-lth" role="row"><span>For</span><span></span><span class="n">DKK</span></div>${p.items.map(x=>`<div class="ml-ltr" role="row"><span>${esc(x[0])}</span><span></span><span class="n mono">${L.kr(x[1])}</span></div>`).join('')}<div class="ml-ltr ml-ltt" role="row"><span>Total</span><span></span><span class="n mono">${L.kr(poSum(p))}</span></div></div>
+ <div class="ml-facts"><div class="ml-fact"><span>From</span><span>Band account, Danske Bank</span></div><div class="ml-fact"><span>Recorded by</span><span>Vital, ${p.d} Oct</span></div></div>`,
+ foot:`${ghostBtn('Payslip as PDF','data-act="popdf"','download')}<span style="flex:1"></span>${btn('secondary','Close','data-act="close"')}`};};
 
 /* ---------- Ledger content (Ledger view, Books and Reports tabs) ---------- */
 const CH=[['Nov',41,32],['Dec',99,41],['Jan',27,36],['Feb',50,45],['Mar',81,54],['Apr',63,41],['May',90,68],['Jun',117,63],['Jul',140,81],['Aug',126,59],['Sep',77,50],['Oct',108,54]];
@@ -421,11 +455,13 @@ const ledAbar=()=>L.abar('','Ask about the books — post the drafts, what is in
 /* ---------- Journal ---------- */
 function jRows(){const q=M.jq.trim().toLowerCase();
  return M.je.filter(e=>M.jf==='all'||e.st===M.jf).filter(e=>!q||[e.desc,e.ref,e.cp,String(e.no),...e.lines.map(l=>l[0]+' '+accName(l[0])+' '+l[1])].join(' ').toLowerCase().includes(q));}
-const jSummary=e=>{const d=e.lines.filter(l=>l[2]&&l[0]).map(l=>l[0]),c=e.lines.filter(l=>l[3]&&l[0]).map(l=>l[0]);return `debit ${d.join(', ')||'—'}, credit ${c.join(', ')||'—'}`;};
+/* plain words instead of "debit 1500, credit 2500" (Vit 21 Oct: think more about the journal): where it went, from where */
+const jSummary=e=>{const d=e.lines.filter(l=>l[2]&&l[0]).map(l=>accName(l[0])),c=e.lines.filter(l=>l[3]&&l[0]).map(l=>accName(l[0]));return `${d.join(' and ')||'no account'}, from ${c.join(' and ')||'no account'}`;};
+const jNeedsFile=e=>!e.att&&/Expenses|Gear/.test(e.src);
 L.VIEWS.journal=()=>{const list=jRows();const q=M.jq.trim();const nd=drafts();const total=OLDER+M.je.length;
  const counts={all:total,posted:total-nd,draft:nd};
- const chips=`<div class="ml-tools"><div class="m-modes">${[['all','All'],['posted','Posted'],['draft','Drafts']].map(([k,l])=>`<button class="chip m-chip ${M.jf===k?'on':''}" data-act="jfilt" data-f="${k}" aria-pressed="${M.jf===k}">${l}<span class="ml-cc">${counts[k]}</span></button>`).join('')}</div><span class="sp"></span>${search('jsearch','Text, reference, account, contact',M.jq,'Search the journal')}</div>`;
- const rows=list.map((e,i)=>`<div class="ml-tr ml-j" role="row" tabindex="0" data-act="jopen" data-no="${e.no}" style="--i:${i}"><span class="ml-d">${e.date}</span><span class="mono ml-no">${e.no}</span><span class="ml-tt"><b>${L.hl(e.desc,q)}</b><small>${e.cp?L.hl(e.cp,q)+', ':''}${jSummary(e)}${e.src.startsWith('Proposed')?`, <span class="ml-pair">${ic('link','s')}paired with Gear</span>`:''}</small></span><span class="mono ml-m">${L.hl(e.ref,q)}</span><span class="ml-att" ${e.att?`title="${esc(e.att)}"`:''}>${e.att?ic('clip','s'):'<span class="ml-none">none</span>'}</span><span>${e.st==='draft'?tag('draft','Draft'):tag('confirmed','Posted')}</span><span class="n mono">${L.kr(jTotal(e))}</span></div>`).join('');
+ const chips=`<div class="ml-tools"><div class="m-modes">${[['all','All'],['posted','Posted'],['draft','Drafts']].map(([k,l])=>`<button class="chip m-chip ${M.jf===k?'on':''}" data-act="jfilt" data-f="${k}" aria-pressed="${M.jf===k}">${l}<span class="ml-cc">${counts[k]}</span></button>`).join('')}</div><span class="sp"></span>${M.jf==='draft'&&nd?btn('accent s',`Post ${nd===1?'the draft':'all '+nd+' drafts'}`,'data-act="jpostall"','check'):''}${search('jsearch','Text, reference, account, contact',M.jq,'Search the journal')}</div>`;
+ const rows=list.map((e,i)=>`<div class="ml-tr ml-j" role="row" tabindex="0" data-act="jopen" data-no="${e.no}" style="--i:${i}"><span class="ml-d">${e.date}</span><span class="mono ml-no">${e.no}</span><span class="ml-tt"><b>${L.hl(e.desc,q)}</b><small>${e.cp?L.hl(e.cp,q)+', ':''}${jSummary(e)}${e.src.startsWith('Proposed')?`, <span class="ml-pair">${ic('link','s')}paired with Gear</span>`:''}</small></span><span class="mono ml-m">${L.hl(e.ref,q)}</span><span class="ml-att" ${e.att?`title="${esc(e.att)}"`:''}>${e.att?`${ic('clip','s')}<span class="sr">Attached</span>`:jNeedsFile(e)?'<span class="tag attention ml-miss">Missing</span>':'<span class="faint">None</span>'}</span><span>${e.st==='draft'?tag('draft','Draft'):tag('confirmed','Posted')}</span><span class="n mono">${L.kr(jTotal(e))}</span></div>`).join('');
  const table=`<div class="ml-table" role="table" aria-label="Journal entries"><div class="ml-tr ml-th ml-j" role="row"><span>Date</span><span>No.</span><span>Description</span><span>Reference</span><span>File</span><span>Status</span><span class="n">DKK</span></div>${rows}</div>`;
  const filtered=q||M.jf!=='all';
  const footer=`<div class="ml-foot"><span>${q?`${list.length} of ${total} match “${esc(q)}” in text, reference, account or contact`:filtered?`${list.length} ${M.jf==='draft'?'drafts':'posted entries shown, newest first'}`:`Showing ${list.length} of ${total}, newest first. Drafts stay out of the reports until posted.`}</span>${filtered?ghostBtn('Show all','data-act="jall"'):ghostBtn('Show older','data-act="jolder"')}</div>`;
@@ -442,9 +478,14 @@ const linesTable=e=>{const d=e.lines.reduce((a,l)=>a+l[2],0),c=e.lines.reduce((a
  ${e.lines.map(l=>`<button class="ml-ltr" role="row" data-act="jacct" data-n="${l[0]}"><span class="ml-tt"><b>${l[0]?`<span class="mono">${l[0]}</span> ${esc(accName(l[0]))}`:'No account yet'}</b><small>${esc(l[1])}</small></span><span class="n mono">${kr0(l[2])}</span><span class="n mono">${kr0(l[3])}</span></button>`).join('')}
  <div class="ml-ltr ml-ltt" role="row"><span>Total</span><span class="n mono">${L.kr(d)}</span><span class="n mono">${L.kr(c)}</span></div></div>
  <p class="ml-bal ${d===c?'ok':'bad'}">${ic(d===c?'check':'alert','s')}${d===c?'Balanced, debit equals credit':`Off by ${L.kr(Math.abs(d-c))} DKK, it cannot be posted until debit equals credit`}</p>`;};
-L.DR.jentry=no=>{const e=M.je.find(x=>x.no===+no);if(!e)return null;const dr=e.st==='draft';
- return {type:'mldrawer',title:`Entry ${e.no}, ${esc(e.desc)}`,sub:`${e.date} 2026, ${dr?'draft, not in the reports yet':'posted, locked'}`,
- body:`<div class="m-body m-g12 ml-kv">${kvRow('Status',dr?tag('draft','Draft'):tag('confirmed','Posted'))}${kvRow('Reference',`<span class="mono">${esc(e.ref)||'—'}</span>`)}${kvRow('Counterparty',esc(e.cp)||'None')}${kvRow('Attachment',e.att?`<button class="ml-file" data-act="jfile" data-f="${esc(e.att)}">${ic('clip','s')}${esc(e.att)}</button>`:'None, add the receipt from Expenses')}${kvRow('Came from',esc(e.src))}</div>
+const JSRC=e=>/Expenses/.test(e.src)?['Expenses','data-act="jsrc" data-to="expenses"']:/Invoices/.test(e.src)?['Invoices','data-act="jsrc" data-to="invoices"']:/Gear/.test(e.src)?['Gear','data-go="gear"']:null;
+L.DR.jentry=no=>{const e=M.je.find(x=>x.no===+no);if(!e)return null;const dr=e.st==='draft';const src=JSRC(e);
+ const fact=(k,v)=>`<div class="ml-fact"><span>${k}</span><span>${v}</span></div>`;
+ return {type:'mldrawer',title:`Entry ${e.no}, ${esc(e.desc)}`,sub:`${e.date} 2026`,
+ body:`<div class="ml-ehd"><span class="ml-eamt mono">${L.kr(jTotal(e))} <small>DKK</small></span>${dr?tag('draft','Draft'):tag('confirmed','Posted')}<span class="ml-est muted">${dr?'Not in the reports yet':'In the books, locked'}</span></div>
+ <div class="ml-facts">${fact('Reference',`<span class="mono">${esc(e.ref)||'None'}</span>`)}${fact('Counterparty',esc(e.cp)||'None')}${fact('Came from',src?`<button class="ml-link" ${src[1]}>${esc(e.src.replace(/^From /,''))}${ic('right','s')}</button>`:esc(e.src))}${fact('Booked',`${e.date} 2026`)}</div>
+ <div class="ml-filebox">${e.att?`<button class="ml-fcard" data-act="jfile" data-f="${esc(e.att)}"><span class="ml-fic">${ic(/\.pdf$/.test(e.att)?'filetext':'clip','s')}</span><span class="ml-ft"><b>${esc(e.att)}</b><small>${/\.pdf$/.test(e.att)?'PDF':'Photo'}, attached ${e.date}</small></span><span class="ml-fo">Open</span></button>`
+  :`<div class="ml-fcard none"><span class="ml-fic">${ic('upload','s')}</span><span class="ml-ft"><b>No receipt attached</b><small>${jNeedsFile(e)?'The bookkeeper will ask for it.':'Not needed for this kind of entry.'}</small></span>${jNeedsFile(e)?btn('secondary s','Add','data-act="jattach" data-no="'+e.no+'"'):''}</div>`}</div>
  <div class="m-lines"><span class="m-ll">Lines</span>${linesTable(e)}</div>
  <p class="m-foot m-nopad">${dr?'Drafts can be edited or deleted. Post writes the entry to the books and locks it.':'Posted entries are never edited. Reverse writes a new entry dated today with debit and credit swapped, so the history stays readable.'}</p>`,
  foot:dr?`${btn('ghost s','Delete draft',`data-act="jdel" data-no="${e.no}"`)}<span style="flex:1"></span>${btn('secondary','Edit',`data-act="jedit" data-no="${e.no}"`,'pencil')}${btn('accent','Post',`data-act="jpost" data-no="${e.no}"`,'check')}`
@@ -543,16 +584,23 @@ function repBS(p){const d=books(PER[p].end);const acc=c=>M.acc.filter(a=>cls(a[0
  ${rrow('','Liabilities and equity',[L.kr(tl)],'ml-res')}</tbody></table>
  <p class="ml-bal ${tl===d.assets?'ok':'bad'}">${ic('check','s')}Balanced, assets ${L.kr(d.assets)} DKK equal liabilities and equity</p>`;}
 function repTB(p){const d=books(PER[p].end);let td=0,tc=0;
- const rows=M.acc.map(a=>{const v=balOf(a[0],PER[p].end);if(!v)return '';const dr=debitSide(a[0]);if(dr)td+=v;else tc+=v;return rrow(a[0],esc(a[1]),[dr?L.kr(v):'',dr?'':L.kr(v)]);}).join('');
- return `<table class="ml-rep"><thead><tr><th>No.</th><th>Account</th><th class="num">Debit</th><th class="num">Credit</th></tr></thead><tbody>${rows}${rrow('','Total',[L.kr(td),L.kr(tc)],'ml-res')}</tbody></table>
+ const grp=c=>{let gd=0,gc=0;const rows=M.acc.filter(a=>cls(a[0])===c).map(a=>{const v=balOf(a[0],PER[p].end);if(!v)return '';const dr=debitSide(a[0]);if(dr){td+=v;gd+=v;}else{tc+=v;gc+=v;}return rrow(a[0],esc(a[1]),[dr?L.kr(v):'',dr?'':L.kr(v)]);}).join('');
+  return rows?`<tr class="ml-grp"><td colspan="4">${CLS[c][0].toUpperCase()+CLS[c].slice(1)}</td></tr>${rows}`:'';};
+ const body=[1,2,3,4,5].map(grp).join('');
+ return `<table class="ml-rep"><thead><tr><th>No.</th><th>Account</th><th class="num">Debit</th><th class="num">Credit</th></tr></thead><tbody>${body}${rrow('','Total',[L.kr(td),L.kr(tc)],'ml-res')}</tbody></table>
  <p class="ml-bal ${td===tc?'ok':'bad'}">${ic('check','s')}Balanced, debit ${L.kr(td)} DKK equals credit, as at ${PER[p].asAt}</p>`;}
+/* the three numbers each report answers, above it */
+const repKpis=(r,p)=>{const P=PER[p];if(r==='pl'){const v=plFor(P.fi,P.fe);const t=c=>Object.keys(v).filter(k=>cls(+k)===c).reduce((a,k)=>a+v[k],0);const i=t(4),e=t(5);return kpis([kpi('Income',L.kr(i)+' DKK',P.label,'muted','rule'),kpi('Expenses',L.kr(e)+' DKK',P.label,'muted','rule'),kpi('Result',L.kr(i-e)+' DKK','before tax',i-e>=0?'ok':'att','rule')]);}
+ const d=books(P.end);if(r==='bs')return kpis([kpi('The band owns',L.kr(d.assets)+' DKK','assets, as at '+P.asAt,'muted','rule'),kpi('The band owes',L.kr(d.liab)+' DKK','bills, moms, members','muted','rule'),kpi('Equity',L.kr(d.eq+d.result)+' DKK','incl. the result so far','ok','rule')]);
+ let td=0,tc=0;M.acc.forEach(a=>{const v=balOf(a[0],P.end);if(!v)return;if(debitSide(a[0]))td+=v;else tc+=v;});return kpis([kpi('Debit',L.kr(td)+' DKK','all accounts','muted','rule'),kpi('Credit',L.kr(tc)+' DKK','all accounts','muted','rule'),kpi('Difference',L.kr(Math.abs(td-tc))+' DKK',td===tc?'balanced':'an entry is wrong',td===tc?'ok':'att','rule')]);};
 L.VIEWS.ledgerreport=()=>{const p=PER[M.per]?M.per:'ytd',r=REP[M.rep]?M.rep:'pl';const nd=drafts();
  const note={pl:`Income and expenses for ${PER[p].label.toLowerCase().replace(/^this year, |^last year, /,'')}, compared with ${PER[p].cmp}. Open an account to see its entries.`,
   bs:`What the band owns and owes at the end of the period. The result so far is part of equity until the year is closed.`,
   tb:`Every account with a balance at the end of the period. If debit and credit ever differ, an entry is wrong; posting blocks that.`}[r];
- return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,`<button class="chip m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button>`+btn('accent','Export','data-act="lexport" data-what="report"','download'))}
+ return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,btn('secondary','Export','data-act="lexport" data-what="report"','download')+btn('accent','Send to the bookkeeper','data-act="lexport" data-what="bookkeeper"','send'))}
  ${L.ledgerTabs('ledgerreport')}
- <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="chip m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
+ <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="chip m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><button class="chip m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
+ ${repKpis(r,p)}
  <div class="table-wrap ml-repw">${{pl:repPL,bs:repBS,tb:repTB}[r](p)}</div>
  ${foot(note)}</div></div>${ledAbar()}`;};
 
@@ -578,6 +626,9 @@ Object.assign(A,{
  jrmline:el=>{const rows=document.querySelectorAll('#jd-lines .ml-jl');if(rows.length<=2){L.toast('An entry needs at least two lines, one debit and one credit');return;}el.closest('.ml-jl').remove();recalcJ();},
  jsave:()=>saveEntry('draft'),
  jpostnew:()=>saveEntry('posted'),
+ jpostall:()=>{const l=M.je.filter(e=>e.st==='draft'&&jDiff(e)===0);const old=l.map(e=>e.no);l.forEach(e=>{e.st='posted';});M.jf='all';L.render();L.toast(`${l.length} ${l.length===1?'entry':'entries'} posted and locked`,()=>{M.je.forEach(e=>{if(old.includes(e.no))e.st='draft';});L.render();});},
+ jsrc:el=>{S.overlay=null;S.mtab=el.dataset.to;L.go('money');},
+ jattach:el=>{const e=findE(el.dataset.no);if(!e)return;e.att=e.desc.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'')+'.jpg';openDr(L.DR.jentry(e.no));L.toast('Receipt attached to entry '+e.no,()=>{e.att='';L.render();});},
  jpost:el=>{const e=findE(el.dataset.no);if(!e)return;if(jDiff(e)!==0){openDr(L.DR.jnew({entry:e,editNo:e.no,att:e.att}));setTimeout(recalcJ,0);L.toast(`Draft ${e.no} is off by ${L.kr(Math.abs(jDiff(e)))} DKK, fix the lines to post it`);return;}e.st='posted';S.overlay=null;L.render();L.toast(`Entry ${e.no} posted, it is in the reports now`,()=>{e.st='draft';});},
  jdel:el=>{const no=+el.dataset.no;L.open('modal',{html:L.confirmM(`Delete draft ${no}?`,'It was never posted, so the books do not change. The receipt stays in Expenses.','Keep draft','jdelok" data-no="'+no,'Delete draft',1)});},
  jdelok:el=>{const i=M.je.findIndex(e=>e.no===+el.dataset.no);if(i<0)return;const [e]=M.je.splice(i,1);S.overlay=null;L.render();L.toast(`Draft ${e.no} deleted`,()=>{M.je.splice(i,0,e);});},
@@ -604,7 +655,7 @@ Object.assign(A,{
  lrep:el=>{M.rep=el.dataset.r;L.render();},
  lperiod:el=>menu(el,Object.entries(PER).map(([k,P])=>[`<span class="ml-mi">${M.per===k?ic('check','s'):''}</span>${P.label}`,'lper',`data-p="${k}" aria-checked="${M.per===k}" role="menuitemradio"`])),
  lper:el=>{M.per=el.dataset.p;S.overlay=null;L.render();},
- lexport:el=>{const w=el.dataset.what;const what=w==='journal'?'the journal, Jan–Oct 2026':w==='accounts'?'the chart of accounts':`${REP[M.rep].toLowerCase()}, ${PER[M.per].label}`;
+ lexport:el=>{const w=el.dataset.what;if(w==='bookkeeper'){L.toast(`Sent to the bookkeeper: ${REP[M.rep].toLowerCase()}, ${PER[M.per].label}, as PDF and CSV`,()=>{});return;}const what=w==='journal'?'the journal, Jan–Oct 2026':w==='accounts'?'the chart of accounts':`${REP[M.rep].toLowerCase()}, ${PER[M.per].label}`;
   L.open('modal',{html:`<div class="ml-modal"><h2 class="t-title">Export ${what}</h2><div class="field"><label>Format</label><div class="seg"><button class="on">PDF</button><button>CSV</button><button>Excel</button></div></div><label class="row" style="gap:10px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Include account numbers</label><p class="m-foot m-nopad">Drafts are never exported. Nothing is sent, the file downloads here.</p><div class="row" style="justify-content:flex-end">${btn('secondary','Cancel','data-act="close"')}${btn('accent','Export','data-act="close" data-msg="Export ready: '+esc(what)+'"','download')}</div></div>`});},
 });
 function saveEntry(st){const ls=readLines().filter(l=>l[0]||l[1]||l[2]||l[3]);const d=ls.reduce((a,l)=>a+l[2],0),c=ls.reduce((a,l)=>a+l[3],0);const stEl=document.getElementById('jd-st');
@@ -685,4 +736,10 @@ L.DR.expense=id=>{const e=exById(id);const locked=e.rf==='done';
 L.INPUT.push(t=>{if(t.id==='exq'){M.exq=t.value;const p=t.selectionStart;L.render();const n=document.getElementById('exq');if(n){n.focus();n.setSelectionRange(p,p);}return true;}return false;});
 L.CHANGE.push(t=>{if(t.dataset&&t.dataset.exrcpt){A.exrcpt({dataset:{id:t.dataset.exrcpt}});return true;}return false;});
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.ex-r[data-act="exopen"]')){e.preventDefault();A.exopen(e.target);}});
+A.popay=el=>{S.overlay=L.DR.popay(el.dataset.who);L.render();};
+A.poview=el=>{S.overlay=L.DR.poview(el.dataset.id);L.render();};
+A.popdf=()=>L.toast('Payslip ready as PDF');
+A.porecord=el=>{const k=el.dataset.who;const o=poOwed(k);const snapE=M.ex.map(e=>({...e}));const items=[...(o.sh?[['Saturday hotel gig, share',o.sh]]:[]),...o.ex.map(e=>[`${e.what}, paid back`,e.amt])];
+ o.ex.forEach(e=>{e.rf='done';(e.log??=[]).push(['21 Oct',`Paid back with the payout to ${EXWHO[k]}`]);});const p={id:'p'+Date.now(),d:21,who:k,items};M.po.push(p);S.overlay=null;L.render();
+ L.toast(`Payout recorded: ${L.kr(poSum(p))} DKK to ${EXWHO[k]}`,()=>{M.ex=snapE;M.po=M.po.filter(x=>x!==p);L.render();});};
 })();
