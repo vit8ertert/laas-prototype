@@ -153,3 +153,11 @@
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--th-bg:var(--sunken)}}
 :is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr){background:var(--th-bg)!important}
 :is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr,.cv-table thead tr th),:is(.bk-th,.ml-th,.ec-th,.ml-lth)>span,table:not(.iv-lines) th{color:var(--th-ink)!important}
+/* no outer frame around the panels (Vit 21 Oct: "we don't need left bottom border, check all outside borders"):
+   sidebar and page meet the window's left, right and bottom edges; only their inner top corners stay rounded */
+@media (min-width:861px){
+ .body{padding:0!important}
+ .sidebar{border-radius:0 12px 0 0!important}
+ .main{border-radius:12px 0 0 0!important}
+ .m-tint,.cv-tint{border-radius:12px 0 0 0!important}
+}
