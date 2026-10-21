@@ -445,3 +445,7 @@ button.acc-si:hover{background:var(--hover)}
    fields keep the border; onboarding fields are 48 high like the buttons, text centred */
 .acc-obstack .btn.secondary.lg{background:color-mix(in srgb,var(--ink) 11%,var(--canvas))!important;box-shadow:none!important;border:0!important}
 .acc-ob .field :is(input.input,select.input){height:48px;padding-block:0;padding-inline:16px;line-height:normal}
+/* onboarding photo: the panel shows its own background while the photo loads, then the photo fades in and settles */
+.acc-ob .r img.ob-ph{opacity:0;transform:scale(1.03);transition:opacity .6s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.acc-ob .r img.ob-ph.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.acc-ob .r img.ob-ph{transition:none}}
