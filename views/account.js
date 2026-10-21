@@ -459,10 +459,13 @@ function obSteps(st){const ob=S.onboarding;
   <div class="acc-two">${fsel('acc-yp','You play',['Vocals, guitar','Vocals','Guitar','Bass','Drums','Keys'],212,'Used for line-ups and day sheets')}${fsel('acc-yl','Language',['Dansk','English'],212,'Mails to venues use it')}</div>
   <div class="row"><button class="btn accent" data-ob="3">Continue</button></div>`;
  case 3:return head('Your band','One account can run several bands. Start with this one.')
-  +`<div class="acc-obphoto"><img src="${S.photos.band||IMG('band-collage')}" alt=""><div><b class="strong">Low Tide, band photo</b><label class="btn ghost s" style="cursor:pointer;align-self:flex-start">${ic('upload','s')}Replace<input type="file" accept="image/*" hidden data-photo="band"></label></div></div>
-  ${fld('acc-bn','Band name','Low Tide',360)}
-  <div class="acc-two">${fsel('acc-bco','Country',COUNTRIES,212,'Sets currency, VAT and time zone')}${fld('acc-bc','Home city','Odense',212,'Travel distances start here')}</div>
-  <div class="field"><span class="acc-lbl">What do you play?</span><div class="acc-genres">${GENRES.map(g=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''}" data-obgenre="${g}" aria-pressed="${on}">${g}</button>`;}).join('')}</div><span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
+  /* Vit 21 Oct: wider column, fewer genres with search, no photo here (it moves to Settings, Band) */
+  +`${fld('acc-bn','Band name','Low Tide')}
+  <div class="acc-two acc-flex">${fsel('acc-bco','Country',COUNTRIES,0,'Sets currency, VAT and time zone')}${fld('acc-bc','Home city','Odense',0,'Travel distances start here')}</div>
+  <div class="field"><span class="acc-lbl">What do you play?</span>
+   <div class="acc-gsearch">${ic('search','s')}<input id="acc-gq" placeholder="Search genres" aria-label="Search genres" autocomplete="off"></div>
+   <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${GENRES.map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${g}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. Pick the closest one.</span></div>
+   <span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
   <div class="field"><span class="acc-lbl">How many of you?</span><div class="seg acc-size">${['Just me','2','3–4','5+'].map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>
   <div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
@@ -503,6 +506,9 @@ L.INPUT.push(t=>{
   const all=[...document.querySelectorAll('[data-digit]')].every(x=>x.value);if(all){S.onboarding.step=2;setTimeout(()=>{L.render();L.toast('Email confirmed');},150);}return true;}
  if(t.closest&&t.closest('.acc-obinv')){const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;const b=document.getElementById('acc-obsend');if(b)b.innerHTML=ic('send','s')+(n?`Send ${n} invite${n===1?'':'s'}`:'Send invites');return true;}
 });
-})();
-
 AC.accbgenre=t=>{const g=t.dataset.g,l=A.genres;const i=l.indexOf(g);if(i>=0){if(l.length===1)return L.toast('Keep at least one genre');l.splice(i,1);}else l.push(g);L.render();L.toast('Genres saved');};
+AC.accgall=()=>{A.allGenres=!A.allGenres;L.render();};
+/* genre search filters the chips in place, so typing keeps focus */
+L.INPUT.push(t=>{if(t.id!=='acc-gq')return;const q=t.value.trim().toLowerCase(),list=document.getElementById('acc-glist');if(!list)return true;
+ list.classList.toggle('q',!!q);let n=0;list.querySelectorAll('.acc-gc').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q);b.classList.toggle('hit',!!q&&hit);b.classList.toggle('miss',!!q&&!hit);if(hit)n++;});list.classList.toggle('nohit',!!q&&!n);return true;});
+})();
