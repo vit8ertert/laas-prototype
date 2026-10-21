@@ -189,7 +189,7 @@ L.VIEWS.assistant=()=>{
  const sugg=[['Move the hotel gig to Saturday 25 Oct and tell the venue','plan'],['Who still owes us money?','money'],['What is left before Saturday?','gigday'],['Nudge Mette about the offer','nudge']];
  const conv=isNew?`<div class="d-newc"><h2 class="t-title">What do you need?</h2><p class="muted">Ask about gigs, contacts or money. Nothing is sent without your OK.</p><div class="d-chips">${sugg.map(([q,k])=>`<button class="d-chip" data-act="asksugg" data-q="${k}">${ic('ai','s')}${q}</button>`).join('')}</div></div>`:chatBody(id)+extra(id);
  const rec=isNew?'':record(id);
- return `<div class="page d-page d-asst ${rec&&S.asstPanel?'withrec':''}">${hist}
+ return `<div class="page d-page d-asst ${rec&&S.asstPanel?'withrec':''}">${aurora()}${hist}
  <div class="d-center"><div class="d-ahd"><button class="btn secondary s d-histbtn" data-act="assthist">${ic('msgs','s')}Chats</button><div class="grow"><h1 class="t-display">Assistant</h1><p class="muted t-body">Conversation, ${bn()}, remembered for you</p></div>${rec?`<button class="btn ghost s icon" data-act="asstpanel" aria-label="${S.asstPanel?'Hide':'Show'} the record">${ic('panel','s')}</button>`:''}</div>
   <div class="d-conv">${conv}</div>
   <div class="d-dock">${composer(id==='move'&&!isNew?'Reply, or ask about this booking…':`Ask about ${bn()}: gigs, contacts, gear, money`,isNew?null:ctx)}</div></div>
@@ -440,7 +440,7 @@ const TOOLS=[
 const nR=TOOLS.reduce((n,g)=>n+g[2].filter(t=>t[0]==='r').length,0),nW=TOOLS.reduce((n,g)=>n+g[2].filter(t=>t[0]==='w').length,0);
 L.VIEWS.tools=()=>{const f=S.toolsF;
  const groups=TOOLS.map(([g,i,list])=>[g,i,list.filter(t=>f==='all'||t[0]===f)]).filter(x=>x[2].length);
- return `<div class="page tl-page"><button class="btn ghost s flush cs-back" data-go="assistant">${ic('left','s')}Assistant</button>
+ return `<div class="page d-page tl-page">${aurora()}<button class="btn ghost s flush cs-back" data-go="assistant">${ic('left','s')}Assistant</button>
  <div class="ph"><div class="grow"><h1 class="t-display">What it can do</h1><p>${nR} ways to look things up, ${nW} changes it can propose. Anything not on this page is out of reach.</p></div><button class="btn accent" data-act="tlask">${ic('ai','s')}Ask the assistant</button></div>
  <div class="tl-grid"><div class="tl-main">
   <div class="d-seg tl-f" role="tablist" aria-label="Show">${[['all','All',nR+nW],['r','Looks up',nR],['w','Changes',nW]].map(([k,l,n])=>`<button role="tab" aria-selected="${f===k}" class="${f===k?'on':''}" data-act="tlf" data-v="${k}">${l} <span class="faint">${n}</span></button>`).join('')}</div>

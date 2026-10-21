@@ -112,3 +112,13 @@
 .cv-cvr>.cv-cvrrow{margin-inline:0!important;width:100%!important}
 .m-inv .m-right .m-sh{padding-left:0}
 .m-tot{padding:8px}.m-tot>.m-line{margin-inline:0!important;width:100%!important} /* totals box in invoice and journal drawers: a card holding rows */
+
+/* ===== Hover (Vit 21 Oct: "check the hover states and improve consistency") =====
+   Neutral controls (secondary and ghost buttons, chips, the Ask mode picker, chat history items) keep their own
+   background and get the same state overlay on hover: 4 % ink in light, 6 % white in dark (--state-hover).
+   Accent and lime buttons brighten; rows keep fill + line; edge-flush text buttons underline. */
+:is(.btn.secondary,.btn.ghost,.d-chip,.d-mode,.d-hi,.d-hfoot,.qtag,.chip):not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover{
+  background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+.btn.secondary:not([disabled]):hover{background-color:var(--surface)}
+.btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.d-hi:hover,.d-hfoot:hover{background-color:transparent}
+.d-chip:hover{background-color:var(--surface)}
