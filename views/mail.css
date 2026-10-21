@@ -1,0 +1,69 @@
+/* LAAS prototype · mail area styles. Widths follow notes/research/design/27-width-and-density.md:
+   inbox list fluid (excerpt max 65ch), thread column 720 + panel 348, send preview 720, empty text max 560. */
+.ml-av{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--well);color:var(--ink);font:500 12px/1 var(--sans)}
+.ml-filters{gap:8px}
+
+/* inbox list: one column fills (subject + excerpt), the others are fixed */
+.ml-list{background:var(--surface);border-radius:var(--r-lg);overflow:hidden}
+.ml-row{display:grid;grid-template-columns:8px 32px 160px minmax(0,1fr) 200px 104px 104px;gap:16px;align-items:center;padding:12px 16px;cursor:pointer;position:relative;transition:background .12s}
+.ml-row+.ml-row::before{content:"";position:absolute;top:0;left:16px;right:16px;height:1px;background:var(--rule)}
+.ml-row:hover,.ml-row:focus-visible{background:var(--raised)}
+.ml-dot{width:8px;height:8px;border-radius:50%}
+.ml-row.unread .ml-dot{background:var(--accent)}
+.ml-from{min-width:0;display:flex;flex-direction:column;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ml-from small{font-size:13px;line-height:18px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.ml-text{min-width:0;max-width:65ch;display:flex;flex-direction:column}
+.ml-text b,.ml-text span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ml-text b{font-weight:400}.ml-text span{color:var(--muted);font-size:13px;line-height:18px}
+.ml-row.unread .ml-from,.ml-row.unread .ml-text b{font-weight:500}
+.ml-row:not(.unread) .ml-from{color:var(--muted)}
+.ml-link{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:26px;padding:0 10px 0 3px;border-radius:999px;background:var(--well);font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.ml-link img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
+.ml-status{display:flex;justify-content:flex-start}
+.ml-time{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap}
+.ml-row.unread .ml-time{color:var(--ink)}
+.ml-acts{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;gap:2px;background:var(--raised);padding-left:8px}
+.ml-acts .btn.icon.s{width:32px;height:32px}
+.ml-row:hover .ml-acts,.ml-row:focus-within .ml-acts{display:flex}
+.ml-measure{max-width:560px}
+
+/* thread: conversation 720, linked panel 348 */
+.ml-thread{display:grid;grid-template-columns:minmax(0,720px) 348px;gap:48px;align-items:start}
+.ml-conv{display:flex;flex-direction:column;gap:24px;min-width:0}
+.ml-conv .ph .t-display{text-wrap:balance}
+.ml-msgs{display:flex;flex-direction:column}
+.ml-msg{display:flex;flex-direction:column;gap:10px;padding:16px 0;border-top:1px solid var(--rule)}
+.ml-msg:first-child{border-top:0;padding-top:0}
+.ml-msg p{margin:0 0 0 44px;max-width:65ch}
+.ml-msg .avatar-you{width:32px;height:32px}
+.ml-send{max-width:720px}
+.ml-sent{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--ok-tint);color:var(--ok)}
+.ml-panel{gap:20px;position:sticky;top:24px}
+.ml-photo{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:16/10;background:var(--well)}
+.ml-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ml-photo .tag{position:absolute;left:12px;top:12px}
+.ml-panel .list-row{padding:10px 0}
+
+/* empty: not connected */
+.ml-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:64px 24px;border-radius:var(--r-lg);background:var(--surface)}
+.ml-empty p{margin:0;max-width:560px}
+.ml-emptyic{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--well);color:var(--ink)}
+.ml-emptyic svg{width:24px;height:24px}
+.ml-points{list-style:none;margin:8px 0 0;padding:0;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;max-width:720px;color:var(--muted);font-size:13px}
+.ml-points li{display:flex;align-items:center;gap:8px}
+
+@media (max-width:1100px){
+ .ml-row{grid-template-columns:8px 32px 140px minmax(0,1fr) 104px}
+ .ml-linkcol,.ml-status{display:none}
+ .ml-thread{grid-template-columns:1fr}.ml-panel{position:static}
+}
+@media (max-width:860px){
+ .ml-row{grid-template-columns:8px 32px minmax(0,1fr) auto;gap:12px}
+ .ml-from{grid-column:3;grid-row:1}.ml-time{grid-column:4;grid-row:1}
+ .ml-text{grid-column:3/5;grid-row:2}
+ .ml-row .ml-av{grid-row:1/3;grid-column:2}.ml-dot{grid-row:1/3}
+ .ml-acts{display:none!important}
+ .ml-filters .search{width:100%}
+ .ml-msg p{margin-left:0}
+}

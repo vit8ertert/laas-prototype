@@ -1,0 +1,208 @@
+/* LAAS prototype · money area styles. Measured from Figma "UX · Money"; widths follow notes/research/design/27-width-and-density.md. */
+.m-page{gap:24px;position:relative;z-index:1}
+.m-detail{max-width:1200px}
+.m-tint{position:absolute;left:0;right:0;top:0;height:320px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent);pointer-events:none;z-index:0}
+.m-back{align-self:flex-start;margin-bottom:-8px}
+
+/* page header */
+.m-ph{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.m-ph-c{align-items:center}
+.m-tb{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}.m-tb.m-g4{gap:4px}
+.m-tb p{margin:0;color:var(--muted)}
+.m-tr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.m-dot{width:12px;height:12px;border-radius:50%;background:var(--signal);flex:none}
+.m-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.m-more{width:52px;height:36px;background:var(--surface)}
+.m-acts .btn.secondary{background:var(--surface)}
+
+/* tabs (Figma: gap 20, inner 12/4, count pill) */
+.m-tabs{display:flex;gap:20px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+.m-tabs button{position:relative;height:48px;padding:12px 4px;display:flex;align-items:center;gap:8px;color:var(--muted);white-space:nowrap}
+.m-tabs button.on{color:var(--ink);font-weight:500}
+.m-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent-strong);animation:tabline .28s cubic-bezier(.2,.8,.2,1) both}
+.m-tabs .c{font:400 13px/18px var(--sans);padding:2px 8px;border-radius:999px;background:var(--sunken);color:var(--muted)}
+.m-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
+
+/* banner */
+.m-banner{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;background:var(--att-tint);color:var(--att)}
+.m-banner>svg{align-self:flex-start;margin-top:2px}
+.m-banner .tx{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.m-banner small{font-size:13px;line-height:18px;max-width:65ch}
+.m-banner .btn{background:var(--surface);color:var(--ink)}
+
+/* KPI tiles: 240–360 px each */
+.m-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.m-kpi{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px;max-width:360px;width:100%}
+.m-kpi.att{box-shadow:inset 0 0 0 1px var(--att)}.m-kpi.rule{box-shadow:inset 0 0 0 1px var(--rule)}
+.m-kl{font-size:12px;line-height:16px;color:var(--muted)}
+.m-kv{font:400 32px/40px var(--sans);letter-spacing:-.5px;white-space:nowrap}
+.m-kd{font-size:12px;line-height:16px}.m-kd.muted{color:var(--muted)}.m-kd.att{color:var(--att)}.m-kd.ok{color:var(--ok)}
+
+/* columns and sections */
+.m-cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px;align-items:start}
+.m-cols-d{grid-template-columns:minmax(0,1fr) 348px}
+.m-left{display:flex;flex-direction:column;gap:40px;min-width:0}
+.m-right{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:28px;min-width:0}
+.m-sec{display:flex;flex-direction:column;gap:16px;padding:20px 0}
+.m-right .m-sec{padding:20px 0}
+.m-sh{display:flex;align-items:center;gap:8px;min-height:34px}.m-sh h2{flex:1}
+.m-right .m-sh{padding-left:12px}
+.m-gb{gap:8px}
+.m-body{display:flex;flex-direction:column;gap:4px}.m-g12{gap:12px}.m-g8{gap:8px}
+.m-foot{margin:0;padding:0 12px;font-size:13px;line-height:18px;color:var(--muted);max-width:65ch}
+.m-foot.m-nopad{padding:0}
+.m-hr{border:0;border-top:1px solid var(--rule);margin:0}
+
+/* money line / list row */
+.m-line{display:flex;align-items:center;gap:16px;padding:12px;border-radius:8px;width:100%;text-align:left;color:var(--ink)}
+.m-line.m-flush{padding-left:0}
+button.m-line:hover{background:var(--raised)}
+button.m-line.m-flush:hover{padding-left:12px;margin-left:-12px;width:calc(100% + 12px)}
+.m-th{width:36px;height:36px;border-radius:8px;object-fit:cover;flex:none;background:var(--well);display:grid;place-items:center;color:var(--muted)}
+.m-thp svg{width:12px;height:12px}
+.m-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.m-tx>span{font-size:15px;line-height:22px}
+.m-tx small{font-size:13px;line-height:18px;color:var(--muted)}
+.m-end{width:96px;display:flex;justify-content:flex-end;flex:none}
+.m-amt{width:96px;text-align:right;font-size:14px;line-height:20px;flex:none}
+
+/* ghost chart */
+.m-ghost{display:flex;align-items:flex-end;gap:8px;height:56px}
+.m-ghost i{flex:1;border-radius:4px;background:var(--rule-strong)}.m-ghost i.on{background:var(--accent-strong)}
+
+/* Needs you tasks */
+.m-task{background:var(--sunken);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px}
+.m-task-h{display:flex;align-items:center;gap:8px}
+.m-task p{margin:0;font-size:13px;line-height:18px;color:var(--muted)}
+.m-task .btn{background:var(--surface)}
+
+/* key-value rows */
+.m-kvr{display:flex;flex-direction:column;gap:4px;padding:0 12px}
+.m-kvr>span:first-child{font-size:13px;line-height:18px;color:var(--muted)}
+.m-kvr>span:last-child{font-size:15px;line-height:22px;overflow-wrap:anywhere}
+
+/* activity rows */
+.m-ev{display:flex;gap:12px;padding:0 12px;align-items:flex-start}
+.m-well{width:28px;height:28px;border-radius:50%;background:var(--sunken);display:grid;place-items:center;flex:none;margin-top:4px}
+.m-well.acc{background:var(--accent-tint);color:var(--accent-ink)}
+.m-well svg{width:14px;height:14px}
+
+/* empty state */
+.m-empty{border:1px dashed var(--rule);border-radius:16px;background:var(--surface);padding:48px 32px;display:flex;flex-direction:column;gap:24px}
+.m-empty-h{display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
+.m-empty-h p{margin:0;color:var(--muted);max-width:560px}
+.m-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.m-choice{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;max-width:360px;width:100%;justify-self:center;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.m-choice:hover{transform:translateY(-2px)}
+.m-prev{position:relative;height:96px;border-radius:8px;overflow:hidden;background:linear-gradient(110deg,color-mix(in srgb,var(--c) 45%,var(--raised)) 35%,color-mix(in srgb,var(--c) 75%,var(--raised)));color:color-mix(in srgb,var(--c) 55%,var(--ink));padding:16px 16px 12px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.m-prev svg{width:30px;height:30px;filter:brightness(1.4)}
+.m-hint{background:var(--surface);color:var(--ink);border-radius:6px;padding:4px 8px;font-size:12px;line-height:16px}
+.m-ct{font-weight:500}.m-cb{font-size:12px;line-height:16px;color:var(--muted)}
+.m-ghosttiles{display:flex;flex-direction:column;gap:16px}
+.m-ghosttiles .m-kv{color:var(--muted)}
+
+/* expenses */
+.m-exp{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:4px}
+.m-erow{display:flex;align-items:center;gap:24px;padding:12px 8px;border-radius:8px}
+.m-erow:hover{background:var(--raised)}
+.m-ed{width:64px;font-size:13px;line-height:18px;color:var(--muted);flex:none}
+.m-chip{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:8px 12px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font-size:15px;line-height:18px;white-space:nowrap}
+.m-chip:hover{background:var(--raised)}.m-chip.on{background:var(--raised);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.m-erow .m-chip{width:95px}
+.m-eend{width:104px;display:flex;flex:none}
+.m-eend .tag{cursor:default}.m-eend button.tag{cursor:pointer}
+.m-eamt{width:72px;text-align:right;font-size:14px;flex:none}
+
+/* invoice */
+.m-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:12px 16px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
+.m-step{display:flex;flex-direction:column;gap:2px}
+.m-step>span{display:flex;align-items:center;gap:8px}
+.m-step i{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.m-step.att i{background:var(--att)}.m-step.att>span{color:var(--att)}
+.m-step.todo i{background:var(--rule-strong)}.m-step.todo>span{color:var(--muted)}
+.m-step small{font-size:13px;line-height:18px;color:var(--muted)}
+
+/* settle */
+.m-modes{display:flex;gap:8px;flex-wrap:wrap}
+.m-mem{display:flex;align-items:center;gap:12px}
+.m-mem .m-tx{flex:0 1 220px}
+.m-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;flex:none}
+.m-sbar{flex:1;height:10px;display:flex}
+.m-sbar i{height:10px;border-radius:999px;background:var(--paid);transition:width .3s cubic-bezier(.2,.8,.2,1)}
+.m-check{display:flex;align-items:center;gap:8px;font-size:15px;line-height:18px;text-align:left;color:var(--ink)}
+.m-check[disabled]{cursor:default}
+.m-box{width:18px;height:18px;border-radius:4px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);display:grid;place-items:center;flex:none;color:var(--canvas)}
+.m-check.on .m-box{background:var(--ink);box-shadow:none}
+.m-box svg{width:14px;height:14px;stroke-width:2.5}
+
+/* ledger */
+.m-ledger{display:flex;flex-direction:column;gap:24px}
+.m-chart{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.m-chh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.m-chh h3{flex:1;min-width:200px}
+.m-leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.m-leg i{width:10px;height:10px;border-radius:4px;display:inline-block}.m-leg i.exp{margin-left:10px}
+.m-leg i.inc,.m-bp i.inc,.m-track i{background:var(--accent)}
+.m-leg i.exp,.m-bp i.exp{background:var(--faint)}
+.m-bars{display:flex;justify-content:space-between;align-items:flex-end;height:180px;border-bottom:1px solid var(--rule);overflow-x:auto}
+.m-bars>div{display:flex;flex-direction:column;align-items:center;gap:8px;width:40px;flex:none}
+.m-bp{display:flex;gap:4px;align-items:flex-end}.m-bp i{width:18px;border-radius:4px}
+.m-bars small{font-size:12px;line-height:16px;color:var(--faint)}
+.m-dt{min-width:0}
+.m-bdcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start}
+.m-bd{display:flex;flex-direction:column;gap:12px}
+.m-bdh{display:flex;align-items:baseline;gap:8px}.m-bdh h3{flex:1}.m-bdh span{font-size:12px;color:var(--muted)}
+.m-bdl{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);border-radius:12px;overflow:hidden}
+.m-bdr{display:flex;align-items:center;gap:12px;padding:12px 16px}
+.m-bdr+.m-bdr{border-top:1px solid var(--rule)}
+.m-bdr .m-tx>span{font-weight:500;font-size:15px;line-height:18px}.m-bdr .m-tx small{font-size:12px;line-height:16px}
+.m-track{width:120px;height:6px;border-radius:999px;background:var(--well);display:flex;justify-content:flex-end;overflow:hidden;flex:none}
+.m-track i{height:6px}
+.m-bdr .mono{font-size:14px;min-width:56px;text-align:right}
+.m-reports{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.m-reports>span{font-size:12px;color:var(--faint)}
+
+/* drawers */
+.m-dr .dh{border-bottom:1px solid var(--rule)}
+.m-dr .db{padding:20px 24px}
+.m-dr .df{background:var(--surface);padding:16px 24px;gap:8px}
+.m-dr select.input,.m-dr .input{height:38px;border-radius:8px;background:var(--surface)}
+.m-dr .field label{font-size:13px}
+.m-ll{font-size:13px;line-height:18px;color:var(--muted)}
+.m-lines{display:flex;flex-direction:column;gap:8px}
+.m-iline{display:flex;flex-direction:column;gap:8px}
+.m-iline+.m-iline{padding-top:8px;border-top:1px solid var(--rule)}
+.m-irow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+.m-w160{width:160px}.m-w160 .input{width:160px}
+.m-w320{max-width:320px}
+select.m-err{border-color:var(--bad)}.m-err~.help,.m-iline .field .help{color:var(--bad)}
+.m-add{display:flex;gap:8px}
+.m-tot{background:var(--sunken);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.m-tot .m-line{padding:12px}
+.m-sw{align-self:flex-start;padding:0 12px;font-size:13px;line-height:18px;color:var(--accent-ink)}
+.m-sw:hover{text-decoration:underline}
+.m-dates{display:flex;gap:12px;flex-wrap:wrap}.m-dates .field{width:210px}
+.m-ifld{position:relative;display:block}.m-ifld svg{position:absolute;left:12px;top:11px;color:var(--muted)}.m-ifld .input{padding-left:38px}
+.m-tg{display:flex;align-items:center;gap:8px;text-align:left;font-size:15px;line-height:18px}
+.m-track2{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);padding:0 2px;display:flex;align-items:center;flex:none;transition:background .15s}
+.m-track2 i{width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s}
+.m-tg[aria-checked="true"] .m-track2{background:var(--ink)}.m-tg[aria-checked="true"] .m-track2 i{transform:translateX(14px)}
+.m-menu{width:260px;padding:6px}.m-menu .it{color:var(--ink);font-size:15px;display:flex;width:100%;text-align:left;padding:8px 10px;border-radius:8px}
+
+/* table */
+.m-table td .title-cell{font-weight:400}
+
+@media (max-width:1100px){.m-cols,.m-cols-d{grid-template-columns:minmax(0,1fr)}.m-kpi{max-width:none}}
+@media (max-width:860px){.m-tint{border-radius:0}}
+@media (max-width:640px){
+ .m-kpis{grid-template-columns:minmax(0,1fr)}
+ .m-line{flex-wrap:wrap;gap:8px 12px}.m-line .m-tx{flex:1 1 calc(100% - 60px)}
+ .m-line .m-end{width:auto;margin-left:48px}.m-line.m-flush .m-end,.m-line:not(:has(.m-th)) .m-end{margin-left:0}
+ .m-line .m-amt{width:auto;margin-left:auto}
+ .m-erow{flex-wrap:wrap;gap:8px 12px}.m-erow .m-tx{flex:1 1 calc(100% - 80px)}.m-ed{width:auto}
+ .m-erow .m-chip{width:auto}.m-eend{width:auto}.m-eamt{margin-left:auto;width:auto}
+ .m-mem{flex-wrap:wrap}.m-mem .m-tx{flex:1 1 calc(100% - 44px)}.m-sbar{flex:1 1 auto;margin-left:44px}
+ .m-bdr{flex-wrap:wrap}.m-bdr .m-tx{flex:1 1 100%}.m-track{flex:1}
+ .m-empty{padding:32px 16px}.m-bars>div{width:24px}.m-bp i{width:10px}
+ .m-ph .m-acts{width:100%}
+ .m-tabs{gap:8px}
+ .m-banner{flex-wrap:wrap}.m-banner .tx{flex:1 1 calc(100% - 40px)}.m-banner .btn{margin-left:30px}
+}
