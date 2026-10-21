@@ -15,31 +15,34 @@
 @keyframes lm-wiggle{0%{transform:rotate(-24deg) scale(.4);opacity:0}45%{transform:rotate(12deg) scale(1.06);opacity:1}70%{transform:rotate(-5deg)}100%{transform:none}}
 @keyframes lm-blink{0%,100%{transform:none}50%{transform:scaleY(.12)}}
 
-/* idle: the eye blinks now and then and glances right, the S does a small wave; prime-ish loop lengths so it never syncs */
-.lm-idle .lm-eye{animation:lm-idle-blink 5.3s infinite,lm-glance 7.9s 2s infinite}
-.lm-idle .lm-s{transform-origin:50% 100%;animation:lm-wave 11.3s 4s infinite}
+/* idle (Vit 21 Oct: "related to music, the different letters meaning different genres and artists"):
+   the wordmark is a band of four. Each letter plays its own part now and then, on its own slow cycle, so the logo
+   stays mostly calm and the parts rarely line up.
+   L, the heavy one = metal: headbangs, two quick nods.
+   pixel A = electronic: pumps on four kick-drum beats, like a speaker cone.
+   soft A with the eye = the vocalist: closes its eye and sways as if holding a note; blinks in between.
+   S = guitar: plucked like a string, a quick vibration that dies out. */
+.lm-idle .lm-l{transform-origin:20% 100%;animation:lm-bang 13.1s 5s infinite}
+@keyframes lm-bang{0%,92%,100%{transform:none}93%{transform:rotate(7deg) scaleY(.96)}94.2%{transform:none}95.4%{transform:rotate(7deg) scaleY(.96)}96.6%{transform:none}}
+.lm-idle .lm-pa{transform-origin:50% 100%;animation:lm-pump 9.7s 2s infinite}
+@keyframes lm-pump{0%,78%,100%{transform:none}78.6%,83.7%,88.8%,93.9%{transform:scale(1.06,.9)}80.6%,85.7%,90.8%,95.9%{transform:none}}
+.lm-idle .lm-ba{transform-origin:50% 100%;animation:lm-sway 11.3s 7s infinite}
+@keyframes lm-sway{0%,80%,100%{transform:none}84%{transform:rotate(-4deg)}88%{transform:rotate(4deg)}92%{transform:rotate(-3deg)}96%{transform:none}}
+.lm-idle .lm-eye{animation:lm-idle-blink 5.3s infinite,lm-hold 11.3s 7s infinite}
 @keyframes lm-idle-blink{0%,91%,100%{transform:none}94%{transform:scaleY(.12)}}
-@keyframes lm-glance{0%,70%,100%{translate:0 0}74%,90%{translate:28% 6%}}
-@keyframes lm-wave{0%,88%,100%{transform:none}91%{transform:skewX(-8deg)}94%{transform:skewX(6deg)}97%{transform:skewX(-2deg)}}
+@keyframes lm-hold{0%,81%,97%,100%{scale:1 1}83%,95%{scale:1 .12}}
+.lm-idle .lm-s{transform-origin:50% 50%;animation:lm-pluck 7.9s 3.5s infinite}
+@keyframes lm-pluck{0%,90%,100%{transform:none}90.8%{transform:skewX(-12deg)}91.6%{transform:skewX(9deg)}92.4%{transform:skewX(-6deg)}93.2%{transform:skewX(4deg)}94%{transform:skewX(-2deg)}94.8%{transform:none}}
 
-/* pixel A as a level meter (Vit 21 Oct: relevant to its stepped shape, but not 8-bit or game-like):
-   now and then its top drops and climbs back row by row, like a VU meter hitting a peak */
-.lm-idle .lm-pa{animation:lm-meter 9.7s 3s infinite,lm-quake 13.1s 6s infinite}
-@keyframes lm-meter{0%,90%,100%{clip-path:inset(0 0 0 0)}91%{clip-path:inset(48% 0 0 0)}92.5%{clip-path:inset(32% 0 0 0)}94%{clip-path:inset(16% 0 0 0)}95.5%{clip-path:inset(0 0 0 0)}}
-
-/* thick L, the heavy one: lifts and stomps like a foot on a pedal; the others jolt from the impact */
-.lm-idle .lm-l{transform-origin:50% 100%;animation:lm-stomp 13.1s 6s infinite}
-@keyframes lm-stomp{0%,92%,100%{transform:none}94%{transform:translateY(-16%) scaleY(1.04)}95.4%{transform:translateY(0) scale(1.06,.86)}96.6%{transform:scale(.98,1.03)}97.6%{transform:none}}
-.lm-idle :is(.lm-ba,.lm-s){animation-name:lm-quake;animation-duration:13.1s;animation-delay:6s;animation-iteration-count:infinite}
-.lm-idle .lm-s{animation:lm-wave 11.3s 4s infinite,lm-quake 13.1s 6s infinite}
-@keyframes lm-quake{0%,95.2%,97.4%,100%{translate:0 0}95.8%{translate:0 -6%}96.6%{translate:0 2%}}
-
-/* loader: the letters bounce in turn like an equaliser; the eye blinks on the soft A's landing */
-.lm-loader g{transform-origin:50% 100%;animation:lm-hop 1s cubic-bezier(.3,0,.4,1) infinite}
-.lm-loader .lm-pa{animation-delay:.12s}.lm-loader .lm-l{animation-name:lm-hop-heavy}.lm-loader .lm-ba{animation-delay:.24s}.lm-loader .lm-s{animation-delay:.36s}
-.lm-loader .lm-eye{animation:lm-blink .2s .62s infinite;animation-duration:1s}
-@keyframes lm-hop-heavy{0%,60%,100%{transform:none}20%{transform:translateY(-18%)}38%{transform:translateY(0) scale(1.06,.84)}48%{transform:none}}
-@keyframes lm-hop{0%,60%,100%{transform:none}20%{transform:translateY(-28%) scaleY(1.06)}40%{transform:translateY(0) scaleY(.9)}}
+/* loader: the band plays together, one bar a second: L nods, pixel A pumps on the beat, soft A sways, S vibrates */
+.lm-loader .lm-l{transform-origin:20% 100%;animation:lm-bang-l 1s infinite}
+.lm-loader .lm-pa{transform-origin:50% 100%;animation:lm-pump-l .5s infinite}
+.lm-loader .lm-ba{transform-origin:50% 100%;animation:lm-sway-l 2s ease-in-out infinite}
+.lm-loader .lm-s{transform-origin:50% 50%;animation:lm-pluck-l 1s infinite}
+@keyframes lm-bang-l{0%,40%,100%{transform:none}15%{transform:rotate(7deg) scaleY(.96)}}
+@keyframes lm-pump-l{0%,100%{transform:none}12%{transform:scale(1.06,.9)}45%{transform:none}}
+@keyframes lm-sway-l{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes lm-pluck-l{0%,60%,100%{transform:none}8%{transform:skewX(-10deg)}16%{transform:skewX(7deg)}24%{transform:skewX(-4deg)}32%{transform:skewX(2deg)}40%{transform:none}}
 
 @media (prefers-reduced-motion:reduce){.lm g,.lm .lm-eye{animation:none!important;clip-path:none!important;opacity:1!important}}
 .topbar .lm{--logo-bg:var(--sunken)}.acc-obtop .lm{--logo-bg:var(--canvas)}

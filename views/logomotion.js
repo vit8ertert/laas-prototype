@@ -1,8 +1,8 @@
 /* LAAS logo in motion (Vit 21 Oct: "logo in motion … as intro, loader and idle").
    The real wordmark, four letters in four faces: block L, pixel A, soft A whose counter is an eye, wavy S.
    Same paths as LOGO in index.html; the soft A's counter is split off so the eye can blink and glance.
-   Each letter has its own move: the L stomps (heavy), the pixel A dips and climbs back like an audio level meter, the soft A
-   blinks and glances, the S waves.
+   The four letters are a band, one genre each: L metal (headbangs), pixel A electronic (pumps on the kick),
+   soft A the vocalist (closes its eye and sways), S guitar (plucked like a string).
    L.logoMotion(mode) returns the SVG; mode: 'intro' (plays once, then idles), 'idle', 'loader'. Colour = currentColor,
    the eye uses --logo-bg (the surface behind the logo). Reduced motion: static. */
 (function(){const L=window.LAAS;
