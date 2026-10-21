@@ -131,3 +131,5 @@
 /* long popovers scroll inside themselves instead of running off the window (Vit 21 Oct, Flows list) */
 .pop.flowmenu{max-height:calc(100vh - 76px);overflow-y:auto;overscroll-behavior:contain}
 .pop{max-height:calc(100vh - 16px);overflow-y:auto;overscroll-behavior:contain}
+/* status tags on photos keep their colour but sit on dark glass, so they read on any image */
+:is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
