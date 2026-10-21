@@ -474,7 +474,7 @@ function obSteps(st){const ob=S.onboarding;
   /* Vit 21 Oct: "too much info on this step". One line of copy, appearance, two buttons; the looks are picked under the big preview on the right */
   return head('Pick your look',match==='label'?'Change it any time in Settings.':`${TNAME[match]} fits ${ob.genre.toLowerCase()}. Change it any time in Settings.`)
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
-  <div class="field"><span class="acc-lbl">Appearance</span>${appearSeg()}</div>
+  <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
   <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
  case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
