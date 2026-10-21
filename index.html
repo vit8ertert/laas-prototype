@@ -54,7 +54,7 @@ svg.i.s{width:16px;height:16px}
 
 /* shell */
 .app{display:grid;grid-template-rows:58px 1fr;grid-template-columns:minmax(0,1fr);height:100%}
-.topbar{background:var(--sunken);display:flex;align-items:center;gap:16px;padding-block:12px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px))}
+.topbar{background:var(--sunken);display:flex;align-items:center;gap:16px;padding-block:12px;padding-inline:max(24px,env(safe-area-inset-left,0px)) max(40px,env(safe-area-inset-right,0px))}
 .logo{display:flex;align-items:center;gap:10px}.logo svg{width:90px;height:24px;fill:var(--ink)}
 .search-pill{margin-left:auto;display:flex;align-items:center;gap:8px;width:280px;max-width:40vw;height:34px;padding:8px 12px;border-radius:8px;background:var(--canvas);color:var(--faint);font:400 15px/18px var(--sans)}
 .search-pill kbd{margin-left:auto;font:400 12px var(--mono);color:var(--faint)}
@@ -175,6 +175,10 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .d-record .d-rh:has(.d-id)>b{grid-column:1/-1;grid-row:2}
 /* empty-state start cards: 240–360 px each, centred as a group (never left-aligned with empty columns) */
 .choices,.d-choices,.d-choices.three,.cat-choices,.m-choices,.cv-cards{grid-template-columns:repeat(auto-fit,minmax(240px,360px))!important;justify-content:center}
+/* edge alignment: text links at the start or end of a row sit flush on the content edge */
+.sec-h>.btn.ghost:last-child,.ph>.btn.ghost:last-child,[class$="-foot"]>.btn.ghost:last-child,[class*="-foot "]>.btn.ghost:last-child,.cv-link,
+.btn.ghost[class*="-back"],.btn.ghost.flush{padding-inline:0!important;background:none!important}
+.sec-h>.btn.ghost:last-child:hover,.ph>.btn.ghost:last-child:hover,[class$="-foot"]>.btn.ghost:last-child:hover,.cv-link:hover,.btn.ghost[class*="-back"]:hover{text-decoration:underline;text-underline-offset:3px}
 /* motion: view transitions between pages, staggered entrance, springy overlays */
 .main{view-transition-name:main}
 ::view-transition-old(main){animation:vt-out .14s ease-in both}
@@ -288,7 +292,7 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
   .hero .tx{padding:0 20px 20px}.kv{grid-template-columns:100px 1fr}.theme-grid{grid-template-columns:1fr}
   .main{border-radius:0}
   .banner{flex-wrap:wrap}.banner .tx{flex:1 1 200px}
-  .topbar{gap:8px}.logo svg{width:72px}.me>svg{display:none}
+  .topbar{gap:8px;padding-inline:16px}.logo svg{width:72px}.me>svg{display:none}
   .setgrid{grid-template-columns:1fr!important}.setgrid>nav{flex-direction:row!important;overflow-x:auto}.setgrid>nav>span{display:none}
   .ph .btn{flex:none}
 }
@@ -411,9 +415,9 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 
 /* ---------- shell ---------- */
 function sidebar(){
- const v=S.view;const ALIAS={thread:'mail',contact:'contacts',venue:'venues'};const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" title="${label}">${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
+ const v=S.view;const ALIAS={thread:'mail',contact:'contacts',venue:'venues'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${v===id||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
  const area=LAAS.areaOf(v);
- const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} title="${label}">${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
+ const grp=(id,label,icon,go,extra='')=>`<button class="nav group ${S.collapsed&&area===id?'active':''}" data-go="${go}" ${id==='money'?'data-mt="owed"':id==='audience'?'data-at="overview"':''} ${tip(label)}>${ic(icon)}<span>${label}</span>${extra}<span class="chev" ${extra?'style="margin-left:8px"':''}>${ic(area===id?'down':'right','s')}</span></button>`;
  return `<nav class="sidebar ${S.sidebarOpen?'open':''}" aria-label="Main">
   ${(()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'};return `<button class="band" data-act="bandmenu"><span class="sq">${b.logo?`<img src="${b.logo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:esc(b.ini||'LT')}</span><div><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></div>${ic('down','s')}</button>`})()}
   ${nav('dashboard','Dashboard','dashboard')}${nav('assistant','Assistant','ai')}
@@ -428,7 +432,7 @@ function sidebar(){
   ${grp('audience','Audience','radio','audience')}
   ${area==='audience'?`<div class="sb-sub">${[['overview','Overview'],['streaming','Streaming'],['hand','Figures by hand'],['releases','Releases']].map(([k,l])=>`<button class="nav sub ${v==='audience'&&S.atab===k?'active':''}" data-go="audience" data-at="${k}"><span>${l}</span></button>`).join('')}${nav('social','Social posts','','','sub')}${nav('comments','Comments','','','sub')}${nav('keywords','Keyword watch','','','sub')}${nav('deliveries','Deliveries','','','sub')}</div>`:''}
   <div class="sb-spacer"></div>
-  <button class="nav" data-act="thememenu" title="Theme"><i style="width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 2px;flex:none"></i><span>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
+  <button class="nav" data-act="thememenu" ${tip('Theme')}><i style="width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 2px;flex:none"></i><span>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
   ${nav('integrations','Integrations','plug')}${nav('settings','Band settings','settings')}
   ${S.collapsed?`<button class="nav" data-act="collapse" title="Expand menu (⌘\\)">${ic('right')}</button>`:''}
  </nav>`;
