@@ -465,7 +465,7 @@ function topbar(){
 }
 function abar(ctx,ph){
  if(S.abarHidden)return `<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" title="Show the assistant bar (⌘J)">${ic('ai','s')}<span>Ask</span></button></div>`;
- return `${S.booking.sheet?assistantSheet():''}<div class="abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" title="Hide until you open it again (⌘J)">${ic('down','s')}</button></div>`;
+ return `${S.booking.sheet?assistantSheet():''}<div class="abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" title="Hide until you open it again (⌘J)">${ic('x','s')}</button></div>`;
 }
 
 /* ---------- views ---------- */

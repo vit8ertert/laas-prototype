@@ -187,6 +187,9 @@ L.ACTIONS.guide=()=>{const g=S.view==='dashboard'?'first':guideFor(S.view);if(g)
 // first run: when sign-up ends on the dashboard (skip invites or send them)
 for(const a of ['accobskip','accobsend']){const f=L.ACTIONS[a];if(!f)continue;
   L.ACTIONS[a]=function(){const r=f.apply(this,arguments);const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')start('first');return r;};}
+// localhost only: ?tour=<name>&step=<n> opens a tour at a step (for Figma captures of tour states); names are fixed above
+if(location.hostname==='localhost'){const q=new URLSearchParams(location.search),tn=q.get('tour'),sn=parseInt(q.get('step')||'0',10)||0;
+  if(tn&&TOURS[tn])setTimeout(()=>{start(tn);setTimeout(()=>step(Math.min(sn,TOURS[tn].length-1)),400);},900);}
 L.FLOWS.push(['First-run tour','Welcome, then Gigs, new booking, assistant, search and guides',()=>start('first')]);
 L.FLOWS.push(['Guide for this page','The short guide every main page shows the first time',()=>L.ACTIONS.guide()]);
 })();

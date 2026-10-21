@@ -192,3 +192,8 @@ html.gated body>*:not(.gate){display:none!important}
 .btn[data-act=ask]:hover,.btn[data-act=nbask]:hover{filter:brightness(1.06)}
 .abar-mini{background:var(--poster-lime);color:var(--on-accent);border-color:transparent}
 .abar-mini:hover{background:var(--poster-lime);filter:brightness(1.06)}
+
+/* Assistant bar hide: a 32 px × right after Ask (Vit 21 Oct: closer to Ask, a cross not a chevron); 12 bar gap − 8 = 4 */
+.abar .abar-hide{width:32px;height:32px;padding:0;margin-left:-8px;justify-content:center;border-radius:var(--r-pill);color:var(--muted)}
+.abar .abar-hide:hover{background:var(--hover);color:var(--ink)}
+.abar .abar-hide svg.i{width:16px;height:16px}
