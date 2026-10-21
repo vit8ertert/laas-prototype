@@ -48,6 +48,18 @@ const BOOK_ROWS=[['Saturday hotel gig','Sat 25 Oct 2026, 5.000 DKK, deposit wait
 const VENUE_BOOK_ROWS=[...BOOK_ROWS,['Summer party enquiry','Jun 2024, no reply from us','draft','Draft','b3']];
 const ON_STAGE=[['Stage','6 × 4 m, 40 cm riser, corner of the bar','m'],['PA','In house, 2 tops, 2 subs, 16-channel desk','m'],['Backline','Drums (Yamaha stage) and bass amp, bring guitar amps','l'],['Sound engineer','On request, 800 DKK, ask when confirming','m']];
 const GETTING=[['Load-in','Back entrance on Kannikegade, 2 steps, trolley there','l'],['Parking','2 spaces in the yard, ask for the code','m'],['Stay','2 rooms included when you play, breakfast 07–10','m'],['Curfew','23:30 on weekdays, 00:30 Fri and Sat','m']];
+/* each venue has its own stage and access notes (Vit 21 Oct: Loppen showed Hotel Royal's "corner of the bar" and Aarhus street) */
+const VDET={royal:{stage:ON_STAGE,getting:GETTING},
+ mono:{stage:[['Stage','8 × 5 m, 60 cm, end of the room','m'],['PA','In house, line array, 24-channel desk','m'],['Backline','Drum kit and two amps on request, 500 DKK','l'],['Sound engineer','House engineer included','m']],
+  getting:[['Load-in','Side door on Vestergade, street level, 20 m to the stage','l'],['Parking','Loading bay for 30 min, then city parking','m'],['Stay','Not included, Hotel Norden 5 min away','m'],['Curfew','01:00, doors 21:00','m']]},
+ studiob:{stage:[['Room','Room 2, 40 m², treated, no stage','m'],['PA','2 × 12" tops, 12-channel desk','m'],['Backline','Drums, 2 guitar amps, bass amp included','l'],['Sound engineer','None, you run it yourself','m']],
+  getting:[['Load-in','Ground floor, wide door, trolley at reception','l'],['Parking','Courtyard, 2 spaces, first come','m'],['Stay','Not a venue for overnight','m'],['Hours','09:00 to 23:00, booked per hour','m']]},
+ odense:{stage:[['Stage','10 × 6 m, 1 m high, barrier','m'],['PA','Full PA, monitors, 32-channel desk','m'],['Backline','Full backline on the rider','l'],['Sound engineer','House engineer and light tech included','m']],
+  getting:[['Load-in','Dock on Brandts Passage, lift to the stage','l'],['Parking','2 spaces behind the dock, sign at the gate','m'],['Stay','2 rooms at Hotel Odeon, booked by the venue','m'],['Curfew','00:00 on weekdays, 01:00 Fri and Sat','m']]},
+ loppen:{stage:[['Stage','7 × 4 m, 50 cm, low ceiling','m'],['PA','In house, 2 tops, 4 subs, 24-channel desk','m'],['Backline','Drum kit shared with support, bring amps','l'],['Sound engineer','House engineer included on show nights','m']],
+  getting:[['Load-in','Up the stairs from Bådsmandsstræde, 1st floor, no lift','l'],['Parking','Christiania is car-free, drop at the gate, park on Prinsessegade','m'],['Stay','Not included, ask about the band flat','m'],['Curfew','02:00, doors 20:00','m']]},
+ posten:{stage:[['Stage','12 × 7 m, 1.2 m high','m'],['PA','Full PA, 40-channel desk','m'],['Backline','On the rider, confirm 2 weeks before','l'],['Sound engineer','House engineer included','m']],
+  getting:[['Load-in','Dock on Østre Stationsvej, lift','l'],['Parking','Bus and van bay, 3 spaces','m'],['Stay','Hotel on request, venue pays for headliners','m'],['Curfew','00:30, doors 19:30','m']]}};
 const PEOPLE_HERE=[['MK','Mette Kjær','Venue booker, books and signs','c1'],['HR','Hotel Royal accounts','faktura@hotelroyal.dk, pays invoices','c1'],['KH','Kasper Holm','Sound engineer, freelance, on request','c6']];
 const SORTS={last:'last contact',name:'name, A to Z',most:'most bookings',added:'recently added'};
 const SORT_OPTS=[['last','Last contact'],['name','Name, A to Z'],['most','Most bookings'],['added','Recently added']];
@@ -121,9 +133,22 @@ function venueBody(q){
  const list=`<div class="cv-vlist">${rows.map(v=>`<button class="cv-vrow" data-act="cvgo" data-v="venue" data-id="${v.id}"><img class="thumb s" src="${IMG(v.img)}" alt=""><span class="tx"><b>${hl(v.name,q)}</b><small>${esc(VROWS[v.id].sub)}</small></span><span class="tag ${VROWS[v.id].tag[0]}">${VROWS[v.id].tag[1]}</span>${chev}</button>`).join('')}</div>`;
  const foot=q.trim()
   ?`<div class="cv-foot cv-vfoot"><span>${rows.length} of ${VENUES.length} match “${esc(q.trim())}” in name, city or contact</span><button class="btn ghost s cv-link" data-act="cvclear">Clear search</button></div>`
-  :`<div class="cv-foot cv-vfoot"><span>Showing ${rows.length} of ${VENUES.length}, a venue is created from a booking or an email; duplicates are caught by name and street</span><button class="btn ghost s cv-link" data-act="cvmap">${ic('pin','s')}Map view</button></div>`;
- return list+foot;
+  :`<div class="cv-foot cv-vfoot"><span>Showing ${rows.length} of ${VENUES.length}, a venue is created from a booking or an email; duplicates are caught by name and street</span><button class="btn ghost s cv-link" data-act="cvmap">${ic(S.cv.vmap?'menu':'pin','s')}${S.cv.vmap?'List view':'Map view'}</button></div>`;
+ return (S.cv.vmap?venueMap(rows):list)+foot;
 }
+/* map view (Vit 21 Oct: "map view doesn't do anything"): a schematic Denmark with one pin per city and its count;
+   a pin picks the city, the list beside the map shows its venues, each opens the venue */
+const CITY_XY={Aarhus:[196,118],Odense:[196,196],Copenhagen:[322,168]};
+function venueMap(rows){const by={};rows.forEach(v=>(by[v.city]??=[]).push(v));const cities=Object.keys(by);const cur=by[S.cv.mapCity]?S.cv.mapCity:cities[0];
+ const pins=cities.map(c=>{const [x,y]=CITY_XY[c]||[200,150];const on=c===cur;return `<g class="cv-pin ${on?'on':''}" data-act="cvmapcity" data-c="${c}" role="button" tabindex="0" aria-label="${c}, ${by[c].length} venues"><circle cx="${x}" cy="${y}" r="${on?16:13}"/><text x="${x}" y="${y+4}" text-anchor="middle">${by[c].length}</text><text class="lb" x="${x}" y="${y+(c==='Odense'?36:-22)}" text-anchor="middle">${c}</text></g>`;}).join('');
+ return `<div class="cv-map"><div class="cv-mapc"><svg viewBox="40 0 340 250" role="img" aria-label="Venues on a map of Denmark">
+  <path class="land" d="M118,18 L168,8 L184,38 L200,86 L216,118 L206,150 L172,174 L150,198 L118,214 L94,198 L100,150 L90,100 L100,58 Z"/>
+  <ellipse class="land" cx="196" cy="196" rx="30" ry="21"/>
+  <path class="land" d="M262,128 L310,116 L346,138 L352,178 L332,214 L286,220 L262,196 L254,160 Z"/>
+  <path class="land" d="M240,232 L280,226 L300,240 L262,246 Z"/>${pins}</svg>
+  <span class="cv-mapn">Schematic, by city. Distances are not to scale.</span></div>
+ <div class="cv-mapl"><div class="cv-maph"><b>${cur}</b><span class="muted">${by[cur].length} ${by[cur].length===1?'venue':'venues'}</span></div>
+  ${by[cur].map(v=>`<button class="cv-vrow" data-act="cvgo" data-v="venue" data-id="${v.id}"><img class="thumb s" src="${IMG(v.img)}" alt=""><span class="tx"><b>${esc(v.name)}</b><small>${esc(v.kind)}, ${esc(v.cap)}</small></span><span class="tag ${VROWS[v.id].tag[0]}">${VROWS[v.id].tag[1]}</span>${chev}</button>`).join('')}</div></div>`;}
 const vChips=()=>`${fchip('vplayed')}${fchip('vcity')}${fchip('vpa','any')}<button class="chip cv-chip ${S.overlay&&S.overlay.type==='cvsort'?'open':''}" data-act="cvsort" data-k="vsort">Sort: ${VSORTS[S.cv.vsort]}</button>`;
 
 /* ---------- Contacts ---------- */
@@ -186,8 +211,8 @@ L.VIEWS.venue=()=>{editScope();
  <div class="hero cv-hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${esc(v.name)}</h1><div class="facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div></div></div>
  <div class="cv-actions cv-vact"><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="stage">Edit</button><button class="btn accent" data-act="newbooking">New booking here</button><button class="btn ghost cv-more" data-act="cvmore" data-m="venue" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
-  <section class="cv-sec">${secHead('On stage',editBtn('stage'))}${kvSec('stage',ON_STAGE)}</section>
-  <section class="cv-sec">${secHead('Getting there',editBtn('getting'))}${kvSec('getting',GETTING,'<p class="cv-fn">Written once, reused in every day sheet for this venue. Members see it; venues and the calendar feed do not.</p>')}</section>
+  <section class="cv-sec">${secHead('On stage',editBtn('stage'))}${kvSec('stage',(VDET[v.id]||VDET.royal).stage)}</section>
+  <section class="cv-sec">${secHead('Getting there',editBtn('getting'))}${kvSec('getting',(VDET[v.id]||VDET.royal).getting,'<p class="cv-fn">Written once, reused in every day sheet for this venue. Members see it; venues and the calendar feed do not.</p>')}</section>
   <section class="cv-sec">${secHead('Bookings here',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${brows.map(r=>bookRow(r)).join('')||'<p class="muted cv-in">No bookings here yet</p>'}</div></section>
  </div>
  <aside class="cv-panel"><section class="cv-sec">${secHead('People here',actBtn('plus','Add person','newcontact'))}<div class="cv-rows">${people.map(([ini,n,s,id])=>`<button class="cv-row" data-act="cvgo" data-v="contact" data-id="${id}"><span class="cv-av s">${ini}</span><span class="tx"><b>${n}</b><small>${s}</small></span>${chev}</button>`).join('')||'<p class="muted cv-in">Nobody linked yet</p>'}</div></section>
@@ -257,7 +282,7 @@ Object.assign(L.ACTIONS,{
  cvall:()=>{S.cv.all=!S.cv.all;L.render();},
  cvclear:()=>{if(S.view==='venues'||(S.view==='contacts'&&S.cv.tab==='venues')){S.cv.vq='';S.filters.vplayed=[];S.filters.vcity=[];S.filters.vpa=[];}else{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];}L.render();},
  clearcsearch:()=>{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];L.render();},
- cvmap:()=>L.toast('Map view: 3 in Copenhagen, 2 in Odense, 1 in Aarhus'),
+ cvmap:()=>{S.cv.vmap=!S.cv.vmap;L.render();},cvmapcity:el=>{S.cv.mapCity=el.dataset.c;L.render();},
  cvfrommail:()=>{L.go('mail');L.toast('Pick the threads, the assistant finds the bookers');},
  cvsamples:()=>{S.cv.empty=false;L.render();L.toast('3 sample contacts added',()=>{S.cv.empty=true;});},
  cvedit:t=>{const k=t.dataset.k;S.cv.edit=S.cv.edit===k?null:k;S.cv.editFor=S.view+':'+(S.params.id||'');if(!S.cv.edit&&S.cv.save){S.cv.save='';}L.render();if(S.cv.edit){const f=document.querySelector('.cv-form input,.cv-notes-in');if(f)f.focus();}},

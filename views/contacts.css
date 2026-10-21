@@ -267,3 +267,17 @@ button.cv-irow:hover b{text-decoration:underline}
 .help>svg.i{width:13px;height:13px;vertical-align:-2px;margin-right:2px}
 /* inline section edit: every field in a section is the same width (Vit 21 Oct: "some inputs longer than others") */
 .cv-form .field{max-width:640px!important}
+/* venues map view */
+.cv-map{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:16px;align-items:start}
+.cv-mapc{position:relative;border-radius:var(--r-lg);background:color-mix(in srgb,var(--stream,#0a7fbf) 10%,var(--surface));box-shadow:inset 0 0 0 1px var(--rule);padding:16px}
+.cv-mapc svg{display:block;width:100%;height:auto}
+.cv-mapc .land{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1.5}
+.cv-pin{cursor:pointer}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3;transition:r .15s}
+.cv-pin text{fill:var(--canvas);font:600 12px/1 var(--sans)}.cv-pin .lb{fill:var(--ink);font:500 12px/1 var(--sans)}
+.cv-pin.on circle{fill:var(--accent)}.cv-pin.on text:not(.lb){fill:var(--on-accent)}
+.cv-pin:hover circle{fill:var(--accent)}.cv-pin:focus-visible{outline:none}.cv-pin:focus-visible circle{stroke:var(--ink)}
+.cv-mapn{position:absolute;left:16px;bottom:12px;font:400 12px/16px var(--sans);color:var(--muted)}
+.cv-mapl{border:1px solid var(--rule);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
+.cv-maph{display:flex;align-items:baseline;justify-content:space-between;padding:12px 16px;background:var(--th-bg,var(--canvas));font:500 15px/22px var(--sans)}.cv-maph .muted{font:400 13px/18px var(--sans)}
+.cv-mapl .cv-vrow{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;box-shadow:inset 0 1px 0 var(--rule);text-align:left;position:relative}
+@media (max-width:900px){.cv-map{grid-template-columns:1fr}}
