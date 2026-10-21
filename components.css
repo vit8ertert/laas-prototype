@@ -115,3 +115,65 @@ tbody tr:hover td{background:var(--hover)}
 /* Drawer head title block (203:3658 "Frame" in Drawer head): column, gap 2 */
 .drawer .dh .grow{display:flex;flex-direction:column;gap:2px}
 .drawer .dh .grow>*{margin:0}
+
+/* Status chip 301:5149: pad 4 12, gap 8, radius pill, dot 6, Label strong 13/18; colours per status */
+.schip{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:var(--r-pill);font:500 13px/18px var(--sans);white-space:nowrap;flex:none}
+.schip>i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.schip.enquiry{background:var(--sunken);color:var(--muted)}
+.schip.hold{background:var(--att-tint);color:var(--att)}
+.schip.offer{background:var(--accent-tint);color:var(--accent-ink)}
+.schip.confirmed{background:var(--ok-tint);color:var(--ok)}
+.schip.completed{background:var(--sunken);color:var(--ink)}
+.schip.cancelled{background:none;color:var(--muted);border:1px solid var(--rule-strong)}
+
+/* Status menu (306:5936 "Status menu · open"): 360 wide, pad 8, radius 12, inside stroke 1 rule-strong, overlay;
+   head pad 8 12 Label 13/18 muted; items pad 8 12, gap 12, radius 8, hover/current fill hover, text Label 13/18 muted;
+   rule 1 px; foot pad 8 12 Label 13/18 faint */
+.smenu{width:360px;padding:8px;display:flex;flex-direction:column;border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
+.smenu-h{padding:8px 12px;font:400 13px/18px var(--sans);color:var(--muted)}
+.smenu-it{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r-md);text-align:left;width:100%;color:var(--ink)}
+.smenu-it:hover,.smenu-it.on{background:var(--hover)}
+.smenu-d{flex:1;min-width:0;font:400 13px/18px var(--sans);color:var(--muted)}
+.smenu-it>svg.i{width:14px;height:14px;flex:none}
+.smenu-rule{border:0;height:1px;margin:0;background:var(--rule)}
+.smenu-f{padding:8px 12px;font:400 13px/18px var(--sans);color:var(--faint)}
+
+/* Send preview (booking screens "Send preview", measured by the booking pass): pad 20 24, gap 16, stroke takes space (border);
+   head = title block column gap 4; To line gap 8 with the value at 15/22; "Show full message" line 18;
+   actions gap 12, the flush "Snooze" / "Not now" link padding 8 16 8 0 */
+.send{padding:20px 24px;gap:16px}
+.send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
+.send>div:first-child p{margin:0!important}
+.send>.row.t-label{gap:8px}
+.send>.row.t-label>span:nth-child(2){font:400 15px/22px var(--sans)}
+.send .msg .link{line-height:18px}
+.send>.row:last-child{gap:12px}
+.send>.row:last-child>.btn.ghost.flush{padding:8px 16px 8px 0!important}
+
+/* Assistant sheet (420:19222 "Assistant sheet"): content width, pad 20 24, gap 16, radius 12, top, inside stroke 1 rule-strong,
+   shadow 0 16 48 #00000073 (its stroke takes space: real border); head row gap 8: record chip pad 4 10 4 4, gap 8, radius 8, well, 24 thumb radius 5, Label strong 13/18;
+   close ghost S pad 8 0 8 12; question right-aligned, pad 8 16, radius 8, well, Body 15/22; answer Body 15/22 */
+.sheet{flex:none;max-width:none;width:calc(100% - 64px);padding:20px 24px;gap:16px;border:1px solid var(--rule-strong);border-radius:var(--r-lg);background:var(--top);
+  box-shadow:0 16px 48px #00000073}
+.sheet-h{display:flex;align-items:center;gap:8px}
+.sheet-h .grow{flex:1}
+.sheet-rec{display:inline-flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:500 13px/18px var(--sans);white-space:nowrap}
+.sheet-rec img{width:24px;height:24px;border-radius:5px;object-fit:cover;flex:none}
+.sheet .sheet-x{padding:8px 0 8px 12px}
+.sheet-you{display:flex;justify-content:flex-end}
+.sheet-you .bubble{margin:0;padding:8px 16px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:400 15px/22px var(--sans);max-width:none}
+.sheet-a{margin:0;font:400 15px/22px var(--sans);color:var(--ink)}
+
+/* Drawer head Close (203:3658): ghost S with x, pad 8 0 8 12 (flush on the drawer's right padding), 69×34 */
+.drawer .dh>.btn.ghost[data-act=close]{padding:8px 0 8px 12px}
+
+/* Theme switch while its menu is open (455:22247): state-selected at 12 % */
+body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srgb,var(--state-selected) 12%,transparent)}
+
+/* Input 132:118 "Value" text: Body 15/22 muted. Figma only draws the empty state ("Choose…"), so muted is the placeholder;
+   a typed value stays ink so it never reads as a hint */
+.input::placeholder{color:var(--muted);opacity:1}
+
+/* Collapsed rail (466:23760 "Rail"): 64 wide, no fill (on the sunken page), gap 4; band square 36, initials Label 13/18 */
+.collapsed .sidebar{background:none;gap:4px}
+.collapsed .sidebar .band .sq{width:36px;height:36px;font:500 13px/18px var(--sans)}

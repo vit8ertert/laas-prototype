@@ -321,15 +321,4 @@
  .abar .rec{min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:40%}
 }
 
-/* send preview inside the booking page (core sendPreview, Figma "Send preview"): pad 20 24, gap 16, title block gap 4, actions gap 12 */
-.bd-page .send{padding:20px 24px;gap:16px}
-/* Figma "Head" (row, gap 12) holds "Title block" (column, gap 4): one box carries both */
-.bd-page .send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
-.bd-page .send>div:first-child p{margin:0!important}
-.bd-page .send>.row.t-label{gap:8px}
-.bd-page .send>.row.t-label>span:nth-child(2){font:400 15px/22px var(--sans)}
-.bd-page .send .msg .link{line-height:18px}
-.bd-page .send>.row:last-child>.btn.ghost.flush{padding:8px 16px 8px 0!important}
-.bd-page .send .t-heading{letter-spacing:-.1px}
-.bd-page .send>.row:last-child{gap:12px}
-.bd-page .send .btn.secondary{background:var(--surface)}
+/* send preview: values now in core components.css (.send) */
