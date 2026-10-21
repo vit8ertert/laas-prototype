@@ -139,3 +139,8 @@
    ends on the row's 8 px padding, the same line as the chevrons; same 20 px height, at least 24 wide, digits centred,
    so 1, 12 and 123 sit on one right edge. Grey = how many; lilac = needs you (unread mail, a catalogue problem). */
 .sidebar .nav .count,.sidebar .nav .alert{margin-right:0;box-sizing:border-box;min-width:24px;height:20px;padding:2px 7px;justify-content:center;text-align:center;font-variant-numeric:tabular-nums;flex:none}
+/* one column for numbers (Vit 21 Oct: Catalogue's number sat left of the others): chevrons keep the right column,
+   numbers end 32 px before the row edge in every row, so sub-row counts line up with group alerts */
+.sidebar .nav.sub :is(.count,.alert){margin-right:32px}
+/* banners: icon and text start at the top, the action button sits in the vertical middle (Vit 21 Oct) */
+.banner>.btn,.banner>.ml-bact,.banner>div:last-child:has(>.btn){align-self:center}
