@@ -401,3 +401,5 @@ button.acc-si:hover{background:var(--hover)}
 .acc-ob .l,.acc-ob.snd .l{padding:48px clamp(48px,8vw,128px);align-items:center}
 .acc-ob .l>*{width:100%;max-width:480px}
 .acc-obform{width:480px}
+/* rank numbers in Top songs: a 20 px column on the row's left edge (Vit 21 Oct: "bad alignment") */
+.acc-li .aud-i{width:20px;min-width:0;flex:none;text-align:left;margin:0}

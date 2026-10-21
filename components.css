@@ -165,7 +165,9 @@ tbody tr:hover td{background:var(--hover)}
 .sheet-a{margin:0;font:400 15px/22px var(--sans);color:var(--ink)}
 
 /* Drawer head Close (203:3658): ghost S with x, pad 8 0 8 12 (flush on the drawer's right padding), 69×34 */
-.drawer .dh>.btn.ghost[data-act=close]{padding:8px 0 8px 12px}
+/* symmetric padding with a -12 px margin: the label stays flush on the drawer's right padding, the hover fill is even (Vit 21 Oct) */
+.drawer .dh>.btn.ghost[data-act=close]{padding:8px 12px;margin-right:-12px}
+.drawer .dh>.btn.ghost[data-act=close]:hover{background:var(--hover)}
 
 /* Theme switch while its menu is open (455:22247): state-selected at 12 % */
 body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srgb,var(--state-selected) 12%,transparent)}
@@ -197,3 +199,9 @@ html.gated body>*:not(.gate){display:none!important}
 .abar .abar-hide{width:32px;height:32px;padding:0;margin-left:-8px;justify-content:center;border-radius:var(--r-pill);color:var(--muted)}
 .abar .abar-hide:hover{background:var(--hover);color:var(--ink)}
 .abar .abar-hide svg.i{width:16px;height:16px}
+
+/* drawer close: slide back to the right, scrim fades (views/motion.js keeps a copy while it leaves) */
+.drawer.leaving{animation:drawer-out .2s cubic-bezier(.4,0,1,1) both;pointer-events:none}
+.scrim.leaving{animation:scrim-out .2s ease both;pointer-events:none}
+@keyframes drawer-out{to{transform:translateX(100%)}}
+@keyframes scrim-out{from{opacity:1}to{opacity:0}}
