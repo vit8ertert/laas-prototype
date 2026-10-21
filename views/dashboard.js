@@ -133,7 +133,8 @@ const CAL_EVENTS={'2026-10-2':{img:'studio-b',ev:[['draft','Rehearsal','data-go=
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],WDL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const dayLong=dt=>`${WD[dt.getDay()]} ${dt.getDate()} ${MON3[dt.getMonth()]} ${dt.getFullYear()}`;
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-L.VIEWS.calendar=()=>{const empty=S.dashFirst;const d0=new Date(2026,9+S.calMonth,1);const y=d0.getFullYear(),m=d0.getMonth();
+/* Vit 21 Oct: the Calendar opens on the month with the band's gigs; the empty state is its own flag (no longer tied to the first-visit dashboard) */
+L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMonth,1);const y=d0.getFullYear(),m=d0.getMonth();
  const start=new Date(y,m,1-((d0.getDay()+6)%7));const weeks=[];let d=new Date(start);
  do{const w=[];for(let i=0;i<7;i++){w.push(new Date(d));d.setDate(d.getDate()+1);}weeks.push(w);}while(d.getMonth()===m);
  const head=`<div class="ph"><div class="grow"><h1 class="t-display">${MONTHS[m]} ${y}</h1><p>${empty?'Nothing yet, holds hatched, confirmed solid, cancelled outlined':S.calMonth===0?'3 bookings, 1 rehearsal, 1 draft':'Nothing booked yet this month'}</p></div>
