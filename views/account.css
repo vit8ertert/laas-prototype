@@ -219,7 +219,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-obfoot{margin:0;font-size:12px;line-height:16px;color:var(--muted)}
 .acc-obfoot .link{font-size:12px;color:var(--muted)}
 .acc-code{display:flex;gap:8px}
-.acc-code input{flex:1;min-width:0;height:64px;text-align:center;font:500 16px/22px var(--mono);border-radius:8px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
+.acc-code input{flex:none;width:48px;min-width:0;height:56px;text-align:center;font:500 16px/22px var(--mono);border-radius:8px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
 .acc-code input:focus{outline:none;border:2px solid var(--accent)}
 .acc-obphoto{display:flex;gap:16px;align-items:center}
 .acc-obphoto img{width:96px;height:96px;border-radius:12px;object-fit:cover;flex:none}
@@ -433,3 +433,8 @@ button.acc-si:hover{background:var(--hover)}
 /* onboarding: the Back / Continue row sits apart from the form, 40 px below the last field on every step (Vit 21 Oct) */
 .acc-obform>.row:last-child{margin-top:20px}
 .acc-ob.snd .acc-obform>.row:last-child{margin-top:26px}
+
+/* sign-up: the button stack sits 32 px under the intro (Vit 21 Oct: "button needs padding on top") */
+.acc-obh+.acc-obstack{margin-top:12px}
+/* "or" divider: equal optical space above and below (the label text sits 4 px into its box) */
+.acc-or{margin-bottom:-5px}
