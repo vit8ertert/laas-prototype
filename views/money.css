@@ -109,7 +109,6 @@ button.m-line:hover{background:var(--raised)}
 .m-ghosttiles .m-kpi{opacity:.5}
 
 /* expenses */
-.m-exp{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:4px}
 .m-erow{display:flex;align-items:center;gap:24px;padding:12px 8px;border-radius:8px}
 .m-erow:hover{background:var(--raised)}
 .m-ed{width:64px;font-size:13px;line-height:18px;color:var(--muted);flex:none}
@@ -156,7 +155,7 @@ button.m-line:hover{background:var(--raised)}
 .m-leg{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:12px;line-height:16px;color:var(--muted)}
 .m-leg span,.m-dlab span,.m-tip span{display:inline-flex;align-items:center;gap:6px}
 .m-chart i:is(.gig,.merch,.stream,.grant){width:10px;height:10px;border-radius:3px;display:inline-block;background:var(--sc);flex:none}
-.m-chart i.exp{width:14px;height:2px;border-radius:1px;background:repeating-linear-gradient(90deg,var(--ink) 0 5px,transparent 5px 8px);display:inline-block;flex:none}
+.m-chart i.exp{width:14px;height:2px;border-radius:1px;background:var(--ink);display:inline-block;flex:none}
 .m-chart i.inc{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none;background:linear-gradient(var(--c-grant) 0 25%,var(--c-stream) 0 50%,var(--c-merch) 0 75%,var(--c-gig) 0)}
 .m-track i{background:var(--accent)}
 .m-plotwrap{display:grid;grid-template-columns:40px minmax(0,1fr) 128px;grid-template-rows:220px auto;column-gap:12px;row-gap:8px}
@@ -164,13 +163,9 @@ button.m-line:hover{background:var(--raised)}
 .m-plot{position:relative;cursor:crosshair}
 .m-plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .m-grid{position:absolute;left:0;right:0;height:1px;background:var(--rule);pointer-events:none}
-/* quiet bands: the fill at 38 %, the band's top edge as a 2 px line in the full colour (Ramp home charts) */
-.m-a{fill:var(--sc);fill-opacity:.38}
-.m-edge{fill:none;stroke:var(--sc);stroke-width:2px;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .m-exp{fill:none;stroke:var(--ink);stroke-width:2px;stroke-dasharray:6 4;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.m-cross{position:absolute;top:0;bottom:0;width:1px;background:var(--ink);opacity:.5;pointer-events:none}
 .m-tip{position:absolute;top:8px;margin-left:12px;z-index:2;min-width:208px;display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:var(--r-md);background:var(--overlay);box-shadow:inset 0 0 0 1px var(--rule-strong),0 16px 48px #00000073;font-size:13px;line-height:18px;color:var(--muted);pointer-events:none}
-.m-tip[hidden],.m-cross[hidden]{display:none}
+.m-tip[hidden]{display:none}
 .m-tip.left{transform:translateX(-100%);margin-left:-12px}
 .m-tip b{font-weight:500;color:var(--ink)}
 .m-tip em{font-style:normal;margin-left:auto;padding-left:16px;color:var(--ink)}
@@ -366,3 +361,12 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-bd .m-bdr:hover{background:var(--hover)}
 .m-bd:has(.m-bdr[data-i="0"]:hover) .m-seg[data-i="0"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="1"]:hover) .m-seg[data-i="1"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="2"]:hover) .m-seg[data-i="2"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="3"]:hover) .m-seg[data-i="3"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="4"]:hover) .m-seg[data-i="4"]{stroke-width:24}
 @media (max-width:860px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center}.m-bdrs{width:100%}}
+
+/* stacked monthly bars */
+.m-bars12{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:100%}
+.m-mcol{position:relative;display:flex;justify-content:center;align-items:flex-end;border-radius:6px}
+.m-mcol.on{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.m-stack{width:min(56%,40px);height:100%;display:flex;flex-direction:column-reverse;gap:2px;justify-content:flex-start}
+.m-stack i{display:block;background:var(--sc);flex:none;min-height:2px}
+.m-stack i:last-child{border-radius:4px 4px 0 0}
+.m-tick{position:absolute;left:50%;width:min(76%,56px);height:2px;margin-bottom:-1px;transform:translateX(-50%);border-radius:1px;background:var(--ink);box-shadow:0 0 0 1.5px var(--surface)}
