@@ -1,0 +1,107 @@
+/* LAAS core components, values copied from the Figma component specs in design/components/*.md
+   (generated from Figma by design/figma-dump/spec.py). Tokens come from tokens.css (Figma variables).
+   Figma "inside" strokes take no space: drawn as inset box-shadow, never as a CSS border.
+   Loaded after the core <style> and before the area files. */
+
+/* Shell: Body 8 all round (Figma Body frame), Sidebar pad 8 gap 2 radius 12, Main pad 24 32 gap 24 radius 12 */
+@media (min-width: 861px){.body{padding:8px}}
+
+/* Button 131:168: gap 8, pad 8 16 (M) / 8 12 (S), radius pill, label Body strong 15/22 (M) / Label strong 13/18 (S), icon 20 / 16 */
+.btn{height:auto;gap:8px;padding:8px 16px;border:0;border-radius:var(--r-pill);font:500 15px/22px var(--sans);color:var(--ink)}
+.btn>svg.i{width:20px;height:20px;flex:none}
+.btn.s{height:auto;padding:8px 12px;font:500 13px/18px var(--sans)}
+.btn.s>svg.i{width:16px;height:16px}
+.btn.primary{background:var(--ink);color:var(--on-dark)}
+.btn.secondary{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--ink)}
+.btn.secondary:hover{background:var(--hover)}
+.btn.ghost{background:none}
+.btn.accent{background:var(--accent-strong);color:var(--on-accent)}
+/* icon-only (Show label off): pad 8 16 around a 20 icon = 52×36 */
+.btn.icon{width:auto;padding:8px 16px}
+.btn.icon.s{padding:8px 12px}
+
+/* Chip 153:948: gap 8, pad 8 12, radius pill, inside stroke 1 rule, surface; hover fill hover; label Body tight 15/18; icon 14 */
+.chip{height:auto;gap:8px;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink)}
+.chip:hover{background:var(--hover)}
+.chip>svg.i{width:14px;height:14px}
+
+/* Input / Select 132:118 / 142:616: column gap 8; Label 13/18 ink; Field pad 8 12, radius 8, inside stroke 1 rule-strong, surface;
+   Focus inside stroke 2 ink; Error stroke 1 bad + help in bad; Help Meta 12/16 muted */
+.field{gap:8px}
+.field label{font:400 13px/18px var(--sans);color:var(--ink)}
+.field .help{font:400 12px/16px var(--sans);color:var(--muted)}
+.input{height:38px;padding:8px 12px;border:0;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 15px/22px var(--sans);color:var(--ink)}
+.input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ink)}
+.input.err,.field.err .input{box-shadow:inset 0 0 0 1px var(--bad)}
+.field.err .help{color:var(--bad)}
+textarea.input{height:auto;padding:8px 12px}
+
+/* Tag 132:131: pad 4 8, radius pill, Label 13/18; tint + ink per status */
+.tag{height:auto;padding:4px 8px;border-radius:var(--r-pill);font:400 13px/18px var(--sans)}
+.tag.draft{background:var(--draft-tint);color:var(--draft)}
+.tag.confirmed{background:var(--ok-tint);color:var(--ok)}
+.tag.paid{background:var(--paid-tint);color:var(--paid)}
+.tag.attention{background:var(--att-tint);color:var(--att)}
+.tag.danger{background:var(--bad-tint);color:var(--bad)}
+.tag.accent{background:var(--accent-tint);color:var(--accent-ink)}
+
+/* Tab 298:5098: 48 high = inner 46 (pad 12 4, gap 8) + indicator 2; label Body strong 15/22;
+   hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
+.tabs button{height:48px;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/22px var(--sans)}
+.tabs button:hover{border-bottom-color:var(--rule-strong)}
+.tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
+.tabs .c{padding:2px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/18px var(--sans)}
+
+/* Table row 140:357: pad 12 16, gap 24, bottom stroke 1 rule (inside), surface; hover fill hover */
+td{padding:12px 16px;border-top:0;box-shadow:inset 0 -1px 0 var(--rule);background:var(--surface)}
+tbody tr:hover td{background:var(--hover)}
+
+/* Toast 299:5237: gap 12, pad 12 12 12 16, radius 12, inside stroke 1 rule-strong, overlay, shadow 0 8 24 #00000059;
+   Figma places it 110 above the frame bottom */
+.toast{gap:12px;padding:12px 12px 12px 16px;border:0;border-radius:var(--r-lg);background:var(--overlay);
+  box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #00000059;font:400 15px/22px var(--sans);bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+
+/* Segmented control 442:19785: pad 3, gap 2, radius 8, well; segment pad 6 14, radius 6, Label strong 13/18;
+   selected surface + shadow 0 1 2 #00000040 */
+.seg{gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
+.seg button{height:auto;padding:6px 14px;border-radius:6px;font:500 13px/18px var(--sans)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px #00000040}
+
+/* Banner 299:5204: gap 12, pad 12 16, radius 8, icon 18; text column gap 2 */
+.banner{gap:12px;padding:12px 16px;border-radius:var(--r-md)}
+.banner>svg.i:first-child{width:18px;height:18px}
+
+/* Drawer (screen 203:3658): 480 wide, top, inside left stroke 1 rule-strong, shadow -16 0 48 #00000080;
+   head pad 20 24 gap 12 (90 high); scroll pad 20 24 gap 20; footer pad 16 24 gap 8, inside top stroke 1 rule, surface */
+.drawer{background:var(--top);box-shadow:inset 1px 0 0 var(--rule-strong),-16px 0 48px #00000080}
+.drawer .dh{gap:12px;padding:20px 24px;border-bottom:0;align-items:center}
+.drawer .db{padding:20px 24px;gap:20px}
+.drawer .df{gap:8px;padding:16px 24px;border-top:0;box-shadow:inset 0 1px 0 var(--rule);background:var(--surface)}
+/* Scrim: #000 at 35% */
+.scrim{background:#00000059}
+
+/* Popover (screen 438:21857): radius 12, inside stroke 1 rule-strong, overlay, shadow 0 16 48 #00000073 */
+.pop{border:0;border-radius:var(--r-lg);background:var(--overlay);box-shadow:inset 0 0 0 1px var(--rule-strong),0 16px 48px #00000073}
+
+/* Tabs row (screen 156:1386 "Tabs · bookings"): row gap 20, then a 1 px rule: 49 high */
+.tabs{gap:20px}
+
+/* Band avatar in the sidebar: 32, radius 8, initials Body strong tight 15/18. Figma uses accent-tint / accent-ink on 82 screens
+   (only Dashboard 167:1894 has artwork-base / on-dark), so the majority wins */
+.band .sq{width:32px;height:32px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);font:500 15px/18px var(--sans)}
+
+/* Nav item 132:153: pad 8, gap 8, radius 8; label Body tight 15/18; hover surface; active well + Body strong tight 500;
+   count pad 2 8, radius pill, Meta 12/16 faint (20 high, so a row with a count is 36) */
+.nav{padding:8px;gap:8px;border-radius:var(--r-md);font:400 15px/18px var(--sans)}
+.nav:hover{background:var(--surface)}
+.nav.active{background:var(--well);font-weight:500}
+
+/* Record chip (28 screens, e.g. 297:4814): pad 4 8, gap 8, radius pill, Label 13/18, accent-tint / accent-ink */
+.rec{height:auto;padding:4px 8px;gap:8px;border-radius:var(--r-pill);font:400 13px/18px var(--sans)}
+
+/* Page header title block (every screen "Title block"): column, gap 4 */
+.ph .grow{display:flex;flex-direction:column;gap:4px}
+.ph .grow>*{margin:0}
+
+/* Main (all screens): pad 24 32 24 32, gap 24; the padding sits on .page inside the scrolling .main */
+@media (min-width: 861px){.page{padding:24px 32px}}
