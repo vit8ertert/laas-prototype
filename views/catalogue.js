@@ -99,14 +99,29 @@ function listCounts(){const past=S.catalog||[];const n=(hasRel()?1:0)+past.lengt
  const secs=[...(hasRel()?LS_TRACKS.slice(0,R().tracks):[]),...past.flatMap(r=>r.tracks)].reduce((a,t)=>{const [m,s]=t[1].split(':');return a+ +m*60+ +s},0);
  return {n,tracks,min:Math.round(secs/60),past};}
 
+const kpisE=(n,bad,r)=>`<div class="ec-kpis"><div><span>Songs out</span><b>${n}</b><small>on ${r} releases</small></div><div><span>Earning everywhere</span><b>${n-bad}</b><small class="c-ok">Koda, Gramex and stores</small></div><div><span>Missing money</span><b>${bad}</b><small class="${bad?'c-att':'c-ok'}">${bad?'songs not registered somewhere':'nothing missing'}</small></div></div>`;
 function tabBody(){const c=listCounts();const t=S.cat.tab;
  if(t==='tracks'){const rows=[...(hasRel()?LS_TRACKS.slice(0,R().tracks).map(x=>[...x,R().title]):[]),...c.past.flatMap(r=>r.tracks.map(x=>[x[0],x[1],x[2],r.title]))];
   if(!rows.length)return `<div class="empty cat-empty"><h3 class="t-title">No tracks yet</h3><p class="muted">Tracks come with a release. Add them on the release page.</p></div>`;
   return `<section class="cat-rows trk-list">${rows.map((x,i)=>L.trow(i+1,x[0],x[1],x[3])).join('')}</section>`;}
  if(t==='credits')return `<section class="cat-rows">${PEOPLE.map(p=>`<div class="cat-row"><span class="cat-av">${p[0]}</span><span class="tx"><b>${p[1]}</b><small>${p[2]}, on every song</small></span>${tag('confirmed','Signed')}<span class="mono">${p[3]}</span></div>`).join('')}</section><p class="t-label muted cat-note">Splits are the same on all songs. Change them on a release before delivery; after delivery they lock.</p>`;
- if(t==='earning'){const rows=c.past.flatMap(r=>r.tracks.map(x=>[x[0],r.title,x[2]]));
-  if(!rows.length)return `<div class="empty cat-empty"><h3 class="t-title">Nothing to check yet</h3><p class="muted">The earning check runs on songs that are out. Import your catalogue to start it.</p><div class="row" style="justify-content:center"><button class="btn secondary" data-act="importcat" data-src="Spotify">${ic('upload','s')}Import catalogue</button></div></div>`;
-  return `<section class="cat-rows">${rows.map(x=>`<div class="cat-row"><span class="tx"><b>${esc(x[0])}</b><small>${esc(x[1])}</small></span>${x[2]?`<span class="t-label c-att">${x[2]}</span>${tag('attention','Check')}`:tag('confirmed','Earning')}</div>`).join('')}</section>`;}
+ if(t==='earning'){
+  if(!c.past.length)return `<div class="empty cat-empty"><h3 class="t-title">Nothing to check yet</h3><p class="muted">The earning check runs on songs that are out. Import your catalogue to start it.</p><div class="row" style="justify-content:center"><button class="btn secondary" data-act="importcat" data-src="Spotify">${ic('upload','s')}Import catalogue</button></div></div>`;
+  /* release by release, song by song (Vit 21 Oct: with 5 albums and 3 singles a flat list of every song does not scale):
+     releases with a problem come first and open; releases where every song earns fold to one line. */
+  const chk=x=>{const t=x[2]||'';const k=!/not registered at koda/i.test(t),g=!/not at gramex/i.test(t);return {k,g,ok:k&&g};};
+  const rel=c.past.map(r=>{const songs=r.tracks.map(x=>({x,...chk(x)}));return {r,songs,bad:songs.filter(s=>!s.ok).length};}).sort((a,b)=>b.bad-a.bad);
+  const nBad=rel.reduce((a,g)=>a+g.bad,0),nAll=rel.reduce((a,g)=>a+g.songs.length,0),f=S.cat.ef||'all';
+  S.cat.eopen??=Object.fromEntries(rel.map(g=>[g.r.id,g.bad>0]));
+  const cell=(ok,miss,act,id)=>ok?`<span class="ec-ok">${ic('check','s')}Registered</span>`:`<button class="tag attention ec-fix" data-act="ecfix" data-what="${miss}" data-song="${esc(id)}">${ic('plus','s')}Register</button>`;
+  const grp=g=>{const open=S.cat.eopen[g.r.id];const songs=f==='check'?g.songs.filter(s=>!s.ok):g.songs;if(f==='check'&&!songs.length)return '';
+   return `<div class="ec-grp ${open?'open':''}"><button class="ec-gh" data-act="ecgrp" data-id="${g.r.id}" aria-expanded="${!!open}"><img class="ec-art" src="${L.IMG(g.r.img)}" alt=""><span class="ec-gt"><b>${esc(g.r.title)}</b><small>${g.r.kind}, ${g.songs.length} ${g.songs.length===1?'song':'songs'}, ${g.r.date}, ${g.r.distributor}</small></span>${g.bad?tag('attention',`${g.bad} to check`):tag('confirmed','All earning')}<span class="ec-chev">${ic(open?'down':'right','s')}</span></button>
+   ${open?`<div class="ec-t" role="table" aria-label="${esc(g.r.title)}, songs"><div class="ec-r ec-th" role="row"><span>Song</span><span>Koda, the song</span><span>Gramex, the recording</span><span>Stores</span><span></span></div>
+    ${songs.map(s=>`<div class="ec-r ${s.ok?'':'bad'}" role="row"><span class="ec-st"><b>${esc(s.x[0])}</b><small>${s.x[1]}</small></span><span>${cell(s.k,'Koda',0,s.x[0])}</span><span>${cell(s.g,'Gramex',0,s.x[0])}</span><span class="ec-ok">${ic('check','s')}${g.r.id==='lt'?'9 stores':'Live'}</span><span class="n">${s.ok?tag('confirmed','Earning'):`<span class="c-att ec-why">${esc(s.x[2])}</span>`}</span></div>`).join('')}</div>`:''}</div>`;};
+  return `<div class="ec">${kpisE(nAll,nBad,rel.length)}
+  <div class="ec-bar"><div class="ec-fs">${[['all','All songs',nAll],['check','Needs a check',nBad]].map(([k,l,n])=>`<button class="chip ${f===k?'on':''}" data-act="ecf" data-f="${k}" aria-pressed="${f===k}">${l}<span class="c">${n}</span></button>`).join('')}</div>${nBad?`<button class="btn secondary s" data-act="ecall">${ic('check','s')}Fix all ${nBad}</button>`:''}</div>
+  ${rel.map(grp).join('')}
+  <p class="t-label muted cat-note">A song earns in three places: Koda pays for the song when it is played or streamed, Gramex pays the performers of the recording, and the stores pay through ${'the distributor'}. LAAS checks all three for every song and tells you what is missing; it never registers for you without asking.</p></div>`;}
  /* releases */
  return `<div class="cat-relgrid"><div class="cat-grid">${hasRel()?relTile():''}${c.past.map(pastTile).join('')}</div>
  <p class="t-label muted cat-note">Statuses mirror the tools that own them: Draft, Scheduled, Delivered per store, Live, Check (something not earning). Nothing here is delivered by LAAS; it tells you what to do and when.</p></div>`;}
@@ -244,6 +259,12 @@ L.DR.gearitem=(id)=>{const x=GEAR.find(g=>g.id===id)||GEAR[0];return {type:'draw
 
 /* ---------- actions ---------- */
 const A=L.ACTIONS;const open=o=>{S.overlay=o;L.render();};
+A.ecgrp=el=>{S.cat.eopen[el.dataset.id]=!S.cat.eopen[el.dataset.id];L.render();};
+A.ecf=el=>{S.cat.ef=el.dataset.f;L.render();};
+A.ecfix=el=>{const w=el.dataset.what,song=el.dataset.song;L.open('modal',{html:L.confirmM?L.confirmM(`Register “${song}” at ${w}?`,`LAAS fills in the ${w} form with the song, the writers and the splits from Credits. You check it and send it from your ${w} account.`,'Not now',`ecfixok" data-what="${w}" data-song="${song}`,'Open the form'):''});};
+A.ecfixok=el=>{const w=el.dataset.what,song=el.dataset.song;for(const r of (S.catalog||[]))for(const x of r.tracks)if(x[0]===song&&x[2]){x[2]=w==='Koda'?(/gramex/i.test(x[2])?x[2]:''):(/koda/i.test(x[2])&&/not registered/i.test(x[2])?x[2]:'');}S.overlay=null;L.render();L.toast(`${w} form for “${song}” is ready to send, marked as registered here`);};
+A.ecall=()=>{for(const r of (S.catalog||[]))for(const x of r.tracks)x[2]='';S.overlay=null;L.render();L.toast('All missing registrations prepared, open each form to send it');};
+
 const menu=(r,items)=>{L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items});};
 A.newrelease=()=>{S.newCover=null;open(L.DR.newrelease());};
 A.createrelease=()=>{const v=(document.getElementById('rt')||{}).value;
