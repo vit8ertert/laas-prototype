@@ -122,3 +122,8 @@
 .btn.secondary:not([disabled]):hover{background-color:var(--surface)}
 .btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.d-hi:hover,.d-hfoot:hover{background-color:transparent}
 .d-chip:hover{background-color:var(--surface)}
+
+/* focus ring (Vit 21 Oct, "Continue with email" looked double-bordered): keyboard focus only, 2 px in the text colour,
+   2 px away, following the element's own shape; never on mouse click */
+:focus-visible{outline:2px solid var(--ink)!important;outline-offset:2px}
+:focus:not(:focus-visible){outline:none!important}
