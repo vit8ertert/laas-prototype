@@ -206,3 +206,31 @@
 /* money lines on a booking open nothing: no hover inset, text on the heading edge, amounts on the card's right edge
    (Vit 21 Oct: "this Money card looks broken", rows sat 16 px in and the amounts 16 px past the action) */
 :is(.bd-sec,.bd-panel) .bd-mrow:not(button,a,[data-go],[data-act]){margin-inline:0!important;width:100%!important;padding-inline:0!important}
+
+/* event header (booking, gig day, social post): a tile that says what kind of thing this is, then the title and facts;
+   the venue is a chip with its photo that opens the venue page (Vit 21 Oct) */
+.ev-head{display:flex;align-items:center;gap:24px;margin:8px 0 20px}
+.ev-date{width:88px;height:96px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px}
+.ev-date span{font:500 13px/16px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ev-date b{font:400 40px/44px var(--sans);letter-spacing:-.8px;color:var(--ink)}
+.ev-date.today{background:var(--accent);box-shadow:none}.ev-date.today :is(span,b){color:var(--on-accent)}
+.ev-date.ev-post{height:88px}
+.ev-tx{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ev-k{font:400 14px/20px var(--sans);color:var(--muted)}
+.ev-tx h1{margin:0}
+.ev-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
+.ev-venue{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 3px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 13px/18px var(--sans);color:var(--ink)}
+.ev-venue img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+.ev-venue:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+/* booking progress: six steps, done filled, current half, late red, cancelled stops */
+.bk-prog{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.bk-prog li{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bk-prog i{height:6px;border-radius:3px;background:var(--well)}
+.bk-prog li.done i{background:var(--ok)}.bk-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
+.bk-prog li.att i{background:var(--att)}.bk-prog li.att span{color:var(--att)}
+.bk-prog.cancelled li.done i{background:var(--muted)}.bk-prog.cancelled li:nth-child(4) span{color:var(--bad)}
+.bk-prog span{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-prog li:is(.done,.now) span{color:var(--ink)}
+@media (max-width:700px){.ev-head{gap:16px}.ev-date{width:64px;height:72px}.ev-date b{font-size:28px;line-height:32px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
+/* booking and gig day open without a photo now, so they use the shared detail-page tint, not the venue-photo brown */
+.main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)!important}

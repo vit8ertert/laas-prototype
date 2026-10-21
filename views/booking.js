@@ -64,7 +64,16 @@ function bdAbar(ph){
   
   ;
 }
-const hero=(kicker,facts)=>`<div class="hero bd-hero"><img src="${IMG(VEN.img)}" alt=""><div class="tx"><span class="k">${kicker}</span><h1>Saturday hotel gig</h1><div class="facts">${facts.map(f=>`<span>${f}</span>`).join('')}</div></div></div>`;
+/* each kind of page opens differently (Vit 21 Oct: venue and booking had the same photo hero and mental model):
+   a venue is a place (photo hero), a booking is an event in time (date tile, venue chip, progress), the gig day is today */
+const evHead=({tile,kicker,title,facts,today})=>`<header class="ev-head">
+ <div class="ev-date ${today?'today':''}" aria-hidden="true">${tile}</div>
+ <div class="ev-tx"><span class="ev-k">${kicker}</span><h1 class="t-display">${title}</h1>
+  <div class="ev-meta"><button class="ev-venue" data-go="venue" data-id="royal"><img src="${IMG(VEN.img)}" alt="">Hotel Royal, Aarhus</button>${facts.map(f=>`<span class="tag">${f}</span>`).join('')}</div></div></header>`;
+const BK_STEPS=['Enquiry','Hold','Offer','Confirmed','Played','Settled'];
+const bkProg=k=>{if(k==='cancelled')return `<ol class="bk-prog cancelled" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<4?'done':'off'}"><i></i><span>${i===3?'Cancelled 14 Oct':t}</span></li>`).join('')}</ol>`;
+ const cur={enquiry:0,hold:1,offer:2,overdue:3,paid:4,completed:S.booking.settled?6:5}[k]??0;
+ return `<ol class="bk-prog" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<cur?'done':i===cur?(k==='overdue'?'att':'now'):'todo'}" ${i===cur?'aria-current="step"':''}><i></i><span>${t}${i===cur&&k==='overdue'?', deposit late':''}${i===cur&&k==='paid'?', 25 Oct':''}</span></li>`).join('')}</ol>`;};
 
 /* ---------- booking states ---------- */
 const hb=(cls,icon,label,a)=>`<button class="btn ${cls}" data-act="${a}">${icon?ic(icon):''}${label}</button>`;
@@ -142,9 +151,9 @@ function rateCard(){const r=S.rating;const words=['','Never again','Only if need
 L.VIEWS.booking=()=>{const k=keyOf();const s=STATES[k]();
  return `<div class="page bd-page bd-bk"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="bookings">${ic('left','s')}Bookings</button>
- ${hero('Concert at Hotel Royal, Aarhus',['Sat 25 Oct','Doors 20:00','On stage 21:30','Fee 4.500 DKK'])}
+ ${evHead({tile:'<span>Sat</span><b>25</b><span>Oct</span>',kicker:'Concert',title:'Saturday hotel gig',facts:['Doors 20:00','On stage 21:30','Fee 4.500 DKK']})}
  <div class="bd-bar hd"><div class="bd-tb">${s.pill}</div><div class="bd-hacts">${s.btns}<button class="btn secondary icon bd-more" aria-label="More" data-act="bookingmore">${ic('more')}</button></div></div>
- ${s.banner||''}${s.before||''}
+ ${bkProg(k)}${s.banner||''}${s.before||''}
  <div class="bd-grid"><div class="bd-main">${s.main}</div>${s.panel}</div>
  </div>${bdAbar(S.booking.sheet?'Ask a follow-up, or say “send it”':s.ph)}`;};
 L.VIEWS.rate=()=>{S.booking.state='completed';S.booking.cancelled=false;return L.VIEWS.booking();};
@@ -212,7 +221,7 @@ L.VIEWS.gigday=()=>{const H0=14,HN=11,X=t=>((t-H0)/HN*100);
  const stepHtml=([t,h,d,c,tags,kind,extra],i)=>`<div class="bd-step ${kind||''}">${S.editTimes?`<input class="input mono bd-tin" value="${t}" aria-label="Time for ${esc(h)}">`:`<span class="time">${t}</span>`}<span class="spine"><i style="--c:${col[c]}"></i>${i<steps.length-1?'<b></b>':''}</span><div class="content"><div class="bd-sth"><h4>${h}</h4>${tags.join('')}</div><p>${d}</p>${extra?`<div class="bd-sx">${extra}</div>`:''}</div></div>`;
  return `<div class="page bd-page bd-bk bd-gd"><div class="bd-tint" data-obj="royal"></div>
  <button class="btn ghost s flush bd-back" data-go="booking">${ic('left','s')}Saturday hotel gig</button>
- ${hero('Day sheet, Saturday 25 Oct',['Load-in 17:00','On stage 21:30','Curfew 00:30','118 km from Odense'])}
+ ${evHead({tile:'<span>Today</span><b>25</b><span>Oct</span>',kicker:'Day sheet',title:'Saturday hotel gig',facts:['Load-in 17:00','On stage 21:30','Curfew 00:30','118 km from Odense'],today:true})}
  <div class="bd-bar hd"><div class="bd-tb">${pill('confirmed','Confirmed',false,true)}</div><div class="bd-hacts">${hb('secondary','fileText','PDF','bdpdf')}${hb('accent','send','Send to band','bdsendday')}<button class="btn secondary icon bd-more" aria-label="More" data-act="bddaymore">${ic('more')}</button></div></div>
  ${S.bdd.gigBanner?banner('info','ai','Soundcheck moved 18:30 → 17:45, venue confirmed this morning','Jonas and Sofie were told at 09:12 with just this change. Mette has not opened it yet.',`<button class="btn secondary s" data-act="bdnudgemette">Nudge Mette</button>`,'gig'):''}
  <section class="strip bd-strip"><div class="bd-nowr"><span class="bd-now">Now 14:20</span><b>Leave Odense in 10 min, then load-in 17:00</b><span class="t-meta muted">Curfew 00:30</span></div>
