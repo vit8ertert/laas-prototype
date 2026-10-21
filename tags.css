@@ -203,3 +203,6 @@
 /* side card header: a long title wraps under its own column, the action stays on the first line */
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh{align-items:flex-start!important}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh>.btn{margin-top:-6px}
+/* money lines on a booking open nothing: no hover inset, text on the heading edge, amounts on the card's right edge
+   (Vit 21 Oct: "this Money card looks broken", rows sat 16 px in and the amounts 16 px past the action) */
+:is(.bd-sec,.bd-panel) .bd-mrow:not(button,a,[data-go],[data-act]){margin-inline:0!important;width:100%!important;padding-inline:0!important}
