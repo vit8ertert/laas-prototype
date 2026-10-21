@@ -116,11 +116,48 @@ const payouts=()=>`<div class="m-cols"><div class="m-left"><section class="m-sec
 
 /* ---------- Ledger content (Ledger view, Books and Reports tabs) ---------- */
 const CH=[['Nov',41,32],['Dec',99,41],['Jan',27,36],['Feb',50,45],['Mar',81,54],['Apr',63,41],['May',90,68],['Jun',117,63],['Jul',140,81],['Aug',126,59],['Sep',77,50],['Oct',108,54]];
-function chartTable(){const ytd=CH.slice(2);const fit=(i,total)=>{const s=ytd.reduce((a,r)=>a+r[i],0);const v=CH.map(r=>Math.round(r[i]*total/s/100)*100);const sum=v.slice(2).reduce((a,b)=>a+b,0);v[11]+=total-sum;return v;};
- const inc=fit(1,186400),out=fit(2,121950);
- return `<div class="table-wrap"><table class="m-dt"><thead><tr><th>Month</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Result</th></tr></thead><tbody>${CH.map((r,i)=>`<tr><td>${r[0]} ${i<2?2025:2026}</td><td class="num mono">${L.kr(inc[i])}</td><td class="num mono">${L.kr(out[i])}</td><td class="num mono">${L.kr(inc[i]-out[i])}</td></tr>`).join('')}</tbody></table></div>`;}
-const chart=()=>`<section class="m-chart"><div class="m-chh"><h3 class="t-heading">Income and expenses, last 12 months</h3><span class="m-leg"><i class="inc"></i>Income<i class="exp"></i>Expenses</span>${ghostBtn(M.showTable?'Show chart':'Show data table','data-act="mnytable"')}</div>
- ${M.showTable?chartTable():`<div class="m-bars">${CH.map(([m,a,b])=>`<div><span class="m-bp"><i class="inc" style="height:${a}px"></i><i class="exp" style="height:${b}px"></i></span><small>${m}</small></div>`).join('')}</div>`}</section>`;
+/* income by type, stacked, with expenses as a line on the same DKK axis (Vit 21 Oct: "more creative graphs") */
+const SER=[['gig','Gig fees'],['merch','Merch'],['stream','Streaming'],['grant','Grants and other']];
+function chartData(){const ytd=CH.slice(2);const fit=(i,total)=>{const s=ytd.reduce((a,r)=>a+r[i],0);const v=CH.map(r=>Math.round(r[i]*total/s/100)*100);const sum=v.slice(2).reduce((a,b)=>a+b,0);v[11]+=total-sum;return v;};
+ const inc=fit(1,186400),out=fit(2,121950),STR=[2400,2900,2600,2700,2800,2900,3100,3300,3200,3000,3100,3200],GR={4:12000,10:8000};
+ return CH.map((r,i)=>{const grant=GR[i]||0,stream=STR[i],merch=Math.round((inc[i]-grant-stream)*.18/100)*100,gig=inc[i]-grant-stream-merch;
+  return {m:r[0],y:i<2?2025:2026,gig,merch,stream,grant,inc:inc[i],out:out[i]};});}
+function chartTable(){const D=chartData();
+ return `<div class="table-wrap"><table class="m-dt"><thead><tr><th>Month</th>${SER.map(s=>`<th class="num">${s[1]}</th>`).join('')}<th class="num">Income</th><th class="num">Expenses</th><th class="num">Result</th></tr></thead><tbody>${D.map(d=>`<tr><td>${d.m} ${d.y}</td>${SER.map(s=>`<td class="num mono">${L.kr(d[s[0]])}</td>`).join('')}<td class="num mono">${L.kr(d.inc)}</td><td class="num mono">${L.kr(d.out)}</td><td class="num mono">${L.kr(d.inc-d.out)}</td></tr>`).join('')}</tbody></table></div>`;}
+/* monotone cubic, so a band never dips below zero and stacked edges never cross */
+function mono(y){const n=y.length,d=[],m=[];for(let i=0;i<n-1;i++)d.push(y[i+1]-y[i]);
+ m[0]=d[0];m[n-1]=d[n-2];for(let i=1;i<n-1;i++)m[i]=d[i-1]*d[i]<=0?0:(d[i-1]+d[i])/2;
+ for(let i=0;i<n-1;i++){if(!d[i]){m[i]=m[i+1]=0;continue;}const a=m[i]/d[i],b=m[i+1]/d[i],s=a*a+b*b;if(s>9){const t=3/Math.sqrt(s);m[i]=t*a*d[i];m[i+1]=t*b*d[i];}}
+ return t=>{const i=Math.min(n-2,Math.floor(t)),u=t-i,u2=u*u,u3=u2*u;return (2*u3-3*u2+1)*y[i]+(u3-2*u2+u)*m[i]+(-2*u3+3*u2)*y[i+1]+(u3-u2)*m[i+1];};}
+const CHW=1000,CHH=240,CHMAX=40000,CHS=12;
+const cx=t=>(t+.5)/CH.length*CHW,cy=v=>CHH-v/CHMAX*CHH;
+function chartPlot(){const D=chartData(),n=D.length,ts=[];for(let t=0;t<=(n-1)*CHS;t++)ts.push(t/CHS);
+ const f=SER.map(s=>mono(D.map(d=>d[s[0]]))),fo=mono(D.map(d=>d.out));
+ const edges=[ts.map(()=>0)];f.forEach((g,k)=>edges.push(ts.map((t,j)=>edges[k][j]+Math.max(0,g(t)))));
+ const pts=e=>ts.map((t,j)=>`${cx(t).toFixed(1)},${cy(e[j]).toFixed(1)}`);
+ const areas=SER.map((s,k)=>`<path class="m-a ${s[0]}" d="M${pts(edges[k+1]).join('L')}L${pts(edges[k]).reverse().join('L')}Z"/>`).join('');
+ const gaps=SER.slice(0,-1).map((s,k)=>`<path class="m-gap" d="M${pts(edges[k+1]).join('L')}"/>`).join('');
+ const exp=`<path class="m-exp" d="M${ts.map(t=>`${cx(t).toFixed(1)},${cy(fo(t)).toFixed(1)}`).join('L')}"/>`;
+ /* direct labels in the right gutter, at the middle of each band in the last month, nudged 18 px apart */
+ const last=D[n-1];let acc=0;const lab=SER.map(s=>{const v=last[s[0]],mid=acc+v/2;acc+=v;return {s,y:cy(mid)/CHH*220};});
+ for(let k=1;k<lab.length;k++)if(lab[k-1].y-lab[k].y<18)lab[k].y=lab[k-1].y-18;
+ const grid=[0,10000,20000,30000,40000];
+ return `<div class="m-plotwrap"><div class="m-yax">${grid.map(g=>`<span style="top:${(cy(g)/CHH*100).toFixed(2)}%">${g?L.kr(g/1000)+'k':'0'}</span>`).join('')}</div>
+  <div class="m-plot" data-chart>${grid.map(g=>`<i class="m-grid" style="top:${(cy(g)/CHH*100).toFixed(2)}%"></i>`).join('')}
+   <svg viewBox="0 0 ${CHW} ${CHH}" preserveAspectRatio="none" aria-hidden="true">${areas}${gaps}${exp}</svg>
+   <i class="m-cross" hidden></i><div class="m-tip" hidden></div></div>
+  <div class="m-dlab">${lab.map(l=>`<span style="top:${l.y.toFixed(1)}px"><i class="${l.s[0]}"></i>${l.s[1]}</span>`).join('')}</div>
+  <div></div><div class="m-xax">${D.map(d=>`<small>${d.m}</small>`).join('')}</div></div>`;}
+function chartTip(i){const d=chartData()[i];
+ return `<b>${d.m} ${d.y}</b>${SER.slice().reverse().map(s=>`<span><i class="${s[0]}"></i>${s[1]}<em class="mono">${L.kr(d[s[0]])}</em></span>`).join('')}
+  <span class="m-tt"><i class="inc"></i>Income<em class="mono">${L.kr(d.inc)}</em></span><span><i class="exp"></i>Expenses<em class="mono">${L.kr(d.out)}</em></span><span class="m-tt">Result<em class="mono">${L.kr(d.inc-d.out)}</em></span>`;}
+document.addEventListener('pointermove',e=>{const p=e.target.closest&&e.target.closest('[data-chart]');document.querySelectorAll('[data-chart]').forEach(q=>{if(q!==p){q.querySelector('.m-cross').hidden=true;q.querySelector('.m-tip').hidden=true;}});if(!p)return;
+ const r=p.getBoundingClientRect(),i=Math.max(0,Math.min(CH.length-1,Math.floor((e.clientX-r.left)/r.width*CH.length))),x=(i+.5)/CH.length*100;
+ const c=p.querySelector('.m-cross'),tp=p.querySelector('.m-tip');c.hidden=false;c.style.left=x+'%';
+ if(tp.dataset.i!==String(i)){tp.innerHTML=chartTip(i);tp.dataset.i=i;}tp.hidden=false;tp.classList.toggle('left',x>55);tp.style.left=x+'%';});
+const chart=()=>`<section class="m-chart"><div class="m-chh"><h3 class="t-heading">Income and expenses, last 12 months</h3>${ghostBtn(M.showTable?'Show chart':'Show data table','data-act="mnytable"')}</div>
+ <div class="m-leg">${SER.map(s=>`<span><i class="${s[0]}"></i>${s[1]}</span>`).join('')}<span><i class="exp"></i>Expenses</span></div>
+ ${M.showTable?chartTable():chartPlot()}</section>`;
 const breakdown=(title,total,rows,cls='')=>`<div class="m-bd ${cls}"><div class="m-bdh"><h3 class="t-heading">${title}</h3><span>${total}</span></div><div class="m-bdl">${rows.map(([n,s,w,a])=>`<div class="m-bdr"><span class="m-tx"><span>${n}</span><small>${s}</small></span><span class="m-track"><i style="width:${w}px"></i></span><span class="mono">${a}</span></div>`).join('')}</div></div>`;
 const reportsRow=()=>`<div class="m-reports"><span>Reports</span>${['Profit and loss','Balance sheet','Trial balance','VAT period'].map(r=>`<button class="chip m-chip" data-act="mnyreport" data-r="${r}">${r}</button>`).join('')}</div>`;
 const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% vs 2025 to date','ok','rule'),kpi('Expenses','121.950','−4% vs 2025 to date','muted','rule'),kpi('Result','64.450','before tax','muted','rule'),kpi('Cash at bank','112.300','13.500 invoiced, not paid','att','att')])}

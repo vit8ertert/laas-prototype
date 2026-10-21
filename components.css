@@ -205,3 +205,5 @@ html.gated body>*:not(.gate){display:none!important}
 .scrim.leaving{animation:scrim-out .2s ease both;pointer-events:none}
 @keyframes drawer-out{to{transform:translateX(100%)}}
 @keyframes scrim-out{from{opacity:1}to{opacity:0}}
+/* banner icon centred on the 22 px title line (Vit 21 Oct: "better align the icon and the text") */
+.banner>svg.i:first-child{margin-top:2px}
