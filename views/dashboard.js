@@ -25,7 +25,7 @@ S.dashMode??='Ask';           // composer mode
 S.shareTip??=true;
 S.calMonth??=0;               // offset from October 2026
 S.calView??='month';
-S.asstChat??='move';S.asstLog??={};S.asstWho??=null;S.asstCtxOff??={};S.asstHist??=false;S.asstPanel??=true;
+S.asstChat??='move';S.asstLog??={};S.asstWho??=null;S.asstCtxOff??={};S.askCtx??=[];S.asstHist??=false;S.asstPanel??=true;
 
 /* ---------- small building blocks ---------- */
 const tag=(k,l)=>`<span class="tag ${k}">${l}</span>`;
@@ -41,7 +41,11 @@ const bn=()=>esc(curBand().name);
 const aurora=()=>`<div class="d-aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="a5"></i><b class="grid"></b></div>`;
 
 /* ---------- composer (Prompt hero) ---------- */
-const composer=(ph,chip)=>`<div class="d-comp">${chip?`<span class="d-ctx">${esc(chip)}<button data-act="asstctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<textarea id="ask" rows="2" placeholder="${esc(ph)}" aria-label="Ask the assistant"></textarea>
+/* context pills (Vit 21 Oct: added context should show in the box as a pill with a cross) */
+const CTXK={booking:['calendar',['LT-0041, Hotel Skov, 25 Oct','LT-0038, Loppen, 8 Nov']],contact:['users',['Mette, Hotel Skov','Loppen, venue']],file:['file',['Stage plot.pdf','Press photo, Late Shift.jpg']],mail:['mail',['Re: Saturday load-in','Invoice LT-0038']]};
+const ctxPill=(i,t,act,idx)=>`<span class="d-ctx">${ic(i,'s')}<span>${esc(t)}</span><button data-act="${act}" ${idx!=null?`data-i="${idx}"`:''} aria-label="Remove ${esc(t)}">${ic('x','s')}</button></span>`;
+const ctxRow=(list,act)=>list.length?`<div class="d-ctxs">${list.map((c,n)=>act?ctxPill(c[0],c[1],act,n):`<span class="d-ctx">${ic(c[0],'s')}<span>${esc(c[1])}</span></span>`).join('')}</div>`:'';
+const composer=(ph,chip)=>`<div class="d-comp">${chip||S.askCtx.length?`<div class="d-ctxs">${chip?ctxPill(chip[0],chip[1],'asstctxoff'):''}${S.askCtx.map((c,n)=>ctxPill(c[0],c[1],'askctxrm',n)).join('')}</div>`:''}<textarea id="ask" rows="2" placeholder="${esc(ph)}" aria-label="Ask the assistant">${esc(S.askDraft||'')}</textarea>
  <div class="d-compbar"><button class="btn ghost s" data-act="addctx">${ic('plus','s')}Add context</button><span style="flex:1"></span><button class="d-mode" data-act="askmode">${S.dashMode}${ic('down','s')}</button><button class="btn accent" data-act="ask">${ic('send','s')}Send</button></div></div>`;
 const chips=list=>`<div class="d-chips">${list.map(([t,a,q])=>`<button class="d-chip" data-act="${a}" ${q?`data-q="${esc(q)}"`:''}>${ic('ai','s')}${t}</button>`).join('')}</div>`;
 
@@ -172,10 +176,10 @@ function moveChat(){const a=['plan','done','cancelled'].includes(S.asst)?S.asst:
  <div class="d-user">Move the hotel gig to Saturday 25 Oct and tell the venue</div>
  <div class="d-turn"><div class="d-ah">${ic('ai','s')}<b>Saturday 25 Oct is free. I can move it and draft the mail.</b></div>
  <div class="d-checked"><span class="faint">I checked</span>${['Calendar, 25 Oct has no booking, rehearsal at 14:00 ends 16:00','Booking LT-0041, confirmed, fee 4.500 DKK, deposit not yet invoiced','Contacts, Hotel Skov has two contacts: Mette (booking) and Jonas (bar)'].map(t=>`<span>${ic('check','s')}${t}</span>`).join('')}</div>${plan}</div>`;}
-const extra=id=>(S.asstLog[id]||[]).map(([q,r])=>`<div class="d-user">${esc(q)}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>${r}</span></div></div>`).join('');
+const extra=id=>(S.asstLog[id]||[]).map(([q,r,cx])=>`<div class="d-user">${cx&&cx.length?ctxRow(cx):''}${esc(q)}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>${r}</span></div></div>`).join('');
 /* while the assistant works on a new question: the logo loader and what it is checking (Vit 21 Oct, logo motion) */
 const asstWork=()=>{S.asstBusy=true;clearTimeout(asstWork.t);asstWork.t=setTimeout(()=>{S.asstBusy=false;if(S.view==='assistant')L.render();},1400);};
-function chatBody(id){if(id==='move')return moveChat();if(id==='q'&&S.asstBusy)return `<div class="d-user">${esc(S.asstQ||'')}</div><div class="d-turn d-busy" role="status"><span class="d-busylogo">${L.logoMotion?L.logoMotion('loader','Working'):''}</span><span class="muted">Looking through bookings, money and mail…</span></div>`;if(id==='q')return `<div class="d-user">${esc(S.asstQ||'')}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>Here is where ${bn()} stands: 3 loose ends today, 8.500 DKK owed to you, and the next gig is tonight at Hotel Skov.</span></div><div class="d-chips left"><button class="d-chip" data-go="gigday">Open day sheet</button><button class="d-chip" data-go="money">See what is owed</button></div></div>`;
+function chatBody(id){if(id==='move')return moveChat();if(id==='q'&&S.asstBusy)return `<div class="d-user">${ctxRow(S.asstQCtx||[])}${esc(S.asstQ||'')}</div><div class="d-turn d-busy" role="status"><span class="d-busylogo">${L.logoMotion?L.logoMotion('loader','Working'):''}</span><span class="muted">Looking through bookings, money and mail…</span></div>`;if(id==='q')return `<div class="d-user">${ctxRow(S.asstQCtx||[])}${esc(S.asstQ||'')}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>Here is where ${bn()} stands: 3 loose ends today, 8.500 DKK owed to you, and the next gig is tonight at Hotel Skov.</span></div><div class="d-chips left"><button class="d-chip" data-go="gigday">Open day sheet</button><button class="d-chip" data-go="money">See what is owed</button></div></div>`;
  const c=CHAT_BODY[id];return `<div class="d-user">${c[0]}</div><div class="d-turn"><div class="d-ah">${ic('ai','s')}<span>${c[1]}</span></div><div class="d-chips left">${c[2].map(([t,a])=>`<button class="d-chip" ${a}>${t}</button>`).join('')}</div></div>`;}
 function record(id){
  if(id==='move'||id==='setlist'||id==='q')return `<aside class="d-record"><div class="d-rh"><span class="mono d-id">LT-0041</span><b class="t-heading">Saturday hotel gig</b>${tag('confirmed','Confirmed')}</div>${[['When','Fri 24 Oct 2026, 20:00, 75 min'],['Where','Hotel Skov, Aarhus, cap. 300'],['Contact','Mette Krogh, booking, +45 …'],['Fee','4.500 DKK, deposit 1.500 not invoiced'],['People','Full band, 4, driver: Jonas'],['Files','Rider v3, Stage plot, Contract (signed)']].map(([k,v])=>`<div class="d-kvr"><small>${k}</small><span>${v}</span></div>`).join('')}<span style="flex:1"></span><button class="btn secondary" data-go="booking" data-id="b1">Open booking</button></aside>`;
@@ -190,7 +194,7 @@ L.VIEWS.assistant=()=>{
  const col=S.asstCol,sq=S.asstSearch;
  const hist=`<nav class="d-hist ${S.asstHist?'open':''} ${col?'col':''}" aria-label="Chats"><div class="d-hh"><button class="btn ghost icon s" data-act="asstcol" aria-label="${col?'Show chats':'Hide chats'}" title="${col?'Show chats':'Hide chats'}">${ic('panel','s')}</button><span class="grow"></span><button class="btn ghost icon s ${sq?'on':''}" data-act="asstsearch" aria-label="Search chats" title="Search chats" aria-pressed="${!!sq}">${ic('search','s')}</button>${col?`<button class="btn ghost icon s" data-act="asstnew" aria-label="New conversation" title="New conversation">${ic('plus','s')}</button>`:''}</div>
  ${sq&&!col?`<div class="d-hsearch">${ic('search','s')}<input id="asstq" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></div>`:''}<button class="btn secondary d-newchat" data-act="asstnew">${ic('plus','s')}New conversation</button>${groups.map(([g,cs])=>`<div class="d-hg"><span class="faint d-hgl">${g}</span>${cs.map(([cid,,t,link])=>`<button class="d-hi ${!isNew&&cid===id?'on':''}" data-act="asstchat" data-id="${cid}"><span>${esc(t)}</span>${link?`<small>${link}</small>`:''}</button>`).join('')}</div>`).join('')}<p class="d-hnone faint" hidden>No chat matches.</p><span class="d-hsp"></span><button class="d-hfoot" data-go="tools">${ic('help','s')}<span><b>What it can do</b><small>17 look-ups, 11 changes it proposes</small></span></button></nav>`;
- const ctx=id==='move'&&!isNew&&!S.asstCtxOff.move?'LT-0041, Hotel gig':id==='parking'&&!S.asstCtxOff.parking?'Hotel Skov':null;
+ const ctx=id==='move'&&!isNew&&!S.asstCtxOff.move?['calendar','LT-0041, Hotel gig']:id==='parking'&&!S.asstCtxOff.parking?['pin','Hotel Skov']:null;
  const sugg=[['Move the hotel gig to Saturday 25 Oct and tell the venue','plan'],['Who still owes us money?','money'],['What is left before Saturday?','gigday'],['Nudge Mette about the offer','nudge']];
  const conv=isNew?`<div class="d-newc"><h2 class="t-title">What do you need?</h2><p class="muted">Ask about gigs, contacts or money. Nothing is sent without your OK.</p><div class="d-chips">${sugg.map(([q,k])=>`<button class="d-chip" data-act="asksugg" data-q="${k}">${ic('ai','s')}${q}</button>`).join('')}</div></div>`:chatBody(id)+extra(id);
  const rec=isNew?'':record(id);
@@ -260,17 +264,21 @@ L.OVERLAYS.dashshare=o=>`<div class="scrim d-scrim0" data-act="close"></div><div
 
 /* ---------- actions ---------- */
 const A=L.ACTIONS;
-A.ask=(t)=>{const el=document.getElementById('ask');const q=(el?.value||'').trim();
+A.ask=(t)=>{const el=document.getElementById('ask');const q=(el?.value||'').trim();if(q)S.askDraft='';
  if(S.view==='booking'){S.booking.sheet=true;L.render();return;}
- if(S.view==='assistant'&&S.asst!=='new'){if(!q){el?.focus();return;}const id=S.asst==='q'?'q':S.asstChat;(S.asstLog[id]??=[]).push([q,id==='move'?'Noted. I added it to the plan above; nothing changes until you press Confirm.':'I looked at it. Nothing is changed without your OK; say “do it” and I will make a plan.']);L.render();setTimeout(()=>{const c=document.querySelector('.main');if(c)c.scrollTop=c.scrollHeight;document.getElementById('ask')?.focus();},30);return;}
- if(q){S.asst='q';S.asstQ=q;asstWork();}else if(S.view==='assistant'){el?.focus();return;}
+ if(S.view==='assistant'&&S.asst!=='new'){if(!q){el?.focus();return;}const id=S.asst==='q'?'q':S.asstChat;const cx=S.askCtx.splice(0);(S.asstLog[id]??=[]).push([q,id==='move'?'Noted. I added it to the plan above; nothing changes until you press Confirm.':'I looked at it. Nothing is changed without your OK; say “do it” and I will make a plan.',cx]);L.render();setTimeout(()=>{const c=document.querySelector('.main');if(c)c.scrollTop=c.scrollHeight;document.getElementById('ask')?.focus();},30);return;}
+ if(q){S.asst='q';S.asstQ=q;S.asstQCtx=S.askCtx.splice(0);asstWork();}else if(S.view==='assistant'){el?.focus();return;}
  L.go('assistant');};
 A.asksugg=t=>{const k=t.dataset.q;if(k==='plan'){S.asst='plan';S.asstMove='plan';S.asstChat='move';S.asstWho=null;if(S.view==='assistant')L.render();else L.go('assistant');}else if(k==='nudge'){S.booking.state='offer';S.booking.cancelled=false;L.go('booking');S.booking.sheet=true;L.render();}else L.go(k);};
 A.askq=t=>{S.asst='q';S.asstQ=t.dataset.q;asstWork();L.go('assistant');};
 A.palask=t=>{S.asst='q';S.asstQ=t.dataset.q||'Ask about '+curBand().name;asstWork();L.go('assistant');};
 A.palnew=()=>{S.overlay=L.DR.newbooking(S.overlay?.q||'');L.render();};
-A.addctx=(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['A booking','ctxpick'],['A contact or venue','ctxpick'],['A file or photo','ctxpick'],['An email thread','ctxpick']]});
-A.ctxpick=t=>{L.close();L.toast('Added as context: '+t.textContent.trim());};
+A.addctx=(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['A booking','ctxpick',0,'booking'],['A contact or venue','ctxpick',0,'contact'],['A file or photo','ctxpick',0,'file'],['An email thread','ctxpick',0,'mail']]});
+/* picking adds the next example of that kind as a pill; the typed text survives the re-render */
+L.INPUT.push(t=>{if(t.id==='ask'){S.askDraft=t.value;return true;}});
+const keepAsk=fn=>{fn();L.render();const n=document.getElementById('ask');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
+A.ctxpick=t=>{const [i,opts]=CTXK[t.dataset.text]||CTXK.file;const pick=opts.find(o=>!S.askCtx.some(c=>c[1]===o));L.close();if(!pick){L.toast('Already added');return;}keepAsk(()=>S.askCtx.push([i,pick]));};
+A.askctxrm=t=>keepAsk(()=>S.askCtx.splice(+t.dataset.i,1));
 A.askmode=(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['Ask: answers, changes nothing','modeask'],['Plan: drafts changes behind Confirm','modeplan']]});
 A.modeask=()=>{S.dashMode='Ask';L.close();};A.modeplan=()=>{S.dashMode='Plan';L.close();};
 A.importcal=()=>L.open('modal',{html:`<h2 class="t-title">Import a calendar</h2><p class="muted" style="margin:0">Dates come in as holds you confirm one by one. Nothing is sent to anyone.</p>${[['Google Calendar','Two-way, holds stay tentative'],['Microsoft 365','Two-way, holds stay tentative']].map(([a,b])=>`<div class="list-row" style="cursor:default">${ic('calendar')}<span class="tx"><b>${a}</b><small>${b}</small></span><button class="btn secondary s" data-act="close" data-msg="${a} connected. 14 dates found, waiting for you to confirm">Connect</button></div>`).join('')}<label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong">Or drop an .ics or CSV file</b><span class="t-meta muted">From your old tool, one-off.</span><input type="file" accept=".ics,.csv" hidden data-dcal></label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button></div>`});
@@ -296,7 +304,7 @@ A.asstcancel=()=>{S.asst='cancelled';S.asstMove='cancelled';S.asstEdit=false;L.r
 A.asstundo=()=>{S.asst='plan';S.asstMove='plan';L.render();L.toast('Undone. The booking, the mail and the day sheet are back');};
 A.asstreply=t=>{const k=t.dataset.k;if(k==='mail'){L.open('modal',{html:`<h2 class="t-title">Mail to Hotel Skov</h2><div class="msg full"><b class="strong">New date for the gig</b><p>Hej ${S.asstWho==='Jonas'?'Jonas':'Mette'}, kan vi flytte koncerten til lørdag den 25. oktober kl. 20:00? Alt andet er som aftalt. Venlig hilsen, Low Tide</p></div><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Close</button></div>`});return;}
  (S.asstLog.move??=[]).push(k==='also'?['Also move the rehearsal','The rehearsal on 25 Oct at 14:00 would clash with load-in. I can move it to Sunday 26 Oct, 14:00. It is in the plan as a 4th change when you confirm.']:['What does Mette usually reply?','Mette replies within a day, usually before noon. She said yes to the last two date changes.']);L.render();};
-A.asstctxoff=()=>{S.asstCtxOff[S.asstChat]=true;L.render();};
+A.asstctxoff=()=>keepAsk(()=>{S.asstCtxOff[S.asstChat]=true;});
 A.assthist=()=>{S.asstHist=!S.asstHist;L.render();};
 A.asstcol=()=>{S.asstCol=!S.asstCol;if(S.asstCol)S.asstSearch=false;L.render();};
 A.asstsearch=()=>{if(S.asstCol){S.asstCol=false;S.asstSearch=true;}else S.asstSearch=!S.asstSearch;L.render();setTimeout(()=>document.getElementById('asstq')?.focus(),30);};

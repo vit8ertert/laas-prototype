@@ -117,8 +117,14 @@ button.d-kpi:hover{background:var(--raised)}
 .d-compbar{display:flex;align-items:center;gap:8px}
 .d-mode{display:inline-flex;align-items:center;gap:4px;height:auto;padding:8px 12px;border-radius:8px;background:var(--canvas);font:400 13px/18px var(--sans)}.d-mode svg.i.s{width:14px;height:14px}
 .d-compbar .btn.accent svg.i{width:20px;height:20px}
-.d-ctx{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;height:auto;padding:4px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/18px var(--sans)}
-.d-ctx button{display:grid;place-items:center;width:14px;height:14px;border-radius:50%}.d-ctx button:hover{background:var(--accent-ink);color:var(--accent-tint)}
+/* context pills: what the question is about, in the box and on the sent message (Vit 21 Oct). Outlined tag, icon, cross */
+.d-ctxs{display:flex;flex-wrap:wrap;gap:8px}
+.d-ctx{display:inline-flex;align-items:center;gap:6px;max-width:100%;height:28px;padding:0 4px 0 10px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--ink);font:400 13px/18px var(--sans)}
+.d-ctx>.i{color:var(--muted);flex:none}.d-ctx>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d-ctx:not(:has(button)){padding-right:10px}
+.d-ctx button{display:grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;color:var(--muted)}.d-ctx button:hover{background:var(--state-hover);color:var(--ink)}
+.d-ctx button .i{width:12px;height:12px}
+.d-user .d-ctxs{margin-bottom:8px}.d-user .d-ctx{background:transparent}
 .d-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.d-chips.left{justify-content:flex-start}
 .d-chip svg.i.s{width:14px;height:14px;fill:currentColor}
 .d-empty{width:100%;max-width:760px;margin:0 auto;padding:48px 32px;border-radius:16px;display:flex;flex-direction:column;gap:24px;text-align:center}
