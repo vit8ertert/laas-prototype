@@ -256,29 +256,55 @@ function invoiceData(id){
   steps:[['Draft','',1],['Approved, number locked','',n>=2],['Sent','',n>=3],['Viewed','',n>=4],['Paid',label==='Paid'?r[3]:'waiting',n>=5]].map(s=>[s[0],s[1]||(s[2]?'done':'not yet'),s[2]?1:0]),
   lines:[[esc(r[2]),'25 % moms',L.kr(excl)]],excl,company:esc(r[1]),addr:`${v.city}`,to:'invoice address on the venue',slug:`${r[7]}-${r[0]}`};
 }
-L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Math.round(d.excl*.25);
- const primary=d.rich?(d.paid?'':btn('accent','Send påmindelse','data-act="mnyremind"','mail')):d.r[5]==='Draft'?btn('accent','Approve and send','data-act="mnyinvsend" data-id="'+d.r[0]+'"','send'):'';
- const ladder=[['ai','acc','7 days before due, friendly heads-up','5 Oct, sent, opened'],['ai','acc','On the due date, "due today"','12 Oct, sent'],['ai','acc','3 days after, "a small reminder"','15 Oct, sent, opened'],
-  ['msg',M.reminded?'acc':'','Påmindelse by hand, free, any time',M.reminded?'21 Oct, sent by you':'proposed, waiting for you'],['money','','Rykker 1, 100 DKK fee, inkasso not mentioned','possible from 22 Oct, 10 days after due'],['money','','Rykker 2, 100 DKK, 10 days later','possible from 1 Nov'],['money','','Rykker 3, 100 DKK, with inkasso warning','possible from 11 Nov, last one allowed']];
- const hist=d.rich?[...(M.reminded?[['msg','acc','Påmindelse sent by you','21 Oct, just now']]:[]),...(d.paid?[['check','','Payment of 1.470 DKK approved','16 Oct, matched by the bank']]:[]),['filetext','','Opened by Mette Kjær','15 Oct, 10:02'],['ai','acc','Reminder 3 days after due sent','15 Oct, 09:00'],['filetext','','Opened by Mette Kjær','13 Oct, 08:41'],['ai','acc','Reminder on the due date sent','12 Oct, 09:00'],['money','','Sent with the offer, number 2026-031 locked','7 Oct, 11:02, by you']]
-  :[['money','',`Created from the booking, number ${d.r[0]} reserved`,'by you']];
- return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail m-inv">
+/* Invoice page (Vit 21 Oct: "when I am on the invoice page I expect to see a kind of invoice"; research 30-invoice-detail):
+   the invoice itself is the page, drawn as paper; a slim lifecycle line; one primary action per state;
+   a right panel that only shows what helps now: what is due, the pay page, reminders, activity. */
+const BAND={name:'Low Tide I/S',addr:'Nørregade 12, 5000 Odense C',cvr:'CVR 41 22 90 17',reg:'Danske Bank, reg. 3409, konto 0012 345 678',mp:'MobilePay box 2214 88'};
+const invMore=d=>{const k=d.r[5];return k==='Draft'?[['Edit lines','mnyedit'],['Delete draft','mnydeldraft']]:[['Duplicate','mnydup'],['Credit note','mnycredit'],...(d.paid?[]:[['Stop reminders','mnystoprem']]),['Open the booking','mnybooking']];};
+const invState=d=>{const t=d.excl+Math.round(d.excl*.25);const paidAmt=d.rich?(d.paid?1470:0):(d.paid?t:0);return {t,paidAmt,due:Math.max(0,d.paid&&!d.rich?0:t-paidAmt),short:d.rich&&d.paid?t-paidAmt:0};};
+L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Math.round(d.excl*.25);const st=invState(d);const draft=d.r[5]==='Draft';const over=d.rich&&!d.paid;
+ const dueTxt=d.rich?'12 Oct 2026':(d.r[3].replace(/^(due|paid|sends) /,'')+' 2026');const issued=d.rich?'7 Oct 2026':draft?'not issued yet':'14 days before due';
+ const primary=draft?btn('accent','Approve and send',`data-act="mnyinvsend" data-id="${d.r[0]}"`,'send'):d.paid?btn('secondary','Receipt','data-act="mnypdf" data-id="'+d.r[0]+'"','filetext'):btn('accent','Record payment',`data-act="invpay" data-id="${d.r[0]}"`,'check');
+ const second=over?btn('secondary','Send påmindelse','data-act="mnyremind"','mail'):'';
+ /* lifecycle: done steps carry their date, the current one says what happens next */
+ const cur=d.steps.findIndex(x=>x[2]!==1);
+ const steps=`<ol class="iv-steps" aria-label="Invoice status">${d.steps.map(([t,sub,ok],i)=>`<li class="${ok===1?'done':ok==='att'?'att':i===cur?'now':'todo'}"><i aria-hidden="true">${ok===1?ic('check','s'):''}</i><span><b>${t.replace(', number locked','')}</b><small>${ok==='att'?`${late()?'6 days late':sub}`:sub}</small></span></li>`).join('')}</ol>`;
+ const paper=`<article class="iv-paper" aria-label="Invoice ${d.r[0]} as sent">
+  <header class="iv-ph"><div><span class="iv-logo" aria-hidden="true">LT</span><b>${BAND.name}</b><small>${BAND.addr}<br>${BAND.cvr}</small></div><div class="iv-pt"><span class="iv-kind">Faktura</span><b class="mono">${d.r[0]}</b></div></header>
+  <div class="iv-meta"><div><span class="iv-lab">Bill to</span><b>${d.company}</b><small>${d.addr}<br>${d.to}</small>${draft?`<button class="link iv-edit" data-go="venue" data-id="${d.r[7]}">Change</button>`:''}</div>
+   <dl><div><dt>Issued</dt><dd>${issued}</dd></div><div><dt>Due</dt><dd class="${over?'bad':''}">${dueTxt}${d.rich?', Net 5':''}</dd></div><div><dt>Reference</dt><dd class="mono">${d.rich?'LT-0041':d.r[0]}</dd></div><div><dt>For</dt><dd>${esc(d.r[2])}</dd></div></dl></div>
+  <table class="iv-lines"><thead><tr><th>Description</th><th>Moms</th><th class="num">Amount, DKK</th></tr></thead><tbody>${d.lines.map(([a,b,c])=>`<tr><td>${a}</td><td class="muted">${b.replace(' moms','')}</td><td class="num mono">${c}</td></tr>`).join('')}</tbody></table>
+  <div class="iv-tot"><div><span>Excl. moms</span><span class="mono">${L.kr(d.excl)}</span></div><div><span>Moms 25 %</span><span class="mono">${L.kr(moms)}</span></div><div class="iv-big"><span>Total, DKK</span><span class="mono">${L.kr(st.t)}</span></div>
+   ${st.paidAmt&&d.rich?`<div class="iv-paid"><span>Paid 16 Oct</span><span class="mono">−${L.kr(st.paidAmt)}</span></div><div class="iv-bal"><span>Still open</span><span class="mono">${L.kr(st.short)}</span></div>`:''}</div>
+  <footer class="iv-pf"><div><span class="iv-lab">Pay to</span><span>${BAND.reg}</span><span>${BAND.mp}</span></div><div><span class="iv-lab">Pay online</span><span class="mono">laas.dk/pay/${d.slug}</span><span class="muted">Use ${d.r[0]} as the reference.</span></div></footer>
+  ${d.paid?`<span class="iv-stamp" aria-hidden="true">Paid</span>`:''}</article>`;
+ const ladder=[['Heads-up, 7 days before due','5 Oct, opened',1],['"Due today"','12 Oct',1],['"A small reminder", 3 days after','15 Oct, opened',1],['Påmindelse by hand, free',M.reminded?'21 Oct, sent by you':'waiting for you',M.reminded?1:0],['Rykker 1, 100 DKK fee','possible from 22 Oct',0],['Rykker 2, 100 DKK','possible from 1 Nov',0],['Rykker 3, with inkasso warning','possible from 11 Nov',0]];
+ const hist=d.rich?[...(M.reminded?[['msg','Påmindelse sent by you','21 Oct, just now']]:[]),...(d.paid?[['check','Payment of 1.470 DKK matched by the bank, 30 short','16 Oct']]:[]),['eye','Pay page opened by Mette Kjær','15 Oct, 10:02'],['ai','Reminder "3 days after" sent','15 Oct, 09:00'],['eye','Pay page opened by Mette Kjær','13 Oct, 08:41'],['ai','Reminder "due today" sent','12 Oct, 09:00'],['send','Sent to booking@hotelroyal.dk with the offer','7 Oct, 11:02, by Vital'],['check','Approved, number 2026-031 locked','7 Oct, 11:00, by Vital']]
+  :[['filetext',`Created from the booking, number ${d.r[0]} reserved`,'by Vital'],...(draft?[]:[['send','Sent','by Vital']]),...(d.paid?[['check','Paid in full',d.r[3]]]:[])];
+ const side=`<aside class="iv-side">
+  <section class="iv-card iv-sum"><span class="iv-lab">${d.paid?(st.short?'Still open, paid 30 short':'Paid in full'):draft?'Will ask for':'Amount due'}</span><b class="iv-due mono">${L.kr(d.paid?(st.short||st.t):st.t)} <small>DKK</small></b>
+   <div class="iv-kv"><span>Total incl. moms</span><span class="mono">${L.kr(st.t)}</span></div>${st.paidAmt?`<div class="iv-kv"><span>Paid</span><span class="mono">${L.kr(st.paidAmt)}, 16 Oct</span></div>`:''}<div class="iv-kv"><span>Due</span><span class="${over?'bad':''}">${dueTxt}${over?', 6 days late':''}</span></div>
+   ${st.short?`<p class="iv-note">Hotel Royal paid 1.470. Ask about the 30 DKK, or write it off.</p><div class="iv-btns">${btn('secondary s','Ask about it','data-act="mnyremind"','mail')}${btn('ghost s','Write it off','data-act="invwriteoff"')}</div>`:''}</section>
+  ${draft?'':`<section class="iv-card"><div class="iv-ch"><h3 class="t-heading">Pay page</h3>${ghostBtn('Preview','data-act="mnypaypage"','ext')}</div>
+   <div class="iv-link"><span class="mono">laas.dk/pay/${d.slug}</span><button class="btn secondary s" data-act="mnycopylink">${ic('copy','s')}Copy</button></div>
+   <p class="iv-note">${d.rich?'Opened 13 and 15 Oct. Nobody pressed "I have paid" yet.':'Bank details, MobilePay and copy buttons for the venue.'} The money goes straight to the band account.</p></section>`}
+  ${over?`<section class="iv-card"><div class="iv-ch"><h3 class="t-heading">Reminders</h3>${ghostBtn(S.ivLadder?'Hide steps':'All steps','data-act="ivladder"')}</div>
+   <p class="iv-note"><b>3 sent automatically</b>, the last on 15 Oct. Next is yours: a free påmindelse, then rykker letters from 22 Oct.</p>
+   ${S.ivLadder?`<ol class="iv-ladder">${ladder.map(([t,w,ok])=>`<li class="${ok?'done':''}"><i></i><span>${t}<small>${w}</small></span></li>`).join('')}</ol><p class="iv-note faint">Danish rules: at most 100 DKK a letter, 3 fee letters, 10 days apart, none before the due date.</p>`:''}
+   <div class="iv-btns">${btn('ghost s','Pause reminders','data-act="mnystoprem"')}</div></section>`:''}
+  <section class="iv-card"><h3 class="t-heading">Activity</h3><ol class="iv-act">${hist.map(([i,t,w])=>`<li><span class="iv-ai">${ic(i,'s')}</span><span>${t}<small>${w}</small></span></li>`).join('')}</ol>
+   <label class="iv-cmt"><input class="input" id="ivnote" placeholder="Add a note for the band"><button class="btn ghost s" data-act="ivnote">Add</button></label></section>
+ </aside>`;
+ return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail m-inv iv">
  <button class="btn ghost s m-up" data-go="money" data-mt="invoices">${ic('left','s')}Invoices</button>
- <div class="m-ph"><div class="m-tb"><div class="m-tr"><i class="m-dot"></i><h1 class="t-display">${d.title}</h1>${d.tg}</div><p>${d.sub}</p></div><div class="m-acts">${btn('secondary','PDF','data-act="mnypdf" data-id="'+d.r[0]+'"','filetext')}${primary}${more('mnyinvmore')}</div></div>
- <div class="m-strip">${d.steps.map(([t,s,ok])=>`<div class="m-step ${ok==='att'?'att':ok?'ok':'todo'}"><span><i></i>${t}</span><small>${s}</small></div>`).join('')}</div>
- <div class="m-cols m-cols-d"><div class="m-left">
-  <section class="m-sec">${secHead('Lines')}<div class="m-body m-g12">
-   ${d.lines.map(([a,b,c])=>line({label:a,note:b,amt:c,cls:'m-fl'})).join('')}<hr class="m-hr">
-   ${line({label:'Excl. moms',amt:L.kr(d.excl),cls:'m-fl'})}${line({label:'Moms 25 %',amt:L.kr(moms),cls:'m-fl'})}${line({label:'To pay, incl. moms',amt:L.kr(d.excl+moms),cls:'m-fl'})}
-   <p class="m-foot m-nopad">Totals always show excl., moms, incl. The VAT code is per line and never guessed: "25 %" or "Momsfri" is your call when you approve.</p></div></section>
-  ${d.rich?`<section class="m-sec">${secHead('Reminder ladder',ghostBtn('Settings','data-go="settings-money"','settings'))}<div class="m-body m-g12">${ladder.map(([i,w,t,s])=>ev(i,w,t,s)).join('')}
-   ${foot('Danish rules built in: at most 100 DKK per letter, at most 3 fee letters, at least 10 days apart, none before the due date. Steps that are not allowed yet are simply not offered.')}</div></section>`:''}
- </div>
- <aside class="m-right">
-  <section class="m-sec">${secHead('Pay page',ghostBtn('Open','data-act="mnypaypage"','ext'))}<div class="m-body m-g12">${kvRow('Link',`laas.dk/pay/${d.slug}`)}${kvRow('Shows','Amount, bank, reference, MobilePay, copy buttons')}${d.rich?kvRow('States',d.paid?'sent 7 Oct, opened 13 and 15 Oct, paid 16 Oct':'sent 7 Oct, opened 13 and 15 Oct, not paid')+kvRow('"I have paid"','Nobody pressed it yet'):''}${kvRow('Money goes to','Band account, Danske Bank, LAAS never holds it')}</div></section>
-  <section class="m-sec">${secHead('Bill to',ghostBtn('Edit',`data-go="venue" data-id="${d.r[7]}"`,'pencil'))}<div class="m-body m-g12">${kvRow('Company',d.company)}${kvRow('Address',d.addr)}${kvRow('Sent to',d.to)}${kvRow('E-invoice','Not needed, private company')}</div></section>
-  <section class="m-sec">${secHead('History')}<div class="m-body m-g12">${hist.map(([i,w,t,s])=>ev(i,w,t,s)).join('')}</div></section>
- </aside></div></div>${L.abar(d.title,'Ask about this invoice — send it to accounts instead, split it, write it off')}`;};
+ <div class="m-ph iv-ph0"><div class="m-tb"><div class="m-tr"><h1 class="t-display">${d.title}</h1>${d.tg}</div><p>${d.company.split(',')[0]}, ${L.kr(st.t)} DKK incl. moms, ${draft?'not sent yet':d.paid?`paid ${d.rich?'16 Oct':d.r[3].replace('paid ','')}`:`due ${dueTxt}`}</p></div>
+ <div class="m-acts">${draft?'':ghostBtn('Copy pay link','data-act="mnycopylink"','copy')}${btn('secondary','PDF','data-act="mnypdf" data-id="'+d.r[0]+'"','filetext')}${second}${primary}${more('mnyinvmore')}</div></div>
+ ${steps}
+ <div class="iv-grid">${paper}${side}</div></div>${L.abar(d.title,'Ask about this invoice — send it to accounts instead, split it, write it off')}`;};
+L.DR.invpay=id=>{const d=invoiceData(id);const st=invState(d);return {type:'mnydrawer',title:`Record payment, ${d.r[0]}`,sub:`${d.company.split(',')[0]}, ${L.kr(st.due)} DKK open`,
+ body:`${field('ipa','Amount, DKK',`<input class="input mono" id="ipa" inputmode="decimal" value="${L.kr(st.due)}">`,'Less than the total keeps the rest open.','m-w160')}${field('ipd','Paid on',`<input class="input" id="ipd" value="21 Oct 2026">`,'','m-w160')}${field('ipw','Into',`<select class="input m-w320" id="ipw"><option>Band account, Danske Bank</option><option>MobilePay box 2214 88</option><option>Cash</option></select>`)}
+ <p class="m-foot m-nopad">Most payments are matched by the bank on their own. Record one here when it came another way, or before the bank shows it.</p>`,
+ foot:`<span style="flex:1"></span>${btn('secondary','Cancel','data-act="close"')}${btn('accent','Record payment',`data-act="invpayok" data-id="${id}"`,'check')}`};};
 
 /* settle */
 const SPLIT={Equal:[[1453,'equal share'],[1453,'equal share'],[2094,'equal share + 640 travel back']],
@@ -356,7 +382,7 @@ L.DR.addexpense=()=>({type:'mnydrawer',title:'Add expense',sub:'A photo of the r
 const A=L.ACTIONS;
 const menu=(el,items)=>{const r=el.getBoundingClientRect();S.overlay={type:'mnymenu',y:Math.round(r.bottom+6),r:Math.max(16,Math.round(innerWidth-r.right)),items};L.render();};
 A.mnymore=el=>menu(el,[[M.empty?'Show the books with data':'Show the empty state','mnyempty'],['Open the ledger','mnyledger'],['Export for the bookkeeper','mnyexport']]);
-A.mnyinvmore=el=>menu(el,[['Copy pay link','mnycopylink'],['Credit note','mnycredit'],['Open the booking','mnybooking']]);
+A.mnyinvmore=el=>{const d=invoiceData(S.params.id||'2026-031');menu(el,invMore(d));};
 A.mnysettlemore=el=>menu(el,[['Open the booking','mnybooking'],['Open the ledger','mnyledger']]);
 A.mnyempty=()=>{M.empty=!M.empty;S.mtab='owed';S.overlay=null;L.go('money');};
 A.mnyledger=()=>L.go('ledger');A.mnybooking=()=>L.go('booking');
@@ -751,4 +777,15 @@ document.addEventListener('pointermove',e=>{const host=e.target.closest&&e.targe
  const tp=dot.nextElementSibling,px=r.left-hr.left+pts[i][0]/200*r.width,py=r.top-hr.top+pts[i][1]/60*r.height;
  dot.style.background=getComputedStyle(sv).color;dot.style.left=px+'px';dot.style.top=py+'px';dot.hidden=false;tp.textContent=tips[i];tp.hidden=false;
  tp.style.left=Math.max(8,Math.min(hr.width-tp.offsetWidth-8,px-tp.offsetWidth/2))+'px';const clip=getComputedStyle(host).overflow!=='visible';tp.style.top=(py-34<(clip?4:-36)?py+12:py-34)+'px';});
+A.invpay=el=>{S.overlay=L.DR.invpay(el.dataset.id);L.render();};
+A.invpayok=el=>{const id=el.dataset.id;const r=S.invoices.find(x=>x[0]===id);const old=r?r.slice():null;const wasDP=S.booking.depositPaid;
+ if(id==='2026-031'){S.booking.depositPaid=true;}else if(r){r[3]='paid 21 Oct';r[4]='paid';r[5]='Paid';}
+ S.overlay=null;L.render();L.toast(`Payment recorded on ${id}`,()=>{S.booking.depositPaid=wasDP;if(r&&old)r.splice(0,r.length,...old);L.render();});};
+A.ivladder=()=>{S.ivLadder=!S.ivLadder;L.render();};
+A.invwriteoff=()=>L.toast('30 DKK written off to 5900 Small differences, the invoice is closed',()=>{});
+A.mnystoprem=()=>{S.overlay=null;L.render();L.toast('Reminders paused for this invoice',()=>{});};
+A.mnydup=()=>{S.overlay=null;L.render();L.toast('Copied as a new draft, 2026-033',()=>{});};
+A.mnyedit=()=>{S.overlay=L.DR.newinvoice?L.DR.newinvoice():null;L.render();};
+A.mnydeldraft=()=>{S.overlay=null;L.go('money');L.toast('Draft deleted, the number is free again',()=>{});};
+A.ivnote=()=>{const i=document.getElementById('ivnote');if(!i||!i.value.trim()){i?.focus();return;}L.toast('Note added for the band');i.value='';};
 })();
