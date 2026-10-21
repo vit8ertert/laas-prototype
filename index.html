@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=4c4734e">
+<link rel="stylesheet" href="tokens.css?v=23c3b7b">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -315,18 +315,18 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=4c4734e">
-<link rel="stylesheet" href="views/tour.css?v=4c4734e">
-<link rel="stylesheet" href="views/dashboard.css?v=4c4734e">
-<link rel="stylesheet" href="views/bookings.css?v=4c4734e">
-<link rel="stylesheet" href="views/booking.css?v=4c4734e">
-<link rel="stylesheet" href="views/contacts.css?v=4c4734e">
-<link rel="stylesheet" href="views/money.css?v=4c4734e">
-<link rel="stylesheet" href="views/catalogue.css?v=4c4734e">
-<link rel="stylesheet" href="views/account.css?v=4c4734e">
-<link rel="stylesheet" href="views/mail.css?v=4c4734e">
-<link rel="stylesheet" href="views/social.css?v=4c4734e">
-<link rel="stylesheet" href="tags.css?v=4c4734e">
+<link rel="stylesheet" href="components.css?v=23c3b7b">
+<link rel="stylesheet" href="views/tour.css?v=23c3b7b">
+<link rel="stylesheet" href="views/dashboard.css?v=23c3b7b">
+<link rel="stylesheet" href="views/bookings.css?v=23c3b7b">
+<link rel="stylesheet" href="views/booking.css?v=23c3b7b">
+<link rel="stylesheet" href="views/contacts.css?v=23c3b7b">
+<link rel="stylesheet" href="views/money.css?v=23c3b7b">
+<link rel="stylesheet" href="views/catalogue.css?v=23c3b7b">
+<link rel="stylesheet" href="views/account.css?v=23c3b7b">
+<link rel="stylesheet" href="views/mail.css?v=23c3b7b">
+<link rel="stylesheet" href="views/social.css?v=23c3b7b">
+<link rel="stylesheet" href="tags.css?v=23c3b7b">
 
 <div id="app"></div>
 
@@ -804,6 +804,9 @@ function render(){
  const m=document.querySelector('.main');if(m){m.scrollTop=mainScroll;if(S.enterUntil&&Date.now()<S.enterUntil){m.classList.add(S.enter||'enter');m.querySelectorAll('tbody tr,.list-row').forEach((r,i)=>r.style.setProperty('--i',Math.min(i,10)));}}
  if(prevFocus){const el=document.getElementById(prevFocus);if(el){el.focus();try{if(selStart!=null)el.setSelectionRange(selStart,selStart)}catch(e){}}}
  if(S.overlay&&S.overlay.type==='palette'){const q=document.getElementById('palq');if(q&&document.activeElement!==q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
+ /* menus opened below their button flip above it when they would run off the bottom of the window (Vit 21 Oct, Add context) */
+ document.querySelectorAll('.pop[style*="top:"]').forEach(p=>{const b=p.getBoundingClientRect();if(b.bottom<=innerHeight-8)return;
+  const up=S.anchor?S.anchor.top-b.height-6:-1;p.style.top=Math.max(8,up>=8?up:innerHeight-b.height-8)+'px';});
 }
 const toastHtml=()=>S.toast?`<div class="toast" role="status">${ic('check','s')}<span>${esc(S.toast.msg)}</span>${S.toast.undo?'<button class="btn ghost s" data-act="undo">Undo</button>':''}</div>`:'';
 const FLOWS=[['First run','Sign up to the dashboard',()=>{S.onboarding.step=0;go('onboarding')}],['Book a gig','Bookings, search, filter, booking',()=>{S.bookTab='up';S.search='';go('bookings')}],['A booking’s life','Enquiry → hold → offer → confirmed → completed',()=>{S.booking={state:'enquiry',depositPaid:false,settled:false,rated:false,sheet:false,cancelled:false};go('booking')}],['Get paid','Overdue deposit, record, settle',()=>{S.booking.state='confirmed';S.booking.depositPaid=false;go('money')}],['Gig day','Timeline, open items',()=>{S.parkingDone=false;go('gigday')}],['Contacts import','Three-step import',()=>{S.imported=false;go('contacts')}],['A release','Empty catalogue to delivery',()=>{S.release={stage:'none',title:'Late Shift EP',tracks:0,progress:0};S.catalog=null;S.rtab='overview';go('catalogue')}],['Themes','Genre themes and light mode',()=>go('theme')],['Settings','Account, members, plan',()=>go('account')],['Audience','Empty, connect Spotify, metrics',()=>{S.audConnected=false;S.atab='overview';S.audBanner=true;go('audience')}]];
@@ -835,7 +838,7 @@ document.addEventListener('click',e=>{
  if(t.dataset.qtag){const q=t.dataset.qtag;S.rating.tags=S.rating.tags.includes(q)?S.rating.tags.filter(x=>x!==q):[...S.rating.tags,q];return render();}
  if(t.dataset.split){S.split=t.dataset.split;return render();}
  if(t.dataset.bstate){S.booking.state=t.dataset.bstate;S.overlay=null;toast('Status changed by hand, logged with your name');return;}
- const a=t.dataset.act;const r=t.getBoundingClientRect();
+ const a=t.dataset.act;const r=t.getBoundingClientRect();S.anchor={top:r.top,bottom:r.bottom};
  const A={
   close:()=>{const m=t.dataset.msg;close();if(m)toast(m,t.dataset.undo?()=>{}:null);},
   palette:()=>open('palette',{q:'',sel:0}),notifs:()=>open('notifs',{f:'all'}),thememenu:()=>open('thememenu'),
@@ -971,16 +974,16 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=4c4734e"></script>
-<script src="views/bookings.js?v=4c4734e"></script>
-<script src="views/booking.js?v=4c4734e"></script>
-<script src="views/contacts.js?v=4c4734e"></script>
-<script src="views/money.js?v=4c4734e"></script>
-<script src="views/catalogue.js?v=4c4734e"></script>
-<script src="views/brands.js?v=4c4734e"></script>
-<script src="views/account.js?v=4c4734e"></script>
-<script src="views/mail.js?v=4c4734e"></script>
-<script src="views/social.js?v=4c4734e"></script>
-<script src="views/tour.js?v=4c4734e"></script>
-<script src="views/motion.js?v=4c4734e"></script>
+<script src="views/dashboard.js?v=23c3b7b"></script>
+<script src="views/bookings.js?v=23c3b7b"></script>
+<script src="views/booking.js?v=23c3b7b"></script>
+<script src="views/contacts.js?v=23c3b7b"></script>
+<script src="views/money.js?v=23c3b7b"></script>
+<script src="views/catalogue.js?v=23c3b7b"></script>
+<script src="views/brands.js?v=23c3b7b"></script>
+<script src="views/account.js?v=23c3b7b"></script>
+<script src="views/mail.js?v=23c3b7b"></script>
+<script src="views/social.js?v=23c3b7b"></script>
+<script src="views/tour.js?v=23c3b7b"></script>
+<script src="views/motion.js?v=23c3b7b"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
