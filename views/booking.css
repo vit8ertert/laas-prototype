@@ -86,10 +86,10 @@
 .bd-tones .btn.s{font:500 13px/18px var(--sans)}
 
 /* key-value rows (298:5048): label 140 13/18 muted, gap 16, value 15/22; rows 12 apart, 12 side padding */
-.bd-kv{display:grid;grid-template-columns:140px minmax(0,1fr);gap:12px 16px;margin:0;padding:0 12px}
+.bd-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:12px 16px;margin:0;padding:0;align-items:baseline}
 /* row form (Figma Key-value "Row": label 140, gap 16, pad 0 12; rows 12 apart) */
 .bd-kv:has(>div){display:flex;flex-direction:column;gap:12px;padding:0}
-.bd-kv>div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;padding:0 12px}
+.bd-kv>div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px;padding:0;align-items:baseline}
 .bd-kv dt{font:400 13px/18px var(--sans);color:var(--muted)}
 .bd-kv dd{margin:0;font:400 15px/22px var(--sans);max-width:65ch}
 /* Details on the Confirmed screen: rows 16 apart, no side padding */
@@ -128,7 +128,7 @@
 .bd-split .bd-prow::after{display:none}
 
 /* side panel: pad 20, gap 28; its sections indent the head and body by 12 */
-.bd-panel{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:28px}
+.bd-panel{background:var(--surface);border-radius:12px;padding:20px 12px;display:flex;flex-direction:column;gap:28px}
 .bd-pgroup{display:flex;flex-direction:column;gap:16px;padding:20px 0;border-radius:12px}
 .bd-actg.open{border-radius:8px}
 .bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:12px}
@@ -322,3 +322,7 @@
 }
 
 /* send preview: values now in core components.css (.send) */
+
+/* section headers: the action's label ends on the section's right edge, like the heading starts on its left (Vit 21 Oct, "alignment") */
+.bd-bk .bd-sec>.bd-sh>.btn.bd-act{padding:8px 0 8px 12px}
+/* side panel: 12 px + the rows' own 12 px = 24 px, the same inset as the main blocks */
