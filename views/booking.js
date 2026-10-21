@@ -56,7 +56,7 @@ const ACTS={
  cancelled:[['14 Oct','Cancelled by Mette Kjær by email'],['14 Oct','Band told, 3 of 3 seen'],['14 Oct','Date freed in the calendar']],
 };
 const activity=k=>{const ev=ACTS[k];const open=S.bdd.actOpen[k]??(k==='paid');
- return `<div class="bd-pgroup bd-actg ${open?'open':''}"><button class="bd-acth bd-sh" data-act="bdact" data-k="${k}" aria-expanded="${open}"><h2 class="t-title">Activity, ${ev.length} events</h2></button>${open?`<div class="bd-acts">${ev.map(([d,t])=>`<div><span class="d">${d}</span><span>${t}</span></div>`).join('')}</div>`:''}</div>`;};
+ return `<div class="bd-pgroup bd-actg ${open?'open':''}"><button class="bd-acth bd-sh" data-act="bdact" data-k="${k}" aria-expanded="${open}"><h2 class="t-title">Activity, ${ev.length} events</h2><span class="bd-chev" aria-hidden="true">${ic(open?'down':'right','s')}</span></button>${open?`<div class="bd-acts">${ev.map(([d,t])=>`<div><span class="d">${d}</span><span>${t}</span></div>`).join('')}</div>`:''}</div>`;};
 const panel=(k,top)=>`<aside class="bd-panel">${top||`<div class="bd-pgroup"><div class="bd-sh"><h2 class="t-title">Next up</h2></div>${checklist(k,S.bdd.check[k])}</div>`}${activity(k)}</aside>`;
 
 function bdAbar(ph){

@@ -194,3 +194,10 @@
 /* key-value lists in dialogs and cards start on the text edge, label on the value's baseline (Vit 21 Oct) */
 .bk-chg{padding:0!important;background:none!important;align-items:baseline}
 .kv{align-items:baseline}
+/* collapsible section headers say they open: a chevron on the right, the whole line is the button (Vit 21 Oct) */
+.bd-acth{display:flex!important;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
+.bd-acth .bd-chev{display:grid;place-items:center;width:20px;height:20px;color:var(--muted);flex:none}
+.bd-acth:hover .bd-chev{color:var(--ink)}
+/* side card header: a long title wraps under its own column, the action stays on the first line */
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh{align-items:flex-start!important}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh>.btn{margin-top:-6px}
