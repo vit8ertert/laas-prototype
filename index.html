@@ -406,7 +406,7 @@ let lastFocus=null;
 const reduceMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const go=(view,params={})=>{const same=S.view===view;S.view=view;S.params=params;S.overlay=null;S.sidebarOpen=false;S.booking.sheet=false;S.enter='enter';S.enterUntil=Date.now()+700;
  const run=()=>{render();const m=document.querySelector('.main');if(m)m.scrollTop=0;};
- if(document.startViewTransition&&!reduceMotion()&&!same&&view!=='onboarding')document.startViewTransition(run);else run();};
+ if(document.startViewTransition&&!reduceMotion()&&!same&&view!=='onboarding'){const vt=document.startViewTransition(run);[vt.ready,vt.finished,vt.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}));}else run();};
 const open=(o,extra={})=>{lastFocus=document.activeElement;S.overlay={type:o,...extra};render();};
 const close=()=>{S.overlay=null;render();if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}};
 const refresh=()=>{if(S.overlay&&S.overlay.kind)S.overlay.html=sendPreview(S.overlay.kind);render();};

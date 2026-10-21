@@ -1,6 +1,7 @@
 /* LAAS prototype · money area. Rebuilt 1:1 from the Figma section "UX · Money" (page Build · LAAS v1.0).
    Views: money (tabs owed, invoices, expenses, payouts, reports, books; empty state), invoice, ledger, settle.
-   Drawers: newinvoice (Invoice · new · drawer), addexpense. Uses window.LAAS (see index.html). */
+   Drawers: newinvoice (Invoice · new · drawer), addexpense. Uses window.LAAS (see index.html).
+   Ledger depth (21 Oct, from LaaS 0.5, no Figma yet): journal, accounts, ledgerreport; drawers jnew, jentry, jacct, jnewacct. */
 (function(){
 "use strict";
 const L=window.LAAS;const S=L.S,ic=L.ic,esc=L.esc,IMG=L.IMG,V=L.V;
@@ -129,11 +130,11 @@ const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% 
 L.VIEWS.money=()=>{const t=S.mtab||'owed';
  const h=t==='expenses'?head('Expenses',`October 2026, ${L.kr(2140+M.added)} DKK, ${M.exp.length} receipts, ${M.exp.filter(e=>!e[4]).length} missing, paid by 3 people`,btn('secondary','Snap a receipt','data-act="addexpense"','upload')+btn('accent','Add expense','data-act="addexpense"','plus')+more('mnymore'))
   :head('Money',M.empty?'Nothing owed, nothing late, the first booking with a fee starts the books':'October 2026, 8.500 DKK owed to you, 9.000 DKK in this month, books up to date as of yesterday',btn('secondary','Add expense','data-act="addexpense"','upload')+btn('accent','New invoice','data-act="newinvoice"','plus')+more('mnymore'));
- const body={owed:M.empty?owedEmpty:owed,invoices,expenses,payouts,reports:()=>`<div class="m-ledger">${chart()}${reportsRow()}</div>`,books:()=>`${ledgerBody()}<div>${btn('secondary s','Open the ledger','data-go="ledger"','ext')}</div>`}[t]||owed;
+ const body={owed:M.empty?owedEmpty:owed,invoices,expenses,payouts,reports:()=>`<div class="m-ledger">${chart()}${reportsRow()}</div>`,books:()=>`${ledgerBody()}<div class="ml-links">${btn('secondary s','Open the ledger','data-go="ledger"','ext')}${btn('secondary s','Journal','data-go="journal"','filetext')}${btn('secondary s','Chart of accounts','data-go="accounts"','list')}${btn('secondary s','Reports','data-go="ledgerreport"','chart')}</div>`}[t]||owed;
  const ph=t==='expenses'?'Ask — add 320 DKK petrol paid by Sofie yesterday, what did merch cost this year, who is owed money':'Ask about money — who owes us, what did we net in October, draft the balance invoice for Club Mono';
  return `<div class="page m-page">${h}${tabsBar(t)}${body()}</div>${L.abar('',ph)}`;};
 
-L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, DKK, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="addexpense"','plus')}</div></div>${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
+L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, DKK, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
 
 /* invoice detail */
 function invoiceData(id){
@@ -287,4 +288,271 @@ A.saveexpense=()=>{const v=id=>(document.getElementById(id)||{}).value||'';const
  M.exp.unshift(['21 Oct',what,by==='Band account'?'paid from the band account':`paid by ${by}`,acct,S.rcpt?1:0,amt]);M.added+=num(amt);
  S.expenses?.unshift(['21 Oct',what,v('exf'),by,amt]);S.overlay=null;S.mtab='expenses';L.go('money');
  L.toast('Expense saved',()=>{M.exp.shift();M.added-=num(amt);S.expenses?.shift();});};
+
+/* ================= Ledger depth: journal, chart of accounts, ledger reports (LaaS 0.5 /ledger/…) ================= */
+L.P.list=L.P.list||'<path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/>';
+L.P.chart=L.P.chart||'<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>';
+L.P.clip=L.P.clip||'<path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/>';
+L.P.link=L.P.link||'<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>';
+
+/* chart of accounts, default for bands: 1xxx assets … 5xxx expenses */
+const ACC0=[[1000,'Bank account, Danske Bank','—'],[1010,'Cash','—'],[1100,'Invoices not paid yet','—'],[1200,'Band money held by members','—'],[1500,'Equipment','—'],
+ [2000,'Bills to pay','—'],[2100,'Owed to members','—'],[2500,'Band card','—'],[2700,'Moms to pay','—'],
+ [3000,'Band equity, opening balance','—'],
+ [4000,'Live fees','25 %'],[4100,'Streaming payouts','Momsfri'],[4200,'Merch','25 %'],[4300,'Grants','Momsfri'],
+ [5000,'Travel and van','25 %'],[5100,'Rehearsal space','25 %'],[5200,'Gear and repairs','25 %'],[5300,'Recording','25 %'],[5400,'Fees, software and promotion','25 %']];
+const CLS={1:'Assets',2:'Liabilities',3:'Equity',4:'Income',5:'Expenses'};
+const TYPE={1:'Asset',2:'Liability',3:'Equity',4:'Income',5:'Expense'};
+const cls=n=>Math.floor(n/1000);
+const debitSide=n=>cls(n)===1||cls(n)===5;
+const ENT={1000:96,1010:4,1100:38,1200:6,1500:9,2000:11,2100:14,2500:22,2700:31,3000:1,4000:31,4100:10,4200:12,4300:1,5000:27,5100:10,5200:9,5300:3,5400:18};
+/* posted figures, Jan–Oct 2026; the Ledger overview tiles and breakdowns add up to these */
+const PL0={4000:142000,4100:18900,4200:14300,4300:11200,5000:41200,5100:28800,5200:22450,5300:18000,5400:11500};
+const BAL={26:{1000:112300,1010:1200,1100:13500,1200:5000,1500:38400,2000:4250,2100:1640,2500:360,2700:8920},
+ 25:{1000:84600,1010:800,1100:9000,1200:0,1500:30200,2000:2100,2100:900,2500:0,2700:6400}};
+const PER={ytd:{label:'This year, Jan–Oct 2026',fi:1,fe:1,end:26,asAt:'31 Oct 2026',cmp:'Jan–Oct 2025'},
+ oct:{label:'October 2026',fi:108/879,fe:54/551,end:26,asAt:'31 Oct 2026',cmp:'October 2025'},
+ y25:{label:'Last year, 2025',fi:1.1,fe:1.12,end:25,asAt:'31 Dec 2025',cmp:'2024'}};
+const r50=v=>Math.round(v/50)*50;
+const plFor=(fi,fe)=>{const o={};for(const k in PL0)o[k]=r50(PL0[k]*(cls(+k)===4?fi:fe));return o;};
+const sumBy=(o,f)=>Object.keys(o).filter(k=>f(+k)).reduce((a,k)=>a+o[k],0);
+function books(end){const b=BAL[end];const p=end===26?plFor(1,1):plFor(PER.y25.fi,PER.y25.fe);
+ const inc=sumBy(p,k=>cls(k)===4),exp=sumBy(p,k=>cls(k)===5),result=inc-exp;
+ const assets=sumBy(b,k=>cls(k)===1),liab=sumBy(b,k=>cls(k)===2);
+ return {b,p,inc,exp,result,assets,liab,eq:assets-liab-result};}
+const balOf=(n,end=26)=>{const d=books(end);return n===3000?d.eq:(d.b[n]??d.p[n]??0);};
+
+M.coa??=true;M.acc??=ACC0.map(a=>a.slice());M.jq??='';M.jf??='all';M.per??='ytd';M.rep??='pl';M.aq??='';M.jd??=null;
+M.je??=[
+ {no:142,date:'21 Oct',desc:'Shure SM58, microphone',ref:'GEAR-0019',cp:'Thomann',att:'',st:'draft',src:'Proposed from Gear, paired with the purchase, same date',lines:[[1500,'Shure SM58',1099,0],[2500,'Paid with the band card',0,1099]]},
+ {no:141,date:'20 Oct',desc:'Parking, Aarhus',ref:'R-0412',cp:'Sofie Lund',att:'parking-aarhus.jpg',st:'draft',src:'From Expenses',lines:[[5000,'Parking, Saturday hotel gig',384,0],[2100,'Paid by Sofie, owed back',0,384]]},
+ {no:140,date:'16 Oct',desc:'Payment, invoice 2026-031',ref:'2026-031',cp:'Hotel Royal A/S',att:'bank-16-oct.pdf',st:'posted',src:'Matched by the bank',lines:[[1000,'Hotel Royal A/S',1470,0],[1100,'Invoice 2026-031, 30 short',0,1470]]},
+ {no:139,date:'14 Oct',desc:'Payment, invoice 2026-028',ref:'2026-028',cp:'Odense Live',att:'bank-14-oct.pdf',st:'posted',src:'Matched by the bank',lines:[[1000,'Odense Live',6000,0],[1100,'Invoice 2026-028',0,6000]]},
+ {no:138,date:'9 Oct',desc:'Strings, 2 sets',ref:'R-0398',cp:'Mette Ravn',att:'',st:'posted',src:'From Expenses, no receipt yet',lines:[[5200,'Strings, 2 sets',240,0],[2100,'Paid by Mette, cash',0,240]]},
+ {no:137,date:'7 Oct',desc:'Invoice 2026-031, deposit',ref:'2026-031',cp:'Hotel Royal A/S',att:'2026-031.pdf',st:'posted',src:'From Invoices, booked when approved',lines:[[1100,'Hotel Royal A/S',1500,0],[4000,'Deposit, 30 % of the fee',0,1200],[2700,'Moms 25 %',0,300]]},
+ {no:136,date:'3 Oct',desc:'Pre-save link, Feature.fm',ref:'R-0391',cp:'Feature.fm',att:'featurefm-oct.pdf',st:'posted',src:'From Expenses, recurring',lines:[[5400,'October',89,0],[2500,'Band card',0,89]]},
+ {no:135,date:'1 Oct',desc:'Rehearsal room, Studio B, October',ref:'SB-2210',cp:'Studio B',att:'studiob-oct.pdf',st:'posted',src:'Bank transfer',lines:[[5100,'October, 8 sessions',2400,0],[1000,'Danske Bank',0,2400]]}];
+const OLDER=134;/* entries 1–134 sit behind "Show older" */
+const accName=n=>(M.acc.find(a=>a[0]===+n)||[0,'No account'])[1];
+const jTotal=e=>e.lines.reduce((a,l)=>a+l[2],0);
+const jDiff=e=>e.lines.reduce((a,l)=>a+l[2]-l[3],0);
+const drafts=()=>M.je.filter(e=>e.st==='draft').length;
+const kr0=v=>v?L.kr(v):'';
+
+/* shared: ledger section tabs, header */
+L.ledgerTabs=cur=>{const nd=drafts();return `<div class="m-tabs" role="tablist">${[['ledger','Overview'],['journal','Journal'],['accounts','Chart of accounts'],['ledgerreport','Reports']].map(([k,l])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?'on':''}" data-go="${k}"><span>${l}</span>${k==='journal'&&nd?`<span class="c" aria-label="${nd} drafts">${nd}</span>`:''}</button>`).join('')}</div>`;};
+const lhead=(title,sub,actions)=>`<div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
+const search=(id,ph,val,label)=>`<label class="ml-search">${ic('search','s')}<input id="${id}" placeholder="${ph}" value="${esc(val)}" aria-label="${label}" autocomplete="off"></label>`;
+const ledAbar=()=>L.abar('','Ask about the books — post the drafts, what is in 5000 Travel, why is the bank 30 short');
+
+/* ---------- Journal ---------- */
+function jRows(){const q=M.jq.trim().toLowerCase();
+ return M.je.filter(e=>M.jf==='all'||e.st===M.jf).filter(e=>!q||[e.desc,e.ref,e.cp,String(e.no),...e.lines.map(l=>l[0]+' '+accName(l[0])+' '+l[1])].join(' ').toLowerCase().includes(q));}
+const jSummary=e=>{const d=e.lines.filter(l=>l[2]&&l[0]).map(l=>l[0]),c=e.lines.filter(l=>l[3]&&l[0]).map(l=>l[0]);return `debit ${d.join(', ')||'—'}, credit ${c.join(', ')||'—'}`;};
+L.VIEWS.journal=()=>{const list=jRows();const q=M.jq.trim();const nd=drafts();const total=OLDER+M.je.length;
+ const counts={all:total,posted:total-nd,draft:nd};
+ const chips=`<div class="ml-tools"><div class="m-modes">${[['all','All'],['posted','Posted'],['draft','Drafts']].map(([k,l])=>`<button class="m-chip ${M.jf===k?'on':''}" data-act="jfilt" data-f="${k}" aria-pressed="${M.jf===k}">${l}<span class="ml-cc">${counts[k]}</span></button>`).join('')}</div><span class="sp"></span>${search('jsearch','Text, reference, account, contact',M.jq,'Search the journal')}</div>`;
+ const rows=list.map((e,i)=>`<div class="ml-tr ml-j" role="row" tabindex="0" data-act="jopen" data-no="${e.no}" style="--i:${i}"><span class="ml-d">${e.date}</span><span class="mono ml-no">${e.no}</span><span class="ml-tt"><b>${L.hl(e.desc,q)}</b><small>${e.cp?L.hl(e.cp,q)+', ':''}${jSummary(e)}${e.src.startsWith('Proposed')?`, <span class="ml-pair">${ic('link','s')}paired with Gear</span>`:''}</small></span><span class="mono ml-m">${L.hl(e.ref,q)}</span><span class="ml-att" ${e.att?`title="${esc(e.att)}"`:''}>${e.att?ic('clip','s'):'<span class="ml-none">none</span>'}</span><span>${e.st==='draft'?tag('draft','Draft'):tag('confirmed','Posted')}</span><span class="n mono">${L.kr(jTotal(e))}</span></div>`).join('');
+ const table=`<div class="ml-table" role="table" aria-label="Journal entries"><div class="ml-tr ml-th ml-j" role="row"><span>Date</span><span>No.</span><span>Description</span><span>Reference</span><span>File</span><span>Status</span><span class="n">DKK</span></div>${rows}</div>`;
+ const filtered=q||M.jf!=='all';
+ const footer=`<div class="ml-foot"><span>${q?`${list.length} of ${total} match “${esc(q)}” in text, reference, account or contact`:filtered?`${list.length} ${M.jf==='draft'?'drafts':'posted entries shown, newest first'}`:`Showing ${list.length} of ${total}, newest first. Drafts stay out of the reports until posted.`}</span>${filtered?ghostBtn('Show all','data-act="jall"'):ghostBtn('Show older','data-act="jolder"')}</div>`;
+ const none=`<div class="ml-empty"><h2 class="t-title">${q?`No entry matches “${esc(q)}”`:'No drafts'}</h2><p>${q?'Nothing in text, reference, account or contact. Check the spelling, or start an entry with this text.':'Everything is posted. New drafts come from Expenses, Gear and the bank, or from New entry.'}</p><div class="ml-acts">${q?btn('secondary','New entry “'+esc(q)+'”','data-act="jnew" data-desc="'+esc(q)+'"','plus')+btn('ghost','Clear search','data-act="jall"'):btn('ghost','Show all','data-act="jall"')}</div></div>`;
+ return `<div class="page m-page">${lhead('Journal',`Jan–Oct 2026, ${total} entries, ${nd?nd+(nd===1?' draft':' drafts')+' to post':'all posted'}, double-entry: every entry balances`,btn('secondary','Export','data-act="lexport" data-what="journal"','download')+btn('accent','New entry','data-act="jnew"','plus')+more('jmore'))}
+ ${L.ledgerTabs('journal')}
+ ${nd&&M.jf!=='draft'&&!q?banner(`${nd} ${nd===1?'draft waits':'drafts wait'} to be posted`,'Drafts are not in the reports yet. Post them when the lines are right; posted entries are locked and can only be reversed.',btn('secondary s','Show drafts','data-act="jfilt" data-f="draft"')):''}
+ <div class="ml-content">${chips}${list.length?table+footer:none}</div></div>${ledAbar()}`;};
+
+/* entry detail drawer */
+L.OVERLAYS.mldrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr ${o.cls||''}" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
+const linesTable=e=>{const d=e.lines.reduce((a,l)=>a+l[2],0),c=e.lines.reduce((a,l)=>a+l[3],0);
+ return `<div class="ml-lt" role="table" aria-label="Lines"><div class="ml-ltr ml-lth" role="row"><span>Account</span><span class="n">Debit</span><span class="n">Credit</span></div>
+ ${e.lines.map(l=>`<button class="ml-ltr" role="row" data-act="jacct" data-n="${l[0]}"><span class="ml-tt"><b>${l[0]?`<span class="mono">${l[0]}</span> ${esc(accName(l[0]))}`:'No account yet'}</b><small>${esc(l[1])}</small></span><span class="n mono">${kr0(l[2])}</span><span class="n mono">${kr0(l[3])}</span></button>`).join('')}
+ <div class="ml-ltr ml-ltt" role="row"><span>Total</span><span class="n mono">${L.kr(d)}</span><span class="n mono">${L.kr(c)}</span></div></div>
+ <p class="ml-bal ${d===c?'ok':'bad'}">${ic(d===c?'check':'alert','s')}${d===c?'Balanced, debit equals credit':`Off by ${L.kr(Math.abs(d-c))} DKK, it cannot be posted until debit equals credit`}</p>`;};
+L.DR.jentry=no=>{const e=M.je.find(x=>x.no===+no);if(!e)return null;const dr=e.st==='draft';
+ return {type:'mldrawer',title:`Entry ${e.no}, ${esc(e.desc)}`,sub:`${e.date} 2026, ${dr?'draft, not in the reports yet':'posted, locked'}`,
+ body:`<div class="m-body m-g12 ml-kv">${kvRow('Status',dr?tag('draft','Draft'):tag('confirmed','Posted'))}${kvRow('Reference',`<span class="mono">${esc(e.ref)||'—'}</span>`)}${kvRow('Counterparty',esc(e.cp)||'None')}${kvRow('Attachment',e.att?`<button class="ml-file" data-act="jfile" data-f="${esc(e.att)}">${ic('clip','s')}${esc(e.att)}</button>`:'None, add the receipt from Expenses')}${kvRow('Came from',esc(e.src))}</div>
+ <div class="m-lines"><span class="m-ll">Lines</span>${linesTable(e)}</div>
+ <p class="m-foot m-nopad">${dr?'Drafts can be edited or deleted. Post writes the entry to the books and locks it.':'Posted entries are never edited. Reverse writes a new entry dated today with debit and credit swapped, so the history stays readable.'}</p>`,
+ foot:dr?`${btn('ghost s','Delete draft',`data-act="jdel" data-no="${e.no}"`)}<span style="flex:1"></span>${btn('secondary','Edit',`data-act="jedit" data-no="${e.no}"`,'pencil')}${btn('accent','Post',`data-act="jpost" data-no="${e.no}"`,'check')}`
+  :`${btn('ghost s','Copy as new',`data-act="jcopy" data-no="${e.no}"`,'copy')}<span style="flex:1"></span>${btn('secondary','Reverse',`data-act="jrev" data-no="${e.no}"`,'undo')}`};};
+
+/* new entry drawer: lines must balance; paired entries start from a template */
+const PAID=[[1000,'Bank'],[1010,'Cash'],[2500,'Band card'],[2000,'Not paid yet']];
+const TPL={blank:['Blank',''],gear:['Gear bought','Gear bought'],member:['Paid by a member','Expense paid by a member'],payment:['Payment received','Payment, invoice'],payout:['Payout to a member','Payout to a member']};
+const tplLines=(t,paid)=>({blank:[[0,'',0,0],[0,'',0,0]],gear:[[1500,'Equipment',0,0],[paid,PAID.find(p=>p[0]===paid)[1],0,0]],member:[[5000,'',0,0],[2100,'Owed back to the member',0,0]],payment:[[1000,'Danske Bank',0,0],[1100,'Invoice',0,0]],payout:[[2100,'',0,0],[1000,'Danske Bank',0,0]]})[t];
+const CP=['None','Hotel Royal A/S','Club Mono','Odense Live','Studio B','Thomann','Feature.fm','Mette Ravn','Sofie Lund','Jonas Holm'];
+const accOpts=v=>`<option value="0" ${!v?'selected':''}>Pick an account</option>${[1,2,3,4,5].map(c=>`<optgroup label="${c}xxx ${CLS[c]}">${M.acc.filter(a=>cls(a[0])===c).map(a=>`<option value="${a[0]}" ${a[0]===+v?'selected':''}>${a[0]} ${esc(a[1])}</option>`).join('')}</optgroup>`).join('')}`;
+let jl=0;
+const jLine=l=>{const i=++jl;return `<div class="ml-jl" data-l="${i}"><div class="ml-jl1">${field('jd-a'+i,'Account',`<select class="input ml-acc" id="jd-a${i}">${accOpts(l[0])}</select>`,'','ml-grow')}<button class="btn ghost s icon ml-rm" data-act="jrmline" aria-label="Remove line">${ic('x','s')}</button></div>
+ <div class="ml-jl2">${field('jd-t'+i,'Text',`<input class="input" id="jd-t${i}" value="${esc(l[1])}">`,'','ml-grow')}${field('jd-d'+i,'Debit',`<input class="input mono ml-dr" id="jd-d${i}" inputmode="decimal" value="${kr0(l[2])}" placeholder="0">`,'','ml-w120')}${field('jd-c'+i,'Credit',`<input class="input mono ml-cr" id="jd-c${i}" inputmode="decimal" value="${kr0(l[3])}" placeholder="0">`,'','ml-w120')}</div></div>`;};
+const paidSeg=()=>M.jd.tpl==='gear'?`<div class="field"><label>Paid with</label><div class="m-modes">${PAID.map(([n,l])=>`<button class="m-chip ${M.jd.paid===n?'on':''}" data-act="jpaid" data-n="${n}" aria-pressed="${M.jd.paid===n}">${l}</button>`).join('')}</div><span class="help">Debit 1500 Equipment, credit ${M.jd.paid} ${esc(accName(M.jd.paid))}. Adding the item to Gear proposes this entry for you, same date.</span></div>`:'';
+L.DR.jnew=(pre={})=>{M.jd={tpl:pre.tpl||'blank',paid:1000,editNo:pre.editNo||null,att:pre.att||''};const e=pre.entry;
+ const lines=e?e.lines:tplLines(M.jd.tpl,M.jd.paid);
+ return {type:'mldrawer',cls:'ml-wide',title:e&&pre.editNo?`Edit draft ${e.no}`:'New journal entry',sub:e&&pre.editNo?'Still a draft, nothing is booked until you post':`Gets number ${Math.max(...M.je.map(x=>x.no))+1} when saved, every entry must balance`,
+ body:`${pre.editNo?'':`<div class="field"><label>Start from</label><div class="m-modes">${Object.entries(TPL).map(([k,[l]])=>`<button class="m-chip ${M.jd.tpl===k?'on':''}" data-act="jtpl" data-t="${k}" aria-pressed="${M.jd.tpl===k}">${l}</button>`).join('')}</div><span class="help">Paired entries: the usual two sides are filled, you add the amount</span></div>`}
+ <div id="jd-paid">${paidSeg()}</div>
+ <div class="m-dates">${field('jd-date','Date',`<span class="m-ifld">${ic('calendar','s')}<input class="input" id="jd-date" value="${esc(e?e.date+' 2026':'21 Oct 2026')}"></span>`)}${field('jd-ref','Reference',`<input class="input mono" id="jd-ref" value="${esc(e?e.ref:'')}" placeholder="Receipt or invoice no.">`)}</div>
+ ${field('jd-desc','Description',`<input class="input" id="jd-desc" value="${esc(e?e.desc:pre.desc||TPL[M.jd.tpl][1])}" placeholder="What happened, in plain words">`)}
+ ${field('jd-cp','Counterparty',`<select class="input m-w320" id="jd-cp">${CP.map(c=>`<option ${e&&e.cp===c?'selected':''}>${c}</option>`).join('')}</select>`,'A contact or venue, optional')}
+ <label class="drop ml-drop">${ic('clip','s')}<span class="ml-tt"><b id="jd-att">${M.jd.att?esc(M.jd.att):'Attach a receipt or invoice'}</b><small>Image or PDF, kept with the entry for the bookkeeper</small></span><input type="file" accept="image/*,.pdf" hidden data-jfile></label>
+ <div class="m-lines"><span class="m-ll">Lines</span><div id="jd-lines" class="ml-jls">${lines.map(jLine).join('')}</div></div>
+ <div class="m-add">${ghostBtn('Add line','data-act="jaddline"','plus')}</div>
+ <div class="m-tot"><div class="m-line m-tl"><span class="m-tx"><span>Debit</span></span><span class="m-amt mono" id="jd-td">0</span></div>
+  <div class="m-line m-tl"><span class="m-tx"><span>Credit</span></span><span class="m-amt mono" id="jd-tc">0</span></div>
+  <p class="ml-bal" id="jd-st" aria-live="polite"></p></div>
+ <p class="m-foot m-nopad">Post books the entry and locks it. Save draft keeps it out of the reports, it may be off while you work on it. If you do not know the amount or how it was paid, leave it as a draft rather than guessing.</p>`,
+ foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('secondary','Save draft','data-act="jsave"')}${btn('accent','Post','data-act="jpostnew"','check')}`};};
+function readLines(){return [...document.querySelectorAll('#jd-lines .ml-jl')].map(r=>[+r.querySelector('.ml-acc').value,r.querySelector('[id^="jd-t"]').value.trim(),num(r.querySelector('.ml-dr').value),num(r.querySelector('.ml-cr').value)]);}
+function recalcJ(){const ls=readLines();const d=ls.reduce((a,l)=>a+l[2],0),c=ls.reduce((a,l)=>a+l[3],0);
+ const set=(id,v)=>{const el=document.getElementById(id);if(el)el.innerHTML=v;};set('jd-td',L.kr(d));set('jd-tc',L.kr(c));
+ const st=document.getElementById('jd-st');if(!st)return;const ok=d===c&&d>0;st.className='ml-bal '+(ok?'ok':d||c?'bad':'');
+ st.innerHTML=ok?`${ic('check','s')}Balanced, ${L.kr(d)} DKK on each side`:d||c?`${ic('alert','s')}Off by ${L.kr(Math.abs(d-c))} DKK, debit and credit must match to post`:'Enter the amounts, debit and credit must match';}
+L.INPUT.push(t=>{if(t.closest&&t.closest('#jd-lines')){
+  const rows=[...document.querySelectorAll('#jd-lines .ml-jl')];
+  if(M.jd&&M.jd.tpl!=='blank'&&rows.length===2&&t.classList.contains('ml-dr')&&t.closest('.ml-jl')===rows[0]){rows[1].querySelector('.ml-cr').value=t.value;}
+  recalcJ();return true;}
+ if(t.id==='jsearch'){M.jq=t.value;L.render();return true;}
+ if(t.id==='asearch'){M.aq=t.value;L.render();return true;}
+ if(t.id==='na-no'){const h=document.getElementById('na-h');const n=+t.value;if(h)h.textContent=n>=1000&&n<6000?`${TYPE[cls(n)]}, in ${cls(n)}xxx ${CLS[cls(n)]}`:'1xxx assets, 2xxx liabilities, 3xxx equity, 4xxx income, 5xxx expenses';return true;}
+ return false;});
+L.CHANGE.push(t=>{if(t.dataset&&t.dataset.jfile!==undefined){const f=t.files&&t.files[0];if(f&&M.jd){M.jd.att=f.name;const b=document.getElementById('jd-att');if(b)b.textContent=f.name;}return true;}
+ if(t.classList&&t.classList.contains('ml-acc')){recalcJ();return true;}return false;});
+
+/* ---------- Chart of accounts ---------- */
+function accEmpty(){
+ return `<div class="ml-empty"><h2 class="t-title">No chart of accounts yet</h2><p>The journal needs accounts to post to. The default chart is made for bands: ${ACC0.length} accounts from 1000 Bank to 5400 Fees, with the moms codes set. Rename, add or hide accounts afterwards.</p>
+ <div class="ml-preview" aria-hidden="true">${[1,2,3,4,5].map(c=>`<div><span class="mono">${c}xxx</span><b>${CLS[c]}</b><small>${ACC0.filter(a=>cls(a[0])===c).slice(0,3).map(a=>a[1].split(',')[0]).join(', ')}</small></div>`).join('')}</div>
+ <div class="ml-acts">${btn('accent','Install the default chart','data-act="jinstall"','check')}${btn('secondary','Import from Dinero or e-conomic','data-act="jimportcoa"','upload')}</div></div>`;}
+L.VIEWS.accounts=()=>{
+ if(!M.coa)return `<div class="page m-page">${lhead('Chart of accounts','No accounts yet, install the default chart to start the books',btn('secondary','New account','data-act="jnewacct"','plus')+more('accmore'))}${L.ledgerTabs('accounts')}${accEmpty()}</div>${ledAbar()}`;
+ const q=M.aq.trim().toLowerCase();const match=a=>!q||(a[0]+' '+a[1]).toLowerCase().includes(q);
+ const groups=[1,2,3,4,5].map(c=>{const list=M.acc.filter(a=>cls(a[0])===c&&match(a));if(!list.length)return '';
+  const sub=list.reduce((s,a)=>s+balOf(a[0]),0);
+  return `<div class="ml-tr ml-gh ml-a" role="row"><span class="mono">${c}xxx</span><span>${CLS[c]}</span><span></span><span></span><span></span><span class="n mono">${L.kr(sub)}</span></div>
+  ${list.map(a=>`<div class="ml-tr ml-a" role="row" tabindex="0" data-act="jacct" data-n="${a[0]}"><span class="mono ml-no">${L.hl(String(a[0]),q)}</span><span class="ml-tt"><b>${L.hl(a[1],q)}</b></span><span class="ml-m">${TYPE[c]}</span><span class="ml-m">${a[2]}</span><span class="n ml-m">${ENT[a[0]]||0}</span><span class="n mono">${L.kr(balOf(a[0]))}</span></div>`).join('')}`;}).join('');
+ return `<div class="page m-page">${lhead('Chart of accounts',`${M.acc.length} accounts in 5 groups, 1xxx to 5xxx, balances as at 31 Oct 2026`,btn('secondary','Export','data-act="lexport" data-what="accounts"','download')+btn('accent','New account','data-act="jnewacct"','plus')+more('accmore'))}
+ ${L.ledgerTabs('accounts')}
+ <div class="ml-content ml-narrow"><div class="ml-tools"><span class="ml-note">Expenses show these in plain words: Travel is 5000, Rehearsal is 5100.</span><span class="sp"></span>${search('asearch','Number or name',M.aq,'Search accounts')}</div>
+ ${groups?`<div class="ml-table" role="table" aria-label="Chart of accounts"><div class="ml-tr ml-th ml-a" role="row"><span>No.</span><span>Name</span><span>Type</span><span>Moms</span><span class="n">Entries</span><span class="n">Balance</span></div>${groups}</div>
+ <div class="ml-foot"><span>Balances include posted entries only. Debit-side accounts (assets, expenses) and credit-side accounts (liabilities, equity, income) both show as positive.</span></div>`
+ :`<div class="ml-empty"><h2 class="t-title">No account matches “${esc(M.aq.trim())}”</h2><p>Search by number or name. Add it as a new account if it is missing.</p><div class="ml-acts">${btn('secondary','New account','data-act="jnewacct"','plus')}${btn('ghost','Clear search','data-act="aclear"')}</div></div>`}</div></div>${ledAbar()}`;};
+
+L.DR.jacct=n=>{n=+n;const a=M.acc.find(x=>x[0]===n);if(!a)return null;const c=cls(n);
+ const ents=M.je.filter(e=>e.lines.some(l=>l[0]===n));
+ return {type:'mldrawer',title:`${n} ${esc(a[1])}`,sub:`${TYPE[c]}, ${c}xxx ${CLS[c]}, moms ${a[2]==='—'?'not used':a[2]}`,
+ body:`${kpis([kpi('Balance, 31 Oct 2026',L.kr(balOf(n))+' DKK',`${debitSide(n)?'debit':'credit'} side, ${ENT[n]||0} entries this year`,'muted','rule')])}
+ <div class="m-lines"><span class="m-ll">Recent entries</span><div class="m-body">${ents.length?ents.map(e=>{const l=e.lines.find(x=>x[0]===n);return line({label:`${e.no}, ${esc(e.desc)}`,note:`${e.date}${e.st==='draft'?', draft':''}, ${l[2]?'debit':'credit'}`,amt:L.kr(l[2]||l[3]),attrs:`data-act="jopen" data-no="${e.no}"`,cls:'m-flush'});}).join(''):`<p class="m-foot m-nopad">No entries in October yet.</p>`}</div></div>
+ <p class="m-foot m-nopad">${n===1500?'Gear bought pairs with this account: adding an item in Gear proposes a debit here and a credit to how it was paid.':n===2100?'Expenses paid by a member land here and are paid back with their next payout.':'Accounts in use are never deleted, only hidden from pickers.'}</p>`,
+ foot:`${btn('ghost s','Hide account','data-act="jhideacct" data-n="'+n+'"')}<span style="flex:1"></span>${btn('secondary','Show in the journal',`data-act="jshowin" data-n="${n}"`,'filetext')}`};};
+L.DR.jnewacct=()=>({type:'mldrawer',title:'New account',sub:'Numbers follow the chart: the first digit says the group',
+ body:`${field('na-no','Number',`<input class="input mono" id="na-no" inputmode="numeric" maxlength="4" placeholder="5500">`,{t:'1xxx assets, 2xxx liabilities, 3xxx equity, 4xxx income, 5xxx expenses',id:'na-h'},'m-w160')}
+ ${field('na-name','Name',`<input class="input m-w320" id="na-name" placeholder="Promotion">`,'Plain words, shown on Expenses chips and in reports')}
+ ${field('na-vat','Moms',`<select class="input" id="na-vat"><option>25 %</option><option>Momsfri</option><option>—</option></select>`,'Never guessed: pick it for this account','m-w160')}`,
+ foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('accent','Add account','data-act="jaddacct"','plus')}`});
+
+/* ---------- Ledger reports: P&L, balance sheet, trial balance ---------- */
+const REP={pl:'Profit and loss',bs:'Balance sheet',tb:'Trial balance'};
+const rrow=(n,name,cells,cls2='')=>`<tr class="${cls2}" ${n?`data-act="jacct" data-n="${n}" tabindex="0"`:''}><td class="mono ml-no">${n||''}</td><td>${name}</td>${cells.map(c=>`<td class="num mono">${c}</td>`).join('')}</tr>`;
+function repPL(p){const P=PER[p];const v=plFor(P.fi,P.fe);const cmp=k=>r50(v[k]/(cls(+k)===4?1.09:.96));
+ const part=c=>{const ks=Object.keys(v).filter(k=>cls(+k)===c);return {rows:ks.map(k=>rrow(k,esc(accName(k)),[L.kr(v[k]),L.kr(cmp(k))])).join(''),t:ks.reduce((a,k)=>a+v[k],0),tc:ks.reduce((a,k)=>a+cmp(k),0)};};
+ const i=part(4),e=part(5);
+ return `<table class="ml-rep"><thead><tr><th>No.</th><th>Account</th><th class="num">${P.label.replace(/^This year, |^Last year, /,'')}</th><th class="num">${P.cmp}</th></tr></thead><tbody>
+ <tr class="ml-grp"><td colspan="4">Income</td></tr>${i.rows}${rrow('','Total income',[L.kr(i.t),L.kr(i.tc)],'ml-sub')}
+ <tr class="ml-grp"><td colspan="4">Expenses</td></tr>${e.rows}${rrow('','Total expenses',[L.kr(e.t),L.kr(e.tc)],'ml-sub')}
+ ${rrow('','Result before tax',[L.kr(i.t-e.t),L.kr(i.tc-e.tc)],'ml-res')}</tbody></table>`;}
+function repBS(p){const d=books(PER[p].end);const acc=c=>M.acc.filter(a=>cls(a[0])===c&&a[0]!==3000);
+ const rows=c=>acc(c).map(a=>rrow(a[0],esc(a[1]),[L.kr(d.b[a[0]]??0)])).join('');const tl=d.liab+d.eq+d.result;
+ return `<table class="ml-rep"><thead><tr><th>No.</th><th>Account</th><th class="num">As at ${PER[p].asAt}</th></tr></thead><tbody>
+ <tr class="ml-grp"><td colspan="3">Assets</td></tr>${rows(1)}${rrow('','Total assets',[L.kr(d.assets)],'ml-sub')}
+ <tr class="ml-grp"><td colspan="3">Liabilities</td></tr>${rows(2)}${rrow('','Total liabilities',[L.kr(d.liab)],'ml-sub')}
+ <tr class="ml-grp"><td colspan="3">Equity</td></tr>${rrow(3000,esc(accName(3000)),[L.kr(d.eq)])}${rrow('',`Result ${PER[p].end===25?'2025':'this year so far'}`,[L.kr(d.result)])}${rrow('','Total equity',[L.kr(d.eq+d.result)],'ml-sub')}
+ ${rrow('','Liabilities and equity',[L.kr(tl)],'ml-res')}</tbody></table>
+ <p class="ml-bal ${tl===d.assets?'ok':'bad'}">${ic('check','s')}Balanced, assets ${L.kr(d.assets)} DKK equal liabilities and equity</p>`;}
+function repTB(p){const d=books(PER[p].end);let td=0,tc=0;
+ const rows=M.acc.map(a=>{const v=balOf(a[0],PER[p].end);if(!v)return '';const dr=debitSide(a[0]);if(dr)td+=v;else tc+=v;return rrow(a[0],esc(a[1]),[dr?L.kr(v):'',dr?'':L.kr(v)]);}).join('');
+ return `<table class="ml-rep"><thead><tr><th>No.</th><th>Account</th><th class="num">Debit</th><th class="num">Credit</th></tr></thead><tbody>${rows}${rrow('','Total',[L.kr(td),L.kr(tc)],'ml-res')}</tbody></table>
+ <p class="ml-bal ${td===tc?'ok':'bad'}">${ic('check','s')}Balanced, debit ${L.kr(td)} DKK equals credit, as at ${PER[p].asAt}</p>`;}
+L.VIEWS.ledgerreport=()=>{const p=PER[M.per]?M.per:'ytd',r=REP[M.rep]?M.rep:'pl';const nd=drafts();
+ const note={pl:`Income and expenses for ${PER[p].label.toLowerCase().replace(/^this year, |^last year, /,'')}, compared with ${PER[p].cmp}. Open an account to see its entries.`,
+  bs:`What the band owns and owes at the end of the period. The result so far is part of equity until the year is closed.`,
+  tb:`Every account with a balance at the end of the period. If debit and credit ever differ, an entry is wrong; posting blocks that.`}[r];
+ return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,`<button class="m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button>`+btn('accent','Export','data-act="lexport" data-what="report"','download'))}
+ ${L.ledgerTabs('ledgerreport')}
+ <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
+ <div class="table-wrap ml-repw">${{pl:repPL,bs:repBS,tb:repTB}[r](p)}</div>
+ ${foot(note)}</div></div>${ledAbar()}`;};
+
+/* ---------- ledger actions ---------- */
+const openDr=d=>{if(!d)return;S.overlay=d;L.render();};
+const findE=no=>M.je.find(e=>e.no===+no);
+Object.assign(A,{
+ jopen:el=>openDr(L.DR.jentry(el.dataset.no)),
+ jacct:el=>openDr(L.DR.jacct(el.dataset.n)),
+ jfilt:el=>{M.jf=el.dataset.f;S.overlay=null;L.render();},
+ jall:()=>{M.jf='all';M.jq='';L.render();},
+ jolder:()=>L.toast(`Entries 1 to ${OLDER} load as you scroll, newest first`),
+ jfile:el=>L.toast(`${el.dataset.f} opened in a new tab`),
+ jnew:el=>{const d=el&&el.dataset&&el.dataset.desc;openDr(L.DR.jnew(d?{desc:d}:{}));setTimeout(recalcJ,0);},
+ jedit:el=>{const e=findE(el.dataset.no);if(!e)return;openDr(L.DR.jnew({entry:e,editNo:e.no,att:e.att}));setTimeout(recalcJ,0);},
+ jcopy:el=>{const e=findE(el.dataset.no);if(!e)return;openDr(L.DR.jnew({entry:{...e,ref:'',date:'21 Oct'},att:''}));setTimeout(recalcJ,0);},
+ jtpl:el=>{if(!M.jd)return;M.jd.tpl=el.dataset.t;document.querySelectorAll('[data-act="jtpl"]').forEach(b=>{const on=b.dataset.t===M.jd.tpl;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});
+  const w=document.getElementById('jd-lines');if(w)w.innerHTML=tplLines(M.jd.tpl,M.jd.paid).map(jLine).join('');
+  const p=document.getElementById('jd-paid');if(p)p.innerHTML=paidSeg();const d=document.getElementById('jd-desc');if(d)d.value=TPL[M.jd.tpl][1];recalcJ();},
+ jpaid:el=>{if(!M.jd)return;M.jd.paid=+el.dataset.n;const p=document.getElementById('jd-paid');if(p)p.innerHTML=paidSeg();
+  const rows=document.querySelectorAll('#jd-lines .ml-jl');const last=rows[1];if(last){last.querySelector('.ml-acc').value=String(M.jd.paid);last.querySelector('[id^="jd-t"]').value=PAID.find(x=>x[0]===M.jd.paid)[1];}recalcJ();},
+ jaddline:()=>{const w=document.getElementById('jd-lines');if(!w)return;w.insertAdjacentHTML('beforeend',jLine([0,'',0,0]));w.lastElementChild.querySelector('select')?.focus();recalcJ();},
+ jrmline:el=>{const rows=document.querySelectorAll('#jd-lines .ml-jl');if(rows.length<=2){L.toast('An entry needs at least two lines, one debit and one credit');return;}el.closest('.ml-jl').remove();recalcJ();},
+ jsave:()=>saveEntry('draft'),
+ jpostnew:()=>saveEntry('posted'),
+ jpost:el=>{const e=findE(el.dataset.no);if(!e)return;if(jDiff(e)!==0){openDr(L.DR.jnew({entry:e,editNo:e.no,att:e.att}));setTimeout(recalcJ,0);L.toast(`Draft ${e.no} is off by ${L.kr(Math.abs(jDiff(e)))} DKK, fix the lines to post it`);return;}e.st='posted';S.overlay=null;L.render();L.toast(`Entry ${e.no} posted, it is in the reports now`,()=>{e.st='draft';});},
+ jdel:el=>{const no=+el.dataset.no;L.open('modal',{html:L.confirmM(`Delete draft ${no}?`,'It was never posted, so the books do not change. The receipt stays in Expenses.','Keep draft','jdelok" data-no="'+no,'Delete draft',1)});},
+ jdelok:el=>{const i=M.je.findIndex(e=>e.no===+el.dataset.no);if(i<0)return;const [e]=M.je.splice(i,1);S.overlay=null;L.render();L.toast(`Draft ${e.no} deleted`,()=>{M.je.splice(i,0,e);});},
+ jrev:el=>{const e=findE(el.dataset.no);if(!e)return;const no=Math.max(...M.je.map(x=>x.no))+1;
+  const r={no,date:'21 Oct',desc:`Reversal of entry ${e.no}, ${e.desc}`,ref:e.ref,cp:e.cp,att:'',st:'posted',src:`Reverses entry ${e.no}`,lines:e.lines.map(l=>[l[0],l[1],l[3],l[2]])};
+  M.je.unshift(r);S.overlay=null;M.jf='all';M.jq='';L.go('journal');L.toast(`Entry ${no} reverses ${e.no}, both stay in the journal`,()=>{M.je.shift();});},
+ jmore:el=>menu(el,[[M.jf==='draft'?'Show all entries':'Show only drafts','jfilt',`data-f="${M.jf==='draft'?'all':'draft'}"`],['Import entries from a CSV','jimport'],['Chart of accounts','jgoacc']]),
+ jimport:()=>{S.overlay=null;L.render();L.toast('Import started: entries.csv, 24 rows, saved as drafts');},
+ jgoacc:()=>L.go('accounts'),
+ jshowin:el=>{M.jq=el.dataset.n;M.jf='all';S.overlay=null;L.go('journal');},
+ jhideacct:el=>{const n=+el.dataset.n;const i=M.acc.findIndex(a=>a[0]===n);if(i<0)return;const [a]=M.acc.splice(i,1);S.overlay=null;L.render();L.toast(`${n} ${a[1]} hidden from pickers`,()=>{M.acc.splice(i,0,a);});},
+ jinstall:()=>{M.coa=true;M.acc=ACC0.map(a=>a.slice());L.render();L.toast(`Default chart installed, ${ACC0.length} accounts`,()=>{M.coa=false;});},
+ jimportcoa:()=>L.toast('Choose the chart export from Dinero or e-conomic, numbers are kept'),
+ accmore:el=>menu(el,[[M.coa?'Show the empty state':'Show the chart','jcoa'],['Import from Dinero or e-conomic','jimportcoa'],['Open the journal','jgojour']]),
+ jcoa:()=>{M.coa=!M.coa;S.overlay=null;L.render();},
+ jgojour:()=>L.go('journal'),
+ aclear:()=>{M.aq='';L.render();},
+ jnewacct:()=>openDr(L.DR.jnewacct()),
+ jaddacct:()=>{const no=document.getElementById('na-no'),nm=document.getElementById('na-name'),h=document.getElementById('na-h');const n=+(no?.value||0),name=(nm?.value||'').trim();
+  const err=n<1000||n>5999?'Use four digits from 1000 to 5999':M.acc.some(a=>a[0]===n)?`${n} is taken by ${accName(n)}`:!name?'':null;
+  if(err!==null){if(err){h.textContent=err;h.classList.add('ml-err');no.focus();}else nm.focus();return;}
+  const a=[n,name,document.getElementById('na-vat').value];M.acc.push(a);M.acc.sort((x,y)=>x[0]-y[0]);M.coa=true;M.aq='';S.overlay=null;L.go('accounts');
+  L.toast(`${n} ${name} added to ${CLS[cls(n)]}`,()=>{M.acc.splice(M.acc.indexOf(a),1);});},
+ lrep:el=>{M.rep=el.dataset.r;L.render();},
+ lperiod:el=>menu(el,Object.entries(PER).map(([k,P])=>[`<span class="ml-mi">${M.per===k?ic('check','s'):''}</span>${P.label}`,'lper',`data-p="${k}" aria-checked="${M.per===k}" role="menuitemradio"`])),
+ lper:el=>{M.per=el.dataset.p;S.overlay=null;L.render();},
+ lexport:el=>{const w=el.dataset.what;const what=w==='journal'?'the journal, Jan–Oct 2026':w==='accounts'?'the chart of accounts':`${REP[M.rep].toLowerCase()}, ${PER[M.per].label}`;
+  L.open('modal',{html:`<div class="ml-modal"><h2 class="t-title">Export ${what}</h2><div class="field"><label>Format</label><div class="seg"><button class="on">PDF</button><button>CSV</button><button>Excel</button></div></div><label class="row" style="gap:10px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Include account numbers</label><p class="m-foot m-nopad">Drafts are never exported. Nothing is sent, the file downloads here.</p><div class="row" style="justify-content:flex-end">${btn('secondary','Cancel','data-act="close"')}${btn('accent','Export','data-act="close" data-msg="Export ready: '+esc(what)+'"','download')}</div></div>`});},
+});
+function saveEntry(st){const ls=readLines().filter(l=>l[0]||l[1]||l[2]||l[3]);const d=ls.reduce((a,l)=>a+l[2],0),c=ls.reduce((a,l)=>a+l[3],0);const stEl=document.getElementById('jd-st');
+ const fail=(msg,el)=>{if(stEl){stEl.className='ml-bal bad';stEl.innerHTML=ic('alert','s')+msg;}el?.focus();};
+ if(st==='posted'){
+  const rows=[...document.querySelectorAll('#jd-lines .ml-jl')];
+  const noAcc=rows.find(r=>(num(r.querySelector('.ml-dr').value)||num(r.querySelector('.ml-cr').value))&&!+r.querySelector('.ml-acc').value);
+  if(noAcc)return fail('Every line with an amount needs an account',noAcc.querySelector('.ml-acc'));
+  const both=rows.find(r=>num(r.querySelector('.ml-dr').value)&&num(r.querySelector('.ml-cr').value));
+  if(both)return fail('A line is either debit or credit, not both',both.querySelector('.ml-cr'));
+  if(!d)return fail('Enter the amounts first',rows[0]?.querySelector('.ml-dr'));
+  if(d!==c)return fail(`Off by ${L.kr(Math.abs(d-c))} DKK, debit and credit must match to post. Save it as a draft if you are not sure yet.`,rows[rows.length-1]?.querySelector(d>c?'.ml-cr':'.ml-dr'));}
+ const v=id=>(document.getElementById(id)||{}).value||'';const cp=v('jd-cp');
+ const data={date:v('jd-date').replace(/\s*\d{4}$/,'')||'21 Oct',desc:v('jd-desc').trim()||'Journal entry',ref:v('jd-ref').trim(),cp:cp==='None'?'':cp,att:M.jd?.att||'',st,lines:ls.length?ls:[[0,'',0,0]]};
+ const editNo=M.jd?.editNo;let undo;
+ if(editNo){const e=findE(editNo);const old={...e};Object.assign(e,data);undo=()=>Object.assign(e,old);}
+ else{const no=Math.max(...M.je.map(x=>x.no))+1;M.je.unshift({no,src:M.jd?.tpl==='gear'?'Gear bought, paired entry, the item is added to Gear':'Entered by you',...data});undo=()=>M.je.shift();}
+ const no=editNo||M.je[0].no;M.jd=null;S.overlay=null;M.jf='all';M.jq='';L.go('journal');
+ L.toast(st==='posted'?`Entry ${no} posted, ${L.kr(d)} DKK on each side`:`Draft ${no} saved, not in the reports yet`,undo);}
+
+/* reports chips on Ledger and Reports: open the report page for the three ledger reports */
+A.mnyreport=el=>{const k={'Profit and loss':'pl','Balance sheet':'bs','Trial balance':'tb'}[el.dataset.r];if(k){M.rep=k;L.go('ledgerreport');}else L.toast(`${el.dataset.r}, Jan–Oct 2026, ready as PDF`);};
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.ml-tr[data-act],.ml-rep tr[data-act]')){e.preventDefault();e.target.click();}});
 })();

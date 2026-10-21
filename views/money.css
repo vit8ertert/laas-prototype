@@ -206,3 +206,98 @@ select.m-err{border-color:var(--bad)}.m-err~.help,.m-iline .field .help{color:va
  .m-tabs{gap:8px}
  .m-banner{flex-wrap:wrap}.m-banner .tx{flex:1 1 calc(100% - 40px)}.m-banner .btn{margin-left:30px}
 }
+
+/* ---------- ledger depth: journal, chart of accounts, reports (LaaS 0.5 /ledger/…; no Figma yet, built from the
+   bookings list and money ledger patterns) ---------- */
+.ml-links{display:flex;gap:8px;flex-wrap:wrap}
+.ml-content{display:flex;flex-direction:column;gap:16px;min-width:0}
+.ml-narrow{max-width:960px}
+.ml-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ml-tools .sp{flex:1}
+.ml-note{font-size:13px;line-height:18px;color:var(--muted)}
+.ml-cc{margin-left:8px;font-size:13px;color:var(--muted)}
+.m-chip.on .ml-cc{color:var(--ink)}
+.ml-search{position:relative;display:flex;align-items:center;width:280px;max-width:100%;height:38px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.ml-search svg{position:absolute;left:12px;color:var(--muted);pointer-events:none}
+.ml-search input{width:100%;height:100%;padding:8px 12px 8px 38px;background:none;border:0;outline:none;font:400 15px/22px var(--sans);color:var(--ink)}
+.ml-search input::placeholder{color:var(--muted)}
+.ml-search:focus-within{box-shadow:inset 0 0 0 2px var(--ink)}
+
+/* grid tables, as the bookings table: one column fills, the rest fixed */
+.ml-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}
+.ml-tr{display:grid;column-gap:24px;align-items:center;padding:0 16px;min-height:56px;box-sizing:border-box;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .12s}
+.ml-tr:last-child{border-bottom:0}
+.ml-tr:not(.ml-th):not(.ml-gh):hover,.ml-tr:not(.ml-th):not(.ml-gh):focus-visible{background:var(--raised);outline:none}
+.ml-tr.ml-th{min-height:34px;background:var(--canvas);cursor:default;font:400 13px/18px var(--sans);color:var(--muted)}
+.ml-tr.ml-gh{min-height:40px;background:var(--sunken);cursor:default;font-weight:500;font-size:13px}
+.ml-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ml-tr .n{text-align:right}
+.ml-tr .mono{font:400 14px/20px var(--mono)}
+.ml-j{grid-template-columns:56px 40px minmax(220px,1fr) 96px 36px 84px 88px;min-width:820px}
+.ml-a{grid-template-columns:48px minmax(200px,1fr) 80px 72px 64px 104px;min-width:680px;min-height:44px}
+.ml-d{font-size:13px;line-height:18px}
+.ml-no{color:var(--muted)}
+.ml-m{color:var(--muted);font-size:15px}
+.ml-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ml-tt b{font:500 15px/22px var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ml-tt small{font-size:13px;line-height:18px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ml-tr mark,.ml-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
+.ml-att{display:flex;color:var(--muted)}.ml-none{font-size:12px;color:var(--faint)}
+.ml-pair{display:inline-flex;align-items:center;gap:4px;color:var(--accent-ink)}.ml-pair svg{width:12px;height:12px}
+.main.enter .ml-tr:not(.ml-th){animation:rise .36s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.12s + var(--i,0) * 30ms)}
+.ml-foot{display:flex;align-items:center;gap:8px;min-height:34px}
+.ml-foot>span{flex:1;font-size:12px;line-height:16px;color:var(--muted);max-width:75ch}
+
+/* empty and no-results, as bookings */
+.ml-empty{display:flex;flex-direction:column;align-items:center;gap:24px;padding:48px 32px;border-radius:16px;background:var(--surface);border:1px dashed var(--rule);text-align:center}
+.ml-empty>p{margin:-16px 0 0;max-width:560px;color:var(--muted)}
+.ml-acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.ml-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;width:100%;max-width:832px;text-align:left}
+.ml-preview>div{background:var(--canvas);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.ml-preview .mono{font-size:12px;color:var(--faint)}.ml-preview b{font-weight:500}.ml-preview small{font-size:12px;line-height:16px;color:var(--muted)}
+
+/* reports */
+.ml-repw{box-shadow:inset 0 0 0 1px var(--rule)}
+.ml-rep{min-width:520px}
+.ml-rep th{font-weight:400;font-size:13px;color:var(--muted)}
+.ml-rep td.ml-no{width:64px;color:var(--muted)}
+.ml-rep tr[data-act]{cursor:pointer}
+.ml-rep tr[data-act]:hover,.ml-rep tr[data-act]:focus-visible{background:var(--raised);outline:none}
+.ml-rep .ml-grp td{background:var(--sunken);font-weight:500;font-size:13px}
+.ml-rep .ml-sub td{font-weight:500;border-top:1px solid var(--rule-strong)}
+.ml-rep .ml-res td{font-weight:500;border-top:2px solid var(--ink)}
+.ml-per{gap:8px}.ml-per svg{width:16px;height:16px;color:var(--muted)}
+.ml-mi{width:16px;display:inline-flex;margin-right:8px;flex:none}
+.ml-bal{display:flex;align-items:center;gap:8px;margin:0;font-size:13px;line-height:18px;color:var(--muted)}
+.ml-bal.ok{color:var(--ok)}.ml-bal.bad{color:var(--bad)}
+.ml-modal{display:flex;flex-direction:column;gap:16px}
+.modal:has(.ml-modal){width:min(560px,calc(100% - 32px))}
+
+/* drawers: entry detail, new entry (560, an editor), account */
+.ml-wide{width:min(560px,100%)}
+.ml-kv .m-kvr{padding:0}
+.ml-file{display:inline-flex;align-items:center;gap:6px;color:var(--accent-ink)}.ml-file:hover{text-decoration:underline}
+.ml-lt{border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.ml-ltr{display:grid;grid-template-columns:minmax(0,1fr) 88px 88px;gap:12px;align-items:center;padding:10px 12px;width:100%;text-align:left;color:var(--ink);border-bottom:1px solid var(--rule)}
+.ml-ltr:last-child{border-bottom:0}
+button.ml-ltr:hover{background:var(--raised)}
+.ml-lth{background:var(--canvas);font-size:13px;color:var(--muted);padding:8px 12px}
+.ml-ltt{font-weight:500}
+.ml-ltr .n{text-align:right}.ml-ltr .mono{font-size:14px}
+.ml-ltr .ml-tt b .mono{color:var(--muted);margin-right:4px}
+.ml-drop{flex-direction:row;align-items:center;gap:12px;padding:12px 16px;cursor:pointer}
+.ml-jls{display:flex;flex-direction:column;gap:8px}
+.ml-jl{display:flex;flex-direction:column;gap:8px}
+.ml-jl+.ml-jl{padding-top:8px;border-top:1px solid var(--rule)}
+.ml-jl1,.ml-jl2{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.ml-grow{flex:1;min-width:180px}
+.ml-w120{width:120px}.ml-w120 .input{width:120px;text-align:right}
+.ml-rm{height:38px;width:38px;justify-content:center}
+.ml-err{color:var(--bad)!important}
+
+@media (max-width:640px){
+ .ml-tools .sp{display:none}.ml-search{width:100%}
+ .ml-empty{padding:32px 16px}
+ .ml-ltr{grid-template-columns:minmax(0,1fr) 72px 72px;gap:8px}
+ .ml-w120,.ml-w120 .input{width:100%}.ml-jl2 .ml-w120{flex:1 1 120px}
+}
