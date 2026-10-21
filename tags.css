@@ -73,3 +73,26 @@
 /* ghost buttons that sit flush to a page or card edge (no padding on that side) say "hover" with an underline, not a fill,
    so the fill never touches their text (Vit 21 Oct, "Add another") */
 .btn.ghost:is(.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.cat-storelist .btn.ghost.s:hover,.m-chh .btn.ghost:hover{background:none!important;text-decoration:underline}
+
+/* ===== List row (Vit 21 Oct: "define in DS and apply across all pages") =====
+   One pattern for every text strip that lists things in a section or card:
+   16 px inside on the sides, 12 px top and bottom (settings rows 16), radius 8, hover fill on clickable rows.
+   The row extends 16 px past the content edge, so its text starts on the heading line and the hover box has room.
+   Containers give it that room: open sections need nothing; cards use 8 px padding plus 16 px on the content,
+   so card text and headings sit 24 px in. Table rows (bordered tables) stay 12 16 with a divider. */
+:root{--row-x:16px;--row-y:12px}
+:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.aud-rel){
+  padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:8px}
+.acc-row{padding-block:16px!important}
+/* cards that hold rows */
+.acc-sec{padding:20px 8px}.acc-sec>.acc-sh{padding-inline:16px}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:16px}
+.acc-card{padding:24px}
+.cv-vlist{padding:8px 24px}
+.bd-panel{padding:20px 8px}.bd-panel .bd-pgroup{padding-inline:16px}
+.bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:0}.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:0}.bd-panel .bd-check{padding-inline:0}
+/* padded cards (forms plus rows) keep 24 px; their rows fill to 8 px from the edge, text on the 24 px line */
+.acc-sec:is(.pad,.inset){padding:20px 24px}.acc-sec:is(.pad,.inset)>:is(.acc-list,.acc-rows,.aud-body){padding-inline:0}
+/* rows placed straight in a card (no wrapper) fill the card's 8 px padding instead of extending past it */
+.acc-sec:not(.pad):not(.inset)>:is(.acc-li,.acc-row,.acc-si){margin-inline:0!important;width:100%!important}
+.cv-panel{padding:20px 8px}.cv-panel>*{padding-inline:16px}.cv-panel .cv-sh{padding-left:0}
+.cv-panel .cv-pbody{padding-inline:0}
