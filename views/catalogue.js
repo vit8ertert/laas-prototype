@@ -18,6 +18,8 @@ const PASTC=[
   tracks:[['Harbour','3:02'],['Salt','2:41'],['Ferry','2:36'],['Night Bus','2:50','Not registered at Koda'],['Untitled','2:23']],streams:'22.400',earn:'860',koda:'4 of 5 registered',distributor:'CD Baby'}];
 const LS_TRACKS=[['Late Shift','4:12'],['Harbour Lights','3:58','Explicit flag not set'],['Low Tide (Original Mix)','4:40','Title flagged by Beatport rules'],['Closing Time','3:52']];
 L.PASTC=PASTC;
+/* Vit 21 Oct: the catalogue opens with the band's releases already in (the import result), not empty; the empty state stays reachable */
+if(S.catalog==null)S.catalog=PASTC;
 const PEOPLE=[['MR','Mette Ravn','Writer, vocals','40 %'],['SL','Sofie Lund','Writer, synth','30 %'],['JH','Jonas Holm','Writer, drums','30 %']];
 
 /* gear: [id, item, serial, category, insured, last service, owner, status, value] */

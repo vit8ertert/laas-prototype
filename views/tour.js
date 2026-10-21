@@ -120,7 +120,7 @@ function place(){
   if(!c)return;
   if(!t||!t.getClientRects().length){spot.style.display='none';root.classList.add('tour-dim');c.classList.add('tour-center');c.style.left=c.style.top='';return;}
   root.classList.remove('tour-dim');c.classList.remove('tour-center');
-  const r=t.getBoundingClientRect(),pad=6,W=innerWidth,H=innerHeight,cw=c.offsetWidth,ch=c.offsetHeight,gap=14;
+  const r=t.getBoundingClientRect(),pad=6,W=document.documentElement.clientWidth,H=document.documentElement.clientHeight,cw=c.offsetWidth,ch=c.offsetHeight,gap=14;
   // big targets (a whole table or section) get a spotlight on their visible part only
   const top0=Math.max(r.top,0),bot0=Math.min(r.bottom,H);
   Object.assign(spot.style,{display:'block',left:r.left-pad+'px',top:top0-pad+'px',width:r.width+pad*2+'px',height:Math.max(bot0-top0,0)+pad*2+'px'});
@@ -131,6 +131,10 @@ function place(){
     if(top<16){side='inside';top=top0+24;left=r.left+r.width/2-cw/2;}}
   left=Math.max(16,Math.min(left,W-cw-16));top=Math.max(16,Math.min(top,H-ch-16));
   c.style.left=left+'px';c.style.top=top+'px';c.dataset.side=side;
+  // final guard: keep the whole card inside the visible window (zoom, scrollbars, late font metrics)
+  const vw=document.documentElement.clientWidth,vh=document.documentElement.clientHeight,b=c.getBoundingClientRect();
+  if(b.right>vw-16){left-=b.right-(vw-16);c.style.left=Math.max(16,left)+'px';}
+  if(b.bottom>vh-16){top-=b.bottom-(vh-16);c.style.top=Math.max(16,top)+'px';}
   const ax=Math.max(16,Math.min(r.left+r.width/2-left,cw-16)),ay=Math.max(16,Math.min(top0+(bot0-top0)/2-top,ch-16));
   c.style.setProperty('--ax',ax+'px');c.style.setProperty('--ay',ay+'px');
 }
