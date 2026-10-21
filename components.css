@@ -10,6 +10,8 @@
 .btn{height:auto;gap:8px;padding:8px 16px;border:0;border-radius:var(--r-pill);font:500 15px/22px var(--sans);color:var(--ink)}
 .btn>svg.i{width:20px;height:20px;flex:none}
 .btn.s{height:auto;padding:8px 12px;font:500 13px/18px var(--sans)}
+/* Size=L (Vit 21 Oct: the sign-up buttons felt small): 48 high, for full-width calls to action on sign-up and onboarding */
+.btn.lg{height:auto;min-height:48px;padding:13px 24px;font:500 15px/22px var(--sans);gap:10px}.btn.lg>svg{width:20px;height:20px}
 .btn.s>svg.i{width:16px;height:16px}
 .btn.primary{background:var(--ink);color:var(--on-dark)}
 .btn.secondary{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--ink)}

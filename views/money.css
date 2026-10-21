@@ -149,9 +149,9 @@ button.m-line:hover{background:var(--raised)}
 .m-chh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.m-chh h3{flex:1;min-width:200px}
 .m-chh .btn{padding-right:0}
 /* chart colours: categorical, fixed order, validated (dataviz validator) on #121212/#1e1e1e and #f4f3ef/#fff */
-.m-chart{--c-gig:#8b6cff;--c-merch:#c8701f;--c-stream:#0091d0;--c-grant:#5f9e1f}
-:root[data-theme="light"] .m-chart{--c-gig:#7a5cf0;--c-merch:#c0631a;--c-stream:#0a7fbf;--c-grant:#4f8a17}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .m-chart{--c-gig:#7a5cf0;--c-merch:#c0631a;--c-stream:#0a7fbf;--c-grant:#4f8a17}}
+.m-chart,.m-kpi,.m-strip{--c-gig:#8b6cff;--c-merch:#c8701f;--c-stream:#0091d0;--c-grant:#5f9e1f}
+:root[data-theme="light"] :is(.m-chart,.m-kpi,.m-strip){--c-gig:#7a5cf0;--c-merch:#c0631a;--c-stream:#0a7fbf;--c-grant:#4f8a17}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) :is(.m-chart,.m-kpi,.m-strip){--c-gig:#7a5cf0;--c-merch:#c0631a;--c-stream:#0a7fbf;--c-grant:#4f8a17}}
 .m-chart :is(i,path).gig{--sc:var(--c-gig)}.m-chart :is(i,path).merch{--sc:var(--c-merch)}.m-chart :is(i,path).stream{--sc:var(--c-stream)}.m-chart :is(i,path).grant{--sc:var(--c-grant)}
 .m-leg{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:12px;line-height:16px;color:var(--muted)}
 .m-leg span,.m-dlab span,.m-tip span{display:inline-flex;align-items:center;gap:6px}
@@ -340,3 +340,10 @@ button.ml-ltr:hover{background:var(--raised)}
  .ml-ltr{grid-template-columns:minmax(0,1fr) 72px 72px;gap:8px}
  .ml-w120,.ml-w120 .input{width:100%}.ml-jl2 .ml-w120{flex:1 1 120px}
 }
+
+/* sparklines (Ramp home tiles): a 48 px band flush to the tile's bottom and sides, below the text so it never covers it */
+.m-kpi.has-spark{position:relative;overflow:hidden;padding-bottom:60px}
+.m-kpi .m-spark{position:absolute;left:0;right:0;bottom:0;width:100%;height:48px;color:var(--c-gig);pointer-events:none}
+.m-strip{position:relative;height:64px;color:var(--c-gig)}
+.m-strip .m-spark{display:block;width:100%;height:100%}
+.m-strip .m-now{position:absolute;right:-4px;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:var(--c-gig);box-shadow:0 0 0 2px var(--canvas)}

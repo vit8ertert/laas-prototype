@@ -27,7 +27,13 @@ const num=s=>+String(s).replace(/\./g,'').replace(/[^\d-]/g,'')||0;
 const btn=(cls,label,attrs='',icon='')=>`<button class="btn ${cls}" ${attrs}>${icon?ic(icon,'s'):''}${label}</button>`;
 const more=act=>`<button class="btn secondary icon m-more" data-act="${act}" aria-label="More">${ic('more','s')}</button>`;
 const head=(title,sub,actions)=>`<div class="m-ph"><div class="m-tb"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
-const kpi=(label,value,delta,tone='',stroke='')=>`<div class="m-kpi ${stroke}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span></div>`;
+/* sparkline in the tile, after Ramp's home tiles (Vit 21 Oct): no axes, bleeds to the tile's right and bottom edge,
+   2 px line over a fill that fades from 32 % to nothing; the number in the tile is the label */
+let SPK=0;
+const spark=(vals,cls='')=>{const n=vals.length,mx=Math.max(...vals),mn=Math.min(...vals),W=200,H=60,y=v=>H-4-(v-mn)/((mx-mn)||1)*(H-12),x=i=>i/(n-1)*W;
+ const pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`),id='spk'+(SPK++);
+ return `<svg class="m-spark ${cls}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".32"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path d="M${pts.join('L')}L${W},${H}L0,${H}Z" fill="url(#${id})"/><path d="M${pts.join('L')}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;};
+const kpi=(label,value,delta,tone='',stroke='',sp)=>`<div class="m-kpi ${stroke} ${sp?'has-spark':''}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span>${sp?spark(sp):''}</div>`;
 const kpis=list=>`<div class="m-kpis">${list.join('')}</div>`;
 const banner=(title,body,action)=>`<div class="banner attention m-banner">${ic('alert','s')}<div class="tx"><span>${title}</span><small>${body}</small></div>${action}</div>`;
 const tag=(cls,label)=>cls?`<span class="tag ${cls}">${label}</span>`:'';
@@ -52,9 +58,9 @@ function owed(){
   ['approve','Approve 1.470 DKK from HOTEL ROYAL A/S','The bank shows it on 16 Oct, matches 2026-031, 30 DKK short, ask what the difference is','Approve','mnyapprove'],
   ['move','Move 5.000 DKK from Mads to the band','Two MobilePay payments landed in Mads\' private account. Record where it is, then nudge: business MobilePay or bank.','Record','mnymove']].filter(x=>!M.done[x[0]]&&!(x[0]!=='move'&&!late()));
  return `${late()?banner('One deposit is 6 days late, 1.500 DKK from Hotel Royal','Three automatic reminders went out. The next step is a påmindelse by hand; a rykker with fee is allowed from 22 Oct.',btn('secondary s','Open the booking','data-go="booking"')):''}
- ${kpis([kpi('Owed to you',late()?'8.500 DKK':'7.000 DKK',late()?'3 invoices, 1 late':'2 invoices, none late','muted'),
+ ${kpis([kpi('Owed to you',late()?'8.500 DKK':'7.000 DKK',late()?'3 invoices, 1 late':'2 invoices, none late','muted','',[4,6.5,5,9,7.5,6,8,10,7,8.5,9.5,8.5]),
   late()?kpi('Waiting','1.500 DKK','6 days late, Hotel Royal','att','att'):kpi('Waiting','—','nothing late','muted'),
-  kpi('In this month',late()?'9.000 DKK':'10.470 DKK',late()?'2 paid, 9 days average':'3 paid, 9 days average','ok'),
+  kpi('In this month',late()?'9.000 DKK':'10.470 DKK',late()?'2 paid, 9 days average':'3 paid, 9 days average','ok','',CH.map(r=>r[1])),
   M.done.move?kpi('Held by members','0 DKK','all band money in the band account','muted'):kpi('Held by members','5.000 DKK','Mads holds band money, move it','att')])}
  <div class="m-cols">
   <div class="m-left">
@@ -69,8 +75,8 @@ function owed(){
     <div class="m-body m-g12">
      ${line({img:'odense',label:'Odense Live, fee',note:'2026-028, paid 14 Oct',tg:tag('paid','Paid'),amt:'6.000',attrs:'data-go="invoice" data-id="2026-028"',cls:'m-flush'})}
      ${line({img:null,label:'Private party, balance',note:'2026-027, paid 3 Oct',tg:tag('paid','Paid'),amt:'3.000',attrs:'data-go="invoice" data-id="2026-027"',cls:'m-flush'})}
-     <div class="m-ghost" aria-hidden="true">${[18,26,12,40,30,56,22,34,48,20,38,44].map((h,i)=>`<i style="height:${h}px" class="${i===5?'on':''}"></i>`).join('')}</div>
-     <p class="m-foot m-nopad">Last 12 months, October is the best so far, tabular figures, DKK after the amount, never shortened</p>
+     <div class="m-strip">${spark(CH.map(r=>r[1]),'wide')}<i class="m-now" style="top:${(()=>{const v=CH.map(r=>r[1]),mx=Math.max(...v),mn=Math.min(...v);return ((60-4-(v[v.length-1]-mn)/(mx-mn)*48)/60*100).toFixed(1);})()}%"></i></div>
+     <p class="m-foot m-nopad">Paid in, last 12 months, November to October. The full chart by type is in <button class="link" data-mtab="reports">Reports</button>.</p>
     </div></section>
   </div>
   <aside class="m-right">
