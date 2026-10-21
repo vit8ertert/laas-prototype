@@ -264,3 +264,7 @@ button.cat-chk:hover{background:var(--raised)}
 .cat-storepick{display:flex;flex-direction:column;gap:12px}
 .cat-storepick .check{display:flex;align-items:center;gap:8px;font:400 15px/18px var(--sans);cursor:pointer}
 .cat-storepick input{width:18px;height:18px;accent-color:var(--ink);margin:0}
+/* platform rows lead with the service logo (views/brands.js); missing ones are greyed */
+.cat-storelist li{gap:12px}
+.cat-storelist li.missing .brand{filter:grayscale(1);opacity:.5}
+.cat-storelist li.pending .brand{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--att) 50%,transparent)}

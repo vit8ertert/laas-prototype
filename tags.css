@@ -27,3 +27,7 @@
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line):is(:hover,:focus-visible)::before{opacity:1}
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line):is(:hover,:focus-visible) b:first-of-type,.cv-table tbody tr[data-go]:hover td:first-child b{text-decoration:underline;text-underline-offset:3px}
 .cv-table tbody tr[data-go]:hover td:first-child{box-shadow:inset 2px 0 0 var(--accent-strong)}
+
+/* brand logo tile (views/brands.js): Para recipe in the brand colour */
+.brand{display:inline-grid;place-items:center;flex:none;border-radius:var(--r-md);color:var(--bc);
+  background:color-mix(in srgb,var(--bc) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bc) 22%,transparent)}
