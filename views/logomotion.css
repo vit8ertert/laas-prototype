@@ -22,28 +22,24 @@
 @keyframes lm-glance{0%,70%,100%{translate:0 0}74%,90%{translate:28% 6%}}
 @keyframes lm-wave{0%,88%,100%{transform:none}91%{transform:skewX(-8deg)}94%{transform:skewX(6deg)}97%{transform:skewX(-2deg)}}
 
-/* pixel A, 8-bit: hard-stepped jump, a single pixel pops above it at the top (Vit 21 Oct: "something relevant") */
-.lm .lm-px{opacity:0}
-.lm-idle .lm-pa{animation:lm-8bit 9.7s 3s infinite}
-.lm-idle .lm-px{animation:lm-coin 9.7s 3s infinite}
-@keyframes lm-8bit{0%,90%,100%{transform:none}90.6%{transform:translateY(-14%)}91.6%{transform:translateY(-24%)}92.6%{transform:translateY(-14%)}93.6%{transform:none}}
-@keyframes lm-coin{0%,90.8%,94.4%,100%{opacity:0;transform:none}91.6%{opacity:1;transform:translateY(-40%)}93%{opacity:1;transform:translateY(-100%)}94%{opacity:0;transform:translateY(-120%)}}
-.lm-idle .lm-pa,.lm-idle .lm-px{animation-timing-function:steps(1,end)}
+/* pixel A as a level meter (Vit 21 Oct: relevant to its stepped shape, but not 8-bit or game-like):
+   now and then its top drops and climbs back row by row, like a VU meter hitting a peak */
+.lm-idle .lm-pa{animation:lm-meter 9.7s 3s infinite,lm-quake 13.1s 6s infinite}
+@keyframes lm-meter{0%,90%,100%{clip-path:inset(0 0 0 0)}91%{clip-path:inset(48% 0 0 0)}92.5%{clip-path:inset(32% 0 0 0)}94%{clip-path:inset(16% 0 0 0)}95.5%{clip-path:inset(0 0 0 0)}}
 
 /* thick L, the heavy one: lifts and stomps like a foot on a pedal; the others jolt from the impact */
 .lm-idle .lm-l{transform-origin:50% 100%;animation:lm-stomp 13.1s 6s infinite}
 @keyframes lm-stomp{0%,92%,100%{transform:none}94%{transform:translateY(-16%) scaleY(1.04)}95.4%{transform:translateY(0) scale(1.06,.86)}96.6%{transform:scale(.98,1.03)}97.6%{transform:none}}
 .lm-idle :is(.lm-ba,.lm-s){animation-name:lm-quake;animation-duration:13.1s;animation-delay:6s;animation-iteration-count:infinite}
 .lm-idle .lm-s{animation:lm-wave 11.3s 4s infinite,lm-quake 13.1s 6s infinite}
-.lm-idle .lm-pa{animation:lm-8bit 9.7s 3s infinite steps(1,end),lm-quake 13.1s 6s infinite}
 @keyframes lm-quake{0%,95.2%,97.4%,100%{translate:0 0}95.8%{translate:0 -6%}96.6%{translate:0 2%}}
 
 /* loader: the letters bounce in turn like an equaliser; the eye blinks on the soft A's landing */
 .lm-loader g{transform-origin:50% 100%;animation:lm-hop 1s cubic-bezier(.3,0,.4,1) infinite}
-.lm-loader .lm-pa{animation-delay:.12s;animation-timing-function:steps(4,end)}.lm-loader .lm-l{animation-name:lm-hop-heavy}.lm-loader .lm-ba{animation-delay:.24s}.lm-loader .lm-s{animation-delay:.36s}
+.lm-loader .lm-pa{animation-delay:.12s}.lm-loader .lm-l{animation-name:lm-hop-heavy}.lm-loader .lm-ba{animation-delay:.24s}.lm-loader .lm-s{animation-delay:.36s}
 .lm-loader .lm-eye{animation:lm-blink .2s .62s infinite;animation-duration:1s}
 @keyframes lm-hop-heavy{0%,60%,100%{transform:none}20%{transform:translateY(-18%)}38%{transform:translateY(0) scale(1.06,.84)}48%{transform:none}}
 @keyframes lm-hop{0%,60%,100%{transform:none}20%{transform:translateY(-28%) scaleY(1.06)}40%{transform:translateY(0) scaleY(.9)}}
 
-@media (prefers-reduced-motion:reduce){.lm .lm-px{display:none}.lm g,.lm .lm-eye{animation:none!important;clip-path:none!important;opacity:1!important}}
+@media (prefers-reduced-motion:reduce){.lm g,.lm .lm-eye{animation:none!important;clip-path:none!important;opacity:1!important}}
 .topbar .lm{--logo-bg:var(--sunken)}.acc-obtop .lm{--logo-bg:var(--canvas)}
