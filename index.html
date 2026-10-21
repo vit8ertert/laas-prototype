@@ -217,7 +217,7 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .scrim{animation:fade .22s ease both}
 .modal{animation:modal-in .26s cubic-bezier(.2,.8,.2,1) both}@keyframes modal-in{from{opacity:0;transform:translate(-50%,8px) scale(.97)}}
 .pop{animation:pop-in .18s cubic-bezier(.2,.8,.2,1) both;transform-origin:top}@keyframes pop-in{from{opacity:0;transform:translate(var(--tx,0),-4px) scale(.98)}}
-.toast{animation:toast-in .32s cubic-bezier(.2,.8,.2,1) both}@keyframes toast-in{from{opacity:0;transform:translate(-50%,12px) scale(.98)}}
+.toast{animation:toast-in .14s cubic-bezier(.2,.8,.2,1) both}@keyframes toast-in{from{opacity:.4;transform:translate(-50%,6px) scale(.99)}}
 @media (prefers-reduced-motion: reduce){*,::view-transition-old(main),::view-transition-new(main){animation:none!important;transition:none!important}}
 
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
@@ -818,7 +818,7 @@ document.addEventListener('click',e=>{
  if(t.dataset.rtab){S.rtab=t.dataset.rtab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
  if(t.dataset.atab){S.atab=t.dataset.atab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
  if(t.dataset.tab){S.bookTab=t.dataset.tab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
- if(t.dataset.genre){const was=S.genre;S.genre=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}toast(`Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}`,was!==S.genre?()=>{S.genre=was}:null);return;}
+ if(t.dataset.genre){const was=S.genre,next=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}/* the note paints first, the (heavier) theme repaint follows on the next frame (Vit: the note felt late) */toast(`Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[next]}`,was!==next?()=>{S.genre=was}:null);setTimeout(()=>{S.genre=next;render();},30);return;}
  if(t.dataset.appearance){S.appearance=t.dataset.appearance;return render();}
  if(t.dataset.ob){S.onboarding.step=+t.dataset.ob;return render();}
  if(t.dataset.obgenre){S.onboarding.genre=t.dataset.obgenre;S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'})[t.dataset.obgenre]||'label';return render();}
