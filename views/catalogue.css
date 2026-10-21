@@ -253,10 +253,10 @@ button.cat-chk:hover{background:var(--raised)}
 .cat-stores{display:flex;flex-direction:column;gap:8px}
 .cat-storelist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .cat-storelist li{display:flex;align-items:center;gap:8px;min-height:34px;font:400 15px/22px var(--sans)}
-.cat-storelist li>span:first-of-type{flex:1}
+.cat-storelist li>.brand+span{flex:1}
 .cat-storelist li i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
 .cat-storelist li.missing i{background:none;box-shadow:inset 0 0 0 1px var(--rule-strong)}
-.cat-storelist li.missing>span:first-of-type{color:var(--muted)}
+.cat-storelist li.missing>.brand+span{color:var(--muted)}
 .cat-storelist li.pending i{background:var(--att)}
 .cat-storelist .btn.ghost.s{padding:8px 0 8px 12px}
 .cat-stores>.btn{align-self:flex-start}
