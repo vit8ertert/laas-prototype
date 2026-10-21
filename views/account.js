@@ -490,7 +490,7 @@ function obSteps(st){const ob=S.onboarding;
 L.ONBOARDING=function(){const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;
  queueMicrotask(()=>{fitWin();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
  const right=st===4?`<div class="r acc-live"><div class="acc-win">${mini()}</div>${lookPicker()}</div>`:`<div class="r"><img src="${IMG(photo)}" alt=""></div>`;
- return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.LOGO}</span><span style="flex:1"></span>${prog?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${L.flowBtnInline()}</div>
+ return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.logoMotion?L.logoMotion(S.logoIntro?'idle':(S.logoIntro=1,'intro')):L.LOGO}</span><span style="flex:1"></span>${prog?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${L.flowBtnInline()}</div>
  ${prog?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}
  <div class="acc-obform">${obSteps(st)}</div></div>${right}</div>`;};
 

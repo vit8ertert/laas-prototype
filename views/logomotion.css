@@ -1,0 +1,32 @@
+/* LAAS logo in motion. Each letter is a group so it can move on its own; transforms use the letter's own box. */
+.lm{fill:currentColor;--logo-bg:var(--canvas)}
+.lm g{transform-box:fill-box}
+.lm .lm-eye{fill:var(--logo-bg);transform-box:fill-box;transform-origin:center}
+
+/* intro, about 1.6 s: L stamps down, pixel A builds up row by row, soft A inflates, S wiggles in, the eye blinks once */
+.lm-intro .lm-l{transform-origin:50% 100%;animation:lm-stamp .42s cubic-bezier(.3,1.6,.5,1) both}
+.lm-intro .lm-pa{animation:lm-build .5s steps(6,end) .28s both}
+.lm-intro .lm-ba{transform-origin:50% 100%;animation:lm-inflate .55s cubic-bezier(.3,1.5,.5,1) .62s both}
+.lm-intro .lm-s{transform-origin:50% 50%;animation:lm-wiggle .6s ease-out .9s both}
+.lm-intro .lm-eye{animation:lm-blink .22s ease-in-out 1.45s both}
+@keyframes lm-stamp{0%{transform:translateY(-70%) scaleY(1.1);opacity:0}60%{transform:translateY(0) scaleY(.88);opacity:1}100%{transform:none}}
+@keyframes lm-build{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes lm-inflate{0%{transform:scale(.15);opacity:0}55%{transform:scale(1.12,.92);opacity:1}100%{transform:none}}
+@keyframes lm-wiggle{0%{transform:rotate(-24deg) scale(.4);opacity:0}45%{transform:rotate(12deg) scale(1.06);opacity:1}70%{transform:rotate(-5deg)}100%{transform:none}}
+@keyframes lm-blink{0%,100%{transform:none}50%{transform:scaleY(.12)}}
+
+/* idle: the eye blinks now and then and glances right, the S does a small wave; prime-ish loop lengths so it never syncs */
+.lm-idle .lm-eye{animation:lm-idle-blink 5.3s infinite,lm-glance 7.9s 2s infinite}
+.lm-idle .lm-s{transform-origin:50% 100%;animation:lm-wave 11.3s 4s infinite}
+@keyframes lm-idle-blink{0%,91%,100%{transform:none}94%{transform:scaleY(.12)}}
+@keyframes lm-glance{0%,70%,100%{translate:0 0}74%,90%{translate:28% 6%}}
+@keyframes lm-wave{0%,88%,100%{transform:none}91%{transform:skewX(-8deg)}94%{transform:skewX(6deg)}97%{transform:skewX(-2deg)}}
+
+/* loader: the letters bounce in turn like an equaliser; the eye blinks on the soft A's landing */
+.lm-loader g{transform-origin:50% 100%;animation:lm-hop 1s cubic-bezier(.3,0,.4,1) infinite}
+.lm-loader .lm-pa{animation-delay:.12s}.lm-loader .lm-ba{animation-delay:.24s}.lm-loader .lm-s{animation-delay:.36s}
+.lm-loader .lm-eye{animation:lm-blink .2s .62s infinite;animation-duration:1s}
+@keyframes lm-hop{0%,60%,100%{transform:none}20%{transform:translateY(-28%) scaleY(1.06)}40%{transform:translateY(0) scaleY(.9)}}
+
+@media (prefers-reduced-motion:reduce){.lm g,.lm .lm-eye{animation:none!important;clip-path:none!important;opacity:1!important}}
+.topbar .lm{--logo-bg:var(--sunken)}.acc-obtop .lm{--logo-bg:var(--canvas)}
