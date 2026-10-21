@@ -228,7 +228,7 @@ L.OVERLAYS.notifs=o=>{const N=S.notifs;const unread=N.filter(n=>n.unread).length
  const today=list.filter(([n])=>/^\d\d:\d\d$/.test(n.time)),earlier=list.filter(([n])=>!/^\d\d:\d\d$/.test(n.time));
  return `<div class="scrim d-scrim0" data-act="close"></div><div class="pop notif d-notif" style="right:${o.right??16}px" role="dialog" aria-label="Notifications">
  <div class="d-nh"><b class="t-heading">Notifications</b><button class="btn ghost s d-nset" data-act="readall" ${unread?'':'disabled'}>${ic('check','s')}Mark all read</button></div>
- <div class="d-nf"><button class="${o.f!=='need'?'on':''}" data-nf="all">All</button><button class="${o.f==='need'?'on':''}" data-nf="need">Needs you ${need}</button></div>
+ <div class="d-nf"><button class="${o.f!=='need'?'on':''}" data-nf="all">All</button><button class="${o.f==='need'?'on':''}" data-nf="need">Needs you<span class="c">${need}</span></button></div>
  <div class="d-nl">${today.length?`<div class="d-ng">Today</div>${today.map(([n,i])=>item(n,i,i<2?acts[i]:'')).join('')}`:''}${earlier.length?`<div class="d-ng">Earlier</div>${earlier.map(([n,i])=>item(n,i)).join('')}`:''}
  ${o.more&&o.f!=='need'?OLDER.map((n,j)=>`<div class="ni d-ni" data-act="notifold" data-i="${j}" role="button" tabindex="0"><span class="dot"></span><img class="thumb" src="${IMG(L.V(n.v).img)}" alt=""><span class="d-nt"><b>${n.t}</b><small class="muted">${n.m}</small><small class="faint">${n.time}</small></span></div>`).join(''):''}</div>
  <div class="d-nft"><button class="btn ghost s d-nsee" data-act="notifmore">${o.more?'Show less':'See all'}</button><span style="flex:1"></span><button class="btn ghost s d-nset" data-go="notifications">${ic('settings','s')}Settings</button></div></div>`;};

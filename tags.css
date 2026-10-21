@@ -2,8 +2,8 @@
    text in the full colour, fill the same colour at 6 %, a 1 px border the same colour at 19 % (drawn inside, takes no space).
    One rule for every tag-like element: tags, status chips, booking pills, calendar events, counts, record chips.
    Loaded after the area styles so it wins. Each element only sets --tc, the colour. */
-:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt){--tc:var(--muted)}
-:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt){
+:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c){--tc:var(--muted)}
+:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c){
   background:color-mix(in srgb,var(--tc) 6.3%,transparent)!important;
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 19%,transparent)!important;
   color:var(--tc)!important}
@@ -14,6 +14,8 @@
 :is(.tag,.schip,.bd-pill,.d-ev).draft,.schip.enquiry{--tc:var(--draft)}
 .schip.completed{--tc:var(--ink)}
 .tag.accent,.tag.cat-acc,.schip.offer,.bd-pill.offer,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c{--tc:var(--accent-ink)}
+/* "Needs you" count in the notifications panel: attention, it is the work waiting on you */
+.d-nf .c{--tc:var(--att)}
 /* the cancelled chip keeps its outline look, now in the same recipe */
 .schip.cancelled{--tc:var(--muted)}
 .schip.cancelled{border:0}

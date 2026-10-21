@@ -147,7 +147,7 @@ button.acc-li:hover{background:var(--hover)}
 .acc-fields .field{min-width:0}
 .acc-fields .input{max-width:100%}
 .acc-signin{display:flex;flex-direction:column;gap:16px}
-.acc-si{display:flex;align-items:center;gap:12px;padding:12px 0;text-align:left;width:100%;position:relative;border-radius:8px}
+.acc-si{display:flex;align-items:center;gap:12px;padding:12px;margin:0 -12px;text-align:left;width:calc(100% + 24px);position:relative;border-radius:8px}
 .acc-si::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .acc-si svg.acc-i32{width:32px;height:32px;flex:none;color:var(--ink);stroke-width:1.67}
 button.acc-si:hover{background:var(--hover)}
@@ -158,7 +158,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-nr{display:flex;align-items:center;gap:8px}
 .acc-nr>span{font:400 15px/18px var(--sans)}
 .acc-small{margin:0;font:400 12px/16px var(--sans);color:var(--muted)}
-.acc-band{display:flex;align-items:center;gap:12px;text-align:left;padding:4px;margin:-4px;border-radius:8px}
+.acc-band{display:flex;align-items:center;gap:12px;text-align:left;padding:8px;margin:-8px;border-radius:8px}
 .acc-band:hover{background:var(--hover)}
 .acc-band img{width:40px;height:40px;border-radius:8px;object-fit:cover}
 .acc-band .tx{display:flex;flex-direction:column;gap:2px}
@@ -326,7 +326,7 @@ button.acc-si:hover{background:var(--hover)}
 /* ---------- Account: your bands ---------- */
 .acc-bands{display:flex;flex-direction:column;gap:12px}
 .acc-bandrow{display:flex;align-items:center;gap:12px}
-.acc-bandrow .acc-band{flex:1;min-width:0;margin:-4px 0}
+.acc-bandrow .acc-band{flex:1;min-width:0;margin:-8px 0 -8px -8px}
 .acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:8px;background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:600;overflow:hidden}
 .acc-bsq{width:40px;height:40px;font-size:14px}
 
@@ -375,7 +375,7 @@ button.acc-si:hover{background:var(--hover)}
 .aud-city .tr{flex:1;min-width:0;height:8px;border-radius:999px;background:var(--well);overflow:hidden;display:flex}
 .aud-city .tr i{display:block;height:8px;border-radius:999px;background:var(--accent-strong);flex:none;max-width:100%}
 .aud-city .pc{width:48px;flex:none;text-align:right;font:400 14px/20px var(--mono)}
-.aud-rel{display:flex;align-items:center;gap:12px;text-align:left;width:100%;border-radius:8px}
+.aud-rel{display:flex;align-items:center;gap:12px;text-align:left;padding:8px 12px;margin:-4px -12px;width:calc(100% + 24px);border-radius:8px}
 .aud-rel:hover{background:var(--hover)}
 .aud-rel .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .aud-rel .tx span{font:400 15px/22px var(--sans)}
@@ -403,3 +403,6 @@ button.acc-si:hover{background:var(--hover)}
 .acc-obform{width:480px}
 /* rank numbers in Top songs: a 20 px column on the row's left edge (Vit 21 Oct: "bad alignment") */
 .acc-li .aud-i{width:20px;min-width:0;flex:none;text-align:left;margin:0}
+/* Settings, Genres: 18 chips do not fit the control column, so they sit under the label at full width */
+.acc-rgen{flex-wrap:wrap;row-gap:12px}.acc-rgen .tx{flex:1 1 100%}
+.acc-rgen .ctl{flex:1 1 100%;justify-content:flex-start}

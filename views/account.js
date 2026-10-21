@@ -91,8 +91,9 @@ L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre],b=curBand(),lt=b.id==='lt';
  sec('Profile',rows(
   row('Band name','Shown on offers, invoices and the pay page',txt('Band name',b.name,320)),
   row('Home city','Travel is counted from here',txt('Home city',b.city||'',240)),
-  ...(lt?[]:[row('Country and currency','Fees and invoices use this currency',tag('draft',`${esc(b.country)}, ${b.currency}`)),row('Time zone','Gig times and reminders follow it',tag('draft',b.tz))]),
-  row('Genres','Drive the theme suggestion and the sample copy',sel('Genres',['Indie rock, Shoegaze','Indie rock','Shoegaze','Metal and hardcore','Electronic','Classical'])),
+  row('Country','Currency, VAT and time zone follow it',`<select class="input acc-sel" aria-label="Country" data-accsave>${COUNTRIES.map(c=>`<option ${c===(lt?'Denmark':b.country)?'selected':''}>${esc(c)}</option>`).join('')}</select>`),
+  ...(lt?[]:[row('Time zone','Gig times and reminders follow it',tag('draft',b.tz))]),
+  row('Genres','Pick all that fit. They drive the theme suggestion and the sample copy.',`<div class="acc-genres acc-bgen">${GENRES.map(g=>{const on=(A.genres||(A.genres=['Indie and rock','Shoegaze and dream pop'])).includes(g);return `<button class="acc-gc ${on?'on':''}" data-act="accbgenre" data-g="${g}" aria-pressed="${on}">${g}</button>`;}).join('')}</div>`,'acc-rgen'),
   row('Logo and cover','Used on the pay page and offers, 2 files',`<label class="btn secondary s" style="cursor:pointer">Change<input type="file" accept="image/*" hidden data-photo="band"></label>`)))
  +sec('House terms',rows(
   row('Deposit','Default on every new offer, full payment inside 28 days of the gig',sel('Deposit',['30 % on signing','50 % on signing','No deposit'])),
@@ -421,7 +422,10 @@ const APPLE=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" 
 const fld=(id,label,val,w,help,ph)=>`<div class="field"><label for="${id}">${label}</label><input class="input" id="${id}" ${w?`style="width:${w}px"`:''} ${val?`value="${esc(val)}"`:''} ${ph?`placeholder="${esc(ph)}"`:''}>${help?`<span class="help">${help}</span>`:''}</div>`;
 const fsel=(id,label,opts,w,help)=>`<div class="field"><label for="${id}">${label}</label><select class="input" id="${id}" style="width:${w}px">${opts.map(o=>`<option>${o}</option>`).join('')}</select>${help?`<span class="help">${help}</span>`:''}</div>`;
 const head=(t,p)=>`<div class="acc-obh"><h1 class="t-title">${t}</h1><p>${p}</p></div>`;
-const GENRES=['Indie and rock','Metal and hardcore','Electronic','Classical','Jazz','Folk','Hip-hop and soul','Pop'];
+/* Vit 21 Oct: "we need country and more genres" (onboarding and Settings share these lists) */
+const GENRES=L.GENRES=['Indie and rock','Shoegaze and dream pop','Punk','Metal and hardcore','Electronic','Hip-hop and soul','R&B','Pop','Folk','Singer-songwriter','Country and Americana','Blues','Jazz','Classical','Reggae and ska','Latin','World','Ambient and experimental'];
+const COUNTRIES=L.COUNTRIES=['Denmark','Sweden','Norway','Finland','Iceland','Germany','Netherlands','United Kingdom','Ireland','France','Spain','Another country'];
+const obGenres=()=>S.onboarding.genres||(S.onboarding.genres=[S.onboarding.genre]);
 
 /* mini dashboard used for the live window and the theme card previews (tokens, so it follows the theme) */
 function mini(g=S.genre){const h={metal:'What are we unleashing first?',classical:'What is on the programme first?'}[g]||'What should we set up first?';
@@ -453,8 +457,9 @@ function obSteps(st){const ob=S.onboarding;
   <div class="row"><button class="btn accent" data-ob="3">Continue</button></div>`;
  case 3:return head('Your band','One account can run several bands. Start with this one.')
   +`<div class="acc-obphoto"><img src="${S.photos.band||IMG('band-collage')}" alt=""><div><b class="strong">Low Tide, band photo</b><label class="btn ghost s" style="cursor:pointer;align-self:flex-start">${ic('upload','s')}Replace<input type="file" accept="image/*" hidden data-photo="band"></label></div></div>
-  ${fld('acc-bn','Band name','Low Tide',360)}${fld('acc-bc','Home city','Odense',240,'Travel distances start here')}
-  <div class="field"><span class="acc-lbl">What do you play?</span><div class="acc-genres">${GENRES.map(g=>`<button class="acc-gc ${ob.genre===g?'on':''}" data-obgenre="${g}" aria-pressed="${ob.genre===g}">${g}</button>`).join('')}</div><span class="help">Picks the look on the next step</span></div>
+  ${fld('acc-bn','Band name','Low Tide',360)}
+  <div class="acc-two">${fsel('acc-bco','Country',COUNTRIES,212,'Sets currency, VAT and time zone')}${fld('acc-bc','Home city','Odense',212,'Travel distances start here')}</div>
+  <div class="field"><span class="acc-lbl">What do you play?</span><div class="acc-genres">${GENRES.map(g=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''}" data-obgenre="${g}" aria-pressed="${on}">${g}</button>`;}).join('')}</div><span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
   <div class="field"><span class="acc-lbl">How many of you?</span><div class="seg acc-size">${['Just me','2','3–4','5+'].map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>
   <div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
@@ -496,3 +501,5 @@ L.INPUT.push(t=>{
  if(t.closest&&t.closest('.acc-obinv')){const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;const b=document.getElementById('acc-obsend');if(b)b.innerHTML=ic('send','s')+(n?`Send ${n} invite${n===1?'':'s'}`:'Send invites');return true;}
 });
 })();
+
+AC.accbgenre=t=>{const g=t.dataset.g,l=A.genres;const i=l.indexOf(g);if(i>=0){if(l.length===1)return L.toast('Keep at least one genre');l.splice(i,1);}else l.push(g);L.render();L.toast('Genres saved');};

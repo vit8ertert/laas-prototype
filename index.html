@@ -41,9 +41,10 @@ svg.i.s{width:16px;height:16px}
 
 /* shell */
 .app{display:grid;grid-template-rows:58px 1fr;grid-template-columns:minmax(0,1fr);height:100%}
-.topbar{background:var(--sunken);display:flex;align-items:center;gap:16px;padding-block:12px;padding-inline:max(24px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px))}
+.topbar{background:var(--sunken);display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,480px) minmax(0,1fr);align-items:center;gap:16px;padding-block:12px;padding-inline:max(24px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px))}
 .logo{display:flex;align-items:center;gap:10px}.logo svg{width:90px;height:24px;fill:var(--ink)}
-.search-pill{margin-left:auto;display:flex;align-items:center;gap:8px;width:280px;max-width:40vw;height:34px;padding:8px 12px;border-radius:8px;background:var(--surface);color:var(--faint);font:400 15px/18px var(--sans)}
+.tb-l,.tb-r{display:flex;align-items:center;gap:16px;min-width:0}.tb-r{justify-content:flex-end}
+.search-pill{display:flex;align-items:center;gap:8px;width:100%;height:34px;padding:8px 12px;border-radius:8px;background:var(--surface);color:var(--faint);font:400 15px/18px var(--sans)}
 .search-pill kbd{margin-left:auto;font:400 12px var(--mono);color:var(--faint)}
 .bell{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:8px;color:var(--ink)}
 .bell .n{position:absolute;top:2px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
@@ -217,10 +218,10 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .scrim{animation:fade .22s ease both}
 .modal{animation:modal-in .26s cubic-bezier(.2,.8,.2,1) both}@keyframes modal-in{from{opacity:0;transform:translate(-50%,8px) scale(.97)}}
 .pop{animation:pop-in .18s cubic-bezier(.2,.8,.2,1) both;transform-origin:top}@keyframes pop-in{from{opacity:0;transform:translate(var(--tx,0),-4px) scale(.98)}}
-.toast{animation:toast-in .14s cubic-bezier(.2,.8,.2,1) both}@keyframes toast-in{from{opacity:.4;transform:translate(-50%,6px) scale(.99)}}
+.toast{animation:toast-in .14s cubic-bezier(.2,.8,.2,1) both}@keyframes toast-in{from{opacity:0;transform:translateY(-6px)}}
 @media (prefers-reduced-motion: reduce){*,::view-transition-old(main),::view-transition-new(main){animation:none!important;transition:none!important}}
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+.toast{position:fixed;top:64px;right:max(20px,env(safe-area-inset-right,0px));max-width:min(420px,calc(100% - 32px));z-index:60;background:var(--overlay);border:1px solid var(--rule-strong);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
 .abar{position:sticky;bottom:16px;flex:none;margin:0 auto 16px;max-width:720px;width:calc(100% - 64px);background:var(--raised);border:1px solid var(--rule-strong);border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px;z-index:20}
 .abar input{flex:1;background:none;border:0;outline:none;min-width:0;color:var(--ink)}
 .rec-x{display:grid;place-items:center;width:16px;height:16px;border-radius:4px;color:inherit;opacity:.7}.rec-x:hover{opacity:1;background:color-mix(in srgb,currentColor 14%,transparent)}.rec-x svg{width:12px;height:12px}
@@ -302,13 +303,13 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 @media (max-width:860px){
   .body{grid-template-columns:1fr;padding:0;gap:0}.sidebar{position:fixed;inset:58px auto 0 0;width:260px;background:var(--canvas);z-index:35;transform:translateX(-100%);transition:transform .2s;padding-left:max(8px,env(safe-area-inset-left,0px));border-radius:0}
   .sidebar.open{transform:none}.menu-btn{display:grid!important}
-  .fl,.search-pill span,.search-pill kbd,.me .nm,.logo small{display:none}.search-pill{width:38px;padding:0;justify-content:center}
+  .fl,.search-pill span,.search-pill kbd,.me .nm,.logo small{display:none}.search-pill{width:38px;padding:0;justify-content:center;justify-self:end}.topbar{grid-template-columns:auto minmax(0,1fr) auto}
   .page{padding:16px max(16px,env(safe-area-inset-left,0px)) 24px max(16px,env(safe-area-inset-right,0px))}
   .abar,.sheet{width:calc(100% - 32px)}
   .hero .tx{padding:0 20px 20px}.kv{grid-template-columns:100px 1fr}.theme-grid{grid-template-columns:1fr}
   .main{border-radius:0}
   .banner{flex-wrap:wrap}.banner .tx{flex:1 1 200px}
-  .topbar{gap:8px;padding-inline:16px}.logo svg{width:72px}.me>svg{display:none}
+  .topbar{gap:8px;padding-inline:16px}.tb-l,.tb-r{gap:8px}.logo svg{width:72px}.me>svg{display:none}
   .setgrid{grid-template-columns:1fr!important}.setgrid>nav{flex-direction:row!important;overflow-x:auto}.setgrid>nav>span{display:none}
   .ph .btn{flex:none}
 }
@@ -430,7 +431,7 @@ const open=(o,extra={})=>{lastFocus=document.activeElement;S.overlay={type:o,...
 const close=()=>{S.overlay=null;render();if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}};
 const refresh=()=>{if(S.overlay&&S.overlay.kind)S.overlay.html=sendPreview(S.overlay.kind);render();};
 let toastTimer=null;
-const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=setTimeout(()=>{S.toast=null;render()},undo?10000:5000);render();};
+const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=setTimeout(()=>{S.toast=null;render()},undo?6000:3000);render();};
 
 /* ---------- shell ---------- */
 function sidebar(){
@@ -459,10 +460,10 @@ function sidebar(){
 }
 function topbar(){
  const unread=S.notifs.filter(n=>n.unread).length;
- return `<header class="topbar"><button class="menu-btn" data-act="menu" aria-label="Open menu">${ic('menu')}</button><div class="logo">${LOGO}<small class="muted t-meta">artist platform</small></div>
+ return `<header class="topbar"><div class="tb-l"><button class="menu-btn" data-act="menu" aria-label="Open menu">${ic('menu')}</button><div class="logo">${LOGO}<small class="muted t-meta">artist platform</small></div></div>
  <button class="search-pill" data-act="palette">${ic('search','s')}<span>Search for anything</span><kbd>⌘K</kbd></button>
- ${flowBtnInline()}<button class="bell" data-act="notifs" aria-label="Notifications">${ic('bell')}${unread?`<span class="n">${unread}</span>`:''}</button>
- <button class="me" data-go="account"><span class="avatar-you">V</span><span class="nm">Vital</span>${ic('down','s')}</button></header>`;
+ <div class="tb-r">${flowBtnInline()}<button class="bell" data-act="notifs" aria-label="Notifications">${ic('bell')}${unread?`<span class="n">${unread}</span>`:''}</button>
+ <button class="me" data-act="memenu" aria-haspopup="menu" aria-label="Your account menu"><span class="avatar-you">V</span><span class="nm">Vital</span>${ic('down','s')}</button></div></header>`;
 }
 function abar(ctx,ph){
  if(S.abarHidden)return `<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" title="Show the assistant bar (⌘J)">${ic('ai','s')}<span>Ask</span></button></div>`;
@@ -735,7 +736,7 @@ function onboarding(){const st=S.onboarding.step;const photo=['stagedive','noteb
   ()=>`<div><h1 class="t-title">Check your inbox</h1><p class="muted">We sent a 6-digit code and a sign-in link to vital@lowtide.dk. Both work for 15 minutes.</p></div><div class="code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" value="${d}" maxlength="1">`).join('')}</div><div class="row"><button class="btn accent" data-ob="2">Continue</button><a class="btn secondary" style="text-decoration:none" href="https://mail.google.com" target="_blank" rel="noopener">Open Gmail</a><button class="btn ghost" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div><p class="t-meta muted" style="margin:0">Wrong address? <button class="link" data-ob="0">Use a different email</button>.</p>`,
   ()=>`<div><h1 class="t-title">About you</h1><p class="muted">Takes a minute. You can change all of it in Account.</p></div><div class="row"><img src="${S.photos.you||IMG('booker')}" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt=""><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label></div><div class="field"><label for="yn">Your name</label><input class="input" id="yn" value="Vital Sinkevich"></div><div class="field"><label for="yp">You play</label><input class="input" id="yp" value="Vocals, guitar"></div><button class="btn accent" data-ob="3" style="align-self:flex-start">Continue</button>`,
   ()=>`<div><h1 class="t-title">Your band</h1><p class="muted">One account can run several bands. Start with this one.</p></div><div class="row"><img src="${S.photos.band||IMG('band-collage')}" style="width:96px;height:96px;border-radius:12px;object-fit:cover" alt=""><label class="btn ghost s" style="cursor:pointer">${ic('upload','s')}Replace<input type="file" accept="image/*" hidden data-photo="band"></label></div><div class="field"><label for="bnm">Band name</label><input class="input" id="bnm" value="Low Tide"></div><div class="field"><label for="bc">Home city</label><input class="input" id="bc" value="Odense"></div><div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-ob="4">Continue</button></div>`,
-  ()=>`<div><h1 class="t-title">What do you play?</h1><p class="muted">LAAS dresses itself for your genre: colours, type and the logo. Switch any time, or keep the default.</p></div><div class="row" style="gap:8px">${['Indie and rock','Metal and hardcore','Electronic','Classical','Jazz','Folk','Pop'].map(g=>`<button class="qtag ${S.onboarding.genre===g?'on':''}" data-obgenre="${g}">${g}</button>`).join('')}</div><div class="theme-grid">${themeCards()}</div>${appearanceSeg()}<div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</button></div>`,
+  ()=>`<div><h1 class="t-title">What do you play?</h1><p class="muted">LAAS dresses itself for your genre: colours, type and the logo. Switch any time, or keep the default.</p></div><div class="row" style="gap:8px">${(LAAS.GENRES||['Indie and rock','Metal and hardcore','Electronic','Classical']).map(g=>`<button class="qtag ${S.onboarding.genre===g?'on':''}" data-obgenre="${g}">${g}</button>`).join('')}</div><div class="theme-grid">${themeCards()}</div>${appearanceSeg()}<div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</button></div>`,
   ()=>`<div><h1 class="t-title">Bring the band</h1><p class="muted">They get an email to join Low Tide. Nobody pays per member.</p></div>${['jonas@lowtide.dk','mia.bass@gmail.com'].map(m=>`<div class="row"><input class="input" style="flex:1" value="${m}" aria-label="Email"><select class="input" style="width:140px" aria-label="Role"><option>Member</option><option>Admin</option><option>Viewer</option></select></div>`).join('')}<p class="t-meta muted">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only.</p><div class="row"><button class="btn ghost" data-act="obdone">Skip for now</button><button class="btn accent" data-act="obdone">${ic('send','s')}Send 2 invites</button></div>`];
  return `<div class="ob"><div class="l"><div class="row"><div class="logo">${LOGO}</div><span style="flex:1"></span>${st>=2?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${flowBtnInline()}<button class="btn ghost s" data-act="obexit">Exit</button></div>${st>=2?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px">${steps[st]()}</div></div><div class="r"><img src="${IMG(photo)}" alt=""></div></div>`;}
 
@@ -822,7 +823,7 @@ document.addEventListener('click',e=>{
  if(t.dataset.genre){const was=S.genre,next=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}/* the note paints first, the (heavier) theme repaint follows on the next frame (Vit: the note felt late) */toast(`Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[next]}`,was!==next?()=>{S.genre=was}:null);setTimeout(()=>{S.genre=next;render();},30);return;}
  if(t.dataset.appearance){S.appearance=t.dataset.appearance;return render();}
  if(t.dataset.ob){S.onboarding.step=+t.dataset.ob;return render();}
- if(t.dataset.obgenre){S.onboarding.genre=t.dataset.obgenre;S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'})[t.dataset.obgenre]||'label';return render();}
+ if(t.dataset.obgenre){const ob=S.onboarding,g=t.dataset.obgenre,l=ob.genres||(ob.genres=[ob.genre]),i=l.indexOf(g);if(i>=0){if(l.length>1)l.splice(i,1);}else l.push(g);ob.genre=l[0];S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'})[ob.genre]||'label';return render();}
  if(t.dataset.pgo){const v=t.dataset.pgo;const p=JSON.parse(t.dataset.pp||'{}');if(v==='newbooking'){S.overlay=DR.newbooking(S.overlay.q);return render();}return go(v,p);}
  if(t.dataset.ni){const n=S.notifs[+t.dataset.ni];n.unread=false;return go(n.go[0],n.go[1]);}
  if(t.dataset.nf){S.overlay.f=t.dataset.nf;return render();}
@@ -917,6 +918,9 @@ document.addEventListener('click',e=>{
   abarctxoff:()=>{S.abarCtxOff=S.view;render();},
   abarnew:()=>{S.asst='new';S.asstEdit=false;go('assistant');},
   readall:()=>{S.notifs.forEach(n=>n.unread=false);render();},
+  memenu:()=>{const b=t.getBoundingClientRect();open('menu',{x:Math.max(8,Math.round(b.right-260)),y:Math.round(b.bottom+6),items:[['Your account','meacc'],['Band settings','meband'],['Switch band','meswitch'],['Guide','meguide'],['Sign out','mesignout']]});},
+  meacc:()=>{S.overlay=null;go('account');},meband:()=>{S.overlay=null;go('settings');},meswitch:()=>{S.overlay=null;render();const b=document.querySelector('.sidebar [data-act="bandmenu"]');if(b)b.click();},
+  meguide:()=>{S.overlay=null;render();L.tour&&L.tour.start('first');},mesignout:()=>{S.overlay=null;render();toast('Signed out. This is a prototype, so you stay in.');},
   undo:()=>{if(S.toast&&typeof S.toast.undo==='function')S.toast.undo();S.toast=null;render();},
   ask:()=>{const q=(document.getElementById('ask')?.value||'').trim();if(S.view==='booking'){S.booking.sheet=true;render();}else{if(q){S.asst='q';S.asstQ=q;}go('assistant');}},
   obdefault:()=>{S.genre='label';S.onboarding.step=5;render();},obdone:()=>{go('dashboard');toast('Welcome to LAAS. 2 invites sent');},obexit:()=>go('dashboard'),
