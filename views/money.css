@@ -569,3 +569,19 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-paper .iv-lines td{color:#1a1a1a}.iv-paper .iv-lines td.muted,.iv-paper .iv-lines th{color:#6b6b66}
 .iv-paper .iv-lines tr:hover td{background:transparent!important}
 .iv-paper .link{color:#1a1a1a;text-decoration-color:#1a1a1a80}
+/* lifecycle as a full-width card; the last step ends on the right edge (Vit 21 Oct) */
+.iv-steps{display:flex;gap:0;padding:16px 20px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
+.iv-steps li{flex:1;min-width:0}.iv-steps li:last-child{flex:none;padding-right:0}
+.iv-steps li:not(:last-child)::after{left:28px;right:8px}
+.iv-steps i{background:var(--surface)}
+/* summary: one clear figure, then quiet rows (Vit 21 Oct: "size text hierarchy is strange") */
+.iv-lab{font:400 13px/18px var(--sans)}
+.iv-due{display:flex;align-items:baseline;gap:6px;font:400 32px/40px var(--sans);letter-spacing:-.5px;font-variant-numeric:tabular-nums;margin:0}
+.iv-due small{font:400 15px/22px var(--sans);color:var(--muted);letter-spacing:0}
+.iv-kvs{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--rule)}
+.iv-kv{font:400 14px/20px var(--sans)}.iv-kv .mono{font:400 14px/20px var(--mono)}
+.iv-sum{gap:4px}.iv-sum .iv-kvs{margin-top:8px}
+/* back links sit flush with the page title, like other edge text buttons (Vit 21 Oct: "looks misaligned") */
+.btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back){padding-left:0;padding-right:4px;margin-left:0}
+.btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back):hover{background:none!important;text-decoration:underline}
+@media (max-width:700px){.iv-steps{padding:12px}}
