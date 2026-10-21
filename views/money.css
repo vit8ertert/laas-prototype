@@ -370,3 +370,8 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-stack i{display:block;width:100%;background:var(--sc);flex:none;min-height:2px;border-radius:0}
 .m-stack i:last-child{border-radius:4px 4px 0 0}
 .m-tick{position:absolute;left:50%;width:min(72%,60px);height:2px;margin-bottom:-1px;transform:translateX(-50%);border-radius:1px;background:var(--ink);box-shadow:0 0 0 1.5px var(--surface)}
+
+/* every Money section: rows start on the heading line (12 px inside for the hover box, bled 12 px out) and footnotes
+   have no inset, like "In this month" already did (Vit 21 Oct, "alignment" on Gigs to settle) */
+.m-sec .m-body>.m-line{padding:12px;margin:0 -12px;width:calc(100% + 24px)}
+.m-sec .m-body>.m-foot{padding-inline:0}

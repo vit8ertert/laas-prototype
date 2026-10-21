@@ -138,8 +138,9 @@
 .bd-check input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
 .bd-check .bx{width:18px;height:18px;border-radius:4px;flex:none;display:grid;place-items:center;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--surface)}
 .bd-check .bx svg.i.s{width:14px;height:14px;visibility:hidden}
-.bd-check input:checked+.bx{background:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.bd-check input:checked+.bx svg{visibility:visible}
+/* checked: ink box with the check in the page colour. Figma 142:626 strokes the check in ink on an ink box, so it never shows (Vit 21 Oct) */
+.bd-check input:checked+.bx{background:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);color:var(--surface)}
+.bd-check input:checked+.bx svg.i.s{visibility:visible}
 .bd-check input:focus-visible+.bx{outline:2px solid var(--accent);outline-offset:2px}
 .bd-acth{text-align:left;width:100%}
 .bd-acth h2{display:block}
