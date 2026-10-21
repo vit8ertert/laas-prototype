@@ -21,23 +21,23 @@
 @keyframes lm-tag{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
 
 /* idle (Vit 21 Oct: "related to music, the different letters meaning different genres and artists"):
-   the wordmark is a band of four. Each letter plays its own part now and then, on its own slow cycle, so the logo
+   the wordmark is a band of four. Each letter plays its own part now and then, on its own slow cycle (20 to 30 s; Vit 21 Oct: "less frequent"), so the logo
    stays mostly calm and the parts rarely line up.
    L, the heavy one = metal: headbangs, two quick nods.
    pixel A = electronic: pumps on four kick-drum beats, like a speaker cone.
    soft A with the eye = the vocalist: closes its eye and sways as if holding a note; blinks in between.
    S = guitar: plucked like a string, a quick vibration that dies out. */
-.lm-idle .lm-l{transform-origin:20% 100%;animation:lm-bang 13.1s 5s infinite}
-@keyframes lm-bang{0%,92%,100%{transform:none}93%{transform:rotate(7deg) scaleY(.96)}94.2%{transform:none}95.4%{transform:rotate(7deg) scaleY(.96)}96.6%{transform:none}}
-.lm-idle .lm-pa{transform-origin:50% 100%;animation:lm-pump 9.7s 2s infinite}
-@keyframes lm-pump{0%,78%,100%{transform:none}78.6%,83.7%,88.8%,93.9%{transform:scale(1.06,.9)}80.6%,85.7%,90.8%,95.9%{transform:none}}
-.lm-idle .lm-ba{transform-origin:50% 100%;animation:lm-sway 11.3s 7s infinite}
-@keyframes lm-sway{0%,80%,100%{transform:none}84%{transform:rotate(-4deg)}88%{transform:rotate(4deg)}92%{transform:rotate(-3deg)}96%{transform:none}}
-.lm-idle .lm-eye{animation:lm-idle-blink 5.3s infinite,lm-hold 11.3s 7s infinite}
-@keyframes lm-idle-blink{0%,91%,100%{transform:none}94%{transform:scaleY(.12)}}
-@keyframes lm-hold{0%,81%,97%,100%{scale:1 1}83%,95%{scale:1 .12}}
-.lm-idle .lm-s{transform-origin:50% 50%;animation:lm-pluck 7.9s 3.5s infinite}
-@keyframes lm-pluck{0%,90%,100%{transform:none}90.8%{transform:skewX(-12deg)}91.6%{transform:skewX(9deg)}92.4%{transform:skewX(-6deg)}93.2%{transform:skewX(4deg)}94%{transform:skewX(-2deg)}94.8%{transform:none}}
+.lm-idle .lm-l{transform-origin:20% 100%;animation:lm-bang 31.3s 5s infinite}
+@keyframes lm-bang{0%,96.65%,100%{transform:none}97.07%{transform:rotate(7deg) scaleY(.96)}97.57%{transform:none}98.07%{transform:rotate(7deg) scaleY(.96)}98.58%{transform:none}}
+.lm-idle .lm-pa{transform-origin:50% 100%;animation:lm-pump 23.9s 2s infinite}
+@keyframes lm-pump{0%,91.07%,100%{transform:none}91.31%,93.38%,95.45%,97.52%{transform:scale(1.06,.9)}92.13%,94.2%,96.27%,98.34%{transform:none}}
+.lm-idle .lm-ba{transform-origin:50% 100%;animation:lm-sway 27.7s 7s infinite}
+@keyframes lm-sway{0%,91.84%,100%{transform:none}93.47%{transform:rotate(-4deg)}95.1%{transform:rotate(4deg)}96.74%{transform:rotate(-3deg)}98.37%{transform:none}}
+.lm-idle .lm-eye{animation:lm-idle-blink 11.9s infinite,lm-hold 27.7s 7s infinite}
+@keyframes lm-idle-blink{0%,95.99%,100%{transform:none}97.33%{transform:scaleY(.12)}}
+@keyframes lm-hold{0%,92.25%,98.78%,100%{scale:1 1}93.06%,97.96%{scale:1 .12}}
+.lm-idle .lm-s{transform-origin:50% 50%;animation:lm-pluck 19.7s 3.5s infinite}
+@keyframes lm-pluck{0%,95.99%,100%{transform:none}96.31%{transform:skewX(-12deg)}96.63%{transform:skewX(9deg)}96.95%{transform:skewX(-6deg)}97.27%{transform:skewX(4deg)}97.59%{transform:skewX(-2deg)}97.91%{transform:none}}
 
 /* loader: the band plays together, one bar a second: L nods, pixel A pumps on the beat, soft A sways, S vibrates */
 .lm-loader .lm-l{transform-origin:20% 100%;animation:lm-bang-l 1s infinite}
