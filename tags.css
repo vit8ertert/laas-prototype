@@ -2,8 +2,8 @@
    text in the full colour, fill the same colour at 6 %, a 1 px border the same colour at 19 % (drawn inside, takes no space).
    One rule for every tag-like element: tags, status chips, booking pills, calendar events, counts, record chips.
    Loaded after the area styles so it wins. Each element only sets --tc, the colour. */
-:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c){--tc:var(--muted)}
-:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c){
+:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){--tc:var(--muted)}
+:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){
   background:color-mix(in srgb,var(--tc) 6.3%,transparent)!important;
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 19%,transparent)!important;
   color:var(--tc)!important}
@@ -40,8 +40,6 @@
 .facts-dl dd{margin:0;font:400 15px/22px var(--sans);overflow-wrap:anywhere}
 .facts-h{margin:8px 0 0;font:500 13px/18px var(--sans);color:var(--muted)}
 
-/* one underline for the whole app (Vit 21 Oct: "this default underline looks bad"): 1 px, half-strength colour, clear of the descenders */
-*{text-decoration-thickness:1px;text-underline-offset:.3em;text-decoration-color:color-mix(in srgb,currentColor 55%,transparent)}
 
 /* light theme: detail-page sections (booking, social post, gig day) sit in white blocks. Canvas #f4f3ef on sunken #ebe8e5 gives
    too little depth for open sections, which dark mode gets from its panel contrast (Vit 21 Oct: "not blocked content on light theme") */
@@ -67,3 +65,8 @@
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]):not([data-genre="metal"]):not([data-genre="electronic"]):not([data-genre="classical"]){--faint:#878781}}
 :root[data-genre="classical"][data-theme="light"]{--faint:#857b69}
 @media (prefers-color-scheme: light){:root[data-genre="classical"]:not([data-theme="dark"]){--faint:#857b69}}
+
+/* hover underline: the 'text-decoration: underline' shorthand used across the views resets thickness, offset and colour,
+   so the soft underline is forced here (Vit 21 Oct: "still default underline on hover"). Mail subjects keep their fade-in. */
+*:not(.ml-text>b){text-decoration-thickness:1px!important;text-underline-offset:.3em!important;text-decoration-color:color-mix(in srgb,currentColor 50%,transparent)!important}
+.ml-text>b{text-decoration-thickness:1px!important;text-underline-offset:.3em!important}
