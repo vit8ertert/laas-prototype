@@ -357,17 +357,17 @@ L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mod
  </aside></div></div>${L.abar('Settle, Hotel gig','Ask — give Jonas 300 more for driving, what did each of us net this year, remind Mads to move the money')}`;};
 
 /* ---------- drawers ---------- */
-L.OVERLAYS.mnydrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s m-close" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
+L.OVERLAYS.mnydrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr ${o.cls||''}" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s m-close" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
 L.OVERLAYS.mnymenu=o=>`<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop m-menu" style="top:${o.y}px;right:${o.r}px">${o.items.map(([l,a,x])=>`<button class="it" data-act="${a}" ${x||''}>${l}</button>`).join('')}</div>`;
 L.OVERLAYS.mnyrem=()=>`<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true">${L.sendPreview('reminder').replace(/data-act="sendreminder"/g,'data-act="mnysendrem"')}</div>`;
 
 const field=(id,label,ctl,help,cls='')=>`<div class="field ${cls}"><label for="${id}">${label}</label>${ctl}${help?`<span class="help" ${help.id?`id="${help.id}"`:''}>${help.t||help}</span>`:''}</div>`;
 /* Figma: one row per line, Description fills (2 lines, 60 px), Excl. moms and Moms 110 px each, gap 8 */
-const invLine=(i,desc,amt,m)=>`<div class="m-iline" data-line="${i}">${field('mi-d'+i,'Description',`<span class="m-ifld"><textarea class="m-fin" id="mi-d${i}" rows="2">${esc(desc)}</textarea></span>`,'','m-fd')}
+const invLine=(i,desc,amt,m)=>`<div class="m-iline" data-line="${i}">${field('mi-d'+i,'Description',`<span class="m-ifld"><textarea class="m-fin" id="mi-d${i}" rows="1">${esc(desc)}</textarea></span>`,'','m-fd')}
  ${field('mi-a'+i,'Excl. moms',`<input class="input m-amtin" id="mi-a${i}" inputmode="decimal" value="${amt}">`,'','m-w110')}
  ${field('mi-m'+i,'Moms',`<select class="input m-moms ${m===''?'m-err':''}" id="mi-m${i}"><option value="" ${m===''?'selected':''}>—</option><option value="25" ${m==='25'?'selected':''}>25 %</option><option value="0" ${m==='0'?'selected':''}>Momsfri</option></select>`,m===''?{t:'Pick 25 % or Momsfri',id:'mi-e'+i}:'','m-w110')}</div>`;
 const toggle=(k,label)=>`<button class="m-tg" data-act="mnytg" data-k="${k}" role="switch" aria-checked="${!!M.inv[k]}"><span class="m-track2"><i></i></span><span>${label}</span></button>`;
-L.DR.newinvoice=()=>{M.inv={lines:2,m2:'',incl:false,remind:true,interest:false};return {type:'mnydrawer',title:'New balance invoice',sub:'From Saturday hotel gig, 2026-032 is reserved, locked when you approve',
+L.DR.newinvoice=()=>{M.inv={lines:2,m2:'',incl:false,remind:true,interest:false};return {type:'mnydrawer',cls:'m-wide',title:'New balance invoice',sub:'From Saturday hotel gig, 2026-032 is reserved, locked when you approve',
  body:`${field('mi-b','For booking',`<select class="input" id="mi-b"><option>Saturday hotel gig, 25 Oct, Hotel Royal</option><option>Club night, 15 Nov, Club Mono</option><option>Support slot, 28 Nov, Odense Live</option></select>`,'Lines, bill-to and due date come from the booking and your house terms')}
  ${field('mi-to','Bill to',`<select class="input" id="mi-to"><option>Hotel Royal A/S, CVR 12 34 56 78</option><option>Mette Kjær, private</option></select>`,'Sent to faktura@hotelroyal.dk (invoice address), cc Mette')}
  <div class="m-lines"><span class="m-ll">Lines</span><div class="m-lines" id="mi-lines">${invLine(1,'Balance, fee for 25 Oct, 70 %','2.800','25')}${invLine(2,'Travel, 2 cars from Odense','512','')}</div>
@@ -375,8 +375,8 @@ L.DR.newinvoice=()=>{M.inv={lines:2,m2:'',incl:false,remind:true,interest:false}
  <div class="m-tot"><div class="m-line m-tl"><span class="m-tx">Excl. moms</span><span class="m-amt mono" id="mi-tx">3.312</span></div>
   <div class="m-line m-tl"><span class="m-tx"><span>Moms</span><small id="mi-tn">travel line has no code yet</small></span><span class="m-amt mono" id="mi-tm">700</span></div>
   <div class="m-line m-tl"><span class="m-tx">To pay, incl. moms</span><span class="m-amt mono" id="mi-ti">4.012</span></div>
-  <button class="m-sw" data-act="mnyincl" id="mi-sw">Prices shown excl. moms, switch</button></div>
- <div class="m-dates">${field('mi-due','Due',`<span class="m-ifld">${ic('calendar')}<textarea class="m-fin" id="mi-due" rows="2">25 Oct 2026, on the gig date</textarea></span>`,'House default, Net 7 for other invoices')}
+  <button class="m-inclsw" data-act="mnyincl" id="mi-sw">Prices shown excl. moms, switch</button></div>
+ <div class="m-dates">${field('mi-due','Due',`<span class="m-ifld">${ic('calendar')}<textarea class="m-fin" id="mi-due" rows="1">25 Oct 2026, on the gig date</textarea></span>`,'House default, Net 7 for other invoices')}
  ${field('mi-send','Send on',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="mi-send" value="18 Oct 2026"></span>`,'7 days before due')}</div>
  ${toggle('remind','Reminders, 7 days before, on the day, 3 days after, then by hand')}${toggle('interest','Late interest, reference rate + 8 %')}
  <p class="m-foot m-nopad">Approve books the invoice and locks number 2026-032. Send is a separate step, so you can approve now and send on 18 Oct.</p>`,

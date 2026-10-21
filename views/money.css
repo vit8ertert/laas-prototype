@@ -205,8 +205,8 @@ button.m-line:hover{background:var(--raised)}
 .m-add .btn:last-child{padding-right:0}
 .m-tot{background:var(--sunken);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .m-tot .m-line{padding:12px}
-.m-sw{align-self:flex-start;font-size:13px;line-height:18px;color:var(--accent-ink)}
-.m-sw:hover{text-decoration:underline}
+.m-inclsw{align-self:flex-start;padding:4px 12px;font-size:13px;line-height:18px;color:var(--accent-ink);text-align:left}
+.m-inclsw:hover{text-decoration:underline}
 .m-dates{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}.m-dates .field{width:210px}
 /* Figma Input "Field" frame as its own box (row, gap 8, pad 8 12, radius 8, surface, inside stroke rule-strong; focus 2 ink),
    holding the leading icon 18 and a bare control, so a 2-line value or a leading icon sits in the flow like Figma */
@@ -585,3 +585,13 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back){padding-left:0;padding-right:4px;margin-left:0}
 .btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back):hover{background:none!important;text-decoration:underline}
 @media (max-width:700px){.iv-steps{padding:12px}}
+
+/* wide drawer for invoices: lines fit on one row (Vit 21 Oct: "use more width, lots of overlaps") */
+.drawer.m-wide{width:min(640px,100%)}
+.m-wide .m-iline{display:grid;grid-template-columns:minmax(0,1fr) 140px 150px;gap:12px}
+.m-wide .m-iline .m-w110{width:auto}
+.m-wide .m-dates{display:grid;grid-template-columns:1fr 1fr;gap:16px}.m-wide .m-dates .field{width:auto}
+.m-wide textarea.m-fin{resize:none;field-sizing:content;min-height:22px}
+@media (max-width:640px){.m-wide .m-iline{grid-template-columns:1fr 1fr}.m-wide .m-iline .m-fd{grid-column:1/-1}.m-wide .m-dates{grid-template-columns:1fr}}
+.m-wide .m-iline+.m-iline .field>label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.m-wide #mi-lines{gap:8px}
+.m-wide .m-tot{gap:0;padding:8px 4px}.m-wide .m-tot .m-line{padding:8px 12px}
