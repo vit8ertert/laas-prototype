@@ -180,7 +180,7 @@ L.VIEWS.integrations=()=>{const c=A.conn;
   avail('dinero','Dinero','Pushes approved invoices and payments to your books',1),
   avail('spotify','Spotify for Artists','Pulls release dates and listener numbers, read-only'),
   avail('bandcamp','Bandcamp','Pulls releases and sales, read-only'))
-  +foot('Streaming and social posting are not planned for v1. Everything here is import; LAAS writes back only to the calendar and your books.'))
+  +foot('Streaming figures are read-only. Posts and uploads go out only from Social posts and Deliveries, and only when you press Publish or Deliver.'))
  +sec('Calendar feed',rows(
   row('Public feed','Anyone with the link sees gig dates and venues, fees are never in it',tg('ipub','Public feed')),
   row('Fees in the band feed','Members’ own calendars, off hides fee and deposit',tag('draft','Fees hidden')),
