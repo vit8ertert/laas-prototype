@@ -56,7 +56,7 @@ svg.i.s{width:16px;height:16px}
 .app{display:grid;grid-template-rows:58px 1fr;grid-template-columns:minmax(0,1fr);height:100%}
 .topbar{background:var(--sunken);display:flex;align-items:center;gap:16px;padding-block:12px;padding-inline:max(24px,env(safe-area-inset-left,0px)) max(40px,env(safe-area-inset-right,0px))}
 .logo{display:flex;align-items:center;gap:10px}.logo svg{width:90px;height:24px;fill:var(--ink)}
-.search-pill{margin-left:auto;display:flex;align-items:center;gap:8px;width:280px;max-width:40vw;height:34px;padding:8px 12px;border-radius:8px;background:var(--canvas);color:var(--faint);font:400 15px/18px var(--sans)}
+.search-pill{margin-left:auto;display:flex;align-items:center;gap:8px;width:280px;max-width:40vw;height:34px;padding:8px 12px;border-radius:8px;background:var(--surface);color:var(--faint);font:400 15px/18px var(--sans)}
 .search-pill kbd{margin-left:auto;font:400 12px var(--mono);color:var(--faint)}
 .bell{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:8px;color:var(--ink)}
 .bell .n{position:absolute;top:2px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
@@ -343,7 +343,7 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 /* ---------- icons (Lucide paths) ---------- */
 const P={
  dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
- ai:'<path d="M9.94 14.06 7 22l-2.94-7.94L-3.88 11 4.06 8.06 7 0l2.94 8.06L17.88 11z" transform="translate(4 1) scale(.82)"/><path d="M20 3v4M22 5h-4"/>',
+ ai:'<g transform="scale(1.2)" fill="currentColor" stroke="none"><path d="M8.85547 5.51431C8.84547 5.46561 8.80253 5.43065 8.75277 5.43065H8.2423C8.19255 5.43065 8.1496 5.46561 8.1396 5.51431L7.4408 8.91085C7.28466 9.66979 6.722 10.2807 5.97795 10.499L3.06886 11.3528C3.02422 11.3659 2.99356 11.4069 2.99356 11.4533L2.99356 11.9773C2.99356 12.0238 3.02422 12.0648 3.06886 12.0778L5.97795 12.9316C6.72201 13.15 7.28466 13.7609 7.4408 14.5198L8.1396 17.9164C8.1496 17.9651 8.19255 18 8.2423 18H8.75277C8.80253 18 8.84547 17.9651 8.85547 17.9164L9.55428 14.5198C9.7104 13.7609 10.2731 13.15 11.0171 12.9316L13.9262 12.0778C13.9708 12.0648 14.0015 12.0238 14.0015 11.9773V11.4533C14.0015 11.4069 13.9708 11.3659 13.9262 11.3528L11.0171 10.499C10.2731 10.2807 9.7104 9.66979 9.55428 8.91085L8.85547 5.51431Z"/><path d="M14.1971 2.04567C14.1916 2.01908 14.1682 2 14.141 2H13.8624C13.8352 2 13.8117 2.01908 13.8063 2.04567L13.4248 3.8999C13.3396 4.31422 13.0324 4.6477 12.6262 4.76691L11.0381 5.233C11.0137 5.24015 10.997 5.26251 10.997 5.28787V5.57395C10.997 5.59931 11.0137 5.62167 11.0381 5.62882L12.6262 6.0949C13.0324 6.21413 13.3396 6.54761 13.4248 6.96192L13.8063 8.81616C13.8117 8.84275 13.8352 8.86182 13.8624 8.86182H14.141C14.1682 8.86182 14.1916 8.84275 14.1971 8.81616L14.5786 6.96192C14.6638 6.54761 14.971 6.21413 15.3772 6.0949L16.9653 5.62882C16.9897 5.62167 17.0064 5.59931 17.0064 5.57395V5.28787C17.0064 5.26251 16.9897 5.24015 16.9653 5.233L15.3772 4.76691C14.971 4.6477 14.6638 4.31422 14.5786 3.8999L14.1971 2.04567Z"/></g>',
  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/>',
  money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
  disc:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/>',
@@ -964,7 +964,9 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
  ACTIONS:{},OVERLAYS:{},INPUT:[],CHANGE:[],ONBOARDING:null,
  AREAS:{gigs:['bookings','booking','gigday','calendar','calsync','contacts','contact','venues','venue','mail','thread','mailaccounts','compose','rate','paypage'],money:['money','settle','invoice','ledger','journal','accounts','ledgerreport'],catalogue:['catalogue','release','pastrelease','gear'],audience:['audience','social','post','comments','keywords','deliveries']},
  areaOf(v){for(const [a,list] of Object.entries(this.AREAS))if(list.includes(v))return a;return ''},
- boot(){const h=decodeURIComponent(location.hash.slice(1));if(h&&(VIEWS[h]||h==='onboarding'))S.view=h;render();}};
+ boot(){const q=new URLSearchParams(location.search);const qv=q.get('view'),qt=q.get('theme');const h=decodeURIComponent(location.hash.slice(1));if(qv&&(VIEWS[qv]||qv==='onboarding'))S.view=qv;else if(h&&(VIEWS[h]||h==='onboarding'))S.view=h;if(['dark','light','system'].includes(qt))S.appearance=qt;render();
+  /* Figma capture: only on the local dev server, only for #figmacapture links; loads Figma's fixed capture script */
+  if(location.hostname==='localhost'&&location.hash.includes('figmacapture=')){setTimeout(()=>{const h=document.querySelector('.main h1');document.title=(h?h.textContent.trim():S.view)+' (prototype)';},800);const sc=document.createElement('script');sc.src='https://mcp.figma.com/mcp/html-to-design/capture.js';sc.async=true;document.head.appendChild(sc);}}};
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
