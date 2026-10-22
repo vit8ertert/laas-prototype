@@ -269,13 +269,26 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-form .field{max-width:640px!important}
 /* venues map view */
 .cv-map{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:16px;align-items:start}
-.cv-mapc{position:relative;border-radius:var(--r-lg);background:color-mix(in srgb,var(--stream,#0a7fbf) 10%,var(--surface));box-shadow:inset 0 0 0 1px var(--rule);padding:16px}
-.cv-mapc svg{display:block;width:100%;height:auto}
-.cv-mapc .land{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1.5}
-.cv-pin{cursor:pointer}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3;transition:r .15s}
-.cv-pin text{fill:var(--canvas);font:600 12px/1 var(--sans)}.cv-pin .lb{fill:var(--ink);font:500 12px/1 var(--sans)}
+.cv-mapc{position:relative;border-radius:var(--r-lg);background:color-mix(in srgb,var(--stream,#0a7fbf) 12%,var(--surface));box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
+.cv-mapc svg{display:block;width:100%;height:auto;aspect-ratio:1000/780}
+/* real coastline (views/denmark.js): Denmark on the surface, the neighbours a step back; hairlines keep 1 px at any zoom */
+.cv-mapc .land{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.cv-mapc .near{fill:color-mix(in srgb,var(--surface) 55%,transparent);stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.cv-town circle{fill:var(--faint)}.cv-town text{fill:var(--muted);font:400 12px/1 var(--sans)}
+.cv-pin{cursor:pointer;transition:opacity .2s}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3}
+.cv-pin text{fill:var(--canvas);font:500 13px/1 var(--sans)}.cv-pin .lb{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .cv-pin.on circle{fill:var(--accent)}.cv-pin.on text:not(.lb){fill:var(--on-accent)}
 .cv-pin:hover circle{fill:var(--accent)}.cv-pin:focus-visible{outline:none}.cv-pin:focus-visible circle{stroke:var(--ink)}
+/* venue pins only in a city view; their names sit on a halo so streets of coastline never cut them */
+.cv-vpin{cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s}
+.cv-vpin circle{fill:var(--muted);stroke:var(--surface);stroke-width:3}.cv-vpin.on circle{fill:var(--accent)}
+.cv-vpin text{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.cv-vpin:hover circle,.cv-vpin:focus-visible circle{fill:var(--accent-strong)}.cv-vpin:focus-visible{outline:none}.cv-vpin:hover text{text-decoration:underline}
+.zoomed .cv-vpin{opacity:1;pointer-events:auto}.zoomed .cv-pin,.zoomed .cv-town{opacity:0;pointer-events:none}
+@media (max-width:599.98px){.cv-town.minor{display:none}}
+.cv-mapall{position:absolute;top:12px;left:12px}
+.cv-scale{position:absolute;right:16px;bottom:12px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;width:var(--w);font:400 12px/16px var(--sans);color:var(--muted)}
+.cv-scale i{display:block;width:100%;height:6px;border:2px solid var(--muted);border-top:0}
 .cv-mapn{position:absolute;left:16px;bottom:12px;font:400 12px/16px var(--sans);color:var(--muted)}
 .cv-mapl{border:1px solid var(--rule);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
 .cv-maph{display:flex;align-items:baseline;justify-content:space-between;padding:12px 16px;background:var(--th-bg,var(--canvas));font:500 15px/var(--lh-body) var(--sans)}.cv-maph .muted{font:400 13px/var(--lh-label) var(--sans)}

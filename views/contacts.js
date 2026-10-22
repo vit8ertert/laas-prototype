@@ -136,19 +136,45 @@ function venueBody(q){
   :`<div class="cv-foot cv-vfoot"><span>Showing ${rows.length} of ${VENUES.length}, a venue is created from a booking or an email; duplicates are caught by name and street</span><button class="btn ghost s cv-link" data-act="cvmap">${ic(S.cv.vmap?'menu':'pin','s')}${S.cv.vmap?'List view':'Map view'}</button></div>`;
  return (S.cv.vmap?venueMap(rows):list)+foot;
 }
-/* map view (Vit 21 Oct: "map view doesn't do anything"): a schematic Denmark with one pin per city and its count;
-   a pin picks the city, the list beside the map shows its venues, each opens the venue */
-const CITY_XY={Aarhus:[196,118],Odense:[196,196],Copenhagen:[322,168]};
-function venueMap(rows){const by={};rows.forEach(v=>(by[v.city]??=[]).push(v));const cities=Object.keys(by);const cur=by[S.cv.mapCity]?S.cv.mapCity:cities[0];
- const pins=cities.map(c=>{const [x,y]=CITY_XY[c]||[200,150];const on=c===cur;return `<g class="cv-pin ${on?'on':''}" data-act="cvmapcity" data-c="${c}" role="button" tabindex="0" aria-label="${c}, ${by[c].length} venues"><circle cx="${x}" cy="${y}" r="${on?16:13}"/><text x="${x}" y="${y+4}" text-anchor="middle">${by[c].length}</text><text class="lb" x="${x}" y="${y+(c==='Odense'?36:-22)}" text-anchor="middle">${c}</text></g>`;}).join('');
- return `<div class="cv-map"><div class="cv-mapc"><svg viewBox="40 0 340 250" role="img" aria-label="Venues on a map of Denmark">
-  <path class="land" d="M118,18 L168,8 L184,38 L200,86 L216,118 L206,150 L172,174 L150,198 L118,214 L94,198 L100,150 L90,100 L100,58 Z"/>
-  <ellipse class="land" cx="196" cy="196" rx="30" ry="21"/>
-  <path class="land" d="M262,128 L310,116 L346,138 L352,178 L332,214 L286,220 L262,196 L254,160 Z"/>
-  <path class="land" d="M240,232 L280,226 L300,240 L262,246 Z"/>${pins}</svg>
-  <span class="cv-mapn">Schematic, by city. Distances are not to scale.</span></div>
+/* map view (Vit 22 Oct: "we need much better map"): the real coastline (Natural Earth 1:10m, views/denmark.js), a count
+   badge per city in the overview; picking a city zooms in and shows each venue at its street address. Pins and labels
+   are counter-scaled so they keep their size while the map zooms. */
+/* towns that sit next to a venue city; phones drop them so labels never collide */
+const MINOR=['Herning','Vejle','Helsingør'];
+const MAPZ={Copenhagen:14,Aarhus:14,Odense:14};
+/* 1 map unit = 0.486 km (1000 units over 7.8 degrees of longitude at 56 N); the scale bar shows 1 km in a city view */
+const KM_PER_UNIT=0.486;
+function mapT(){const D=window.LAAS_DK,c=S.cv.mapZoom&&D.cities[S.cv.mapZoom];if(!c)return {k:1,x:0,y:0};const k=MAPZ[S.cv.mapZoom]||16;return {k,x:D.w/2-c[0]*k,y:D.h/2-c[1]*k};}
+/* pins and labels are drawn in CSS pixels: counter-scaled against the zoom and against the map's rendered width
+   (F = map units per screen pixel), so 13 px stays 13 px on desktop and phone (LAAS/Label strong, LAAS/Meta) */
+const mapF=()=>{const v=document.querySelector('.cv-mapc svg');return v&&v.clientWidth?window.LAAS_DK.w/v.clientWidth:1000/680;};
+const pinT=(p,k)=>`translate(${p[0]},${p[1]}) scale(${(mapF()/k).toFixed(4)})`;
+function mapRefit(){const v=document.querySelector('.cv-mapc svg');if(!v)return;const k=mapT().k;v.querySelectorAll('[data-p]').forEach(g=>g.setAttribute('transform',pinT(g.dataset.p.split(',').map(Number),k)));}
+addEventListener('resize',()=>mapRefit());
+function venueMap(rows){const D=window.LAAS_DK;const by={};rows.forEach(v=>(by[v.city]??=[]).push(v));const cities=Object.keys(by);const cur=by[S.cv.mapCity]?S.cv.mapCity:cities[0];
+ const t=mapT(),zoomed=t.k>1;setTimeout(mapRefit);
+ const towns=Object.keys(D.cities).filter(c=>!by[c]).map(c=>`<g class="cv-town ${MINOR.includes(c)?'minor':''}" transform="${pinT(D.cities[c],t.k)}" data-p="${D.cities[c]}"><circle r="3"/><text x="7" y="4">${c}</text></g>`).join('');
+ const badges=cities.map(c=>{const p=D.cities[c];if(!p)return '';const on=c===cur;return `<g class="cv-pin ${on?'on':''}" transform="${pinT(p,t.k)}" data-p="${p}" data-act="cvmapcity" data-c="${c}" role="button" tabindex="0" aria-label="${c}, ${by[c].length} venues, zoom in"><circle r="${on?16:14}"/><text y="4.5" text-anchor="middle">${by[c].length}</text><text class="lb" y="${c==='Odense'?32:-22}" text-anchor="middle">${c}</text></g>`;}).join('');
+ /* labels never collide: in each city the westernmost name sits left of its pin, the easternmost right, the rest above */
+ const side={};cities.forEach(c=>{const vs=by[c].filter(v=>D.venues[v.id]).sort((a,b)=>D.venues[a.id][0]-D.venues[b.id][0]);vs.forEach((v,i)=>side[v.id]=vs.length===1||i===vs.length-1?'r':i===0?'l':'t');});
+ const lab=(v)=>({r:'x="12" y="4.5"',l:'x="-12" y="4.5" text-anchor="end"',t:'x="0" y="-13" text-anchor="middle"'})[side[v.id]];
+ const vpins=rows.map(v=>{const p=D.venues[v.id];if(!p)return '';return `<g class="cv-vpin ${v.city===cur?'on':''}" transform="${pinT(p,t.k)}" data-p="${p}" data-act="cvgo" data-v="venue" data-id="${v.id}" role="button" tabindex="${zoomed?0:-1}" aria-label="${esc(v.name)}, open the venue"><circle r="7"/><text ${lab(v)}>${esc(v.name)}</text></g>`;}).join('');
+ return `<div class="cv-map"><div class="cv-mapc ${zoomed?'zoomed':''}"><svg viewBox="0 0 ${D.w} ${D.h}" role="img" aria-label="Venues on a map of Denmark">
+  <g class="cv-mv" transform="translate(${t.x},${t.y}) scale(${t.k})"><path class="near" d="${D.near}"/><path class="land" d="${D.dk}"/>${towns}<g class="cv-badges">${badges}</g><g class="cv-vpins">${vpins}</g></g></svg>
+  ${zoomed?`<button class="btn secondary s cv-mapall" data-act="cvmapall">${ic('left','s')}All of Denmark</button>`:''}
+  ${zoomed?(()=>{const pc=km=>km/KM_PER_UNIT*t.k/10,km=[10,5,2,1].find(k=>pc(k)<=16)||1;return `<span class="cv-scale" style="--w:${pc(km).toFixed(2)}%"><i></i>${km} km</span>`;})():''}
+  <span class="cv-mapn">${zoomed?`${by[cur].length} ${by[cur].length===1?'venue':'venues'} in ${cur}, at their street address`:'Pick a city to zoom in'}</span></div>
  <div class="cv-mapl"><div class="cv-maph"><b>${cur}</b><span class="muted">${by[cur].length} ${by[cur].length===1?'venue':'venues'}</span></div>
   ${by[cur].map(v=>`<button class="cv-vrow" data-act="cvgo" data-v="venue" data-id="${v.id}"><img class="thumb s" src="${IMG(v.img)}" alt=""><span class="tx"><b>${esc(v.name)}</b><small>${esc(v.kind)}, ${esc(v.cap)}</small></span><span class="tag ${VROWS[v.id].tag[0]}">${VROWS[v.id].tag[1]}</span>${chev}</button>`).join('')}</div></div>`;}
+/* glide from one map transform to the next; the pins counter-scale on every frame */
+function mapGlide(from){const svg=document.querySelector('.cv-mapc svg');if(!svg||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const to=mapT(),mv=svg.querySelector('.cv-mv'),pins=[...svg.querySelectorAll('[data-p]')],t0=performance.now(),dur=520,ease=u=>1-Math.pow(1-u,3);
+ const step=now=>{const u=Math.min(1,(now-t0)/dur),e=ease(u),k=Math.exp(Math.log(from.k)+(Math.log(to.k)-Math.log(from.k))*e);
+  /* keep the zoom centre on a straight path in map space */
+  const cf=[(500-from.x)/from.k,(390-from.y)/from.k],ct=[(500-to.x)/to.k,(390-to.y)/to.k],c=[cf[0]+(ct[0]-cf[0])*e,cf[1]+(ct[1]-cf[1])*e];
+  const W=window.LAAS_DK.w/2,H=window.LAAS_DK.h/2;mv.setAttribute('transform',`translate(${W-c[0]*k},${H-c[1]*k}) scale(${k})`);
+  pins.forEach(g=>g.setAttribute('transform',pinT(g.dataset.p.split(',').map(Number),k)));if(u<1)requestAnimationFrame(step);};
+ const k0=from.k;mv.setAttribute('transform',`translate(${from.x},${from.y}) scale(${k0})`);pins.forEach(g=>g.setAttribute('transform',pinT(g.dataset.p.split(',').map(Number),k0)));requestAnimationFrame(step);}
 const vChips=()=>`${fchip('vplayed')}${fchip('vcity')}${fchip('vpa','any')}<button class="chip cv-chip ${S.overlay&&S.overlay.type==='cvsort'?'open':''}" data-act="cvsort" data-k="vsort">Sort: ${VSORTS[S.cv.vsort]}</button>`;
 
 /* ---------- Contacts ---------- */
@@ -284,7 +310,7 @@ Object.assign(L.ACTIONS,{
  cvclear:()=>{if(S.view==='venues'||(S.view==='contacts'&&S.cv.tab==='venues')){S.cv.vq='';S.filters.vplayed=[];S.filters.vcity=[];S.filters.vpa=[];}else{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];}L.render();},
  clearcsearch:()=>{S.contactSearch='';S.filters.ckind=[];S.filters.ccity=[];L.render();},
  cvact:()=>{S.cv.actOpen=!S.cv.actOpen;L.render();},
- cvmap:()=>{S.cv.vmap=!S.cv.vmap;L.render();},cvmapcity:el=>{S.cv.mapCity=el.dataset.c;L.render();},
+ cvmap:()=>{S.cv.vmap=!S.cv.vmap;L.render();},cvmapcity:el=>{const f=mapT();S.cv.mapCity=el.dataset.c;S.cv.mapZoom=el.dataset.c;L.render();mapGlide(f);},cvmapall:()=>{const f=mapT();S.cv.mapZoom=null;L.render();mapGlide(f);},
  cvfrommail:()=>{L.go('mail');L.toast('Pick the threads, the assistant finds the bookers');},
  cvsamples:()=>{S.cv.empty=false;L.render();L.toast('3 sample contacts added',()=>{S.cv.empty=true;});},
  cvedit:t=>{const k=t.dataset.k;S.cv.edit=S.cv.edit===k?null:k;S.cv.editFor=S.view+':'+(S.params.id||'');if(!S.cv.edit&&S.cv.save){S.cv.save='';}L.render();if(S.cv.edit){const f=document.querySelector('.cv-form input,.cv-notes-in');if(f)f.focus();}},
