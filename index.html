@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=0812c6b">
+<link rel="stylesheet" href="tokens.css?v=b0fd7c5">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=0812c6b">
-<link rel="stylesheet" href="components.css?v=0812c6b">
-<link rel="stylesheet" href="views/tour.css?v=0812c6b">
-<link rel="stylesheet" href="views/dashboard.css?v=0812c6b">
-<link rel="stylesheet" href="views/bookings.css?v=0812c6b">
-<link rel="stylesheet" href="views/booking.css?v=0812c6b">
-<link rel="stylesheet" href="views/contacts.css?v=0812c6b">
-<link rel="stylesheet" href="views/money.css?v=0812c6b">
-<link rel="stylesheet" href="views/catalogue.css?v=0812c6b">
-<link rel="stylesheet" href="views/account.css?v=0812c6b">
-<link rel="stylesheet" href="views/mail.css?v=0812c6b">
-<link rel="stylesheet" href="views/social.css?v=0812c6b">
-<link rel="stylesheet" href="views/logomotion.css?v=0812c6b">
-<link rel="stylesheet" href="tags.css?v=0812c6b">
-<link rel="stylesheet" href="views/compact.css?v=0812c6b">
+<link rel="stylesheet" href="shell.css?v=b0fd7c5">
+<link rel="stylesheet" href="components.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/tour.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/dashboard.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/bookings.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/booking.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/contacts.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/money.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/catalogue.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/account.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/mail.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/social.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/logomotion.css?v=b0fd7c5">
+<link rel="stylesheet" href="tags.css?v=b0fd7c5">
+<link rel="stylesheet" href="views/compact.css?v=b0fd7c5">
 
 <div id="app"></div>
 
@@ -67,7 +67,7 @@ const P={
  wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
  undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
 };
-const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
+const ic=(n,c='')=>`<svg class="i ${c}" data-i="${n}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
 const LOGO='<svg viewBox="0 0 90 24" aria-label="LAAS" role="img"><path d="M24.1567 24V6.75583H27.5533V3.39658H30.9125V0H34.7197V3.39658H38.0789V6.75583H41.5128V24H37.7057V17.2442H27.9265V24H24.1567ZM27.9265 13.4743H37.7057V7.12908H34.3464V3.76983H31.2858V7.12908H27.9265V13.4743Z"/><path d="M0 0H13.2156V12.3429H20.4156V24H0V0Z"/><path d="M65.5072 14.2581H72.3459C73.1416 17.3978 74.9588 18.9677 77.7976 18.9677C78.6363 18.9677 79.389 18.8172 80.0556 18.5161C80.7438 18.2151 81.2814 17.828 81.6685 17.3548C82.0771 16.8602 82.2814 16.3226 82.2814 15.7419C82.2814 15.2688 82.1631 14.8817 81.9266 14.5806C81.7115 14.2796 81.3997 14.129 80.9911 14.129C80.7115 14.129 80.4427 14.1935 80.1847 14.3226C79.9481 14.4516 79.6148 14.6989 79.1847 15.0645C78.432 15.7312 77.647 16.0645 76.8298 16.0645C76.2492 16.0645 75.733 15.8602 75.2814 15.4516C74.8513 15.043 74.5287 14.5376 74.3137 13.9355C73.9051 12.7742 73.2277 12.1935 72.2814 12.1935C72.0879 12.1935 71.8943 12.2151 71.7008 12.2581C71.5072 12.3011 71.3029 12.3548 71.0879 12.4194C70.6793 12.5484 70.2384 12.6129 69.7653 12.6129C68.9696 12.6129 68.2277 12.3871 67.5395 11.9355C66.8513 11.4624 66.2922 10.828 65.8621 10.0323C65.4535 9.23656 65.2492 8.33333 65.2492 7.32258C65.2492 5.88172 65.6578 4.6129 66.475 3.51613C67.3137 2.41936 68.4427 1.55914 69.8621 0.935485C71.3029 0.311828 72.9051 0 74.6685 0C76.1309 0 77.4535 0.225807 78.6363 0.67742C79.8406 1.10753 80.9696 1.75269 82.0234 2.6129C82.4105 2.93548 82.7438 3.09677 83.0234 3.09677C83.6255 3.09677 84.0879 2.30108 84.4105 0.709678H89.4427V8.74193H82.604C82.2169 7.49462 81.518 6.51613 80.5072 5.80645C79.4965 5.07527 78.3137 4.70968 76.9589 4.70968C75.647 4.70968 74.561 5 73.7008 5.58065C72.8621 6.16129 72.4427 6.87097 72.4427 7.70968C72.4427 8.11828 72.561 8.46237 72.7976 8.74193C73.0341 9 73.3567 9.12903 73.7653 9.12903C74.3029 9.12903 74.8083 8.89247 75.2814 8.41935C75.7761 7.92473 76.2169 7.56989 76.604 7.35484C76.9911 7.13979 77.4212 7.03226 77.8943 7.03226C78.475 7.03226 78.9588 7.2043 79.3459 7.54839C79.733 7.87097 80.0126 8.29032 80.1847 8.80645C80.6363 10.1398 81.2814 10.8065 82.1201 10.8065C82.4427 10.8065 82.7761 10.7419 83.1201 10.6129C83.4212 10.5054 83.69 10.4409 83.9266 10.4194C84.1847 10.3763 84.4427 10.3548 84.7008 10.3548C85.6255 10.3548 86.4642 10.6129 87.2169 11.129C87.9696 11.6452 88.561 12.3548 88.9911 13.2581C89.4427 14.1613 89.6685 15.2043 89.6685 16.3871C89.6685 17.957 89.2922 19.3118 88.5395 20.4516C87.7868 21.5914 86.7438 22.4731 85.4105 23.0968C84.0771 23.6989 82.5287 24 80.7653 24C79.0449 24 77.5825 23.7742 76.3782 23.3226C75.1954 22.871 74.0664 22.1613 72.9911 21.1935C72.5825 20.828 72.2384 20.6452 71.9588 20.6452C71.3352 20.6452 70.8621 21.5269 70.5395 23.2903H65.5072V14.2581Z"/><path d="M48.3314 24C45.2109 24 44.3882 23.2057 44.3882 19.6312C44.3882 15.1489 45.3811 10.5248 46.913 6.89362C48.6151 2.83688 50.9697 0 53.3811 0C55.7073 0 58.0336 2.7234 59.7357 6.6383C61.3243 10.2979 62.374 15.0071 62.374 19.5745C62.374 23.0922 61.5513 24 58.5442 24H57.4094C55.1683 24 53.9485 23.2057 53.9485 20.6525V19.4043C53.9485 18.6099 53.9485 17.7872 53.3811 17.7872C52.7853 17.7872 52.7853 18.6099 52.7853 19.4043V20.6809C52.7853 23.2057 51.5655 24 49.4662 24H48.3314ZM51.7073 6.49645C51.7073 7.48936 52.5584 7.82979 53.4094 7.82979C54.2605 7.82979 55.0832 7.48936 55.0832 6.49645C55.0832 5.84397 54.374 4.59574 53.3811 4.59574C52.3882 4.59574 51.7073 5.84397 51.7073 6.49645Z"/></svg>';
 const IMG=n=>`img/${n}.jpg`;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -688,20 +688,20 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=0812c6b"></script>
-<script src="views/bookings.js?v=0812c6b"></script>
-<script src="views/booking.js?v=0812c6b"></script>
-<script src="views/denmark.js?v=0812c6b"></script>
-<script src="views/contacts.js?v=0812c6b"></script>
-<script src="views/money.js?v=0812c6b"></script>
-<script src="views/catalogue.js?v=0812c6b"></script>
-<script src="views/brands.js?v=0812c6b"></script>
-<script src="views/account.js?v=0812c6b"></script>
-<script src="views/mail.js?v=0812c6b"></script>
-<script src="views/social.js?v=0812c6b"></script>
-<script src="views/tour.js?v=0812c6b"></script>
-<script src="views/motion.js?v=0812c6b"></script>
-<script src="views/logomotion.js?v=0812c6b"></script>
-<script src="views/compact.js?v=0812c6b"></script>
-<script src="views/overflow.js?v=0812c6b"></script>
+<script src="views/dashboard.js?v=b0fd7c5"></script>
+<script src="views/bookings.js?v=b0fd7c5"></script>
+<script src="views/booking.js?v=b0fd7c5"></script>
+<script src="views/denmark.js?v=b0fd7c5"></script>
+<script src="views/contacts.js?v=b0fd7c5"></script>
+<script src="views/money.js?v=b0fd7c5"></script>
+<script src="views/catalogue.js?v=b0fd7c5"></script>
+<script src="views/brands.js?v=b0fd7c5"></script>
+<script src="views/account.js?v=b0fd7c5"></script>
+<script src="views/mail.js?v=b0fd7c5"></script>
+<script src="views/social.js?v=b0fd7c5"></script>
+<script src="views/tour.js?v=b0fd7c5"></script>
+<script src="views/motion.js?v=b0fd7c5"></script>
+<script src="views/logomotion.js?v=b0fd7c5"></script>
+<script src="views/compact.js?v=b0fd7c5"></script>
+<script src="views/overflow.js?v=b0fd7c5"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
