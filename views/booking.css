@@ -54,9 +54,11 @@
 .bd-banner .tx span{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-banner.attention{background:var(--att-tint);color:var(--att)}
 .bd-banner.success{background:var(--ok-tint);color:var(--ok)}
-.bd-banner.attention .tx span,.bd-banner.success .tx span{color:inherit}
+.bd-banner.danger{background:var(--bad-tint);color:var(--bad)} /* Figma Banner Kind=Danger */
+.bd-banner.attention .tx span,.bd-banner.success .tx span,.bd-banner.danger .tx span{color:inherit}
 .bd-banner .btn.secondary{color:var(--ink);font:500 13px/var(--lh-label) var(--sans)}
-.bd-banner.success .btn.secondary{color:var(--ok)}
+/* Action keeps its ink on every kind; the × takes the kind colour (Figma Banner) */
+.bd-banner:is(.attention,.success,.danger) .bd-x{color:inherit}
 .bd-banner .bd-x{width:16px;height:16px;display:grid;place-items:center;color:var(--ink);flex:none}
 
 /* columns: left fluid (sections gap 40), right panel 360 */
