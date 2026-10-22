@@ -409,6 +409,8 @@
   .acc-ob .l{overflow:visible!important}
   /* fields in a row on desktop stack at their own height (flex-basis 200 px became a 200 px height in a column) */
   .acc-two>*{flex:0 0 auto!important}
+  /* one 24 px gap on every step here, so the desktop correction for the tighter step is not needed */
+  .acc-ob.snd .l>.acc-obtop+.bar4{margin-top:0}
 }
 @media (max-width:599.98px){
   /* settings and audience sections: every block on the card edge, rows without bleed */

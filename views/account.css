@@ -207,6 +207,8 @@ button.acc-si:hover{background:var(--hover)}
 .acc-ob{display:grid;grid-template-columns:600px minmax(0,1fr);height:100%;background:var(--canvas);padding:16px 16px 16px 0;box-sizing:border-box}
 .acc-ob .l{padding:48px 80px;display:flex;flex-direction:column;gap:32px;overflow:auto;min-height:0}
 .acc-ob.snd .l{padding:40px 80px 32px;gap:16px}
+/* the tighter step keeps the same logo-to-progress-bar distance as every other step (32 px; Vit 22 Oct) */
+.acc-ob.snd .l>.acc-obtop+.bar4{margin-top:16px}
 .acc-obtop{display:flex;align-items:center;gap:12px;height:24px}
 .acc-obtop .t-meta{color:var(--muted)}
 .acc-obtop .logo svg{height:24px;width:auto;fill:var(--ink);display:block}
