@@ -163,7 +163,10 @@
 @media (max-width:599.98px){
   .bd-gdgrid{display:flex!important;flex-direction:column;gap:var(--section)}
   .bd-gdgrid>.bd-rail{display:contents}
-  .bd-gdgrid .bd-openbox{order:-1}
+  /* Vit 22 Oct (comment on Figma 727:44272: "this is better than the proto, use this positioning"): on phones the
+     timeline comes first, the open items after it, as in Figma; the Now card stacks time, next step, curfew */
+  .bd-strip .bd-nowr{flex-direction:column;align-items:flex-start;gap:4px}
+  .bd-strip .bd-nowr b{flex:none}
   .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{background:var(--surface);border-radius:var(--r-lg);padding:var(--card)}
   .bd-pgroup.cx-folded>:not(.bd-sh){display:none}
   .bd-steps>.bd-step.cx-later{display:none}
