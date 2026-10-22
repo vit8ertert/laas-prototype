@@ -8,7 +8,7 @@
 (function(){
 const L=window.LAAS,{S,ic}=L;
 const TABLES='.ml-table,.table-wrap,.cat-table,.so-bars';
-const ROWS='.d-shelf,.cv-chips,.m-tabs,.m-kpis,.m-g12,.cat-tabrow,.cat-kpis,.acc-nav,.aud-tabs,.aud-kpis,.ml-tabs,.cx-chiprow,.cat-filters,.bk-tabs,.tabs';
+const ROWS='.ml-tools,.d-shelf,.cv-chips,.m-tabs,.m-kpis,.m-g12,.cat-tabrow,.cat-kpis,.acc-nav,.aud-tabs,.aud-kpis,.ml-tabs,.cx-chiprow,.cat-filters,.bk-tabs,.tabs';
 const BANNERS=':is(.banner,.bd-banner,.acc-banner,.cv-banner)';
 const compact=matchMedia('(max-width:599.98px)');
 

@@ -551,3 +551,11 @@
 @media (max-width:599.98px){
   .main .page :is(.ph,.bk-ph,.cv-ph,.acc-ph) :is(.grow>p,>p){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 }
+/* Ledger tools (report chips, period, VAT) on phones (Vit 22 Oct: "can we make them scrollable horizontally"): one line
+   that scrolls sideways, like the tab and chip rows; the edge fade comes from views/overflow.js */
+@media (max-width:599.98px){
+  .main .ml-tools{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:8px}
+  .main .ml-tools::-webkit-scrollbar{display:none}
+  .main .ml-tools>*,.main .ml-tools .m-modes>*{flex:none!important}
+  .main .ml-tools .m-modes{flex-wrap:nowrap!important;flex:none!important}
+}
