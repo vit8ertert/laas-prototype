@@ -287,7 +287,7 @@
      then when · where and status), so nothing scrolls sideways */
   .bk-filters{flex-wrap:wrap!important;row-gap:8px!important;overflow:visible!important;mask-image:none!important;margin-right:0!important;padding-right:0!important}
   .bk-filters>.bk-search{order:-1;flex:1 1 100%!important;max-width:none!important;width:100%!important}
-  .bk-filters>.bk-search input{width:100%!important}
+  .bk-filters>.bk-search input{width:100%!important;padding-left:36px}
   .bk-table{min-width:0!important;overflow:visible!important}
   .bk-table>.bk-th{display:none!important}
   .bk-table>.bk-tr:not(.ex-r){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
@@ -334,7 +334,7 @@
   .iv-grid{display:block!important}.iv-grid>.iv-side{margin-top:var(--section)}
   /* filter chips scroll on one line; search is its own full-width line, never inside the scroll */
   .ex-bar{flex-direction:column!important;align-items:stretch!important;gap:8px!important}
-  .ex-fs,.cx-chiprow{display:flex;flex-wrap:nowrap!important;gap:8px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .ex-fs,.cx-chiprow{display:flex;flex:none;flex-wrap:nowrap!important;gap:8px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
   .ex-fs>*,.cx-chiprow>*{flex:none}
   .ex-search{width:100%!important;order:-1}
   :is(.bk-filters,.ml-filters){display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:8px!important}
@@ -344,17 +344,17 @@
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>b{font-size:14px;line-height:18px}
   /* Mail list like Gmail on a phone: avatar, sender and time; subject; one line of preview. Unread is bold, no dot;
      the booking link, status and row actions live in the thread */
-  .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:10px 12px!important;align-items:start!important}
+  .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;align-items:start!important}
   .ml-row>.ml-dot,.ml-row>.ml-linkcol,.ml-row>.ml-status,.ml-row>.ml-acts{display:none!important}
-  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:14px;align-self:start;margin-top:2px}
-  .ml-row>.ml-from{grid-area:from;display:block!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;line-height:20px}
-  .ml-row>.ml-from small{display:inline!important;margin-left:6px;font-size:13px;color:var(--muted)}
-  .ml-row>.ml-time{grid-area:time;font-size:12px;line-height:20px;color:var(--muted);display:flex;gap:4px;align-items:center;white-space:nowrap}
+  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:13px;align-self:start;margin-top:2px}
+  .ml-row>.ml-from{grid-area:from;display:block!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;line-height:var(--lh-body)}
+  .ml-row>.ml-from small{display:inline!important;margin-left:4px;font-size:13px;color:var(--muted)}
+  .ml-row>.ml-time{grid-area:time;font-size:12px;line-height:var(--lh-body);color:var(--muted);display:flex;gap:4px;align-items:center;white-space:nowrap}
   .ml-row>.ml-text{grid-area:text;min-width:0;display:flex;flex-direction:column;gap:0}
-  .ml-row>.ml-text>b{font-weight:400;font-size:14px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ml-row>.ml-text>b{font-weight:400;font-size:15px;line-height:var(--lh-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ml-row>.ml-text>b::after{display:none!important}
-  .ml-row>.ml-text>span{font-size:13px;line-height:18px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important}
-  .ml-row.unread>.ml-from,.ml-row.unread>.ml-text>b,.ml-row.unread>.ml-time{font-weight:600;color:var(--ink)}
+  .ml-row>.ml-text>span{font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important}
+  .ml-row.unread>.ml-from,.ml-row.unread>.ml-text>b{font-weight:500;color:var(--ink)}.ml-row.unread>.ml-time{color:var(--ink)}
   .ml-row+.ml-row::before{left:64px!important;right:12px!important}
   /* contact and venue header: avatar and name on one line, facts wrap under the name, actions below */
   .cv-actions.cv-person{display:grid!important;grid-template-columns:56px minmax(0,1fr)!important;grid-template-areas:"av who" "acts acts";column-gap:12px!important;row-gap:12px!important;align-items:start!important}
