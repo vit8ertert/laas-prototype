@@ -27,7 +27,8 @@
 /* ---------- compact: one primary action in the header, sheets for menus and drawers ---------- */
 @media (max-width:599.98px){
   .cx-over{display:none!important}
-  .cx-group{flex-wrap:nowrap}
+  /* a folded action row stays on one line; a page header still wraps so the title keeps its own line (Figma Page header Compact) */
+  .cx-group:not(.ph):not(.bk-ph){flex-wrap:nowrap}
 
   /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
   .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up .28s cubic-bezier(.32,.72,0,1) both!important}
@@ -197,6 +198,8 @@
 @media (max-width:599.98px){
   /* Page header: title block above, the actions on their own row below */
   .ph>.grow{flex:1 1 100%;min-width:0}
+  /* Figma Page header Width=Compact: title block to actions on space/w/stack (8), buttons 8 apart (Action group) */
+  :is(.page>.ph,.bk-ph){gap:var(--stack)!important}
   /* Banner: icon, text and dismiss on the first line, the action below the text */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
