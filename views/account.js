@@ -87,7 +87,7 @@ function markSidebar(){document.querySelectorAll('.sidebar .nav[data-go="setting
 
 /* ---------- Settings · Band (315:9963) ---------- */
 L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre],b=curBand(),lt=b.id==='lt';
- return shell('Band',lt?'Low Tide, Owner: you, 3 members, created 14 Sep 2026':`${esc(b.name)}, Owner: you, just you so far, created ${b.created||'21 Oct 2026'}`,
+ return shell('Band',lt?'Low Tide, 3 members, since 14 Sep 2026':`${esc(b.name)}, Owner: you, just you so far, created ${b.created||'21 Oct 2026'}`,
  sec('Profile',rows(
   row('Band name','Shown on offers, invoices and the pay page',txt('Band name',b.name,320)),
   row('Home city','Travel is counted from here',txt('Home city',b.city||'',240)),
@@ -113,7 +113,7 @@ L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre],b=curBand(),lt=b.id==='lt';
 
 /* ---------- Settings · Members (315:10665) ---------- */
 L.VIEWS.members=()=>{const n=A.invites.length;
- return shell('Members',`${A.members.length-1} members, ${n} invite${n===1?'':'s'} pending, roles: Owner, Admin, Member, Viewer`,
+ return shell('Members',`${A.members.length-1} members, ${n} invite${n===1?'':'s'} pending`,
  banner('roles','ai','What each role sees','Owner and Admin see everything. Members see bookings, day sheets and their own payouts. Viewers can only read.')
  +sec('Members',`<div class="acc-list">${A.members.map(m=>li(av(m.ini),m.name,`${m.role}${m.role==='Owner'?':':','} ${m.meta}`,`${tag(m.role==='Member'||m.role==='Viewer'?'draft':'accent',m.role)}${ic('right','s')}`,`data-act="accmember" data-id="${m.id}"`)).join('')}</div>`,act('plus','Invite','accinvite'))
  +sec('Invites',n?`<div class="acc-list">${A.invites.map((v,i)=>`<div class="acc-inv">${li('',esc(v.email),v.meta,tag('attention','Pending'))}<div class="acc-invact">${sbtn('Resend','accresend',`data-i="${i}"`)}<button class="btn ghost s" data-act="copytext" data-text="https://laas.app/join/low-tide-7Hq2">${ic('copy','s')}Copy link</button>${gflush('Revoke','accrevoke',`data-i="${i}"`).replace('acc-gr','acc-gr acc-danger')}</div></div>`).join('')}</div>`:foot('No invites waiting. Invite someone and they show here until they join.'),'','pad')
@@ -123,7 +123,7 @@ L.VIEWS.members=()=>{const n=A.invites.length;
   row('Leaving with a balance','A member cannot leave while they are owed or hold band money. Jonas is owed 1.787 DKK.',tag('attention','1 blocked')))));};
 
 /* ---------- Settings · Money (316:10498) ---------- */
-L.VIEWS['settings-money']=()=>shell('Money','Where payments land, how invoices are numbered, how reminders behave, LAAS never holds money',
+L.VIEWS['settings-money']=()=>shell('Money','Payments, invoice numbers and reminders',
  (A.hide.bank?'':`<div class="acc-banner att">${ic('alertc','s')}<div class="tx"><b>Bank details were changed 2 hours ago by Mette Ravn</b><span>New invoices will use it. Not expected? Call Mette before anything is sent.</span></div><button class="btn secondary s" data-act="acchide" data-k="bank" data-msg="Bank details confirmed">Looks right</button></div>`.replace(ic('alertc','s'),ic('alertc')))
  +sec('Where money lands',rows(
   row('Band account','Shown on invoices and the pay page, Danske Bank',sel('Band account',['Reg 1234, 0012345678'])),
@@ -149,7 +149,7 @@ L.VIEWS['settings-money']=()=>shell('Money','Where payments land, how invoices a
 
 /* ---------- Settings · Calendar feed (320:11090), new view ---------- */
 const feedUrl=(u,reset)=>`<div class="acc-url"><code>${u}</code><button class="btn ghost s" data-act="copytext" data-text="${u}">${ic('copy','s')}Copy</button>${gflush('Reset link','acctoast',`data-msg="${reset}"`)}</div>`;
-L.VIEWS['calendar-feed']=()=>shell('Calendar feed','Two feeds: one for the band, one for anyone with the link, fees never leave',
+L.VIEWS['calendar-feed']=()=>shell('Calendar feed','A band feed and a public one, no fees',
  (A.hide.cal?'':`<div class="acc-explainer"><div class="tx"><b>Your gigs in any calendar</b><span>Subscribe once in Google, Apple or Outlook; new and moved gigs appear by themselves. Fees never leave LAAS.</span></div><img src="${IMG('notebook')}" alt="">${xbtn('acchide','data-k="cal"')}</div>`)
  +sec('Band feed',rows(feedUrl('webcal://laas.dk/feed/lowtide/band/7f3a…','New band feed link made. Members re-subscribe once'),
   row('Who has it','Members only, 3 subscribed, Jonas last synced 2 min ago',tag('confirmed','3 of 3')),
@@ -173,7 +173,7 @@ L.VIEWS['calendar-feed']=()=>shell('Calendar feed','Two feeds: one for the band,
 /* ---------- Settings · Integrations (316:11090) ---------- */
 L.VIEWS.integrations=()=>{const c=A.conn;
  const avail=(k,name,desc,missing)=>row(name,desc,c[k]?tag('confirmed','Connected'):missing?`<button class="acc-tagbtn" data-act="accconnect" data-k="${k}" data-n="${name}" aria-label="Add credentials for ${name}">${tag('attention','Credentials missing')}</button>`:sbtn('Connect','accconnect',`data-k="${k}" data-n="${name}"`));
- return shell('Integrations','Every row shows its state, nothing leaves the band without saying so',
+ return shell('Integrations','What is connected and what it shares',
  sec('Connected',rows(
   row('Google Calendar','Two-way, Low Tide gigs, last sync 2 min ago',tag('confirmed','Connected')),
   row('Gmail','Reads threads you pick, never sends without Confirm',tag('confirmed','Connected')),
@@ -205,7 +205,7 @@ const THEMES8=[
 const PALETTE={label:'Lilac, #CDBDFF',metal:'Bone, #E8E2D6',electronic:'Acid lime, #D9F25A',classical:'Burgundy, #6E1F2B'};
 const appearSeg=()=>`<div class="seg acc-seg3">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'acc-i14')}${l}</button>`).join('')}</div>`;
 L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
- return shell('Theme','A theme is four slots: palette, backdrop, one signature motion, tone of voice, money and status colours never change',
+ return shell('Theme','Palette, backdrop, motion and tone of voice',
  sec('Pick a theme',`<div class="acc-fl"><span class="acc-lbl">Appearance</span>${appearSeg()}<span class="acc-help">Every theme has a light and a dark version. Match system follows your phone or computer.</span></div>
   <div class="acc-in12 acc-stack"><div class="acc-themes">${THEMES8.map(([id,n,d,c])=>{const on=cur===id,live=!!TNAME[id];return `<button class="acc-th ${on?'on':''}" ${live?`data-genre="${id}"`:`data-act="accproposal" data-n="${n}"`} aria-pressed="${on}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="nm"><span>${n}</span>${on?tag('accent','Current'):id==='metal'?tag('confirmed','Suggested for you'):''}</span><span class="d">${d}</span></button>`}).join('')}</div>
   <p class="acc-note">Suggested from your genres and cover art. Switching changes the room, not the facts: money tiles, tables, confirm cards and the assistant bar keep the Label look in every theme. Switch back any time.</p></div>`,
@@ -223,7 +223,7 @@ L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
 const badge=`<button class="acc-store" data-act="acctoast" data-msg="Opens LAAS in the App Store" aria-label="Download on the App Store"><svg viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></button>`;
 const NOTIF=[['n1','Email me when a venue opens or signs an offer'],['n2','A short summary every morning at 08:00'],['n3','Push on gig day: leave times and changes'],['n4','Product news, a few times a year']];
 const card=(title,inner,action='')=>`<section class="acc-card"><div class="acc-ch"><h2 class="t-heading">${title}</h2>${action}</div>${inner}</section>`;
-L.VIEWS.account=()=>shell('Account',`vital@lowtide.dk, signed in with Google, member of ${S.bands.length} band${S.bands.length===1?'':'s'}`,
+L.VIEWS.account=()=>shell('Account','vital@lowtide.dk, signed in with Google',
  card('Profile',`<div class="acc-prof"><img src="${S.photos.you||IMG('booker')}" alt=""><div><b class="t-heading">Vital Sinkevich</b><span>Vocals, guitar. Shown to bandmates and on day sheets.</span><label class="btn secondary s" style="cursor:pointer;align-self:flex-start">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label></div></div>
   <div class="acc-fields"><div class="field"><label for="acc-an">Name</label><input class="input" id="acc-an" style="width:360px" value="Vital Sinkevich" data-accsave></div><div class="field"><label for="acc-ap">Phone</label><input class="input" id="acc-ap" style="width:240px" value="+45 20 11 22 33" data-accsave><span class="help">Only bandmates see it</span></div></div>`)
  +card('Sign-in',`<div class="acc-signin">${[['mail','vital@lowtide.dk','Email, where sign-in links go',''],['check','Google','Connected 14 Sep 2026',''],['plus','Add a passkey','Sign in with Face ID or a fingerprint, no codes','data-act="accpasskey"']].map(([i,t,m,a])=>`<${a?'button':'div'} class="acc-si" ${a}>${ic(i,'acc-i32')}<span class="tx"><span>${t}</span><small>${m}</small></span></${a?'button':'div'}>`).join('')}</div>`)
@@ -249,7 +249,7 @@ L.VIEWS.plan=()=>{const cur=S.plan,name={free:'Free',band:'Band',pro:'Pro'}[cur]
   band:['39 DKK a month, billed monthly. Next payment 14 Nov.','Unlimited bookings, contacts and day sheets for the whole band. Invoices, reminders and settling are on Pro.'],
   pro:['Pro trial, 14 days left. Then 199 DKK a month; cancel any time and you go back to Band.','Invoices with a pay link, reminders, settling and the bookkeeping export are on.']}[cur];
  const plans=[['free','Free','0 DKK','Trying it out',['10 active bookings','Contacts and venues','Day sheets','1 member']],['band','Band','39 DKK / month','Gigging bands',['Unlimited bookings','Whole band, any size','Calendar feed and import','Assistant']],['pro','Pro','199 DKK / month','Bands that invoice',['Everything in Band','Invoices with a pay link','Reminders and settling','Bookkeeping export']]];
- return shell('Plan and billing',`Low Tide is on ${name}. Billing goes to the owner, Vital`,
+ return shell('Plan and billing',`${name} plan, billed to Vital`,
  `<section class="acc-cur"><h2 class="t-title">${name}</h2><p>${head[0]}</p><p class="acc-small">${head[1]}</p><div class="row acc-act">${cur!=='pro'?`<button class="btn accent" data-act="trypro">Try Pro free for 14 days</button>`:`<button class="btn secondary" data-act="endtrial">End trial</button>`}<button class="btn ghost" data-act="compare">Compare plans</button></div></section>`
  +`<div class="acc-plans" id="plancards">${plans.map(([id,n,p,w,f])=>{const on=id===cur;const a=on?null:id==='free'?gflush('Move to Free','movefree').replace('acc-gr','acc-gfl'):id==='band'?gflush('Move to Band','moveband').replace('acc-gr','acc-gfl'):`<button class="btn secondary s" data-act="trypro">Try Pro free</button>`;
   return `<div class="acc-plan ${on?'on':''}"><div class="nm"><span class="t-heading">${n}</span>${on?tag('accent','Current'):''}</div><span class="pr">${p}</span><span class="acc-small">${w}</span>${f.map(x=>`<span class="f">${ic('check','s')}${x}</span>`).join('')}<span class="sp"></span>${a||`<span class="acc-since">Your plan since 14 Sep</span>`}</div>`}).join('')}</div>`
@@ -391,7 +391,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-accseg]');
 
 /* ---------- Audience (330:12770 overview, 330:13413 empty): replaces the core view, same data and actions ---------- */
 L.VIEWS.audience=()=>{const t=S.atab,AUD=L.AUD,kr=L.kr;
- const head=`<div class="aud-ph"><div class="grow"><h1 class="t-display">Audience</h1><p>${S.audConnected?'Read-only in v1, Spotify for Artists and figures you type in, nothing is posted from here':'Nothing connected yet, read-only in v1'}</p></div><div class="aud-acts"><button class="btn secondary" data-act="addfigures">${ic('plus')}Add figures</button><button class="btn accent" data-act="connectsvc">${ic('plug')}Connect a service</button><button class="btn secondary aud-more" aria-label="More" data-act="audmore">${ic('more')}</button></div></div>`;
+ const head=`<div class="aud-ph"><div class="grow"><h1 class="t-display">Audience</h1><p>${S.audConnected?'Spotify for Artists and your own figures':'Nothing connected yet, read-only in v1'}</p></div><div class="aud-acts"><button class="btn secondary" data-act="addfigures">${ic('plus')}Add figures</button><button class="btn accent" data-act="connectsvc">${ic('plug')}Connect a service</button><button class="btn secondary aud-more" aria-label="More" data-act="audmore">${ic('more')}</button></div></div>`;
  const kpi=(l,v,sub,ok)=>`<div class="aud-kpi"><span class="l">${l}</span><span class="v">${v}</span><span class="d ${ok?'ok':''}">${sub}</span></div>`;
  if(!S.audConnected)return `<div class="page aud">${head}<section class="aud-empty"><div class="hd"><h2 class="t-title">No audience numbers yet</h2><p>Connect Spotify for Artists or YouTube (read-only), or type in the figures you have. LAAS never posts for you and never shows these numbers to venues.</p></div>
   <div class="ch">${[['Connect Spotify for Artists','Read-only, listeners, followers, streams, cities','connectspotify','stagedive'],['Connect YouTube','Read-only, subscribers and views','connectyoutube','studio-b'],['Type a figure in','Apple Music, Tidal, Deezer, Bandcamp: one number a month is enough','addfigures','notebook']].map(([a,b,act,im])=>`<button class="aud-choice" data-act="${act}"><img src="${IMG(im)}" alt=""><b>${a}</b><span>${b}</span></button>`).join('')}</div></section>

@@ -190,7 +190,7 @@ L.VIEWS.paypage=()=>{const paid=S.bdd.venuePaid;
  <div class="bd-prev"><button class="btn ghost s flush" data-go="booking">${ic('left','s')}Saturday hotel gig</button><span class="t-label muted">Preview of what Mette Kjær sees from the pay link</span></div>
  <article class="bd-pay">
   <div class="bd-payhead"><span class="bd-logo">${L.LOGO}</span><span class="t-label muted">Low Tide, band</span></div>
-  <div class="bd-payhero"><h1 class="t-display">Deposit for the Saturday hotel gig, 25 Oct</h1><p class="muted">Invoice 2026-031 from Low Tide, due 12 Oct 2026, you are 4 days late, no fee has been added</p></div>
+  <div class="bd-payhero"><h1 class="t-display">Deposit for the Saturday hotel gig, 25 Oct</h1><p class="muted">Invoice 2026-031, due 12 Oct, 4 days late</p></div>
   <section class="bd-amount"><div class="bd-amt"><span class="n">1.500</span><span class="c">DKK</span><span class="grow"></span><button class="btn secondary s" data-act="bdcopy" data-text="1500">${ic('copy','s')}Copy amount</button></div>
    ${[['Bank','Reg 1234, 0012345678','1234 0012345678'],['Reference','2026-031','2026-031'],['MobilePay','12345. Low Tide','12345']].map(([l,v,c])=>`<div class="bd-payrow"><span class="l">${l}</span><span class="v mono">${v}</span><button class="btn ghost s bd-act" data-act="bdcopy" data-text="${c}">${ic('copy','s')}Copy</button></div>`).join('')}</section>
   <section class="bd-told">${paid?`<h2 class="t-title">Thanks, Low Tide has been told</h2><p class="muted">They see “paid on 16 Oct by bank transfer” and approve it on their side. You can close this page.</p><div class="bd-btns"><button class="btn secondary" data-act="bdunpaid">${ic('undo')}I made a mistake</button></div>`

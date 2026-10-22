@@ -197,7 +197,7 @@ function emptyPage(){
 
 /* ---------- Venues ---------- */
 L.VIEWS.venues=()=>{const q=S.cv.vq;const played=VENUES.filter(v=>v.played>0).length;
- return `<div class="page cv cv-list"><div class="ph cv-ph cv-vph"><div class="grow"><h1 class="t-display">Venues</h1><p>${VENUES.length} venues, ${played>3?3:played} played, typical fees and stage notes are band only, reached from Contacts and from every booking</p></div><div class="cv-btns"><button class="btn accent" data-act="newvenue">${ic('plus','s')}New venue</button><button class="btn secondary cv-more" data-act="cvmore" data-m="venues" aria-label="More">${ic('more','s')}</button></div></div>
+ return `<div class="page cv cv-list"><div class="ph cv-ph cv-vph"><div class="grow"><h1 class="t-display">Venues</h1><p>${VENUES.length} venues, ${played>3?3:played} played</p></div><div class="cv-btns"><button class="btn accent" data-act="newvenue">${ic('plus','s')}New venue</button><button class="btn secondary cv-more" data-act="cvmore" data-m="venues" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-bar cv-vbar"><div class="cv-chips">${vChips()}</div><label class="search cv-search cv-vsearch">${ic('search','s')}<input class="input" id="cvvsearch" placeholder="Name or city" value="${esc(q)}" aria-label="Search venues"></label></div>
  <div class="cv-body">${venueBody(q)}</div></div>${L.abar('','Ask about venues — which ones in Aarhus have a PA, who owes us, add Loppen\'s stage notes')}`;};
 

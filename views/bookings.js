@@ -57,7 +57,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 
 function header(){
  const past=S.bookTab==='past';
- const sub=S.bk.empty?'No bookings yet':past?'31 gigs played in 2026 at 14 venues, 112.400 DKK settled':'12 bookings, 2 drafts, 13.500 DKK invoiced, not paid';
+ const sub=S.bk.empty?'No bookings yet':past?'31 gigs in 2026, 112.400 DKK settled':'12 bookings, 13.500 DKK not paid';
  return `<div class="bk-ph"><div class="bk-tb"><h1 class="t-display">Bookings &amp; agreements</h1><p>${sub}</p></div>
  <button class="btn secondary" data-act="export">Export</button><button class="btn accent" data-act="newbooking">${ic('plus')}New booking</button></div>`;
 }

@@ -394,7 +394,7 @@ function conflicts(){const n=CS.conf.length;
  return csSec(`Conflicts`,body+(n?csFoot('Sync never picks a side by itself. Until you choose, LAAS keeps its own version.'):''),n?tag('attention',n+' to decide'):'');}
 L.VIEWS.calsync=()=>{const g=CS.g;
  return `<div class="page cs-page"><button class="btn ghost s flush cs-back" data-go="calendar">${ic('left','s')}Calendar</button>
- <div class="acc-ph"><div class="grow"><h1 class="t-display">Calendar sync</h1><p>Your gigs in Google or Microsoft 365, their busy times back in LAAS, and a read-only feed for everyone else</p></div>${csSave()}</div>
+ <div class="acc-ph"><div class="grow"><h1 class="t-display">Calendar sync</h1><p>Two-way with Google or Microsoft 365</p></div>${csSave()}</div>
  <div class="cs-col">
  ${g?account('g'):csSec('Google Calendar',`<div class="acc-li cs-acc"><span class="d-lic">${ic('calendar','s')}</span><span class="tx"><span>Not connected</span><small>Gigs already in Google stay there. Connect again to pick up where you left off.</small></span><button class="btn secondary s" data-act="csgconnect">Connect</button></div>`)}
  ${account('m')}
@@ -464,7 +464,7 @@ const nR=TOOLS.reduce((n,g)=>n+g[2].filter(t=>t[0]==='r').length,0),nW=TOOLS.red
 L.VIEWS.tools=()=>{const f=S.toolsF;
  const groups=TOOLS.map(([g,i,list])=>[g,i,list.filter(t=>f==='all'||t[0]===f)]).filter(x=>x[2].length);
  return `<div class="page d-page tl-page">${aurora()}<button class="btn ghost s flush cs-back" data-go="assistant">${ic('left','s')}Assistant</button>
- <div class="ph"><div class="grow"><h1 class="t-display">What it can do</h1><p>${nR} ways to look things up, ${nW} changes it can propose. Anything not on this page is out of reach.</p></div><button class="btn accent" data-act="tlask">${ic('ai','s')}Ask the assistant</button></div>
+ <div class="ph"><div class="grow"><h1 class="t-display">What it can do</h1><p>${nR} lookups and ${nW} changes it can propose</p></div><button class="btn accent" data-act="tlask">${ic('ai','s')}Ask the assistant</button></div>
  <div class="tl-grid"><div class="tl-main">
   <div class="d-seg tl-f" role="tablist" aria-label="Show">${[['all','All',nR+nW],['r','Looks up',nR],['w','Changes',nW]].map(([k,l,n])=>`<button role="tab" aria-selected="${f===k}" class="${f===k?'on':''}" data-act="tlf" data-v="${k}">${l} <span class="faint">${n}</span></button>`).join('')}</div>
   ${groups.map(([g,i,list])=>`<section class="acc-sec tl-sec"><div class="acc-sh"><span class="d-lic">${ic(i,'s')}</span><h2 class="t-title">${g}</h2><span class="t-meta muted tl-count">${list.length} actions</span></div><div class="acc-list">${list.map(([k,id,t,d,q])=>`<button class="acc-li tl-row" data-act="askq" data-q="${esc(q)}" title="Try: ${esc(q)}"><span class="tx"><span>${t}</span><small>${d}</small><code class="tl-id">${id}</code></span>${k==='w'?tag('accent','Asks first'):tag('draft','Reads')}${ic('chevr','s')}</button>`).join('')}</div></section>`).join('')}

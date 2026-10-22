@@ -254,12 +254,12 @@ const ledgerBody=()=>`<div class="m-ledger">${kpis([kpi('Income','186.400','+9% 
 /* ---------- views ---------- */
 L.VIEWS.money=()=>{const t=S.mtab||'owed';
  const h=t==='expenses'?head('Expenses',`October 2026, what the band spent, who paid and which receipts are in`,btn('secondary','Snap a receipt','data-act="addexpense"','upload')+btn('accent','Add expense','data-act="addexpense"','plus')+more('mnymore'))
-  :head('Money',M.empty?'Nothing owed, nothing late, the first booking with a fee starts the books':'October 2026, 8.500 DKK owed to you, 9.000 DKK in this month, books up to date as of yesterday',btn('secondary','Add expense','data-act="addexpense"','upload')+btn('accent','New invoice','data-act="newinvoice"','plus')+more('mnymore'));
+  :head('Money',M.empty?'Nothing owed, nothing late, the first booking with a fee starts the books':'October 2026, books up to date yesterday',btn('secondary','Add expense','data-act="addexpense"','upload')+btn('accent','New invoice','data-act="newinvoice"','plus')+more('mnymore'));
  const body={owed:M.empty?owedEmpty:owed,invoices,expenses,payouts,reports:()=>`<div class="m-ledger">${chart()}${reportsRow()}</div>`,books:()=>`${ledgerBody()}<div class="ml-links">${btn('secondary s','Open the ledger','data-go="ledger"','ext')}${btn('secondary s','Journal','data-go="journal"','filetext')}${btn('secondary s','Chart of accounts','data-go="accounts"','list')}${btn('secondary s','Reports','data-go="ledgerreport"','chart')}</div>`}[t]||owed;
  const ph=t==='expenses'?'Ask — add 320 DKK petrol paid by Sofie yesterday, what did merch cost this year, who is owed money':'Ask about money — who owes us, what did we net in October, draft the balance invoice for Club Mono';
  return `<div class="page m-page">${h}${tabsBar(t)}${body()}</div>${L.abar('',ph)}`;};
 
-L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, DKK, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="chip m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
+L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="chip m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
 
 /* invoice detail */
 function invoiceData(id){
@@ -338,7 +338,7 @@ L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mod
  const checks=[['All invoices paid',1],['All receipts in, 1 of 1',1],['Split adds up to 100 %',1],['Everyone has seen the split, 2 of 3',M.seen?1:0,'mnyseen']];
  return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail">
  <button class="btn ghost s m-up" data-go="money" data-mt="payouts">${ic('left','s')}Payouts</button>
- ${head('Settle the Saturday hotel gig','Sat 25 Oct, Hotel Royal, all money in 27 Oct, Settle locks this gig\'s money',btn('secondary','Export PDF','data-act="mnysettlepdf"')+(S.booking.settled?btn('accent','Settled','disabled','check'):btn('accent','Settle 4.360 DKK','data-act="dosettle"','check'))+more('mnysettlemore'))}
+ ${head('Settle the Saturday hotel gig','Sat 25 Oct, Hotel Royal, all money in',btn('secondary','Export PDF','data-act="mnysettlepdf"')+(S.booking.settled?btn('accent','Settled','disabled','check'):btn('accent','Settle 4.360 DKK','data-act="dosettle"','check'))+more('mnysettlemore'))}
  ${kpis([kpi('In','5.000 DKK','fee, deposit 16 Oct, balance 27 Oct','ok'),kpi('Out','640 DKK','travel, 1 receipt, paid by Jonas','muted'),kpi('Commission','0 DKK','no agent on this gig','muted'),kpi('Net to split','4.360 DKK',`3 members, ${mode==='Equal'?'equal after travel':mode.toLowerCase()+' after travel'}`,'muted')])}
  <div class="m-cols m-cols-d"><div class="m-left">
   <section class="m-sec">${secHead('Settlement')}<div class="m-body">
@@ -515,7 +515,7 @@ L.VIEWS.journal=()=>{const list=jRows();const q=M.jq.trim();const nd=drafts();co
  const filtered=q||M.jf!=='all';
  const footer=`<div class="ml-foot"><span>${q?`${list.length} of ${total} match “${esc(q)}” in text, reference, account or contact`:filtered?`${list.length} ${M.jf==='draft'?'drafts':'posted entries shown, newest first'}`:`Showing ${list.length} of ${total}, newest first. Drafts stay out of the reports until posted.`}</span>${filtered?ghostBtn('Show all','data-act="jall"'):ghostBtn('Show older','data-act="jolder"')}</div>`;
  const none=`<div class="ml-empty"><h2 class="t-title">${q?`No entry matches “${esc(q)}”`:'No drafts'}</h2><p>${q?'Nothing in text, reference, account or contact. Check the spelling, or start an entry with this text.':'Everything is posted. New drafts come from Expenses, Gear and the bank, or from New entry.'}</p><div class="ml-acts">${q?btn('secondary','New entry “'+esc(q)+'”','data-act="jnew" data-desc="'+esc(q)+'"','plus')+btn('ghost','Clear search','data-act="jall"'):btn('ghost','Show all','data-act="jall"')}</div></div>`;
- return `<div class="page m-page">${lhead('Journal',`Jan–Oct 2026, ${total} entries, ${nd?nd+(nd===1?' draft':' drafts')+' to post':'all posted'}, double-entry: every entry balances`,btn('secondary','Export','data-act="lexport" data-what="journal"','download')+btn('accent','New entry','data-act="jnew"','plus')+more('jmore'))}
+ return `<div class="page m-page">${lhead('Journal',`Jan–Oct 2026, ${total} entries, ${nd?nd+(nd===1?' draft':' drafts')+' to post':'all posted'}`,btn('secondary','Export','data-act="lexport" data-what="journal"','download')+btn('accent','New entry','data-act="jnew"','plus')+more('jmore'))}
  ${L.ledgerTabs('journal')}
  ${nd&&M.jf!=='draft'&&!q?banner(`${nd} ${nd===1?'draft waits':'drafts wait'} to be posted`,'Drafts are not in the reports yet. Post them when the lines are right; posted entries are locked and can only be reversed.',btn('secondary s','Show drafts','data-act="jfilt" data-f="draft"')):''}
  <div class="ml-content">${chips}${list.length?table+footer:none}</div></div>${ledAbar()}`;};
@@ -594,7 +594,7 @@ L.VIEWS.accounts=()=>{
   const sub=list.reduce((s,a)=>s+balOf(a[0]),0);
   return `<div class="ml-tr ml-gh ml-a" role="row"><span class="mono">${c}xxx</span><span>${CLS[c]}</span><span></span><span></span><span></span><span class="n mono">${L.kr(sub)}</span></div>
   ${list.map(a=>`<div class="ml-tr ml-a" role="row" tabindex="0" data-act="jacct" data-n="${a[0]}"><span class="mono ml-no">${L.hl(String(a[0]),q)}</span><span class="ml-tt"><b>${L.hl(a[1],q)}</b></span><span class="ml-m">${TYPE[c]}</span><span class="ml-m">${a[2]}</span><span class="n ml-m">${ENT[a[0]]||0}</span><span class="n mono">${L.kr(balOf(a[0]))}</span></div>`).join('')}`;}).join('');
- return `<div class="page m-page">${lhead('Chart of accounts',`${M.acc.length} accounts in 5 groups, 1xxx to 5xxx, balances as at 31 Oct 2026`,btn('secondary','Export','data-act="lexport" data-what="accounts"','download')+btn('accent','New account','data-act="jnewacct"','plus')+more('accmore'))}
+ return `<div class="page m-page">${lhead('Chart of accounts',`${M.acc.length} accounts, balances at 31 Oct 2026`,btn('secondary','Export','data-act="lexport" data-what="accounts"','download')+btn('accent','New account','data-act="jnewacct"','plus')+more('accmore'))}
  ${L.ledgerTabs('accounts')}
  <div class="ml-content ml-narrow"><div class="ml-tools"><span class="ml-note">Expenses show these in plain words: Travel is 5000, Rehearsal is 5100.</span><span class="sp"></span>${search('asearch','Number or name',M.aq,'Search accounts')}</div>
  ${groups?`<div class="ml-table" role="table" aria-label="Chart of accounts"><div class="ml-tr ml-th ml-a" role="row"><span>No.</span><span>Name</span><span>Type</span><span>Moms</span><span class="n">Entries</span><span class="n">Balance</span></div>${groups}</div>
@@ -646,7 +646,7 @@ L.VIEWS.ledgerreport=()=>{const p=PER[M.per]?M.per:'ytd',r=REP[M.rep]?M.rep:'pl'
  const note={pl:`Income and expenses for ${PER[p].label.toLowerCase().replace(/^this year, |^last year, /,'')}, compared with ${PER[p].cmp}. Open an account to see its entries.`,
   bs:`What the band owns and owes at the end of the period. The result so far is part of equity until the year is closed.`,
   tb:`Every account with a balance at the end of the period. If debit and credit ever differ, an entry is wrong; posting blocks that.`}[r];
- return `<div class="page m-page">${lhead('Reports',`${REP[r]}, ${PER[p].label}, DKK, posted entries only${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,btn('secondary','Export','data-act="lexport" data-what="report"','download')+btn('accent','Send to the bookkeeper','data-act="lexport" data-what="bookkeeper"','send'))}
+ return `<div class="page m-page">${lhead('Reports',`${PER[p].label}${nd&&p!=='y25'?`, ${nd} ${nd===1?'draft':'drafts'} left out`:''}`,btn('secondary','Export','data-act="lexport" data-what="report"','download')+btn('accent','Send to the bookkeeper','data-act="lexport" data-what="bookkeeper"','send'))}
  ${L.ledgerTabs('ledgerreport')}
  <div class="ml-content ml-narrow"><div class="ml-tools"><div class="m-modes" role="tablist">${Object.entries(REP).map(([k,l])=>`<button class="chip m-chip ${r===k?'on':''}" role="tab" aria-selected="${r===k}" data-act="lrep" data-r="${k}">${l}</button>`).join('')}</div><button class="chip m-chip ml-per" data-act="lperiod" aria-haspopup="menu">${ic('calendar','s')}${PER[p].label}${ic('down','s')}</button><span class="sp"></span>${ghostBtn('VAT period','data-act="mnyreport" data-r="VAT period"','ext')}</div>
  ${repKpis(r,p)}

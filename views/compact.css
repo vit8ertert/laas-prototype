@@ -546,3 +546,8 @@
 @media (max-width:599.98px){
   .cv-detail .cv-row{margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;width:100%!important}
 }
+/* page subtitles: one line of copy on every breakpoint (Vit 22 Oct: "too long text not acceptable"); if a live value
+   still pushes one past two lines on a phone, it stops at two */
+@media (max-width:599.98px){
+  .main .page :is(.ph,.bk-ph,.cv-ph,.acc-ph) :is(.grow>p,>p){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+}

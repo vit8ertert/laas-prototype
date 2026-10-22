@@ -258,7 +258,7 @@ VIEWS.comments=()=>{
  const emptyTxt={open:['Nothing open','You answered or hid every comment. New ones are collected every hour.'],flagged:['Nothing flagged','Spam, booking requests and unhappy comments are flagged here.'],replied:['No replies yet','Comments you answer from LAAS show here with your reply.'],hidden:['Nothing hidden','Hidden comments stay on the post for the writer only.']}[so.ctab];
  const none=q?`<div class="bk-empty"><div class="hd"><h2 class="t-title">No match for “${esc(q)}”</h2><p>Nothing in names or comment text. Check the spelling, or clear the search.</p></div><div class="acts"><button class="btn ghost" data-act="soclear">Clear search</button></div></div>`
   :`<div class="bk-empty"><div class="hd"><h2 class="t-title">${emptyTxt[0]}</h2><p>${emptyTxt[1]}</p></div>${so.cnet.length||cp?`<div class="acts"><button class="btn ghost" data-act="soclear">Clear filters</button></div>`:''}</div>`;
- return page('',`${header('Comments',`${cnt('open')} open, ${cnt('flagged')} flagged, collected from ${nets(SOCIAL.filter(k=>so.acc[k]))} every hour`,btns)}
+ return page('',`${header('Comments',`${cnt('open')} open, ${cnt('flagged')} flagged`,btns)}
  ${tabs([['open','Open',cnt('open')],['flagged','Flagged',cnt('flagged')],['replied','Replied',cnt('replied')],['hidden','Hidden',cnt('hidden')]],so.ctab,'soctab')}
  <div class="bk-content"><div class="bk-filters">${chip('cnet','Accounts',so.cnet)}<button class="bk-chip ${cp?'on':''}" data-act="sofilter" data-key="cpost" aria-haspopup="dialog">Post: ${cp?esc(cp.name):'all'}</button><span class="sp"></span>${search('socsearch','Name or words',so.cq,'Search comments')}</div>
  ${list.length?`<div class="so-clist">${list.map(c=>commentRow(c,q)).join('')}</div><div class="bk-foot"><span>${q||so.cnet.length||cp?`${list.length} of ${cnt(so.ctab)} shown`:so.ctab==='hidden'?'Hidden comments are still on the post, only the writer sees them.':`Showing ${list.length}, newest first. Replies post as the band’s account.`}</span>${q||so.cnet.length||cp?'<button class="btn ghost s bk-fb" data-act="soclear">Show all</button>':''}</div>`:none}</div>`);
@@ -287,7 +287,7 @@ VIEWS.keywords=()=>{
  const hitSec=sel?`<section class="bd-sec"><div class="bd-sh"><h2 class="t-title">Latest hits for “${esc(sel.kw)}”</h2>${act(sel.on?'pause':'play',sel.on?'Pause':'Resume','sokwpause',`data-id="${sel.id}"`)}${act('trash','Remove','sokwdel',`data-id="${sel.id}"`)}</div>
   ${hits.length?`<div class="bd-rows so-hits">${hits.map(([n,who,txt,when])=>`<div class="bd-prow">${av(n)}<span class="tx"><span>${L.hl(txt,sel.kw.replace('#',''))}</span><small>${NET[n].n}, ${esc(who)}, ${when}</small></span><button class="btn ghost s bd-act" data-act="sohitopen" data-n="${n}">${ic('arrowUpRight','s')}Open</button></div>`).join('')}</div>`:'<p class="bd-foot">No hits yet. The next scan runs tomorrow at 06:00.</p>'}
   <p class="bd-foot">Keyword watch only reads public posts. Nothing is liked, followed or answered from here.</p></section>`:'';
- return page('so-kwp',`${header('Keyword watch',`${kws.length} keyword${kws.length===1?'':'s'}, ${total} hits in the last 30 days, last scan ${so.lastScan}`,btns)}
+ return page('so-kwp',`${header('Keyword watch',`${kws.length} keyword${kws.length===1?'':'s'}, ${total} hits in 30 days`,btns)}
  <div class="bk-content">${chart}${table}${hitSec}</div>`);
 };
 
@@ -301,8 +301,8 @@ VIEWS.deliveries=()=>{
  let list=so.dels;if(so.dnet.length)list=list.filter(d=>so.dnet.includes(NET[d.dest].n));
  const c=k=>so.dels.filter(d=>d.st===k).length;
  const failed=so.dels.find(d=>d.st==='failed');
- const sub=[c('processing')&&`${c('processing')} processing`,c('queued')&&`${c('queued')} waiting for release day`,`${c('live')} live`,c('failed')&&`${c('failed')} failed`].filter(Boolean).join(', ');
- return page('',`${header('Deliveries',`Push a track’s audio to YouTube or SoundCloud. ${cap(sub)}`,btns)}
+ const sub=[c('processing')&&`${c('processing')} processing`,c('queued')&&`${c('queued')} waiting`,`${c('live')} live`,c('failed')&&`${c('failed')} failed`].filter(Boolean).join(', ');
+ return page('',`${header('Deliveries',cap(sub),btns)}
  ${failed&&!so.dbannerOff?banner('attention','alert',`${esc(failed.track)} was rejected by ${NET[failed.dest].n}`,esc(failed.why),`<button class="btn secondary s" data-act="soretry" data-id="${failed.id}">${ic('refreshCw','s')}Retry with 44.1 kHz</button>`,'sodbannerx'):''}
  <div class="bk-content"><div class="bk-filters">${chip('dnet','Destination',so.dnet)}</div>
  ${list.length?`<div class="bk-table" role="table" aria-label="Deliveries"><div class="bk-tr so-d bk-th" role="row"><span>Track</span><span>Destination</span><span>Format</span><span>Visibility</span><span>When</span><span>Status</span><span class="n">Plays</span></div>

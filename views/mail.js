@@ -199,7 +199,7 @@ L.VIEWS.mail=()=>{
   :`<span class="t-meta muted ml-fnote">${FNOTE[f]}</span>${f==='spam'&&l.length?`<button class="btn ghost s" data-act="mailemptyf" data-f="spam">${ic('trash','s')}Delete all spam</button>`:''}${f==='trash'&&l.length?`<button class="btn ghost s" data-act="mailemptyf" data-f="trash">${ic('trash','s')}Empty Trash</button>`:''}`;
  const [eh,et]=EMPTY[f];
  return `<div class="page ml-page">
- ${header(`${KIND[acc.kind]}, ${esc(acc.email)}${more>0?` and ${more} more`:''}. ${u?`${u} unread`:'All read'}${n?`, ${n} need${n===1?'s':''} a reply`:''}`,`<button class="btn secondary" data-act="mailreadall" ${u?'':'disabled'}>${ic('check','s')}Mark all read</button><button class="btn secondary icon" data-act="mailmenu" aria-label="Mail account">${ic('more')}</button><button class="btn accent" data-act="mailnew">${ic('plus','s')}New mail</button>`)}
+ ${header(`${u?`${u} unread`:'All read'}${n?`, ${n} need${n===1?'s':''} a reply`:''}`,`<button class="btn secondary" data-act="mailreadall" ${u?'':'disabled'}>${ic('check','s')}Mark all read</button><button class="btn secondary icon" data-act="mailmenu" aria-label="Mail account">${ic('more')}</button><button class="btn accent" data-act="mailnew">${ic('plus','s')}New mail</button>`)}
  ${errBanner()}
  ${tabs()}
  <div class="row ml-filters">${folderBar}<span style="flex:1"></span><label class="search">${ic('search','s')}<input class="input" id="mlsearch" placeholder="Search ${fname.toLowerCase()}" value="${esc(q)}" aria-label="Search ${fname}"></label></div>
@@ -298,7 +298,7 @@ const accRow=a=>`<div class="acc-li ml-accrow">${logo(a.kind)}<span class="tx"><
  <span class="ml-accend">${a.state==='error'?`<span class="tag danger">Sign-in failed</span><button class="btn secondary s" data-act="mlfix" data-id="${a.id}">Fix</button>`:`<span class="tag confirmed">Connected</span>`}${iconBtn('more',`More for ${a.email}`,'mlaccmenu',a.id)}</span></div>`;
 L.VIEWS.mailaccounts=()=>{const acc=M.accounts.filter(a=>a.state!=='off'),ok=okAccs(),err=acc.filter(a=>a.state==='error').length,hasG=acc.some(a=>a.kind==='gmail'),hasM=acc.some(a=>a.kind==='m365');
  return `${navMark}<div class="page acc-set ml-page ml-accs"><button class="btn ghost s flush" data-go="mail" style="align-self:flex-start">${ic('left','s')}Mail</button>
- <div class="acc-ph"><div class="grow"><h1 class="t-display">Mail accounts</h1><p>${acc.length?`${acc.length} connected${err?`, ${err} needs attention`:''}. LAAS reads and sends as you, only when you press Send`:'Nothing connected yet. Add Gmail, Microsoft 365 or any mail with SMTP and IMAP'}</p></div>${accSave()}</div>
+ <div class="acc-ph"><div class="grow"><h1 class="t-display">Mail accounts</h1><p>${acc.length?`${acc.length} connected${err?`, ${err} needs attention`:''}`:'Nothing connected yet. Add Gmail, Microsoft 365 or any mail with SMTP and IMAP'}</p></div>${accSave()}</div>
  <div class="ml-col">
  ${aSec('Connected',acc.length?`<div class="acc-list">${acc.map(accRow).join('')}</div>`:`<p class="acc-foot">No mail connected. Add an account below and LAAS links your threads to bookings.</p>`,'','pad')}
  ${aSec('Add an account',`<div class="acc-rows">

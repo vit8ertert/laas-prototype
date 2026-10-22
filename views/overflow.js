@@ -17,7 +17,8 @@ function edges(el){const max=el.scrollWidth-el.clientWidth;el.classList.toggle('
 function place(el){const b=el._sx,top=el.offsetTop+Math.max(0,Math.min(el.clientHeight/2,17)-16)+1;
  b.l.style.top=b.r.style.top=top+'px';b.l.style.left=(el.offsetLeft+8)+'px';b.r.style.left=(el.offsetLeft+el.clientWidth-40)+'px';}
 function scrollCues(){document.querySelectorAll(`.main :is(${TABLES},${ROWS})`).forEach(el=>{
- const over=el.scrollWidth>el.clientWidth+2;el.classList.toggle('sx',over);
+ /* only real sideways scrollers: a box that is wider only because its rows bleed is not one */
+ const ox=getComputedStyle(el).overflowX,over=/auto|scroll/.test(ox)&&el.scrollWidth>el.clientWidth+2;el.classList.toggle('sx',over);
  if(!over){el.classList.remove('sx-l','sx-r');if(el._sx){el._sx.l.remove();el._sx.r.remove();el._sx=null;}return;}
  if(el.matches(TABLES)&&!el._sx){const p=el.offsetParent||el.parentElement;
   const mk=(dir)=>{const b=document.createElement('button');b.type='button';b.className='sx-btn sx-'+dir;b.setAttribute('aria-label',dir==='r'?'Scroll the table right':'Scroll the table left');b.innerHTML=ic(dir==='r'?'right':'left','s');
