@@ -477,7 +477,7 @@ function obSteps(st){const ob=S.onboarding;
   /* Vit 21 Oct: genre and band size are asked on "Your band"; this step is the look only (Figma 443:19646 still has the older version) */
   /* Vit 21 Oct: "too much info on this step". One line of copy, appearance, two buttons; the looks are picked under the big preview on the right */
   /* Vit 21 Oct: the old line read strangely; point at the looks on the right */
-  return head('Pick your look',match==='label'?'Choose one of the looks on the right. You can change it any time in Settings.':`Choose one of the looks on the right. We suggest ${TNAME[match]} for ${ob.genre.toLowerCase()}.`)
+  return head('Pick your look',match==='label'?`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. You can change it any time in Settings.`:`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. We suggest ${TNAME[match]} for ${ob.genre.toLowerCase()}.`)
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
   <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
   <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}

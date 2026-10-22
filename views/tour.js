@@ -161,6 +161,9 @@ function end(done,off){
 }
 function start(name){
   if(!TOURS[name])return;
+  /* phones (< 600): no spotlight tour and no page guides; one welcome sheet instead (research 31 §10: NN/g mobile
+     onboarding, Apple HIG onboarding). Its targets (sidebar, assistant bar, search pill) do not exist on a phone */
+  if(L.isCompact&&L.isCompact()){if(name==='first'){set('laas-tour','done');if(root){root.remove();root=null;}L.open('cxwelcome');}return;}
   if(root){root.remove();root=null;}
   tour=name;
   if(name==='first'&&S.view!=='dashboard')L.go('dashboard');

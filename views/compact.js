@@ -102,6 +102,16 @@ function gigdayCompact(){if(!compact.matches||S.view!=='gigday')return;const o=S
   if(!o[k])g.classList.add('cx-folded');
   h.insertAdjacentHTML('beforeend',`<button class="cx-fold-b" data-act="cxfold" data-k="${k}" aria-expanded="${!!o[k]}" aria-label="${o[k]?'Fold':'Show'} ${esc(name)}"><span>${n}</span>${ic(o[k]?'down':'right','s')}</button>`);});}
 
+/* the editor's assistant bar: collapsed to Ask on phones, the first tap opens it */
+function editorAbar(){if(!narrow.matches)return;const a=document.querySelector('.bk-abar');if(a&&S.cxAbarOpen)a.classList.add('cx-open');}
+document.addEventListener('click',e=>{const b=e.target.closest('.bk-abar:not(.cx-open) [data-act="nbask"]');if(!b||!narrow.matches)return;e.preventDefault();e.stopImmediatePropagation();S.cxAbarOpen=true;b.closest('.bk-abar').classList.add('cx-open');setTimeout(()=>document.getElementById('nbask')?.focus(),30);},true);
+
+/* phone welcome sheet, in place of the spotlight tour */
+L.OVERLAYS.cxwelcome=()=>`<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-welcome" role="dialog" aria-label="Welcome to LAAS">
+ <div class="cx-ask-h"><b class="t-heading">Welcome to LAAS</b></div>
+ ${[['file','Gigs, Money and Mail sit in the bar at the bottom.'],['ai','Ask drafts and answers. Nothing is sent without your OK.'],['circleellipsis','More holds everything else, and this guide.']].map(([i,t])=>`<div class="cx-wl">${ic(i)}<span>${t}</span></div>`).join('')}
+ <button class="btn accent cx-full" data-act="close">Got it</button></div>`;
+
 Object.assign(L.ACTIONS,{
  moresheet:()=>{S.overlay&&S.overlay.type==='moresheet'?L.close():L.open('moresheet');},
  moreband:()=>{S.overlay=null;L.render();toast2('Switching bands opens from the band name on a wider screen.');},
@@ -121,6 +131,6 @@ Object.assign(L.ACTIONS,{
 const toast2=m=>L.toast(m);
 /* the current page tab stays in view when the tab row scrolls */
 const tabsInView=()=>{if(!compact.matches)return;document.querySelectorAll('.main .tabs').forEach(t=>{const on=t.querySelector('.on');if(on&&t.scrollWidth>t.clientWidth)t.scrollLeft=Math.max(0,on.offsetLeft-t.offsetLeft-16);});};
-L.afterRender=()=>{collapseHeaders();injectPending();tabsInView();summariseFacts();backLabels();gigdayCompact();};
+L.afterRender=()=>{collapseHeaders();injectPending();tabsInView();summariseFacts();backLabels();gigdayCompact();editorAbar();};
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='asksheetq'){e.preventDefault();L.ACTIONS.asksheetgo();}});
 })();
