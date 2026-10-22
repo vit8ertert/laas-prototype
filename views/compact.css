@@ -580,3 +580,10 @@
   .main .cat-rhead>.acts{grid-column:1/-1;padding-top:0!important}
   .main .cat-rhead .id h1{font-size:var(--fs-title)!important;line-height:var(--lh-title)!important}
 }
+/* Pay page on phones (Vit 22 Oct: "text needs to be smaller"): it is a page inside a card, so its type steps down one
+   level: title in the Title size, "Already paid?" in the Heading size, running text 13/18 */
+@media (max-width:599.98px){
+  .bd-pay .bd-payhero h1{font-size:var(--fs-title)!important;line-height:var(--lh-title)!important}
+  .bd-pay .bd-payhero p,.bd-pay .bd-told>p{font-size:13px!important;line-height:18px!important}
+  .bd-pay .bd-told h2{font-size:var(--fs-heading)!important;line-height:var(--lh-heading)!important;font-weight:500!important}
+}
