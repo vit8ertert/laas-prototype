@@ -174,7 +174,7 @@
   .bd-open{flex-wrap:wrap}.bd-open>span{flex:1 1 200px}
   /* the notation footnote repeats what the Approximate and Moved tags already say */
   .bd-tl>.bd-foot{display:none}
-  .bd-step.next h4,.bd-step h4{font-size:16px!important;line-height:22px!important}
+  .bd-step.next h4{font-size:var(--fs-heading)!important;line-height:var(--lh-heading)!important}
   .bd-step .content>p{font-size:14px;line-height:20px}
   .bd-step .content{padding-bottom:20px}
 }

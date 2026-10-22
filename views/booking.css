@@ -284,7 +284,7 @@
 .bd-step .content>p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .bd-sth{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:26px}
 .bd-sth h4{margin:0;flex:1;font:500 15px/var(--lh-body) var(--sans)}
-.bd-step.next .time{color:var(--ink)}.bd-step.next h4{font:500 18px/24px var(--sans);letter-spacing:-.1px}
+.bd-step.next .time{color:var(--ink)}.bd-step.next h4{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 .bd-step.nowrow{display:flex;align-items:center;gap:12px;padding-bottom:16px}
 .bd-step.nowrow .time{width:64px;color:var(--accent-ink)}
 .bd-step.nowrow .spine{width:16px;height:16px;padding:0;justify-content:center}
