@@ -247,3 +247,13 @@ input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 .btn.s>svg.i,.btn.s>svg.i.s{width:16px;height:16px}
 .bell svg{width:18px;height:18px}
 :is(.bd-pill,.bd-lock,.d-add,.bk-thumb.none) svg.i,.help>svg.i,.cv-drawer .help svg{width:14px;height:14px}
+
+/* Day step (Vit 22 Oct: "the text aligned with the circle"): the time, the dot and the title share one line box.
+   The title row is as tall as its tags (26 px, 24 on phones) with the title centred in it, so the time and the dot
+   centre on that same line instead of sitting at the row's top. */
+.bd-step{--st-line:26px}
+.bd-step .bd-sth{min-height:var(--st-line)}
+.bd-step:not(.nowrow) .time{padding-top:calc((var(--st-line) - 20px) / 2)}
+.bd-step:not(.nowrow) .spine{padding-top:calc(var(--st-line) / 2 - 6px)}
+.bd-step.next .spine{padding-top:calc(var(--st-line) / 2 - 7px)}
+@media (max-width:599.98px){.bd-step{--st-line:24px}}
