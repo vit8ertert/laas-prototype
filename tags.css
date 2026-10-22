@@ -267,3 +267,7 @@ input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 .sx-btn:hover{background:var(--hover)}
 .sx-btn svg.i{width:16px;height:16px}
 .sx-btn[hidden]{display:none}
+
+/* Venues map city card (Vit 22 Oct: "we need to fix padding?"): the card has no inner padding, so its rows do not bleed;
+   they take the row inset and line up with the city heading (16) */
+.cv-mapl .cv-vrow{margin:0!important;width:100%!important;padding:var(--row-y) 16px!important}
