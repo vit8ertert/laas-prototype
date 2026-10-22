@@ -85,10 +85,10 @@
 
   svg.i{width:16px;height:16px}svg.i.s{width:14px;height:14px}
   .tabbar svg.i{width:20px;height:20px}
-  .btn{height:34px;padding:0 14px;font-size:14px;line-height:20px;gap:6px}
-  .btn>svg.i{width:16px;height:16px}
-  .btn.s{height:30px;padding:0 10px;font-size:13px}.btn.s>svg.i{width:14px;height:14px}
-  .btn.icon{width:auto;min-width:34px;padding:0 10px}.btn.icon.s{min-width:30px;padding:0 8px}
+  /* buttons on phones are Figma Button S: 34 high, 13/18 Medium, 12 side padding, 16 icon */
+  .btn,.btn.s{height:34px;padding:0 12px;font-size:13px;line-height:18px;gap:6px}
+  .btn>svg.i,.btn.s>svg.i{width:16px;height:16px}
+  .btn.icon,.btn.icon.s{width:auto;min-width:34px;padding:0 10px}
   .btn.lg{min-height:44px;padding:10px 20px}
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
@@ -114,9 +114,9 @@
   .bk-filters>*,.cat-filters>*,.ml-chips>*,.cv-chips>*,.d-chips>*{flex:none}
   .ev-k{font-size:12px;line-height:16px}
 }
-@media (max-width:599.98px){.m-kpi,.cat-kpi,.aud-kpi{padding:14px 16px!important;gap:4px!important}}
+@media (max-width:599.98px){.m-kpi,.cat-kpi,.aud-kpi{gap:4px!important}}
 @media (max-width:599.98px){
-  .acc-row{padding-block:12px!important;row-gap:6px!important}
+  .acc-row{row-gap:6px!important}
   /* inputs at 16 px: iOS Safari zooms the page into any field set smaller */
   .input,input.input,select.input,textarea.input,.cx-ask-f input{font-size:16px}
 }
@@ -182,7 +182,7 @@
 
 /* width-aware spacing on compact: Figma LAAS · Width, mode Compact (Vit 22 Oct: far less spacing on phones) */
 @media (max-width:599.98px){
-  :root{--gutter:16px;--section:16px;--card:12px;--stack:8px;--row-y:8px;--row-x:12px}
+  :root{--gutter:16px;--section:16px;--card:12px;--stack:8px;--row-y:8px;--row-x:12px;--hero-y:24px;--hero-x:16px}
   .page{padding-top:12px!important}
   .ev-head{gap:12px!important;margin:0!important}
   .ev-date{width:56px!important;height:64px!important;padding:0!important;gap:0!important;justify-content:center}
@@ -191,4 +191,31 @@
   .ev-tx{gap:4px!important}.ev-k{font:400 12px/16px var(--sans)!important}
   .bd-bar.hd{gap:8px!important}
   .acc-row{padding-inline:0!important}
+}
+
+/* components that change structure on phones, as their Figma Width=Compact variants (22 Oct) */
+@media (max-width:599.98px){
+  /* Page header: title block above, the actions on their own row below */
+  .ph>.grow{flex:1 1 100%;min-width:0}
+  /* Banner: icon, text and dismiss on the first line, the action below the text */
+  :is(.banner,.bd-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
+  :is(.banner,.bd-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
+  :is(.banner,.bd-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:30px;margin-right:auto}
+  :is(.banner,.bd-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:18px}
+  :is(.banner,.bd-banner)>.btn.icon,:is(.banner,.bd-banner)>[aria-label*="ismiss"]{order:2}
+  /* Booking progress: segments only; the current step's label runs under the whole bar instead of under its segment */
+  .bk-prog{position:relative;padding-bottom:22px!important}.bk-prog li{position:static!important}
+  .bk-prog li:is(.now,.att) span{position:absolute;left:0;right:0;bottom:0;text-align:left!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none!important;width:auto!important}
+  /* Settings row with a field: label above, the field full width (rows with a toggle keep it on the right) */
+  .acc-row:has(.ctl .input,.ctl select){flex-direction:column;align-items:stretch;gap:var(--stack)!important}
+  .acc-row:has(.ctl .input,.ctl select) .ctl,.acc-row:has(.ctl .input,.ctl select) .ctl>*{width:100%!important;max-width:none!important}
+  /* Tabs: Figma Tab inner padding row-y → 38 + indicator */
+  .tabs button{height:40px}
+}
+
+/* settings on phones: heading and rows on one 12 px edge, rows touch (Figma Section Padding=M + Settings row Compact) */
+@media (max-width:599.98px){
+  .acc-sec{padding:var(--card)!important;gap:var(--stack)!important}
+  .acc-sh{padding-inline:0!important}
+  .acc-body{gap:var(--stack)!important}.acc-rows{gap:0!important}
 }
