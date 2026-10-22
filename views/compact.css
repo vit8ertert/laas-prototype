@@ -482,3 +482,10 @@
   .acc-row .ctl,.acc-row .ctl .input{min-width:0!important;max-width:100%!important}
 }
 @media (max-width:599.98px){.d-conv{padding-bottom:24px!important}}
+/* Today on phones (prototype and Django alike): day-sheet notes stop after one line, the tonight card grows
+   with its title instead of a fixed 240 px */
+@media (max-width:599.98px){
+  .d-row .d-rt small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .d-row{min-height:0;padding:var(--row-y) var(--row-x)}
+  .d-tonight{height:auto!important;min-height:200px;gap:8px}
+}
