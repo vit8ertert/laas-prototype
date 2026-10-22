@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=2ba9bbf">
+<link rel="stylesheet" href="tokens.css?v=f2720ad">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -73,7 +73,7 @@ svg.i.s{width:16px;height:16px}
 .collapsed .sidebar .nav .alert{position:absolute;margin:0;min-width:8px;height:8px;padding:0;font-size:0;transform:translate(10px,-10px)}
 .main{min-width:0;overflow:auto;background:var(--canvas);border-radius:12px;position:relative;display:flex;flex-direction:column}
 .main>.page{flex:1 0 auto;width:100%}
-.page{max-width:1440px;margin:0 auto;padding:24px 32px 32px;display:flex;flex-direction:column;gap:24px}
+.page{max-width:1440px;margin:0 auto;padding:24px 32px 32px;display:flex;flex-direction:column;gap:var(--section)}
 .ph{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}.ph .grow{flex:1;min-width:240px}
 .ph p{margin:2px 0 0;color:var(--muted)}
 .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -105,18 +105,18 @@ textarea.input{height:auto;min-height:76px;padding:10px 12px;resize:vertical}
 .tabs button{height:44px;padding:0 12px;color:var(--muted);display:flex;align-items:center;gap:8px;border-bottom:2px solid transparent;white-space:nowrap}
 .tabs button.on{color:var(--ink);font-weight:500;border-color:var(--accent)}
 .tabs .c{font-size:12px;padding:0 6px;border-radius:999px;background:var(--well);color:var(--ink)}
-.card{background:var(--surface);border-radius:var(--r-lg);padding:20px}
+.card{background:var(--surface);border-radius:var(--r-lg);padding:var(--card)}
 .panel{background:var(--surface);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:28px}
 .sec{display:flex;flex-direction:column;gap:8px}
 .sec-h{display:flex;align-items:center;gap:12px}.sec-h h3{flex:1}
-.list-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--rule);width:100%;text-align:left}
+.list-row{display:flex;align-items:center;gap:12px;padding:var(--row-y) 0;border-top:1px solid var(--rule);width:100%;text-align:left}
 .list-row:first-of-type{border-top:0}
 .list-row .tx{flex:1;min-width:0}.list-row .tx b{font-weight:400;display:block}.list-row .tx small{color:var(--muted);font-size:13px}
 .thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:var(--well)}
 .thumb.s{width:32px;height:32px;border-radius:6px}
 .kv{display:grid;grid-template-columns:120px 1fr;gap:10px 12px;font-size:15px}.kv dt{color:var(--muted);font-size:13px}.kv dd{margin:0}
 .grid2{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:48px;align-items:start}
-.banner{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md)}
+.banner{display:flex;gap:12px;align-items:flex-start;padding:var(--row-y) var(--row-x);border-radius:var(--r-md)}
 .banner.attention{background:var(--att-tint);color:var(--att)}.banner.danger{background:var(--bad-tint);color:var(--bad)}.banner.info{background:var(--well)}
 .banner .tx{flex:1}.banner b{font-weight:500;display:block}
 .table-wrap{overflow-x:auto;border-radius:var(--r-lg);background:var(--surface)}
@@ -314,20 +314,20 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/tour.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/dashboard.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/bookings.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/booking.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/contacts.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/money.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/catalogue.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/account.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/mail.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/social.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/logomotion.css?v=2ba9bbf">
-<link rel="stylesheet" href="tags.css?v=2ba9bbf">
-<link rel="stylesheet" href="views/compact.css?v=2ba9bbf">
+<link rel="stylesheet" href="components.css?v=f2720ad">
+<link rel="stylesheet" href="views/tour.css?v=f2720ad">
+<link rel="stylesheet" href="views/dashboard.css?v=f2720ad">
+<link rel="stylesheet" href="views/bookings.css?v=f2720ad">
+<link rel="stylesheet" href="views/booking.css?v=f2720ad">
+<link rel="stylesheet" href="views/contacts.css?v=f2720ad">
+<link rel="stylesheet" href="views/money.css?v=f2720ad">
+<link rel="stylesheet" href="views/catalogue.css?v=f2720ad">
+<link rel="stylesheet" href="views/account.css?v=f2720ad">
+<link rel="stylesheet" href="views/mail.css?v=f2720ad">
+<link rel="stylesheet" href="views/social.css?v=f2720ad">
+<link rel="stylesheet" href="views/logomotion.css?v=f2720ad">
+<link rel="stylesheet" href="tags.css?v=f2720ad">
+<link rel="stylesheet" href="views/compact.css?v=f2720ad">
 
 <div id="app"></div>
 
@@ -982,18 +982,18 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=2ba9bbf"></script>
-<script src="views/bookings.js?v=2ba9bbf"></script>
-<script src="views/booking.js?v=2ba9bbf"></script>
-<script src="views/contacts.js?v=2ba9bbf"></script>
-<script src="views/money.js?v=2ba9bbf"></script>
-<script src="views/catalogue.js?v=2ba9bbf"></script>
-<script src="views/brands.js?v=2ba9bbf"></script>
-<script src="views/account.js?v=2ba9bbf"></script>
-<script src="views/mail.js?v=2ba9bbf"></script>
-<script src="views/social.js?v=2ba9bbf"></script>
-<script src="views/tour.js?v=2ba9bbf"></script>
-<script src="views/motion.js?v=2ba9bbf"></script>
-<script src="views/logomotion.js?v=2ba9bbf"></script>
-<script src="views/compact.js?v=2ba9bbf"></script>
+<script src="views/dashboard.js?v=f2720ad"></script>
+<script src="views/bookings.js?v=f2720ad"></script>
+<script src="views/booking.js?v=f2720ad"></script>
+<script src="views/contacts.js?v=f2720ad"></script>
+<script src="views/money.js?v=f2720ad"></script>
+<script src="views/catalogue.js?v=f2720ad"></script>
+<script src="views/brands.js?v=f2720ad"></script>
+<script src="views/account.js?v=f2720ad"></script>
+<script src="views/mail.js?v=f2720ad"></script>
+<script src="views/social.js?v=f2720ad"></script>
+<script src="views/tour.js?v=f2720ad"></script>
+<script src="views/motion.js?v=f2720ad"></script>
+<script src="views/logomotion.js?v=f2720ad"></script>
+<script src="views/compact.js?v=f2720ad"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

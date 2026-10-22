@@ -100,7 +100,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-kv{font:400 32px/40px var(--sans);letter-spacing:-.5px}
 .d-kd{font-size:12px;line-height:16px;color:var(--muted)}.d-kd.attc{color:var(--att)}.d-kd.okc{color:var(--ok)}
 .d-list{display:flex;flex-direction:column;gap:8px}
-.d-card{display:flex;align-items:center;gap:12px;padding:16px;border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left;width:100%}
+.d-card{display:flex;align-items:center;gap:12px;padding:var(--row-y) var(--row-x);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left;width:100%}
 .d-card:hover{background:var(--hover);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .d-cb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.d-cb b{font:500 15px/22px var(--sans)}.d-card>svg.i.s{width:18px;height:18px}.d-cb small{font-size:12px;line-height:16px;color:var(--muted)}
 

@@ -36,3 +36,5 @@
 :root{--scrim-base:#000;--scrim:color-mix(in srgb,var(--scrim-base) 45%,transparent);--on-photo:#ffffff;--on-lime:#0f0f0f}
 /* width classes (research 31, M3): compact < 600, medium 600-839, expanded >= 840. For reference; media queries write the numbers out */
 :root{--bp-medium:600px;--bp-wide:840px}
+/* width-aware spacing, Figma LAAS · Width (Expanded / Compact); compact values in views/compact.css (22 Oct) */
+:root{--gutter:24px;--section:24px;--card:20px;--stack:12px;--row-y:12px;--row-x:16px}

@@ -2,7 +2,7 @@
    Exact pass 21 Oct 2026: every number below is from design/figma-dump/digest (Booking · detail 297:4814 and its siblings). */
 
 /* page: detail pages max 1200 px (width rule 27), centred like data pages */
-.page.bd-page{max-width:1200px;margin:0 auto;position:relative;isolation:isolate;gap:24px}
+.page.bd-page{max-width:1200px;margin:0 auto;position:relative;isolation:isolate;gap:var(--section)}
 .bd-tint{display:none}
 .page.bd-page.bd-gd{max-width:none}
 /* object colour header tint across the whole main panel (Hotel Royal tint from the venue data), scrolls with the page */
@@ -63,7 +63,7 @@
 .bd-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
 .bd-main{display:flex;flex-direction:column;gap:40px;min-width:0}
 /* section (298:5025): pad 20 0, gap 16; head 24/32 -0.3 with a ghost s action on the right edge */
-.bd-sec{display:flex;flex-direction:column;gap:16px;padding:20px 0;border-radius:12px}
+.bd-sec{display:flex;flex-direction:column;gap:var(--stack);padding:var(--card) 0;border-radius:12px}
 .bd-page .t-title{letter-spacing:-.3px}
 .bd-sh{display:flex;align-items:center;gap:8px;min-height:32px}
 .bd-sh>h2,.bd-sh>h3{flex:1;margin:0}
@@ -107,7 +107,7 @@
 
 /* rows: money (299:5064) pad 12 gap 16, end 96, amount 96 mono 14/20; list rows (299:5019) pad 12 gap 12, avatar 32, divider inset 12 */
 .bd-rows{display:flex;flex-direction:column}
-.bd-mrow,.bd-prow,.bd-frow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;position:relative;width:100%;text-align:left}
+.bd-mrow,.bd-prow,.bd-frow{display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;position:relative;width:100%;text-align:left}
 .bd-mrow{gap:16px}
 .bd-prow:not(:last-child)::after,.bd-frow:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .bd-mrow .tx,.bd-prow .tx,.bd-frow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/22px var(--sans)}
@@ -266,7 +266,7 @@
 .bd-strip .legend i.nc{box-shadow:inset 0 0 0 1px var(--muted)}
 /* columns: timeline card fluid, rail 380 */
 .bd-gdgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
-.bd-card{background:var(--surface);border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:40px;min-width:0}
+.bd-card{background:var(--surface);border-radius:12px;padding:var(--card) var(--section);display:flex;flex-direction:column;gap:var(--section);min-width:0}
 .bd-card>.bd-sh{min-height:34px;gap:12px}
 .bd-card .t-heading,.bd-openbox .t-heading{letter-spacing:-.1px}
 .bd-tl>.bd-foot{font:400 12px/16px var(--sans);padding:0}

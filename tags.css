@@ -83,10 +83,10 @@
 :root{--row-x:16px;--row-y:12px}
 :is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.aud-rel,.m-kvr,.m-ev,.cat-row,.cv-cvrrow,.cv-irow){
   padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:8px}
-.acc-row{padding-block:16px!important}
+.acc-row{padding-block:var(--row-y)!important}
 /* cards that hold rows */
 .acc-sec{padding:20px 8px}.acc-sec>.acc-sh{padding-inline:16px}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:16px}
-.acc-card{padding:24px}
+.acc-card{padding:var(--card)}
 .cv-vlist{padding:8px 24px}
 .bd-panel{padding:20px 8px}.bd-panel .bd-pgroup{padding-inline:16px}
 .bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:0}.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:0}.bd-panel .bd-check{padding-inline:0}
@@ -190,7 +190,7 @@
  background:linear-gradient(color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent),color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent)),var(--surface)!important;
  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 1px 3px #00000033,inset 0 0 0 1px color-mix(in srgb,var(--tc,var(--muted)) 24%,transparent)!important}
 /* clickable list rows use the List row inset, so the hover bar never touches the avatar (Vit 21 Oct) */
-.list-row:is(button,a,[data-go],[data-act]):not([style*="cursor:default"]){padding:12px 16px!important;margin-inline:-16px;width:calc(100% + 32px)!important;border-radius:8px;box-sizing:border-box}
+.list-row:is(button,a,[data-go],[data-act]):not([style*="cursor:default"]){padding:var(--row-y) 16px!important;margin-inline:-16px;width:calc(100% + 32px)!important;border-radius:8px;box-sizing:border-box}
 /* calendar days with a photo: their event chips use the Filled tag too (Vit 21 Oct: "badge not visible here too") */
 .d-day.photo .d-ev.d-ev{background:linear-gradient(color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent),color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent)),var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 1px 3px #00000033,inset 0 0 0 1px color-mix(in srgb,var(--tc,var(--muted)) 24%,transparent)!important}
 /* key-value lists in dialogs and cards start on the text edge, label on the value's baseline (Vit 21 Oct) */
@@ -209,7 +209,7 @@
 
 /* event header (booking, gig day, social post): a tile that says what kind of thing this is, then the title and facts;
    the venue is a chip with its photo that opens the venue page (Vit 21 Oct) */
-.ev-head{display:flex;align-items:center;gap:24px;margin:8px 0 20px}
+.ev-head{display:flex;align-items:center;gap:var(--section);margin:8px 0 var(--card)}
 .ev-date{width:88px;height:96px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px}
 .ev-date span{font:500 13px/16px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .ev-date b{font:400 40px/44px var(--sans);letter-spacing:-.8px;color:var(--ink)}

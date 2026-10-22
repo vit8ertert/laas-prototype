@@ -93,8 +93,8 @@
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
   .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-main>.bd-sec,.bd-pay,.cv-main,.d-left,.m-left,
-  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.acc-sec:is(.pad,.inset),.strip,.drop,.cat-col,.cat-ov{padding:16px!important}
-  .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:20px!important}
+  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.acc-sec:is(.pad,.inset),.strip,.drop,.cat-col,.cat-ov{padding:var(--card)!important}
+  .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:var(--section)!important}
 
   /* rows of like cards scroll sideways with the next one peeking (research 31, findings 6 and 12):
      KPI tiles, money tasks, release shelves. Lists of records stay vertical lists. */
@@ -157,10 +157,10 @@
 
 /* Gig day on phones (M5 step 2) */
 @media (max-width:599.98px){
-  .bd-gdgrid{display:flex!important;flex-direction:column;gap:16px}
+  .bd-gdgrid{display:flex!important;flex-direction:column;gap:var(--section)}
   .bd-gdgrid>.bd-rail{display:contents}
   .bd-gdgrid .bd-openbox{order:-1}
-  .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{background:var(--surface);border-radius:var(--r-lg);padding:16px}
+  .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{background:var(--surface);border-radius:var(--r-lg);padding:var(--card)}
   .bd-pgroup.cx-folded>:not(.bd-sh){display:none}
   .bd-steps>.bd-step.cx-later{display:none}
   .cx-showall{align-self:flex-start;margin:0 0 4px}
@@ -179,3 +179,16 @@
   .bd-step .content{padding-bottom:20px}
 }
 @media (max-width:599.98px){.bd-pgroup.cx-folded{padding:10px 12px 10px 16px!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:32px}.bd-pgroup>.bd-sh>*{margin-block:0}}
+
+/* width-aware spacing on compact: Figma LAAS · Width, mode Compact (Vit 22 Oct: far less spacing on phones) */
+@media (max-width:599.98px){
+  :root{--gutter:16px;--section:16px;--card:12px;--stack:8px;--row-y:8px;--row-x:12px}
+  .page{padding-top:12px!important}
+  .ev-head{gap:12px!important;margin:0!important}
+  .ev-date{width:56px!important;height:64px!important;padding:0!important;gap:0!important;justify-content:center}
+  .ev-date span{font:400 12px/16px var(--sans)!important;text-transform:uppercase;letter-spacing:0}
+  .ev-date b{font-size:24px!important;line-height:30px!important;letter-spacing:-.3px!important}
+  .ev-tx{gap:4px!important}.ev-k{font:400 12px/16px var(--sans)!important}
+  .bd-bar.hd{gap:8px!important}
+  .acc-row{padding-inline:0!important}
+}

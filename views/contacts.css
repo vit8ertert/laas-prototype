@@ -112,7 +112,7 @@
 .cv .btn.cv-act{height:34px;padding:8px 12px;gap:8px}
 .cv .btn.cv-act:hover{background:var(--surface)}
 .cv-rows{display:flex;flex-direction:column}
-.cv-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:8px;position:relative}
+.cv-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:var(--row-y) 12px;border-radius:8px;position:relative}
 .cv-row:not(:last-child):after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .cv-row:hover{background:var(--hover)}
 .cv-sq{width:32px;height:32px;border-radius:8px;background:var(--sunken);color:var(--ink);display:grid;place-items:center;font:400 13px/18px var(--sans);flex:none}

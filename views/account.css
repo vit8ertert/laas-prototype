@@ -42,7 +42,7 @@
 .btn.ghost.s.acc-gr{padding-right:0}
 .btn.ghost.s.acc-gfl{padding-left:0}
 .acc-rows{display:flex;flex-direction:column;gap:4px}
-.acc-row{display:flex;align-items:center;gap:24px;padding:16px 12px;border-radius:8px;transition:background .12s}
+.acc-row{display:flex;align-items:center;gap:24px;padding:var(--row-y) 12px;border-radius:8px;transition:background .12s}
 .acc-row:hover{background:var(--hover)}
 .acc-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-half);font:400 15px/22px var(--sans)}
 .acc-row .tx span{font-size:15px;line-height:22px}
@@ -65,7 +65,7 @@
 
 /* List rows: avatar, two lines, trailing tag + chevron, hairline inset to the text edges */
 .acc-list{display:flex;flex-direction:column}
-.acc-li{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;width:100%;text-align:left;position:relative}
+.acc-li{display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;position:relative}
 button.acc-li:hover{background:var(--hover)}
 .acc-li:not(:last-child)::after,.acc-inv:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .acc-li .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -136,7 +136,9 @@ button.acc-li:hover{background:var(--hover)}
 .acc-th .d{font-size:13px;line-height:18px;color:var(--muted)}
 
 /* Account cards (custom sections: no border, 20 padding, heading 18/24) */
-.acc-card{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.acc-card{background:var(--surface);border-radius:12px;padding:var(--card);display:flex;flex-direction:column;gap:var(--stack)}
+/* rows in a list touch; the divider separates them, as in the Figma List row (Vit 22 Oct: no extra spacing) */
+.acc-card>.acc-si+.acc-si,.acc-card>.acc-li+.acc-li{margin-top:calc(-1 * var(--stack))}
 .acc-ch{display:flex;align-items:center;gap:12px}
 .acc-ch h2:not(:only-child){flex:1}
 .acc-prof{display:flex;gap:20px;align-items:center}
@@ -147,8 +149,8 @@ button.acc-li:hover{background:var(--hover)}
 .acc-fields .field{min-width:0}
 .acc-fields .input{max-width:100%}
 .acc-signin{display:flex;flex-direction:column;gap:16px}
-.acc-si{display:flex;align-items:center;gap:12px;padding:12px;margin:0 -12px;text-align:left;width:calc(100% + 24px);position:relative;border-radius:8px}
-.acc-si::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
+.acc-si{display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;margin:0 -12px;text-align:left;width:calc(100% + 24px);position:relative;border-radius:8px}
+.acc-si:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .acc-si svg.acc-i32{width:32px;height:32px;flex:none;color:var(--ink);stroke-width:1.67}
 button.acc-si:hover{background:var(--hover)}
 .acc-si .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}

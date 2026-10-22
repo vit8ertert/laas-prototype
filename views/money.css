@@ -56,8 +56,8 @@
 .m-hr{border:0;border-top:1px solid var(--rule);margin:0}
 
 /* money line / list row */
-.m-line{display:flex;align-items:center;gap:16px;padding:12px;border-radius:8px;width:100%;text-align:left;color:var(--ink)}
-.m-line.m-flush{padding:12px;margin:0 -12px;width:calc(100% + 24px)}
+.m-line{display:flex;align-items:center;gap:16px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;color:var(--ink)}
+.m-line.m-flush{padding:var(--row-y) 12px;margin:0 -12px;width:calc(100% + 24px)}
 .m-line.m-fl{padding-left:0}
 button.m-line.m-fl:hover{padding-left:12px;margin-left:-12px;width:calc(100% + 12px)}
 button.m-line:hover{background:var(--raised)}
