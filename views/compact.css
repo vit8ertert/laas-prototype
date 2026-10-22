@@ -81,7 +81,7 @@
   .aud-kpi .v,.cat-kpi .v,.ec-kpis b,.d-kv,.m-kv,.bd-amt .n,.iv-due{font-size:24px;line-height:30px;letter-spacing:-.3px}
   .bd-amt .c,.bk-gig .ti,.cat-emptystate .hd h2,.cv-eh h3,.cv-sh h2,.cv-drawer .dh h2,.d-tonight h2,.acc-mini h4{font-size:20px;line-height:26px}
   .ml-eamt{font-size:22px;line-height:28px}
-  .cv-av.cv-av-l{width:56px;height:56px;font-size:22px;line-height:28px}
+  .cv-av.cv-av-l{width:56px;height:56px;font-size:var(--fs-title);line-height:var(--lh-title)}
 
   svg.i{width:16px;height:16px}svg.i.s{width:14px;height:14px}
   .tabbar svg.i{width:20px;height:20px}
@@ -362,9 +362,9 @@
   .cv-actions.cv-person>.cv-av{grid-area:av;width:56px!important;height:56px!important}
   .cv-actions.cv-person>.cv-who{grid-area:who;min-width:0;width:auto!important}
   .cv-actions.cv-person>.cv-acts{grid-area:acts;justify-content:flex-start!important}
-  .cv-who h1{font-size:24px!important;line-height:30px!important}
-  .cv-facts{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:6px!important;width:auto!important}
-  .cv-facts>*{height:26px;font-size:12px!important}
+  .cv-who h1{font-size:var(--fs-display)!important;line-height:var(--lh-display)!important}
+  .cv-facts{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:var(--space-2)!important;width:auto!important}
+  .cv-facts>*{height:26px}
   /* sections on the page edge: the columns add no padding of their own */
   .cv-main,.cv-panel{padding:0!important;background:none!important;box-shadow:none!important}
 }
