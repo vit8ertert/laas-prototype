@@ -120,6 +120,8 @@ addEventListener('resize',invoicePaper);
 /* phones: in a filter bar the chips scroll on one line inside their own row; search stays a full-width line */
 function chipRows(){if(!compact.matches)return;document.querySelectorAll('.main :is(.bk-filters,.ml-filters)').forEach(f=>{if(f.querySelector(':scope>.cx-chiprow'))return;const chips=[...f.children].filter(c=>!c.matches('.bk-search,.search'));if(chips.length<2)return;const row=document.createElement('div');row.className='cx-chiprow';chips[0].before(row);chips.forEach(c=>row.appendChild(c));});}
 
+/* tap a one-line help text to read all of it */
+document.addEventListener('click',e=>{const h=e.target.closest('.field .help');if(!h||!compact.matches)return;h.classList.toggle('cx-full');},true);
 Object.assign(L.ACTIONS,{
  moresheet:()=>{S.overlay&&S.overlay.type==='moresheet'?L.close():L.open('moresheet');},
  moreband:()=>{S.overlay=null;L.render();toast2('Switching bands opens from the band name on a wider screen.');},

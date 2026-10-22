@@ -198,11 +198,11 @@
   /* Page header: title block above, the actions on their own row below */
   .ph>.grow{flex:1 1 100%;min-width:0}
   /* Banner: icon, text and dismiss on the first line, the action below the text */
-  :is(.banner,.bd-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
-  :is(.banner,.bd-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
-  :is(.banner,.bd-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:30px;margin-right:auto}
-  :is(.banner,.bd-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:18px}
-  :is(.banner,.bd-banner)>.btn.icon,:is(.banner,.bd-banner)>[aria-label*="ismiss"]{order:2}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:30px;margin-right:auto}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:18px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.icon,:is(.banner,.bd-banner,.acc-banner,.cv-banner)>[aria-label*="ismiss"]{order:2}
   /* Booking progress: segments only; the current step's label runs under the whole bar instead of under its segment */
   .bk-prog{position:relative;padding-bottom:22px!important}.bk-prog li{position:static!important}
   .bk-prog li:is(.now,.att) span{position:absolute;left:0;right:0;bottom:0;text-align:left!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none!important;width:auto!important}
@@ -235,10 +235,10 @@
   .acc-store{padding:4px 10px 4px 8px!important;border-radius:6px!important}.acc-store svg{width:16px!important;height:16px!important}
   .acc-store span{font-size:14px!important;line-height:16px!important}.acc-store small{font-size:8px!important;line-height:10px!important}
   /* banners: less padding and space between lines */
-  :is(.banner,.bd-banner){gap:8px!important;row-gap:4px!important}
-  :is(.banner,.bd-banner) .tx{gap:2px!important}
-  :is(.banner,.bd-banner) .tx>span,:is(.banner,.bd-banner) .tx>.t-label{font-size:13px;line-height:16px}
-  :is(.banner,.bd-banner)>.btn{height:30px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner){gap:8px!important;row-gap:4px!important}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx{gap:2px!important}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span,:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{font-size:13px;line-height:16px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn{height:30px}
 }
 /* page-level containers on the width tokens (audit of every page at 390, 22 Oct): grids and side panels use the
    section gap, cards and sections the card padding (Figma Section / Card / Block on LAAS · Width) */
@@ -340,8 +340,8 @@
   :is(.bk-filters,.ml-filters){display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:8px!important}
   :is(.bk-filters,.ml-filters)>:is(.bk-search,.search){order:-1;width:100%!important;max-width:none!important}
   /* banners: title, at most two lines of text, a small action */
-  :is(.banner,.bd-banner) .tx>span:not(:first-child),:is(.banner,.bd-banner) .tx>.t-label{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  :is(.banner,.bd-banner) .tx>b{font-size:14px;line-height:18px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span:not(:first-child),:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>b{font-size:14px;line-height:18px}
   /* Mail list like Gmail on a phone: avatar, sender and time; subject; one line of preview. Unread is bold, no dot;
      the booking link, status and row actions live in the thread */
   .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:10px 12px!important;align-items:start!important}
@@ -400,3 +400,36 @@
   :is(.bk-ph,.aud-ph,.m-ph)>:first-child{flex:1 1 100%!important;min-width:0}
   .bk-ph>.btn.accent{order:2}.bk-ph>.btn:not(.accent){order:3}
 }
+
+/* Vit's fourth phone review (22 Oct) */
+@media (max-width:839.98px){
+  /* onboarding scrolls as a normal page (an inner scroll area inside a locked body did not scroll on iOS) */
+  body:has(.acc-ob),html:has(.acc-ob){overflow:auto!important}
+  .acc-ob{height:auto!important;min-height:100dvh}
+  .acc-ob .l{overflow:visible!important}
+  /* fields in a row on desktop stack at their own height (flex-basis 200 px became a 200 px height in a column) */
+  .acc-two>*{flex:0 0 auto!important}
+}
+@media (max-width:599.98px){
+  /* settings and audience sections: every block on the card edge, rows without bleed */
+  .acc-sec>:not(.acc-sh){padding-inline:0!important}
+  .acc-li{margin-inline:0!important;padding-inline:0!important;width:100%!important}
+  .acc-li:not(:last-child)::after{left:0!important;right:0!important}
+  .acc-li .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .aud-body>*{margin-inline:0!important}
+  /* long help under a field: one line on a phone, a tap shows all of it (Carbon: truncate descriptions, never labels) */
+  .field .help:not(.err):not(.cx-full){display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+  /* Today: the day sheet header on one line; the record row wraps instead of overlapping */
+  .d-sh{flex-wrap:nowrap!important;min-width:0}.d-sh h3{white-space:nowrap;flex:none}
+  .d-sh>:not(h3){min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .d-dh{flex-wrap:wrap!important;row-gap:4px!important;column-gap:8px!important}
+  .d-dh>b{order:5;flex:1 1 100%!important;width:auto!important;height:auto!important}
+  .d-dh>small{order:6;flex:1 1 100%!important;width:auto!important;height:auto!important;display:block!important}
+  .d-dh>.tag{margin-left:auto}
+  .d-dh>.d-v,.d-dh>.btn{order:7}
+  /* tonight's card: facts above, the button on its own line */
+  .d-tonight .d-tm{flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
+  .d-tonight .d-tm>span:first-child{font-size:13px;line-height:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .d-tonight h2{font-size:20px!important;line-height:26px!important}
+}
+@media (max-width:599.98px){.aud-rel{margin-inline:0!important;padding-inline:0!important;width:100%!important}}
