@@ -213,3 +213,11 @@ html.gated body>*:not(.gate){display:none!important}
 
 /* sidebar Theme item: half page colour, half accent, so it shows both the theme and the mode */
 .th-dot{width:14px;height:14px;border-radius:50%;margin:0 2px;flex:none;background:linear-gradient(135deg,var(--canvas) 0 50%,var(--accent) 50% 100%);box-shadow:0 0 0 1px var(--rule-strong)}
+
+/* Banner trailing items (Vit 22 Oct, research: Primer, Fluent, Ant): the action and the × centre on the FIRST
+   text line, not on the whole block; the × is a 32 px box (16 px icon) 4 px from the trailing edge.
+   Title line = 22 px on desktop (15/22), 18 px on phones (14/18, compact.css). */
+:is(.banner,.bd-banner,.acc-banner,.cv-banner){--bn-line:var(--lh-body)}
+:is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){flex:none;align-self:flex-start;margin-top:calc((var(--bn-line) - 34px) / 2)}
+:is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){width:32px!important;height:32px!important;flex:none;align-self:flex-start;display:grid;place-items:center;border-radius:8px;margin:calc((var(--bn-line) - 32px) / 2) -12px 0 -8px}
+:is(.banner,.bd-banner,.acc-banner,.cv-banner)>.acc-x::before{inset:0}

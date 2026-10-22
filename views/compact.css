@@ -353,6 +353,10 @@
   /* banners: title, at most two lines of text, a small action */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span:not(:first-child),:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>b{font-size:14px;line-height:18px}
+  /* the trailing × centres on the 18 px phone title line; the action sits below the text here, so it needs no line offset */
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner){--bn-line:18px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){margin-top:0}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){margin-right:-8px}
   /* Mail list like Gmail on a phone: avatar, sender and time; subject; one line of preview. Unread is bold, no dot;
      the booking link, status and row actions live in the thread */
   .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;align-items:start!important}
