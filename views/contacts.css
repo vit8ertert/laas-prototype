@@ -290,3 +290,9 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-person .cv-acts{align-self:center}
 /* a lock or icon before two lines of text sits on the first line */
 .cv-lock{align-items:flex-start!important}.cv-lock svg.i{margin-top:2px!important}
+
+/* the avatar's top lines up with the top of the name's capitals, not with its line box (Vit 22 Oct): Display 32/40 caps start 8.6 px down, 24/30 on phones 6.2 px */
+.cv-actions.cv-person{align-items:flex-start}
+.cv-actions.cv-person>.cv-av{margin-top:9px}
+.cv-actions.cv-person>.cv-acts{align-self:center}
+@media (max-width:599.98px){.cv-actions.cv-person>.cv-av{margin-top:6px!important}}

@@ -508,3 +508,21 @@
   .d-row{min-height:0;padding:var(--row-y) var(--row-x)}
   .d-tonight{height:auto!important;min-height:200px;gap:8px}
 }
+
+/* ---------- Banner on phones: Option B (Vit 22 Oct, research: GOV.UK, Atlassian Banner, Carbon "View more") ----------
+   One paragraph: the title runs into the body (13/18, title Medium), the action is an underlined link after the last
+   word, the × is a 32 px box centred on line 1, 4 px from the edge. Icon 16 on line 1. Padding 8 / 40 / 8 / 36.
+   Figma: Banner Width=Compact. Same markup for .banner, .bd-banner, .acc-banner, .cv-banner (and Django bd-banner). */
+@media (max-width:599.98px){
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:8px 40px 8px 36px!important;min-height:40px;font:400 13px/18px var(--sans)}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>svg.i{position:absolute;left:12px;top:9px;width:16px!important;height:16px!important;margin:0!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{display:inline!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>*{display:inline!important;font:400 13px/18px var(--sans)!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child{font-weight:500!important;margin-right:4px}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child:not(:only-child)::after{content:"."}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline!important;height:auto!important;min-height:0!important;padding:0!important;margin:0 0 0 4px!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 13px/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label])>svg{display:none}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:4px;margin:0!important}
+  /* no action link to lose: the paragraph stops after three lines */
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner):not(:has(>.btn:not(.icon):not([aria-label]))){display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+}
