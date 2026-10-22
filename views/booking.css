@@ -224,7 +224,9 @@
 .bd-payhero p{margin:0}
 .bd-amount{border:1px solid var(--rule);background:var(--surface);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px}
 .bd-amt{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule);height:57px}
-.bd-amt .n{font:400 32px/40px var(--sans);letter-spacing:-.5px}.bd-amt .c{font:400 24px/32px var(--sans);letter-spacing:-.3px;color:var(--muted);align-self:flex-end;margin-bottom:1px}
+.bd-amt .n{font:400 32px/40px var(--sans);letter-spacing:-.5px}.bd-amt .c{font:400 24px/32px var(--sans);letter-spacing:-.3px;color:var(--muted);align-self:baseline}
+/* amount and currency share one baseline at any size (Vit 22 Oct: "alignment of the currency needs to be fixed", it sat 5 px low on phones); the copy button stays centred */
+.bd-amt .n{align-self:baseline}.bd-amt>.btn{align-self:center}
 .bd-amt .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
 .bd-payrow{display:flex;align-items:center;gap:12px;height:34px}
 .bd-payrow .l{width:110px;flex:none;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
