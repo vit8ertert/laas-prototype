@@ -7,6 +7,12 @@
 (function(){
 const L=window.LAAS,{S,ic,esc}=L;
 L.BP={medium:600,wide:840};
+/* Lucide circle-ellipsis: More in the tab bar, the same outline weight as the other tab icons (Figma icon/circle-ellipsis) */
+L.P.circleellipsis='<circle cx="12" cy="12" r="10"/><path d="M17 12h.01"/><path d="M12 12h.01"/><path d="M7 12h.01"/>';
+/* no hover on touch screens: a tapped row kept its hover background (Vit 22 Oct). Drop every :hover rule when the device cannot hover */
+/* split a selector list on top-level commas only, never inside :is() or :not() */
+const topSplit=t=>{const out=[];let d=0,cur='';for(const ch of t){if(ch==='(')d++;if(ch===')')d--;if(ch===','&&!d){out.push(cur);cur='';}else cur+=ch;}out.push(cur);return out};
+if(matchMedia('(hover:none)').matches){for(const sh of document.styleSheets){let rules;try{rules=sh.cssRules}catch(e){continue}const strip=list=>{for(let i=list.length-1;i>=0;i--){const r=list[i];if(r.cssRules&&!r.selectorText){strip(r.cssRules);continue}if(r.selectorText&&r.selectorText.includes(':hover')){const sel=r.selectorText.replace(/:not\(:hover\)/g,'').replace(/:is\(\s*:hover\s*,\s*([^()]*)\)/g,':is($1)');if(!sel.includes(':hover')){r.selectorText=sel;continue}const keep=topSplit(sel).filter(s=>!s.includes(':hover'));if(keep.length)r.selectorText=keep.join(',');else list===rules?sh.deleteRule(i):r.parentRule.deleteRule(i)}}};strip(rules)}}
 const narrow=matchMedia(`(max-width:${L.BP.wide-.02}px)`),compact=matchMedia(`(max-width:${L.BP.medium-.02}px)`);
 L.isNarrow=()=>narrow.matches;L.isCompact=()=>compact.matches;
 /* crossing a width class re-renders, so the shell and headers swap without a reload */
@@ -19,7 +25,7 @@ const unread=()=>S.mail&&S.mail.threads?S.mail.threads.filter(t=>t.unread&&!(S.m
 L.tabbar=()=>{const on=S.overlay&&S.overlay.type==='moresheet'?'more':tabOf(S.view),n=unread();
  const tab=(id,label,icon,attrs,badge='')=>`<button class="tb-tab ${on===id?'on':''}" ${attrs} ${on===id?'aria-current="page"':''}><span class="ti">${ic(icon)}${badge}</span><span class="tl">${label}</span></button>`;
  return `<nav class="tabbar" aria-label="Main">
-  <div class="tb-tabs">${tab('today','Today','dashboard','data-go="dashboard"')}${tab('gigs','Gigs','file','data-go="bookings"')}${tab('money','Money','money','data-go="money" data-mt="owed"')}${tab('mail','Mail','mail','data-go="mail"',n?`<span class="tb-n">${n}</span>`:'')}${tab('more','More','more','data-act="moresheet" aria-haspopup="dialog"')}</div>
+  <div class="tb-tabs">${tab('today','Today','dashboard','data-go="dashboard"')}${tab('gigs','Gigs','file','data-go="bookings"')}${tab('money','Money','money','data-go="money" data-mt="owed"')}${tab('mail','Mail','mail','data-go="mail"',n?`<span class="tb-n">${n}</span>`:'')}${tab('more','More','circleellipsis','data-act="moresheet" aria-haspopup="dialog"')}</div>
   <button class="tb-ask" data-act="asksheet" aria-label="Ask the assistant" aria-haspopup="dialog">${ic('ai')}<span>Ask</span></button>
  </nav>`;};
 

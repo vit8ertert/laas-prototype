@@ -24,7 +24,7 @@
 .so-accs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .so-acc{display:flex;align-items:center;gap:12px;min-height:64px;padding:12px 16px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);max-width:360px}
 .so-acc .tx{flex:1;min-width:0;display:flex;flex-direction:column}
-.so-acc b{font:500 15px/22px var(--sans)}
+.so-acc b{font:500 15px/var(--lh-body) var(--sans)}
 .so-acc small{font:400 12px/16px var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so-acc .bd-act{margin-right:-8px}
 
@@ -38,21 +38,21 @@
 .so-c.open{background:var(--raised)}
 .so-cb{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .so-ch{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.so-ch b{font:500 15px/22px var(--sans)}
+.so-ch b{font:500 15px/var(--lh-body) var(--sans)}
 .so-ch small{font:400 12px/16px var(--sans);color:var(--muted)}
 .so-ch small .link{font-size:12px;color:var(--muted)}
 .so-ch small .link:hover{color:var(--ink)}
 .so-ch .tag{margin-left:auto}
-.so-c p{margin:0;max-width:65ch;font:400 15px/22px var(--sans);color:var(--ink)}
+.so-c p{margin:0;max-width:65ch;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .so-c mark,.so-hits mark{background:none;color:var(--accent-ink);font-weight:500}
 .so-cacts{display:flex;gap:4px;flex-wrap:wrap;margin-left:-8px}
 .so-cacts .bd-act{margin-right:0}
-.so-yours{display:flex;gap:8px;align-items:flex-start;max-width:65ch;padding:8px 12px;border-radius:8px;background:var(--well);font:400 13px/18px var(--sans);color:var(--ink)}
+.so-yours{display:flex;gap:8px;align-items:flex-start;max-width:65ch;padding:8px 12px;border-radius:8px;background:var(--well);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .so-yours svg.i{margin-top:2px;color:var(--muted)}
 .so-yours b{display:block;font:400 12px/16px var(--sans);color:var(--muted);margin-bottom:2px}
 .so-reply{display:flex;flex-direction:column;gap:8px;max-width:640px;margin-top:4px}
-.so-rl{font:400 13px/18px var(--sans);color:var(--ink)}
-.so-reply textarea{min-height:84px;font:400 15px/22px var(--sans)}
+.so-rl{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
+.so-reply textarea{min-height:84px;font:400 15px/var(--lh-body) var(--sans)}
 .so-rn{display:flex;gap:8px;align-items:flex-start;font:400 12px/16px var(--sans);color:var(--muted)}
 .so-rn svg.i{width:14px;height:14px;margin-top:1px;color:var(--accent-ink)}
 .so-rf{display:flex;align-items:center;gap:8px}
@@ -64,10 +64,10 @@
 .so-crow:hover{background:var(--raised)}
 .so-crow small{display:block!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so-phone{display:flex;flex-direction:column;border-radius:12px;background:var(--canvas);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
-.so-ph-h{display:flex;align-items:center;gap:8px;padding:10px 12px;font:500 13px/18px var(--sans)}
+.so-ph-h{display:flex;align-items:center;gap:8px;padding:10px 12px;font:500 13px/var(--lh-label) var(--sans)}
 .so-ph-h .so-av{width:24px;height:24px;font-size:10px}
 .so-phone img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
-.so-phone p{margin:0;padding:10px 12px 12px;font:400 13px/18px var(--sans);color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.so-phone p{margin:0;padding:10px 12px 12px;font:400 13px/var(--lh-label) var(--sans);color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .so-phone p b{font-weight:500}
 
 /* ---------- keyword chart (same anatomy as the money chart) ---------- */
@@ -87,7 +87,7 @@
 /* ---------- drawers ---------- */
 .so-dr{display:flex;flex-direction:column;gap:20px}
 .so-dr .field{gap:8px}
-.so-dr .field label{font:400 13px/18px var(--sans)}
+.so-dr .field label{font:400 13px/var(--lh-label) var(--sans)}
 .so-grp{display:flex;flex-direction:column;gap:4px}
 .so-k{font:400 12px/16px var(--sans);color:var(--faint)}
 .so-grp .bd-prow{padding-inline:0}
@@ -97,7 +97,7 @@
 .so-dr .bk-describe .r .btn{margin:-6px -8px -6px 0}
 .so-off{display:inline-flex;align-items:center;gap:4px;font:400 15px/18px var(--sans);color:var(--muted)}
 .so-off .link{font-size:15px}
-.so-dr textarea.input{font:400 15px/22px var(--sans)}
+.so-dr textarea.input{font:400 15px/var(--lh-body) var(--sans)}
 .so-picks{display:flex;gap:8px;flex-wrap:wrap}
 .so-picks button,.so-up{width:72px;height:72px;border-radius:8px;overflow:hidden;flex:none}
 .so-picks button img{width:100%;height:100%;object-fit:cover;display:block}
@@ -123,7 +123,7 @@
 .so-modal{display:flex;flex-direction:column;gap:16px}
 .so-quote{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--well)}
 .so-quote img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex:none}
-.so-quote p{margin:0;font:400 13px/18px var(--sans);color:var(--ink)}
+.so-quote p{margin:0;font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 
 /* ---------- spinner ---------- */
 .so-spin{animation:so-spin 1s linear infinite}

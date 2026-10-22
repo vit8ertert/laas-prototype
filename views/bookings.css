@@ -4,7 +4,7 @@
 /* ---------- page header ---------- */
 .bk .bk-ph{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
 .bk .bk-tb{flex:1;min-width:240px;display:flex;flex-direction:column;gap:4px}
-.bk .bk-tb p{margin:0;font:400 15px/22px var(--sans);color:var(--muted)}
+.bk .bk-tb p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .bk .btn svg.i{width:20px;height:20px}
 /* Figma Button · secondary has a surface fill (core .btn.secondary has none) */
 .bk .btn.secondary,.bk-modal .btn.secondary,.drawer:has(.bk-nbd) .btn.secondary,.bk-nbe .btn.secondary{background:var(--surface)}
@@ -13,14 +13,14 @@
 /* Figma "Tabs · bookings" 49 = "tab row" 48 (gap 20) + a 1 px rule rectangle. Tab 298:5098: pad 0, "inner" 46 (pad 12 4,
    gap 8) + indicator 2 (hover rule-strong, active accent-strong). social.js renders tabs without .in, so it keeps the old padding */
 .bk-tabs{display:flex;gap:20px;box-shadow:inset 0 -1px 0 var(--rule);overflow-x:auto;scrollbar-width:none}
-.bk-tabs>button{position:relative;display:flex;align-items:center;gap:8px;height:48px;margin-bottom:1px;padding:12px 4px 14px;font:400 15px/22px var(--sans);color:var(--muted);white-space:nowrap;flex:none}
+.bk-tabs>button{position:relative;display:flex;align-items:center;gap:8px;height:48px;margin-bottom:1px;padding:12px 4px 14px;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 .bk-tabs>button:has(>.in){flex-direction:column;align-items:stretch;gap:0;padding:0}
 .bk-tabs .in{display:flex;align-items:center;gap:8px;padding:12px 4px}
 .bk-tabs button.on{color:var(--ink);font-weight:500}
 .bk-tabs>button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px}
 .bk-tabs>button:hover:not(.on)::after{background:var(--rule-strong)}
 .bk-tabs button.on::after{background:var(--accent-strong);animation:tabline .28s cubic-bezier(.2,.8,.2,1) both}
-.bk-tabs .c{display:inline-flex;align-items:center;height:22px;padding:2px 8px;border-radius:999px;font:400 13px/18px var(--sans);background:var(--sunken);color:var(--muted)}
+.bk-tabs .c{display:inline-flex;align-items:center;height:22px;padding:2px 8px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
 .bk-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
 .bk-tabs button:hover:not(.on){color:var(--ink)}
 
@@ -33,7 +33,7 @@
 .bk-chip.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
 .bk-search{position:relative;display:flex;align-items:center;width:280px;max-width:100%;height:38px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .bk-search svg.i{position:absolute;left:12px;color:var(--muted);pointer-events:none}
-.bk-search input{width:100%;height:100%;padding:8px 12px 8px 38px;background:none;border:0;outline:none;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-search input{width:100%;height:100%;padding:8px 12px 8px 38px;background:none;border:0;outline:none;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-search input::placeholder{color:var(--muted)}
 .bk-search:focus-within,.bk-search:has(input:not(:placeholder-shown)){box-shadow:inset 0 0 0 2px var(--ink)}
 .bk-search:focus-within svg.i{color:var(--ink)}
@@ -45,15 +45,15 @@
 .bk-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}
 .bk-tr{display:grid;grid-template-columns:136px minmax(196px,1fr) 100px 140px 120px 150px 96px;column-gap:24px;align-items:center;min-width:1060px;padding:12px 16px;min-height:56px;box-sizing:border-box;background:var(--surface);box-shadow:inset 0 -1px 0 var(--rule);cursor:pointer;transition:background .12s}
 .bk-tr:not(.bk-th):hover,.bk-tr:not(.bk-th):focus-visible{background:var(--hover);outline:none}
-.bk-th{min-height:0;padding:8px 16px;box-shadow:none;background:var(--canvas);cursor:default;font:400 13px/18px var(--sans);color:var(--muted)}
+.bk-th{min-height:0;padding:8px 16px;box-shadow:none;background:var(--canvas);cursor:default;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bk-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bk-tr .w{font:400 13px/18px var(--sans);color:var(--ink)}
+.bk-tr .w{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .bk-tr .tt{display:flex;align-items:center;gap:12px}
-.bk-tr .tt b{font:500 15px/22px var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.bk-tr .tt b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis}
 .bk-tr .m{font:400 15px/18px var(--sans);color:var(--muted)}
 .bk-tr .n{text-align:right}
 .bk-tr .mono{font:400 14px/20px var(--mono);color:var(--ink)}
-.bk-tr .tag{height:26px;padding:4px 8px;font:400 13px/18px var(--sans)}
+.bk-tr .tag{height:26px;padding:4px 8px;font:400 13px/var(--lh-label) var(--sans)}
 .bk-tr mark,.bk-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
 .bk-thumb{width:32px;height:32px;border-radius:8px;object-fit:cover;flex:none}
 .bk-thumb.none{display:grid;place-items:center;background:var(--well);border-radius:6px;color:var(--ink)}
@@ -64,7 +64,7 @@
 .bk-foot{display:flex;align-items:center;gap:8px;min-height:34px}
 .bk-foot>span{flex:1;font:400 12px/16px var(--sans);color:var(--muted)}
 /* Figma footer Button: pad 8 0 8 12 (83 wide); core's flush-right rule ([class$="-foot"]>.btn.ghost:last-child) zeroes the left too */
-.bk-foot>.btn.ghost.bk-fb:last-child{padding:8px 0 8px 12px!important;font:500 13px/18px var(--sans)}
+.bk-foot>.btn.ghost.bk-fb:last-child{padding:8px 0 8px 12px!important;font:500 13px/var(--lh-label) var(--sans)}
 .bk-foot .bk-fb:hover{background:none;text-decoration:underline}
 
 /* ---------- empty states (no results, filters, first run) ---------- */
@@ -73,7 +73,7 @@
 .bk-empty.choice{overflow:visible;transform:none;box-shadow:none}.bk-empty.choice div{padding:0}
 .bk-empty .hd{display:flex;flex-direction:column;gap:8px;width:100%}
 .bk-empty .hd .t-title{letter-spacing:-.3px}
-.bk-empty .hd p{margin:0;font:400 15px/22px var(--sans);color:var(--muted)}
+.bk-empty .hd p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .bk-empty .acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .bk-start{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:560px}
 .bk-empty.choice{width:100%;max-width:760px}
@@ -81,7 +81,7 @@
 .bk-choice{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:12px;background:var(--canvas);text-align:left;transition:background .12s}
 .bk-choice:hover{background:var(--raised)}
 .bk-choice img{width:100%;height:96px;object-fit:cover;border-radius:8px}
-.bk-choice b{font:500 15px/22px var(--sans);color:var(--ink);margin-top:0}
+.bk-choice b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink);margin-top:0}
 .bk-choice small{font:400 12px/16px var(--sans);color:var(--muted)}
 
 /* ---------- Past: year in gigs tiles ---------- */
@@ -101,7 +101,7 @@
 .bk-menu .hd{padding:6px 10px 4px;font:400 12px/16px var(--sans);color:var(--faint)}
 .bk-menu .opt{display:flex;align-items:center;gap:10px;width:100%;height:38px;padding:8px 10px;border-radius:8px;text-align:left}
 .bk-menu .opt:hover{background:var(--well)}
-.bk-menu .l{flex:1;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-menu .l{flex:1;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-menu .n{font:400 12px/16px var(--sans);color:var(--faint)}
 .bk-menu .ft{margin-top:0;padding:4px 4px 0;border-top:1px solid var(--rule)}
 .bk-menu .box,.bk-cb .box{display:grid;place-items:center;width:16px;height:16px;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none;color:var(--canvas)}
@@ -124,14 +124,14 @@
 .drawer:has(.bk-nbd) .df .btn.accent svg.i{width:20px;height:20px}
 .bk-nbd{display:flex;flex-direction:column;gap:20px}
 .bk-nbd .field,.bk-form .field{gap:8px}
-.bk-nbd .field label,.bk-form .field label{font:400 13px/18px var(--sans)}
-.bk-nbd .input,.bk-form .input{border-radius:8px;font:400 15px/22px var(--sans)}
+.bk-nbd .field label,.bk-form .field label{font:400 13px/var(--lh-label) var(--sans)}
+.bk-nbd .input,.bk-form .input{border-radius:8px;font:400 15px/var(--lh-body) var(--sans)}
 /* fields sized to their input (intentional, research note 27): the width goes on the control, so help text keeps the row */
 .bk-nbd .help{line-height:16px}
 :is(.bk-nbd,.bk-form) .field.w-280>:is(.input,.bk-lead,.bk-sel){max-width:280px}:is(.bk-nbd,.bk-form) .field.w-240>:is(.input,.bk-lead,.bk-sel){max-width:240px}
 :is(.bk-nbd,.bk-form) .field.w-400>:is(.input,.bk-lead,.bk-sel){max-width:400px}:is(.bk-nbd,.bk-form) .field.w-200>:is(.input,.bk-lead,.bk-sel){max-width:200px}
 .bk-describe{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-radius:12px;background:var(--canvas);border:1px solid var(--accent)}
-.bk-describe .r{display:flex;align-items:flex-start;gap:8px;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-describe .r{display:flex;align-items:flex-start;gap:8px;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-describe .m{display:flex;align-items:flex-start;gap:8px;font:400 12px/16px var(--sans);color:var(--muted)}
 .bk-describe .m svg.i{width:14px;height:14px}
 .bk-lead{position:relative;display:block}
@@ -154,7 +154,7 @@
 .bk-ebar{display:flex;align-items:center;gap:12px;height:62px;padding:12px 20px;flex:none;background:var(--sunken)}
 .bk-ebar .ti{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;min-width:0}
 .bk-ebar .id{font:400 14px/20px var(--mono);color:var(--muted)}
-.bk-ebar .ti b{font:500 15px/22px var(--sans);white-space:nowrap}
+.bk-ebar .ti b{font:500 15px/var(--lh-body) var(--sans);white-space:nowrap}
 .bk-ebar .saved{display:flex;align-items:center;gap:8px;font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap}
 .bk-ebar .btn.accent svg.i{width:20px;height:20px}
 .bk-ebody{flex:1;min-height:0;display:flex;gap:8px;padding:0 8px 8px}
@@ -183,10 +183,10 @@
 .bk-vlist button{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;text-align:left}
 .bk-vlist button:hover{background:var(--well)}
 .bk-vlist img{width:32px;height:32px;border-radius:8px;object-fit:cover}
-.bk-vlist b{display:block;font:500 15px/22px var(--sans)}
+.bk-vlist b{display:block;font:500 15px/var(--lh-body) var(--sans)}
 .bk-vlist small{font:400 12px/16px var(--sans);color:var(--muted)}
 .bk-vlist .none{padding:8px 10px;color:var(--muted);font-size:13px}
-.bk-vlist .add{border-top:1px solid var(--rule);border-radius:0 0 8px 8px;font:500 13px/18px var(--sans);margin-top:4px}
+.bk-vlist .add{border-top:1px solid var(--rule);border-radius:0 0 8px 8px;font:500 13px/var(--lh-label) var(--sans);margin-top:4px}
 .bk-people{display:flex;gap:16px;flex-wrap:wrap}
 .bk-cb{display:flex;align-items:center;gap:8px;font:400 15px/18px var(--sans);color:var(--ink)}
 .bk-cb .box{width:18px;height:18px;box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface)}
@@ -196,7 +196,7 @@
 .bk-file{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left}
 .bk-file:hover{background:var(--raised)}
 .bk-file>span:first-child{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
-.bk-file b{font:500 15px/22px var(--sans)}.bk-file small{font:400 12px/16px var(--sans);color:var(--muted)}
+.bk-file b{font:500 15px/var(--lh-body) var(--sans)}.bk-file small{font:400 12px/16px var(--sans);color:var(--muted)}
 .bk-live{position:sticky;top:0;width:300px;flex:none;display:flex;flex-direction:column;gap:12px;padding-bottom:20px;border-radius:12px}
 .bk-live p{margin:0;max-width:260px;font:400 12px/16px var(--sans);color:var(--faint)}
 .bk-gig{display:flex;flex-direction:column;gap:var(--stack);padding:var(--row-x);border-radius:12px;background:var(--surface);position:relative}
@@ -206,9 +206,9 @@
 .bk-gig .cv.none svg.i{width:24px;height:24px;color:var(--ink)}
 .bk-gig .cv .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.16);color:#fff}
 .bk-gig .tx{display:flex;flex-direction:column}
-.bk-gig .when{font:400 13px/18px var(--sans);color:var(--muted)}
+.bk-gig .when{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bk-gig .ti{margin-top:4px;font:400 24px/28px var(--sans);letter-spacing:-.3px;color:var(--ink)}
-.bk-gig .wh{display:flex;align-items:center;gap:6px;margin-top:8px;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-gig .wh{display:flex;align-items:center;gap:6px;margin-top:8px;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-gig .wh svg.i{width:14px;height:14px}
 .bk-gig .wh.err{color:var(--bad)}
 .bk-gig hr{width:100%;margin:16px 0;border:0;border-top:1px solid var(--rule)}
@@ -226,10 +226,10 @@
 .bk-ebar2{flex:none;padding:0 8px 8px}
 .bk-abar{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:var(--raised);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .bk-abar>svg.i{width:20px;height:20px}
-.bk-abar .rec{display:inline-flex;align-items:center;gap:8px;height:26px;padding:4px 8px;border-radius:999px;background:var(--accent-tint);color:var(--accent-ink);font:400 13px/18px var(--sans);white-space:nowrap}
+.bk-abar .rec{display:inline-flex;align-items:center;gap:8px;height:26px;padding:4px 8px;border-radius:999px;background:var(--accent-tint);color:var(--accent-ink);font:400 13px/var(--lh-label) var(--sans);white-space:nowrap}
 .bk-abar .rec button{display:grid;place-items:center;color:inherit}
 .bk-abar .rec svg.i{width:14px;height:14px}
-.bk-abar input{flex:1;min-width:0;background:none;border:0;outline:none;font:400 15px/22px var(--sans);color:var(--ink)}
+.bk-abar input{flex:1;min-width:0;background:none;border:0;outline:none;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-abar input::placeholder{color:var(--muted)}
 
 /* ---------- narrow screens ---------- */

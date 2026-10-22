@@ -36,8 +36,8 @@
 /* fact grid used for file details and royalties (views/brands.js L.factsDl) */
 .facts-dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
 .facts-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.facts-dl dd{margin:0;font:400 15px/22px var(--sans);overflow-wrap:anywhere}
-.facts-h{margin:8px 0 0;font:500 13px/18px var(--sans);color:var(--muted)}
+.facts-dl dd{margin:0;font:400 15px/var(--lh-body) var(--sans);overflow-wrap:anywhere}
+.facts-h{margin:8px 0 0;font:500 13px/var(--lh-label) var(--sans);color:var(--muted)}
 
 
 /* light theme: detail-page sections (booking, social post, gig day) sit in white blocks. Canvas #f4f3ef on sunken #ebe8e5 gives
@@ -219,7 +219,7 @@
 .ev-k{font:400 14px/20px var(--sans);color:var(--muted)}
 .ev-tx h1{margin:0}
 .ev-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
-.ev-venue{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 3px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 13px/18px var(--sans);color:var(--ink)}
+.ev-venue{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 3px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .ev-venue img{width:22px;height:22px;border-radius:50%;object-fit:cover}
 .ev-venue:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 /* booking progress: six steps, done filled, current half, late red, cancelled stops */

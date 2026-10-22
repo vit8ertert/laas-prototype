@@ -7,11 +7,11 @@
 @media (min-width:840px){.body{padding:8px}}
 
 /* Button 131:168: gap 8, pad 8 16 (M) / 8 12 (S), radius pill, label Body strong 15/22 (M) / Label strong 13/18 (S), icon 20 / 16 */
-.btn{height:auto;gap:8px;padding:8px 16px;border:0;border-radius:var(--r-pill);font:500 15px/22px var(--sans);color:var(--ink)}
+.btn{height:auto;gap:8px;padding:8px 16px;border:0;border-radius:var(--r-pill);font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .btn>svg.i{width:20px;height:20px;flex:none}
-.btn.s{height:auto;padding:8px 12px;font:500 13px/18px var(--sans)}
+.btn.s{height:auto;padding:8px 12px;font:500 13px/var(--lh-label) var(--sans)}
 /* Size=L (Vit 21 Oct: the sign-up buttons felt small): 48 high, for full-width calls to action on sign-up and onboarding */
-.btn.lg{height:auto;min-height:48px;padding:13px 24px;font:500 15px/22px var(--sans);gap:10px}.btn.lg>svg{width:20px;height:20px}
+.btn.lg{height:auto;min-height:48px;padding:13px 24px;font:500 15px/var(--lh-body) var(--sans);gap:10px}.btn.lg>svg{width:20px;height:20px}
 .btn.s>svg.i{width:16px;height:16px}
 .btn.primary{background:var(--ink);color:var(--on-dark)}
 .btn.secondary{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--ink)}
@@ -30,16 +30,16 @@
 /* Input / Select 132:118 / 142:616: column gap 8; Label 13/18 ink; Field pad 8 12, radius 8, inside stroke 1 rule-strong, surface;
    Focus inside stroke 2 ink; Error stroke 1 bad + help in bad; Help Meta 12/16 muted */
 .field{gap:8px}
-.field label{font:400 13px/18px var(--sans);color:var(--ink)}
+.field label{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .field .help{font:400 12px/16px var(--sans);color:var(--muted)}
-.input{height:38px;padding:8px 12px;border:0;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 15px/22px var(--sans);color:var(--ink)}
+.input{height:38px;padding:8px 12px;border:0;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ink)}
 .input.err,.field.err .input{box-shadow:inset 0 0 0 1px var(--bad)}
 .field.err .help{color:var(--bad)}
 textarea.input{height:auto;padding:8px 12px}
 
 /* Tag 132:131: pad 4 8, radius pill, Label 13/18; tint + ink per status */
-.tag{height:auto;padding:4px 8px;border-radius:var(--r-pill);font:400 13px/18px var(--sans)}
+.tag{height:auto;padding:4px 8px;border-radius:var(--r-pill);font:400 13px/var(--lh-label) var(--sans)}
 .tag.draft{background:var(--draft-tint);color:var(--draft)}
 .tag.confirmed{background:var(--ok-tint);color:var(--ok)}
 .tag.paid{background:var(--paid-tint);color:var(--paid)}
@@ -49,10 +49,10 @@ textarea.input{height:auto;padding:8px 12px}
 
 /* Tab 298:5098: 48 high = inner 46 (pad 12 4, gap 8) + indicator 2; label Body strong 15/22;
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
-.tabs button{height:48px;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/22px var(--sans)}
+.tabs button{height:48px;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
 .tabs button:hover{border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
-.tabs .c{padding:2px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/18px var(--sans)}
+.tabs .c{padding:2px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/var(--lh-label) var(--sans)}
 
 /* Table row 140:357: pad 12 16, gap 24, bottom stroke 1 rule (inside), surface; hover fill hover */
 td{padding:12px 16px;border-top:0;box-shadow:inset 0 -1px 0 var(--rule);background:var(--surface)}
@@ -61,12 +61,12 @@ tbody tr:hover td{background:var(--hover)}
 /* Toast 299:5237: gap 12, pad 12 12 12 16, radius 12, stroke 1 rule-strong that takes space (strokesIncludedInLayout: a real border), overlay, shadow 0 8 24 #00000059;
    Figma places it 110 above the frame bottom */
 .toast{gap:12px;padding:var(--row-y) 12px var(--row-y) 16px;border:1px solid var(--rule-strong);border-radius:var(--r-lg);background:var(--overlay);
-  box-shadow:0 8px 24px #00000059;font:400 15px/22px var(--sans);bottom:auto}
+  box-shadow:0 8px 24px #00000059;font:400 15px/var(--lh-body) var(--sans);bottom:auto}
 
 /* Segmented control 442:19785: pad 3, gap 2, radius 8, well; segment pad 6 14, radius 6, Label strong 13/18;
    selected surface + shadow 0 1 2 #00000040 */
 .seg{gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
-.seg button{height:auto;padding:6px 14px;border-radius:6px;font:400 13px/18px var(--sans)}
+.seg button{height:auto;padding:6px 14px;border-radius:6px;font:400 13px/var(--lh-label) var(--sans)}
 .seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px #00000040}
 
 /* Banner 299:5204: gap 12, pad 12 16, radius 8, icon 18; text column gap 2 */
@@ -105,7 +105,7 @@ tbody tr:hover td{background:var(--hover)}
 .nav.active{background:var(--well);font-weight:500}
 
 /* Record chip (28 screens, e.g. 297:4814): pad 4 8, gap 8, radius pill, Label 13/18, accent-tint / accent-ink */
-.rec{height:auto;padding:4px 8px;gap:8px;border-radius:var(--r-pill);font:400 13px/18px var(--sans)}
+.rec{height:auto;padding:4px 8px;gap:8px;border-radius:var(--r-pill);font:400 13px/var(--lh-label) var(--sans)}
 
 /* Page header title block (every screen "Title block"): column, gap 4 */
 .ph .grow{display:flex;flex-direction:column;gap:4px}
@@ -119,7 +119,7 @@ tbody tr:hover td{background:var(--hover)}
 .drawer .dh .grow>*{margin:0}
 
 /* Status chip 301:5149: pad 4 12, gap 8, radius pill, dot 6, Label strong 13/18; colours per status */
-.schip{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:var(--r-pill);font:500 13px/18px var(--sans);white-space:nowrap;flex:none}
+.schip{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:var(--r-pill);font:500 13px/var(--lh-label) var(--sans);white-space:nowrap;flex:none}
 .schip>i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
 .schip.enquiry{background:var(--sunken);color:var(--muted)}
 .schip.hold{background:var(--att-tint);color:var(--att)}
@@ -132,13 +132,13 @@ tbody tr:hover td{background:var(--hover)}
    head pad 8 12 Label 13/18 muted; items pad 8 12, gap 12, radius 8, hover/current fill hover, text Label 13/18 muted;
    rule 1 px; foot pad 8 12 Label 13/18 faint */
 .smenu{width:360px;padding:8px;display:flex;flex-direction:column;border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
-.smenu-h{padding:8px 12px;font:400 13px/18px var(--sans);color:var(--muted)}
+.smenu-h{padding:8px 12px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .smenu-it{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r-md);text-align:left;width:100%;color:var(--ink)}
 .smenu-it:hover,.smenu-it.on{background:var(--hover)}
-.smenu-d{flex:1;min-width:0;font:400 13px/18px var(--sans);color:var(--muted)}
+.smenu-d{flex:1;min-width:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .smenu-it>svg.i{width:14px;height:14px;flex:none}
 .smenu-rule{border:0;height:1px;margin:0;background:var(--rule)}
-.smenu-f{padding:8px 12px;font:400 13px/18px var(--sans);color:var(--faint)}
+.smenu-f{padding:8px 12px;font:400 13px/var(--lh-label) var(--sans);color:var(--faint)}
 
 /* Send preview (booking screens "Send preview", measured by the booking pass): pad 20 24, gap 16, stroke takes space (border);
    head = title block column gap 4; To line gap 8 with the value at 15/22; "Show full message" line 18;
@@ -147,7 +147,7 @@ tbody tr:hover td{background:var(--hover)}
 .send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
 .send>div:first-child p{margin:0!important}
 .send>.row.t-label{gap:8px}
-.send>.row.t-label>span:nth-child(2){font:400 15px/22px var(--sans)}
+.send>.row.t-label>span:nth-child(2){font:400 15px/var(--lh-body) var(--sans)}
 .send .msg .link{line-height:18px}
 .send>.row:last-child{gap:12px}
 .send>.row:last-child>.btn.ghost.flush{padding:8px 16px 8px 0!important}
@@ -159,12 +159,12 @@ tbody tr:hover td{background:var(--hover)}
   box-shadow:0 16px 48px #00000073}
 .sheet-h{display:flex;align-items:center;gap:8px}
 .sheet-h .grow{flex:1}
-.sheet-rec{display:inline-flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:500 13px/18px var(--sans);white-space:nowrap}
+.sheet-rec{display:inline-flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:500 13px/var(--lh-label) var(--sans);white-space:nowrap}
 .sheet-rec img{width:24px;height:24px;border-radius:5px;object-fit:cover;flex:none}
 .sheet .sheet-x{padding:8px 0 8px 12px}
 .sheet-you{display:flex;justify-content:flex-end}
-.sheet-you .bubble{margin:0;padding:8px 16px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:400 15px/22px var(--sans);max-width:none}
-.sheet-a{margin:0;font:400 15px/22px var(--sans);color:var(--ink)}
+.sheet-you .bubble{margin:0;padding:8px 16px;border-radius:var(--r-md);background:var(--well);color:var(--ink);font:400 15px/var(--lh-body) var(--sans);max-width:none}
+.sheet-a{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 
 /* Drawer head Close (203:3658): ghost S with x, pad 8 0 8 12 (flush on the drawer's right padding), 69×34 */
 /* symmetric padding with a -12 px margin: the label stays flush on the drawer's right padding, the hover fill is even (Vit 21 Oct) */
@@ -180,7 +180,7 @@ body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srg
 
 /* Collapsed rail (466:23760 "Rail"): 64 wide, no fill (on the sunken page), gap 4; band square 36, initials Label 13/18 */
 .collapsed .sidebar{background:none;gap:4px}
-.collapsed .sidebar .band .sq{width:36px;height:36px;font:500 13px/18px var(--sans)}
+.collapsed .sidebar .band .sq{width:36px;height:36px;font:500 13px/var(--lh-label) var(--sans)}
 
 /* Password gate on the public GitHub Pages copy: card on the sunken page, popover values */
 html.gated body>*:not(.gate){display:none!important}

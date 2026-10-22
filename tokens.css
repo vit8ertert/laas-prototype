@@ -14,16 +14,16 @@
 .t-display{font:400 32px/40px var(--sans);letter-spacing:-0.5px}
 .t-title{font:400 24px/32px var(--sans);letter-spacing:-0.3px}
 .t-heading{font:500 18px/24px var(--sans);letter-spacing:-0.1px}
-.t-body{font:400 15px/22px var(--sans);letter-spacing:0px}
-.t-body-strong{font:500 15px/22px var(--sans);letter-spacing:0px}
-.t-label{font:400 13px/18px var(--sans);letter-spacing:0px}
+.t-body{font:400 15px/var(--lh-body) var(--sans);letter-spacing:0px}
+.t-body-strong{font:500 15px/var(--lh-body) var(--sans);letter-spacing:0px}
+.t-label{font:400 13px/var(--lh-label) var(--sans);letter-spacing:0px}
 .t-meta{font:400 12px/16px var(--sans);letter-spacing:0px}
 .t-mono{font:400 14px/20px var(--mono);letter-spacing:0px}
 .t-body-tight{font:400 15px/18px var(--sans);letter-spacing:0px}
 .t-body-strong-tight{font:500 15px/18px var(--sans);letter-spacing:0px}
 .t-overline{font:400 12px/16px var(--sans);letter-spacing:0px}
 .t-mono-large{font:500 16px/22px var(--mono);letter-spacing:0px}
-.t-label-strong{font:500 13px/18px var(--sans);letter-spacing:0px}
+.t-label-strong{font:500 13px/var(--lh-label) var(--sans);letter-spacing:0px}
 .tok-label-light{--sunken:#ebe8e5;--canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f7f6f3;--well:#ebe8e5;--rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#a3a39d;--on-dark:#ffffff;--accent:#cdbdff;--accent-strong:#a98bff;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#1a1a1a;--ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;--signal:#c9e63a;--signal-tint:#f3f9c9;--signal-ink:#55640a;--artwork-tint:#f1ecf9;--artwork-base:#8e7bd6;--artwork-ink:#2a1f4d;--travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;--you:#ff6437;--you-ink:#000000;--state-hover:#0000000a;--state-selected:#00000014;--state-pressed:#0000001f;--poster-lime:#d9f25a;--poster-green:#1fa06a;--poster-pink:#ff5ca8;--poster-orange:#ff7a1a}
 .tok-label-dark{--sunken:#0b0b0b;--canvas:#121212;--surface:#1e1e1e;--raised:#272727;--overlay:#2e2e2e;--top:#383838;--hover:#272727;--well:#262626;--rule:#2a2a2a;--rule-strong:#3e3e3e;--ink:#e3e3e3;--muted:#a3a3a3;--faint:#828282;--on-dark:#121212;--accent:#cdbdff;--accent-strong:#b39bff;--accent-tint:#332b4a;--accent-ink:#dcd0ff;--on-accent:#121212;--ok-tint:#163222;--ok:#71eb44;--paid-tint:#2a2340;--paid:#8b6cff;--att-tint:#3a2010;--att:#ffb454;--bad-tint:#3b1218;--bad:#ff1e62;--draft-tint:#26251f;--draft:#b8b5ac;--signal:#d9f25a;--signal-tint:#2a3012;--signal-ink:#e4f77a;--artwork-tint:#1f1f1f;--artwork-base:#8e7bd6;--artwork-ink:#e6ddff;--travel:#00aeef;--work:#3bc9db;--break:#ffb454;--doors:#ff80c0;--you:#ff6437;--you-ink:#000000;--state-hover:#ffffff0f;--state-selected:#ffffff1f;--state-pressed:#ffffff29;--poster-lime:#d9f25a;--poster-green:#2bc57f;--poster-pink:#ff6fb5;--poster-orange:#ff8a33}
 .tok-metal-light{--sunken:#ebe8e5;--canvas:#f4f3ef;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f7f6f3;--well:#ebe8e5;--rule:#e3e1dc;--rule-strong:#c9c7c1;--ink:#1a1a1a;--muted:#6b6b66;--faint:#a3a39d;--on-dark:#ffffff;--accent:#cdbdff;--accent-strong:#a98bff;--accent-tint:#efe9ff;--accent-ink:#4b3a9e;--on-accent:#1a1a1a;--ok-tint:#dff1e3;--ok:#1f6b3a;--paid-tint:#e9e2ff;--paid:#4b3a9e;--att-tint:#ffe8d6;--att:#b04a00;--bad-tint:#fbe0e4;--bad:#a3122e;--draft-tint:#ecebe7;--draft:#5c5b57;--signal:#c9e63a;--signal-tint:#f3f9c9;--signal-ink:#55640a;--artwork-tint:#f1ecf9;--artwork-base:#8e7bd6;--artwork-ink:#2a1f4d;--travel:#2e6be6;--work:#0e8f8a;--break:#b7791f;--doors:#d6338a;--you:#ff6437;--you-ink:#000000;--state-hover:#0000000a;--state-selected:#00000014;--state-pressed:#0000001f;--poster-lime:#d9f25a;--poster-green:#1fa06a;--poster-pink:#ff5ca8;--poster-orange:#ff7a1a}
@@ -37,4 +37,4 @@
 /* width classes (research 31, M3): compact < 600, medium 600-839, expanded >= 840. For reference; media queries write the numbers out */
 :root{--bp-medium:600px;--bp-wide:840px}
 /* width-aware spacing, Figma LAAS · Width (Expanded / Compact); compact values in views/compact.css (22 Oct) */
-:root{--gutter:24px;--section:24px;--card:20px;--stack:12px;--row-y:12px;--row-x:16px;--hero-y:48px;--hero-x:32px}
+:root{--gutter:24px;--section:24px;--card:20px;--stack:12px;--row-y:12px;--row-x:16px;--hero-y:48px;--hero-x:32px;--lh-body:22px;--lh-label:18px}

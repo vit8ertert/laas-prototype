@@ -29,5 +29,5 @@
 .tour-card[data-side=inside] .tour-arrow{display:none}
 
 /* skip everything: a quiet text link under the card's buttons */
-.tour-off{align-self:flex-start;margin-top:4px;padding:0;font:400 13px/18px var(--sans);color:var(--muted);text-decoration:underline}
+.tour-off{align-self:flex-start;margin-top:4px;padding:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);text-decoration:underline}
 .tour-off:hover{color:var(--ink)}
