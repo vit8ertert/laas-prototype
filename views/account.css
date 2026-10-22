@@ -99,8 +99,10 @@ button.acc-li:hover{background:var(--hover)}
 .acc-x::before{content:"";position:absolute;inset:-6px;border-radius:6px}
 .acc-x:hover::before{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .acc-x svg.i{width:16px;height:16px;color:var(--ink)}
-.acc-explainer .acc-x,.acc-explainer .acc-x svg.i{width:14px;height:14px}
-.acc-explainer{display:flex;gap:12px;align-items:flex-start;padding:12px 8px 12px 12px;border-radius:8px;background:var(--well);height:80px;box-sizing:border-box}
+.acc-explainer .acc-x svg.i{width:14px;height:14px}
+/* grows with its text, × in a 32 px box in the corner, like the dashboard Explainer (Vit 22 Oct: "this needs to be fixed", the text was cut at 80 px) */
+.acc-explainer{position:relative;display:flex;gap:12px;align-items:flex-start;padding:12px 40px 12px 12px;border-radius:8px;background:var(--well);min-height:80px;box-sizing:border-box}
+.acc-explainer>.acc-x{position:absolute!important;top:7px;right:4px;width:32px!important;height:32px!important;border-radius:8px;display:grid;place-items:center;margin:0!important}
 .acc-explainer .tx{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
 .acc-explainer b{font-weight:500;font-size:15px;line-height:var(--lh-body)}
 .acc-explainer .tx span{font-size:12px;line-height:16px;color:var(--muted)}
