@@ -93,8 +93,10 @@
   .btn.lg{min-height:44px;padding:10px 20px}
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
-  .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-main>.bd-sec,.bd-pay,.cv-main,.d-left,.m-left,
-  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.acc-sec:is(.pad,.inset),.strip,.drop,.cat-col,.cat-ov{padding:var(--card)!important}
+  .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-pay,.cv-main,
+  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.acc-sec:is(.pad,.inset),.strip,.drop{padding:var(--card)!important}
+  /* columns with no card behind them on a phone sit on the page edge, like the page header (sweep 22 Oct: Today, Money, Settle, booking pages, past release) */
+  :is(.d-left,.m-left,.bd-main>.bd-sec,.cat-col,.cat-ov){padding:0!important}
   .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:var(--section)!important}
 
   /* rows of like cards scroll sideways with the next one peeking (research 31, findings 6 and 12):
@@ -247,7 +249,9 @@
    section gap, cards and sections the card padding (Figma Section / Card / Block on LAAS · Width) */
 @media (max-width:599.98px){
   .bd-grid,.m-cols,.iv-grid,.cv-grid,.aud-cols,.bd-panel,.m-right,.cv-panel,.ml-thread,.ml-conv,.ml-panel{gap:var(--section)!important}
-  .m-sec,.cv-sec,.iv-card,.bd-pgroup.bd-actg,.acc-cur,.acc-plan{padding:var(--card)!important}
+  .cv-sec,.iv-card,.bd-pgroup.bd-actg,.acc-cur,.acc-plan{padding:var(--card)!important}
+  /* Money sections have no surface (desktop pads them top and bottom only), so their text stays on the page edge */
+  .m-sec{padding:var(--card) 0!important}
   .cv-hero .tx,.hero .tx{padding:0 var(--card) var(--card)!important}
   .bd-step .content{padding-bottom:var(--section)!important}
 }
