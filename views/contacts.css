@@ -85,7 +85,7 @@
 .cv-tint{position:absolute;left:0;right:0;top:0;height:var(--tint-h,320px);pointer-events:none;z-index:0;border-radius:12px 12px 0 0;background:linear-gradient(180deg,color-mix(in srgb,var(--tint) var(--tint-a,26%),transparent),color-mix(in srgb,var(--tint) 0%,transparent))}
 .cv-detail>*:not(.cv-tint){position:relative;z-index:1}
 .cv .btn.cv-back{align-self:flex-start;height:34px;gap:8px}
-.cv-hero{min-height:280px;height:280px;border-radius:12px;background:#1a1a1a}
+.cv-hero{min-height:var(--photo-hero);height:var(--photo-hero);border-radius:12px;background:#1a1a1a} /* Width token: 280 desktop, 200 phones (Vit 22 Oct: "use less height for the banner") */
 .cv-hero:after{background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 5%,transparent),color-mix(in srgb,var(--scrim-base) 25%,transparent) 45%,color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .cv-hero .tx{padding:0 32px 28px;gap:10px}
 .cv-hero .k{font:400 13px/var(--lh-label) var(--sans);color:rgba(255,255,255,.85);opacity:1}

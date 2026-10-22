@@ -541,3 +541,8 @@
   .main .cx-more{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
   .main .cx-clamp>.tx+.cx-more{margin-left:0}
 }
+/* Contact and venue pages on phones (Vit 22 Oct): the Bookings and People sections have no card, so their rows do not
+   bleed past the page gutter; the text starts on the section heading's edge (16 from the screen) */
+@media (max-width:599.98px){
+  .cv-detail .cv-row{margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;width:100%!important}
+}
