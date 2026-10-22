@@ -375,9 +375,15 @@
   .ml-row.unread>.ml-from,.ml-row.unread>.ml-text>b{font-weight:500;color:var(--ink)}.ml-row.unread>.ml-time{color:var(--ink)}
   .ml-row+.ml-row::before{left:64px!important;right:12px!important}
   /* contact and venue header: avatar and name on one line, facts wrap under the name, actions below */
-  .cv-actions.cv-person{display:grid!important;grid-template-columns:56px minmax(0,1fr)!important;grid-template-areas:"av who" "acts acts";column-gap:12px!important;row-gap:12px!important;align-items:start!important}
+  /* Vit 22 Oct (comment on the phone Contact): the fact tags run the full width, from the avatar's left edge to the right;
+     avatar beside name and role, then the tags, then the actions */
+  .cv-actions.cv-person{display:grid!important;grid-template-columns:56px minmax(0,1fr)!important;grid-template-areas:"av name" "av role" "facts facts" "acts acts";column-gap:12px!important;row-gap:0!important;align-items:start!important}
+  .cv-actions.cv-person>.cv-who{display:contents!important}
+  .cv-actions.cv-person>.cv-who>h1{grid-area:name;min-width:0}
+  .cv-actions.cv-person>.cv-who>.cv-role{grid-area:role;min-width:0;margin-top:4px}
+  .cv-actions.cv-person>.cv-who>.cv-facts{grid-area:facts;margin-top:12px;gap:6px!important}
+  .cv-actions.cv-person>.cv-acts{margin-top:12px}
   .cv-actions.cv-person>.cv-av{grid-area:av;width:56px!important;height:56px!important}
-  .cv-actions.cv-person>.cv-who{grid-area:who;min-width:0;width:auto!important}
   .cv-actions.cv-person>.cv-acts{grid-area:acts;justify-content:flex-start!important}
   .cv-who h1{font-size:var(--fs-display)!important;line-height:var(--lh-display)!important}
   .cv-facts{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:var(--space-2)!important;width:auto!important}
