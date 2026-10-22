@@ -414,12 +414,12 @@ button.acc-si:hover{background:var(--hover)}
 
 /* Pick your look: swatch cards under the live preview (right) or in the form on narrow screens */
 .acc-looks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:728px}
-.acc-look{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;border:1px solid var(--rule-strong);background:color-mix(in srgb,var(--canvas) 70%,transparent);text-align:left;color:var(--ink)}
+.acc-look{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);padding:var(--space-3);border-radius:12px;border:1px solid var(--rule-strong);background:color-mix(in srgb,var(--canvas) 70%,transparent);text-align:left;color:var(--ink)}
 .acc-look:hover{border-color:var(--muted)}
 .acc-look.on{box-shadow:inset 0 0 0 1px var(--ink);border-color:var(--ink)}
 .acc-look .sw{display:flex}.acc-look .sw i{width:20px;height:20px;border-radius:50%;box-shadow:0 0 0 2px var(--surface)}.acc-look .sw i+i{margin-left:-6px}
 .acc-look .nm{font:500 15px/var(--lh-body) var(--sans)}
-.acc-look .fits{position:absolute;top:-10px;right:8px;padding:2px 8px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 12px/16px var(--sans)}
+.acc-look .fits{position:absolute;top:-11px;right:8px;padding:2px 8px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 13px/var(--lh-label) var(--sans)}
 .acc-obpick-l{display:none}
 @media (max-width:839.98px){.acc-obpick-l{display:block}.acc-looks{grid-template-columns:1fr 1fr}}
 
