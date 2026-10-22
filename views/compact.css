@@ -29,23 +29,23 @@
   .cx-over{display:none!important}
   .cx-group{flex-wrap:nowrap}
 
-  /* menus become bottom sheets: full width, grab handle, 48 px rows */
-  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:20px 20px 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up .28s cubic-bezier(.32,.72,0,1) both!important}
-  .pop:not(.pal)::before{content:"";position:absolute;top:8px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
+  /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
+  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up .28s cubic-bezier(.32,.72,0,1) both!important}
+  .pop:not(.pal)::before{content:"";position:absolute;top:12px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
   .scrim[style*="transparent"]{background:var(--scrim)!important}
   /* search takes the whole screen */
   .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}
   /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
-  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:20px 20px 0 0;animation:cx-up .34s cubic-bezier(.32,.72,0,1) both}
+  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up .34s cubic-bezier(.32,.72,0,1) both}
   .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
-  .modal{left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:20px 20px 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
+  .modal{left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 
 /* ---------- sheets of our own (More, Ask, ⋯) ---------- */
-.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up .28s cubic-bezier(.32,.72,0,1) both}
+.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up .28s cubic-bezier(.32,.72,0,1) both}
 @media (min-width:600px){.cx-sheet{left:50%;right:auto;width:min(560px,100%);margin-left:max(-280px,-50%)}}
 .cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 12px;border-radius:var(--r-md);text-align:left}
 .cx-it>span{display:flex;align-items:center;gap:12px}
@@ -316,7 +316,8 @@
   /* welcome sheet */
   .pop.cx-welcome{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
   .cx-wl{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:20px}.cx-wl svg{margin-top:2px;flex:none}
-  .cx-full{width:100%;justify-content:center;height:44px!important}
+  /* full-width sheet button = Figma Button Size=L (Body strong 15, 46 high in Compact) */
+  .cx-full{width:100%;justify-content:center;height:46px!important;font:500 15px/var(--lh-body) var(--sans)!important}
 }
 @media (max-width:599.98px){
   .bk-table>.bk-tr.bk-th{display:none!important}
