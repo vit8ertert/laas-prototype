@@ -72,9 +72,9 @@
    Icons 18 → 16, small 16 → 14; icons inside buttons 20 → 16. Buttons 38 → 34, small 34 → 30.
    Cards and panels 24 → 16 padding, section gaps 32+ → 20. Tab bar icons stay 20 (navigation). */
 @media (max-width:599.98px){
-  .t-display{font-size:24px;line-height:30px;letter-spacing:-.3px}
-  .t-title{font-size:20px;line-height:26px;letter-spacing:-.2px}
-  .t-heading{font-size:16px;line-height:22px}
+  /* sizes and line heights come from tokens.css (Figma LAAS · Width); only the tighter tracking is set here */
+  .t-display{letter-spacing:-.3px}
+  .t-title{letter-spacing:-.2px}
   .bd-hero h1,.cv-hero h1,.ev-tx h1{font-size:28px!important;line-height:32px!important;letter-spacing:-.4px!important}
   .ev-date{width:56px!important;height:64px!important;border-radius:12px}.ev-date b{font-size:24px!important;line-height:28px!important}
   .acc-mini h3{font-size:28px;line-height:34px}
@@ -182,7 +182,7 @@
 
 /* width-aware spacing on compact: Figma LAAS · Width, mode Compact (Vit 22 Oct: far less spacing on phones) */
 @media (max-width:599.98px){
-  :root{--gutter:16px;--section:16px;--card:12px;--stack:8px;--row-y:8px;--row-x:12px;--hero-y:24px;--hero-x:16px;--lh-body:20px;--lh-label:16px}
+  /* the Compact values of LAAS · Width come from tokens.css (generated from Figma) */
   .page{padding-top:12px!important}
   .ev-head{gap:12px!important;margin:0!important}
   .ev-date{width:56px!important;height:64px!important;padding:0!important;gap:0!important;justify-content:center}

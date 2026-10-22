@@ -80,7 +80,7 @@
    The row extends 16 px past the content edge, so its text starts on the heading line and the hover box has room.
    Containers give it that room: open sections need nothing; cards use 8 px padding plus 16 px on the content,
    so card text and headings sit 24 px in. Table rows (bordered tables) stay 12 16 with a divider. */
-:root{--row-x:16px;--row-y:12px}
+/* --row-x and --row-y come from tokens.css (Figma LAAS · Width: 16/12 desktop, 12/8 phones) */
 :is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.aud-rel,.m-kvr,.m-ev,.cat-row,.cv-cvrrow,.cv-irow){
   padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:8px}
 .acc-row{padding-block:var(--row-y)!important}
