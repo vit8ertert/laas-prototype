@@ -269,7 +269,7 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-form .field{max-width:640px!important}
 /* venues map view */
 .cv-map{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:16px;align-items:start}
-.cv-mapc{position:relative;border-radius:var(--r-lg);background:color-mix(in srgb,var(--stream,#0a7fbf) 12%,var(--surface));box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
+.cv-mapc{position:relative;border-radius:var(--r-lg);background:var(--map-water);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
 .cv-mapc svg{display:block;width:100%;height:auto;aspect-ratio:1000/780}
 /* real coastline (views/denmark.js): Denmark on the surface, the neighbours a step back; hairlines keep 1 px at any zoom */
 .cv-mapc .land{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
