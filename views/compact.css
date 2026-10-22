@@ -145,6 +145,7 @@
   .ev-meta.cx-sum{flex-wrap:wrap;gap:4px 8px;align-items:center}
   .main .ev-head .ev-meta.cx-sum>.tag{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
   .ev-meta.cx-sum>.tag::before{content:"·";margin-right:8px;color:var(--faint)}
+  .ev-meta.cx-sum>.tag:first-child::before{content:none}
   .main .ev-head .ev-meta.cx-sum>.ev-venue{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:500 13px/var(--lh-label) var(--sans);color:var(--ink)}
   .ev-meta.cx-sum>.ev-venue img{display:none}
   /* "+N" more-details chip = a tag-shaped pill (Figma Event header "More facts"): 24 high, 10 px sides, Label 13 (Vit: the 31 x 24 oval looked squeezed) */
