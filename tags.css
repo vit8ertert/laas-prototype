@@ -210,7 +210,7 @@
 /* event header (booking, gig day, social post): a tile that says what kind of thing this is, then the title and facts;
    the venue is a chip with its photo that opens the venue page (Vit 21 Oct) */
 .ev-head{display:flex;align-items:center;gap:var(--section);margin:8px 0 var(--card)}
-.ev-date{width:88px;height:96px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px}
+.ev-date{width:88px;height:96px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px;text-align:center}
 .ev-date span{font:500 13px/16px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .ev-date b{font:400 40px/44px var(--sans);letter-spacing:-.8px;color:var(--ink)}
 .ev-date.today{background:var(--accent);box-shadow:none}.ev-date.today :is(span,b){color:var(--on-accent)}

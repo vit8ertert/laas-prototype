@@ -312,7 +312,9 @@
   .send>.row:last-child>.btn.accent{order:3;flex:1 1 100%;justify-content:center}
   .send>.row:last-child>.btn.secondary{margin-left:auto}
   /* date tile: smaller number, room around it */
-  .ev-date{width:52px!important;height:60px!important}.ev-date b{font-size:20px!important;line-height:26px!important;letter-spacing:-.2px!important}
+  .ev-date{width:52px!important;height:60px!important}
+  /* Figma Event header Compact: the day, date and month sit 2 px tighter than touching (item spacing -2; CSS gap cannot be negative) */
+  .ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:20px!important;line-height:26px!important;letter-spacing:-.2px!important}
   .ev-date span{font-size:12px!important;line-height:16px!important;letter-spacing:0!important}
   /* first-run dashboard: room above the heading; start cards scroll sideways; suggestions wrap, smaller */
   .main>.page.d-first{padding-top:24px!important}
