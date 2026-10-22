@@ -200,8 +200,8 @@
   /* Banner: icon, text and dismiss on the first line, the action below the text */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:30px;margin-right:auto}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:18px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:24px;margin-right:auto}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:12px}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.icon,:is(.banner,.bd-banner,.acc-banner,.cv-banner)>[aria-label*="ismiss"]{order:2}
   /* Booking progress: segments only; the current step's label runs under the whole bar instead of under its segment */
   .bk-prog{position:relative;padding-bottom:22px!important}.bk-prog li{position:static!important}
@@ -433,3 +433,52 @@
   .d-tonight h2{font-size:20px!important;line-height:26px!important}
 }
 @media (max-width:599.98px){.aud-rel{margin-inline:0!important;padding-inline:0!important;width:100%!important}}
+
+/* Vit's fifth phone review (22 Oct): fixed as patterns, not spots */
+@media (max-width:839.98px){
+  /* onboarding: room between the logo row and the step title */
+  .acc-obform{margin-top:16px!important}
+}
+@media (max-width:599.98px){
+  /* every banner kind: the text under the title stops after two lines, whatever element holds it (span, small, p) */
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>:not(:first-child){display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:16px}
+  /* Assistant, empty chat: greeting and suggestions sit above the composer, left-aligned, one suggestion per row
+     (phone chat apps put them where the thumb is) */
+  .d-newc{justify-content:flex-end!important;align-items:stretch!important;text-align:left!important}
+  .d-newc :is(h1,h2,p){text-align:left!important}
+  .d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important}
+  .d-newc .d-chip{justify-content:flex-start!important;text-align:left!important;height:auto!important;min-height:40px;padding:10px 12px!important;border-radius:var(--r-lg)!important;white-space:normal}
+}
+/* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
+:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:last-child{padding-right:0!important;margin-right:0!important}
+:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:last-child:hover{background:none!important;text-decoration:underline}
+/* touch screens get a pressed state instead of hover: a brief tint while the finger is down (Material state layer) */
+@media (hover:none){
+  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):active{background-color:var(--state-pressed)!important}
+  .tb-tab:active .ti{background:var(--state-pressed)}
+}
+
+@media (max-width:599.98px){
+  /* Social posts use the Bookings row: when · accounts, post and reach, status; comments live in the post */
+  .bk-tr.so-p>.n:last-child{display:none!important}
+  .bk-tr.so-p>span:nth-child(4){grid-area:s;justify-self:end}
+  .bk-tr.so-p>.n:nth-child(5){grid-area:n}
+  .bk-tr.so-p>.m:nth-child(3){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk-tr.so-p>.m:nth-child(3)::before{content:"· "}
+  .bk-tr.so-p .so-pt small{display:none}
+  /* Contacts table becomes list rows: name and status, then kind · where · last contact */
+  .table-wrap.cv-table{overflow:visible!important}
+  .cv-table table,.cv-table tbody{display:block;width:100%;min-width:0!important}
+  .cv-table thead{display:none}
+  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc lc";column-gap:6px;row-gap:2px;padding:var(--row-y) 0;border-bottom:1px solid var(--rule)}
+  .cv-table td{padding:0!important;border:0!important;min-width:0}
+  .cv-table td:nth-child(1){grid-area:n;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cv-table td:nth-child(2){grid-area:k}.cv-table td:nth-child(3){grid-area:w}.cv-table td:nth-child(4){grid-area:lc}
+  .cv-table td:is(:nth-child(2),:nth-child(3),:nth-child(4)){font-size:13px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cv-table td:is(:nth-child(3),:nth-child(4))::before{content:"· "}
+  .cv-table td:nth-child(5){grid-area:s;justify-self:end}
+  .cv-table td:nth-child(6){display:none}
+  /* settings fields never wider than the row */
+  .acc-row .ctl,.acc-row .ctl .input{min-width:0!important;max-width:100%!important}
+}
+@media (max-width:599.98px){.d-conv{padding-bottom:24px!important}}
