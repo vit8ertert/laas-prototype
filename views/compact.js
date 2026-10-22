@@ -60,6 +60,8 @@ function collapseHeaders(){if(!compact.matches)return;
  groups().forEach((g,gi)=>{const btns=[...g.children].filter(c=>c.matches('.btn')&&c.offsetParent!==null||c.matches('.btn.cx-over'));
   const prim=btns.filter(b=>b.matches('.accent')).pop();if(!prim)return;
   const over=btns.filter(b=>b!==prim&&!isMore(b));if(!over.length)return;
+  /* Priority+: one secondary and no page ⋯ fits next to the primary, so it stays visible (Vit 22 Oct: a sheet with one item looked odd) */
+  if(over.length===1&&!btns.some(isMore))return;
   over.forEach(b=>b.classList.add('cx-over'));g.classList.add('cx-group');g.dataset.cxg=gi;
   if(!btns.some(isMore)){g.insertAdjacentHTML('beforeend',`<button class="btn secondary icon cx-more" aria-label="More" data-act="cxmore">${ic('more')}</button>`);}
   /* the primary sits last, ⋯ after it, as on desktop */
@@ -112,6 +114,12 @@ L.OVERLAYS.cxwelcome=()=>`<div class="scrim" data-act="close"></div><div class="
  ${[['file','Gigs, Money and Mail sit in the bar at the bottom.'],['ai','Ask drafts and answers. Nothing is sent without your OK.'],['circleellipsis','More holds everything else, and this guide.']].map(([i,t])=>`<div class="cx-wl">${ic(i)}<span>${t}</span></div>`).join('')}
  <button class="btn accent cx-full" data-act="close">Got it</button></div>`;
 
+/* phones: the invoice paper is laid out at 680 px and scaled down to the column, so it keeps its desktop look */
+function invoicePaper(){document.querySelectorAll('.main .iv-paper').forEach(p=>{if(!compact.matches){p.style.zoom='';return}const w=p.parentElement.clientWidth;p.style.zoom=Math.min(1,w/680).toFixed(4);});}
+addEventListener('resize',invoicePaper);
+/* phones: in a filter bar the chips scroll on one line inside their own row; search stays a full-width line */
+function chipRows(){if(!compact.matches)return;document.querySelectorAll('.main :is(.bk-filters,.ml-filters)').forEach(f=>{if(f.querySelector(':scope>.cx-chiprow'))return;const chips=[...f.children].filter(c=>!c.matches('.bk-search,.search'));if(chips.length<2)return;const row=document.createElement('div');row.className='cx-chiprow';chips[0].before(row);chips.forEach(c=>row.appendChild(c));});}
+
 Object.assign(L.ACTIONS,{
  moresheet:()=>{S.overlay&&S.overlay.type==='moresheet'?L.close():L.open('moresheet');},
  moreband:()=>{S.overlay=null;L.render();toast2('Switching bands opens from the band name on a wider screen.');},
@@ -131,6 +139,6 @@ Object.assign(L.ACTIONS,{
 const toast2=m=>L.toast(m);
 /* the current page tab stays in view when the tab row scrolls */
 const tabsInView=()=>{if(!compact.matches)return;document.querySelectorAll('.main .tabs').forEach(t=>{const on=t.querySelector('.on');if(on&&t.scrollWidth>t.clientWidth)t.scrollLeft=Math.max(0,on.offsetLeft-t.offsetLeft-16);});};
-L.afterRender=()=>{collapseHeaders();injectPending();tabsInView();summariseFacts();backLabels();gigdayCompact();editorAbar();};
+L.afterRender=()=>{collapseHeaders();injectPending();tabsInView();summariseFacts();backLabels();gigdayCompact();editorAbar();invoicePaper();chipRows();};
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='asksheetq'){e.preventDefault();L.ACTIONS.asksheetgo();}});
 })();
