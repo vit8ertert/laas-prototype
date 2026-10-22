@@ -149,3 +149,7 @@
 /* Deliveries: destination with its logo, a Format column (Vit 21 Oct) */
 .so .bk-tr.so-d{grid-template-columns:minmax(180px,1fr) 140px 100px 80px 140px 150px 72px;min-width:960px}
 .so-dest{display:inline-flex;align-items:center;gap:8px}
+/* Keyword watch: the networks a keyword watches as their 20 px marks, not words (Vit 22 Oct: "IG and FB take too much
+   space"); the full names stay in the label and tooltip */
+.so-nets{display:inline-flex;align-items:center;gap:6px}
+.so-nets>*{flex:none}
