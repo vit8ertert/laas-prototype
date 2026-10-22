@@ -117,7 +117,7 @@
 .bd-mrow .amt{width:96px;text-align:right;flex:none}
 .amt.mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
 .bd-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/18px var(--sans);flex:none}
-.bd-av.obj{background:var(--signal);color:#0f0f0f}
+.bd-av.obj{background:var(--signal);color:var(--on-lime)}
 .bd-frow:hover{background:var(--raised)}
 .bd-frow>svg{color:var(--muted)}
 /* split rows: no left padding, amount right after the text */
@@ -168,7 +168,7 @@
 /* modals: send preview 720 (Figma "Send preview": pad 20 24, gap 16, radius 12, border rule-strong on --top), dialogs 560 */
 .bd-modal.w720{width:min(720px,calc(100% - 32px));padding:20px 24px;gap:16px;border:1px solid var(--rule-strong);border-radius:12px}
 .bd-modal.w560{width:min(560px,calc(100% - 32px));top:72px;max-height:calc(100% - 96px)}
-.bd-scrim{background:rgba(0,0,0,.35)}
+.bd-scrim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent)}
 .bd-send{display:flex;flex-direction:column;gap:16px}
 .bd-send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
 .bd-send .t-heading{letter-spacing:-.1px}
@@ -187,7 +187,7 @@
 .bd-sf .btn svg.i{width:20px;height:20px}
 /* record a payment (dialog 560): pad 24 24 20, gap 20, radius 16, surface, border rule-strong, shadow 0 16 48 */
 .bd-modal.bd-rec{top:120px;gap:20px;padding:24px 24px 20px;border-radius:16px;background:var(--surface);border:1px solid var(--rule-strong);box-shadow:0 16px 48px rgba(0,0,0,.5)}
-.bd-scrim55{background:rgba(0,0,0,.55)}
+.bd-scrim55{background:color-mix(in srgb,var(--scrim-base) 55%,transparent)}
 .bd-mh{display:flex;align-items:center;gap:12px}.bd-mh>div{flex:1;display:flex;flex-direction:column;gap:4px}
 .bd-mh .t-title{letter-spacing:-.3px}
 .bd-mx{width:40px;height:32px;padding:8px 12px}

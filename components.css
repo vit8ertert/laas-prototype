@@ -193,9 +193,9 @@ html.gated body>*:not(.gate){display:none!important}
 /* Ask (the assistant's own action) in Figma's lime (color/poster/lime, the same in every theme and mode), so it never competes
    with the lilac page action (Vit 21 Oct: "the lime colour from the Figma file for Ask") */
 /* lime is always light, so its text and icon are always near-black, whatever the theme's on-accent is (Metal light has a bone on-accent) */
-.btn[data-act=ask],.btn[data-act=nbask]{background:var(--poster-lime);color:#0f0f0f}
+.btn[data-act=ask],.btn[data-act=nbask]{background:var(--poster-lime);color:var(--on-lime)}
 .btn[data-act=ask]:hover,.btn[data-act=nbask]:hover{filter:brightness(1.06)}
-.abar-mini{background:var(--poster-lime);color:#0f0f0f;border-color:transparent}
+.abar-mini{background:var(--poster-lime);color:var(--on-lime);border-color:transparent}
 .abar-mini:hover{background:var(--poster-lime);filter:brightness(1.06)}
 
 /* Assistant bar hide: a 32 px × right after Ask (Vit 21 Oct: closer to Ask, a cross not a chevron); 12 bar gap − 8 = 4 */

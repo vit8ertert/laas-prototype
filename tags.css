@@ -132,7 +132,7 @@
 .pop.flowmenu{max-height:calc(100vh - 76px);overflow-y:auto;overscroll-behavior:contain}
 .pop{max-height:calc(100vh - 16px);overflow-y:auto;overscroll-behavior:contain}
 /* status tags on photos keep their colour but sit on dark glass, so they read on any image */
-:is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+:is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:color-mix(in srgb,var(--scrim-base) 50%,transparent)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 /* inputs inside a composed field (search boxes, composers) show focus on the field, not a second ring inside it */
 :is(input,textarea):not(.input):focus-visible{outline:none!important}
 /* sidebar numbers (Vit 21 Oct: some stuck out over the hover fill, alignment differed): every count and alert
@@ -234,3 +234,10 @@
 @media (max-width:700px){.ev-head{gap:16px}.ev-date{width:64px;height:72px}.ev-date b{font-size:28px;line-height:32px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
 /* booking and gig day open without a photo now, so they use the shared detail-page tint, not the venue-photo brown */
 .main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)!important}
+
+/* checkbox and toggle states, matching Figma (21–22 Oct audit): hover shows a soft halo, disabled is 45 % and inert;
+   keyboard focus is the global 2 px ink ring */
+:is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):hover{box-shadow:0 0 0 4px var(--state-hover)}
+input[type=checkbox]:not(:disabled):hover{border-radius:4px}
+:is(input[type=checkbox],[role=checkbox],[role=switch]):is(:disabled,[aria-disabled=true]){opacity:.45;cursor:not-allowed;pointer-events:none}
+:is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;color:var(--muted)}

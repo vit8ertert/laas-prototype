@@ -86,7 +86,7 @@
 .cv-detail>*:not(.cv-tint){position:relative;z-index:1}
 .cv .btn.cv-back{align-self:flex-start;height:34px;gap:8px}
 .cv-hero{min-height:280px;height:280px;border-radius:12px;background:#1a1a1a}
-.cv-hero:after{background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.25) 45%,rgba(0,0,0,.85))}
+.cv-hero:after{background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 5%,transparent),color-mix(in srgb,var(--scrim-base) 25%,transparent) 45%,color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .cv-hero .tx{padding:0 32px 28px;gap:10px}
 .cv-hero .k{font:400 13px/18px var(--sans);color:rgba(255,255,255,.85);opacity:1}
 .cv-hero h1{font:400 52px/52px var(--sans);letter-spacing:-1.04px}

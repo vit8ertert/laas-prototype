@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=49852f2">
+<link rel="stylesheet" href="tokens.css?v=fafeb81">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -136,14 +136,14 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 /* hero */
 .hero{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:280px;display:flex;align-items:flex-end;color:#fff}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.25) 45%,rgba(0,0,0,.85))}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 5%,transparent),color-mix(in srgb,var(--scrim-base) 25%,transparent) 45%,color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .hero .tx{position:relative;z-index:1;padding:0 32px 28px;display:flex;flex-direction:column;gap:10px}
 .hero h1{font:400 clamp(36px,5vw,52px)/1 var(--sans);letter-spacing:-1px;margin:0}
 .hero .k{font-size:13px;opacity:.85}
 .facts{display:flex;gap:8px;flex-wrap:wrap}.facts span{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px}
 
 /* overlays */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;animation:fade .15s}
+.scrim{position:fixed;inset:0;background:color-mix(in srgb,var(--scrim-base) 45%,transparent);z-index:40;animation:fade .15s}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--top);z-index:41;display:flex;flex-direction:column;animation:slide .2s ease-out;padding-bottom:env(safe-area-inset-bottom,0px)}
 .drawer .dh{display:flex;align-items:flex-start;gap:12px;padding:20px 24px;border-bottom:1px solid var(--rule)}.drawer .dh .grow{flex:1}
 .drawer .db{flex:1;overflow:auto;padding:4px 24px 24px;display:flex;flex-direction:column;gap:20px}
@@ -315,19 +315,19 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=49852f2">
-<link rel="stylesheet" href="views/tour.css?v=49852f2">
-<link rel="stylesheet" href="views/dashboard.css?v=49852f2">
-<link rel="stylesheet" href="views/bookings.css?v=49852f2">
-<link rel="stylesheet" href="views/booking.css?v=49852f2">
-<link rel="stylesheet" href="views/contacts.css?v=49852f2">
-<link rel="stylesheet" href="views/money.css?v=49852f2">
-<link rel="stylesheet" href="views/catalogue.css?v=49852f2">
-<link rel="stylesheet" href="views/account.css?v=49852f2">
-<link rel="stylesheet" href="views/mail.css?v=49852f2">
-<link rel="stylesheet" href="views/social.css?v=49852f2">
-<link rel="stylesheet" href="views/logomotion.css?v=49852f2">
-<link rel="stylesheet" href="tags.css?v=49852f2">
+<link rel="stylesheet" href="components.css?v=fafeb81">
+<link rel="stylesheet" href="views/tour.css?v=fafeb81">
+<link rel="stylesheet" href="views/dashboard.css?v=fafeb81">
+<link rel="stylesheet" href="views/bookings.css?v=fafeb81">
+<link rel="stylesheet" href="views/booking.css?v=fafeb81">
+<link rel="stylesheet" href="views/contacts.css?v=fafeb81">
+<link rel="stylesheet" href="views/money.css?v=fafeb81">
+<link rel="stylesheet" href="views/catalogue.css?v=fafeb81">
+<link rel="stylesheet" href="views/account.css?v=fafeb81">
+<link rel="stylesheet" href="views/mail.css?v=fafeb81">
+<link rel="stylesheet" href="views/social.css?v=fafeb81">
+<link rel="stylesheet" href="views/logomotion.css?v=fafeb81">
+<link rel="stylesheet" href="tags.css?v=fafeb81">
 
 <div id="app"></div>
 
@@ -981,17 +981,17 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=49852f2"></script>
-<script src="views/bookings.js?v=49852f2"></script>
-<script src="views/booking.js?v=49852f2"></script>
-<script src="views/contacts.js?v=49852f2"></script>
-<script src="views/money.js?v=49852f2"></script>
-<script src="views/catalogue.js?v=49852f2"></script>
-<script src="views/brands.js?v=49852f2"></script>
-<script src="views/account.js?v=49852f2"></script>
-<script src="views/mail.js?v=49852f2"></script>
-<script src="views/social.js?v=49852f2"></script>
-<script src="views/tour.js?v=49852f2"></script>
-<script src="views/motion.js?v=49852f2"></script>
-<script src="views/logomotion.js?v=49852f2"></script>
+<script src="views/dashboard.js?v=fafeb81"></script>
+<script src="views/bookings.js?v=fafeb81"></script>
+<script src="views/booking.js?v=fafeb81"></script>
+<script src="views/contacts.js?v=fafeb81"></script>
+<script src="views/money.js?v=fafeb81"></script>
+<script src="views/catalogue.js?v=fafeb81"></script>
+<script src="views/brands.js?v=fafeb81"></script>
+<script src="views/account.js?v=fafeb81"></script>
+<script src="views/mail.js?v=fafeb81"></script>
+<script src="views/social.js?v=fafeb81"></script>
+<script src="views/tour.js?v=fafeb81"></script>
+<script src="views/motion.js?v=fafeb81"></script>
+<script src="views/logomotion.js?v=fafeb81"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

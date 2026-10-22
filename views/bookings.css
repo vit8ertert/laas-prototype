@@ -89,7 +89,7 @@
 @media (max-width:900px){.bk-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .bk-tile{position:relative;height:120px;border-radius:12px;overflow:hidden;text-align:left;color:#fff}
 .bk-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.bk-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.85))}
+.bk-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 10%,transparent),color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .bk-tile:hover img{transform:scale(1.03)}
 .bk-tile .tx{position:absolute;left:16px;right:16px;bottom:16px;z-index:1;display:flex;flex-direction:column;gap:6px}
 .bk-tile b{font:500 18px/24px var(--sans);letter-spacing:-.1px}
