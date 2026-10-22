@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=fafeb81">
+<link rel="stylesheet" href="tokens.css">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -315,19 +315,19 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 }
 .menu-btn{display:none;width:34px;height:34px;place-items:center}
 </style>
-<link rel="stylesheet" href="components.css?v=fafeb81">
-<link rel="stylesheet" href="views/tour.css?v=fafeb81">
-<link rel="stylesheet" href="views/dashboard.css?v=fafeb81">
-<link rel="stylesheet" href="views/bookings.css?v=fafeb81">
-<link rel="stylesheet" href="views/booking.css?v=fafeb81">
-<link rel="stylesheet" href="views/contacts.css?v=fafeb81">
-<link rel="stylesheet" href="views/money.css?v=fafeb81">
-<link rel="stylesheet" href="views/catalogue.css?v=fafeb81">
-<link rel="stylesheet" href="views/account.css?v=fafeb81">
-<link rel="stylesheet" href="views/mail.css?v=fafeb81">
-<link rel="stylesheet" href="views/social.css?v=fafeb81">
-<link rel="stylesheet" href="views/logomotion.css?v=fafeb81">
-<link rel="stylesheet" href="tags.css?v=fafeb81">
+<link rel="stylesheet" href="components.css">
+<link rel="stylesheet" href="views/tour.css">
+<link rel="stylesheet" href="views/dashboard.css">
+<link rel="stylesheet" href="views/bookings.css">
+<link rel="stylesheet" href="views/booking.css">
+<link rel="stylesheet" href="views/contacts.css">
+<link rel="stylesheet" href="views/money.css">
+<link rel="stylesheet" href="views/catalogue.css">
+<link rel="stylesheet" href="views/account.css">
+<link rel="stylesheet" href="views/mail.css">
+<link rel="stylesheet" href="views/social.css">
+<link rel="stylesheet" href="views/logomotion.css">
+<link rel="stylesheet" href="tags.css">
 
 <div id="app"></div>
 
@@ -812,7 +812,7 @@ function render(){
   const up=S.anchor?S.anchor.top-b.height-6:-1;p.style.top=Math.max(8,up>=8?up:innerHeight-b.height-8)+'px';});
 }
 const toastHtml=()=>S.toast?`<div class="toast" role="status">${ic('check','s')}<span>${esc(S.toast.msg)}</span>${S.toast.undo?'<button class="btn ghost s" data-act="undo">Undo</button>':''}</div>`:'';
-const FLOWS=[['First run','Sign up to the dashboard',()=>{S.onboarding.step=0;go('onboarding')}],['Book a gig','Bookings, search, filter, booking',()=>{S.bookTab='up';S.search='';go('bookings')}],['A booking’s life','Enquiry → hold → offer → confirmed → completed',()=>{S.booking={state:'enquiry',depositPaid:false,settled:false,rated:false,sheet:false,cancelled:false};go('booking')}],['Get paid','Overdue deposit, record, settle',()=>{S.booking.state='confirmed';S.booking.depositPaid=false;go('money')}],['Gig day','Timeline, open items',()=>{S.parkingDone=false;go('gigday')}],['Contacts import','Three-step import',()=>{S.imported=false;go('contacts')}],['A release','Empty catalogue to delivery',()=>{S.release={stage:'none',title:'Late Shift EP',tracks:0,progress:0};S.catalog=null;S.rtab='overview';go('catalogue')}],['Themes','Genre themes and light mode',()=>go('theme')],['Settings','Account, members, plan',()=>go('account')],['Audience','Empty, connect Spotify, metrics',()=>{S.audConnected=false;S.atab='overview';S.audBanner=true;go('audience')}]];
+const FLOWS=[['First run','Sign up to the dashboard',()=>{S.onboarding.step=0;go('onboarding')}],['Book a gig','Bookings, search, filter, booking',()=>{S.bookTab='up';S.search='';go('bookings')}],['A booking’s life','Enquiry → hold → offer → confirmed → completed',()=>{S.booking={state:'enquiry',depositPaid:false,settled:false,rated:false,sheet:false,cancelled:false};go('booking')}],['Get paid','Overdue deposit, record, settle',()=>{S.booking.state='confirmed';S.booking.depositPaid=false;go('money')}],['Money from zero','No invoices yet, three ways to start',()=>LAAS.ACTIONS.mnyfromzero()],['Gig day','Timeline, open items',()=>{S.parkingDone=false;go('gigday')}],['Contacts import','Three-step import',()=>{S.imported=false;go('contacts')}],['A release','Empty catalogue to delivery',()=>{S.release={stage:'none',title:'Late Shift EP',tracks:0,progress:0};S.catalog=null;S.rtab='overview';go('catalogue')}],['Themes','Genre themes and light mode',()=>go('theme')],['Settings','Account, members, plan',()=>go('account')],['Audience','Empty, connect Spotify, metrics',()=>{S.audConnected=false;S.atab='overview';S.audBanner=true;go('audience')}]];
 const flowBtnInline=()=>`<div class="flowbar"><button class="btn secondary s" data-act="flows">${ic('flow','s')}<span class="fl">Flows</span></button></div>`;
 const flowBtn=()=>`${S.flowsOpen?`<div class="pop flowmenu" role="menu">${FLOWS.map((f,i)=>`<button data-flow="${i}" role="menuitem"><span style="flex:1"><b class="strong">${f[0]}</b><br><span class="t-meta muted">${f[1]}</span></span>${ic('right','s')}</button>`).join('')}</div>`:''}`;
 
@@ -981,17 +981,17 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=fafeb81"></script>
-<script src="views/bookings.js?v=fafeb81"></script>
-<script src="views/booking.js?v=fafeb81"></script>
-<script src="views/contacts.js?v=fafeb81"></script>
-<script src="views/money.js?v=fafeb81"></script>
-<script src="views/catalogue.js?v=fafeb81"></script>
-<script src="views/brands.js?v=fafeb81"></script>
-<script src="views/account.js?v=fafeb81"></script>
-<script src="views/mail.js?v=fafeb81"></script>
-<script src="views/social.js?v=fafeb81"></script>
-<script src="views/tour.js?v=fafeb81"></script>
-<script src="views/motion.js?v=fafeb81"></script>
-<script src="views/logomotion.js?v=fafeb81"></script>
+<script src="views/dashboard.js"></script>
+<script src="views/bookings.js"></script>
+<script src="views/booking.js"></script>
+<script src="views/contacts.js"></script>
+<script src="views/money.js"></script>
+<script src="views/catalogue.js"></script>
+<script src="views/brands.js"></script>
+<script src="views/account.js"></script>
+<script src="views/mail.js"></script>
+<script src="views/social.js"></script>
+<script src="views/tour.js"></script>
+<script src="views/motion.js"></script>
+<script src="views/logomotion.js"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

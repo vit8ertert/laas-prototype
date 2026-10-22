@@ -241,3 +241,9 @@
 input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 :is(input[type=checkbox],[role=checkbox],[role=switch]):is(:disabled,[aria-disabled=true]){opacity:.45;cursor:not-allowed;pointer-events:none}
 :is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;color:var(--muted)}
+
+/* Icon sizes (Vit 22 Oct, rule 14/16/18/20, "fix everywhere"): small buttons carry 16 (the medium-button 20 leaked in
+   through .btn>svg.i), the top-bar bell is navigation 18, and no icon goes below 14 */
+.btn.s>svg.i,.btn.s>svg.i.s{width:16px;height:16px}
+.bell svg{width:18px;height:18px}
+:is(.bd-pill,.bd-lock,.d-add,.bk-thumb.none) svg.i,.help>svg.i,.cv-drawer .help svg{width:14px;height:14px}

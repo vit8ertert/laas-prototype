@@ -408,6 +408,7 @@ A.mnymore=el=>menu(el,[[M.empty?'Show the books with data':'Show the empty state
 A.mnyinvmore=el=>{const d=invoiceData(S.params.id||'2026-031');menu(el,invMore(d));};
 A.mnysettlemore=el=>menu(el,[['Open the booking','mnybooking'],['Open the ledger','mnyledger']]);
 A.mnyempty=()=>{M.empty=!M.empty;S.mtab='owed';S.overlay=null;L.go('money');};
+A.mnyfromzero=()=>{M.empty=true;S.mtab='owed';S.overlay=null;L.go('money');}; /* Flows: Money from zero */
 A.mnyledger=()=>L.go('ledger');A.mnybooking=()=>L.go('booking');
 A.mnyexport=()=>{S.overlay=null;L.toast('Export for the bookkeeper is ready: Jan–Oct 2026, CSV and receipts');};
 A.mnycopylink=()=>{S.overlay=null;L.toast('Pay link copied');};
