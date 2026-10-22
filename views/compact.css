@@ -492,7 +492,10 @@
   .table-wrap.cv-table{overflow:visible!important}
   .cv-table table,.cv-table tbody{display:block;width:100%;min-width:0!important}
   .cv-table thead{display:none}
-  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc lc";column-gap:6px;row-gap:2px;padding:var(--row-y) 0;border-bottom:1px solid var(--rule)}
+  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc lc";column-gap:6px;row-gap:2px;padding:var(--row-y) var(--row-x);border-bottom:1px solid var(--rule)}
+  /* Vit 22 Oct ("on code this needs to be fixed in paddings"): the rows sit inside the card, so they take the row inset; the card edge closes the last row */
+  .cv-table tbody tr:last-child{border-bottom:0}
+  .cv-foot .btn.cv-link{padding-left:0}
   .cv-table td{padding:0!important;border:0!important;min-width:0}
   .cv-table td:nth-child(1){grid-area:n;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cv-table td:nth-child(2){grid-area:k}.cv-table td:nth-child(3){grid-area:w}.cv-table td:nth-child(4){grid-area:lc}
