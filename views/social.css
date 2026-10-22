@@ -130,8 +130,8 @@
 @keyframes so-spin{to{transform:rotate(360deg)}}
 
 /* ---------- narrow screens ---------- */
-@media (max-width:900px){.so-choice .bk-choices.two{grid-template-columns:1fr;max-width:360px}}
-@media (max-width:640px){
+@media (max-width:839.98px){.so-choice .bk-choices.two{grid-template-columns:1fr;max-width:360px}}
+@media (max-width:599.98px){
  .so-acc{max-width:none}
  .so-c{padding:12px}
  .so-ch .tag{margin-left:0}

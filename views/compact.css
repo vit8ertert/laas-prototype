@@ -1,0 +1,181 @@
+/* Small screens (research 31, decisions M1-M5, Vit 22 Oct). Width classes: compact < 600, medium 600-839,
+   expanded >= 840; tokens --bp-medium and --bp-wide in tokens.css (media queries cannot read custom properties,
+   so the numbers are written out: 599.98px and 839.98px). */
+.tabbar{display:none}
+
+/* ---------- compact and medium: bottom tab bar instead of the sidebar ---------- */
+@media (max-width:839.98px){
+  .app{grid-template-rows:auto minmax(0,1fr) auto}
+  .sidebar,.menu-btn{display:none!important}
+  /* M4: no permanent assistant bar; Ask lives in the tab bar */
+  .abar,.abar-mini-wrap{display:none!important}
+  .sheet{bottom:16px}
+  .tabbar{display:flex;align-items:center;gap:8px;padding:6px max(12px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:30}
+  .tabbar .tb-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:560px;margin:0 auto}
+  .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 12px/16px var(--sans);border-radius:var(--r-lg)}
+  .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background .15s}
+  .tb-tab .tl{white-space:nowrap}
+  .tb-tab:hover .ti{background:var(--state-hover)}
+  .tb-tab.on{color:var(--ink)}.tb-tab.on .ti{background:var(--well)}
+  .tb-n{position:absolute;top:-2px;left:28px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
+  /* Ask: the lime of the assistant, the same in every theme */
+  .tb-ask{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:56px;height:52px;border-radius:var(--r-xl);background:var(--poster-lime);color:var(--on-lime);font:400 12px/16px var(--sans)}
+  .tb-ask svg{width:20px;height:20px}
+  .page{padding-bottom:24px}
+}
+
+/* ---------- compact: one primary action in the header, sheets for menus and drawers ---------- */
+@media (max-width:599.98px){
+  .cx-over{display:none!important}
+  .cx-group{flex-wrap:nowrap}
+
+  /* menus become bottom sheets: full width, grab handle, 48 px rows */
+  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:20px 20px 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up .28s cubic-bezier(.32,.72,0,1) both!important}
+  .pop:not(.pal)::before{content:"";position:absolute;top:8px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
+  .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
+  .scrim[style*="transparent"]{background:var(--scrim)!important}
+  /* search takes the whole screen */
+  .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}
+  /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
+  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:20px 20px 0 0;animation:cx-up .34s cubic-bezier(.32,.72,0,1) both}
+  .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
+  .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .modal{left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:20px 20px 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
+}
+@keyframes cx-up{from{transform:translateY(100%)}}
+
+/* ---------- sheets of our own (More, Ask, ⋯) ---------- */
+.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up .28s cubic-bezier(.32,.72,0,1) both}
+@media (min-width:600px){.cx-sheet{left:50%;right:auto;width:min(560px,100%);margin-left:max(-280px,-50%)}}
+.cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 12px;border-radius:var(--r-md);text-align:left}
+.cx-it>span{display:flex;align-items:center;gap:12px}
+.cx-it:hover{background:var(--well)}.cx-it>svg{color:var(--faint)}
+.cx-g{padding:4px 0;border-top:1px solid var(--rule)}.cx-g:first-of-type{border-top:0}
+.cx-gl{padding:10px 12px 4px;color:var(--faint);font:500 12px/16px var(--sans)}
+.cx-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 4px 12px}
+.cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 14px/18px var(--sans);text-align:left}
+.cx-tile:hover{background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
+.cx-it.on{background:var(--well)}
+.cx-sep{height:1px;margin:6px 4px;background:var(--rule)}
+.cx-band{display:flex;align-items:center;gap:10px;width:100%;padding:8px 12px 12px;text-align:left}
+.cx-band .sq{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans)}
+.cx-band .tx{flex:1;min-width:0;display:flex;flex-direction:column}.cx-band small{color:var(--muted);font-size:13px}
+.pop.cx-ask{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
+.cx-ask-h{display:flex;align-items:center;gap:8px}.cx-ask-h .grow{flex:1}
+.cx-ask .rec{align-self:flex-start}
+.cx-ask-f{display:flex;gap:8px;align-items:center;background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-xl);padding:6px 6px 6px 14px}
+.cx-ask-f input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font-size:16px}
+.cx-ask-s{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ---------- compact density (Vit 22 Oct: headings, icons and elements much smaller on a phone) ----------
+   Type: hero 52 → 28, display 32 → 24, title 24 → 20, heading 18 → 16; body stays 15 (legibility).
+   Icons 18 → 16, small 16 → 14; icons inside buttons 20 → 16. Buttons 38 → 34, small 34 → 30.
+   Cards and panels 24 → 16 padding, section gaps 32+ → 20. Tab bar icons stay 20 (navigation). */
+@media (max-width:599.98px){
+  .t-display{font-size:24px;line-height:30px;letter-spacing:-.3px}
+  .t-title{font-size:20px;line-height:26px;letter-spacing:-.2px}
+  .t-heading{font-size:16px;line-height:22px}
+  .bd-hero h1,.cv-hero h1,.ev-tx h1{font-size:28px!important;line-height:32px!important;letter-spacing:-.4px!important}
+  .ev-date{width:56px!important;height:64px!important;border-radius:12px}.ev-date b{font-size:24px!important;line-height:28px!important}
+  .acc-mini h3{font-size:28px;line-height:34px}
+  .aud-kpi .v,.cat-kpi .v,.ec-kpis b,.d-kv,.m-kv,.bd-amt .n,.iv-due{font-size:24px;line-height:30px;letter-spacing:-.3px}
+  .bd-amt .c,.bk-gig .ti,.cat-emptystate .hd h2,.cv-eh h3,.cv-sh h2,.cv-drawer .dh h2,.d-tonight h2,.acc-mini h4{font-size:20px;line-height:26px}
+  .ml-eamt{font-size:22px;line-height:28px}
+  .cv-av.cv-av-l{width:56px;height:56px;font-size:22px;line-height:28px}
+
+  svg.i{width:16px;height:16px}svg.i.s{width:14px;height:14px}
+  .tabbar svg.i{width:20px;height:20px}
+  .btn{height:34px;padding:0 14px;font-size:14px;line-height:20px;gap:6px}
+  .btn>svg.i{width:16px;height:16px}
+  .btn.s{height:30px;padding:0 10px;font-size:13px}.btn.s>svg.i{width:14px;height:14px}
+  .btn.icon{width:auto;min-width:34px;padding:0 10px}.btn.icon.s{min-width:30px;padding:0 8px}
+  .btn.lg{min-height:44px;padding:10px 20px}
+  .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
+
+  .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-main>.bd-sec,.bd-pay,.cv-main,.d-left,.m-left,
+  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.acc-sec:is(.pad,.inset),.strip,.drop,.cat-col,.cat-ov{padding:16px!important}
+  .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:20px!important}
+
+  /* rows of like cards scroll sideways with the next one peeking (research 31, findings 6 and 12):
+     KPI tiles, money tasks, release shelves. Lists of records stay vertical lists. */
+  .m-kpis,.cat-kpis,.aud-kpis,.m-g12:has(>.m-task){display:flex!important;flex-direction:row!important;gap:12px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}
+  :is(.m-kpis,.cat-kpis,.aud-kpis)>*,.m-g12>.m-task{flex:0 0 72%;scroll-snap-align:start;min-width:0}
+  :is(.m-kpis,.cat-kpis,.aud-kpis,.m-g12)::-webkit-scrollbar{display:none}
+  /* release tiles: two per row instead of one 234 px tile per screen third */
+  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  /* page tabs and filter chips scroll in one line; the current tab is kept in view (compact.js) */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:16px!important;margin-inline:-16px;padding-inline:16px}
+  .tabs::-webkit-scrollbar{display:none}.tabs>*{flex:none}
+  .tabs button{font-size:14px;height:44px}
+}
+@media (max-width:599.98px){
+  /* fact chips and filter chips: one scrolling line instead of three wrapped lines */
+  .bk-filters,.cat-filters,.ml-chips,.cv-chips,.d-chips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .bk-filters>*,.cat-filters>*,.ml-chips>*,.cv-chips>*,.d-chips>*{flex:none}
+  .ev-k{font-size:12px;line-height:16px}
+}
+@media (max-width:599.98px){.m-kpi,.cat-kpi,.aud-kpi{padding:14px 16px!important;gap:4px!important}}
+@media (max-width:599.98px){
+  .acc-row{padding-block:12px!important;row-gap:6px!important}
+  /* inputs at 16 px: iOS Safari zooms the page into any field set smaller */
+  .input,input.input,select.input,textarea.input,.cx-ask-f input{font-size:16px}
+}
+/* icons on phones: one cap for every view, whatever size the view set (Vit 22 Oct: the 32 px sign-in icon is far too big).
+   Content and buttons 16, small 14; icons that lead a row 20 (were 24-32); stars and cover placeholders 28; tab bar 20. */
+@media (max-width:599.98px){
+  :is(.main,.drawer,.pop,.modal,.sheet) svg.i{width:16px!important;height:16px!important}
+  :is(.main,.drawer,.pop,.modal,.sheet) svg.i.s{width:14px!important;height:14px!important}
+  .acc-si svg.acc-i32,.cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.ml-emptyic svg,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
+  .acc-si{gap:12px!important}
+  .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.cat-coverdrop .ph svg{width:28px!important;height:28px!important}
+  .acc-appicon svg{width:36px}
+  .bell svg{width:18px;height:18px}
+}
+/* no scrollbars on phones and tablets: sideways rows (settings nav, tabs, chips) showed a grey bar under them (Vit 22 Oct) */
+@media (max-width:839.98px){
+  .main *,.pop,.drawer .db{scrollbar-width:none}
+  .main ::-webkit-scrollbar,.pop::-webkit-scrollbar{display:none}
+}
+
+/* facts summary line and Gig day on phones (research 31 §8) */
+@media (max-width:599.98px){
+  .ev-meta.cx-sum{flex-wrap:wrap;gap:4px 8px;align-items:center}
+  .main .ev-head .ev-meta.cx-sum>.tag{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:400 13px/18px var(--sans);color:var(--muted)}
+  .ev-meta.cx-sum>.tag::before{content:"·";margin-right:8px;color:var(--faint)}
+  .main .ev-head .ev-meta.cx-sum>.ev-venue{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:500 13px/18px var(--sans);color:var(--ink)}
+  .ev-meta.cx-sum>.ev-venue img{display:none}
+  .cx-facts{height:24px;padding:0 8px;border-radius:var(--r-pill);background:var(--well);color:var(--ink);font:500 12px/24px var(--sans)}
+  /* the day strip repeats the timeline list below it: on a phone only its Now line stays */
+  .bd-strip>.track,.bd-strip>.legend{display:none}
+}
+.cx-factsheet{display:flex;flex-direction:column;gap:8px}
+.pop.cx-factsheet{padding-inline:16px!important}
+.cx-kv{display:grid;grid-template-columns:auto 1fr;margin:0}
+.cx-kv dt,.cx-kv dd{margin:0;padding:12px 0;border-top:1px solid var(--rule)}
+.cx-kv dt{color:var(--muted);padding-right:16px}.cx-kv dd{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.cx-kv dt:first-of-type,.cx-kv dt:first-of-type+dd{border-top:0}
+
+/* Gig day on phones (M5 step 2) */
+@media (max-width:599.98px){
+  .bd-gdgrid{display:flex!important;flex-direction:column;gap:16px}
+  .bd-gdgrid>.bd-rail{display:contents}
+  .bd-gdgrid .bd-openbox{order:-1}
+  .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{background:var(--surface);border-radius:var(--r-lg);padding:16px}
+  .bd-pgroup.cx-folded>:not(.bd-sh){display:none}
+  .bd-steps>.bd-step.cx-later{display:none}
+  .cx-showall{align-self:flex-start;margin:0 0 4px}
+  .cx-fold-b{display:inline-flex;align-items:center;gap:6px;margin-left:auto;min-height:32px;padding:0 4px 0 10px;border-radius:var(--r-pill);color:var(--muted);font:400 13px/18px var(--sans)}
+  .cx-fold-b:hover{background:var(--state-hover)}
+  .bd-pgroup>.bd-sh{display:flex;align-items:center;gap:8px}
+}
+@media (max-width:599.98px){
+  .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{align-self:stretch;width:100%}
+  .bd-pgroup>.bd-sh>:first-child{font:500 16px/22px var(--sans)}
+  .bd-open{flex-wrap:wrap}.bd-open>span{flex:1 1 200px}
+  /* the notation footnote repeats what the Approximate and Moved tags already say */
+  .bd-tl>.bd-foot{display:none}
+  .bd-step.next h4,.bd-step h4{font-size:16px!important;line-height:22px!important}
+  .bd-step .content>p{font-size:14px;line-height:20px}
+  .bd-step .content{padding-bottom:20px}
+}
+@media (max-width:599.98px){.bd-pgroup.cx-folded{padding:10px 12px 10px 16px!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:32px}.bd-pgroup>.bd-sh>*{margin-block:0}}

@@ -274,10 +274,11 @@
 .bd-steps{display:flex;flex-direction:column}
 .bd-step{display:grid;grid-template-columns:64px 16px minmax(0,1fr);gap:12px}
 .bd-step .time{font:400 14px/20px var(--mono);color:var(--muted)}
-.bd-step .spine{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.bd-step .spine{display:flex;flex-direction:column;align-items:center;padding-top:4px;gap:4px}
 .bd-step .spine i{width:12px;height:12px;border-radius:50%;flex:none;background:var(--c)}
 .bd-step.approx .spine i{background:var(--surface);box-shadow:inset 0 0 0 2px var(--c)}
-.bd-step.next .spine i{width:10px;height:10px;box-shadow:0 0 0 2px var(--c)}
+/* the ring is a box-shadow and takes no space: the margin keeps the line from running into it (Vit 22 Oct) */
+.bd-step.next .spine i{width:10px;height:10px;margin:2px 0;box-shadow:0 0 0 2px var(--c)}
 .bd-step .spine b{flex:1;width:2px;background:var(--rule)}
 .bd-step .content{padding-bottom:24px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .bd-step .content>p{margin:0;font:400 15px/22px var(--sans);color:var(--muted)}
@@ -309,7 +310,7 @@
 .bd-rail .bd-pgroup .bd-body.list{gap:0}
 
 @media (max-width:1100px){.bd-grid,.bd-gdgrid{grid-template-columns:1fr}}
-@media (max-width:860px){
+@media (max-width:839.98px){
  .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:10px}
  .bd-kv>div{grid-template-columns:1fr;gap:2px}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}

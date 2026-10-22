@@ -224,8 +224,8 @@ button.m-line:hover{background:var(--raised)}
 .m-table td .title-cell{font-weight:400}
 
 @media (max-width:1100px){.m-cols,.m-cols-d{grid-template-columns:minmax(0,1fr)}.m-kpi{max-width:none}}
-@media (max-width:860px){.m-tint{border-radius:0}}
-@media (max-width:640px){
+@media (max-width:839.98px){.m-tint{border-radius:0}}
+@media (max-width:599.98px){
  .m-kpis{grid-template-columns:minmax(0,1fr)}
  .m-line{flex-wrap:wrap;gap:8px 12px}.m-line .m-tx{flex:1 1 calc(100% - 60px)}
  .m-line .m-end{width:auto;margin-left:48px}.m-line.m-flush .m-end,.m-line:not(:has(.m-th)) .m-end{margin-left:0}
@@ -330,7 +330,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ml-rm{height:38px;width:38px;justify-content:center}
 .ml-err{color:var(--bad)!important}
 
-@media (max-width:640px){
+@media (max-width:599.98px){
  .ml-tools .sp{display:none}.ml-search{width:100%}
  .ml-empty{padding:32px 16px}
  .ml-ltr{grid-template-columns:minmax(0,1fr) 72px 72px;gap:8px}
@@ -360,7 +360,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-bd .m-bdr .mono,.m-bd.out .m-bdr .mono{width:64px;text-align:right}
 .m-bd .m-bdr:hover{background:var(--hover)}
 .m-bd:has(.m-bdr[data-i="0"]:hover) .m-seg[data-i="0"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="1"]:hover) .m-seg[data-i="1"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="2"]:hover) .m-seg[data-i="2"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="3"]:hover) .m-seg[data-i="3"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="4"]:hover) .m-seg[data-i="4"]{stroke-width:24}
-@media (max-width:860px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center}.m-bdrs{width:100%}}
+@media (max-width:839.98px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center}.m-bdrs{width:100%}}
 
 /* stacked monthly bars */
 .m-bars12{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:100%}
@@ -427,7 +427,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ex-d2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .ex-hist{display:flex;flex-direction:column;gap:8px;padding-top:8px;border-top:1px solid var(--rule)}
 .ex-hist>div{display:grid;grid-template-columns:56px 1fr;gap:12px;font:400 13px/18px var(--sans)}
-@media (max-width:860px){.ex-kpis{grid-template-columns:1fr}.ex-bar{flex-wrap:wrap}.ex-search{width:100%}.ex-d2{grid-template-columns:1fr}.ex-owe{flex-wrap:wrap}}
+@media (max-width:839.98px){.ex-kpis{grid-template-columns:1fr}.ex-bar{flex-wrap:wrap}.ex-search{width:100%}.ex-d2{grid-template-columns:1fr}.ex-owe{flex-wrap:wrap}}
 
 /* Where it went in colour too (Vit 21 Oct: "make them both in colours, also the same height").
    Own hues for spending, so they never read as an income type: rose, teal, gold, brown, slate. */
@@ -468,7 +468,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .ml-ft{flex:1;min-width:0;display:flex;flex-direction:column}.ml-ft b{font:500 14px/20px var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ml-ft small{font:400 13px/18px var(--sans);color:var(--muted)}
 .ml-fo{font:400 14px/20px var(--sans);color:var(--accent-ink)}
 .ml-fcard.none{background:transparent;box-shadow:inset 0 0 0 1px var(--rule);border-style:dashed}
-@media (max-width:860px){.ml-facts{grid-template-columns:1fr}}
+@media (max-width:839.98px){.ml-facts{grid-template-columns:1fr}}
 /* Payouts: three tables, Table row recipe (Vit 21 Oct: "looks very raw") */
 .po-sec{display:flex;flex-direction:column;gap:12px;margin-top:32px}
 .po-sec .m-sh{margin:0}
@@ -553,7 +553,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-ai{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--well);color:var(--muted);flex:none}.iv-ai .i{width:12px;height:12px}
 .iv-cmt{display:flex;gap:8px;align-items:center}.iv-cmt .input{flex:1;min-width:0;height:36px}
 @media (max-width:1180px){.iv-grid{grid-template-columns:1fr}.iv-side{position:static}.iv-paper{max-width:none}}
-@media (max-width:700px){.iv-steps{margin-bottom:16px}.iv-steps li{padding-right:4px}.iv-steps b{font-size:12px;line-height:16px}.iv-steps small{display:none}.iv-steps li:is(.att,.now) small{display:block;font-size:12px;line-height:16px;white-space:nowrap}
+@media (max-width:599.98px){.iv-steps{margin-bottom:16px}.iv-steps li{padding-right:4px}.iv-steps b{font-size:12px;line-height:16px}.iv-steps small{display:none}.iv-steps li:is(.att,.now) small{display:block;font-size:12px;line-height:16px;white-space:nowrap}
  .iv-paper{padding:24px 20px;gap:20px}.iv-meta,.iv-pf{grid-template-columns:1fr}.iv-tot{width:100%}.iv-ph{flex-direction:column}.iv-pt{text-align:left}}
 /* Invoices list, Table row recipe */
 .bk-tr.iv-r{grid-template-columns:20px 84px minmax(240px,1fr) 120px 150px 110px 110px;column-gap:16px;min-width:960px}
@@ -563,7 +563,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 /* the invoice paper keeps A4 proportions, 210 × 297 (Vit 21 Oct); the footer sits at the bottom like on the printed page */
 .iv-paper{aspect-ratio:210/297;width:100%;max-width:760px;box-sizing:border-box;justify-self:center}
 .iv-paper .iv-pf{margin-top:auto}
-@media (max-width:700px){.iv-paper{aspect-ratio:auto}}
+@media (max-width:599.98px){.iv-paper{aspect-ratio:auto}}
 /* the paper ignores the app's table and link colours: it is the printed page in every theme */
 .iv-paper :is(table,thead,tbody,tr,th,td){background:transparent!important;color:inherit}
 .iv-paper .iv-lines td{color:#1a1a1a}.iv-paper .iv-lines td.muted,.iv-paper .iv-lines th{color:#6b6b66}
@@ -584,7 +584,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 /* back links sit flush with the page title, like other edge text buttons (Vit 21 Oct: "looks misaligned") */
 .btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back){padding-left:0;padding-right:4px;margin-left:0}
 .btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back):hover{background:none!important;text-decoration:underline}
-@media (max-width:700px){.iv-steps{padding:12px}}
+@media (max-width:599.98px){.iv-steps{padding:12px}}
 
 /* wide drawer for invoices: lines fit on one row (Vit 21 Oct: "use more width, lots of overlaps") */
 .drawer.m-wide{width:min(640px,100%)}
@@ -592,7 +592,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .m-wide .m-iline .m-w110{width:auto}
 .m-wide .m-dates{display:grid;grid-template-columns:1fr 1fr;gap:16px}.m-wide .m-dates .field{width:auto}
 .m-wide textarea.m-fin{resize:none;field-sizing:content;min-height:22px}
-@media (max-width:640px){.m-wide .m-iline{grid-template-columns:1fr 1fr}.m-wide .m-iline .m-fd{grid-column:1/-1}.m-wide .m-dates{grid-template-columns:1fr}}
+@media (max-width:599.98px){.m-wide .m-iline{grid-template-columns:1fr 1fr}.m-wide .m-iline .m-fd{grid-column:1/-1}.m-wide .m-dates{grid-template-columns:1fr}}
 .m-wide .m-iline+.m-iline .field>label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.m-wide #mi-lines{gap:8px}
 .m-wide .m-tot{gap:0;padding:8px 4px}.m-wide .m-tot .m-line{padding:8px 12px}
 /* invoice progress, segmented (replaces the dots and lines) */
@@ -606,5 +606,5 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-prog li.att i{background:var(--bad)}
 .iv-prog b{font:500 13px/18px var(--sans)}.iv-prog small{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
-@media (max-width:700px){.iv-prog{padding:12px}.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
+@media (max-width:599.98px){.iv-prog{padding:12px}.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
 .iv-labrow{display:flex;align-items:baseline;gap:8px}.iv-labrow .iv-edit{margin:0;font-size:12px;line-height:16px}

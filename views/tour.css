@@ -24,7 +24,7 @@
 @keyframes tour-in{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
 @keyframes tour-pop{from{opacity:0;scale:.96}to{opacity:1;scale:1}}
 @media (prefers-reduced-motion: reduce){.tour-card,.tour-spot{animation:none;transition:none}}
-@media (max-width:860px){.tour-card:not(.tour-center){left:16px!important;right:16px;width:auto;top:auto!important;bottom:16px}.tour-arrow{display:none}}
+@media (max-width:839.98px){.tour-card:not(.tour-center){left:16px!important;right:16px;width:auto;top:auto!important;bottom:16px}.tour-arrow{display:none}}
 .tour-card[data-side=left] .tour-arrow{right:-6px;top:calc(var(--ay) - 6px);box-shadow:inset -1px 1px 0 var(--rule-strong)}
 .tour-card[data-side=inside] .tour-arrow{display:none}
 

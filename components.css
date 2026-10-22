@@ -4,7 +4,7 @@
    Loaded after the core <style> and before the area files. */
 
 /* Shell: Body 8 all round (Figma Body frame), Sidebar pad 8 gap 2 radius 12, Main pad 24 32 gap 24 radius 12 */
-@media (min-width: 861px){.body{padding:8px}}
+@media (min-width:840px){.body{padding:8px}}
 
 /* Button 131:168: gap 8, pad 8 16 (M) / 8 12 (S), radius pill, label Body strong 15/22 (M) / Label strong 13/18 (S), icon 20 / 16 */
 .btn{height:auto;gap:8px;padding:8px 16px;border:0;border-radius:var(--r-pill);font:500 15px/22px var(--sans);color:var(--ink)}
@@ -112,7 +112,7 @@ tbody tr:hover td{background:var(--hover)}
 .ph .grow>*{margin:0}
 
 /* Main (all screens): pad 24 32 24 32, gap 24; the padding sits on .page inside the scrolling .main */
-@media (min-width: 861px){.page{padding:24px 32px}}
+@media (min-width:840px){.page{padding:24px 32px}}
 
 /* Drawer head title block (203:3658 "Frame" in Drawer head): column, gap 2 */
 .drawer .dh .grow{display:flex;flex-direction:column;gap:2px}

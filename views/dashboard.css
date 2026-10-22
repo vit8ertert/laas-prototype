@@ -351,12 +351,12 @@ button.d-kpi:hover{background:var(--raised)}
 .tl-out li{display:flex;gap:10px;align-items:flex-start}.tl-out li>svg{margin-top:3px;flex:none;color:var(--bad)}
 .tl-out span{display:flex;flex-direction:column;gap:2px}
 @media (max-width:1100px){.tl-grid{grid-template-columns:1fr}.tl-side{position:static}}
-@media (max-width:860px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 6px}
+@media (max-width:839.98px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 6px}
  .d-add{top:3px;right:2px;width:18px;height:18px;border:0;background:transparent;color:var(--muted);border-radius:4px}.d-add svg.i.s{width:12px;height:12px}.d-day.photo .d-add{color:var(--ink)}.cs-cal .cs-role{display:none}.cs-log>span{flex-direction:column;gap:0}.tl-f{align-self:stretch;flex-wrap:nowrap}.tl-f button{flex:1;padding:0 8px}}
 
 @media (max-width:1280px){.d-asst.withrec{grid-template-columns:280px minmax(0,1fr)}.d-asst .d-record,.d-ahd [data-act="asstpanel"]{display:none}}
 @media (max-width:1100px){.d-grid{grid-template-columns:1fr}.d-cols{grid-template-columns:1fr}}
-@media (max-width:860px){
+@media (max-width:839.98px){
  .d-asst,.d-asst.withrec{grid-template-columns:1fr}
  .d-hist{display:none;position:static;max-height:none;border-right:0;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:16px}.d-hist.open{display:flex}
  .d-histbtn{display:inline-flex}.d-ahd{flex-wrap:wrap}.d-ahd .grow{order:-1;flex-basis:100%}.d-center{min-height:calc(100vh - 100px)}
@@ -365,7 +365,7 @@ button.d-kpi:hover{background:var(--raised)}
  .d-empty,.d-box{padding:32px 16px}
  .d-dh small{display:none}
 }
-@media (max-width:520px){.d-tiles{grid-template-columns:1fr}.d-tm{flex-wrap:wrap}.d-chip{white-space:normal;height:auto;min-height:34px;padding:6px 12px}.d-compbar .btn.ghost.s{padding:0 8px}}
+@media (max-width:599.98px){.d-tiles{grid-template-columns:1fr}.d-tm{flex-wrap:wrap}.d-chip{white-space:normal;height:auto;min-height:34px;padding:6px 12px}.d-compbar .btn.ghost.s{padding:0 8px}}
 .d-andmore{align-self:flex-start;height:34px;padding:0 12px;font:500 13px/18px var(--sans)}
 .d-box .d-eh h3{letter-spacing:-.3px}
 .d-shelf{align-items:flex-start}
@@ -412,7 +412,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-record{padding:16px;border-radius:16px}
 /* new chat: no page title; "What do you need?" is the heading in the middle. In a chat the header names it (Vit 21 Oct) */
 .d-asst .d-ahd:not(:has(.grow h1)):not(:has(.btn:not(.d-histbtn))){display:none}
-@media (max-width:860px){.d-asst .d-ahd{display:flex!important}}
+@media (max-width:839.98px){.d-asst .d-ahd{display:flex!important}}
 /* "Tonight, LT-0041" on the hero photo: a white glass chip like the fact chips on booking photos, so it reads on any image
    (Vit 21 Oct: the lilac text was not visible) */
 .d-tonight .d-k{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font:400 13px/18px var(--sans);color:#fff;
