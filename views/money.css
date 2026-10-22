@@ -66,7 +66,7 @@ button.m-line:hover{background:var(--raised)}
 .m-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;line-height:var(--lh-body)}
 .m-tx>span{font-size:15px;line-height:var(--lh-body)}
 .m-tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
-.m-end{width:96px;min-height:26px;display:flex;justify-content:flex-end;flex:none}
+.m-end{width:96px;min-height:26px;display:flex;justify-content:flex-end;align-items:center;flex:none}
 .m-amt{width:96px;text-align:right;font-size:14px;line-height:20px;flex:none}
 
 /* ghost chart */
@@ -452,7 +452,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ml-content .m-kpis{margin-bottom:16px}
 .ml-per{margin-left:8px}
 /* journal: missing receipt tag, no "none" text */
-.ml-miss{height:24px;padding:2px 8px;font-size:12px}
+.ml-miss{flex:none} /* a normal Tag (was a 12 px mini tag, not in the design system) */
 .ml-att .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* entry drawer: amount and state, facts in two columns, the file as a card */
 .ml-ehd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -533,7 +533,8 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-paid{color:#1e7a3c}.iv-bal{font-weight:500}
 .iv-pf{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:20px;border-top:1px solid #e6e4df;font-size:13px;line-height:var(--lh-label)}
 .iv-pf>div{display:flex;flex-direction:column;gap:2px}
-.iv-stamp{position:absolute;top:28px;right:-44px;transform:rotate(30deg);padding:6px 56px;background:#1e7a3c;color:#fff;font:600 13px/var(--lh-label) var(--sans);letter-spacing:.1em;text-transform:uppercase}
+/* Paid ribbon, as Vit drew it in Figma (Paper · A4, 22 Oct): a 144 x 30 band at 45 degrees across the corner, centred 26.5 px from the right and 25.5 px from the top; Medium 13/18, 10 % tracking */
+.iv-stamp{position:absolute;top:10.5px;right:-45.5px;transform:rotate(45deg);padding:6px 56px;background:#1e7a3c;color:#fff;font:500 13px/18px var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 .iv-paper:has(.iv-stamp) .iv-pt{padding-right:40px}
 /* side panel */
 .iv-side{position:sticky;top:16px;display:flex;flex-direction:column;gap:16px}

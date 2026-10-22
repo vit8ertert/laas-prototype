@@ -147,7 +147,8 @@
   .ev-meta.cx-sum>.tag::before{content:"·";margin-right:8px;color:var(--faint)}
   .main .ev-head .ev-meta.cx-sum>.ev-venue{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:500 13px/var(--lh-label) var(--sans);color:var(--ink)}
   .ev-meta.cx-sum>.ev-venue img{display:none}
-  .cx-facts{height:24px;padding:0 8px;border-radius:var(--r-pill);background:var(--well);color:var(--ink);font:500 12px/24px var(--sans)}
+  /* "+N" more-details chip = a tag-shaped pill (Figma Event header "More facts"): 24 high, 10 px sides, Label 13 (Vit: the 31 x 24 oval looked squeezed) */
+  .cx-facts{height:24px;padding:0 10px;border-radius:var(--r-pill);background:var(--well);color:var(--ink);font:400 13px/24px var(--sans)}
   /* the day strip repeats the timeline list below it: on a phone only its Now line stays */
   .bd-strip>.track,.bd-strip>.legend{display:none}
 }
@@ -371,7 +372,9 @@
   .cv-actions.cv-person>.cv-acts{grid-area:acts;justify-content:flex-start!important}
   .cv-who h1{font-size:var(--fs-display)!important;line-height:var(--lh-display)!important}
   .cv-facts{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:var(--space-2)!important;width:auto!important}
-  .cv-facts>*{height:26px}
+  .cv-facts>*{height:auto}
+  /* one Tag height on phones: 24 (Figma Tag in a Compact frame: Label 13/16 + 4 + 4); page rules that pinned 26 no longer apply */
+  .main .tag{height:auto!important}
   /* sections on the page edge: the columns add no padding of their own */
   .cv-main,.cv-panel{padding:0!important;background:none!important;box-shadow:none!important}
 }

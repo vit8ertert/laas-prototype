@@ -104,7 +104,7 @@ L.VIEWS.settings=()=>{const th=SLOTNAME[S.genre],b=curBand(),lt=b.id==='lt';
   foot('Changing a term changes new offers only. Signed offers keep their terms.')),
   act('upright','Preview an offer','accgo','data-to="paypage"'))
  +sec('Look',rows(
-  row('Theme','Colours, backdrop, wordmark and tone of voice, suggested from your genres',`<button class="acc-tagbtn" data-go="theme" aria-label="Change theme">${tag('accent',th+(S.genre==='label'?', default':''))}</button>`),
+  row('Theme','Colours, backdrop and tone of voice, suggested from your genres',`<button class="acc-tagbtn" data-go="theme" aria-label="Change theme">${tag('accent',th+(S.genre==='label'?', default':''))}</button>`),
   row('Light or dark','Follows your computer unless you pick one',`<select class="input acc-sel" aria-label="Light or dark" id="acc-appear">${[['system','System'],['dark','Dark'],['light','Light']].map(([k,l])=>`<option value="${k}" ${S.appearance===k?'selected':''}>${l}</option>`).join('')}</select>`),
   row('Density','Bookings and money lists go compact on desktop',sel('Density',['Comfortable','Compact']))))
  +sec('Danger zone',rows(
@@ -205,7 +205,7 @@ const THEMES8=[
 const PALETTE={label:'Lilac, #CDBDFF',metal:'Bone, #E8E2D6',electronic:'Acid lime, #D9F25A',classical:'Burgundy, #6E1F2B'};
 const appearSeg=()=>`<div class="seg acc-seg3">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'acc-i14')}${l}</button>`).join('')}</div>`;
 L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
- return shell('Theme','A theme is five slots: palette, backdrop, wordmark, one signature motion, tone of voice, money and status colours never change',
+ return shell('Theme','A theme is four slots: palette, backdrop, one signature motion, tone of voice, money and status colours never change',
  sec('Pick a theme',`<div class="acc-fl"><span class="acc-lbl">Appearance</span>${appearSeg()}<span class="acc-help">Every theme has a light and a dark version. Match system follows your phone or computer.</span></div>
   <div class="acc-in12 acc-stack"><div class="acc-themes">${THEMES8.map(([id,n,d,c])=>{const on=cur===id,live=!!TNAME[id];return `<button class="acc-th ${on?'on':''}" ${live?`data-genre="${id}"`:`data-act="accproposal" data-n="${n}"`} aria-pressed="${on}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="nm"><span>${n}</span>${on?tag('accent','Current'):id==='metal'?tag('confirmed','Suggested for you'):''}</span><span class="d">${d}</span></button>`}).join('')}</div>
   <p class="acc-note">Suggested from your genres and cover art. Switching changes the room, not the facts: money tiles, tables, confirm cards and the assistant bar keep the Label look in every theme. Switch back any time.</p></div>`,
@@ -213,7 +213,7 @@ L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
  +sec(`What each slot does in ${name}`,rows(
   row('Palette','Token mode, lilac on near-black, light or dark follows the system',sel('Palette',[PALETTE[cur]])),
   row('Backdrop','The aurora behind the first-screen question',sel('Backdrop',['Config aurora','Plain canvas'])),
-  row('Wordmark','The LAAS mark re-drawn in the theme\'s hand, yours stays in offers and invoices',sel('Wordmark',['Alien Block, eyes','Plain LAAS'])),
+  /* no Wordmark slot: one LAAS logo for every theme for now (Vit, 22 Oct) */
   row('Signature motion','One move on load and on big moments, nothing else',sel('Signature motion',['Soft aurora drift','None'])),
   row('Tone of voice','Greetings, empty states, chips, the hero question and success lines only, never labels, money, errors or legal copy',sel('Tone of voice',['Plain, warm, a colleague','Short and dry'])),
   row('Reduce motion','Follows your system setting, turns the signature motion into a fade',tg('motion','Reduce motion'))),

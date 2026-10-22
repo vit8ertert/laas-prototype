@@ -275,10 +275,11 @@ button.d-kpi:hover{background:var(--raised)}
 .d-act{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:38px;border-radius:8px;width:100%;text-align:left;font:400 15px/var(--lh-body) var(--sans)}.d-act:hover{background:var(--well)}
 .d-sq{width:32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans);flex:none}
 .d-share{width:318px;padding:8px;display:flex;flex-direction:column;gap:4px;border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 12px 32px #00000073}
-.d-expl{display:flex;align-items:flex-start;gap:12px;width:300px;height:80px;padding:12px 8px 12px 12px;border-radius:8px;background:var(--well);overflow:hidden}
+/* grows with its text (it was 80 high and cut the note); the dismiss is a 32 px box centred on the title line, 4 from the edge (Figma Explainer) */
+.d-expl{position:relative;display:flex;align-items:flex-start;gap:12px;width:300px;min-height:80px;padding:12px 40px 12px 12px;border-radius:8px;background:var(--well)}
 .d-et{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}.d-et b{font:500 15px/var(--lh-body) var(--sans)}.d-et small{font:400 12px/16px var(--sans)}
 .d-expl img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex:none}
-.d-expl>button{flex:none;width:14px;height:14px;display:grid;place-items:center;color:var(--ink)}.d-expl>button svg.i.s{width:14px;height:14px}
+.d-expl>button{position:absolute;top:7px;right:4px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--ink)}.d-expl>button svg.i.s{width:14px;height:14px}
 .d-menu{display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:12px}
 .d-mi{display:flex;align-items:center;gap:12px;height:34px;padding:8px 12px;border-radius:8px;text-align:left;font:400 15px/18px var(--sans)}.d-mi:hover,.d-mi:focus-visible{background:var(--raised)}
 .d-menu .d-div{margin:0}
