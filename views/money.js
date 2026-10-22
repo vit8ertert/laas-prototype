@@ -59,7 +59,7 @@ function owed(){
   ['send','Send a reminder to Hotel Royal','Invoice 2026-031, 1.500 DKK, 6 days late, friendly, no fee. The headline is the action; the tick does exactly that.','Send','mnyremind'],
   ['approve','Approve 1.470 DKK from HOTEL ROYAL A/S','The bank shows it on 16 Oct, matches 2026-031, 30 DKK short, ask what the difference is','Approve','mnyapprove'],
   ['move','Move 5.000 DKK from Mads to the band','Two MobilePay payments landed in Mads\' private account. Record where it is, then nudge: business MobilePay or bank.','Record','mnymove']].filter(x=>!M.done[x[0]]&&!(x[0]!=='move'&&!late()));
- return `${late()?banner('One deposit is 6 days late, 1.500 DKK from Hotel Royal','Three automatic reminders went out. The next step is a free reminder by hand; a reminder with a fee is allowed from 22 Oct.',btn('secondary s','Open the booking','data-go="booking"')):''}
+ return `${late()?banner('One deposit is 6 days late, 1.500 DKK from Hotel Royal','Three reminders went out. Send a free one by hand now; a fee is allowed from 22 Oct.',btn('secondary s','Open the booking','data-go="booking"')):''}
  ${kpis([kpi('Owed to you',late()?'8.500 DKK':'7.000 DKK',late()?'3 invoices, 1 late':'2 invoices, none late','muted','',[4,6.5,5,9,7.5,6,8,10,7,8.5,9.5,8.5],[4,6.5,5,9,7.5,6,8,10,7,8.5,9.5,8.5].map((v,i)=>`${CH[i][0]}: ${L.kr(v*1000)} DKK owed`)),
   late()?kpi('Waiting','1.500 DKK','6 days late, Hotel Royal','att','att'):kpi('Waiting','—','nothing late','muted'),
   kpi('In this month',late()?'9.000 DKK':'10.470 DKK',late()?'2 paid, 9 days average':'3 paid, 9 days average','ok','',CH.map(r=>r[1]),paidTips()),

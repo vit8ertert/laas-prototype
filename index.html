@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=6142d06">
+<link rel="stylesheet" href="tokens.css?v=084c934">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=6142d06">
-<link rel="stylesheet" href="components.css?v=6142d06">
-<link rel="stylesheet" href="views/tour.css?v=6142d06">
-<link rel="stylesheet" href="views/dashboard.css?v=6142d06">
-<link rel="stylesheet" href="views/bookings.css?v=6142d06">
-<link rel="stylesheet" href="views/booking.css?v=6142d06">
-<link rel="stylesheet" href="views/contacts.css?v=6142d06">
-<link rel="stylesheet" href="views/money.css?v=6142d06">
-<link rel="stylesheet" href="views/catalogue.css?v=6142d06">
-<link rel="stylesheet" href="views/account.css?v=6142d06">
-<link rel="stylesheet" href="views/mail.css?v=6142d06">
-<link rel="stylesheet" href="views/social.css?v=6142d06">
-<link rel="stylesheet" href="views/logomotion.css?v=6142d06">
-<link rel="stylesheet" href="tags.css?v=6142d06">
-<link rel="stylesheet" href="views/compact.css?v=6142d06">
+<link rel="stylesheet" href="shell.css?v=084c934">
+<link rel="stylesheet" href="components.css?v=084c934">
+<link rel="stylesheet" href="views/tour.css?v=084c934">
+<link rel="stylesheet" href="views/dashboard.css?v=084c934">
+<link rel="stylesheet" href="views/bookings.css?v=084c934">
+<link rel="stylesheet" href="views/booking.css?v=084c934">
+<link rel="stylesheet" href="views/contacts.css?v=084c934">
+<link rel="stylesheet" href="views/money.css?v=084c934">
+<link rel="stylesheet" href="views/catalogue.css?v=084c934">
+<link rel="stylesheet" href="views/account.css?v=084c934">
+<link rel="stylesheet" href="views/mail.css?v=084c934">
+<link rel="stylesheet" href="views/social.css?v=084c934">
+<link rel="stylesheet" href="views/logomotion.css?v=084c934">
+<link rel="stylesheet" href="tags.css?v=084c934">
+<link rel="stylesheet" href="views/compact.css?v=084c934">
 
 <div id="app"></div>
 
@@ -132,7 +132,8 @@ const reduceMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const go=(view,params={})=>{const same=S.view===view;S.view=view;S.params=params;S.overlay=null;S.sidebarOpen=false;S.booking.sheet=false;S.enter='enter';S.enterUntil=Date.now()+700;
  const run=()=>{render();const m=document.querySelector('.main');if(m)m.scrollTop=0;};
  if(document.startViewTransition&&!reduceMotion()&&!same&&view!=='onboarding'){const vt=document.startViewTransition(run);[vt.ready,vt.finished,vt.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}));}else run();};
-const open=(o,extra={})=>{lastFocus=document.activeElement;S.overlay={type:o,...extra};render();};
+/* opening any overlay (search, a sheet, a menu) closes the Flows menu, so the two never stack (Vit 22 Oct) */
+const open=(o,extra={})=>{lastFocus=document.activeElement;S.flowsOpen=false;S.overlay={type:o,...extra};render();};
 const close=()=>{S.overlay=null;render();if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}};
 const refresh=()=>{if(S.overlay&&S.overlay.kind)S.overlay.html=sendPreview(S.overlay.kind);render();};
 let toastTimer=null;
@@ -529,6 +530,7 @@ document.addEventListener('click',e=>{
  const t0=e.target.closest('[data-go],[data-act],[data-tab],[data-flow],[data-genre],[data-appearance],[data-ob],[data-obgenre],[data-pgo],[data-ni],[data-nf],[data-star],[data-qtag],[data-split],[data-bstate],[data-toggle],[data-mtab],[data-rtab],[data-atab]');/* the page root carries data-genre for the theme: a click that only reaches it is not a theme pick */const t=t0===document.documentElement?null:t0;
  if(!t){if(S.flowsOpen&&!e.target.closest('.flowmenu')){S.flowsOpen=false;render();}return;}
  if(t.dataset.flow!==undefined){S.flowsOpen=false;FLOWS[+t.dataset.flow][2]();return;}
+ if(S.flowsOpen&&!t.closest('.flowmenu')&&t.dataset.act!=='flows')S.flowsOpen=false;
  if(t.dataset.go){if(t.dataset.mt)S.mtab=t.dataset.mt;if(t.dataset.ct&&S.cat)S.cat.tab=t.dataset.ct;if(t.dataset.at)S.atab=t.dataset.at;const id=t.dataset.id;if(t.dataset.go==='booking'&&id&&id!=='b1'){const b=BOOKINGS.find(x=>x.id===id);if(b&&b.status==='completed')S.booking.state='completed';}if(t.dataset.go==='rate'){S.booking.state='completed';S.booking.rated=false;return go('booking');}return go(t.dataset.go,id?{id}:{});}
  if(t.dataset.toggle){return go('bookings');}
  if(t.dataset.mtab){S.mtab=t.dataset.mtab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
@@ -686,19 +688,20 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=6142d06"></script>
-<script src="views/bookings.js?v=6142d06"></script>
-<script src="views/booking.js?v=6142d06"></script>
-<script src="views/denmark.js?v=6142d06"></script>
-<script src="views/contacts.js?v=6142d06"></script>
-<script src="views/money.js?v=6142d06"></script>
-<script src="views/catalogue.js?v=6142d06"></script>
-<script src="views/brands.js?v=6142d06"></script>
-<script src="views/account.js?v=6142d06"></script>
-<script src="views/mail.js?v=6142d06"></script>
-<script src="views/social.js?v=6142d06"></script>
-<script src="views/tour.js?v=6142d06"></script>
-<script src="views/motion.js?v=6142d06"></script>
-<script src="views/logomotion.js?v=6142d06"></script>
-<script src="views/compact.js?v=6142d06"></script>
+<script src="views/dashboard.js?v=084c934"></script>
+<script src="views/bookings.js?v=084c934"></script>
+<script src="views/booking.js?v=084c934"></script>
+<script src="views/denmark.js?v=084c934"></script>
+<script src="views/contacts.js?v=084c934"></script>
+<script src="views/money.js?v=084c934"></script>
+<script src="views/catalogue.js?v=084c934"></script>
+<script src="views/brands.js?v=084c934"></script>
+<script src="views/account.js?v=084c934"></script>
+<script src="views/mail.js?v=084c934"></script>
+<script src="views/social.js?v=084c934"></script>
+<script src="views/tour.js?v=084c934"></script>
+<script src="views/motion.js?v=084c934"></script>
+<script src="views/logomotion.js?v=084c934"></script>
+<script src="views/compact.js?v=084c934"></script>
+<script src="views/overflow.js?v=084c934"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

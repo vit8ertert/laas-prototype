@@ -523,6 +523,9 @@
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline!important;height:auto!important;min-height:0!important;padding:0!important;margin:0 0 0 4px!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 13px/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label])>svg{display:none}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:4px;margin:0!important}
-  /* no action link to lose: the paragraph stops after three lines */
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner):not(:has(>.btn:not(.icon):not([aria-label]))){display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+  /* longer than three lines (views/overflow.js): two lines, then the action and "Show more" on the next line */
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.tx{display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.btn:not(.icon):not([aria-label]){margin-left:0!important}
+  .main .cx-more{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+  .main .cx-clamp>.tx+.cx-more{margin-left:0}
 }
