@@ -92,7 +92,7 @@
 .bk-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 10%,transparent),color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .bk-tile:hover img{transform:scale(1.03)}
 .bk-tile .tx{position:absolute;left:16px;right:16px;bottom:16px;z-index:1;display:flex;flex-direction:column;gap:6px}
-.bk-tile b{font:500 18px/24px var(--sans);letter-spacing:-.1px}
+.bk-tile b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 .bk-tile small{font:400 12px/16px var(--sans);color:rgba(255,255,255,.8)}
 
 /* ---------- filter menu ---------- */
@@ -214,7 +214,7 @@
 .bk-gig hr{width:100%;margin:16px 0;border:0;border-top:1px solid var(--rule)}
 .bk-gig .facts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .bk-gig .facts span{display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0;border:0;height:auto}
-.bk-gig .facts b{font:500 18px/24px var(--sans);letter-spacing:-.1px}.bk-gig .facts b.mono{font:500 20px/22px var(--mono);letter-spacing:0}
+.bk-gig .facts b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}.bk-gig .facts b.mono{font:500 20px/22px var(--mono);letter-spacing:0}
 .bk-gig .facts small,.bk-gig .who{font:400 12px/16px var(--sans);color:var(--muted)}
 .bk-gig .who{display:flex;align-items:center;gap:8px;margin-top:16px}
 .bk-gig .who i{width:20px;height:20px;border-radius:50%;background:var(--well)}

@@ -245,7 +245,7 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 .step .spine i{width:12px;height:12px;border-radius:50%;flex:none}
 .step .spine b{flex:1;width:2px;background:var(--rule);margin-top:2px}
 .step .content{padding-bottom:24px;display:flex;flex-direction:column;gap:8px}
-.step.next .time{color:var(--ink)}.step.next h4{font:500 18px/24px var(--sans)}
+.step.next .time{color:var(--ink)}.step.next h4{font:500 var(--fs-heading)/var(--lh-heading) var(--sans)}
 .step h4{margin:0;font-weight:500;font-size:15px;flex:1}
 .openitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-md);background:var(--bad-tint);color:var(--bad)}
 /* gig card */

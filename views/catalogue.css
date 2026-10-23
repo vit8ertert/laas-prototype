@@ -160,7 +160,7 @@ button.cat-chk:hover{background:var(--raised)}
 .cat-problem img{width:96px;height:96px;border-radius:8px;object-fit:cover;flex:none}
 .cat-problem div{display:flex;flex-direction:column;gap:6px}
 .cat-problem div>span{font:400 13px/var(--lh-label) var(--sans)}
-.cat-problem b{font:500 18px/24px var(--sans);letter-spacing:-.1px}
+.cat-problem b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 .cat-ptext{margin:0;font:400 15px/var(--lh-body) var(--sans)}
 .cat-opts{display:flex;flex-direction:column;gap:10px}
 .cat-opts .radio{border-radius:10px}

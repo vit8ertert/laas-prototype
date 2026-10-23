@@ -82,7 +82,7 @@ button.d-shm:hover{color:var(--ink);text-decoration:underline}
 .d-tile b{font-weight:500}.d-tile small{font-size:12px;line-height:16px;color:var(--muted)}
 .s>.d-tile{width:128px}.s>.d-tile img{width:104px;height:104px}
 .d-more{flex:none;width:128px;height:198px;border:1px dashed var(--rule);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.d-more b{font:500 18px/24px var(--sans);letter-spacing:-.1px;color:var(--muted)}.d-more small{font:400 12px/16px var(--sans);color:var(--faint)}
+.d-more b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px;color:var(--muted)}.d-more small{font:400 12px/16px var(--sans);color:var(--faint)}
 .d-one{display:flex;gap:16px;align-items:flex-start}
 .d-nextfor{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}.d-nextfor>b{font:500 15px/18px var(--sans)}
 .d-do{display:flex;align-items:center;gap:12px;padding:12px 16px;outline:1px dashed var(--rule);outline-offset:-1px;border-radius:12px;font:400 15px/18px var(--sans)}.d-do span{flex:1}
@@ -244,7 +244,7 @@ button.d-kpi:hover{background:var(--raised)}
 
 /* notifications (438:21857) */
 .d-notif{padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 80px);border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
-.d-nh{display:flex;align-items:center;gap:12px;padding:10px 4px 8px 16px}.d-nh b{flex:1;font:500 18px/24px var(--sans);letter-spacing:-.1px}
+.d-nh{display:flex;align-items:center;gap:12px;padding:10px 4px 8px 16px}.d-nh b{flex:1;font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 /* footer and header buttons keep their own 12 px padding; the bar insets 4 px so labels still line up at 16 (Vit 21 Oct: the See all hover touched the panel corner) */
 .d-notif .d-nset,.d-notif .d-nsee{padding:8px 12px}
 .d-nf{display:flex;gap:4px;padding:0 16px 8px}
