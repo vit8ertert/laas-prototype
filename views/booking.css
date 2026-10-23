@@ -291,7 +291,9 @@
 .bd-step.next .time{color:var(--ink)}.bd-step.next h4{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 .bd-step.nowrow{display:flex;align-items:center;gap:12px;padding-bottom:16px}
 .bd-step.nowrow .time{width:64px;color:var(--accent-ink)}
-.bd-step.nowrow .spine{width:16px;height:16px;padding:0;justify-content:center}
+.bd-step.nowrow .spine{width:16px;height:16px;padding:0;justify-content:center;flex:none}
+/* the Now row is flex, not the step grid: keep its time and dot columns at the grid widths so the dot sits on the same line as the step dots (Vit 23 Oct) */
+.bd-step.nowrow .time{flex:none}
 .bd-step.nowrow .spine i.nowdot{width:8px;height:8px;background:var(--accent)}
 .bd-step.nowrow .muted{font:400 15px/var(--lh-body) var(--sans)}
 .bd-nowtag{gap:6px;padding:4px 10px;background:var(--accent);color:var(--on-accent);font:400 13px/var(--lh-label) var(--sans)}
@@ -322,7 +324,7 @@
  .bd-payrow{flex-wrap:wrap;height:auto;row-gap:2px}.bd-payrow .l{width:100%}
  .bd-banner{flex-wrap:wrap}.bd-banner .tx{flex:1 1 200px}
  .bd-strip{overflow-x:auto}.bd-strip .track{min-width:640px}
- .bd-step{grid-template-columns:48px 16px minmax(0,1fr);gap:8px}.bd-step.nowrow .time{width:48px}
+ .bd-step{grid-template-columns:48px 16px minmax(0,1fr);gap:8px}.bd-step.nowrow{gap:8px}.bd-step.nowrow .time{width:48px}
  .abar [data-act=bdnew]{display:none}
  .abar .rec{min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:40%}
 }
