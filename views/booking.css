@@ -337,3 +337,7 @@
 .bd-bk .bd-sec>.bd-sh>.btn.bd-act{padding:8px 0 8px 12px}
 /* side panel: 12 px + the rows' own 12 px = 24 px, the same inset as the main blocks */
 .bd-open>svg.i{margin-top:3px;flex:none} /* icon on the first line when the text wraps */
+
+/* a moved step: its status tag stays on the left under the title, the move is a note beside it, not a second badge (Vit 26 Oct) */
+.bd-smeta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px}
+.bd-smeta>span:not(.tag){font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
