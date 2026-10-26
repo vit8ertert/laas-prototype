@@ -585,6 +585,7 @@
   .main .cat-rhead{display:grid!important;grid-template-columns:96px minmax(0,1fr);column-gap:12px;row-gap:12px;align-items:start}
   .main .cat-rhead>.cat-cover{width:96px!important;height:96px!important}
   .main .cat-rhead>.id{min-width:0!important;gap:4px}
+  .main .cat-rhead{grid-template-rows:auto auto}.main .cat-rhead>.cat-cover{grid-row:auto}
   .main .cat-rhead>.acts{grid-column:1/-1;padding-top:0!important}
   .main .cat-rhead .id h1{font-size:var(--fs-title)!important;line-height:var(--lh-title)!important}
 }
