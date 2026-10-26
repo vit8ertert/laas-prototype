@@ -462,4 +462,5 @@ button.d-kpi:hover{background:var(--raised)}
  .d-dlr.add{color:var(--accent-ink)}.d-dlr.add .tt{font-weight:400}.d-dlr.add>svg.i{width:16px;height:16px;color:inherit;margin-inline:10px}
 }
 /* a ghost button that starts a line lines its label up with the text above; the -12 px margin keeps its hover area (Vit 26 Oct, Calendar sync) */
-.cs-cfa>.btn.ghost.s,.cs-page .acc-url>.btn.ghost.s:first-of-type,.cs-page .acc-row .ctl>.btn.ghost.s:only-child{margin-left:-12px}
+.cs-cfa>.btn.ghost.s,.cs-page .acc-row .ctl>.btn.ghost.s:only-child{margin-left:-12px}
+@media (max-width:599.98px){.acc-url>.btn.ghost.s:first-of-type{margin-left:-12px}}
