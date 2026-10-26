@@ -166,6 +166,8 @@ button.d-kpi:hover{background:var(--raised)}
 /* calendar */
 .d-monthnav{display:flex;align-items:center;gap:8px}
 .d-legend{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* the status keys wrap as one group, so on a phone Confirmed sits with Draft, Attention and Paid (Vit 26 Oct) */
+.d-keys{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .d-pill.on{background:var(--raised)}
 .d-month{background:var(--surface);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
 .d-wd,.d-wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
