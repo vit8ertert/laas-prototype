@@ -159,8 +159,10 @@ button.d-kpi:hover{background:var(--raised)}
 .d-switch{align-self:center}
 
 /* customise drawer segments */
-.d-seg{display:flex;flex-wrap:wrap;gap:4px;padding:3px;border-radius:var(--r-md);background:var(--well)}
-.d-seg button{height:30px;padding:0 12px;border-radius:7px;font-size:13px;color:var(--muted)}
+/* Segmented control (Vit 26 Oct, What it can do: "needs to be aligned and be a component"): on the scale, 36 high =
+   4 inset + 28 segment; the inner radius is the outer one minus the inset (8 - 4) */
+.d-seg{display:flex;flex-wrap:wrap;gap:var(--space-1);padding:var(--space-1);border-radius:var(--r-md);background:var(--well)}
+.d-seg button{height:28px;padding:0 var(--space-3);border-radius:var(--r-sm);font-size:13px;color:var(--muted)}
 .d-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.25)}
 
 /* calendar */
