@@ -122,6 +122,8 @@ button.m-line:hover{background:var(--raised)}
 /* invoice */
 /* Figma counts these strokes in the layout (frame 68 = 12+42+12 + 2 × 1) */
 .m-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:center;gap:8px;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--rule)}
+/* phones: every card takes the card token (Vit 26 Oct: card padding is 12 everywhere on phones) */
+@media (max-width:599.98px){.m-strip{padding:var(--card)}}
 .m-step{display:flex;flex-direction:column;gap:2px}
 .m-step>span{display:flex;align-items:center;gap:8px}
 .m-step i{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
