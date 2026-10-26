@@ -267,6 +267,11 @@ input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 .sx-btn:hover{background:var(--hover)}
 .sx-btn svg.i{width:16px;height:16px}
 .sx-btn[hidden]{display:none}
+/* Phones: a scroll bar under the table instead of the arrow buttons (Vit 26 Oct). 4 px track on the rule, thumb on
+   the muted ink, 8 px under the table (overflow.js subtracts the parent's gap); the 16 px box keeps it draggable without making the bar look heavy */
+.sx-bar{position:relative;height:4px;margin:var(--space-2) 0;border-radius:2px;background:var(--rule);touch-action:none;cursor:pointer}
+.sx-bar::before{content:"";position:absolute;inset:-6px 0}
+.sx-bar>i{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--muted)}
 
 /* Venues map city card (Vit 22 Oct: "we need to fix padding?"): the card has no inner padding, so its rows do not bleed;
    they take the row inset and line up with the city heading (16) */
