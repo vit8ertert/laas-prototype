@@ -156,3 +156,12 @@
    space"); the full names stay in the label and tooltip */
 .so-nets{display:inline-flex;align-items:center;gap:6px}
 .so-nets>*{flex:none}
+/* phones: a delivery row has its own grid (the booking-row grid had no place for the status, so "On release day", "Failed" and
+   "Private" were cut): title + streams, destination · visibility + date, then the status on its own row; the file format is a
+   desktop column (gate finding, 26 Oct) */
+@media (max-width:599.98px){
+ .so .bk-tr.so-d{grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "dest vis w" "st st st"!important;grid-template-rows:auto!important;min-width:0}
+ .so .bk-tr.so-d>.tt{grid-area:tt!important}.so .bk-tr.so-d>.so-dest{grid-area:dest!important}.so .bk-tr.so-d>:nth-child(3){display:none}
+ .so .bk-tr.so-d>.m:not(.so-dest){grid-area:vis!important;min-width:0;white-space:nowrap}.so .bk-tr.so-d>.w{grid-area:w!important;justify-self:end;padding-left:0!important}
+ .so .bk-tr.so-d>:nth-child(6){grid-area:st!important;justify-self:start;max-width:none!important;overflow:visible!important}.so .bk-tr.so-d>.n{grid-area:n!important;justify-self:end}
+}
