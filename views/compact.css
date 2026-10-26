@@ -606,3 +606,6 @@
 /* Onboarding on phones (Vit 26 Oct, Sign-up: "add more space between the logo and the title, for all onboarding"):
    the logo row gets 24 more below it, so the title starts 64 under the logo instead of 40 */
 @media (max-width:599.98px){.acc-ob .acc-obtop{margin-bottom:var(--space-6)}}
+/* and the step itself is centred in the space under the logo (Vit 26 Oct, Sign-up: "center this vertically"); a step
+   taller than the screen starts right under the logo and scrolls */
+@media (max-width:599.98px){.acc-ob .l>.acc-obform{margin-top:auto!important;margin-bottom:auto!important}}
