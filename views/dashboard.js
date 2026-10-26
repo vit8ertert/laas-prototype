@@ -138,6 +138,12 @@ const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],WDL=['Sunday','Monday','Tue
 const dayLong=dt=>`${WD[dt.getDay()]} ${dt.getDate()} ${MON3[dt.getMonth()]} ${dt.getFullYear()}`;
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 /* Vit 21 Oct: the Calendar opens on the month with the band's gigs; the empty state is its own flag (no longer tied to the first-visit dashboard) */
+/* phones: the selected day's gigs under the grid (Apple Calendar's month + list, Vit 26 Oct); hidden on desktop, where cells carry titles */
+const ST_LABEL={confirmed:'Confirmed',draft:'Draft',attention:'Attention',paid:'Paid'};
+const dayList=k=>{const [y,mo,d]=k.split('-').map(Number);const dt=new Date(y,mo-1,d);const e=CAL_EVENTS[k];const n=e?e.ev.length:0;
+ return `<section class="d-daylist" aria-label="${dayLong(dt)}"><div class="d-dlh"><b>${dayLong(dt)}</b><span>${n?`${n} booking${n>1?'s':''}`:'Nothing booked'}</span></div>
+ ${e?e.ev.map(([k2,t,go],i)=>`<button class="d-dlr" ${go}>${i===0?`<img src="${IMG(e.img)}" alt="">`:'<span class="ph0"></span>'}<span class="tt">${t}</span>${tag(k2,ST_LABEL[k2]||k2)}${ic('chevr','s')}</button>`).join(''):''}
+ ${roleViewer()?'':`<button class="d-dlr add" data-act="caladd" data-d="${k}">${ic('plus','s')}<span class="tt">Add a booking on this day</span></button>`}</section>`;};
 L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMonth,1);const y=d0.getFullYear(),m=d0.getMonth();
  const start=new Date(y,m,1-((d0.getDay()+6)%7));const weeks=[];let d=new Date(start);
  do{const w=[];for(let i=0;i<7;i++){w.push(new Date(d));d.setDate(d.getDate()+1);}weeks.push(w);}while(d.getMonth()===m);
@@ -146,13 +152,15 @@ L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMon
   <button class="btn secondary" data-act="calsub">Subscribe</button><button class="btn ghost" data-act="calsync">Sync settings</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button></div>`;
  if(empty)return `<div class="page d-page">${head}<section class="d-box wide"><div class="d-eh"><h2 class="t-title">Nothing on the calendar yet</h2><p class="muted">Bring your dates over, connect a calendar for two-way sync, or add the next gig. Holds and enquiries will show hatched; confirmed gigs solid.</p></div>
   <div class="d-choices three">${[['stagedive','Add a gig','Date and venue are enough to start','newbooking'],['notebook','Connect a calendar','Google or Microsoft 365, two-way, holds stay tentative','calsync'],['catalogue-distributor','Import a file','.ics or CSV from your old tool, one-off','importcal']].map(([im,t,s,a])=>`<button class="d-choice sunk" data-act="${a}"><img src="${IMG(im)}" alt=""><b>${t}</b><small>${s}</small></button>`).join('')}</div></section></div>${L.abar(null,'Ask: “we play Loppen on 14 Nov, doors 20:00”, the assistant adds it behind Confirm')}`;
+ const sel=S.calSel||'2026-10-19';
  const cell=dt=>{const k=`${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;const e=CAL_EVENTS[k];const out=dt.getMonth()!==m;const today=k==='2026-10-19';
   /* the venue photo moves into the chip as a thumbnail (Vit 21 Oct: full-cell photos hurt contrast and accessibility) */
-  return `<div class="d-day ${out?'out':''} ${today?'today':''} ${e?'has-ev':''}"><span class="d-dn">${dt.getDate()}</span>${roleViewer()?'':`<button class="d-add" data-act="caladd" data-d="${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}" aria-label="New booking on ${dayLong(dt)}" title="New booking on ${dayLong(dt)}">${ic('plus','s')}</button>`}${e?e.ev.map(([k2,t,go],i)=>`<button class="d-ev ${k2}" ${go}>${i===0?`<img class="d-evth" src="${IMG(e.img)}" alt="">`:''}<span>${t}</span></button>`).join(''):''}</div>`;};
+  /* phones (Apple-style, Vit 26 Oct): the whole cell selects the day; events show as status bars, at most 2, then +N */
+  return `<div class="d-day ${out?'out':''} ${today?'today':''} ${e?'has-ev':''} ${k===sel?'sel':''}" data-act="calsel" data-k="${k}"><span class="d-dn">${dt.getDate()}</span>${roleViewer()?'':`<button class="d-add" data-act="caladd" data-d="${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}" aria-label="New booking on ${dayLong(dt)}" title="New booking on ${dayLong(dt)}">${ic('plus','s')}</button>`}${e?e.ev.map(([k2,t,go],i)=>`<button class="d-ev ${k2} ${i>1?'more2':''}" ${go}>${i===0?`<img class="d-evth" src="${IMG(e.img)}" alt="">`:''}<span>${t}</span></button>`).join(''):''}${e&&e.ev.length>2?`<span class="d-more">+${e.ev.length-2}</span>`:''}</div>`;};
  const rows=S.calView==='week'?weeks.filter(w=>w.some(x=>x.getDate()===24&&x.getMonth()===m)).slice(0,1).concat(S.calMonth?[weeks[0]]:[]).slice(0,1):weeks;
  return `<div class="page d-page">${head}
  <div class="d-legend"><button class="d-pill ${S.calView==='month'?'on':''}" data-act="calview" data-v="month">Month</button><button class="d-pill ${S.calView==='week'?'on':''}" data-act="calview" data-v="week">Week</button><button class="d-pill" data-go="gigday">Day sheet</button><span style="flex:1"></span><span class="d-keys">${tag('confirmed','Confirmed')}${tag('draft','Draft')}${tag('attention','Attention')}${tag('paid','Paid')}</span></div>
- <div class="d-month ${S.calView==='week'?'week':''}"><div class="d-wd">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<span>${x}</span>`).join('')}</div>${rows.map(w=>`<div class="d-wk">${w.map(cell).join('')}</div>`).join('')}</div></div>
+ <div class="d-month ${S.calView==='week'?'week':''}"><div class="d-wd">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<span>${x}</span>`).join('')}</div>${rows.map(w=>`<div class="d-wk">${w.map(cell).join('')}</div>`).join('')}</div>${dayList(sel)}</div>
  ${L.abar(null,`Ask about ${bn()}: gigs, contacts, gear, money`)}`;};
 
 /* ---------- assistant (chat app: history, centred column, pinned composer) ---------- */
@@ -295,7 +303,7 @@ A.sharepdf=()=>{L.close();L.toast('Day sheet PDF is ready, v2');};A.sharecal=()=
 A.shareband=()=>{L.close();L.toast('Day sheet sent to 3 members',()=>{});};A.sharelink=()=>{try{navigator.clipboard.writeText('https://laas.app/d/LT-0041')}catch(e){}L.close();L.toast('Link copied, fees stay hidden');};
 A.shareprint=()=>{L.close();L.toast('Print view opened');};
 A.calmonth=t=>{const v=+t.dataset.v;S.calMonth=v===0?0:S.calMonth+v;L.render();};
-A.calview=t=>{S.calView=t.dataset.v;L.render();};
+A.calview=t=>{S.calView=t.dataset.v;L.render();};A.calsel=t=>{S.calSel=t.dataset.k;L.render();};
 A.calsub=()=>L.open('modal',{html:`<h2 class="t-title">Subscribe to ${bn()}’s calendar</h2><p class="muted" style="margin:0">Paste this link in Google Calendar, Outlook or Apple Calendar. It updates by itself; fees and notes stay out.</p><div class="row" style="flex-wrap:nowrap"><input class="input mono" value="webcal://laas.app/c/lowtide-7f3a.ics" readonly aria-label="Feed link"><button class="btn secondary" data-act="copytext" data-text="webcal://laas.app/c/lowtide-7f3a.ics">${ic('copy','s')}Copy</button></div><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Close</button></div>`});
 A.calsync=()=>L.go('calsync');
 A.asstchat=t=>{const id=t.dataset.id;S.asstHist=false;S.asstEdit=false;if(id==='q'){S.asst='q';}else{S.asstChat=id;S.asst=id==='move'?(S.asstMove||'plan'):'chat';}L.render();};

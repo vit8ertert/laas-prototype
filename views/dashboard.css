@@ -429,3 +429,32 @@ button.d-kpi:hover{background:var(--raised)}
 .d-ev{display:flex;align-items:center;gap:6px;min-width:0}
 .d-ev .d-evth{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none;margin-left:-4px}
 .d-ev>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Calendar on phones, Apple-style (Vit 26 Oct, research notes/research/calendar-mobile-grid.md): no cell borders, only a rule between
+   weeks; today a filled circle, the selected day a ring; events as status bars (Draft as an outline), at most 2, then +N; one + (New
+   booking in the header, "Add a booking on this day" in the list); the selected day's gigs listed under the grid */
+.d-daylist,.d-more{display:none}
+@media (max-width:599.98px){
+ .d-month{border:0;border-radius:0;background:none;overflow:visible}
+ .d-wd{background:none}.d-wd span{padding:4px 0 6px;text-align:center}
+ .d-wk,.d-month.week .d-wk{min-height:0!important;box-shadow:inset 0 1px 0 var(--rule)}.d-wk::after{display:none}
+ .d-day,.d-day:first-child{box-shadow:none!important;background:none!important;min-height:56px!important;padding:6px 2px 4px!important;align-items:center;gap:3px!important;cursor:pointer}
+ .d-dn{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font:400 15px/20px var(--sans)}
+ .d-day.today .d-dn{background:var(--accent-strong);color:var(--on-accent)}
+ .d-day.sel:not(.today) .d-dn{box-shadow:inset 0 0 0 1.5px var(--ink)}
+ .d-add{display:none!important}
+ .d-ev{pointer-events:none;flex:none;width:calc(100% - 8px)!important;height:4px;padding:0!important;border-radius:2px;font-size:0!important}
+ .d-ev .d-evth,.d-ev>span,.d-ev.more2{display:none!important}
+ .d-month .d-wk .d-day .d-ev.confirmed{background:var(--ok)!important;box-shadow:none!important}.d-month .d-wk .d-day .d-ev.attention{background:var(--att)!important;box-shadow:none!important}.d-month .d-wk .d-day .d-ev.paid{background:var(--paid)!important;box-shadow:none!important}
+ .d-month .d-wk .d-day .d-ev.draft{background:none!important;box-shadow:inset 0 0 0 1px var(--draft)!important}
+ .d-more{display:block;font:400 10px/12px var(--sans);color:var(--muted)}
+ .d-daylist{display:flex;flex-direction:column;margin-top:var(--space-2);border-top:1px solid var(--rule)}
+ .d-dlh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:12px 0 4px}
+ .d-dlh b{font:500 16px/22px var(--sans)}.d-dlh span{font:400 13px/16px var(--sans);color:var(--muted)}
+ .d-dlr{display:flex;align-items:center;gap:12px;width:100%;padding:var(--row-y) 0;text-align:left;color:var(--ink);box-shadow:inset 0 -1px 0 var(--rule)}
+ .d-dlr:last-child{box-shadow:none}
+ .d-dlr img,.d-dlr .ph0{width:36px;height:36px;border-radius:8px;object-fit:cover;flex:none;background:var(--well)}
+ .d-dlr .tt{flex:1;min-width:0;font:500 15px/20px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .d-dlr>svg.i{width:14px;height:14px;color:var(--muted);flex:none}
+ .d-dlr.add{color:var(--accent-ink)}.d-dlr.add .tt{font-weight:400}.d-dlr.add>svg.i{width:16px;height:16px;color:inherit;margin-inline:10px}
+}

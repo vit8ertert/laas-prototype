@@ -48,7 +48,8 @@
 /* ---------- sheets of our own (More, Ask, ⋯) ---------- */
 .cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up .28s cubic-bezier(.32,.72,0,1) both}
 @media (min-width:600px){.cx-sheet{left:50%;right:auto;width:min(560px,100%);margin-left:max(-280px,-50%)}}
-.cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 12px;border-radius:var(--r-md);text-align:left}
+/* sheet rows 44 high (Vit 26 Oct: less space between the More sheet rows; 44 keeps a comfortable tap target) */
+.cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0 12px;border-radius:var(--r-md);text-align:left}
 .cx-it>span{display:flex;align-items:center;gap:12px}
 .cx-it:hover{background:var(--well)}.cx-it>svg{color:var(--faint)}
 .cx-g{padding:4px 0;border-top:1px solid var(--rule)}.cx-g:first-of-type{border-top:0}
