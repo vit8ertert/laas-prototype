@@ -596,3 +596,10 @@
   .bd-pay .bd-payhero p,.bd-pay .bd-told>p{font-size:13px!important;line-height:18px!important}
   .bd-pay .bd-told h2{font-size:var(--fs-heading)!important;line-height:var(--lh-heading)!important;font-weight:500!important}
 }
+/* Release checks summary on phones (Vit 26 Oct, Late Shift EP: "make Before delivery and 1 blocker… stacked, not
+   inlined"): the title and the count stack (4 apart, like a title and its subtitle), the meter and Run again follow */
+@media (max-width:599.98px){
+  .main .cat-checks .sum{row-gap:var(--space-1)}
+  .main .cat-checks .sum>h3,.main .cat-checks .sum>.grow{flex:1 1 100%;min-width:0}
+  .main .cat-checks .sum>.grow~*{margin-top:var(--space-2)}
+}
