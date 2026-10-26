@@ -230,6 +230,11 @@ button.m-line:hover{background:var(--raised)}
  .m-line{flex-wrap:wrap;gap:8px 12px}.m-line .m-tx{flex:1 1 calc(100% - 60px)}
  .m-line .m-end{width:auto;margin-left:48px}.m-line.m-flush .m-end,.m-line:not(:has(.m-th)) .m-end{margin-left:0}
  .m-line .m-amt{width:auto;margin-left:auto}
+ /* a row with a status: amount and tag share the right column (amount on top, tag under it) like the booking rows, so the tag no longer takes a third line (Vit 26 Oct) */
+ .m-line:has(>.m-end>.tag):has(>.m-amt){display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"th tx amt" "th tx end";column-gap:12px;row-gap:var(--space-1);align-items:start}
+ .m-line:has(>.m-end>.tag):has(>.m-amt):not(:has(>.m-th)){grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx end"}
+ .m-line:has(>.m-end>.tag)>.m-th{grid-area:th}.m-line:has(>.m-end>.tag)>.m-tx{grid-area:tx}
+ .m-line:has(>.m-end>.tag)>.m-amt{grid-area:amt;justify-self:end;margin:0}.m-line:has(>.m-end>.tag)>.m-end{grid-area:end;justify-self:end;margin:0}
  .m-erow{flex-wrap:wrap;gap:8px 12px}.m-erow .m-tx{flex:1 1 calc(100% - 80px)}.m-ed{width:auto}
  .m-erow .m-chip{width:auto}.m-eend{width:auto}.m-eamt{margin-left:auto;width:auto}
  .m-mem{flex-wrap:wrap}.m-mem .m-tx{flex:1 1 calc(100% - 44px)}.m-sbar{flex:1 1 auto;margin-left:44px}
