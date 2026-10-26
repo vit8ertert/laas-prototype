@@ -329,6 +329,12 @@ button.acc-si:hover{background:var(--hover)}
 .acc-pph .help svg{flex:none}
 .acc-pph .mono{flex:none}
 .acc-ppact{gap:8px;margin-top:-4px}
+/* Prompt footer (Vit 26 Oct, Your account: "strange, what are these", "improve it for both"): the counter sits on the
+   label row, and the two helpers read as actions: both have an icon and line up with the text (the -12 bleed keeps the
+   hover area); on phones they stack. The privacy note keeps the one-line help clamp (tap to read it all) */
+.acc-ppl{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.acc-ppact>.btn.ghost.s:first-child{margin-left:calc(-1 * var(--space-3))}
+@media (max-width:599.98px){.acc-ppact{flex-direction:column;align-items:flex-start;gap:0}.acc-ppact>.btn.ghost.s{margin-left:calc(-1 * var(--space-3))}}
 
 /* ---------- Account: your bands ---------- */
 .acc-bands{display:flex;flex-direction:column;gap:12px}
@@ -456,3 +462,11 @@ button.acc-si:hover{background:var(--hover)}
 .acc-ob .r img.ob-ph{opacity:0;transform:scale(1.03);transition:opacity .6s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
 .acc-ob .r img.ob-ph.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.acc-ob .r img.ob-ph{transition:none}}
+/* Invite actions on phones (Vit 26 Oct, Members: "all elements left aligned"): the invite row has no inset on phones,
+   so its actions start at the same x as the email (Resend's outline at the text edge); Revoke stays --bad */
+@media (max-width:599.98px){.acc-invact{padding-left:0}}
+/* Theme tile badges (Vit 26 Oct, Theme: "fix for both, suggested badge"): the name row wraps, so a badge that does not
+   fit beside the name ("Suggested for you" in a 160 px tile) goes under it instead of running out of the tile */
+.acc-th .nm{flex-wrap:wrap;row-gap:var(--space-1)}
+.acc-th .nm>span:first-child:not(:only-child){flex:1 0 auto}
+.acc-th .nm>.tag{max-width:100%}

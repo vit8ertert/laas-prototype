@@ -603,3 +603,6 @@
   .main .cat-checks .sum>h3,.main .cat-checks .sum>.grow{flex:1 1 100%;min-width:0}
   .main .cat-checks .sum>.grow~*{margin-top:var(--space-2)}
 }
+/* Onboarding on phones (Vit 26 Oct, Sign-up: "add more space between the logo and the title, for all onboarding"):
+   the logo row gets 24 more below it, so the title starts 64 under the logo instead of 40 */
+@media (max-width:599.98px){.acc-ob .acc-obtop{margin-bottom:var(--space-6)}}
