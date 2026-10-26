@@ -19,7 +19,7 @@
 .cv-chip.cur{background:var(--raised)}
 .cv-chip.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .cv-chip.open{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
-.cv-div{width:1px;height:20px;background:var(--rule);flex:none}
+/* the chip divider lives in components.css (.chip-div) */
 .cv-search{width:280px;flex:none}
 .cv-search svg{left:12px;top:10px;width:18px;height:18px}
 .cv-search svg{color:var(--muted)}.cv-search:has(.input:not(:placeholder-shown)) svg{color:var(--ink)}

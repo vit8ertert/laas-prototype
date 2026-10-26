@@ -223,3 +223,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){flex:none;align-self:flex-start;margin-top:calc((var(--bn-line) - 34px) / 2)}
 :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){width:32px!important;height:32px!important;flex:none;align-self:flex-start;display:grid;place-items:center;border-radius:8px;margin:calc((var(--bn-line) - 32px) / 2) -12px 0 -8px}
 :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.acc-x::before{inset:0}
+
+/* Chip divider (DS "Chip divider", Vit 26 Oct): in a chip row, a 1 × 20 rule separates the view chips (what you look at,
+   e.g. People / Venues) from the filter chips (Kind, City, Sort). Use it on every chip row that has both. */
+.chip-div{width:1px;height:20px;background:var(--rule);flex:none;align-self:center}
