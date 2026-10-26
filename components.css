@@ -146,6 +146,8 @@ tbody tr:hover td{background:var(--hover)}
 .send{padding:var(--card);gap:var(--stack)}
 .send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
 .send>div:first-child p{margin:0!important}
+/* the subtitle under the title (invoice, amount, due date) stays on one line and ends in an ellipsis (Vit 26 Oct) */
+.send>div:first-child p.muted{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .send>.row.t-label{gap:8px}
 .send>.row.t-label>span:nth-child(2){font:400 15px/var(--lh-body) var(--sans)}
 .send .msg .link{line-height:18px}
