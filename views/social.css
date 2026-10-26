@@ -178,3 +178,16 @@
   .so-bars{height:auto;min-height:222px}
   .so-bars small{height:44px;padding-bottom:0;text-align:end;overflow:hidden}
 }
+/* Delivery rows on phones, take 2 (Vit 26 Oct: "improve the layout, too much on the left, remove some icons", both):
+   the cover is the only picture, a 40 px column beside the three lines; the destination's logo goes (its name says it).
+   Left column: title, destination, status. Right column: streams, date, visibility */
+@media (max-width:599.98px){
+ .so .bk-tr.so-d{grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"img tt n" "img dest w" "img st vis"!important;column-gap:var(--space-3)!important;row-gap:var(--space-1)!important;align-items:center}
+ .so .bk-tr.so-d>.tt{display:contents}
+ .so .bk-tr.so-d>.tt>img{grid-area:img;align-self:start;width:40px;height:40px;border-radius:var(--r-sm)}
+ .so .bk-tr.so-d>.tt>b{grid-area:tt;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .so .bk-tr.so-d>.so-dest>.brand{display:none}
+ .so .bk-tr.so-d>.so-dest{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+ .so .bk-tr.so-d>.m:not(.so-dest){justify-self:end}
+ .so .bk-tr.so-d>.m:not(.so-dest)::before{content:none}
+}
