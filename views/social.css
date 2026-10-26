@@ -165,3 +165,9 @@
  .so .bk-tr.so-d>.m:not(.so-dest){grid-area:vis!important;min-width:0;white-space:nowrap}.so .bk-tr.so-d>.w{grid-area:w!important;justify-self:end;padding-left:0!important}
  .so .bk-tr.so-d>:nth-child(6){grid-area:st!important;justify-self:start;max-width:none!important;overflow:visible!important}.so .bk-tr.so-d>.n{grid-area:n!important;justify-self:end}
 }
+/* Keyword watch chart head on phones (Vit 26 Oct: "left align", both): the title takes its own line, the actions
+   follow on the next line and the first one bleeds by its padding so its icon lines up with the title */
+@media (max-width:599.98px){
+  .so-chart .m-chh>h3{flex-basis:100%}
+  .so-chart .m-chh>h3+.btn.ghost{margin-left:calc(-1 * var(--space-3))}
+}
