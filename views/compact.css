@@ -104,6 +104,8 @@
   .m-kpis,.cat-kpis,.aud-kpis,.m-g12:has(>.m-task){display:flex!important;flex-direction:row!important;gap:12px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}
   :is(.m-kpis,.cat-kpis,.aud-kpis)>*,.m-g12>.m-task{flex:0 0 72%;scroll-snap-align:start;min-width:0}
   :is(.m-kpis,.cat-kpis,.aud-kpis,.m-g12)::-webkit-scrollbar{display:none}
+  /* inside a card the sideways row bleeds to the card edges, not the page gutter: margin and padding are the card padding, so the first card lines up with the heading and the row runs to the card edge (Vit 26 Oct) */
+  .m-sec>.m-g12:has(>.m-task){margin-inline:calc(-1 * var(--card))!important;padding-inline:var(--card)!important;scroll-padding-inline:var(--card)}
   /* release tiles: two per row instead of one 234 px tile per screen third */
   .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   /* page tabs and filter chips scroll in one line; the current tab is kept in view (compact.js) */
