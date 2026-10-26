@@ -341,3 +341,5 @@
 /* a moved step: its status tag stays on the left under the title, the move is a note beside it, not a second badge (Vit 26 Oct) */
 .bd-smeta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px}
 .bd-smeta>span:not(.tag){font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+/* an approximate time keeps its digits on the time column; the ~ hangs to the left (Vit 26 Oct) */
+.bd-step .time .tl{font-style:normal;margin-left:-1ch}
