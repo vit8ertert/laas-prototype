@@ -303,6 +303,8 @@
 .bd-open{flex:1;display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;background:var(--bad-tint);color:var(--bad)}
 .bd-open>span{flex:1;min-width:0;font:400 15px/var(--lh-body) var(--sans)}
 .bd-open .btn{color:var(--ink)}
+/* the action is a text link in the sentence, like the banner actions (Vit 26 Oct: "Call Kasper as a link, in the same line as the text") */
+.bd-open>span>.link{font:inherit;font-weight:500;color:inherit;padding:0;background:none;border:0;cursor:pointer}
 .bd-tin{height:30px;padding:0 6px;font-size:13px;width:64px}
 /* rail: pad 20, gap 28; still-open box pad 20 24, gap 16, border att */
 .bd-rail{padding:20px;gap:28px}
