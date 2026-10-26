@@ -322,6 +322,9 @@
  .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:10px}
  .bd-kv>div{grid-template-columns:1fr;gap:2px}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}
+ /* same as the Money line on phones (Vit 26 Oct): amount on top, status tag under it, both in the right column */
+ .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:12px;row-gap:var(--space-1);align-items:start}
+ .bd-mrow:has(>.st .tag)>.tx{grid-area:tx}.bd-mrow:has(>.st .tag)>.amt{grid-area:amt;width:auto;justify-self:end}.bd-mrow:has(>.st .tag)>.st{grid-area:st;width:auto;justify-self:end}
  .bd-pay{padding:32px 20px}.bd-2col{grid-template-columns:1fr}
  .bd-payrow{flex-wrap:wrap;height:auto;row-gap:2px}.bd-payrow .l{width:100%}
  .bd-banner{flex-wrap:wrap}.bd-banner .tx{flex:1 1 200px}
