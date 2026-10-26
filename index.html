@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=3482d77">
+<link rel="stylesheet" href="tokens.css?v=d806925">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=3482d77">
-<link rel="stylesheet" href="components.css?v=3482d77">
-<link rel="stylesheet" href="views/tour.css?v=3482d77">
-<link rel="stylesheet" href="views/dashboard.css?v=3482d77">
-<link rel="stylesheet" href="views/bookings.css?v=3482d77">
-<link rel="stylesheet" href="views/booking.css?v=3482d77">
-<link rel="stylesheet" href="views/contacts.css?v=3482d77">
-<link rel="stylesheet" href="views/money.css?v=3482d77">
-<link rel="stylesheet" href="views/catalogue.css?v=3482d77">
-<link rel="stylesheet" href="views/account.css?v=3482d77">
-<link rel="stylesheet" href="views/mail.css?v=3482d77">
-<link rel="stylesheet" href="views/social.css?v=3482d77">
-<link rel="stylesheet" href="views/logomotion.css?v=3482d77">
-<link rel="stylesheet" href="tags.css?v=3482d77">
-<link rel="stylesheet" href="views/compact.css?v=3482d77">
+<link rel="stylesheet" href="shell.css?v=d806925">
+<link rel="stylesheet" href="components.css?v=d806925">
+<link rel="stylesheet" href="views/tour.css?v=d806925">
+<link rel="stylesheet" href="views/dashboard.css?v=d806925">
+<link rel="stylesheet" href="views/bookings.css?v=d806925">
+<link rel="stylesheet" href="views/booking.css?v=d806925">
+<link rel="stylesheet" href="views/contacts.css?v=d806925">
+<link rel="stylesheet" href="views/money.css?v=d806925">
+<link rel="stylesheet" href="views/catalogue.css?v=d806925">
+<link rel="stylesheet" href="views/account.css?v=d806925">
+<link rel="stylesheet" href="views/mail.css?v=d806925">
+<link rel="stylesheet" href="views/social.css?v=d806925">
+<link rel="stylesheet" href="views/logomotion.css?v=d806925">
+<link rel="stylesheet" href="tags.css?v=d806925">
+<link rel="stylesheet" href="views/compact.css?v=d806925">
 
 <div id="app"></div>
 
@@ -253,7 +253,7 @@ VIEWS.booking=()=>{const st=S.booking.state;const s=S.booking.cancelled?['danger
  </aside></div></div>${abar('Saturday hotel gig')}`;};
 
 function sendPreview(kind,inSheet){
- const d={reminder:{t:'Send a reminder to Hotel Royal',s:'Invoice 2026-031, deposit 1.500 DKK, due 12 Oct',to:'Accounts, faktura@hotelroyal.dk, cc Mette Kjær',subj:'Påmindelse: depositum for 25 Oct, faktura 2026-031',body:'Hej, en venlig påmindelse om depositum på 1.500 DKK for koncerten 25. oktober, som forfaldt 12. oktober. I kan betale via det samme link som før: laas.app/pay/LT-2026-031. Ingen gebyr. Venlig hilsen, Low Tide',send:'Send reminder',act:'sendreminder'},
+ const d={reminder:{t:'Send a reminder to Hotel Royal',s:'Invoice 2026-031, deposit 1.500 DKK, due 12 Oct',to:'Accounts, faktura@hotelroyal.dk, cc Mette Kjær',subj:'Reminder: deposit for 25 Oct, invoice 2026-031',body:'Hi, a friendly reminder about the 1.500 DKK deposit for the concert on 25 October, which was due on 12 October. You can pay with the same link as before: laas.app/pay/LT-2026-031. No fee. Best regards, Low Tide',send:'Send reminder',act:'sendreminder'},
  offer:{t:'Send the offer to Mette Kjær',s:'Saturday hotel gig, 25 Oct, fee 4.500 DKK excl. moms, deposit 30 %',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, Hotel Royal, 25. oktober',body:'Hej Mette, her er vores tilbud på koncerten 25. oktober. I linket kan du se vilkårene, underskrive og betale depositum på 1.500 DKK: laas.app/o/LT-2026-031. Vi holder datoen til fredag den 10. Venlig hilsen, Low Tide',send:'Send offer',act:'offersent'},
  nudge:{t:'Send a nudge to Mette Kjær',s:'Offer for 25 Oct, opened 8 Oct, not signed',to:'Mette Kjær, booking@hotelroyal.dk',subj:'Tilbud: Low Tide, 25. oktober',body:'Hej Mette, kort opfølgning på tilbuddet til 25. oktober. Vi holder datoen til fredag den 10. Linket: laas.app/o/LT-2026-031. Venlig hilsen, Low Tide',send:'Send nudge',act:'nudgesent'}}[kind];
  return `<div class="send"><div><h3 class="t-heading">${d.t}</h3><p class="muted" style="margin:2px 0 0">${d.s}</p></div>
@@ -688,20 +688,20 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=3482d77"></script>
-<script src="views/bookings.js?v=3482d77"></script>
-<script src="views/booking.js?v=3482d77"></script>
-<script src="views/denmark.js?v=3482d77"></script>
-<script src="views/contacts.js?v=3482d77"></script>
-<script src="views/money.js?v=3482d77"></script>
-<script src="views/catalogue.js?v=3482d77"></script>
-<script src="views/brands.js?v=3482d77"></script>
-<script src="views/account.js?v=3482d77"></script>
-<script src="views/mail.js?v=3482d77"></script>
-<script src="views/social.js?v=3482d77"></script>
-<script src="views/tour.js?v=3482d77"></script>
-<script src="views/motion.js?v=3482d77"></script>
-<script src="views/logomotion.js?v=3482d77"></script>
-<script src="views/compact.js?v=3482d77"></script>
-<script src="views/overflow.js?v=3482d77"></script>
+<script src="views/dashboard.js?v=d806925"></script>
+<script src="views/bookings.js?v=d806925"></script>
+<script src="views/booking.js?v=d806925"></script>
+<script src="views/denmark.js?v=d806925"></script>
+<script src="views/contacts.js?v=d806925"></script>
+<script src="views/money.js?v=d806925"></script>
+<script src="views/catalogue.js?v=d806925"></script>
+<script src="views/brands.js?v=d806925"></script>
+<script src="views/account.js?v=d806925"></script>
+<script src="views/mail.js?v=d806925"></script>
+<script src="views/social.js?v=d806925"></script>
+<script src="views/tour.js?v=d806925"></script>
+<script src="views/motion.js?v=d806925"></script>
+<script src="views/logomotion.js?v=d806925"></script>
+<script src="views/compact.js?v=d806925"></script>
+<script src="views/overflow.js?v=d806925"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

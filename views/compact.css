@@ -315,6 +315,9 @@
   .send>.row:last-child{flex-wrap:wrap;row-gap:8px}
   .send>.row:last-child>.btn.accent{order:3;flex:1 1 100%;justify-content:center}
   .send>.row:last-child>.btn.secondary{margin-left:auto}
+  /* "Change" belongs to the address above it (4 px), the message card starts a new group (16 px) (Vit 26 Oct) */
+  .send>.row.t-label>.link{margin-top:calc(var(--space-1) - 8px)}
+  .send>.row.t-label{margin-bottom:calc(var(--space-4) - 8px)}
   /* date tile: smaller number, room around it */
   .ev-date{width:52px!important;height:60px!important}
   /* Figma Event header Compact: the day, date and month sit 2 px tighter than touching (item spacing -2; CSS gap cannot be negative) */
