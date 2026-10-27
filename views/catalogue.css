@@ -126,6 +126,8 @@ button.cat-chk:hover{background:var(--raised)}
 .cat-ov{gap:48px}
 .cat-col{display:flex;flex-direction:column;gap:32px;min-width:0}
 .cat-sec{display:flex;flex-direction:column;gap:8px}
+/* rows that rule each other sit flush: the gap stays between the header and the rows only, so the rule is centred (Vit, 27 Oct) */
+.cat-sec>:is(.cat-row,.trk)+:is(.cat-row,.trk){margin-top:-8px}
 .cat-sec .hd{display:flex;align-items:center;gap:12px;height:34px}.cat-sec .hd h3{flex:1;letter-spacing:-.1px}
 .cat-sec .hd .btn{font:500 13px/var(--lh-label) var(--sans)}
 .cat-sec .cat-row{border-top:1px solid var(--rule)}
