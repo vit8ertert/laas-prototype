@@ -240,8 +240,14 @@ button.acc-si:hover{background:var(--hover)}
 .acc-gc:hover{color:var(--ink)}
 /* 1.5 px stroke in layout (148x37): 1 px border + 0.5 px inset, padding +0.5 (Chrome draws 1.5 px borders as 1 px at 1x) */
 .acc-gc.on{background:var(--well);border:1px solid var(--ink);box-shadow:inset 0 0 0 .5px var(--ink);padding:8.5px 14.5px;color:var(--ink)}
-.acc-obinv{display:flex;flex-direction:column;gap:12px}
+/* each bandmate is numbered (Vit 27 Oct: "email role email role" was hard to tell apart): the Step number circle beside
+   the pair, the same one as "It proposes, you confirm" (.tl-steps); pairs sit further apart than the fields inside one */
+.acc-obinv{margin:0;padding:0;list-style:none;counter-reset:inv;display:flex;flex-direction:column;gap:var(--space-6)}
+.acc-obinv>li{counter-increment:inv;display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:var(--space-3);align-items:start}
+.acc-obinv>li::before{content:counter(inv);width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px}
 .acc-obinv .acc-two{gap:12px;flex-wrap:nowrap}
+.acc-obinv .acc-two>.field:first-child{flex:1 1 auto;min-width:0}.acc-obinv .acc-two>.field:first-child .input{width:100%!important}  /* email takes what the number and role leave */
+.acc-obinv .acc-two>.field:last-child{flex:none}.acc-obinv .acc-two>.field:last-child .input{width:140px!important}
 .btn.s.acc-add{align-self:flex-start;padding:8px 12px;margin-left:-12px} /* hugs its label; bleeds 12 px so the plus lines up with the fields (Vit 21 Oct) */
 .acc-join{display:flex;gap:16px;align-items:center}
 .acc-join img{width:64px;height:64px;border-radius:12px;object-fit:cover}
@@ -318,6 +324,7 @@ button.acc-si:hover{background:var(--hover)}
  .acc-url{flex-wrap:wrap}.acc-url code{flex:1 1 100%}
  .acc-obthemes{grid-template-columns:1fr 1fr}
  .acc-two{flex-direction:column;gap:12px}.acc-two .field,.acc-two .input{width:100%!important}
+ .acc-obinv .acc-two>.field:last-child,.acc-obinv .acc-two>.field:last-child .input{width:100%!important}
  .acc-ob .field .input{width:100%!important}
 }
 

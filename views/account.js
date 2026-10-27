@@ -483,7 +483,7 @@ function obSteps(st){const ob=S.onboarding;
   <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
  case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
-  +`<div class="acc-obinv">${rows.map(([m,r],i)=>`<div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div>`).join('')}</div>
+  +`<ol class="acc-obinv" aria-label="Bandmates to invite">${rows.map(([m,r],i)=>`<li><div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div></li>`).join('')}</ol>
   <button class="btn ghost s acc-add" data-act="accobrow">${ic('plus','s')}Add another</button>
   <p class="acc-obfoot">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only, good for a manager or family.</p>
   <div class="row"><button class="btn ghost" data-act="accobskip">Skip for now</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}Send 2 invites</button></div>`;}
