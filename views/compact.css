@@ -122,7 +122,7 @@
 }
 @media (max-width:599.98px){.m-kpi,.cat-kpi,.aud-kpi{gap:4px!important}}
 @media (max-width:599.98px){
-  .acc-row{row-gap:6px!important}
+  .acc-row{row-gap:var(--space-2)!important}
   /* inputs at 16 px: iOS Safari zooms the page into any field set smaller */
   .input,input.input,select.input,textarea.input,.cx-ask-f input{font-size:16px}
 }
