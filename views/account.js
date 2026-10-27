@@ -451,7 +451,7 @@ function obSteps(st){const ob=S.onboarding;
  case 0:return head('Run your band like a label','Gigs, contacts, money and releases in one place. Free for one band, no card needed.')
   +`<div class="acc-obstack"><button class="btn secondary lg acc-wide" data-ob="1">${GOOGLE}Continue with Google</button><button class="btn secondary lg acc-wide" data-ob="1">${APPLE}Continue with Apple</button></div>
   <div class="acc-or"><i></i><span>or</span><i></i></div>
-  <div class="acc-obstack">${fld('acc-obe','Email','',0,'','you@band.dk')}<button class="btn accent lg acc-wide" data-ob="1">Continue with email</button></div>
+  <div class="acc-obstack"><div class="field"><input class="input" id="acc-obe" type="email" autocomplete="email" aria-label="Email" placeholder="you@band.dk"></div><button class="btn accent lg acc-wide" data-ob="1">Continue with email</button></div>
   <p class="acc-obfoot">Already have an account? <button class="link" data-act="obexit">Log in</button>. By continuing you accept the <button class="link" data-act="acctoast" data-msg="Terms open in a new tab">terms</button> and the <button class="link" data-act="acctoast" data-msg="Privacy policy opens in a new tab">privacy policy</button>.</p>`;
  case 1:return head('Check your inbox','We sent a 6-digit code and a sign-in link to vital@lowtide.dk. Both work for 15 minutes.')
   +`<div class="acc-code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" inputmode="numeric" maxlength="1" value="${d}" data-digit="${i}" ${i===3?'autofocus':''}>`).join('')}</div>
