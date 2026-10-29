@@ -236,3 +236,12 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,:focus-visible){background:var(--hover);outline:none}
 :is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 15px/18px var(--sans);color:var(--muted)}
 .ml-tr.ml-gh{font:500 13px/var(--lh-label) var(--sans)}
+
+/* List row: one pattern for list rows (pattern census card 2, 29 Oct): settings and account lists (.acc-li) and the booking
+   person rows (.bd-prow) are the same row: leading (avatar, brand, icon), title over meta, one trailing item, chevron when it
+   opens; hairline inset to the text edges. The container decides the side inset (phones bleed .acc-li to the card edge).
+   Figma: List row 299:5063 */
+:is(.acc-li,.bd-prow){display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;position:relative}
+:is(.acc-li,.bd-prow):not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
+:is(.acc-li,.bd-prow) .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
+:is(.acc-li,.bd-prow) .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}

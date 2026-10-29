@@ -65,12 +65,8 @@
 
 /* List rows: avatar, two lines, trailing tag + chevron, hairline inset to the text edges */
 .acc-list{display:flex;flex-direction:column}
-.acc-li{display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;position:relative}
 button.acc-li:hover{background:var(--hover)}
-.acc-li:not(:last-child)::after,.acc-inv:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
-.acc-li .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.acc-li .tx span{font-size:15px;line-height:var(--lh-body)}
-.acc-li .tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
+.acc-inv:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .acc-li>svg{color:var(--ink)}
 .acc-li .mono{font-size:14px;min-width:56px;text-align:right}
 .acc-av{width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
