@@ -289,13 +289,15 @@ L.VIEWS.compose=()=>{if(!M.cmp)M.cmp=blank();const c=M.cmp;const accs=M.accounts
  </div></div>${L.abar(c.subj||'New mail','Ask the assistant to write it, for example “ask Posten for a spring date”')}`;};
 
 /* ---------- mail accounts ---------- */
-const logo=k=>`<span class="ml-logo" aria-hidden="true">${k==='gmail'?GOOGLE:k==='m365'?MSFT:ic('server','s')}</span>`;
+const logo=k=>L.brand(k==='gmail'?'Google':k==='m365'?'Microsoft':'Mail server',24);  // = Figma Platform icon (List row Leading), Vit 29 Oct
 const mtg=(k,label)=>`<button class="acc-tg ${M.tg[k]?'on':''}" role="switch" aria-checked="${!!M.tg[k]}" aria-label="${esc(label)}" data-act="mltg" data-k="${k}"><i></i></button>`;
 const aRow=(label,desc,ctl,lead='')=>`<div class="acc-row ${lead?'ml-lead':''}">${lead}<div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
 const aSec=(title,inner,action='',cls='')=>`<section class="acc-sec ${cls}"><div class="acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
 const accSave=()=>{const on=Date.now()<M.savedUntil;return `<span class="acc-save ${on?'on':''}" id="ml-asave" role="status" aria-live="polite">${on?ic('check','s')+'Saved':''}</span>`;};
-const accRow=a=>`<div class="acc-li ml-accrow">${logo(a.kind)}<span class="tx"><span>${esc(a.email)}${a.def?'':''}</span><small class="${a.state==='error'?'ml-errtx':''}">${esc(KIND[a.kind])}. ${esc(a.state==='error'?a.err:a.meta)}</small></span>
- <span class="ml-accend">${a.state==='error'?`<span class="tag danger">Sign-in failed</span><button class="btn secondary s" data-act="mlfix" data-id="${a.id}">Fix</button>`:`<span class="tag confirmed">Connected</span>`}${iconBtn('more',`More for ${a.email}`,'mlaccmenu',a.id)}</span></div>`;
+// one List row per account (Vit 29 Oct, fewer designs): trailing is one thing, Fix on a broken account, else the Connected tag
+// and the row itself opens the account menu (chevron), instead of tag + Fix + more button
+const accRow=a=>a.state==='error'?`<div class="acc-li ml-accrow">${logo(a.kind)}<span class="tx"><span>${esc(a.email)}</span><small class="ml-errtx">${esc(KIND[a.kind])}. ${esc(a.err)}</small></span><button class="btn secondary s" data-act="mlfix" data-id="${a.id}">Fix</button></div>`
+ :`<button class="acc-li ml-accrow" data-act="mlaccmenu" data-id="${a.id}" aria-label="More for ${esc(a.email)}">${logo(a.kind)}<span class="tx"><span>${esc(a.email)}</span><small>${esc(KIND[a.kind])}. ${esc(a.meta)}</small></span><span class="tag confirmed">Connected</span>${ic('chevr','s')}</button>`;
 L.VIEWS.mailaccounts=()=>{const acc=M.accounts.filter(a=>a.state!=='off'),ok=okAccs(),err=acc.filter(a=>a.state==='error').length,hasG=acc.some(a=>a.kind==='gmail'),hasM=acc.some(a=>a.kind==='m365');
  return `${navMark}<div class="page acc-set ml-page ml-accs"><button class="btn ghost s flush" data-go="mail" style="align-self:flex-start">${ic('left','s')}Mail</button>
  <div class="acc-ph"><div class="grow"><h1 class="t-display">Mail accounts</h1><p>${acc.length?`${acc.length} connected${err?`, ${err} needs attention`:''}`:'Nothing connected yet. Add Gmail, Microsoft 365 or any mail with SMTP and IMAP'}</p></div>${accSave()}</div>

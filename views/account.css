@@ -73,7 +73,7 @@ button.acc-li:hover{background:var(--hover)}
 .acc-li .tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .acc-li>svg{color:var(--ink)}
 .acc-li .mono{font-size:14px;min-width:56px;text-align:right}
-.acc-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
+.acc-av{width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 .acc-inv{display:flex;flex-direction:column;gap:8px;position:relative}
 .acc-inv:not(:last-child){padding-bottom:8px}
 .acc-inv .acc-li::after{display:none}

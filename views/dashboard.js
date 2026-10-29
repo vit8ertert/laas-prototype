@@ -378,18 +378,18 @@ const csSave=()=>{const on=Date.now()<CS.savedUntil;return `<span class="acc-sav
 function csSaved(){const el=document.getElementById('cs-save');if(!el)return;clearTimeout(CS._t1);clearTimeout(CS._t2);el.className='acc-save on';el.textContent='Saving…';
  CS._t1=setTimeout(()=>{CS.savedUntil=Date.now()+3000;const e=document.getElementById('cs-save');if(!e)return;e.innerHTML=ic('check','s')+'Saved';CS._t2=setTimeout(()=>{document.getElementById('cs-save')?.classList.remove('on');},3000);},600);}
 const dirSeg=(acc,cur)=>`<div class="d-seg cs-dir" role="radiogroup" aria-label="Direction">${DIRS.map(([k,l,i])=>`<button class="${cur===k?'on':''}" role="radio" aria-checked="${cur===k}" data-act="csdir" data-a="${acc}" data-v="${k}">${ic(i,'s')}${l}</button>`).join('')}</div>`;
-const calRow=(k,name,meta,role)=>`<div class="acc-li cs-cal"><span class="cs-dot ${k}"></span><span class="tx"><span>${name}</span><small>${meta}</small></span>${role?`<span class="t-meta muted cs-role">${role}</span>`:''}${csTg('cal-'+k,name,CS.cals[k])}</div>`;
+const calRow=(k,name,meta,role)=>`<div class="acc-li cs-cal"><span class="tx"><span>${name}</span><small>${role?role+'. ':''}${meta}</small></span>${csTg('cal-'+k,name,CS.cals[k])}</div>`;  // List row: no leading, role in the meta (Vit 29 Oct, fewer designs)
 function account(id){
  if(id==='g'){const dir=CS.gdir;
-  return csSec('Google Calendar',`<div class="acc-li cs-acc"><span class="d-lic">${ic('calendar','s')}</span><span class="tx"><span>vital@lowtide.dk</span><small>Connected 14 Sep, last sync ${CS.last}</small></span>${tag('confirmed','Connected')}</div>
+  return csSec('Google Calendar',`<div class="acc-li cs-acc">${L.brand('Google',24)}<span class="tx"><span>vital@lowtide.dk</span><small>Connected 14 Sep, last sync ${CS.last}</small></span>${tag('confirmed','Connected')}</div>
    <div class="acc-rows">${csRow('Direction',DIRTXT[dir],dirSeg('g',dir))}</div>
    <div class="cs-sub"><span class="t-label muted">Which calendars</span></div>
    <div class="acc-list">${calRow('gigs','Low Tide gigs',dir==='pull'?'Read for busy times':'LAAS writes gigs, holds and rehearsals here','Writes')}${calRow('personal','Vital, personal','Read for busy times only, titles stay private','Busy only')}${calRow('rehearse','Band rehearsals','Shared by Sofie, read as rehearsals','Reads')}${calRow('holidays','Holidays in Denmark','Off, public holidays show anyway in the month grid','')}</div>
    ${dir==='pull'?'':`<div class="acc-rows">${csRow('Holds and enquiries','Sent as tentative so the slot looks taken, never as confirmed',csTg('holds','Holds and enquiries',CS.holds))}${csRow('Day sheet in the event','Load-in, soundcheck and address in the description',csTg('day','Day sheet in the event',CS.day))}${csRow('Fees, notes, contacts','Never written to any calendar',tag('draft','Always off'))}</div>`}`,
    `<button class="btn ghost s icon" data-act="csmore" data-a="g" aria-label="More for Google Calendar">${ic('more','s')}</button>`);}
- if(!CS.ms)return csSec('Microsoft 365',`<div class="acc-li cs-acc"><span class="d-lic">${ic('calendar','s')}</span><span class="tx"><span>Not connected</span><small>Outlook and Teams calendars, work or school accounts. You pick the direction after signing in.</small></span><button class="btn secondary s" data-act="csms">Connect</button></div>`);
+ if(!CS.ms)return csSec('Microsoft 365',`<div class="acc-li cs-acc">${L.brand('Microsoft',24)}<span class="tx"><span>Not connected</span><small>Outlook and Teams calendars, work or school accounts. You pick the direction after signing in.</small></span><button class="btn secondary s" data-act="csms">Connect</button></div>`);
  const dir=CS.mdir;
- return csSec('Microsoft 365',`<div class="acc-li cs-acc"><span class="d-lic">${ic('calendar','s')}</span><span class="tx"><span>vital@lowtide.onmicrosoft.com</span><small>Connected just now, first sync done</small></span>${tag('confirmed','Connected')}</div>
+ return csSec('Microsoft 365',`<div class="acc-li cs-acc">${L.brand('Microsoft',24)}<span class="tx"><span>vital@lowtide.onmicrosoft.com</span><small>Connected just now, first sync done</small></span>${tag('confirmed','Connected')}</div>
   <div class="acc-rows">${csRow('Direction',DIRTXT[dir],dirSeg('m',dir))}</div>
   <div class="cs-sub"><span class="t-label muted">Which calendars</span></div>
   <div class="acc-list">${calRow('mcal','Calendar','The default Outlook calendar',dir==='pull'?'Busy only':'Writes')}</div>`,
@@ -404,7 +404,7 @@ L.VIEWS.calsync=()=>{const g=CS.g;
  return `<div class="page cs-page"><button class="btn ghost s flush cs-back" data-go="calendar">${ic('left','s')}Calendar</button>
  <div class="acc-ph"><div class="grow"><h1 class="t-display">Calendar sync</h1><p>Two-way with Google or Microsoft 365</p></div>${csSave()}</div>
  <div class="cs-col">
- ${g?account('g'):csSec('Google Calendar',`<div class="acc-li cs-acc"><span class="d-lic">${ic('calendar','s')}</span><span class="tx"><span>Not connected</span><small>Gigs already in Google stay there. Connect again to pick up where you left off.</small></span><button class="btn secondary s" data-act="csgconnect">Connect</button></div>`)}
+ ${g?account('g'):csSec('Google Calendar',`<div class="acc-li cs-acc">${L.brand('Google',24)}<span class="tx"><span>Not connected</span><small>Gigs already in Google stay there. Connect again to pick up where you left off.</small></span><button class="btn secondary s" data-act="csgconnect">Connect</button></div>`)}
  ${account('m')}
  ${csSec('Last sync',`<div class="acc-rows">${csRow(CS.syncing?'Syncing…':`${CS.last[0].toUpperCase()+CS.last.slice(1)}`,CS.syncing?'Reading Google'+(CS.ms?' and Microsoft 365':'')+', nothing is changed yet':`${g||CS.ms?'14 events matched to bookings, 2 new busy blocks, '+CS.conf.length+(CS.conf.length===1?' conflict':' conflicts'):'Nothing connected, nothing to sync'}`,`<button class="btn secondary s" data-act="cssync" ${CS.syncing||!(g||CS.ms)?'disabled':''}>${ic('refresh','s')}Sync now</button>`)}</div>
   <div class="cs-log">${[['Today 09:12','Google, 14 matched, 1 conflict'],['Today 06:00','Google, 2 busy blocks from Vital, personal'],['Yesterday 21:40','Google, LT-0041 moved to Fri 24 Oct, sent']].map(([a,b])=>`<span><span class="mono faint">${a}</span>${b}</span>`).join('')}</div>`,'','')}
