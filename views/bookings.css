@@ -45,13 +45,11 @@
    Table header: pad 8 16, canvas, no stroke */
 .bk-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}
 .bk-tr{display:grid;grid-template-columns:136px minmax(196px,1fr) 100px 140px 120px 150px 96px;column-gap:24px;align-items:center;min-width:1060px;padding:12px 16px;min-height:56px;box-sizing:border-box;background:var(--surface);box-shadow:inset 0 -1px 0 var(--rule);cursor:pointer;transition:background .12s}
-.bk-tr:not(.bk-th):hover,.bk-tr:not(.bk-th):focus-visible{background:var(--hover);outline:none}
-.bk-th{min-height:0;padding:8px 16px;box-shadow:none;background:var(--canvas);cursor:default;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bk-th{min-height:0;padding:8px 16px;box-shadow:none;cursor:default}
 .bk-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bk-tr .w{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .bk-tr .tt{display:flex;align-items:center;gap:12px}
 .bk-tr .tt b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis}
-.bk-tr .m{font:400 15px/18px var(--sans);color:var(--muted)}
 .bk-tr .n{text-align:right}
 .bk-tr .mono{font:400 14px/20px var(--mono);color:var(--ink)}
 .bk-tr .tag{height:26px;padding:4px 8px;font:400 13px/var(--lh-label) var(--sans)}

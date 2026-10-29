@@ -227,3 +227,12 @@ html.gated body>*:not(.gate){display:none!important}
 /* Chip divider (DS "Chip divider", Vit 26 Oct): in a chip row, a 1 × 20 rule separates the view chips (what you look at,
    e.g. People / Venues) from the filter chips (Kind, City, Sort). Use it on every chip row that has both. */
 .chip-div{width:1px;height:20px;background:var(--rule);flex:none;align-self:center}
+
+/* Table: one pattern for every table (pattern census T398, Vit 29 Oct "use your proposals"). The bookings and social tables
+   (.bk-tr) and the books tables (.ml-tr) share the head, hover and cell kinds; their own files only set the columns.
+   Cells: .w / .ml-d date (Label), .tt / .ml-tt title (Body strong) with meta, .m / .ml-m muted (Body tight), .mono code, .n number (right).
+   Figma: Table cell 1141:62568 */
+:is(.bk-th,.ml-th){background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,:focus-visible){background:var(--hover);outline:none}
+:is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 15px/18px var(--sans);color:var(--muted)}
+.ml-tr.ml-gh{font:500 13px/var(--lh-label) var(--sans)}

@@ -269,9 +269,8 @@ button.m-line:hover{background:var(--raised)}
 .ml-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}
 .ml-tr{display:grid;column-gap:24px;align-items:center;padding:0 16px;min-height:56px;box-sizing:border-box;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .12s}
 .ml-tr:last-child{border-bottom:0}
-.ml-tr:not(.ml-th):not(.ml-gh):hover,.ml-tr:not(.ml-th):not(.ml-gh):focus-visible{background:var(--raised);outline:none}
-.ml-tr.ml-th{min-height:34px;background:var(--canvas);cursor:default;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.ml-tr.ml-gh{min-height:40px;background:var(--sunken);cursor:default;font-weight:500;font-size:13px}
+.ml-tr.ml-th{min-height:34px;cursor:default}
+.ml-tr.ml-gh{min-height:40px;background:var(--sunken);cursor:default}
 .ml-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-tr .n{text-align:right}
 .ml-tr .mono{font:400 14px/20px var(--mono)}
@@ -279,7 +278,6 @@ button.m-line:hover{background:var(--raised)}
 .ml-a{grid-template-columns:48px minmax(200px,1fr) 80px 72px 64px 104px;min-width:680px;min-height:44px}
 .ml-d{font-size:13px;line-height:var(--lh-label)}
 .ml-no{color:var(--muted)}
-.ml-m{color:var(--muted);font-size:15px}
 .ml-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .ml-tt b{font:500 15px/var(--lh-body) var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-tt small{font-size:13px;line-height:var(--lh-label);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

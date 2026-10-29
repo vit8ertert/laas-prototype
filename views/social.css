@@ -92,7 +92,7 @@
 .so-dr .field{gap:8px}
 .so-dr .field label{font:400 13px/var(--lh-label) var(--sans)}
 .so-grp{display:flex;flex-direction:column;gap:4px}
-.so-k{font:400 12px/16px var(--sans);color:var(--faint)}
+.so-k:not(.bk-th){font:400 12px/16px var(--sans);color:var(--faint)}
 .so-grp .bd-prow{padding-inline:0}
 .so-grp .bd-prow::before{left:0!important;right:0!important}
 .so-grp .bd-prow .btn.ghost{margin-right:-8px}
