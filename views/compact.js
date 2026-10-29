@@ -40,7 +40,7 @@ L.OVERLAYS.moresheet=()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'
   <button class="cx-band" data-act="moreband"><span class="sq">${esc(b.ini||'LT')}</span><span class="tx"><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></span>${ic('down','s')}</button>
   <div class="cx-tiles">${TILES.map(([l,go,i])=>`<button class="cx-tile ${tabOf(v)==='more'&&(v===go||L.areaOf(v)===go)?'on':''}" data-go="${go}" ${go==='audience'?'data-at="overview"':''}>${ic(i)}<span>${l}</span></button>`).join('')}</div>
   ${MORE.map(([g,items])=>`<div class="cx-g"><div class="cx-gl">${g}</div>${items.map(it).join('')}</div>`).join('')}
-  <div class="cx-g"><button class="cx-it" data-act="moreguide"><span>${ic('help')}Guide</span></button><button class="cx-it" data-act="moretheme"><span><i class="th-dot" aria-hidden="true"></i>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span>${ic('right','s')}</button></div>
+  <div class="cx-g"><button class="cx-it" data-act="moreguide"><span>${ic('help')}Guide</span></button><button class="cx-it" data-act="moretheme"><span><i class="th-dot" aria-hidden="true"></i>Theme: ${L.TNAMES[S.genre]}</span>${ic('right','s')}</button></div>
  </div>`;};
 
 /* ---------- Ask: the assistant as a sheet, carrying the page's context ---------- */

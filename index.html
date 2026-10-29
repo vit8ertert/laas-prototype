@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=577e44b">
+<link rel="stylesheet" href="tokens.css?v=475a0c1">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=577e44b">
-<link rel="stylesheet" href="components.css?v=577e44b">
-<link rel="stylesheet" href="views/tour.css?v=577e44b">
-<link rel="stylesheet" href="views/dashboard.css?v=577e44b">
-<link rel="stylesheet" href="views/bookings.css?v=577e44b">
-<link rel="stylesheet" href="views/booking.css?v=577e44b">
-<link rel="stylesheet" href="views/contacts.css?v=577e44b">
-<link rel="stylesheet" href="views/money.css?v=577e44b">
-<link rel="stylesheet" href="views/catalogue.css?v=577e44b">
-<link rel="stylesheet" href="views/account.css?v=577e44b">
-<link rel="stylesheet" href="views/mail.css?v=577e44b">
-<link rel="stylesheet" href="views/social.css?v=577e44b">
-<link rel="stylesheet" href="views/logomotion.css?v=577e44b">
-<link rel="stylesheet" href="tags.css?v=577e44b">
-<link rel="stylesheet" href="views/compact.css?v=577e44b">
+<link rel="stylesheet" href="shell.css?v=475a0c1">
+<link rel="stylesheet" href="components.css?v=475a0c1">
+<link rel="stylesheet" href="views/tour.css?v=475a0c1">
+<link rel="stylesheet" href="views/dashboard.css?v=475a0c1">
+<link rel="stylesheet" href="views/bookings.css?v=475a0c1">
+<link rel="stylesheet" href="views/booking.css?v=475a0c1">
+<link rel="stylesheet" href="views/contacts.css?v=475a0c1">
+<link rel="stylesheet" href="views/money.css?v=475a0c1">
+<link rel="stylesheet" href="views/catalogue.css?v=475a0c1">
+<link rel="stylesheet" href="views/account.css?v=475a0c1">
+<link rel="stylesheet" href="views/mail.css?v=475a0c1">
+<link rel="stylesheet" href="views/social.css?v=475a0c1">
+<link rel="stylesheet" href="views/logomotion.css?v=475a0c1">
+<link rel="stylesheet" href="tags.css?v=475a0c1">
+<link rel="stylesheet" href="views/compact.css?v=475a0c1">
 
 <div id="app"></div>
 
@@ -161,7 +161,7 @@ function sidebar(){
   ${grp('audience','Audience','radio','audience')}
   ${area==='audience'?`<div class="sb-sub">${[['overview','Overview'],['streaming','Streaming'],['hand','Figures by hand'],['releases','Releases']].map(([k,l])=>`<button class="nav sub ${v==='audience'&&S.atab===k?'active':''}" data-go="audience" data-at="${k}"><span>${l}</span></button>`).join('')}${nav('social','Social posts','','','sub')}${nav('comments','Comments','','','sub')}${nav('keywords','Keyword watch','','','sub')}${nav('deliveries','Deliveries','','','sub')}</div>`:''}
   <div class="sb-spacer"></div>
-  <button class="nav" data-act="guide" ${tip('Guide')}>${ic('help')}<span>Guide</span></button><button class="nav" data-act="thememenu" ${tip('Theme')}><i class="th-dot" aria-hidden="true"></i><span>Theme: ${({label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
+  <button class="nav" data-act="guide" ${tip('Guide')}>${ic('help')}<span>Guide</span></button><button class="nav" data-act="thememenu" ${tip('Theme')}><i class="th-dot" aria-hidden="true"></i><span>Theme: ${TNAMES[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
   ${nav('integrations','Integrations','plug')}${nav('settings','Band settings','settings')}
   ${S.collapsed?`<button class="nav" data-act="collapse" title="Expand menu (⌘\\)" aria-label="Expand menu">${ic('right')}</button>`:''}
  </nav>`;
@@ -394,12 +394,16 @@ VIEWS.plan=()=>{const cur=S.plan;const name={free:'Free',band:'Band',pro:'Pro'}[
  const head={free:'Free, 0 DKK. Up to 10 active bookings.',band:'39 DKK a month, billed monthly. Next payment 14 Nov.',pro:'Pro trial, 14 days left. Then 199 DKK a month; cancel any time.'}[cur];
  const plans=[['free','Free','0 DKK','Trying it out',['10 active bookings','Contacts and venues','Day sheets','1 member']],['band','Band','39 DKK / month','Gigging bands',['Unlimited bookings','Whole band, any size','Calendar feed and import','Assistant']],['pro','Pro','199 DKK / month','Bands that invoice',['Everything in Band','Invoices with a pay link','Reminders and settling','Bookkeeping export']]];
  return settingsShell('Plan and billing',SC(name,`<p class="muted" style="margin:0">${head}</p><div class="row">${cur!=='pro'?'<button class="btn accent" data-act="trypro">Try Pro free for 14 days</button>':'<button class="btn secondary" data-act="endtrial">End trial</button>'}<button class="btn ghost" data-act="compare">Compare plans</button></div>`)+`<div class="row" id="plancards" style="align-items:stretch;gap:12px">${plans.map(([id,n,p,w,f])=>{const on=id===cur;const a=on?null:id==='free'?['Move to Free','movefree','ghost']:id==='band'?['Move to Band','moveband','ghost']:['Try Pro free','trypro','secondary'];return `<div class="card" style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px;${on?'box-shadow:inset 0 0 0 1.5px var(--accent)':''}"><div class="row"><b class="t-heading" style="flex:1">${n}</b>${on?'<span class="tag accent">Current</span>':''}</div><span class="mono" style="font-size:18px">${p}</span><span class="t-meta muted">${w}</span>${f.map(x=>`<span class="row" style="gap:8px">${ic('check','s')}${x}</span>`).join('')}<span style="flex:1"></span>${a?`<button class="btn ${a[2]} s" style="align-self:flex-start" data-act="${a[1]}">${a[0]}</button>`:'<span class="t-meta muted">Your plan</span>'}</div>`}).join('')}</div>`,`Low Tide is on ${name}`);};
-const THEMES=[['label','Default','The LAAS look, lilac on dark',['#121212','#cdbdff','#ffffff']],['metal','Metal','Black and bone, hard type',['#0a0a0a','#e8e2d6','#161616']],['electronic','Electronic','Electric navy and lime',['#0a1020','#d9f25a','#111a2e']],['classical','Classical','Ivory, gold, burgundy',['#16130f','#d9788a','#b8923a']]];
-/* the same swatches in light mode, so the theme menu shows what you will get in the current mode */
-const THEMES_LIGHT={label:['#f4f3ef','#cdbdff','#1a1a1a'],metal:['#efece6','#161616','#faf8f4'],electronic:['#eef2fa','#d9f25a','#0a1020'],classical:['#f6f1e7','#6e1f2b','#b8923a']};
+/* 8 themes, all LAAS · Theme modes in Figma (Vit 29 Oct: "Add them to the DS"); swatches read the theme's own tokens
+   through the generated .tok-<theme>-<mode> classes, so no hex lives here */
+const SW=['var(--canvas)','var(--accent)','var(--ink)'];
+const THEMES=[['label','Default','The LAAS look, lilac on dark',SW],['metal','Metal','Black and bone, hard type',SW],['electronic','Electronic','Electric navy and lime',SW],['classical','Classical','Ivory, gold, burgundy',SW],
+ ['minimal','Minimal','Pure black and white, hairlines',SW],['folk','Folk','Brown ink on paper, rust',SW],['hiphop','Hip-hop & soul','Orange on black, heavy',SW],['pop','Pop & lofi','Pink on dusk, soft',SW]];
+const TNAMES={label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical',minimal:'Minimal',folk:'Folk',hiphop:'Hip-hop & soul',pop:'Pop & lofi'};
 const isLight=()=>S.appearance==='light'||(S.appearance==='system'&&matchMedia('(prefers-color-scheme: light)').matches);
-const themeSw=t=>isLight()?THEMES_LIGHT[t[0]]:t[3];
-const themeCards=()=>THEMES.map(([id,n,d,c])=>`<button class="theme-card ${S.genre===id?'on':''}" data-genre="${id}"><span class="swatch">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="row"><b class="strong" style="flex:1">${n}</b>${S.genre===id?ic('check','s'):''}</span><span class="t-meta muted">${d}</span></button>`).join('');
+const themeSw=t=>t[3];
+const tokCls=id=>`tok-${id}-${isLight()?'light':'dark'}`;
+const themeCards=()=>THEMES.map(([id,n,d,c])=>`<button class="theme-card ${S.genre===id?'on':''}" data-genre="${id}"><span class="swatch">${c.map(x=>`<i class="${tokCls(id)}" style="background:${x}"></i>`).join('')}</span><span class="row"><b class="strong" style="flex:1">${n}</b>${S.genre===id?ic('check','s'):''}</span><span class="t-meta muted">${d}</span></button>`).join('');
 const appearanceSeg=()=>`<div class="field"><label>Appearance</label><div class="seg">${[['dark','Dark'],['light','Light'],['system','Match system']].map(([k,l])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${l}</button>`).join('')}</div><span class="help">Every theme has a light and a dark version.</span></div>`;
 VIEWS.assistant=()=>{const a=S.asst;const items=['Move booking: Saturday hotel gig → 25 Oct 20:00','Send mail to venue: Hotel Royal, “New date for the gig”','Notify the band: 3 members get the new day sheet'];
  const sugg=[['Move the hotel gig to Saturday 25 Oct and tell the venue','plan'],['Who still owes us money?','money'],['What is left before Saturday?','gigday'],['Nudge Mette about the offer','nudge']];
@@ -448,7 +452,7 @@ function onboarding(){const st=S.onboarding.step;const photo=['stagedive','noteb
   ()=>`<div><h1 class="t-title">Check your inbox</h1><p class="muted">We sent a 6-digit code and a sign-in link to vital@lowtide.dk. Both work for 15 minutes.</p></div><div class="code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" value="${d}" maxlength="1">`).join('')}</div><div class="row"><button class="btn accent" data-ob="2">Continue</button><a class="btn secondary" style="text-decoration:none" href="https://mail.google.com" target="_blank" rel="noopener">Open Gmail</a><button class="btn ghost" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div><p class="t-meta muted" style="margin:0">Wrong address? <button class="link" data-ob="0">Use a different email</button>.</p>`,
   ()=>`<div><h1 class="t-title">About you</h1><p class="muted">Takes a minute. You can change all of it in Account.</p></div><div class="row"><img src="${S.photos.you||IMG('booker')}" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt=""><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label></div><div class="field"><label for="yn">Your name</label><input class="input" id="yn" value="Vital Sinkevich"></div><div class="field"><label for="yp">You play</label><input class="input" id="yp" value="Vocals, guitar"></div><button class="btn accent" data-ob="3" style="align-self:flex-start">Continue</button>`,
   ()=>`<div><h1 class="t-title">Your band</h1><p class="muted">One account can run several bands. Start with this one.</p></div><div class="row"><img src="${S.photos.band||IMG('band-collage')}" style="width:96px;height:96px;border-radius:12px;object-fit:cover" alt=""><label class="btn ghost s" style="cursor:pointer">${ic('upload','s')}Replace<input type="file" accept="image/*" hidden data-photo="band"></label></div><div class="field"><label for="bnm">Band name</label><input class="input" id="bnm" value="Low Tide"></div><div class="field"><label for="bc">Home city</label><input class="input" id="bc" value="Odense"></div><div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-ob="4">Continue</button></div>`,
-  ()=>`<div><h1 class="t-title">What do you play?</h1><p class="muted">LAAS dresses itself for your genre: colours, type and the logo. Switch any time, or keep the default.</p></div><div class="row" style="gap:8px">${(LAAS.GENRES||['Indie and rock','Metal and hardcore','Electronic','Classical']).map(g=>`<button class="qtag ${S.onboarding.genre===g?'on':''}" data-obgenre="${g}">${g}</button>`).join('')}</div><div class="theme-grid">${themeCards()}</div>${appearanceSeg()}<div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[S.genre]}</button></div>`,
+  ()=>`<div><h1 class="t-title">What do you play?</h1><p class="muted">LAAS dresses itself for your genre: colours, type and the logo. Switch any time, or keep the default.</p></div><div class="row" style="gap:8px">${(LAAS.GENRES||['Indie and rock','Metal and hardcore','Electronic','Classical']).map(g=>`<button class="qtag ${S.onboarding.genre===g?'on':''}" data-obgenre="${g}">${g}</button>`).join('')}</div><div class="theme-grid">${themeCards()}</div>${appearanceSeg()}<div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn secondary" data-act="obdefault">Keep the default</button><button class="btn accent" data-ob="5">Use ${({...TNAMES,label:'Default'})[S.genre]}</button></div>`,
   ()=>`<div><h1 class="t-title">Bring the band</h1><p class="muted">They get an email to join Low Tide. Nobody pays per member.</p></div>${['jonas@lowtide.dk','mia.bass@gmail.com'].map(m=>`<div class="row"><input class="input" style="flex:1" value="${m}" aria-label="Email"><select class="input" style="width:140px" aria-label="Role"><option>Member</option><option>Admin</option><option>Viewer</option></select></div>`).join('')}<p class="t-meta muted">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only.</p><div class="row"><button class="btn ghost" data-act="obdone">Skip for now</button><button class="btn accent" data-act="obdone">${ic('send','s')}Send 2 invites</button></div>`];
  return `<div class="ob"><div class="l"><div class="row"><div class="logo">${LOGO}</div><span style="flex:1"></span>${st>=2?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${flowBtnInline()}<button class="btn ghost s" data-act="obexit">Exit</button></div>${st>=2?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px">${steps[st]()}</div></div><div class="r"><img src="${IMG(photo)}" alt=""></div></div>`;}
 
@@ -466,7 +470,7 @@ function overlay(){const o=S.overlay;if(!o)return '';if(LAAS.OVERLAYS[o.type])re
  if(o.type==='notifs')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop notif" role="dialog" aria-label="Notifications"><div class="row" style="padding:14px 16px 6px"><b class="t-heading" style="flex:1">Notifications</b><button class="btn ghost s" data-act="readall">${ic('check','s')}Mark all read</button></div>
   <div class="row" style="padding:0 16px 8px;gap:4px"><button class="chip ${o.f!=='need'?'on':''}" data-nf="all">All</button><button class="chip ${o.f==='need'?'on':''}" data-nf="need">Needs you 2</button></div><div style="padding:0 8px 8px">
   ${S.notifs.filter((n,i)=>o.f!=='need'||i<2).map((n,i)=>`<button class="ni ${n.unread?'unread':''}" data-ni="${i}"><span class="dot"></span><img class="thumb" src="${IMG(V(n.v).img)}" alt=""><span><b>${n.t}</b><br><span class="t-meta muted">${n.m}</span><br><span class="t-meta faint">${n.time}</span></span></button>`).join('')}</div></div>`;
- if(o.type==='thememenu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:16px;bottom:120px;width:300px;padding:6px" role="dialog" aria-label="Theme"><div class="t-meta faint" style="padding:6px 10px">Theme for Low Tide</div>${THEMES.map(([id,n,d,c])=>`<button class="it row" style="width:100%;padding:8px 10px;border-radius:8px;${S.genre===id?'background:var(--well)':''}" data-genre="${id}"><span class="swatch" style="width:56px;height:36px">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span style="flex:1;text-align:left"><b class="strong">${n}</b><br><span class="t-meta muted">${d}</span></span>${S.genre===id?ic('check','s'):''}</button>`).join('')}<div style="padding:8px 10px">${appearanceSeg()}</div><button class="it row" style="width:100%;padding:8px 10px" data-genre="label">${ic('undo','s')}Reset to default</button></div>`;
+ if(o.type==='thememenu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:16px;bottom:120px;width:300px;padding:6px" role="dialog" aria-label="Theme"><div class="t-meta faint" style="padding:6px 10px">Theme for Low Tide</div>${THEMES.map(([id,n,d,c])=>`<button class="it row" style="width:100%;padding:8px 10px;border-radius:8px;${S.genre===id?'background:var(--well)':''}" data-genre="${id}"><span class="swatch" style="width:56px;height:36px">${c.map(x=>`<i class="${tokCls(id)}" style="background:${x}"></i>`).join('')}</span><span style="flex:1;text-align:left"><b class="strong">${n}</b><br><span class="t-meta muted">${d}</span></span>${S.genre===id?ic('check','s'):''}</button>`).join('')}<div style="padding:8px 10px">${appearanceSeg()}</div><button class="it row" style="width:100%;padding:8px 10px" data-genre="label">${ic('undo','s')}Reset to default</button></div>`;
  if(o.type==='statusmenu'){const opts=['Confirmed','Draft','Attention','Paid','Completed'];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:6px" role="dialog" aria-label="Filter by status"><div class="t-meta faint" style="padding:6px 10px">Status</div>${opts.map(s=>`<label class="row" style="padding:8px 10px;gap:10px;cursor:pointer"><input type="checkbox" data-sf="${s}" ${S.statusFilter.includes(s)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${s}</span><span class="t-meta faint">${BOOKINGS.filter(b=>STATUS[b.status][1]===s).length}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearfilter">Clear</button></div></div>`;}
  if(o.type==='statusmenu2')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop smenu" role="menu" style="left:${o.x}px;top:${o.y}px"><div class="smenu-h">Status follows documents</div>${[['enquiry','Enquiry','Someone asked. Reply or hold the date.'],['hold','Hold','Date reserved until an expiry. Band availability asked.'],['offer','Offer out','Moves here when the offer link is sent.'],['confirmed','Confirmed','Moves here when the offer is signed or the deposit paid.'],['completed','Completed','Moves here after the gig date, once you settle.']].map(([k,l,d])=>`<button class="smenu-it ${S.booking.state===k&&!S.booking.cancelled?'on':''}" role="menuitem" data-bstate="${k}"><span class="schip ${k}"><i></i>${l}</span><span class="smenu-d">${d}</span>${S.booking.state===k&&!S.booking.cancelled?ic('check','s'):''}</button>`).join('')}<hr class="smenu-rule"><button class="smenu-it ${S.booking.cancelled?'on':''}" role="menuitem" data-act="${S.booking.cancelled?'uncancel':'cancelbooking'}"><span class="schip cancelled"><i></i>Cancelled</span><span class="smenu-d">Asks for a reason and what happens to the deposit.</span>${S.booking.cancelled?ic('check','s'):''}</button><div class="smenu-f">Moving by hand is logged with your name. The assistant can propose moves; nothing changes without Confirm.</div></div>`;
  if(o.type==='chipmenu'){const c=CHIPS[o.key];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:6px" role="dialog" aria-label="Filter by ${c.label}"><div class="t-meta faint" style="padding:6px 10px">${c.label}</div>${c.opts.map(x=>`<label class="row" style="padding:8px 10px;gap:10px;cursor:pointer"><input type="checkbox" data-cf="${o.key}|${x}" ${S.filters[o.key].includes(x)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${x}</span><span class="t-meta faint">${c.n(x)}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearchip" data-key="${o.key}">Clear</button></div></div>`;}
@@ -537,10 +541,10 @@ document.addEventListener('click',e=>{
  if(t.dataset.rtab){S.rtab=t.dataset.rtab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
  if(t.dataset.atab){S.atab=t.dataset.atab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
  if(t.dataset.tab){S.bookTab=t.dataset.tab;S.enter='tabenter';S.enterUntil=Date.now()+500;return render();}
- if(t.dataset.genre){const was=S.genre,next=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}/* the note paints first, the (heavier) theme repaint follows on the next frame (Vit: the note felt late) */toast(`Theme: ${({label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'})[next]}`,was!==next?()=>{S.genre=was}:null);setTimeout(()=>{S.genre=next;render();},30);return;}
+ if(t.dataset.genre){const was=S.genre,next=t.dataset.genre;if(S.overlay&&S.overlay.type==='thememenu'){S.overlay=null;}/* the note paints first, the (heavier) theme repaint follows on the next frame (Vit: the note felt late) */toast(`Theme: ${({...TNAMES,label:'Default'})[next]}`,was!==next?()=>{S.genre=was}:null);setTimeout(()=>{S.genre=next;render();},30);return;}
  if(t.dataset.appearance){S.appearance=t.dataset.appearance;return render();}
  if(t.dataset.ob){S.onboarding.step=+t.dataset.ob;return render();}
- if(t.dataset.obgenre){const ob=S.onboarding,g=t.dataset.obgenre,l=ob.genres||(ob.genres=[ob.genre]),i=l.indexOf(g);if(i>=0){if(l.length>1)l.splice(i,1);}else l.push(g);ob.genre=l[0];S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'})[ob.genre]||'label';return render();}
+ if(t.dataset.obgenre){const ob=S.onboarding,g=t.dataset.obgenre,l=ob.genres||(ob.genres=[ob.genre]),i=l.indexOf(g);if(i>=0){if(l.length>1)l.splice(i,1);}else l.push(g);ob.genre=l[0];S.genre=({'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical','Folk':'folk','Hip-hop and soul':'hiphop','Pop':'pop'})[ob.genre]||'label';return render();}
  if(t.dataset.pgo){const v=t.dataset.pgo;const p=JSON.parse(t.dataset.pp||'{}');if(v==='newbooking'){S.overlay=DR.newbooking(S.overlay.q);return render();}return go(v,p);}
  if(t.dataset.ni){const n=S.notifs[+t.dataset.ni];n.unread=false;return go(n.go[0],n.go[1]);}
  if(t.dataset.nf){S.overlay.f=t.dataset.nf;return render();}
@@ -675,7 +679,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Enter'&&e.target.matches('tr[data-go]'))e.target.click();
  if(e.key==='Enter'&&e.target.id==='ask'){document.querySelector('[data-act="ask"]').click();}
 });
-const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STATUS,PAST,ACT,payCat,CHIPS,chip,confirmM,kvs,go,open,close,toast,refresh,render,abar,VIEWS,DR,FLOWS,filteredBookings,sendPreview,rateCard,assistantSheet,contactsPage,settingsShell,SC,SETNAV,THEMES,themeSw,themeCards,appearanceSeg,AUD,audAbar,onboarding,flowBtnInline,
+const LAAS=window.LAAS={TNAMES,tokCls,S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STATUS,PAST,ACT,payCat,CHIPS,chip,confirmM,kvs,go,open,close,toast,refresh,render,abar,VIEWS,DR,FLOWS,filteredBookings,sendPreview,rateCard,assistantSheet,contactsPage,settingsShell,SC,SETNAV,THEMES,themeSw,themeCards,appearanceSeg,AUD,audAbar,onboarding,flowBtnInline,
  ACTIONS:{},OVERLAYS:{},INPUT:[],CHANGE:[],ONBOARDING:null,
  AREAS:{gigs:['bookings','booking','gigday','calendar','calsync','contacts','contact','venues','venue','mail','thread','mailaccounts','compose','rate','paypage'],money:['money','settle','invoice','ledger','journal','accounts','ledgerreport'],catalogue:['catalogue','release','pastrelease','gear'],audience:['audience','social','post','comments','keywords','deliveries']},
  areaOf(v){for(const [a,list] of Object.entries(this.AREAS))if(list.includes(v))return a;return ''},
@@ -688,20 +692,20 @@ const LAAS=window.LAAS={S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STA
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=577e44b"></script>
-<script src="views/bookings.js?v=577e44b"></script>
-<script src="views/booking.js?v=577e44b"></script>
-<script src="views/denmark.js?v=577e44b"></script>
-<script src="views/contacts.js?v=577e44b"></script>
-<script src="views/money.js?v=577e44b"></script>
-<script src="views/catalogue.js?v=577e44b"></script>
-<script src="views/brands.js?v=577e44b"></script>
-<script src="views/account.js?v=577e44b"></script>
-<script src="views/mail.js?v=577e44b"></script>
-<script src="views/social.js?v=577e44b"></script>
-<script src="views/tour.js?v=577e44b"></script>
-<script src="views/motion.js?v=577e44b"></script>
-<script src="views/logomotion.js?v=577e44b"></script>
-<script src="views/compact.js?v=577e44b"></script>
-<script src="views/overflow.js?v=577e44b"></script>
+<script src="views/dashboard.js?v=475a0c1"></script>
+<script src="views/bookings.js?v=475a0c1"></script>
+<script src="views/booking.js?v=475a0c1"></script>
+<script src="views/denmark.js?v=475a0c1"></script>
+<script src="views/contacts.js?v=475a0c1"></script>
+<script src="views/money.js?v=475a0c1"></script>
+<script src="views/catalogue.js?v=475a0c1"></script>
+<script src="views/brands.js?v=475a0c1"></script>
+<script src="views/account.js?v=475a0c1"></script>
+<script src="views/mail.js?v=475a0c1"></script>
+<script src="views/social.js?v=475a0c1"></script>
+<script src="views/tour.js?v=475a0c1"></script>
+<script src="views/motion.js?v=475a0c1"></script>
+<script src="views/logomotion.js?v=475a0c1"></script>
+<script src="views/compact.js?v=475a0c1"></script>
+<script src="views/overflow.js?v=475a0c1"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

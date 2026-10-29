@@ -37,9 +37,9 @@ S.bands??=[{id:'lt',name:'Low Tide',ini:'LT',meta:'Owner: 3 members',city:'Odens
 S.bandId??='lt';
 const curBand=()=>S.bands.find(b=>b.id===S.bandId)||S.bands[0];
 const iniOf=n=>(n.trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2)||'B').toUpperCase();
-const GENRE_THEME={'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical'};
-const TNAME={label:'Default',metal:'Metal',electronic:'Electronic',classical:'Classical'};
-const SLOTNAME={label:'Label',metal:'Metal',electronic:'Electronic',classical:'Classical'};
+const GENRE_THEME={'Metal and hardcore':'metal','Electronic':'electronic','Classical':'classical','Folk':'folk','Hip-hop and soul':'hiphop','Pop':'pop'};
+const TNAME={...L.TNAMES,label:'Default'};
+const SLOTNAME=L.TNAMES;
 
 /* ---------- small parts (Figma components) ---------- */
 const tg=(k,label)=>`<button class="acc-tg ${A.tg[k]?'on':''}" role="switch" aria-checked="${!!A.tg[k]}" aria-label="${esc(label)}" data-act="acctg" data-k="${k}"><i></i></button>`;
@@ -194,20 +194,20 @@ L.VIEWS.integrations=()=>{const c=A.conn;
 
 /* ---------- Settings · Theme (320:11638) ---------- */
 const THEMES8=[
- ['label','Label','default, plain and warm',['#121212','#cdbdff','#ffffff']],
- ['minimal','Minimal','pure black and white, hairlines, terse',['#000000','#ffffff','#0d0d0d']],
- ['metal','Metal','bone on black, blackletter, dry',['#0a0a0a','#e8e2d6','#141414']],
- ['electronic','Electronic','acid lime on electric navy, mono, clipped',['#0a1020','#d9f25a','#111a2e']],
- ['classical','Classical','burgundy on ivory, gold light, programme-note',['#f6f1e7','#6e1f2b','#c9a04a']],
- ['folk','Folk','brown ink on paper, wood type, folksy',['#f1e8d8','#b5533c','#3b2a1a']],
- ['hiphop','Hip-hop & soul','orange on black, heavy display, loose',['#141414','#ff7a1a','#f5efe6']],
- ['pop','Pop & lofi','pink on dusk, rounded, soft',['#1e1a2e','#ff9ac4','#f4eeff']]];
-const PALETTE={label:'Lilac, #CDBDFF',metal:'Bone, #E8E2D6',electronic:'Acid lime, #D9F25A',classical:'Burgundy, #6E1F2B'};
+ ['label','Label','default, plain and warm',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['minimal','Minimal','pure black and white, hairlines, terse',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['metal','Metal','bone on black, blackletter, dry',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['electronic','Electronic','acid lime on electric navy, mono, clipped',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['classical','Classical','burgundy on ivory, gold light, programme-note',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['folk','Folk','brown ink on paper, wood type, folksy',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['hiphop','Hip-hop & soul','orange on black, heavy display, loose',['var(--canvas)','var(--accent)','var(--ink)']],
+ ['pop','Pop & lofi','pink on dusk, rounded, soft',['var(--canvas)','var(--accent)','var(--ink)']]];
+const PALETTE={label:'Lilac, #CDBDFF',metal:'Bone, #E8E2D6',electronic:'Acid lime, #D9F25A',classical:'Burgundy, #6E1F2B',minimal:'White, #FFFFFF',folk:'Rust, #D9785C',hiphop:'Orange, #FF7A1A',pop:'Pink, #FF9AC4'};
 const appearSeg=()=>`<div class="seg acc-seg3">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'acc-i14')}${l}</button>`).join('')}</div>`;
 L.VIEWS.theme=()=>{const cur=S.genre,name=SLOTNAME[cur];
  return shell('Theme','Palette, backdrop, motion and tone of voice',
  sec('Pick a theme',`<div class="acc-fl"><span class="acc-lbl">Appearance</span>${appearSeg()}<span class="acc-help">Every theme has a light and a dark version. Match system follows your phone or computer.</span></div>
-  <div class="acc-in12 acc-stack"><div class="acc-themes">${THEMES8.map(([id,n,d,c])=>{const on=cur===id,live=!!TNAME[id];return `<button class="acc-th ${on?'on':''}" ${live?`data-genre="${id}"`:`data-act="accproposal" data-n="${n}"`} aria-pressed="${on}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="nm"><span>${n}</span>${on?tag('accent','Current'):id==='metal'?tag('confirmed','Suggested for you'):''}</span><span class="d">${d}</span></button>`}).join('')}</div>
+  <div class="acc-in12 acc-stack"><div class="acc-themes">${THEMES8.map(([id,n,d,c])=>{const on=cur===id,live=!!TNAME[id];return `<button class="acc-th ${on?'on':''}" ${live?`data-genre="${id}"`:`data-act="accproposal" data-n="${n}"`} aria-pressed="${on}"><span class="sw">${c.map(x=>`<i class="${L.tokCls(id)}" style="background:${x}"></i>`).join('')}</span><span class="nm"><span>${n}</span>${on?tag('accent','Current'):id==='metal'?tag('confirmed','Suggested for you'):''}</span><span class="d">${d}</span></button>`}).join('')}</div>
   <p class="acc-note">Suggested from your genres and cover art. Switching changes the room, not the facts: money tiles, tables, confirm cards and the assistant bar keep the Label look in every theme. Switch back any time.</p></div>`,
   cur!=='label'?`<button class="btn ghost s" data-genre="label">${ic('rotate','s')}Back to Label</button>`:'','inset')
  +sec(`What each slot does in ${name}`,rows(

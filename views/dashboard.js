@@ -254,7 +254,7 @@ L.OVERLAYS.notifs=o=>{const N=S.notifs;const unread=N.filter(n=>n.unread).length
 const THEME_SUB={label:'The LAAS look',metal:'Black and bone',electronic:'Electric navy and lime',classical:'Ivory, gold, burgundy'};
 L.OVERLAYS.thememenu=o=>`<div class="scrim d-scrim0" data-act="close"></div><div class="pop d-theme" style="left:${o.x??16}px;bottom:${o.b??120}px" role="dialog" aria-label="Theme">
  <div class="d-mh">Theme for ${bn()}</div>
- ${L.THEMES.map(([id,n,d,c0])=>{const c=L.themeSw([id,n,d,c0]);return `<button class="d-opt ${S.genre===id?'on':''}" data-genre="${id}"><span class="d-prev">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</span><span class="d-ot"><b>${n}</b><small>${THEME_SUB[id]||d}</small></span>${S.genre===id?ic('check','s'):''}</button>`;}).join('')}
+ ${L.THEMES.map(([id,n,d,c0])=>{const c=L.themeSw([id,n,d,c0]);return `<button class="d-opt ${S.genre===id?'on':''}" data-genre="${id}"><span class="d-prev">${c.map(x=>`<i class="${L.tokCls(id)}" style="background:${x}"></i>`).join('')}</span><span class="d-ot"><b>${n}</b><small>${THEME_SUB[id]||d}</small></span>${S.genre===id?ic('check','s'):''}</button>`;}).join('')}
  <div class="d-app"><span class="faint">Appearance</span><div class="seg">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'s')}${l}</button>`).join('')}</div></div>
  <div class="d-div"></div><div class="d-sug">${ic('ai','s')}<span>Your genre is indie rock: Default fits. Metal fits hardcore.</span></div>
  <button class="d-act" data-genre="label">${ic('undo','s')}Reset to default</button><button class="d-act" data-go="theme">${ic('settings','s')}Theme settings</button></div>`;
