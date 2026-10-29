@@ -152,9 +152,12 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 @media (max-width:839.98px){
  .ml-tacts{justify-content:flex-start}
  .ml-cl{width:44px}
- .ml-accrow{flex-wrap:wrap}
- .ml-accend{width:100%;padding-left:44px}
- .acc-row.ml-lead .ctl{margin-left:0;padding-left:44px}
+ /* account rows stay one List row on phones too (= Figma List row, Vit 29 Oct: code follows the component):
+    trailing inline, the meta on one line with an ellipsis */
+ .ml-accrow,.acc-row.ml-lead{flex-wrap:nowrap!important}
+ .acc-row.ml-lead .ctl{margin-left:0;flex:none}
+ :is(.ml-accrow,.acc-row.ml-lead)>.tx{min-width:0;flex:1}
+ :is(.ml-accrow,.acc-row.ml-lead)>.tx small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .ml-cfoot .ml-lock{flex:1 1 100%}
  .ml-lkr .field{width:100%}
 }
