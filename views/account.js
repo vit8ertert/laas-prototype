@@ -131,9 +131,9 @@ L.VIEWS['settings-money']=()=>shell('Money','Payments, invoice numbers and remin
   row('Held by members','Payments that landed in someone\'s private account, recorded, not moved',tag('attention','Mads, 5.000 DKK')),
   foot('A member\'s private MobilePay is allowed as a last resort; LAAS records it and nudges towards the business account.')))
  +sec('Invoices',rows(
-  row('Company','Name and CVR printed on every invoice',sel('Company',['Low Tide I/S, CVR 44 55 66 77'],'wide')),
+  row('Company','Name and CVR printed on every invoice',sel('Company',['Low Tide I/S, CVR 44 55 66 77'])),
   row('Moms default','Per line, changeable before you approve, never guessed',sel('Moms default',['25 %, ask when unsure','25 %','No moms'])),
-  row('Numbering','Sequential, locked on approve, gaps are not allowed by law',sel('Numbering',['2026-###, next 2026-033'],'wide')),
+  row('Numbering','Sequential, locked on approve, gaps are not allowed by law',sel('Numbering',['2026-###, next 2026-033'])),
   row('Prices shown','Toggle on every invoice; totals always show excl., moms, incl.',sel('Prices shown',['Excl. moms','Incl. moms'])),
   row('E-invoice (EAN)','Public clients must get e-invoices through a provider',tag('draft','Not set up'))))
  +sec('Reminders',rows(

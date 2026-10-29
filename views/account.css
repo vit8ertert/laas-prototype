@@ -51,7 +51,7 @@
 .acc-sel{width:240px}
 /* Settings row Control 240x40 (stroke in layout); type and padding from core .input */
 .acc-row .input{height:40px;background-size:14px;background-position:right 13px center}
-.acc-sel.wide{width:300px}
+/* one field width, = Figma Value field 240 (Vit 29 Oct, fewer designs); long values truncate like a native select */
 .acc-sel.mono,.input.mono{font-family:var(--mono);font-size:14px}
 .acc-in{max-width:100%}
 .acc-foot{margin:0;padding:0 12px;font-size:13px;line-height:var(--lh-label);color:var(--muted);display:flex;gap:6px;align-items:flex-start}
