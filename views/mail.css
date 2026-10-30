@@ -72,10 +72,10 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 /* folder tabs: same as the bookings tabs (bookings.css .bk-tabs) */
 .ml-tabs{display:flex;gap:20px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none;max-width:100%}
 .ml-tabs::-webkit-scrollbar{display:none}
-.ml-tabs button{position:relative;display:flex;align-items:center;gap:8px;height:48px;padding:12px 4px 14px;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
+.ml-tabs button{position:relative;display:flex;align-items:center;gap:8px;padding:12px 4px 14px;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 .ml-tabs button.on{color:var(--ink);font-weight:500}
 .ml-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent-strong);animation:tabline .28s cubic-bezier(.2,.8,.2,1) both}
-.ml-tabs .c{display:inline-flex;align-items:center;height:22px;padding:2px 8px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
+.ml-tabs .c{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
 .ml-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
 .ml-tabs button:hover:not(.on){color:var(--ink)}
 

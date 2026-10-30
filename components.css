@@ -47,9 +47,10 @@ textarea.input{height:auto;padding:8px 12px}
 .tag.danger{background:var(--bad-tint);color:var(--bad)}
 .tag.accent{background:var(--accent-tint);color:var(--accent-ink)}
 
-/* Tab 298:5098: 48 high = inner 46 (pad 12 4, gap 8) + indicator 2; label Body strong 15/22;
+/* Tab 298:5098: 12 + label line + 12 + indicator 2 = 48 on desktop, 46 on phones (line 22 / 20; one height for every
+   tab row, 30 Oct); label Body strong 15/22;
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
-.tabs button{height:48px;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
+.tabs button{height:auto;padding:12px 4px 10px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
 .tabs button:hover{border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 .tabs .c{padding:2px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/var(--lh-label) var(--sans)}
