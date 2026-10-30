@@ -252,3 +252,5 @@ html.gated body>*:not(.gate){display:none!important}
    Title 24 (20 on phones), Card title 24 (16 on phones, settings cards), Heading 18 medium (16). Figma: Section header */
 :is(.cv-sec,.m-sec,.bd-sec){gap:16px}
 :is(.d-sec,.cat-sec){gap:12px}
+/* one header row height, 34 = the S button, with or without an action (Vit 30 Oct: "Yes, 34 everywhere"; was 28 / 32 / 34) */
+:is(.acc-sh,.cv-sh,.m-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){min-height:34px;align-items:center}

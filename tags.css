@@ -171,7 +171,7 @@
 /* boxed things inside a side card keep their own padding (Vit 21 Oct: the open-items box lost it) */
 .bd-openbox{padding:16px!important;border-radius:12px}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(h2,h3):not(.ex-empty h3){font:500 var(--fs-heading)/var(--lh-heading) var(--sans)!important;letter-spacing:0!important;margin:0!important}
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:0;align-items:center}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:34px;align-items:center}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}
 /* empty lines and plain text in a side card start on the heading edge */
 .cv-in{padding:0!important;margin:0;font:400 14px/20px var(--sans)}
@@ -200,9 +200,6 @@
 .bd-acth{display:flex!important;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
 .bd-acth .bd-chev{display:grid;place-items:center;width:20px;height:20px;color:var(--muted);flex:none}
 .bd-acth:hover .bd-chev{color:var(--ink)}
-/* side card header: a long title wraps under its own column, the action stays on the first line */
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh{align-items:flex-start!important}
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) .bd-sh>.btn{margin-top:-6px}
 /* money lines on a booking open nothing: no hover inset, text on the heading edge, amounts on the card's right edge
    (Vit 21 Oct: "this Money card looks broken", rows sat 16 px in and the amounts 16 px past the action) */
 :is(.bd-sec,.bd-panel) .bd-mrow:not(button,a,[data-go],[data-act]){margin-inline:0!important;width:100%!important;padding-inline:0!important}

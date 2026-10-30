@@ -67,7 +67,7 @@
 /* section (298:5025): pad 20 0, gap 16; head 24/32 -0.3 with a ghost s action on the right edge */
 .bd-sec{display:flex;flex-direction:column;padding:var(--card) 0;border-radius:12px}
 .bd-page .t-title{letter-spacing:-.3px}
-.bd-sh{display:flex;align-items:center;gap:8px;min-height:32px}
+.bd-sh{display:flex;align-items:center;gap:8px;min-height:34px}
 .bd-sh>h2,.bd-sh>h3{flex:1;margin:0}
 /* Figma "head" row (gap 8) is the title alone when a section has no action */
 .bd-sec>.bd-sh>h2{display:flex;align-items:center;column-gap:8px}

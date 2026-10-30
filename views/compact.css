@@ -189,7 +189,7 @@
   .bd-step .content>p{font-size:14px;line-height:20px}
   .bd-step .content{padding-bottom:20px}
 }
-@media (max-width:599.98px){.bd-pgroup.cx-folded{padding:10px 12px 10px 16px!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:32px}.bd-pgroup>.bd-sh>*{margin-block:0}}
+@media (max-width:599.98px){.bd-pgroup.cx-folded{padding:10px 12px 10px 16px!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:34px}.bd-pgroup>.bd-sh>*{margin-block:0}}
 
 /* width-aware spacing on compact: Figma LAAS · Width, mode Compact (Vit 22 Oct: far less spacing on phones) */
 @media (max-width:599.98px){

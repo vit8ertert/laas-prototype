@@ -108,7 +108,6 @@
 .cv-sec{display:flex;flex-direction:column;padding:20px 0;border-radius:var(--r-lg)}
 .cv-sh{display:flex;align-items:center;gap:8px;min-height:34px}.cv-sh h2{flex:1;font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0}
 .cv-panel .cv-sh{padding-left:12px}
-.cv-panel .cv-sh:only-child,.cv-sh.solo{min-height:32px}
 .cv .btn.cv-act{height:34px;padding:8px 12px;gap:8px}
 .cv .btn.cv-act:hover{background:var(--surface)}
 .cv-rows{display:flex;flex-direction:column}
