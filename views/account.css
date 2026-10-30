@@ -232,10 +232,9 @@ button.acc-si:hover{background:var(--hover)}
 .acc-two{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
 .acc-ob .field .input{max-width:100%}
 .acc-genres{display:flex;flex-wrap:wrap;gap:8px}
-.acc-gc{height:auto;padding:var(--space-2) 14px;border-radius:var(--r-pill);border:1px solid var(--rule-strong);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.acc-gc:hover{color:var(--ink)}
-/* 1.5 px stroke in layout (148x37): 1 px border + 0.5 px inset, padding +0.5 (Chrome draws 1.5 px borders as 1 px at 1x) */
-.acc-gc.on{background:var(--well);border:1px solid var(--ink);box-shadow:inset 0 0 0 .5px var(--ink);padding:8.5px 14.5px;color:var(--ink)}
+/* genre chips are the standard chip (30 Oct, one Chip component; they were 13 px muted outline chips of their own) */
+.acc-gc{height:auto;gap:8px;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink)}
+.acc-gc.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
 /* each bandmate is numbered (Vit 27 Oct: "email role email role" was hard to tell apart): the Step number circle beside
    the pair, the same one as "It proposes, you confirm" (.tl-steps); pairs sit further apart than the fields inside one */
 .acc-obinv{margin:0;padding:0;list-style:none;counter-reset:inv;display:flex;flex-direction:column;gap:var(--space-6)}
