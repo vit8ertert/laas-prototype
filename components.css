@@ -248,9 +248,9 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow){display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;position:relative}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow):not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow) .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow) .tx>b{font-weight:inherit}  /* a <b> title (Contacts rows, for the hover underline) is Body like every List row title */
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow) .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow)>:is(.acc-av,.bd-av,.cv-av.s,.cv-sq){width:28px;height:28px}
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow)>svg.i:last-child{color:var(--muted)}  /* one list-row avatar size, the List row component's 28 (30 Oct: booking rows drew 32) */
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow)>:is(.acc-av,.bd-av,.cv-av.s,.cv-sq){width:28px;height:28px}  /* one list-row avatar size, the List row component's 28 (30 Oct: booking rows drew 32) */
 
 /* Sections (pattern census card 3, 30 Oct; Vit: keep two phone title sizes): a page section (Contacts, Money, Booking) has
    16 between its header and body at both widths, a sub-section inside a card (Dashboard, Catalogue) 12. Header levels:
