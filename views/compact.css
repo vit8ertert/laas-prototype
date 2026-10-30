@@ -450,7 +450,7 @@
   .acc-sec>:not(.acc-sh){padding-inline:0!important}
   .acc-li{margin-inline:0!important;padding-inline:0!important;width:100%!important}
   .acc-li:not(:last-child)::after{left:0!important;right:0!important}
-  :is(.acc-li,.bd-prow,.cv-row,.cv-vrow) .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}  /* one List row: the meta is one line on phones for every list row (pattern card 2) */
+  :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk) .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}  /* one List row: the meta is one line on phones for every list row (pattern card 2) */
   .aud-body>*{margin-inline:0!important}
   /* long help under a field: one line on a phone, a tap shows all of it (Carbon: truncate descriptions, never labels) */
   .field .help:not(.err):not(.cx-full){display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}

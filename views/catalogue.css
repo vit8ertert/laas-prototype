@@ -115,11 +115,12 @@
 .cat-checks .sum .grow{flex:1;min-width:160px;font:400 15px/var(--lh-body) var(--sans)}
 .cat-checks .meter{gap:2px}
 .btn.cat-run{padding:0 0 0 12px}.cat-run:hover{background:none;text-decoration:underline}
-.cat-chk{display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--rule);width:100%;text-align:left}
-button.cat-chk:hover{background:var(--raised)}
-.cat-chk .ico{display:flex;flex:none}.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
-.cat-chk .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
-.cat-chk .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+/* a check is a List row (components.css), flush in its card: the card's 20 inset, the rule across the card */
+.cat-checks .cat-chk{padding:12px 20px;border-radius:0}
+.cat-checks .cat-chk::after{left:0;right:0}
+.cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
+button.cat-chk:hover{background:var(--hover)}
+.cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
 .cat-sub{margin:0;padding:0 20px 14px 70px;color:var(--muted);font-size:13px;line-height:22px}
 
 /* overview: 720 column + 348 panel, 48 apart */
