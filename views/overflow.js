@@ -6,7 +6,7 @@
       side: it says "more this way" and scrolls 80 % of the width when tapped. Desktop and phone.
       Phones (Vit 26 Oct: "instead of this icon chevron use just the horizontal scroll bar under the table, everywhere"):
       no arrow buttons; a thin scroll bar under the table shows where you are and how much is left, and can be dragged.
-   2. Phones: a banner longer than three lines shows two, then its action and "Show more" on the next line. */
+   2. Phones: a banner longer than three lines (its action line counted, 30 Oct) shows two, then its action and "Show more" on the next line. */
 (function(){
 const L=window.LAAS,{S,ic}=L;
 const TABLES='.ml-table,.table-wrap,.cat-table,.so-bars';

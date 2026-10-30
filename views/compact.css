@@ -281,7 +281,7 @@
   .acc-ob .l,.acc-ob.snd .l{padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px))!important;align-items:stretch!important;gap:24px!important}
   .acc-ob .l>*{max-width:none!important}
   .acc-obform{width:100%!important;max-width:560px!important;margin:0!important}
-  .acc-ob .field :is(input.input,select.input){height:44px}
+  /* onboarding fields are 38 like every other field (30 Oct, one Input / Select component; were 44 here only) */
 }
 /* the tab bar always sits on the screen's bottom edge (Vit 22 Oct: on iOS the page itself scrolled and carried the
    grid row up). Only .main scrolls; full-screen task flows (the booking editor) hide the tab bar, as phone apps do */
@@ -531,22 +531,22 @@
 }
 
 /* ---------- Banner on phones: Option B (Vit 22 Oct, research: GOV.UK, Atlassian Banner, Carbon "View more") ----------
-   One paragraph: the title runs into the body (13/18, title Medium), the action is an underlined link after the last
-   word, the × is a 32 px box centred on line 1, 4 px from the edge. Icon 16 on line 1. Padding 8 / 40 / 8 / 36.
+   One paragraph: the title runs into the body (13/18, title Medium), the action is an underlined link on its own line
+   under the text (30 Oct: was after the last word unless clamped; now one layout, as Figma's Banner Compact draws it),
+   the × is a 32 px box centred on line 1, 4 px from the edge. Icon 16 on line 1. Padding 8 / 40 / 8 / 36.
    Figma: Banner Width=Compact. Same markup for .banner, .bd-banner, .acc-banner, .cv-banner (and Django bd-banner). */
 @media (max-width:599.98px){
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:8px 40px 8px 36px!important;min-height:40px;font:400 13px/18px var(--sans)}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>svg.i{position:absolute;left:12px;top:9px;width:16px!important;height:16px!important;margin:0!important}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{display:inline!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{display:block!important}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>*{display:inline!important;font:400 13px/18px var(--sans)!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child{font-weight:500!important;margin-right:4px}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child:not(:only-child)::after{content:"."}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline!important;height:auto!important;min-height:0!important;padding:0!important;margin:0 0 0 4px!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 13px/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 13px/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label])>svg{display:none}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:4px;margin:0!important}
   /* longer than three lines (views/overflow.js): two lines, then the action and "Show more" on the next line */
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.tx{display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.btn:not(.icon):not([aria-label]){margin-left:0!important}
   .main .cx-more{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
   .main .cx-clamp>.tx+.cx-more{margin-left:0}
 }

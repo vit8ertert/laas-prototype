@@ -47,7 +47,7 @@
 .so-ch .tag{margin-left:auto}
 .so-c p{margin:0;max-width:65ch;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .so-c mark,.so-hits mark{background:none;color:var(--accent-ink);font-weight:500}
-.so-cacts{display:flex;gap:4px;flex-wrap:wrap;margin-left:-8px}
+.so-cacts{display:flex;gap:4px;flex-wrap:wrap}.so-cacts>.btn:first-child{padding-left:0}  /* first action flush on the text edge, like Comment's first Action (30 Oct; was a -8 row margin) */
 .so-cacts .bd-act{margin-right:0}
 .so-yours{display:flex;gap:8px;align-items:flex-start;max-width:65ch;padding:8px 12px;border-radius:8px;background:var(--well);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .so-yours svg.i{margin-top:2px;color:var(--muted)}
