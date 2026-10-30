@@ -237,6 +237,19 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,:focus-visible){background:var(--hover);outline:none}
 :is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 15px/18px var(--sans);color:var(--muted)}
 .ml-tr.ml-gh{font:500 13px/var(--lh-label) var(--sans)}
+/* 30 Oct (drawn-sweep card 3, Vit: "every screen is lacking" on a Gear row): the Gear table (.cat-gr), the Contacts table
+   (.cv-table) and the ledger reports (.ml-rep) are this table too, on the same cell kinds: plain = Text (Body),
+   .w date (Label), .tt b title (Body strong), .m muted (Body tight), .mono code (muted), .mono.n / .mono.num number (ink, right).
+   Figma: Table cell 1141:62568 in Table row · Gear / Contacts / Report */
+:is(.cat-gr.head,.cv-table thead tr,.ml-rep thead th){background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.cat-gr:not(.head),.cv-table td,.ml-rep td){font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
+:is(.cat-gr,.cv-table,.ml-rep) .w{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
+:is(.cat-gr,.cv-table,.ml-rep) .tt b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
+:is(.cat-gr,.cv-table,.ml-rep) .m{font:400 15px/18px var(--sans);color:var(--muted)}
+:is(.cat-gr,.cv-table,.ml-rep) .mono{font:400 14px/20px var(--mono);color:var(--muted)}
+:is(.cat-gr,.cv-table,.ml-rep) .mono:is(.n,.num){color:var(--ink)}
+:is(.cat-gr,.cv-table,.ml-rep) :is(.n,.num){text-align:right}
+:is(.cat-gr:not(.head),.cv-table tbody tr):is(:hover,:focus-visible){background:var(--hover);outline:none}
 
 /* List row: one pattern for list rows (pattern census card 2, 29 Oct): settings and account lists (.acc-li) and the booking
    person rows (.bd-prow) are the same row: leading (avatar, brand, icon), title over meta, one trailing item, chevron when it

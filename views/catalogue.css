@@ -196,17 +196,12 @@ button.cat-chk:hover{background:var(--raised)}
 .cat-search input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);padding:0}
 .cat-search input::placeholder{color:var(--muted)}
 .cat-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}
-.cat-gr{display:grid;grid-template-columns:minmax(220px,1fr) 120px 72px 120px 96px 110px 96px;gap:24px;align-items:center;padding:12px 16px;box-shadow:inset 0 1px 0 var(--rule);width:100%;min-width:980px;text-align:left;font:400 15px/18px var(--sans)}
-.cat-gr:hover{background:var(--raised)}
-.cat-gr.head{background:var(--canvas);box-shadow:none;padding:8px 16px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.cat-gr.head:hover{background:var(--canvas)}
+/* the Gear table: columns only; head, hover and cell kinds are the shared table (components.css, Table) */
+.cat-gr{display:grid;grid-template-columns:minmax(220px,1fr) 120px 72px 120px 96px 110px 96px;gap:24px;align-items:center;padding:12px 16px;box-shadow:inset 0 1px 0 var(--rule);width:100%;min-width:980px;text-align:left}
+.cat-gr.head{box-shadow:none;padding:8px 16px}
 .cat-gr.att{background:var(--att-tint)}
-.cat-gr .it{font-weight:500}
-.cat-gr .ls{line-height:22px}
-.cat-gr .num{text-align:right}
-.cat-gr .mono{font-size:14px;line-height:20px}
+.cat-gr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cat-gr .ok{display:flex;color:var(--ink)}
-.cat-gr .no{font:400 12px/16px var(--sans);color:var(--faint)}
 .cat-gfoot{display:flex;align-items:center;gap:12px;min-height:34px}
 .cat-gfoot>span{flex:1;font:400 12px/16px var(--sans)}
 .cat-gfoot .btn{font:500 13px/var(--lh-label) var(--sans)}

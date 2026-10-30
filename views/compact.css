@@ -505,16 +505,16 @@
   .table-wrap.cv-table{overflow:visible!important}
   .cv-table table,.cv-table tbody{display:block;width:100%;min-width:0!important}
   .cv-table thead{display:none}
-  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc lc";column-gap:6px;row-gap:2px;padding:var(--row-y) var(--row-x);border-bottom:1px solid var(--rule)}
+  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc s";column-gap:4px;row-gap:2px;padding:var(--row-y) var(--row-x);border-bottom:1px solid var(--rule)}
   /* Vit 22 Oct ("on code this needs to be fixed in paddings"): the rows sit inside the card, so they take the row inset; the card edge closes the last row */
   .cv-table tbody tr:last-child{border-bottom:0}
   .cv-foot .btn.cv-link{padding-left:0}
   .cv-table td{padding:0!important;border:0!important;min-width:0}
   .cv-table td:nth-child(1){grid-area:n;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cv-table td:nth-child(2){grid-area:k}.cv-table td:nth-child(3){grid-area:w}.cv-table td:nth-child(4){grid-area:lc}
-  .cv-table td:is(:nth-child(2),:nth-child(3),:nth-child(4)){font-size:13px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cv-table td:is(:nth-child(3),:nth-child(4))::before{content:"· "}
-  .cv-table td:nth-child(5){grid-area:s;justify-self:end}
+  .cv-table td:is(:nth-child(2),:nth-child(3),:nth-child(4)){font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cv-table td:is(:nth-child(3),:nth-child(4))::before{content:"·\00a0"}  /* a flex item drops a trailing space */
+  .cv-table td:nth-child(5){grid-area:s;justify-self:end;align-self:center}  /* phones: a contact row is a List row (title, meta, trailing tag) */
   .cv-table td:nth-child(6){display:none}
   /* settings fields never wider than the row */
   .acc-row .ctl,.acc-row .ctl .input{min-width:0!important;max-width:100%!important}

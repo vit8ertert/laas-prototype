@@ -616,7 +616,7 @@ L.DR.jnewacct=()=>({type:'mldrawer',title:'New account',sub:'Numbers follow the 
 
 /* ---------- Ledger reports: P&L, balance sheet, trial balance ---------- */
 const REP={pl:'Profit and loss',bs:'Balance sheet',tb:'Trial balance'};
-const rrow=(n,name,cells,cls2='')=>`<tr class="${cls2}" ${n?`data-act="jacct" data-n="${n}" tabindex="0"`:''}><td class="mono ml-no">${n||''}</td><td>${name}</td>${cells.map(c=>`<td class="num mono">${c}</td>`).join('')}</tr>`;
+const rrow=(n,name,cells,cls2='')=>`<tr class="${cls2}" ${n?`data-act="jacct" data-n="${n}" tabindex="0"`:''}><td class="mono ml-no">${n||''}</td>${cls2?`<td class="tt"><b>${name}</b></td>`:`<td>${name}</td>`}${cells.map(c=>`<td class="num mono">${c}</td>`).join('')}</tr>`;
 function repPL(p){const P=PER[p];const v=plFor(P.fi,P.fe);const cmp=k=>r50(v[k]/(cls(+k)===4?1.09:.96));
  const part=c=>{const ks=Object.keys(v).filter(k=>cls(+k)===c);return {rows:ks.map(k=>rrow(k,esc(accName(k)),[L.kr(v[k]),L.kr(cmp(k))])).join(''),t:ks.reduce((a,k)=>a+v[k],0),tc:ks.reduce((a,k)=>a+cmp(k),0)};};
  const i=part(4),e=part(5);
