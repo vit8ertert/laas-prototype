@@ -245,3 +245,9 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.acc-li,.bd-prow):not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 :is(.acc-li,.bd-prow) .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
 :is(.acc-li,.bd-prow) .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+
+/* Sections (pattern census card 3, 30 Oct; Vit: keep two phone title sizes): a page section (Contacts, Money, Booking) has
+   16 between its header and body at both widths, a sub-section inside a card (Dashboard, Catalogue) 12. Header levels:
+   Title 24 (20 on phones), Card title 24 (16 on phones, settings cards), Heading 18 medium (16). Figma: Section header */
+:is(.cv-sec,.m-sec,.bd-sec){gap:16px}
+:is(.d-sec,.cat-sec){gap:12px}

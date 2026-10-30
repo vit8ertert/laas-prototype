@@ -65,7 +65,7 @@
 .bd-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
 .bd-main{display:flex;flex-direction:column;gap:40px;min-width:0}
 /* section (298:5025): pad 20 0, gap 16; head 24/32 -0.3 with a ghost s action on the right edge */
-.bd-sec{display:flex;flex-direction:column;gap:var(--stack);padding:var(--card) 0;border-radius:12px}
+.bd-sec{display:flex;flex-direction:column;padding:var(--card) 0;border-radius:12px}
 .bd-page .t-title{letter-spacing:-.3px}
 .bd-sh{display:flex;align-items:center;gap:8px;min-height:32px}
 .bd-sh>h2,.bd-sh>h3{flex:1;margin:0}

@@ -44,7 +44,7 @@
 .m-cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px;align-items:start}
 .m-left{display:flex;flex-direction:column;gap:40px;min-width:0}
 .m-right{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:28px;min-width:0}
-.m-sec{display:flex;flex-direction:column;gap:16px;padding:20px 0;border-radius:var(--r-lg)}
+.m-sec{display:flex;flex-direction:column;padding:20px 0;border-radius:var(--r-lg)}
 .m-right .m-sec{padding:20px 0}
 .m-sh{display:flex;align-items:center;gap:8px}
 .m-inv .m-right .m-sh{padding-left:12px}.m-sh>h2+*{margin-left:auto}

@@ -32,7 +32,7 @@
 :root[data-genre="metal"] .d-aurora::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,transparent 40%,color-mix(in srgb,var(--scrim-base) 55%,transparent))}
 
 /* section head, generic rows */
-.d-sec{display:flex;flex-direction:column;gap:12px;min-width:0}
+.d-sec{display:flex;flex-direction:column;min-width:0}
 .d-sh{display:flex;align-items:baseline;gap:8px}.d-sh h3{flex:1;min-width:0;letter-spacing:-.1px}
 /* page header (Figma "Page header": title block gap 4, buttons on the bottom edge) */
 .d-page>.ph{align-items:flex-end}.d-page>.ph p{margin-top:4px}
