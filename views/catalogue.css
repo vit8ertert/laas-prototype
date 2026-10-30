@@ -189,8 +189,6 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .cat-filters .sp{flex:1}
 /* Chip 153:948: row gap 8, pad 8 12, pill, inside stroke rule, surface; hover fill hover; selected (153:939) raised */
-.cat-chip{display:inline-flex;align-items:center;gap:8px;height:auto;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink);white-space:nowrap;transition:background .12s}
-.cat-chip:hover{background:var(--hover)}.cat-chip.on{background:var(--raised)}
 .cat-search{position:relative;display:flex;align-items:center;gap:8px;width:260px;max-width:100%;height:38px;padding:0 12px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--muted)}
 .cat-search svg.i{width:18px;height:18px}
 .cat-search:focus-within,.cat-search.on{box-shadow:inset 0 0 0 2px var(--ink)}

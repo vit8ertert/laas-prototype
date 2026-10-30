@@ -213,7 +213,7 @@ const gearRow=x=>`<button class="cat-gr ${x.status==='attention'?'att':''}" data
 L.VIEWS.gear=()=>{const g=S.gear;const att=GEAR.filter(x=>x.status==='attention');const unins=GEAR.filter(x=>!x.ins).length;
  const total=BASE_VALUE+g.added;const list=gearList();const q=g.q.trim();
  const shown=q||g.filter!=='all'||g.cat!=='all'||g.owner!=='band'||g.all?list:list.slice(0,8);
- const chip=(on,label,act,extra='')=>`<button class="cat-chip ${on?'on':''}" data-act="${act}" ${extra}>${label}</button>`;
+ const chip=(on,label,act,extra='')=>`<button class="chip ${on?'on':''}" data-act="${act}" ${extra}>${label}</button>`;
  const filtered=g.filter!=='all'||g.cat!=='all'||g.owner!=='band';
  const foot=q?`${list.length} of ${GEAR.length} match “${esc(q)}” in item, serial or category`:filtered?`Showing ${list.length} of ${GEAR.length}, filtered`:`Showing ${shown.length} of ${GEAR.length}, sorted by status, then value`;
  return `<div class="page cat-page">

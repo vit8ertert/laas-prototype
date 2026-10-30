@@ -332,7 +332,6 @@
   :is(.d-choices,.choices)>*{flex:0 0 78%!important;scroll-snap-align:start;min-width:0}
   :is(.d-choices,.choices) img{height:120px!important;aspect-ratio:auto!important;object-fit:cover}
   .d-chips{flex-wrap:wrap!important;gap:6px!important;overflow:visible!important;mask-image:none!important}
-  .d-chips>*{height:32px!important;padding:0 10px!important;font-size:13px!important;gap:6px!important}
   /* welcome sheet */
   .pop.cx-welcome{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
   .cx-wl{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:20px}.cx-wl svg{margin-top:2px;flex:none}

@@ -144,7 +144,7 @@ function rateCard(){const r=S.rating;const words=['','Never again','Only if need
  return `<section class="bd-rate"><div class="bd-rh"><img src="${IMG('hotel-royal')}" alt=""><div><h3 class="t-heading">How was Hotel Royal?</h3><span class="t-meta muted">Saturday hotel gig, 25 Oct. Takes 20 seconds, helps the next booking.</span></div></div>
  <div class="bd-stars"><div class="stars" role="radiogroup" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button data-star="${n}" aria-label="${n} stars" class="${n<=r.stars?'on':''}"><svg class="i" viewBox="0 0 24 24">${L.P.star}</svg></button>`).join('')}</div><b class="strong">${words[r.stars]||''}</b></div>
  <span class="t-meta faint">1 never again, 2 only if needed, 3 fine, 4 good, 5 dream venue</span>
- <div class="bd-tones">${['Good sound','Great crowd','Paid on time','Easy load-in','Hard load-in','Late payment','Would bring friends'].map(t=>`<button class="qtag ${r.tags.includes(t)?'on':''}" data-qtag="${t}">${t}</button>`).join('')}</div>
+ <div class="bd-tones">${['Good sound','Great crowd','Paid on time','Easy load-in','Hard load-in','Late payment','Would bring friends'].map(t=>`<button class="chip ${r.tags.includes(t)?'on':''}" data-qtag="${t}">${t}</button>`).join('')}</div>
  <div class="field"><label for="rnote">Note for next time</label><input class="input" id="rnote" value="Desk channel 7 hums, bring a DI. Bar staff turn the music up between sets."><span class="help bd-lock">${ic('lock','s')}Band only. Shows on Hotel Royal and in the next offer draft for this venue.</span></div>
  <div class="bd-rf"><button class="btn ghost" data-act="skiprate">Skip</button><button class="btn secondary" data-act="saverate">Save rating</button></div></section>`;}
 

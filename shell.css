@@ -253,8 +253,6 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 .gigcard img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r-md)}
 /* misc */
 .stars{display:flex;gap:6px}.stars button svg{width:32px;height:32px}
-.qtag{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--rule-strong);font-size:13px;color:var(--muted)}
-.qtag.on{border-color:var(--ink);color:var(--ink);background:var(--well)}
 .radio{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);border:1px solid var(--rule-strong);text-align:left;width:100%}
 .radio.on{border:1.5px solid var(--ink)}
 .radio i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--rule-strong);flex:none;margin-top:3px}

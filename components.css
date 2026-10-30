@@ -23,6 +23,8 @@
 .btn.icon.s{padding:8px 12px}
 
 /* Chip 153:948: gap 8, pad 8 12, radius pill, inside stroke 1 rule, surface; hover fill hover; label Body tight 15/18; icon 14 */
+/* Chip 153:948: one chip for every chip-shaped choice (30 Oct, census checklist 2: the Rate tone tags .qtag, the Gear filters
+   .cat-chip and the assistant suggestions .d-chip were their own chips; phones keep the empty chat's stacked suggestions) */
 .chip{height:auto;gap:8px;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink)}
 .chip:hover{background:var(--hover)}
 .chip>svg.i{width:14px;height:14px}

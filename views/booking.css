@@ -161,8 +161,6 @@
 .bd-stars .stars{gap:6px}
 .bd-stars .stars button{color:var(--faint);display:block;height:32px}.bd-stars .stars button svg{width:32px;height:32px;display:block}
 .bd-stars .stars button.on{color:var(--break)}.bd-stars .stars button.on svg{fill:var(--break)}
-.bd-rate .qtag{height:32px;padding:6px 12px;font:400 13px/var(--lh-label) var(--sans)}
-.bd-rate .qtag.on{background:var(--state-selected);border-color:var(--ink)}
 .bd-rate .field{gap:8px}.bd-rate .field label{font:400 13px/var(--lh-label) var(--sans)}
 .bd-lock{display:flex;align-items:center;gap:4px;font:400 12px/16px var(--sans)}.bd-lock svg.i.s{width:12px;height:12px}
 .bd-rf{display:flex;justify-content:flex-end;gap:12px}
