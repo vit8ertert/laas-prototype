@@ -209,7 +209,7 @@
   /* Page header: title block above, the actions on their own row below */
   .ph>.grow{flex:1 1 100%;min-width:0}
   /* Figma Page header Width=Compact: title block to actions on space/w/stack (8), buttons 8 apart (Action group) */
-  :is(.page>.ph,.bk-ph){gap:var(--stack)!important}
+  :is(.page>.ph,.bk-ph,.acc-ph,.m-ph,.aud-ph){gap:var(--stack)!important}  /* one page header on phones: title block and actions 8 apart (census 7, Figma Page header Compact) */
   /* Banner: icon, text and dismiss on the first line, the action below the text */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
