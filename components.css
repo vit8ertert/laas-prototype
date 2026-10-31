@@ -293,3 +293,13 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.d-sec,.cat-sec){gap:12px}
 /* one header row height, 34 = the S button, with or without an action (Vit 30 Oct: "Yes, 34 everywhere"; was 28 / 32 / 34) */
 :is(.acc-sh,.cv-sh,.m-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){min-height:34px;align-items:center}
+
+/* Key-value row (census 9): a 120 px label column and the value on one baseline, or the label above the value (Stack) */
+:is(.cv-kv>div,.cat-panel .fact,.bd-payrow){display:flex;align-items:baseline;gap:var(--space-3);padding:0}
+:is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>:first-child{width:120px;flex:none;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>:nth-child(2){flex:1;min-width:0;margin:0;font-size:15px;line-height:var(--lh-body);font-weight:400;color:var(--ink);overflow-wrap:anywhere}
+:is(.m-kvr,.facts-dl>div,.trk-dl>div){display:flex;flex-direction:column;gap:var(--space-1);min-width:0;padding:0}
+:is(.m-kvr,.facts-dl>div,.trk-dl>div)>:first-child{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.m-kvr,.facts-dl>div,.trk-dl>div)>:nth-child(2){margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--ink);overflow-wrap:anywhere}
+:is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>.mono:nth-child(2){font-size:14px;line-height:20px}
+@media (max-width:599.98px){.bd-pay .bd-payrow{flex-wrap:wrap;align-items:center;row-gap:var(--space-1)}.bd-payrow>.l:first-child{width:100%}}

@@ -226,9 +226,6 @@
 /* amount and currency share one baseline at any size (Vit 22 Oct: "alignment of the currency needs to be fixed", it sat 5 px low on phones); the copy button stays centred */
 .bd-amt .n{align-self:baseline}.bd-amt>.btn{align-self:center}
 .bd-amt .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
-.bd-payrow{display:flex;align-items:center;gap:12px;height:34px}
-.bd-payrow .l{width:110px;flex:none;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-payrow .v{flex:1;min-width:0;font:400 14px/20px var(--mono)}
 .bd-told{background:var(--sunken);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:12px}
 .bd-told p{margin:0}.bd-pay .t-title{letter-spacing:-.3px}
 .bd-told .bd-2col .input{max-width:none}
@@ -324,7 +321,7 @@
  .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:12px;row-gap:var(--space-1);align-items:start}
  .bd-mrow:has(>.st .tag)>.tx{grid-area:tx}.bd-mrow:has(>.st .tag)>.amt{grid-area:amt;width:auto;justify-self:end}.bd-mrow:has(>.st .tag)>.st{grid-area:st;width:auto;justify-self:end}
  .bd-pay{padding:32px 20px}.bd-2col{grid-template-columns:1fr}
- .bd-payrow{flex-wrap:wrap;height:auto;row-gap:2px}.bd-payrow .l{width:100%}
+
  .bd-banner{flex-wrap:wrap}.bd-banner .tx{flex:1 1 200px}
  .bd-strip{overflow-x:auto}.bd-strip .track{min-width:640px}
  .bd-step{grid-template-columns:48px 16px minmax(0,1fr);gap:8px}.bd-step.nowrow{gap:8px}.bd-step.nowrow .time{width:48px}

@@ -137,10 +137,8 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}.cat-drop small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cat-panel{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:24px}
 .cat-panel h3{letter-spacing:-.1px}
-.cat-panel .grp{display:flex;flex-direction:column;gap:10px}.cat-panel .grp.tight{gap:6px}
+.cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:6px}
 .cat-panel .grp>.t-label{font:400 13px/var(--lh-label) var(--sans)}
-.cat-panel .fact{display:grid;grid-template-columns:104px 1fr;gap:12px;align-items:start;font:400 15px/var(--lh-body) var(--sans)}
-.cat-panel .fact .t-label{font:400 13px/var(--lh-label) var(--sans)}
 .cat-avs{display:flex;padding-left:6px}
 .cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 12px/16px var(--sans)}
 .cat-activity{display:flex;align-items:center;gap:10px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
@@ -239,8 +237,6 @@ button.cat-chk:hover{background:var(--hover)}
 .trk-wave:hover .trk-knob,.trk-wave:focus-visible .trk-knob{opacity:1}
 /* file details */
 .trk-dl{margin:0;padding:4px 0 16px 80px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
-.trk-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.trk-dl dd{margin:0;font:400 15px/var(--lh-body) var(--sans);overflow-wrap:anywhere}
 @media (max-width:839.98px){.trk-fmt{display:none}.trk-tl,.trk-dl{padding-left:0}.trk-dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* status badge on the artwork's top-right corner (Vit 21 Oct); tile padding 12 + 8 inset */

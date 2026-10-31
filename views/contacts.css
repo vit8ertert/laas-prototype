@@ -106,9 +106,6 @@
 .cv-sq{border-radius:8px;background:var(--sunken);color:var(--ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 /* Figma "Body": column gap 12, pad 0; each row pad 0 12, gap 16, label 140 */
 .cv-kv{display:flex;flex-direction:column;gap:12px;margin:0;padding:0}
-.cv-kv>div{display:flex;align-items:flex-start;gap:16px;padding:0 12px}
-.cv-kv dt{width:140px;flex:none;color:var(--muted);font:400 13px/var(--lh-label) var(--sans)}
-.cv-kv dd{flex:1;min-width:0}.cv-kv dd{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .cv-kvw{display:flex;flex-direction:column;gap:12px}
 .cv-fn{margin:0;padding:0 12px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-in{margin:0;padding:0 12px}
@@ -232,7 +229,7 @@ button.cv-irow:hover b{text-decoration:underline}
  .cv-search,.cv-vbar .cv-search{width:100%;margin-left:0}
  .cv-table{overflow-x:auto}.cv-table table{min-width:820px}
  .cv-foot{flex-direction:column;align-items:flex-start}
- .cv-kv>div{padding:0}.cv-kv dt{width:110px}
+
  .cv-main{gap:24px}
  .cv-cards{grid-template-columns:1fr}
  .cv-actions{flex-wrap:wrap}
