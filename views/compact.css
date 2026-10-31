@@ -90,7 +90,7 @@
   /* buttons on phones are Figma Button S: 34 high, 13/18 Medium, 12 side padding, 16 icon */
   .btn,.btn.s{height:34px;padding:0 12px;font-size:13px;line-height:var(--lh-label);gap:6px}
   .btn>svg.i,.btn.s>svg.i{width:16px;height:16px}
-  .btn.icon,.btn.icon.s{width:auto;min-width:34px;padding:0 10px}
+  .btn.icon{width:auto;min-width:34px;padding:0 10px}
   .btn.lg{min-height:44px;padding:10px 20px}
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
@@ -484,8 +484,8 @@
   .d-newc .d-chip{justify-content:flex-start!important;text-align:left!important;height:auto!important;min-height:40px;padding:10px 12px!important;border-radius:var(--r-lg)!important;white-space:normal}
 }
 /* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
-:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:last-child{padding-right:0!important;margin-right:0!important}
-:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:last-child:hover{background:none!important;text-decoration:underline}
+:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child{padding-right:0!important;margin-right:0!important}  /* not an icon button: it keeps its square (Vit 31 Oct) */
+:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:hover{background:none!important;text-decoration:underline}
 /* touch screens get a pressed state instead of hover: a brief tint while the finger is down (Material state layer) */
 @media (hover:none){
   :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):active{background-color:var(--state-pressed)!important}
