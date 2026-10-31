@@ -47,7 +47,7 @@ const kvRow=(k,v)=>`<div class="m-kvr"><span>${k}</span><span>${v}</span></div>`
 const ev=(icon,well,t,s)=>`<div class="m-ev"><span class="m-well ${well}">${ic(icon,'s')}</span><span class="m-tx"><span>${t}</span><small>${s}</small></span></div>`;
 const foot=t=>`<p class="m-foot">${t}</p>`;
 /* Figma "Tabs": tab row + 1 px rule; each Tab is inner (label, count) over a 2 px indicator */
-const tabsRow=items=>`<div class="m-tabsw"><div class="m-tabs" role="tablist">${items.map(([on,attrs,l,c,cl=''])=>`<button role="tab" aria-selected="${on}" class="${on?'on':''}" ${attrs}><span class="in"><span>${l}</span>${c!=null?`<span class="c"${cl}>${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div><i class="m-tabrule"></i></div>`;
+const tabsRow=items=>`<div class="m-tabsw"><div class="m-tabs" role="tablist">${items.map(([on,attrs,l,c,cl=''])=>`<button role="tab" aria-selected="${on}" class="${on?'on':''}" ${attrs}><span class="in"><span>${l}</span>${c!=null?`<span class="c"${cl}>${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div></div>`;
 L.mTabsRow=tabsRow;
 const tabsBar=t=>{const counts={owed:3,invoices:S.invoices.length,expenses:t==='expenses'?M.ex.length:null,payouts:S.booking.settled?null:1};
  return tabsRow([['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>[t===k,`data-mtab="${k}"`,l,counts[k]]));};

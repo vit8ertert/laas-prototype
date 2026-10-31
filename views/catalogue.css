@@ -17,7 +17,7 @@
 
 /* tabs (Figma "Tabs" 1116×49 = tab row 48 + rule 1; Tab 298:5092 = inner pad 12 4 gap 8 + indicator 2) */
 .tabs.cat-tabs{display:flex;flex-direction:column;gap:0;padding:0;border-bottom:0;overflow:visible}
-.cat-tabrow{display:flex;gap:20px;overflow-x:auto}
+
 .cat-tabs .cat-tabrow button{display:flex;flex-direction:column;align-items:stretch;height:auto;padding:0;gap:0;border:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .cat-tabs .cat-tabrow button.on{font-weight:500;color:var(--ink)}
 .cat-tabs .cat-tabrow button.on::after{content:none}
@@ -25,7 +25,6 @@
 .cat-tabs .ind{display:block;height:2px;background:transparent}
 .cat-tabs button:hover .ind{background:var(--rule-strong)}
 .cat-tabs button.on .ind{background:var(--accent-strong);animation:tabline .28s cubic-bezier(.2,.8,.2,1) both}
-.cat-tabrule{display:block;height:1px;background:var(--rule)}
 .cat-tabs .c{font:400 13px/var(--lh-label) var(--sans);padding:2px 8px;border-radius:var(--r-pill);background:var(--sunken);color:var(--muted)}
 .cat-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
 

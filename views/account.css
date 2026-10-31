@@ -112,10 +112,7 @@ button.acc-li:hover{background:var(--hover)}
 .acc-fl{display:flex;flex-direction:column;gap:8px}
 .acc-lbl{font-size:13px;line-height:var(--lh-label);color:var(--ink)}
 .acc-help{font-size:12px;line-height:16px;color:var(--muted)}
-.acc-seg3{grid-auto-columns:minmax(max-content,1fr);border-radius:10px}
-.acc-seg3 button{padding:6px var(--space-3);border-radius:7px;gap:6px;font:400 13px/var(--lh-label) var(--sans)}
-.acc-seg3 svg.acc-i14{width:14px;height:14px;color:currentColor}
-.acc-seg3 button.on{font-weight:500;box-shadow:none}
+.acc-seg3{grid-auto-columns:minmax(max-content,1fr)}  /* the rest is the one Segmented control (components.css) */
 /* Account "Dashboard starts with": Segmented control component, hugs; padding and radius from core .seg */
 .acc-seg2{display:inline-grid;grid-auto-columns:max-content;align-self:flex-start}
 .acc-seg2 button{font:400 13px/var(--lh-label) var(--sans)}
@@ -359,7 +356,7 @@ button.acc-si:hover{background:var(--hover)}
 .aud-acts{display:flex;gap:8px;flex:none}
 .aud-acts .btn svg.i{width:20px;height:20px;color:currentColor}
 .btn.aud-more{width:52px;height:36px;padding:0;justify-content:center}
-.aud-tabs{display:flex;gap:20px;box-shadow:inset 0 -1px 0 var(--rule);overflow-x:auto}
+
 .aud-tabs button{padding:0;display:flex;flex-direction:column;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 .aud-tabs button>.in{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1)}
 .aud-tabs button::after{content:"";height:2px;flex:none}

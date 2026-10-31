@@ -74,7 +74,7 @@ const tag=(k,l)=>`<span class="tag ${k}">${l}</span>`;
 const back=(label,go)=>`<button class="btn ghost s cat-back" data-go="${go}">${ic('arrowleft','s')}${label}</button>`;
 const kpi=(label,value,delta,tone='')=>`<div class="cat-kpi ${tone==='attention'?'att':''}"><span class="t-meta muted">${label}</span><span class="v">${value}</span><span class="t-meta ${tone==='attention'?'c-att':tone==='ok'?'c-ok':'muted'}">${delta}</span></div>`;
 /* Figma "Tabs" 1116×49: tab row (gap 20) + 1 px rule; Tab 298:5092 = column of inner (pad 12 4, gap 8) and a 2 px indicator */
-const tabs=(items,cur,attr)=>`<div class="tabs cat-tabs"><div class="cat-tabrow" role="tablist">${items.map(([k,l,c])=>`<button role="tab" class="${cur===k?'on':''}" ${attr}="${k}"><span class="in">${l}${c!=null&&c!==''?`<span class="c">${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div><i class="cat-tabrule"></i></div>`;
+const tabs=(items,cur,attr)=>`<div class="tabs cat-tabs"><div class="cat-tabrow" role="tablist">${items.map(([k,l,c])=>`<button role="tab" class="${cur===k?'on':''}" ${attr}="${k}"><span class="in">${l}${c!=null&&c!==''?`<span class="c">${c}</span>`:''}</span><i class="ind"></i></button>`).join('')}</div></div>`;
 const R=()=>S.release;
 const hasRel=()=>R().stage!=='none';
 const coverHtml=(cls)=>R().stage==='created'&&!R().cover?`<div class="${cls} cat-cover-ph">${ic('disc')}</div>`:`<img class="${cls}" src="${IMG('cover-late-shift')}" alt="">`;

@@ -15,8 +15,7 @@
 
 /* tabs, as Figma "Tabs" (column: tab row 48 + 1 px rule) and Tab 298:5098 (column: inner pad 12 4 gap 8, 46 high + indicator 2) */
 .m-tabsw{display:flex;flex-direction:column}
-.m-tabs{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none}
-.m-tabrule{height:1px;background:var(--rule);flex:none}
+
 .m-tabs button{display:flex;flex-direction:column;padding:0;color:var(--muted);white-space:nowrap;flex:none}
 .m-tabs .in{display:flex;align-items:center;gap:8px;padding:12px 4px;font:400 15px/var(--lh-body) var(--sans)}
 .m-tabs .ind{height:2px;align-self:stretch}
@@ -244,7 +243,7 @@ button.m-line:hover{background:var(--raised)}
  .m-empty{padding:32px 16px}
  .m-plotwrap{grid-template-columns:32px minmax(0,1fr)}.m-dlab{display:none}.m-xax small:nth-child(even){visibility:hidden}
  .m-ph .m-acts{width:100%}
- .m-tabs{gap:8px}
+ 
  .m-iline{flex-wrap:wrap}.m-iline .m-fd{flex:1 1 100%}.m-iline .m-w110{flex:1 1 0}
  .m-banner{flex-wrap:wrap}.m-banner .tx{flex:1 1 calc(100% - 40px)}.m-banner .btn{margin-left:30px}
 }

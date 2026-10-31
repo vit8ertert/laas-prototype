@@ -55,6 +55,10 @@ textarea.input{height:auto;padding:8px 12px}
 .tabs button{height:auto;padding:12px 4px 10px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
 .tabs button:hover{border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
+/* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
+   the line under it an inset rule (no border that adds height, no separate rule element), scrolls sideways when full.
+   Figma: Tabs */
+:is(.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs){display:flex;gap:20px;box-shadow:inset 0 -1px 0 var(--rule);overflow-x:auto;scrollbar-width:none}
 .tabs .c{padding:2px 8px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 13px/var(--lh-label) var(--sans)}
 
 /* Table row 140:357: pad 12 16, gap 24, bottom stroke 1 rule (inside), surface; hover fill hover */
@@ -68,9 +72,13 @@ tbody tr:hover td{background:var(--hover)}
 
 /* Segmented control 442:19785: pad 3, gap 2, radius 8, well; segment pad 6 14, radius 6, Label strong 13/18;
    selected surface + shadow 0 1 2 #00000040 */
-.seg{gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
-.seg button{height:auto;padding:6px 14px;border-radius:6px;font:400 13px/var(--lh-label) var(--sans)}
-.seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px #00000040}
+/* Segmented control (census 3, 31 Oct): one control for the form segmented (.seg) and the filter / direction one (.d-seg,
+   was Segmented control · Small): inset 4, gap 4, items 28 high, 0 12, Label 13/18, icon 14, optional count; 36 high.
+   Figma: Segmented control 442:19785 */
+:is(.seg,.d-seg){gap:4px;padding:4px;border-radius:var(--r-md);background:var(--well)}
+:is(.seg,.d-seg) button{height:28px;padding:0 12px;gap:6px;border-radius:var(--r-sm);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.seg,.d-seg) button svg.i{width:14px;height:14px}
+:is(.seg,.d-seg) button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px #00000040}
 
 /* Banner 299:5204: gap 12, pad 12 16, radius 8, icon 18; text column gap 2 */
 .banner{gap:12px;padding:var(--row-y) var(--row-x);border-radius:var(--r-md)}

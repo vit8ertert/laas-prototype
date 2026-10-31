@@ -161,9 +161,7 @@ button.d-kpi:hover{background:var(--raised)}
 /* customise drawer segments */
 /* Segmented control (Vit 26 Oct, What it can do: "needs to be aligned and be a component"): on the scale, 36 high =
    4 inset + 28 segment; the inner radius is the outer one minus the inset (8 - 4) */
-.d-seg{display:flex;flex-wrap:wrap;gap:var(--space-1);padding:var(--space-1);border-radius:var(--r-md);background:var(--well)}
-.d-seg button{height:28px;padding:0 var(--space-3);border-radius:var(--r-sm);font-size:13px;color:var(--muted)}
-.d-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.d-seg{display:flex;flex-wrap:wrap}
 
 /* calendar */
 .d-monthnav{display:flex;align-items:center;gap:8px}
@@ -271,9 +269,8 @@ button.d-kpi:hover{background:var(--raised)}
 .d-prev{width:56px;height:36px;border-radius:4px;overflow:hidden;display:flex;flex:none}.d-prev i{flex:1}
 .d-ot{flex:1;min-width:0;display:flex;flex-direction:column}.d-ot b{font:500 15px/var(--lh-body) var(--sans)}.d-ot small{font:400 12px/16px var(--sans);color:var(--muted)}
 .d-app{display:flex;flex-direction:column;gap:8px;padding:6px 10px 8px;font:400 12px/16px var(--sans)}
-.d-app .seg{display:flex;gap:2px;padding:3px;border-radius:10px}.d-app .seg button{flex:1 1 0;min-width:0;height:auto;padding:6px 12px;gap:6px;border-radius:7px;font:400 13px/var(--lh-label) var(--sans)}.d-app .seg button:last-child{flex:none}
+.d-app .seg{display:flex}.d-app .seg button{flex:1 1 0;min-width:0}.d-app .seg button:last-child{flex:none}
 .d-app .seg button.on{font-weight:500;box-shadow:none}
-.d-app .seg button svg.i.s{width:14px;height:14px}
 .d-div{display:block;height:1px;background:var(--rule);margin:0}
 .d-sug{display:flex;align-items:center;gap:10px;padding:8px 10px;font:400 12px/16px var(--sans);color:var(--muted)}.d-sug svg{flex:none;margin-top:0;fill:currentColor}
 .d-act{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:38px;border-radius:8px;width:100%;text-align:left;font:400 15px/var(--lh-body) var(--sans)}.d-act:hover{background:var(--well)}
