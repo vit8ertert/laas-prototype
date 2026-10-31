@@ -66,7 +66,7 @@ svg.i.s{width:16px;height:16px}
 .btn.accent{background:var(--accent-strong);color:var(--on-accent)}.btn.accent:hover{filter:brightness(1.06)}
 .btn.primary{background:var(--ink);color:var(--canvas)}
 .btn.secondary{border:1px solid var(--rule-strong)}.btn.secondary:hover{background:var(--surface)}
-.btn.ghost:hover{background:var(--surface)}.btn.ghost.flush{padding:0}.btn.ghost.flush:hover{background:none;text-decoration:underline}
+.btn.ghost:hover{background:var(--surface)}.btn.ghost.flush{padding:8px 0}.btn.ghost.flush:hover{background:none;text-decoration:underline}
 .btn.icon{width:38px;padding:0;justify-content:center}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
 .tag{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:999px;font-size:13px;white-space:nowrap}

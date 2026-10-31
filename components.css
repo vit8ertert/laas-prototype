@@ -20,7 +20,9 @@
 .btn.accent{background:var(--accent-strong);color:var(--on-accent)}
 /* icon-only (Show label off): pad 8 16 around a 20 icon = 52×36 */
 .btn.icon{width:auto;padding:8px 16px}
-.btn.icon.s{width:34px;height:34px;padding:0;justify-content:center}  /* an S icon button is a 34 square, the S height (Vit 31 Oct: the header ⋯ was 28 × 32) */
+.btn.icon.s{width:34px;height:34px;padding:0;justify-content:center}
+/* a flush ghost link (back links, row-end links) is flush at the sides only: 34 high like every S button, phones and desktop alike
+   (31 Oct: desktop drew them 18 high, the Figma Button S minimum is 34) */  /* an S icon button is a 34 square, the S height (Vit 31 Oct: the header ⋯ was 28 × 32) */
 
 /* Chip 153:948: gap 8, pad 8 12, radius pill, inside stroke 1 rule, surface; hover fill hover; label Body tight 15/18; icon 14 */
 /* Chip 153:948: one chip for every chip-shaped choice (30 Oct, census checklist 2: the Rate tone tags .qtag, the Gear filters
