@@ -218,6 +218,7 @@ button.cat-chk:hover{background:var(--hover)}
 .trk-row .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .trk.on .trk-row .tx b{font-weight:500}
 .trk-n{width:16px;text-align:right;flex:none}
+.trk-row :is(.trk-n,.trk-d){font-size:14px;line-height:20px}
 .trk-play,.trk-info{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
 .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .trk-play:hover{background:var(--hover)}
