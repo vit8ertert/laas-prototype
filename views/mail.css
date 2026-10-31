@@ -1,6 +1,6 @@
 /* LAAS prototype · mail area styles. Widths follow notes/research/design/27-width-and-density.md:
    inbox list fluid (excerpt max 65ch), thread column 720 + panel 348, send preview 720, empty text max 560. */
-.ml-av{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--well);color:var(--ink);font:500 12px/1 var(--sans)}
+.ml-av{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--accent-tint);color:var(--accent-ink);font:400 13px/var(--lh-label) var(--sans)}  /* Avatar M like every avatar (census 6, 31 Oct: was well, ink, 500 12) */
 .ml-filters{gap:8px}
 
 /* inbox list: one column fills (subject + excerpt), the others are fixed */
