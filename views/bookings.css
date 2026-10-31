@@ -2,7 +2,8 @@
    venue tint is content colour from the venue data (as in the core VENUES). */
 
 /* ---------- page header ---------- */
-.bk .bk-ph{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.bk .bk-ph{display:flex;align-items:flex-start;gap:16px var(--space-2);flex-wrap:wrap}
+@media (min-width:600px){.bk .bk-ph>.bk-tb{margin-right:var(--space-2)}}  /* census 7: buttons 8 apart, title 16 to them */
 .bk .bk-tb{flex:1;min-width:240px;display:flex;flex-direction:column;gap:4px}
 .bk .bk-tb p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .bk .btn svg.i{width:20px;height:20px}
@@ -239,7 +240,6 @@
  .bk-ebar .saved,.bk-ebar .id{display:none}
 }
 @media (max-width:599.98px){
- .bk .bk-ph .btn{flex:1;justify-content:center}
  .bk-search{width:100%}.bk-filters .sp{display:none}
  .bk-empty{padding:32px 16px}
  .bk-form .g2{grid-template-columns:1fr}

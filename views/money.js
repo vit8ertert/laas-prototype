@@ -259,7 +259,7 @@ L.VIEWS.money=()=>{const t=S.mtab||'owed';
  const ph=t==='expenses'?'Ask — add 320 DKK petrol paid by Sofie yesterday, what did merch cost this year, who is owed money':'Ask about money — who owes us, what did we net in October, draft the balance invoice for Club Mono';
  return `<div class="page m-page">${h}${tabsBar(t)}${body()}</div>${L.abar('',ph)}`;};
 
-L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="chip m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
+L.VIEWS.ledger=()=>`<div class="page m-page"><div class="m-ph"><div class="m-tb"><h1 class="t-display">Ledger</h1><p>Jan–Oct 2026, 142 entries, 2 drafts</p></div><div class="m-acts"><button class="chip m-chip" data-act="mnyyear">This year (2026)</button>${btn('secondary','Export','data-act="mnyexport"')}${btn('accent','New entry','data-act="jnew"','plus')}</div></div>${L.ledgerTabs?L.ledgerTabs('ledger'):''}${ledgerBody()}</div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
 
 /* invoice detail */
 function invoiceData(id){
@@ -497,7 +497,7 @@ const kr0=v=>v?L.kr(v):'';
 
 /* shared: ledger section tabs, header */
 L.ledgerTabs=cur=>{const nd=drafts();return tabsRow([['ledger','Overview'],['journal','Journal'],['accounts','Chart of accounts'],['ledgerreport','Reports']].map(([k,l])=>[cur===k,`data-go="${k}"`,l,k==='journal'&&nd?nd:null,` aria-label="${nd} drafts"`]));};
-const lhead=(title,sub,actions)=>`<div class="m-ph m-ph-c"><div class="m-tb m-g4"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
+const lhead=(title,sub,actions)=>`<div class="m-ph"><div class="m-tb"><h1 class="t-display">${title}</h1><p>${sub}</p></div><div class="m-acts">${actions}</div></div>`;
 const search=(id,ph,val,label)=>`<label class="ml-search">${ic('search','s')}<input id="${id}" placeholder="${ph}" value="${esc(val)}" aria-label="${label}" autocomplete="off"></label>`;
 const ledAbar=()=>L.abar('','Ask about the books — post the drafts, what is in 5000 Travel, why is the bank 30 short');
 

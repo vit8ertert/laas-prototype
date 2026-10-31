@@ -123,6 +123,9 @@ tbody tr:hover td{background:var(--hover)}
 /* Page header title block (every screen "Title block"): column, gap 4 */
 .ph .grow{display:flex;flex-direction:column;gap:4px}
 .ph .grow>*{margin:0}
+/* Page header actions (census 7, Figma Page header Actions): buttons 8 apart at every width; the title block keeps 16 to
+   them. On phones the header gap is 8 already (compact.css). */
+@media (min-width:600px){:is(div.ph,.bk-ph,.acc-ph,.aud-ph,.m-ph){column-gap:var(--space-2)}:is(div.ph,.bk-ph,.acc-ph,.aud-ph,.m-ph)>:is(.grow,.bk-tb){margin-right:var(--space-2)}}
 
 /* Main (all screens): pad 24 32 24 32, gap 24; the padding sits on .page inside the scrolling .main */
 @media (min-width:840px){.page{padding:24px 32px}}

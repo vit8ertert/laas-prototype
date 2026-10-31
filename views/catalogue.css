@@ -4,7 +4,7 @@
 .cat-page{gap:24px}
 .cat-detail{max-width:1200px;gap:28px}                       /* width rule: detail pages max 1200 */
 .cat-ph .grow{min-width:min(240px,100%)}
-.cat-ph .grow p{margin:8px 0 0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
+.cat-ph .grow p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .cat-actions{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
 .cat-page .btn:not(.s) svg.i{width:20px;height:20px}
 .btn.cat-more{width:52px;height:36px;padding:0;justify-content:center}
@@ -181,9 +181,7 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-imp img{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none}
 
 /* gear (Figma Gear 271:4622) */
-.cat-gph{align-items:flex-end}
-.cat-gph .grow p{margin-top:4px}
-.cat-gph .cat-actions{gap:16px}
+
 .cat-gear{display:flex;flex-direction:column;gap:16px}
 .cat-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .cat-filters .sp{flex:1}

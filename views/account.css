@@ -4,8 +4,8 @@
 /* ---------- settings shell ---------- */
 .acc-set{gap:24px}
 .acc-ph{display:flex;align-items:flex-start;gap:16px}
-.acc-ph .grow{flex:1;min-width:0}
-.acc-ph p{margin:8px 0 0;color:var(--muted)}
+.acc-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.acc-ph p{margin:0;color:var(--muted)}
 .acc-save{display:inline-flex;align-items:center;gap:8px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted);opacity:0;transition:opacity .4s;white-space:nowrap}
 .acc-save.on{opacity:1}
 .acc-save.err{color:var(--bad)}
@@ -351,7 +351,7 @@ button.acc-si:hover{background:var(--hover)}
 
 /* ---------- Audience (330:12770 overview, 330:13413 empty) ---------- */
 .aud-ph{display:flex;align-items:flex-start;gap:16px}
-.aud-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.aud-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .aud-ph p{margin:0;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
 .aud-acts{display:flex;gap:8px;flex:none}
 .aud-acts .btn svg.i{width:20px;height:20px;color:currentColor}
