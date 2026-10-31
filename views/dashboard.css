@@ -439,7 +439,7 @@ button.d-kpi:hover{background:var(--raised)}
  .d-month{border:0;border-radius:0;background:none;overflow:visible}
  .d-wd{background:none}.d-wd span{padding:4px 0 6px;text-align:center}
  .d-wk,.d-month.week .d-wk{min-height:0!important;box-shadow:inset 0 1px 0 var(--rule)}.d-wk::after{display:none}
- .d-day,.d-day:first-child{box-shadow:none!important;background:none!important;min-height:56px!important;padding:6px 2px 4px!important;align-items:center;gap:3px!important;cursor:pointer}
+ .d-day,.d-day:first-child{box-shadow:none!important;background:none!important;min-height:56px!important;padding:var(--space-1) 2px!important;align-items:center;gap:var(--space-1)!important;cursor:pointer}
  .d-dn{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font:400 15px/20px var(--sans)}
  .d-day.today .d-dn{background:var(--accent-strong);color:var(--on-accent)}
  .d-day.sel:not(.today) .d-dn{box-shadow:inset 0 0 0 1.5px var(--ink)}
@@ -448,7 +448,7 @@ button.d-kpi:hover{background:var(--raised)}
  .d-ev .d-evth,.d-ev>span,.d-ev.more2{display:none!important}
  .d-month .d-wk .d-day .d-ev.confirmed{background:var(--ok)!important;box-shadow:none!important}.d-month .d-wk .d-day .d-ev.attention{background:var(--att)!important;box-shadow:none!important}.d-month .d-wk .d-day .d-ev.paid{background:var(--paid)!important;box-shadow:none!important}
  .d-month .d-wk .d-day .d-ev.draft{background:none!important;box-shadow:inset 0 0 0 1px var(--draft)!important}
- .d-more{display:block;font:400 10px/12px var(--sans);color:var(--muted)}
+ .d-more{display:block;font:400 12px/16px var(--sans);color:var(--muted)}
  .d-daylist{display:flex;flex-direction:column;margin-top:var(--space-2);border-top:1px solid var(--rule)}
  .d-dlh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:12px 0 4px}
  .d-dlh b{font:500 16px/22px var(--sans)}.d-dlh span{font:400 13px/16px var(--sans);color:var(--muted)}
