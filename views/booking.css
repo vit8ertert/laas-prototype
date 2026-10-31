@@ -152,7 +152,7 @@
 .bd-acts .d{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* rate the venue: border 1 rule, pad 24, radius 16, gap 16 */
-.bd-rate{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.bd-rate{display:flex;flex-direction:column;gap:16px}
 .bd-rh{display:flex;align-items:center;gap:12px}.bd-rh img{width:48px;height:48px;border-radius:8px;object-fit:cover}
 .bd-rh>div{display:flex;flex-direction:column;gap:2px}
 .bd-rh .t-heading{letter-spacing:-.1px}
@@ -220,7 +220,7 @@
 .bd-payhero{display:flex;flex-direction:column;gap:8px}
 .bd-payhero .t-display{text-wrap:wrap}
 .bd-payhero p{margin:0}
-.bd-amount{border:1px solid var(--rule);background:var(--surface);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.bd-amount{display:flex;flex-direction:column;gap:16px}
 .bd-amt{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule);height:57px}
 .bd-amt .n{font:400 32px/40px var(--sans);letter-spacing:-.5px}.bd-amt .c{font:400 24px/32px var(--sans);letter-spacing:-.3px;color:var(--muted);align-self:baseline}
 /* amount and currency share one baseline at any size (Vit 22 Oct: "alignment of the currency needs to be fixed", it sat 5 px low on phones); the copy button stays centred */
@@ -306,8 +306,8 @@
 .bd-tin{height:30px;padding:0 6px;font-size:13px;width:64px}
 /* rail: pad 20, gap 28; still-open box pad 20 24, gap 16, border att */
 .bd-rail{padding:20px;gap:28px}
-.bd-openbox{background:var(--surface);border:1px solid var(--att);border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
-.bd-openbox.done{border-color:var(--rule)}
+.bd-openbox{--ring:var(--att);display:flex;flex-direction:column;gap:16px}
+.bd-openbox.done{--ring:var(--rule)}
 .bd-openbox>.bd-sh{min-height:34px;gap:12px}
 .bd-openbox>p{margin:0}
 .bd-oi{display:flex;flex-direction:column;gap:8px}

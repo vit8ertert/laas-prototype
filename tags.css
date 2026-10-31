@@ -85,13 +85,13 @@
   padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:8px}
 .acc-row{padding-block:var(--row-y)!important}
 /* cards that hold rows */
-.acc-sec{padding:20px 8px}.acc-sec>.acc-sh{padding-inline:16px}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:16px}
+.acc-sec>.acc-sh{padding-inline:16px}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:16px}
 .acc-card{padding:var(--card)}
 .cv-vlist{padding:8px 24px}
 .bd-panel{padding:20px 8px}.bd-panel .bd-pgroup{padding-inline:16px}
 .bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:0}.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:0}.bd-panel .bd-check{padding-inline:0}
 /* padded cards (forms plus rows) keep 24 px; their rows fill to 8 px from the edge, text on the 24 px line */
-.acc-sec:is(.pad,.inset){padding:20px 24px}.acc-sec:is(.pad,.inset)>:is(.acc-list,.acc-rows,.aud-body){padding-inline:0}
+.acc-sec:is(.pad,.inset)>:is(.acc-list,.acc-rows,.aud-body){padding-inline:0}
 /* rows placed straight in a card (no wrapper) fill the card's 8 px padding instead of extending past it */
 .acc-sec:not(.pad):not(.inset)>:is(.acc-li,.acc-row,.acc-si){margin-inline:0!important;width:100%!important}
 .cv-panel{padding:20px 8px}.cv-panel>*{padding-inline:16px}.cv-panel .cv-sh{padding-left:0}
@@ -169,7 +169,7 @@
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){padding:24px!important;display:flex;flex-direction:column;gap:32px;border-radius:12px}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right)>:is(section,.sec,.cv-sec,.m-sec,.bd-pgroup,.d-sec,div:not([class])):not(.bd-openbox):not(.cx-folded){padding:0!important;margin:0!important}
 /* boxed things inside a side card keep their own padding (Vit 21 Oct: the open-items box lost it) */
-.bd-openbox{padding:16px!important;border-radius:12px}
+
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(h2,h3):not(.ex-empty h3){font:500 var(--fs-heading)/var(--lh-heading) var(--sans)!important;letter-spacing:0!important;margin:0!important}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:34px;align-items:center}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}

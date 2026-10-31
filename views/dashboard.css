@@ -342,7 +342,7 @@ button.d-kpi:hover{background:var(--raised)}
 .tl-row{align-items:center}
 .tl-row .tag{flex:none}.tl-row>svg{color:var(--muted)}
 .tl-side{position:sticky;top:0;display:flex;flex-direction:column;gap:16px}
-.tl-card{display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--rule)}
+.tl-card{display:flex;flex-direction:column;gap:12px}
 .tl-card:first-child{border-color:var(--accent)}
 .tl-card p{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
 .tl-card .btn{align-self:flex-start}

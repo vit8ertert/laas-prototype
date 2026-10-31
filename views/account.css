@@ -23,12 +23,10 @@
 .acc-body{display:flex;flex-direction:column;gap:16px;min-width:0}
 
 /* Section (Padding=M): 20/8 with 12 px head inset, so rows share one text edge */
-.acc-sec{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 8px;display:flex;flex-direction:column;gap:16px}
-.acc-sec.danger{border-color:var(--bad)}
+.acc-sec{display:flex;flex-direction:column;gap:16px}
+.acc-sec.danger{--ring:var(--bad)}
 .acc-sec.danger .acc-sh h2{color:var(--bad)}
-.acc-sec.pad{padding:20px}
 .acc-sec.pad .acc-sh{padding-left:0}
-.acc-sec.inset{padding:20px}
 .acc-sec.inset .acc-sh{padding-left:0}
 .acc-sh{display:flex;align-items:center;gap:8px;padding-left:12px}
 .acc-sh h2:not(:only-child){flex:1;min-width:0}
@@ -179,8 +177,8 @@ button.acc-si:hover{background:var(--hover)}
 .acc-cur>p:not(.acc-small){color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
 .acc-cur .acc-act{gap:12px}
 .acc-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.acc-plan{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px}
-.acc-plan.on{box-shadow:inset 0 0 0 .5px var(--accent);border:1px solid var(--accent)}
+.acc-plan{display:flex;flex-direction:column;gap:12px}
+.acc-plan.on{--ring:var(--accent)}
 .acc-plan .nm{display:flex;align-items:center;gap:8px}.acc-plan .nm .t-heading:not(:only-child){flex:1}
 .acc-plan .pr{font:500 16px/22px var(--mono)}
 .acc-plan .f{display:flex;gap:8px;align-items:center;font:400 15px/var(--lh-body) var(--sans)}

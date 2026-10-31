@@ -145,7 +145,7 @@ button.m-line:hover{background:var(--raised)}
 
 /* ledger */
 .m-ledger{display:flex;flex-direction:column;gap:24px}
-.m-chart{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.m-chart{display:flex;flex-direction:column;gap:16px}
 .m-chh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.m-chh h3{flex:1;min-width:200px}
 .m-chh .btn{padding-right:0}
 /* chart colours: categorical, fixed order, validated (dataviz validator) on #121212/#1e1e1e and #f4f3ef/#fff */
@@ -540,7 +540,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-paper:has(.iv-stamp) .iv-pt{padding-right:40px}
 /* side panel */
 .iv-side{position:sticky;top:16px;display:flex;flex-direction:column;gap:16px}
-.iv-card{background:var(--surface);border-radius:12px;box-shadow:inset 0 0 0 1px var(--rule);padding:20px;display:flex;flex-direction:column;gap:12px}
+.iv-card{display:flex;flex-direction:column;gap:12px}
 .iv-card .iv-lab{color:var(--muted)}
 .iv-ch{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .iv-due{font:500 28px/34px var(--mono)}.iv-due small{font:400 14px/20px var(--sans);color:var(--muted)}
@@ -599,7 +599,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .m-wide .m-iline+.m-iline .field>label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.m-wide #mi-lines{gap:8px}
 .m-wide .m-tot{gap:0;padding:8px 4px}.m-wide .m-tot .m-line{padding:8px 12px}
 /* invoice progress, segmented (replaces the dots and lines) */
-.iv-prog{padding:16px 20px 14px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);margin-bottom:24px;display:flex;flex-direction:column;gap:14px}
+.iv-prog{margin-bottom:24px;display:flex;flex-direction:column;gap:14px}
 .iv-ph1{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font:400 14px/20px var(--sans)}.iv-ph1 b{font-weight:500}.iv-ph1 .muted{font-size:13px;white-space:nowrap}
 .iv-prog ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .iv-prog li{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -609,5 +609,5 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-prog li.att i{background:var(--bad)}
 .iv-prog b{font:500 13px/var(--lh-label) var(--sans)}.iv-prog small{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
-@media (max-width:599.98px){.iv-prog{padding:12px}.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
+@media (max-width:599.98px){.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
 .iv-labrow{display:flex;align-items:baseline;gap:8px}.iv-labrow .iv-edit{margin:0;font-size:12px;line-height:16px}

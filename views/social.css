@@ -74,7 +74,7 @@
 .so-phone p b{font-weight:500}
 
 /* ---------- keyword chart (same anatomy as the money chart) ---------- */
-.so-chart{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.so-chart{display:flex;flex-direction:column;gap:16px}
 .so-chart .m-chh{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .so-chart .m-chh h3{flex:1;min-width:200px}
 .so-bars{display:flex;justify-content:space-between;align-items:flex-end;gap:4px;height:184px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}

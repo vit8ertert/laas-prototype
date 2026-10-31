@@ -123,6 +123,11 @@ tbody tr:hover td{background:var(--hover)}
 /* Page header title block (every screen "Title block"): column, gap 4 */
 .ph .grow{display:flex;flex-direction:column;gap:4px}
 .ph .grow>*{margin:0}
+/* Card container (census 8, Figma Card container): surface, a 1 px ring drawn inside (inset, takes no space, like a
+   Figma inside stroke; --ring for a tone: danger, attention, selected), radius 12, padded by --card (20, phones 12). List
+   (a settings card of rows, .acc-sec) pads 8 at the sides on desktop, where its rows carry their own 16. Content sets its own gap. */
+:is(.iv-card,.iv-prog,.tl-card,.m-chart,.so-chart,.ml-lk,.acc-plan,.bd-openbox,.bd-amount,.bd-rate,.acc-sec){--ring:var(--rule);background:var(--surface);border:0;box-shadow:inset 0 0 0 1px var(--ring);border-radius:var(--r-lg);padding:var(--card)}
+@media (min-width:600px){.acc-sec:not(.pad):not(.inset){padding:var(--card) var(--space-2)}}  /* phones: rows add no inset, so 12 like any card */
 /* Page header actions (census 7, Figma Page header Actions): buttons 8 apart at every width; the title block keeps 16 to
    them. On phones the header gap is 8 already (compact.css). */
 @media (min-width:600px){:is(div.ph,.bk-ph,.acc-ph,.aud-ph,.m-ph){column-gap:var(--space-2)}:is(div.ph,.bk-ph,.acc-ph,.aud-ph,.m-ph)>:is(.grow,.bk-tb){margin-right:var(--space-2)}}
