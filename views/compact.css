@@ -430,7 +430,6 @@
 @media (max-width:599.98px){
   /* page title blocks take the full first line; the actions share the line below (Figma Page header Compact) */
   :is(.bk-ph,.aud-ph,.m-ph)>:first-child{flex:1 1 100%!important;min-width:0}
-  .bk-ph>.btn.accent{order:2}.bk-ph>.btn:not(.accent){order:3}
 }
 
 /* Vit's fourth phone review (22 Oct) */
