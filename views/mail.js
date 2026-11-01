@@ -146,7 +146,7 @@ const rowActs=(t,f)=>{const st=M.starred.includes(t.id);
   +iconBtn('trash','Move to Trash','mailtrash',t.id);};
 const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].reverse().find(m=>m.me):null,unread=!sent&&t.unread,st=M.starred.includes(t.id);
  const lastIn=t.msgs[t.msgs.length-1];const waiting=sent&&lastIn.me;
- return `<div class="ml-row ${unread?'unread':''}" role="button" tabindex="0" data-act="openthread" data-id="${t.id}">
+ return `<div class="mail-row ml-row ${unread?'unread':''}" role="button" tabindex="0" data-act="openthread" data-id="${t.id}">
  <span class="ml-dot" aria-label="${unread?'Unread':''}"></span>${avatar(t)}
  <span class="ml-from">${sent?'To: ':''}${L.hl(t.from,q)}${t.org?`<small>${L.hl(t.org,q)}</small>`:''}</span>
  <span class="ml-text"><b>${L.hl(t.subject,q)}</b><span>${L.hl(sent?lastMe.body:t.excerpt,q)}</span></span>
@@ -156,7 +156,7 @@ const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].rever
  <span class="ml-acts">${rowActs(t,f)}</span>
 </div>`;};
 const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
- return `<div class="ml-row" role="button" tabindex="0" data-act="maildraft" data-id="${d.id}">
+ return `<div class="mail-row ml-row" role="button" tabindex="0" data-act="maildraft" data-id="${d.id}">
  <span class="ml-dot"></span><span class="ml-av" aria-hidden="true">${esc(initials(d.to[0]?(d.to[0].name||d.to[0].email):'?'))}</span>
  <span class="ml-from">${names?L.hl('To: '+names,q):'<span class="muted">No recipient yet</span>'}<small class="ml-drl">Draft</small></span>
  <span class="ml-text"><b>${d.subj?L.hl(d.subj,q):'<span class="muted">No subject</span>'}</b><span>${L.hl(d.body||'Empty',q)}</span></span>
@@ -167,7 +167,7 @@ const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
 </div>`;};
 
 /* ---------- views ---------- */
-const header=(meta,actions)=>`<div class="ph"><div class="grow"><h1 class="t-display">Mail</h1><p>${meta}</p></div>${actions}</div>`;
+const header=(meta,actions)=>`<div class="page-header ph"><div class="grow"><h1 class="t-display">Mail</h1><p>${meta}</p></div>${actions}</div>`;
 const navMark='<style>.sidebar .nav.sub[data-go="mail"]{background:var(--well);font-weight:500}</style>';
 const okAccs=()=>M.accounts.filter(a=>a.state==='ok');
 const errAcc=()=>M.accounts.find(a=>a.state==='error');
@@ -235,7 +235,7 @@ L.VIEWS.thread=()=>{const t=T(L.S.params.id),p=t.panel,fo=folderOf(t),st=M.starr
  return `${navMark}<div class="page ml-page">
  <button class="btn ghost s flush" data-go="mail" style="align-self:flex-start">${ic('left','s')}${FOLDERS.find(x=>x[0]===M.folder)[1]}</button>
  <div class="ml-thread"><div class="ml-conv">
-  <div class="ph"><div class="grow"><h1 class="t-display">${esc(t.subject)}</h1><p>${esc(t.from)}${t.org?`, ${esc(t.org)}`:''}, ${t.msgs.length} message${t.msgs.length>1?'s':''}${t.code?`, <span class="mono t-label">${t.code}</span>`:''}</p></div>
+  <div class="page-header ph"><div class="grow"><h1 class="t-display">${esc(t.subject)}</h1><p>${esc(t.from)}${t.org?`, ${esc(t.org)}`:''}, ${t.msgs.length} message${t.msgs.length>1?'s':''}${t.code?`, <span class="mono t-label">${t.code}</span>`:''}</p></div>
    <div class="row ml-tacts">${acts}</div></div>
   ${banner}
   <div class="ml-msgs">${t.msgs.map(m=>`<article class="ml-msg"><div class="row" style="gap:12px;flex-wrap:nowrap">${m.me?`<span class="avatar-you" aria-hidden="true">${ME.ini}</span>`:avatar(t)}<span style="flex:1;min-width:0"><b class="strong">${m.me?'You':esc(t.from)}</b> <span class="t-meta faint">${m.me?esc(m.fromEmail||ME.email):esc(t.email)}</span>${m.att&&m.att.length?`<span class="ml-clip t-meta muted">${ic('paperclip','s')}${m.att.map(a=>esc(a.name)).join(', ')}</span>`:''}</span><span class="t-meta faint">${m.time}</span></div><p>${esc(m.body)}</p></article>`).join('')}</div>
@@ -266,7 +266,7 @@ L.VIEWS.compose=()=>{if(!M.cmp)M.cmp=blank();const c=M.cmp;const accs=M.accounts
  const th=c.thread?T(c.thread):null;
  return `${navMark}<div class="page ml-page ml-cmpage">
  <button class="btn ghost s flush" data-act="mlback" style="align-self:flex-start">${ic('left','s')}${th?'Thread':'Mail'}</button>
- <div class="acc-ph ml-cmph"><div class="grow"><h1 class="t-display">${th?'Reply':c.fresh?'New mail':'Draft'}</h1><p>${th?`Re: ${esc(th.subject)}, to ${esc(th.from)}`:c.fresh?'Starts saving as soon as you type':`Saved in Drafts, ${esc(c.time.toLowerCase())}`}</p></div>${cmpSave()}</div>
+ <div class="page-header acc-ph ml-cmph"><div class="grow"><h1 class="t-display">${th?'Reply':c.fresh?'New mail':'Draft'}</h1><p>${th?`Re: ${esc(th.subject)}, to ${esc(th.from)}`:c.fresh?'Starts saving as soon as you type':`Saved in Drafts, ${esc(c.time.toLowerCase())}`}</p></div>${cmpSave()}</div>
  <div class="ml-cmpw">
  <div class="ml-ed">
   <div class="ml-cf"><label class="ml-cl" for="ml-from">From</label><select class="input ml-fromsel" id="ml-from">${accs.map(a=>`<option value="${a.id}" ${a.id===c.from?'selected':''} ${a.state==='error'?'disabled':''}>${esc(a.email)}, ${KIND[a.kind]}${a.state==='error'?', sign-in failed':''}</option>`).join('')}</select></div>
@@ -290,9 +290,9 @@ L.VIEWS.compose=()=>{if(!M.cmp)M.cmp=blank();const c=M.cmp;const accs=M.accounts
 
 /* ---------- mail accounts ---------- */
 const logo=k=>L.brand(k==='gmail'?'Google':k==='m365'?'Microsoft':'Mail server',24);  // = Figma Platform icon (List row Leading), Vit 29 Oct
-const mtg=(k,label)=>`<button class="acc-tg ${M.tg[k]?'on':''}" role="switch" aria-checked="${!!M.tg[k]}" aria-label="${esc(label)}" data-act="mltg" data-k="${k}"><i></i></button>`;
-const aRow=(label,desc,ctl,lead='')=>`<div class="acc-row ${lead?'ml-lead':''}">${lead}<div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
-const aSec=(title,inner,action='',cls='')=>`<section class="acc-sec ${cls}"><div class="acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
+const mtg=(k,label)=>`<button class="toggle acc-tg ${M.tg[k]?'on':''}" role="switch" aria-checked="${!!M.tg[k]}" aria-label="${esc(label)}" data-act="mltg" data-k="${k}"><i></i></button>`;
+const aRow=(label,desc,ctl,lead='')=>`<div class="settings-row acc-row ${lead?'ml-lead':''}">${lead}<div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
+const aSec=(title,inner,action='',cls='')=>`<section class="acc-sec ${cls}"><div class="section-header acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
 const accSave=()=>{const on=Date.now()<M.savedUntil;return `<span class="acc-save ${on?'on':''}" id="ml-asave" role="status" aria-live="polite">${on?ic('check','s')+'Saved':''}</span>`;};
 // one List row per account (Vit 29 Oct, fewer designs): trailing is one thing, Fix on a broken account, else the Connected tag
 // and the row itself opens the account menu (chevron), instead of tag + Fix + more button
@@ -300,7 +300,7 @@ const accRow=a=>a.state==='error'?`<div class="acc-li ml-accrow">${logo(a.kind)}
  :`<button class="acc-li ml-accrow" data-act="mlaccmenu" data-id="${a.id}" aria-label="More for ${esc(a.email)}">${logo(a.kind)}<span class="tx"><span>${esc(a.email)}</span><small>${esc(KIND[a.kind])}. ${esc(a.meta)}</small></span><span class="tag confirmed">Connected</span>${ic('chevr','s')}</button>`;
 L.VIEWS.mailaccounts=()=>{const acc=M.accounts.filter(a=>a.state!=='off'),ok=okAccs(),err=acc.filter(a=>a.state==='error').length,hasG=acc.some(a=>a.kind==='gmail'),hasM=acc.some(a=>a.kind==='m365');
  return `${navMark}<div class="page acc-set ml-page ml-accs"><button class="btn ghost s flush" data-go="mail" style="align-self:flex-start">${ic('left','s')}Mail</button>
- <div class="acc-ph"><div class="grow"><h1 class="t-display">Mail accounts</h1><p>${acc.length?`${acc.length} connected${err?`, ${err} needs attention`:''}`:'Nothing connected yet. Add Gmail, Microsoft 365 or any mail with SMTP and IMAP'}</p></div>${accSave()}</div>
+ <div class="page-header acc-ph"><div class="grow"><h1 class="t-display">Mail accounts</h1><p>${acc.length?`${acc.length} connected${err?`, ${err} needs attention`:''}`:'Nothing connected yet. Add Gmail, Microsoft 365 or any mail with SMTP and IMAP'}</p></div>${accSave()}</div>
  <div class="ml-col">
  ${aSec('Connected',acc.length?`<div class="acc-list">${acc.map(accRow).join('')}</div>`:`<p class="acc-foot">No mail connected. Add an account below and LAAS links your threads to bookings.</p>`,'','pad')}
  ${aSec('Add an account',`<div class="acc-rows">

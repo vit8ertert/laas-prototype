@@ -77,10 +77,10 @@ tbody tr:hover td{background:var(--hover)}
 /* Segmented control (census 3, 31 Oct): one control for the form segmented (.seg) and the filter / direction one (.d-seg,
    was Segmented control · Small): inset 4, gap 4, items 28 high, 0 12, Label 13/18, icon 14, optional count; 36 high.
    Figma: Segmented control 442:19785 */
-:is(.seg,.d-seg){gap:4px;padding:4px;border-radius:var(--r-md);background:var(--well)}
-:is(.seg,.d-seg) button{height:28px;padding:0 12px;gap:8px;border-radius:var(--r-sm);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-:is(.seg,.d-seg) button svg.i{width:14px;height:14px}
-:is(.seg,.d-seg) button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px #00000040}
+.segmented-control{gap:4px;padding:4px;border-radius:var(--r-md);background:var(--well)}
+.segmented-control button{height:28px;padding:0 12px;gap:8px;border-radius:var(--r-sm);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.segmented-control button svg.i{width:14px;height:14px}
+.segmented-control button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px #00000040}
 
 /* Banner 299:5204: gap 12, pad 12 16, radius 8, icon 18; text column gap 2 */
 .banner{gap:12px;padding:var(--row-y) var(--row-x);border-radius:var(--r-md)}

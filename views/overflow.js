@@ -21,7 +21,7 @@ function place(el){const b=el._sx,top=el.offsetTop+Math.max(0,Math.min(el.client
  b.l.style.top=b.r.style.top=top+'px';b.l.style.left=(el.offsetLeft+8)+'px';b.r.style.left=(el.offsetLeft+el.clientWidth-40)+'px';}
 function bar(el){const t=el._sxbar,k=t.firstChild,w=el.clientWidth/el.scrollWidth,max=el.scrollWidth-el.clientWidth;
  k.style.width=(w*100)+'%';k.style.left=(max>0?el.scrollLeft/max*(1-w)*100:0)+'%';}
-function mkBar(el){const t=document.createElement('div');t.className='sx-bar';t.setAttribute('aria-hidden','true');t.innerHTML='<i></i>';
+function mkBar(el){const t=document.createElement('div');t.className='scroll-bar sx-bar';t.setAttribute('aria-hidden','true');t.innerHTML='<i></i>';
  el.after(t);const ps=getComputedStyle(el.parentElement),g=/flex|grid/.test(ps.display)?parseFloat(ps.rowGap)||0:0;
  if(g){t.style.marginTop=`calc(var(--space-2) - ${g}px)`;t.style.marginBottom="0";}let x0=null,s0=0;
  t.addEventListener('pointerdown',e=>{x0=e.clientX;s0=el.scrollLeft;t.setPointerCapture(e.pointerId);

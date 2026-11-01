@@ -24,7 +24,7 @@ const tabOf=v=>v==='dashboard'?'today':MAILV.includes(v)?'mail':L.areaOf(v)==='g
 const unread=()=>S.mail&&S.mail.threads?S.mail.threads.filter(t=>t.unread&&!(S.mail.archived||[]).includes(t.id)).length:4;
 L.tabbar=()=>{const on=S.overlay&&S.overlay.type==='moresheet'?'more':tabOf(S.view),n=unread();
  const tab=(id,label,icon,attrs,badge='')=>`<button class="tb-tab ${on===id?'on':''}" ${attrs} ${on===id?'aria-current="page"':''}><span class="ti">${ic(icon)}${badge}</span><span class="tl">${label}</span></button>`;
- return `<nav class="tabbar" aria-label="Main">
+ return `<nav class="tab-bar tabbar" aria-label="Main">
   <div class="tb-tabs">${tab('today','Today','dashboard','data-go="dashboard"')}${tab('gigs','Gigs','file','data-go="bookings"')}${tab('money','Money','money','data-go="money" data-mt="owed"')}${tab('mail','Mail','mail','data-go="mail"',n?`<span class="tb-n">${n}</span>`:'')}${tab('more','More','circleellipsis','data-act="moresheet" aria-haspopup="dialog"')}</div>
   <button class="tb-ask" data-act="asksheet" aria-label="Ask the assistant" aria-haspopup="dialog">${ic('ai')}<span>Ask</span></button>
  </nav>`;};
@@ -35,12 +35,12 @@ const TILES=[['Catalogue','catalogue','disc'],['Audience','audience','radio'],['
 const MORE=[['Audience',[['Social posts','social'],['Comments','comments'],['Keyword watch','keywords'],['Deliveries','deliveries']]],
  ['Band',[['Gear','gear'],['Integrations','integrations'],['Band settings','settings'],['Your account','account']]]];
 L.OVERLAYS.moresheet=()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'LT',name:'Low Tide',meta:'Owner: 3 members'},v=S.view;
- const it=([l,go])=>`<button class="cx-it ${v===go?'on':''}" data-go="${go}"><span>${l}</span>${ic('right','s')}</button>`;
+ const it=([l,go])=>`<button class="sheet-item cx-it ${v===go?'on':''}" data-go="${go}"><span>${l}</span>${ic('right','s')}</button>`;
  return `<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-more-sheet" role="dialog" aria-label="More">
   <button class="cx-band" data-act="moreband"><span class="sq">${esc(b.ini||'LT')}</span><span class="tx"><b>${esc(b.name)}</b><small>${esc(b.meta||'Owner')}</small></span>${ic('down','s')}</button>
-  <div class="cx-tiles">${TILES.map(([l,go,i])=>`<button class="cx-tile ${tabOf(v)==='more'&&(v===go||L.areaOf(v)===go)?'on':''}" data-go="${go}" ${go==='audience'?'data-at="overview"':''}>${ic(i)}<span>${l}</span></button>`).join('')}</div>
+  <div class="cx-tiles">${TILES.map(([l,go,i])=>`<button class="more-tile cx-tile ${tabOf(v)==='more'&&(v===go||L.areaOf(v)===go)?'on':''}" data-go="${go}" ${go==='audience'?'data-at="overview"':''}>${ic(i)}<span>${l}</span></button>`).join('')}</div>
   ${MORE.map(([g,items])=>`<div class="cx-g"><div class="cx-gl">${g}</div>${items.map(it).join('')}</div>`).join('')}
-  <div class="cx-g"><button class="cx-it" data-act="moreguide"><span>${ic('help')}Guide</span></button><button class="cx-it" data-act="moretheme"><span><i class="th-dot" aria-hidden="true"></i>Theme: ${L.TNAMES[S.genre]}</span>${ic('right','s')}</button></div>
+  <div class="cx-g"><button class="sheet-item cx-it" data-act="moreguide"><span>${ic('help')}Guide</span></button><button class="sheet-item cx-it" data-act="moretheme"><span><i class="th-dot" aria-hidden="true"></i>Theme: ${L.TNAMES[S.genre]}</span>${ic('right','s')}</button></div>
  </div>`;};
 
 /* ---------- Ask: the assistant as a sheet, carrying the page's context ---------- */
@@ -67,7 +67,7 @@ function collapseHeaders(){if(!compact.matches)return;
   /* the primary sits last, ⋯ after it, as on desktop */
   const m=[...g.children].find(isMore);if(m)g.appendChild(m);});}
 /* the actions moved out of the header lead the ⋯ menu, above that page's own More items */
-function pendingItems(){const p=S.cxPending;if(!p)return '';return p.items.map((l,i)=>`<button class="it row cx-it" role="menuitem" data-act="cxrun" data-i="${i}"><span>${esc(l)}</span></button>`).join('')+(p.more?'<div class="cx-sep" role="separator"></div>':'');}
+function pendingItems(){const p=S.cxPending;if(!p)return '';return p.items.map((l,i)=>`<button class="it row sheet-item cx-it" role="menuitem" data-act="cxrun" data-i="${i}"><span>${esc(l)}</span></button>`).join('')+(p.more?'<div class="cx-sep" role="separator"></div>':'');}
 function injectPending(){const p=S.cxPending;if(!p)return;if(!S.overlay){S.cxPending=null;return;}
  const pop=[...document.querySelectorAll('.pop,.modal,.drawer')].pop();if(!pop||pop.querySelector('[data-act="cxrun"]'))return;
  if(pop.matches('.pop'))pop.insertAdjacentHTML('afterbegin',pendingItems());}
@@ -85,7 +85,7 @@ function summariseFacts(){if(!compact.matches)return;
   m.classList.add('cx-sum');items.slice(FACTS_SHOWN).forEach(c=>c.classList.add('cx-over'));
   if(!m.querySelector('.cx-facts'))m.insertAdjacentHTML('beforeend',`<button class="cx-facts" data-act="cxfacts" data-m="${mi}" aria-label="All ${items.length} details">+${items.length-FACTS_SHOWN}</button>`);});}
 L.OVERLAYS.cxfacts=o=>{const rows=o.rows.map(t=>{const m=t.match(/^(.*?)\s+(\d[\d:.,]*(?:\s?(?:DKK|km|min|h))?)$/);return m?`<dt>${esc(m[1])}</dt><dd>${esc(m[2])}</dd>`:`<dt>${esc(t)}</dt><dd></dd>`}).join('');
- return `<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-factsheet" role="dialog" aria-label="Details"><div class="cx-ask-h"><b class="t-heading">${esc(o.title||'Details')}</b><span class="grow"></span><button class="btn ghost icon s" data-act="close" aria-label="Close">${ic('x','s')}</button></div><dl class="cx-kv">${rows}</dl>${o.venue?`<button class="cx-it" data-go="venue" data-id="${esc(o.venue)}"><span>${ic('pin','s')}Open the venue</span>${ic('right','s')}</button>`:''}</div>`;};
+ return `<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-factsheet" role="dialog" aria-label="Details"><div class="cx-ask-h"><b class="t-heading">${esc(o.title||'Details')}</b><span class="grow"></span><button class="btn ghost icon s" data-act="close" aria-label="Close">${ic('x','s')}</button></div><dl class="cx-kv">${rows}</dl>${o.venue?`<button class="sheet-item cx-it" data-go="venue" data-id="${esc(o.venue)}"><span>${ic('pin','s')}Open the venue</span>${ic('right','s')}</button>`:''}</div>`;};
 /* a back link that repeats the page title says where it goes instead (Primer parent link, Apple back) */
 const BACKTO={booking:'Booking',bookings:'Bookings',money:'Money',contacts:'Contacts',contact:'Contact',venues:'Venues',catalogue:'Catalogue',mail:'Mail',audience:'Audience',settings:'Settings'};
 function backLabels(){if(!compact.matches)return;const h=document.querySelector('.main h1');if(!h)return;

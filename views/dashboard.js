@@ -29,7 +29,7 @@ S.asstChat??='move';S.asstLog??={};S.asstWho??=null;S.asstCtxOff??={};S.askCtx??
 
 /* ---------- small building blocks ---------- */
 const tag=(k,l)=>`<span class="tag ${k}">${l}</span>`;
-const sh=(t,meta,act)=>`<div class="d-sh"><h3 class="t-heading">${t}</h3>${meta?(act?`<button class="d-shm link-quiet" ${act}>${meta}</button>`:`<span class="d-shm">${meta}</span>`):''}</div>`;
+const sh=(t,meta,act)=>`<div class="section-header d-sh"><h3 class="t-heading">${t}</h3>${meta?(act?`<button class="d-shm link-quiet" ${act}>${meta}</button>`:`<span class="d-shm">${meta}</span>`):''}</div>`;
 const kpi=(label,val,delta,o={})=>`<${o.go?'button':'div'} class="d-kpi ${o.att?'att':''}" ${o.go||''}><span class="d-kl">${label}</span><span class="d-kv ${o.faint?'faint':''}">${val}</span><span class="d-kd ${o.att?'attc':o.ok?'okc':''}">${delta}</span></${o.go?'button':'div'}>`;
 const card=(title,meta,t,go)=>`<button class="d-card" ${go}><span class="d-cb"><b>${title}</b><small>${meta}</small></span>${t||''}${ic('chevr','s')}</button>`;
 const tile=(img,t,m,go,cls='')=>`<button class="d-tile ${cls}" ${go}><img src="${IMG(img)}" alt=""><b>${t}</b><small>${m}</small></button>`;
@@ -74,13 +74,13 @@ function tonight(){const v=roleViewer();
   <h2>Hotel gig, Hotel Skov, Aarhus</h2><div class="d-tm">${v?'Load-in 14:00, on stage 20:00':'<span>'+'Load-in 14:00, doors 19:00, set 20:00, 4.500 DKK, Mette +45 …'+'</span>'}${v?'':`<span class="btn secondary s" data-go="gigday">${ic('chevr','s')}Open day sheet</span>`}</div></div>`;}
 function daysheet(){const v=roleViewer();
  return `<section class="d-sec" data-sec="coming">${sh('Day sheet','Fri 24 Oct, v2, updated 16:40, crew copy')}
- <div class="d-sheet"><div class="d-dh"><img class="thumb s" src="${IMG('hotel-skov')}" alt=""><span class="mono d-id">LT-0041</span><b>Saturday hotel gig</b><small>${v?'Hotel Skov, Aarhus':'Hotel Skov, 4.500 DKK'}</small>${tag('confirmed','Confirmed')}<button class="d-v" data-act="dashver">v2</button><button class="btn secondary s" data-act="dashshare">${ic('down','s')}Share</button></div>
-  ${DAY.map(([t,a,b,ok])=>`<button class="d-row" data-go="gigday"><span class="mono d-time">${t}</span><span class="d-rt"><b>${a}</b><small>${b}</small></span>${ok?tag('confirmed','Confirmed'):''}</button>`).join('')}
-  <button class="d-row d-next" data-go="booking" data-id="b2"><img class="thumb s" src="${IMG('studio-b')}" alt=""><span class="mono d-id muted">LT-0042</span><span class="d-rt"><span>Sat 25 Oct, 14:00, Rehearsal, Studio B</span></span>${tag('draft','Draft')}</button></div></section>`;}
+ <div class="gig-sheet d-sheet"><div class="d-dh"><img class="thumb s" src="${IMG('hotel-skov')}" alt=""><span class="mono d-id">LT-0041</span><b>Saturday hotel gig</b><small>${v?'Hotel Skov, Aarhus':'Hotel Skov, 4.500 DKK'}</small>${tag('confirmed','Confirmed')}<button class="d-v" data-act="dashver">v2</button><button class="btn secondary s" data-act="dashshare">${ic('down','s')}Share</button></div>
+  ${DAY.map(([t,a,b,ok])=>`<button class="sheet-row d-row" data-go="gigday"><span class="mono d-time">${t}</span><span class="d-rt"><b>${a}</b><small>${b}</small></span>${ok?tag('confirmed','Confirmed'):''}</button>`).join('')}
+  <button class="sheet-row d-row d-next" data-go="booking" data-id="b2"><img class="thumb s" src="${IMG('studio-b')}" alt=""><span class="mono d-id muted">LT-0042</span><span class="d-rt"><span>Sat 25 Oct, 14:00, Rehearsal, Studio B</span></span>${tag('draft','Draft')}</button></div></section>`;}
 function next7(){const e=S.dashEdge.next;
- if(e==='nogig')return `<section class="d-sec" data-sec="coming">${sh('Next 7 days','2 bookings')}<div class="d-sheet">
-  <button class="d-row" data-go="booking" data-id="b2"><span class="mono d-when">Sat 25 Oct 14:00</span><span class="d-rt"><span>Rehearsal, Studio B</span></span>${tag('draft','Draft')}</button>
-  <button class="d-row" data-go="bookings"><span class="mono d-when">Fri 31 Oct 21:00</span><span class="d-rt"><span>Halloween set, Club Mono</span></span>${tag('attention','Attention')}</button></div></section>`;
+ if(e==='nogig')return `<section class="d-sec" data-sec="coming">${sh('Next 7 days','2 bookings')}<div class="gig-sheet d-sheet">
+  <button class="sheet-row d-row" data-go="booking" data-id="b2"><span class="mono d-when">Sat 25 Oct 14:00</span><span class="d-rt"><span>Rehearsal, Studio B</span></span>${tag('draft','Draft')}</button>
+  <button class="sheet-row d-row" data-go="bookings"><span class="mono d-when">Fri 31 Oct 21:00</span><span class="d-rt"><span>Halloween set, Club Mono</span></span>${tag('attention','Attention')}</button></div></section>`;
  return `<section class="d-sec" data-sec="coming">${sh('Next 7 days')}<div class="d-line"><span class="muted">No bookings in the next 7 days. Next: Fri 14 Nov, Support slot, Odense.</span><button class="btn ghost s" data-act="newbooking">New booking</button></div></section>`;}
 const RELS=[['cover-late-shift','Late Shift EP','3 tracks, 3 Oct 2026','data-go="catalogue"'],['catalogue-low-tide','Low Tide, single','14 Mar 2026','data-go="pastrelease" data-id="lt"'],['catalogue-first-light','First Light, single','2 Nov 2025','data-go="pastrelease" data-id="fl"']];
 function releases(){const e=S.dashEdge.rel;
@@ -106,7 +106,7 @@ function overview(){const v=roleViewer();const gig=S.dashEdge.next==='gig';
  const hide=Object.entries(S.dash).filter(([k,x])=>!x).map(([k])=>`.d-page [data-sec="${k}"]{display:none!important}`).join('');
  return `<div class="page d-page"><style>${hide}</style>
  ${v?`<div class="banner info d-banner">${ic('ai','s')}<div class="tx"><span>You are a Viewer, so this is read-only</span><span class="t-label muted">You see the calendar, day sheets and who is playing. Fees, invoices and settings are hidden. Ask an owner if you need more.</span></div></div>`:''}
- <div class="ph"><div class="grow"><h1 class="t-display">Good morning, ${v?'Anna':'Vital'}</h1><p>${gig?'Show day, Hotel Skov tonight, 3 loose ends':'A quiet day, nothing on stage today'}</p></div><button class="btn secondary" data-act="customise">Customise</button>${v?'':`<button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button>`}</div>
+ <div class="page-header ph"><div class="grow"><h1 class="t-display">Good morning, ${v?'Anna':'Vital'}</h1><p>${gig?'Show day, Hotel Skov tonight, 3 loose ends':'A quiet day, nothing on stage today'}</p></div><button class="btn secondary" data-act="customise">Customise</button>${v?'':`<button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button>`}</div>
  <div class="d-grid"><div class="d-left">${gig?tonight()+daysheet():next7()}${releases()}</div>
   <aside class="d-right">${money()}${needs()}</aside></div></div>
  ${L.abar(null,v?'Ask about the band’s plans: when is the next gig, what time is load-in. Money questions are for owners':`Ask about ${bn()}: gigs, contacts, gear, money`)}`;}
@@ -128,8 +128,8 @@ L.VIEWS.dashboard=()=>S.dashFirst?firstVisit():(S.dashStart==='ask'&&!roleViewer
 /* ---------- customise drawer: sections plus the prototype edge states ---------- */
 const EDGE=[['next','Next 7 days',[['gig','Gig today'],['nogig','No gig today'],['nothing','Nothing in 7 days']]],['needs','Needs you',[['none','None'],['some','1 to 5'],['default','5'],['many','More than five']]],['rel','Latest releases',[['none','None'],['one','One'],['few','2 to 4'],['default','4, large'],['many','5 or more']]],['money','Money',[['bank','Bank connected'],['clear','Nothing outstanding'],['nobank','Bank not connected']]]];
 L.DR.customise=()=>({type:'drawer',title:'Customise dashboard',sub:'Pick what shows on your start page',body:`<div class="sec">${[['tonight','Tonight, next gig photo'],['coming','Day sheet, next 7 days'],['releases','Latest releases'],['cash','Money'],['needs','Needs you']].map(([k,l])=>`<label class="row" style="gap:12px;cursor:pointer"><input type="checkbox" data-dash="${k}" ${S.dash[k]?'checked':''} style="width:18px;height:18px;accent-color:var(--accent-strong)">${l}</label>`).join('')}<p class="t-meta muted" style="margin:0">Only for you. Bandmates keep their own layout.</p></div>
- <div class="sec"><h3 class="t-heading">Start with</h3><div class="d-seg">${[['overview','Overview'],['ask','A question']].map(([k,l])=>`<button class="${S.dashStart===k?'on':''}" data-act="dashstart" data-v="${k}">${l}</button>`).join('')}</div></div>
- <div class="sec"><h3 class="t-heading">Edge states</h3><p class="t-meta muted" style="margin:0">Prototype only: see each section at every count. Never a zero, never a lone tile in a wide space.</p>${EDGE.map(([k,l,opts])=>`<div class="field"><label>${l}</label><div class="d-seg">${opts.map(([v,t])=>`<button class="${S.dashEdge[k]===v?'on':''}" data-act="dashedge" data-k="${k}" data-v="${v}">${t}</button>`).join('')}</div></div>`).join('')}</div>`,
+ <div class="sec"><h3 class="t-heading">Start with</h3><div class="segmented-control d-seg">${[['overview','Overview'],['ask','A question']].map(([k,l])=>`<button class="${S.dashStart===k?'on':''}" data-act="dashstart" data-v="${k}">${l}</button>`).join('')}</div></div>
+ <div class="sec"><h3 class="t-heading">Edge states</h3><p class="t-meta muted" style="margin:0">Prototype only: see each section at every count. Never a zero, never a lone tile in a wide space.</p>${EDGE.map(([k,l,opts])=>`<div class="field"><label>${l}</label><div class="segmented-control d-seg">${opts.map(([v,t])=>`<button class="${S.dashEdge[k]===v?'on':''}" data-act="dashedge" data-k="${k}" data-v="${v}">${t}</button>`).join('')}</div></div>`).join('')}</div>`,
  foot:`<button class="btn ghost" data-act="resetdash">${ic('undo','s')}Reset</button><span style="flex:1"></span><button class="btn accent" data-act="close">Done</button>`});
 
 /* ---------- calendar ---------- */
@@ -142,12 +142,12 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 const ST_LABEL={confirmed:'Confirmed',draft:'Draft',attention:'Attention',paid:'Paid'};
 const dayList=k=>{const [y,mo,d]=k.split('-').map(Number);const dt=new Date(y,mo-1,d);const e=CAL_EVENTS[k];const n=e?e.ev.length:0;
  return `<section class="d-daylist" aria-label="${dayLong(dt)}"><div class="d-dlh"><b>${dayLong(dt)}</b><span>${n?`${n} booking${n>1?'s':''}`:'Nothing booked'}</span></div>
- ${e?e.ev.map(([k2,t,go],i)=>`<button class="d-dlr" ${go}>${i===0?`<img src="${IMG(e.img)}" alt="">`:'<span class="ph0"></span>'}<span class="tt">${t}</span>${tag(k2,ST_LABEL[k2]||k2)}${ic('chevr','s')}</button>`).join(''):''}
- ${roleViewer()?'':`<button class="d-dlr add" data-act="caladd" data-d="${k}">${ic('plus','s')}<span class="tt">Add a booking on this day</span></button>`}</section>`;};
+ ${e?e.ev.map(([k2,t,go],i)=>`<button class="day-list-row d-dlr" ${go}>${i===0?`<img src="${IMG(e.img)}" alt="">`:'<span class="ph0"></span>'}<span class="tt">${t}</span>${tag(k2,ST_LABEL[k2]||k2)}${ic('chevr','s')}</button>`).join(''):''}
+ ${roleViewer()?'':`<button class="day-list-row d-dlr add" data-act="caladd" data-d="${k}">${ic('plus','s')}<span class="tt">Add a booking on this day</span></button>`}</section>`;};
 L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMonth,1);const y=d0.getFullYear(),m=d0.getMonth();
  const start=new Date(y,m,1-((d0.getDay()+6)%7));const weeks=[];let d=new Date(start);
  do{const w=[];for(let i=0;i<7;i++){w.push(new Date(d));d.setDate(d.getDate()+1);}weeks.push(w);}while(d.getMonth()===m);
- const head=`<div class="ph"><div class="grow"><h1 class="t-display">${MONTHS[m]} ${y}</h1><p>${empty?'Nothing yet, holds hatched, confirmed solid, cancelled outlined':S.calMonth===0?'3 bookings, 1 rehearsal, 1 draft':'Nothing booked yet this month'}</p></div>
+ const head=`<div class="page-header ph"><div class="grow"><h1 class="t-display">${MONTHS[m]} ${y}</h1><p>${empty?'Nothing yet, holds hatched, confirmed solid, cancelled outlined':S.calMonth===0?'3 bookings, 1 rehearsal, 1 draft':'Nothing booked yet this month'}</p></div>
   <div class="d-monthnav"><button class="btn secondary s icon" data-act="calmonth" data-v="-1" aria-label="Previous month">${ic('chevl','s')}</button><button class="btn secondary s" data-act="calmonth" data-v="0">Today</button><button class="btn secondary s icon" data-act="calmonth" data-v="1" aria-label="Next month">${ic('chevr','s')}</button></div>
   <button class="btn secondary" data-act="calsub">Subscribe</button><button class="btn ghost" data-act="calsync">Sync settings</button><button class="btn accent" data-act="newbooking">${ic('plus','s')}New booking</button></div>`;
  if(empty)return `<div class="page d-page">${head}<section class="d-box wide"><div class="d-eh"><h2 class="t-title">Nothing on the calendar yet</h2><p class="muted">Bring your dates over, connect a calendar for two-way sync, or add the next gig. Holds and enquiries will show hatched; confirmed gigs solid.</p></div>
@@ -156,7 +156,7 @@ L.VIEWS.calendar=()=>{const empty=!!S.calEmpty;const d0=new Date(2026,9+S.calMon
  const cell=dt=>{const k=`${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;const e=CAL_EVENTS[k];const out=dt.getMonth()!==m;const today=k==='2026-10-19';
   /* the venue photo moves into the chip as a thumbnail (Vit 21 Oct: full-cell photos hurt contrast and accessibility) */
   /* phones (Apple-style, Vit 26 Oct): the whole cell selects the day; events show as status bars, at most 2, then +N */
-  return `<div class="d-day ${out?'out':''} ${today?'today':''} ${e?'has-ev':''} ${k===sel?'sel':''}" data-act="calsel" data-k="${k}"><span class="d-dn">${dt.getDate()}</span>${roleViewer()?'':`<button class="d-add" data-act="caladd" data-d="${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}" aria-label="New booking on ${dayLong(dt)}" title="New booking on ${dayLong(dt)}">${ic('plus','s')}</button>`}${e?e.ev.map(([k2,t,go],i)=>`<button class="d-ev ${k2} ${i>1?'more2':''}" ${go}>${i===0?`<img class="d-evth" src="${IMG(e.img)}" alt="">`:''}<span>${t}</span></button>`).join(''):''}${e&&e.ev.length>2?`<span class="d-more">+${e.ev.length-2}</span>`:''}</div>`;};
+  return `<div class="calendar-day d-day ${out?'out':''} ${today?'today':''} ${e?'has-ev':''} ${k===sel?'sel':''}" data-act="calsel" data-k="${k}"><span class="d-dn">${dt.getDate()}</span>${roleViewer()?'':`<button class="d-add" data-act="caladd" data-d="${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}" aria-label="New booking on ${dayLong(dt)}" title="New booking on ${dayLong(dt)}">${ic('plus','s')}</button>`}${e?e.ev.map(([k2,t,go],i)=>`<button class="d-ev ${k2} ${i>1?'more2':''}" ${go}>${i===0?`<img class="d-evth" src="${IMG(e.img)}" alt="">`:''}<span>${t}</span></button>`).join(''):''}${e&&e.ev.length>2?`<span class="d-more">+${e.ev.length-2}</span>`:''}</div>`;};
  const rows=S.calView==='week'?weeks.filter(w=>w.some(x=>x.getDate()===24&&x.getMonth()===m)).slice(0,1).concat(S.calMonth?[weeks[0]]:[]).slice(0,1):weeks;
  return `<div class="page d-page">${head}
  <div class="d-legend"><button class="d-pill ${S.calView==='month'?'on':''}" data-act="calview" data-v="month">Month</button><button class="d-pill ${S.calView==='week'?'on':''}" data-act="calview" data-v="week">Week</button><button class="d-pill" data-go="gigday">Day sheet</button><span style="flex:1"></span><span class="d-keys">${tag('confirmed','Confirmed')}${tag('draft','Draft')}${tag('attention','Attention')}${tag('paid','Paid')}</span></div>
@@ -255,7 +255,7 @@ const THEME_SUB={label:'The LAAS look',metal:'Black and bone',electronic:'Electr
 L.OVERLAYS.thememenu=o=>`<div class="scrim d-scrim0" data-act="close"></div><div class="pop d-theme" style="left:${o.x??16}px;bottom:${o.b??120}px" role="dialog" aria-label="Theme">
  <div class="d-mh">Theme for ${bn()}</div>
  ${L.THEMES.map(([id,n,d,c0])=>{const c=L.themeSw([id,n,d,c0]);return `<button class="d-opt ${S.genre===id?'on':''}" data-genre="${id}"><span class="d-prev">${c.map(x=>`<i class="${L.tokCls(id)}" style="background:${x}"></i>`).join('')}</span><span class="d-ot"><b>${n}</b><small>${THEME_SUB[id]||d}</small></span>${S.genre===id?ic('check','s'):''}</button>`;}).join('')}
- <div class="d-app"><span class="faint">Appearance</span><div class="seg">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'s')}${l}</button>`).join('')}</div></div>
+ <div class="d-app"><span class="faint">Appearance</span><div class="segmented-control seg">${[['dark','Dark','eye'],['light','Light','square'],['system','Match system','settings']].map(([k,l,i])=>`<button class="${S.appearance===k?'on':''}" data-appearance="${k}">${ic(i,'s')}${l}</button>`).join('')}</div></div>
  <div class="d-div"></div><div class="d-sug">${ic('ai','s')}<span>Your genre is indie rock: Default fits. Metal fits hardcore.</span></div>
  <button class="d-act" data-genre="label">${ic('undo','s')}Reset to default</button><button class="d-act" data-go="theme">${ic('settings','s')}Theme settings</button></div>`;
 
@@ -370,14 +370,14 @@ const DIRS=[['push','Push','upload'],['pull','Pull','download'],['two','Two-way'
 const DIRTXT={push:'LAAS gigs go to the calendar. Nothing comes back.',pull:'Busy times come into LAAS as busy blocks. Nothing is written to the calendar.',two:'Both ways. Holds go out as tentative, busy times come back as busy blocks.'};
 const CONF={c1:{d:'Sat 25 Oct',t:'Rehearsal, Studio B',k:'Overlap',a:'LAAS: rehearsal 14:00 to 16:00',b:'Google, Vital personal: Dentist 13:30 to 15:00',opts:[['Keep both','Both stay. The rehearsal shows Vital as busy until 15:00'],['Move the rehearsal','Proposed: rehearsal 15:30 to 17:30, the band is asked first']],go:'data-go="booking" data-id="b2"'},
  c2:{d:'Fri 31 Oct',t:'Halloween set, Club Mono',k:'Changed on both sides',a:'LAAS: set 21:00, changed by Sofie on 19 Oct',b:'Google, Low Tide gigs: set 22:00, changed by Vital on 20 Oct',opts:[['Use LAAS, 21:00','Google gets 21:00 back on the next sync'],['Use Google, 22:00','The booking and the day sheet move to 22:00']],go:'data-go="bookings"'}};
-const csTg=(k,label,on)=>`<button class="acc-tg ${on?'on':''}" role="switch" aria-checked="${!!on}" aria-label="${esc(label)}" data-act="cstg" data-k="${k}"><i></i></button>`;
-const csRow=(label,desc,ctl)=>`<div class="acc-row"><div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
-const csSec=(title,inner,action='',cls='')=>`<section class="acc-sec cs-sec ${cls}"><div class="acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
+const csTg=(k,label,on)=>`<button class="toggle acc-tg ${on?'on':''}" role="switch" aria-checked="${!!on}" aria-label="${esc(label)}" data-act="cstg" data-k="${k}"><i></i></button>`;
+const csRow=(label,desc,ctl)=>`<div class="settings-row acc-row"><div class="tx"><span>${label}</span>${desc?`<small>${desc}</small>`:''}</div><div class="ctl">${ctl}</div></div>`;
+const csSec=(title,inner,action='',cls='')=>`<section class="acc-sec cs-sec ${cls}"><div class="section-header acc-sh"><h2 class="t-title">${title}</h2>${action}</div>${inner}</section>`;
 const csFoot=(t,icon)=>`<p class="acc-foot">${icon?ic(icon,'s'):''}<span>${t}</span></p>`;
 const csSave=()=>{const on=Date.now()<CS.savedUntil;return `<span class="acc-save ${on?'on':''}" id="cs-save" role="status" aria-live="polite">${on?ic('check','s')+'Saved':''}</span>`;};
 function csSaved(){const el=document.getElementById('cs-save');if(!el)return;clearTimeout(CS._t1);clearTimeout(CS._t2);el.className='acc-save on';el.textContent='Saving…';
  CS._t1=setTimeout(()=>{CS.savedUntil=Date.now()+3000;const e=document.getElementById('cs-save');if(!e)return;e.innerHTML=ic('check','s')+'Saved';CS._t2=setTimeout(()=>{document.getElementById('cs-save')?.classList.remove('on');},3000);},600);}
-const dirSeg=(acc,cur)=>`<div class="d-seg cs-dir" role="radiogroup" aria-label="Direction">${DIRS.map(([k,l,i])=>`<button class="${cur===k?'on':''}" role="radio" aria-checked="${cur===k}" data-act="csdir" data-a="${acc}" data-v="${k}">${ic(i,'s')}${l}</button>`).join('')}</div>`;
+const dirSeg=(acc,cur)=>`<div class="segmented-control d-seg cs-dir" role="radiogroup" aria-label="Direction">${DIRS.map(([k,l,i])=>`<button class="${cur===k?'on':''}" role="radio" aria-checked="${cur===k}" data-act="csdir" data-a="${acc}" data-v="${k}">${ic(i,'s')}${l}</button>`).join('')}</div>`;
 const calRow=(k,name,meta,role)=>`<div class="acc-li cs-cal"><span class="tx"><span>${name}</span><small>${role?role+'. ':''}${meta}</small></span>${csTg('cal-'+k,name,CS.cals[k])}</div>`;  // List row: no leading, role in the meta (Vit 29 Oct, fewer designs)
 function account(id){
  if(id==='g'){const dir=CS.gdir;
@@ -402,7 +402,7 @@ function conflicts(){const n=CS.conf.length;
  return csSec(`Conflicts`,body+(n?csFoot('Sync never picks a side by itself. Until you choose, LAAS keeps its own version.'):''),n?tag('attention',n+' to decide'):'');}
 L.VIEWS.calsync=()=>{const g=CS.g;
  return `<div class="page cs-page"><button class="btn ghost s flush cs-back" data-go="calendar">${ic('left','s')}Calendar</button>
- <div class="acc-ph"><div class="grow"><h1 class="t-display">Calendar sync</h1><p>Two-way with Google or Microsoft 365</p></div>${csSave()}</div>
+ <div class="page-header acc-ph"><div class="grow"><h1 class="t-display">Calendar sync</h1><p>Two-way with Google or Microsoft 365</p></div>${csSave()}</div>
  <div class="cs-col">
  ${g?account('g'):csSec('Google Calendar',`<div class="acc-li cs-acc">${L.brand('Google',24)}<span class="tx"><span>Not connected</span><small>Gigs already in Google stay there. Connect again to pick up where you left off.</small></span><button class="btn secondary s" data-act="csgconnect">Connect</button></div>`)}
  ${account('m')}
@@ -472,10 +472,10 @@ const nR=TOOLS.reduce((n,g)=>n+g[2].filter(t=>t[0]==='r').length,0),nW=TOOLS.red
 L.VIEWS.tools=()=>{const f=S.toolsF;
  const groups=TOOLS.map(([g,i,list])=>[g,i,list.filter(t=>f==='all'||t[0]===f)]).filter(x=>x[2].length);
  return `<div class="page d-page tl-page">${aurora()}<button class="btn ghost s flush cs-back" data-go="assistant">${ic('left','s')}Assistant</button>
- <div class="ph"><div class="grow"><h1 class="t-display">What it can do</h1><p>${nR} lookups and ${nW} changes it can propose</p></div><button class="btn accent" data-act="tlask">${ic('ai','s')}Ask the assistant</button></div>
+ <div class="page-header ph"><div class="grow"><h1 class="t-display">What it can do</h1><p>${nR} lookups and ${nW} changes it can propose</p></div><button class="btn accent" data-act="tlask">${ic('ai','s')}Ask the assistant</button></div>
  <div class="tl-grid"><div class="tl-main">
-  <div class="d-seg tl-f" role="tablist" aria-label="Show">${[['all','All',nR+nW],['r','Looks up',nR],['w','Changes',nW]].map(([k,l,n])=>`<button role="tab" aria-selected="${f===k}" class="${f===k?'on':''}" data-act="tlf" data-v="${k}">${l} <span class="faint">${n}</span></button>`).join('')}</div>
-  ${groups.map(([g,i,list])=>`<section class="acc-sec tl-sec"><div class="acc-sh"><span class="d-lic">${ic(i,'s')}</span><h2 class="t-title">${g}</h2><span class="t-meta muted tl-count">${list.length} actions</span></div><div class="acc-list">${list.map(([k,id,t,d,q])=>`<button class="acc-li tl-row" data-act="askq" data-q="${esc(q)}" data-tool="${id}" title="Try: ${esc(q)}"><span class="tx"><span>${t}</span><small>${d}</small></span>${k==='w'?tag('accent','Asks first'):tag('draft','Reads')}${ic('chevr','s')}</button>`).join('')}</div></section>`).join('')}
+  <div class="segmented-control d-seg tl-f" role="tablist" aria-label="Show">${[['all','All',nR+nW],['r','Looks up',nR],['w','Changes',nW]].map(([k,l,n])=>`<button role="tab" aria-selected="${f===k}" class="${f===k?'on':''}" data-act="tlf" data-v="${k}">${l} <span class="faint">${n}</span></button>`).join('')}</div>
+  ${groups.map(([g,i,list])=>`<section class="acc-sec tl-sec"><div class="section-header acc-sh"><span class="d-lic">${ic(i,'s')}</span><h2 class="t-title">${g}</h2><span class="t-meta muted tl-count">${list.length} actions</span></div><div class="acc-list">${list.map(([k,id,t,d,q])=>`<button class="acc-li tl-row" data-act="askq" data-q="${esc(q)}" data-tool="${id}" title="Try: ${esc(q)}"><span class="tx"><span>${t}</span><small>${d}</small></span>${k==='w'?tag('accent','Asks first'):tag('draft','Reads')}${ic('chevr','s')}</button>`).join('')}</div></section>`).join('')}
   <p class="acc-note">Tap a row to try it with an example question. Nothing is changed by trying.</p>
  </div>
  <aside class="tl-side">

@@ -79,7 +79,7 @@ const fchip=(k,anyWord='all')=>`<button class="chip cv-chip ${S.filters[k].lengt
 /* ---------- small parts ---------- */
 const chev=ic('right','s');
 const lock=t=>`<span class="cv-lock">${ic('lock','s')}${t}</span>`;
-const secHead=(title,btn)=>`<div class="cv-sh${btn?'':' solo'}"><h2>${title}</h2>${btn||''}</div>`;
+const secHead=(title,btn)=>`<div class="section-header cv-sh${btn?'':' solo'}"><h2>${title}</h2>${btn||''}</div>`;
 const actBtn=(icon,label,act,extra='')=>`<button class="btn ghost s cv-act" data-act="${act}" ${extra}>${icon?ic(icon,'s'):''}${label}</button>`;
 const editBtn=key=>S.cv.edit===key?actBtn('','Done','cvedit',`data-k="${key}"`):actBtn('pencil','Edit','cvedit',`data-k="${key}"`);
 const saveState=()=>S.cv.save?`<span class="cv-save ${S.cv.save==='Saved'?'done':''}" id="cvsave">${S.cv.save==='Saved'?ic('check','s'):ic('loader','s')}${S.cv.save}</span>`:'';
@@ -89,7 +89,7 @@ const kvBlock=(key,rows)=>{S.cv.vals??={};const sv=S.cv.vals[scopeKey(key)]||{};
  ?`<div class="cv-form">${rows.map(([l,v,w],i)=>`<div class="field cv-w-${w||'l'}"><label for="cv${key}${i}">${l}</label><input class="input" id="cv${key}${i}" value="${esc(v)}" data-cvsave data-k="${key}" data-i="${i}"></div>`).join('')}</div>`
  :`<dl class="cv-kv">${rows.map(([l,v])=>`<div><dt>${l}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;};
 const kvSec=(key,rows,foot='')=>S.cv.edit===key?kvBlock(key,rows):`<div class="cv-kvw">${kvBlock(key,rows)}${foot}</div>`;
-const bookRow=([t,s,tc,tl,id],ini)=>`<button class="cv-row" data-act="cvgo" data-v="booking" data-id="${id}">${ini?`<span class="cv-sq">${ini}</span>`:''}<span class="tx"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="tag ${tc}">${tl}</span>${chev}</button>`;
+const bookRow=([t,s,tc,tl,id],ini)=>`<button class="cv-row" data-act="cvgo" data-v="booking" data-id="${id}">${ini?`<span class="avatar cv-sq">${ini}</span>`:''}<span class="tx"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="tag ${tc}">${tl}</span>${chev}</button>`;
 const stars=(n,cls='')=>[1,2,3,4,5].map(i=>`<svg class="i s cv-star ${cls} ${i<=n?'on':''}" viewBox="0 0 24 24" aria-hidden="true">${L.P.star}</svg>`).join('');
 
 /* ---------- people table ---------- */
@@ -159,7 +159,7 @@ function venueMap(rows){const D=window.LAAS_DK;const by={};rows.forEach(v=>(by[v
  const side={};cities.forEach(c=>{const vs=by[c].filter(v=>D.venues[v.id]).sort((a,b)=>D.venues[a.id][0]-D.venues[b.id][0]);vs.forEach((v,i)=>side[v.id]=vs.length===1||i===vs.length-1?'r':i===0?'l':'t');});
  const lab=(v)=>({r:'x="12" y="4.5"',l:'x="-12" y="4.5" text-anchor="end"',t:'x="0" y="-13" text-anchor="middle"'})[side[v.id]];
  const vpins=rows.map(v=>{const p=D.venues[v.id];if(!p)return '';return `<g class="cv-vpin ${v.city===cur?'on':''}" transform="${pinT(p,t.k)}" data-p="${p}" data-act="cvgo" data-v="venue" data-id="${v.id}" role="button" tabindex="${zoomed?0:-1}" aria-label="${esc(v.name)}, open the venue"><circle r="7"/><text ${lab(v)}>${esc(v.name)}</text></g>`;}).join('');
- return `<div class="cv-map"><div class="cv-mapc ${zoomed?'zoomed':''}"><svg viewBox="0 0 ${D.w} ${D.h}" role="img" aria-label="Venues on a map of Denmark">
+ return `<div class="cv-map"><div class="venues-map cv-mapc ${zoomed?'zoomed':''}"><svg viewBox="0 0 ${D.w} ${D.h}" role="img" aria-label="Venues on a map of Denmark">
   <g class="cv-mv" transform="translate(${t.x},${t.y}) scale(${t.k})"><path class="near" d="${D.near}"/><path class="land" d="${D.dk}"/>${towns}<g class="cv-badges">${badges}</g><g class="cv-vpins">${vpins}</g></g></svg>
   ${zoomed?`<button class="btn secondary s cv-mapall" data-act="cvmapall">${ic('left','s')}All of Denmark</button>`:''}
   ${zoomed?(()=>{const pc=km=>km/KM_PER_UNIT*t.k/10,km=[10,5,2,1].find(k=>pc(k)<=16)||1;return `<span class="cv-scale" style="--w:${pc(km).toFixed(2)}%"><i></i>${km} km</span>`;})():''}
@@ -182,14 +182,14 @@ L.VIEWS.contacts=()=>{
  if(S.cv.empty)return emptyPage();
  const isV=S.cv.tab==='venues';const q=isV?S.cv.vq:S.contactSearch;
  const sub=S.imported?'222 people, 6 venues, 198 imported today':'24 people, 6 venues, 3 without a booking yet';
- return `<div class="page cv cv-list"><div class="ph cv-ph"><div class="grow"><h1 class="t-display">Contacts</h1><p>${sub}</p></div><div class="cv-btns"><button class="btn secondary" data-act="import">Import</button><button class="btn accent" data-act="${isV?'newvenue':'newcontact'}">${ic('plus','s')}${isV?'New venue':'New contact'}</button></div></div>
+ return `<div class="page cv cv-list"><div class="page-header ph cv-ph"><div class="grow"><h1 class="t-display">Contacts</h1><p>${sub}</p></div><div class="cv-btns"><button class="btn secondary" data-act="import">Import</button><button class="btn accent" data-act="${isV?'newvenue':'newcontact'}">${ic('plus','s')}${isV?'New venue':'New contact'}</button></div></div>
  <div class="cv-bar"><div class="cv-chips"><button class="chip cv-chip ${isV?'':'cur'}" data-act="cvtab" data-tab-k="people" aria-pressed="${!isV}">People ${S.imported?222:24}</button><button class="chip cv-chip ${isV?'cur':''}" data-act="cvtab" data-tab-k="venues" aria-pressed="${isV}">Venues ${VENUES.length}</button><i class="chip-div"></i>${isV?vChips():`${fchip('ckind')}${fchip('ccity')}<button class="chip cv-chip ${S.overlay&&S.overlay.type==='cvsort'?'open':''}" data-act="cvsort" data-k="sort">Sort: ${SORTS[S.cv.sort]}</button>`}</div>
  <label class="search cv-search">${ic('search','s')}<input class="input" id="${isV?'cvvsearch':'csearch'}" placeholder="${isV?'Name or city':'Name, venue, city'}" value="${esc(q)}" aria-label="Search ${isV?'venues':'contacts'}"></label></div>
  <div class="cv-body">${isV?venueBody(q):peopleBody(q)}</div></div>${L.abar('','Ask about Low Tide — gigs, contacts, gear, money')}`;
 };
 function emptyPage(){
  const cards=[['booker','Add one','Name, kind and email are enough','newcontact'],['notebook','Import','CSV or vCard from your phone, Google or Outlook','import'],['contacts-from-email','From email','The assistant finds bookers in threads you pick','cvfrommail']];
- return `<div class="page cv cv-list"><div class="ph cv-ph"><div class="grow"><h1 class="t-display">Contacts</h1><p>Nobody yet, the first booking will add its contact here</p></div><div class="cv-btns"><button class="btn secondary" data-act="import">Import</button><button class="btn accent" data-act="newcontact">${ic('plus','s')}New contact</button></div></div>
+ return `<div class="page cv cv-list"><div class="page-header ph cv-ph"><div class="grow"><h1 class="t-display">Contacts</h1><p>Nobody yet, the first booking will add its contact here</p></div><div class="cv-btns"><button class="btn secondary" data-act="import">Import</button><button class="btn accent" data-act="newcontact">${ic('plus','s')}New contact</button></div></div>
  <div class="cv-empty"><div class="cv-eh"><h3>No contacts yet</h3><p>Bring the people you already work with, or let the first booking add its contact by itself. Nothing is sent to anyone.</p></div>
  <div class="cv-cards">${cards.map(([img,t,s,a])=>`<button class="cv-card" data-act="${a}"><img src="${IMG(img)}" alt=""><b>${t}</b><small>${s}</small></button>`).join('')}</div></div>
  <div class="cv-foot"><span>Or start with three sample contacts (tinted, easy to delete) to see how the list reads.</span><button class="btn ghost s cv-link" data-act="cvsamples">Add samples</button></div></div>${L.abar('','Ask: "add Mette Kjær from Hotel Royal, booking@hotelroyal.dk"')}`;
@@ -197,7 +197,7 @@ function emptyPage(){
 
 /* ---------- Venues ---------- */
 L.VIEWS.venues=()=>{const q=S.cv.vq;const played=VENUES.filter(v=>v.played>0).length;
- return `<div class="page cv cv-list"><div class="ph cv-ph cv-vph"><div class="grow"><h1 class="t-display">Venues</h1><p>${VENUES.length} venues, ${played>3?3:played} played</p></div><div class="cv-btns"><button class="btn accent" data-act="newvenue">${ic('plus','s')}New venue</button><button class="btn secondary cv-more" data-act="cvmore" data-m="venues" aria-label="More">${ic('more','s')}</button></div></div>
+ return `<div class="page cv cv-list"><div class="page-header ph cv-ph cv-vph"><div class="grow"><h1 class="t-display">Venues</h1><p>${VENUES.length} venues, ${played>3?3:played} played</p></div><div class="cv-btns"><button class="btn accent" data-act="newvenue">${ic('plus','s')}New venue</button><button class="btn secondary cv-more" data-act="cvmore" data-m="venues" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-bar cv-vbar"><div class="cv-chips">${vChips()}</div><label class="search cv-search cv-vsearch">${ic('search','s')}<input class="input" id="cvvsearch" placeholder="Name or city" value="${esc(q)}" aria-label="Search venues"></label></div>
  <div class="cv-body">${venueBody(q)}</div></div>${L.abar('','Ask about venues — which ones in Aarhus have a PA, who owes us, add Loppen\'s stage notes')}`;};
 
@@ -215,14 +215,14 @@ L.VIEWS.contact=()=>{editScope();
  return `<div class="m-tint" aria-hidden="true"></div><div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="contacts">${ic('left','s')}Contacts</button>
  <!-- a contact page is about the person, not the venue photo (Vit 21 Oct) -->
- <div class="cv-actions cv-person"><span class="cv-av cv-av-l">${d.ini}</span><div class="cv-who"><h1 class="t-display">${esc(d.name)}</h1><p class="cv-role">${esc(d.kind)} at <button class="link" data-act="cvgo" data-v="venue" data-id="${v.id}">${esc(d.org)}</button></p><div class="cv-facts"><span class="tag">${esc(d.where)}</span><span class="tag">${d.n} bookings together</span><span class="tag">Contacted ${esc(d.last)}</span></div></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
+ <div class="cv-actions contact-header cv-person"><span class="avatar cv-av cv-av-l">${d.ini}</span><div class="cv-who"><h1 class="t-display">${esc(d.name)}</h1><p class="cv-role">${esc(d.kind)} at <button class="link" data-act="cvgo" data-v="venue" data-id="${v.id}">${esc(d.org)}</button></p><div class="cv-facts"><span class="tag">${esc(d.where)}</span><span class="tag">${d.n} bookings together</span><span class="tag">Contacted ${esc(d.last)}</span></div></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('Bookings together',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${rows.map(r=>bookRow(r,'HR')).join('')||'<p class="muted cv-in">None yet</p>'}</div></section>
   <section class="cv-sec">${secHead('Details',editBtn('details'))}${kvSec('details',d.details)}</section>
  </div>
  <aside class="cv-panel"><section class="cv-sec">${secHead('Notes',editBtn('notes'))}<div class="cv-pbody">${S.cv.edit==='notes'?`<textarea class="input cv-notes-in" id="cvnotes" data-cvsave data-nid="${id}" rows="5">${esc(notes)}</textarea>`:`<p class="cv-note">${esc(notes)}</p>`}${lock('Band only, never in offers, invoices or the calendar feed')}</div></section>
   <section class="cv-sec">${(()=>{const ev=[['2 days ago','Mette replied about the deposit, paying Thursday'],['7 Oct','Offer for Saturday hotel gig sent to Mette'],['6 Oct','Enquiry from Mette read by the assistant'],['14 Apr 2025','Spring hotel gig paid, 12 days after']];const o=!!S.cv.actOpen;
-   return `<div class="bd-pgroup bd-actg ${o?'open':''}"><button class="bd-acth bd-sh" data-act="cvact" aria-expanded="${o}"><h2 class="t-title">Activity, ${ev.length} events</h2><span class="bd-chev" aria-hidden="true">${ic(o?'down':'right','s')}</span></button>${o?`<div class="bd-acts">${ev.map(([d2,t])=>`<div><span class="d">${d2}</span><span>${esc(t)}</span></div>`).join('')}</div>`:''}</div>`;})()}</section></aside></div></div>${L.abar(d.name,d.ask)}`;
+   return `<div class="bd-pgroup bd-actg ${o?'open':''}"><button class="bd-acth section-header bd-sh" data-act="cvact" aria-expanded="${o}"><h2 class="t-title">Activity, ${ev.length} events</h2><span class="bd-chev" aria-hidden="true">${ic(o?'down':'right','s')}</span></button>${o?`<div class="bd-acts">${ev.map(([d2,t])=>`<div><span class="d">${d2}</span><span>${esc(t)}</span></div>`).join('')}</div>`:''}</div>`;})()}</section></aside></div></div>${L.abar(d.name,d.ask)}`;
 };
 
 /* ---------- Venue detail ---------- */
@@ -235,14 +235,14 @@ L.VIEWS.venue=()=>{editScope();
  S.cv.notes??={};const nid='v-'+v.id;const notes=S.cv.notes[nid]??(royal?'Good room when the bar is full, dead on a quiet Tuesday. Keep the first set low. The desk\'s channel 7 hums; bring a DI.':'No notes yet. Write what the next gig here should know.');
  return `<div class="page cv cv-detail">
  <button class="btn ghost s cv-back" data-act="cvgo" data-v="venues">${ic('left','s')}Venues</button>
- <div class="hero cv-hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${esc(v.name)}</h1><div class="facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div></div></div>
+ <div class="photo-hero hero cv-hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Venue in ${v.city}</span><h1>${esc(v.name)}</h1><div class="facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div></div></div>
  <div class="cv-actions cv-vact"><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="stage">Edit</button><button class="btn accent" data-act="newbooking">New booking here</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="venue" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('On stage',editBtn('stage'))}${kvSec('stage',(VDET[v.id]||VDET.royal).stage)}</section>
   <section class="cv-sec">${secHead('Getting there',editBtn('getting'))}${kvSec('getting',(VDET[v.id]||VDET.royal).getting,'<p class="cv-fn">Written once, reused in every day sheet for this venue. Members see it; venues and the calendar feed do not.</p>')}</section>
   <section class="cv-sec">${secHead('Bookings here',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${brows.map(r=>bookRow(r)).join('')||'<p class="muted cv-in">No bookings here yet</p>'}</div></section>
  </div>
- <aside class="cv-panel"><section class="cv-sec">${secHead('People here',actBtn('plus','Add person','newcontact'))}<div class="cv-rows">${people.map(([ini,n,s,id])=>`<button class="cv-row" data-act="cvgo" data-v="contact" data-id="${id}"><span class="cv-av s">${ini}</span><span class="tx"><b>${n}</b><small>${s}</small></span>${chev}</button>`).join('')||'<p class="muted cv-in">Nobody linked yet</p>'}</div></section>
+ <aside class="cv-panel"><section class="cv-sec">${secHead('People here',actBtn('plus','Add person','newcontact'))}<div class="cv-rows">${people.map(([ini,n,s,id])=>`<button class="cv-row" data-act="cvgo" data-v="contact" data-id="${id}"><span class="avatar cv-av s">${ini}</span><span class="tx"><b>${n}</b><small>${s}</small></span>${chev}</button>`).join('')||'<p class="muted cv-in">Nobody linked yet</p>'}</div></section>
   <section class="cv-sec">${secHead('Notes',editBtn('vnotes'))}<div class="cv-pbody">${S.cv.edit==='vnotes'?`<textarea class="input cv-notes-in" id="cvnotes" data-cvsave data-nid="${nid}" rows="5">${esc(notes)}</textarea>`:`<p class="cv-note">${esc(notes)}</p>`}${lock('Band only')}
   ${S.cv.edit?`<div class="cv-rate"><span>Your rating</span><span class="cv-tstars">${[1,2,3,4,5].map(i=>`<button data-act="cvrate" data-n="${i}" aria-label="${i} stars">${i<=S.cv.rating?'★':'☆'}</button>`).join('')}</span><span>${S.cv.rating>=4?'would play again':S.cv.rating>=3?'maybe again':'would not play again'}</span></div>`
    :`<div class="cv-rate"><span>${v.rating||'No rating'}</span>${v.rating?`<span class="cv-stars">${stars(Math.round(v.rating))}</span>`:''}<span>${v.played} gig${v.played===1?'':'s'}</span></div>`}</div></section></aside></div></div>${L.abar(v.name,`Ask about ${v.name} — what did we net last time, make a day sheet, who do we invoice`)}`;
@@ -257,11 +257,11 @@ L.DR.newcontact=()=>{const nm=S.contactSearch?S.contactSearch.trim().replace(/^.
  const org=S.cv.org;const res=CVR.filter(r=>!org.trim()||r[1].toLowerCase().includes(org.trim().toLowerCase().slice(0,5)));
  return {type:'cvdrawer',w:480,title:'New contact',sub:'From the booking form, the name you typed is carried over',
  body:`<div class="cv-banner attention" id="cvdup" ${dup?'':'hidden'}>${ic('alert','s')}<div class="tx"><b>Looks like this person exists: Mette Kjær, Hotel Royal, added 6 Oct</b><span>Same email. Use the existing contact, or keep going to make a second one.</span></div><button class="btn secondary s" data-act="cvuseexisting">Use existing</button><button class="cv-x" data-act="cvnobanner" aria-label="Dismiss">${ic('x','s')}</button></div>
- <div class="field"><span class="cv-lab">This contact is a</span><div class="seg"><button class="on">Person</button><button>Organisation</button></div></div>
+ <div class="field"><span class="cv-lab">This contact is a</span><div class="segmented-control seg"><button class="on">Person</button><button>Organisation</button></div></div>
  <div class="field cv-w-m"><label for="cvname">Name</label><input class="input" id="cvname" value="${esc(nm)}"></div>
  <div class="field cv-w-m"><label for="cvkind">Kind</label><select class="input" id="cvkind">${['Venue booker','Promoter','Agent','Festival','Private client','Press','Sound engineer'].map(k=>`<option>${k}</option>`).join('')}</select><span class="help">Books acts for a venue they work at. Other kinds: Promoter, Agent, Festival, Private client, Press, Sound engineer…</span></div>
  <div class="field"><label for="cvorg">Organisation</label><label class="search cv-orgf">${ic('search','s')}<input class="input" id="cvorg" value="${esc(org)}" autocomplete="off"></label>
- ${S.cv.orgOpen&&org.trim()?`<div class="cv-cvr"><span class="cv-cvrh">From the CVR register, fills address and VAT number</span>${res.map(([i,n,s],k)=>`<button class="cv-cvrrow ${k===0?'on':''}" data-act="cvorgpick" data-n="${esc(n)}"><span class="cv-sq">${i}</span><span class="tx"><b>${n}</b><small>${s}</small></span></button>`).join('')}<span class="cv-cvrf">Not a company? Keep typing and press Enter to use the text as is.</span></div>`:''}</div>
+ ${S.cv.orgOpen&&org.trim()?`<div class="cv-cvr"><span class="cv-cvrh">From the CVR register, fills address and VAT number</span>${res.map(([i,n,s],k)=>`<button class="cv-cvrrow ${k===0?'on':''}" data-act="cvorgpick" data-n="${esc(n)}"><span class="avatar cv-sq">${i}</span><span class="tx"><b>${n}</b><small>${s}</small></span></button>`).join('')}<span class="cv-cvrf">Not a company? Keep typing and press Enter to use the text as is.</span></div>`:''}</div>
  <div class="cv-two">${fld('cvem','Email','booking@hotelroyal.dk')}${fld('cvphn','Phone','')}</div>
  ${fld('cvrole','Role at the organisation','Events and bar manager','','cv-w-m')}
  ${fld('cvinv','Invoices go to','faktura@hotelroyal.dk','Optional, used for invoices and reminders instead of the contact\'s own email','cv-w-m')}

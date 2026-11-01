@@ -58,7 +58,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 function header(){
  const past=S.bookTab==='past';
  const sub=S.bk.empty?'No bookings yet':past?'31 gigs in 2026, 112.400 DKK settled':'12 bookings, 13.500 DKK not paid';
- return `<div class="bk-ph"><div class="bk-tb"><h1 class="t-display">Bookings &amp; agreements</h1><p>${sub}</p></div>
+ return `<div class="page-header bk-ph"><div class="bk-tb"><h1 class="t-display">Bookings &amp; agreements</h1><p>${sub}</p></div>
  <button class="btn secondary" data-act="export">Export</button><button class="btn accent" data-act="newbooking">${ic('plus')}New booking</button></div>`;
 }
 function tabs(){
@@ -70,8 +70,8 @@ function filters(){
  <label class="bk-search">${ic('search')}<input id="bsearch" placeholder="Title, venue, contact" value="${esc(S.search)}" aria-label="Search bookings" autocomplete="off"></label></div>`;
 }
 function table(list,q){
- return `<div class="bk-table" role="table" aria-label="Bookings"><div class="bk-tr bk-th" role="row"><span>When</span><span>Title</span><span>Type</span><span>Where</span><span>Status</span><span>Payment</span><span class="n">Fee</span></div>
- ${list.map((r,i)=>`<div class="bk-tr" role="row" tabindex="0" data-act="bkrow" data-id="${r.id}" style="--i:${i}"><span class="w">${r.when}</span><span class="tt">${thumb(r)}<b>${hl(r.title,q)}</b></span><span class="m">${r.type}</span><span class="m">${hl(r.where,q)}</span><span><span class="tag ${r.tag}">${r.st}</span></span><span class="m">${r.pay}</span><span class="n mono">${r.fee}</span></div>`).join('')}</div>`;
+ return `<div class="bk-table" role="table" aria-label="Bookings"><div class="table-row bk-tr bk-th" role="row"><span>When</span><span>Title</span><span>Type</span><span>Where</span><span>Status</span><span>Payment</span><span class="n">Fee</span></div>
+ ${list.map((r,i)=>`<div class="table-row bk-tr" role="row" tabindex="0" data-act="bkrow" data-id="${r.id}" style="--i:${i}"><span class="w">${r.when}</span><span class="tt">${thumb(r)}<b>${hl(r.title,q)}</b></span><span class="m">${r.type}</span><span class="m">${hl(r.where,q)}</span><span><span class="tag ${r.tag}">${r.st}</span></span><span class="m">${r.pay}</span><span class="n mono">${r.fee}</span></div>`).join('')}</div>`;
 }
 function footer(list,q){
  const past=S.bookTab==='past';const total=past?31:12;const af=activeF();
@@ -125,7 +125,7 @@ Object.assign(ACTIONS,{
  bkrow:t=>goRow(t.dataset.id),
  bkimport:()=>{L.go('integrations');L.toast('Connect Google, Microsoft 365 or add an .ics link to import');},
  bksample:()=>{S.bk.empty=false;L.render();L.toast('Sample bookings added, marked as test',()=>{S.bk.empty=true;L.render();});},
- export:()=>{const n=rows().length;L.open('modal',{html:`<div class="bk-modal"><h2 class="t-title">Export bookings</h2><div class="field"><label>Format</label><div class="seg"><button class="on">CSV</button><button>Excel</button><button>PDF</button></div></div><label class="row" style="gap:8px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Only the ${n} shown now</label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Export ready: ${n} bookings">Export</button></div></div>`});},
+ export:()=>{const n=rows().length;L.open('modal',{html:`<div class="bk-modal"><h2 class="t-title">Export bookings</h2><div class="field"><label>Format</label><div class="segmented-control seg"><button class="on">CSV</button><button>Excel</button><button>PDF</button></div></div><label class="row" style="gap:8px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Only the ${n} shown now</label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Export ready: ${n} bookings">Export</button></div></div>`});},
 });
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.bk-tr[data-act="bkrow"]')){e.preventDefault();goRow(e.target.dataset.id);}});
 
