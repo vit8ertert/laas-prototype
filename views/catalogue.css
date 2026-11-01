@@ -101,10 +101,10 @@
 .cat-cover.cat-cover-ph{border-radius:0}
 .cat-cover-ph svg{width:40px;height:40px;stroke-width:1}
 .cat-tile .art.cat-cover-ph{height:152px}
-.cat-rhead .id{min-width:0;display:flex;flex-direction:column;gap:6px}
+.cat-rhead .id{min-width:0;display:flex;flex-direction:column;gap:4px}
 .cat-rhead .id>.t-label{font:400 13px/var(--lh-label) var(--sans)}
-.cat-rhead .sl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:400 15px/var(--lh-body) var(--sans)}
-.cat-rhead .acts{display:flex;align-items:flex-start;gap:10px;padding-top:10px;flex-wrap:wrap}
+.cat-rhead .sl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:400 15px/var(--lh-body) var(--sans)}
+.cat-rhead .acts{display:flex;align-items:flex-start;gap:8px;padding-top:8px;flex-wrap:wrap}
 .cat-rhead .acts .icon{width:52px;height:36px}
 
 /* before delivery (Figma "Needs you"): border counted in the frame, summary 14/20, rows 12/20 */
@@ -137,14 +137,14 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}.cat-drop small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cat-panel{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:24px}
 .cat-panel h3{letter-spacing:-.1px}
-.cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:6px}
+.cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:8px}
 .cat-panel .grp>.t-label{font:400 13px/var(--lh-label) var(--sans)}
-.cat-avs{display:flex;padding-left:6px}
+.cat-avs{display:flex;padding-left:8px}
 .cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 12px/16px var(--sans)}
-.cat-activity{display:flex;align-items:center;gap:10px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
+.cat-activity{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
 .cat-activity svg.i{width:16px;height:16px}
 .cat-activity:hover{color:var(--ink)}
-.cat-acts{display:flex;flex-direction:column;gap:6px;padding-left:26px;margin-top:-16px}
+.cat-acts{display:flex;flex-direction:column;gap:4px;padding-left:26px;margin-top:-16px}
 .cat-acts div{display:flex;gap:12px}.cat-acts .muted{width:72px;flex:none}
 
 /* drawers */
@@ -163,11 +163,11 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-dnote{margin:0;font:400 13px/var(--lh-label) var(--sans)}
 .cat-problem{display:flex;gap:16px;align-items:center}
 .cat-problem img{width:96px;height:96px;border-radius:8px;object-fit:cover;flex:none}
-.cat-problem div{display:flex;flex-direction:column;gap:6px}
+.cat-problem div{display:flex;flex-direction:column;gap:4px}
 .cat-problem div>span{font:400 13px/var(--lh-label) var(--sans)}
 .cat-problem b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 .cat-ptext{margin:0;font:400 15px/var(--lh-body) var(--sans)}
-.cat-opts{display:flex;flex-direction:column;gap:10px}
+.cat-opts{display:flex;flex-direction:column;gap:8px}
 .cat-opts .radio{border-radius:10px}
 .cat-opts .radio>span{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
 .cat-opts .radio b{font:500 15px/var(--lh-body) var(--sans)}
@@ -278,7 +278,7 @@ button.cat-chk:hover{background:var(--hover)}
 .ec-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ec-kpis>div{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
 .ec-kpis span{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.ec-kpis b{font:400 32px/40px var(--sans)}.ec-kpis small{font:400 13px/var(--lh-label) var(--sans)}
-.ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1}.ec-fs .chip .c{margin-left:6px;color:var(--muted)}
+.ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1}.ec-fs .chip .c{margin-left:8px;color:var(--muted)}
 .ec-grp{border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
 .ec-gh{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;text-align:left}
 .ec-gh:hover{background:var(--hover)}.ec-gh:hover b{text-decoration:underline}
@@ -286,11 +286,11 @@ button.cat-chk:hover{background:var(--hover)}
 .ec-gt{flex:1;min-width:0;display:flex;flex-direction:column}.ec-gt b{font:500 15px/var(--lh-body) var(--sans)}.ec-gt small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .ec-chev{color:var(--muted);display:grid;place-items:center;width:20px}
 .ec-t{border-top:1px solid var(--rule)}
-.ec-r{display:grid;grid-template-columns:minmax(180px,1fr) 150px 170px 110px minmax(150px,220px);column-gap:16px;align-items:center;padding:10px 16px;min-height:52px;box-shadow:inset 0 1px 0 var(--rule)}
+.ec-r{display:grid;grid-template-columns:minmax(180px,1fr) 150px 170px 110px minmax(150px,220px);column-gap:16px;align-items:center;padding:8px 16px;min-height:52px;box-shadow:inset 0 1px 0 var(--rule)}
 .ec-r:first-child{box-shadow:none}
 .ec-th{min-height:0;padding:8px 16px;background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .ec-st{display:flex;flex-direction:column}.ec-st b{font:400 15px/var(--lh-body) var(--sans)}.ec-st small{font:400 13px/var(--lh-label) var(--mono);color:var(--muted)}
-.ec-ok{display:inline-flex;align-items:center;gap:6px;font:400 14px/20px var(--sans);color:var(--muted)}.ec-ok .i{width:14px;height:14px;color:var(--ok)}
+.ec-ok{display:inline-flex;align-items:center;gap:8px;font:400 14px/20px var(--sans);color:var(--muted)}.ec-ok .i{width:14px;height:14px;color:var(--ok)}
 .ec-fix{display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ec-fix .i{width:12px;height:12px}
 .ec-r .n{justify-self:end;text-align:right}.ec-why{font:400 13px/var(--lh-label) var(--sans)}
 @media (max-width:839.98px){.ec-kpis{grid-template-columns:1fr}.ec-t{overflow-x:auto}.ec-r{min-width:760px}}

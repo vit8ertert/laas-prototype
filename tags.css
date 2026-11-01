@@ -216,8 +216,8 @@
 .ev-venue img{width:22px;height:22px;border-radius:50%;object-fit:cover}
 .ev-venue:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 /* booking progress: six steps, done filled, current half, late red, cancelled stops */
-.bk-prog{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
-.bk-prog li{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bk-prog{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.bk-prog li{display:flex;flex-direction:column;gap:4px;min-width:0}
 .bk-prog i{height:6px;border-radius:3px;background:var(--well)}
 .bk-prog li.done i{background:var(--ok)}.bk-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
 .bk-prog li.att i{background:var(--att)}.bk-prog li.att span{color:var(--att)}

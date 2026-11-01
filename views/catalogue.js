@@ -250,7 +250,7 @@ L.DR.addgear=(name='')=>({type:'drawer',title:'Add gear',sub:'Serial and value h
  <div class="field cat-f"><label for="ga-c">Category</label><select class="input cat-w240" id="ga-c">${gearOpts([...CATS,'Other'],name?'Instruments':'Instruments')}</select></div>
  <div class="field cat-f"><label for="ga-o">Owner</label><select class="input cat-w240" id="ga-o">${gearOpts(['Band','Mette','Sofie','Jonas','Mia'],'Band')}</select><span class="help">A member’s own gear stays theirs if they leave</span></div>
  <div class="field cat-f"><label for="ga-v">Value, DKK</label><input class="input cat-w160 mono" id="ga-v" value="4.500"></div>
- <label class="row" style="gap:10px;cursor:pointer"><input type="checkbox" id="ga-ins" checked style="width:16px;height:16px;accent-color:var(--ink)">On the band insurance, policy to 2027</label>`,foot:foot('savegear','Add gear')});
+ <label class="row" style="gap:8px;cursor:pointer"><input type="checkbox" id="ga-ins" checked style="width:16px;height:16px;accent-color:var(--ink)">On the band insurance, policy to 2027</label>`,foot:foot('savegear','Add gear')});
 L.DR.logmaint=(id)=>({type:'drawer',title:'Log maintenance',sub:'Repairs and checks, so the insurer sees the history',body:`<div class="field cat-f"><label for="lm-i">Item</label><select class="input cat-w400" id="lm-i">${GEAR.map(x=>`<option value="${x.id}" ${x.id===(id||'g14')?'selected':''}>${esc(x.item)}, ${x.serial}</option>`).join('')}</select></div>
  <div class="field cat-f"><label for="lm-w">What was done</label><input class="input" id="lm-w" value="New grille, tested at rehearsal"></div>
  <div class="field cat-f"><label for="lm-d">Date</label><input class="input cat-w240" id="lm-d" value="21 Oct 2026"></div>

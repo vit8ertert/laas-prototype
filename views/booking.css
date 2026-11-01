@@ -13,10 +13,10 @@
 
 /* photo hero 280, text 32 from the left and 28 from the bottom: kicker 13/18 at 85 %, title 52/52 -1.04, facts 12/16 pills */
 .bd-hero{min-height:280px;height:280px;background:#1a1a1a}
-.bd-hero .tx{gap:10px;padding:0 32px 28px}
+.bd-hero .tx{gap:8px;padding:0 32px 28px}
 .bd-hero .k{font:400 13px/var(--lh-label) var(--sans);opacity:1;color:rgba(255,255,255,.85)}
 .bd-hero h1{font:400 52px/52px var(--sans);letter-spacing:-1.04px}
-.bd-hero .facts span{font:400 12px/16px var(--sans);padding:4px 10px}
+.bd-hero .facts span{font:400 12px/16px var(--sans);padding:4px 8px}
 
 /* page header: status chip left, actions right (gap 8); buttons 38, secondary on surface; More 52 × 36 */
 .bd-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -158,7 +158,7 @@
 .bd-rh .t-heading{letter-spacing:-.1px}
 .bd-stars{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .bd-stars b{font:500 15px/var(--lh-body) var(--sans)}
-.bd-stars .stars{gap:6px}
+.bd-stars .stars{gap:8px}
 .bd-stars .stars button{color:var(--faint);display:block;height:32px}.bd-stars .stars button svg{width:32px;height:32px;display:block}
 .bd-stars .stars button.on{color:var(--break)}.bd-stars .stars button.on svg{fill:var(--break)}
 .bd-rate .field{gap:8px}.bd-rate .field label{font:400 13px/var(--lh-label) var(--sans)}
@@ -177,7 +177,7 @@
 .bd-to>span:nth-child(2){font:400 15px/var(--lh-body) var(--sans)}
 .bd-to .link{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .bd-to .input{flex:1;min-width:200px;height:32px}
-.bd-send .msg{padding:14px 16px;gap:6px;border-radius:8px}
+.bd-send .msg{padding:14px 16px;gap:8px;border-radius:8px}
 .bd-send .msg b{font:500 15px/var(--lh-body) var(--sans)}
 .bd-send .msg p{color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
 .bd-send .msg .link{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
@@ -291,7 +291,7 @@
 .bd-step.nowrow .time{flex:none}
 .bd-step.nowrow .spine i.nowdot{width:8px;height:8px;background:var(--accent)}
 .bd-step.nowrow .muted{font:400 15px/var(--lh-body) var(--sans)}
-.bd-nowtag{gap:6px;padding:4px 10px;background:var(--accent);color:var(--on-accent);font:400 13px/var(--lh-label) var(--sans)}
+.bd-nowtag{gap:8px;padding:4px 12px;background:var(--accent);color:var(--on-accent);font:400 13px/var(--lh-label) var(--sans)}
 .bd-sx{display:flex}.bd-sx a.btn{text-decoration:none;color:var(--ink)}
 .bd-sx .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
 .btn.bd-act.lead{padding:8px 12px 8px 0}
@@ -300,7 +300,7 @@
 .bd-open .btn{color:var(--ink)}
 /* the action is a text link in the sentence, like the banner actions (Vit 26 Oct: "Call Kasper as a link, in the same line as the text") */
 .bd-open>span>.link{font:inherit;font-weight:500;color:inherit;padding:0;background:none;border:0;cursor:pointer}
-.bd-tin{height:30px;padding:0 6px;font-size:13px;width:64px}
+.bd-tin{height:30px;padding:0 8px;font-size:13px;line-height:var(--lh-label);width:64px}
 /* rail: pad 20, gap 28; still-open box pad 20 24, gap 16, border att */
 .bd-rail{padding:20px;gap:28px}
 .bd-openbox{--ring:var(--att);display:flex;flex-direction:column;gap:16px}
@@ -314,7 +314,7 @@
 
 @media (max-width:1100px){.bd-grid,.bd-gdgrid{grid-template-columns:1fr}}
 @media (max-width:839.98px){
- .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:10px}
+ .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:8px}
  .bd-kv>div{grid-template-columns:1fr;gap:2px}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}
  /* same as the Money line on phones (Vit 26 Oct): amount on top, status tag under it, both in the right column */

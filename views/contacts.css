@@ -79,11 +79,11 @@
 .cv .btn.cv-back{align-self:flex-start;height:34px;gap:8px}
 .cv-hero{min-height:var(--photo-hero);height:var(--photo-hero);border-radius:12px;background:#1a1a1a} /* Width token: 280 desktop, 200 phones (Vit 22 Oct: "use less height for the banner") */
 .cv-hero:after{background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 5%,transparent),color-mix(in srgb,var(--scrim-base) 25%,transparent) 45%,color-mix(in srgb,var(--scrim-base) 85%,transparent))}
-.cv-hero .tx{padding:0 32px 28px;gap:10px}
+.cv-hero .tx{padding:0 32px 28px;gap:8px}
 .cv-hero .k{font:400 13px/var(--lh-label) var(--sans);color:rgba(255,255,255,.85);opacity:1}
 .cv-hero h1{font:400 52px/52px var(--sans);letter-spacing:-1.04px}
 .cv-hero .facts{display:flex;gap:8px;flex-wrap:wrap}
-.cv-hero .facts span{height:24px;padding:4px 10px;border-radius:999px;font:400 12px/16px var(--sans);color:#fff;background:rgba(255,255,255,.16);box-shadow:none}
+.cv-hero .facts span{height:24px;padding:4px 12px;border-radius:999px;font:400 12px/16px var(--sans);color:#fff;background:rgba(255,255,255,.16);box-shadow:none}
 .cv-actions{display:flex;align-items:center;gap:16px;min-height:48px}
 .cv-vact{min-height:38px}
 .cv-who{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
@@ -112,10 +112,10 @@
 .cv-pbody{display:flex;flex-direction:column;gap:12px;padding:0 12px}
 .cv-note{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--ink);max-width:65ch}
 /* icon centred on the text line (Vit 21 Oct: "align icon and text") */
-.cv-lock{display:flex;align-items:center;gap:6px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.cv-lock{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-lock svg.i{width:14px!important;height:14px!important;flex:none;color:var(--muted);margin:0}
 .cv-rate{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);min-height:18px}
-.cv-stars{display:inline-flex;gap:6px}
+.cv-stars{display:inline-flex;gap:8px}
 svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-star.on{color:var(--break);fill:var(--break)}
 .cv-tstars{display:inline-flex;font:400 15px/var(--lh-body) var(--sans);color:var(--accent-ink)}
 .cv-tstars button{font:inherit;color:inherit;padding:0;line-height:22px}
@@ -214,9 +214,9 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-check input:checked{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:inset 0 0 0 1px var(--ink)}
 
 /* sort popover: 260 wide, padding 6, radius 12 */
-.pop.cv-sortpop{width:260px;padding:6px;border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
-.cv-poph{padding:6px 10px 4px;font:400 12px/16px var(--sans);color:var(--faint)}
-.cv-opt{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:8px;text-align:left;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
+.pop.cv-sortpop{width:260px;padding:8px;border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
+.cv-poph{padding:8px 8px 4px;font:400 12px/16px var(--sans);color:var(--faint)}
+.cv-opt{display:flex;align-items:center;gap:8px;width:100%;padding:8px 8px;border-radius:8px;text-align:left;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .cv-opt:hover{background:var(--well)}
 .cv-opt i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none}
 .cv-opt.on i{box-shadow:inset 0 0 0 5px var(--ink)}
@@ -292,4 +292,4 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-actions.cv-person{align-items:flex-start}
 .cv-actions.cv-person>.cv-av{margin-top:9px}
 .cv-actions.cv-person>.cv-acts{align-self:center}
-@media (max-width:599.98px){.cv-actions.cv-person>.cv-av{margin-top:6px!important}}
+@media (max-width:599.98px){.cv-actions.cv-person>.cv-av{margin-top:4px!important}}

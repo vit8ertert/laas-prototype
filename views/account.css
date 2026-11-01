@@ -19,7 +19,7 @@
 .acc-search>svg{width:18px;height:18px;color:var(--ink)}
 .acc-search input::placeholder{color:var(--muted)}
 .acc-search:focus-within{box-shadow:inset 0 0 0 2px var(--ink)}
-.acc-gl{font-size:12px;line-height:16px;color:var(--faint);padding:16px 0 6px 12px}
+.acc-gl{font-size:12px;line-height:16px;color:var(--faint);padding:16px 0 8px 12px}
 .acc-body{display:flex;flex-direction:column;gap:16px;min-width:0}
 
 /* Section (Padding=M): 20/8 with 12 px head inset, so rows share one text edge */
@@ -50,9 +50,9 @@
 /* Settings row Control 240x40 (stroke in layout); type and padding from core .input */
 .acc-row .input{height:40px;background-size:14px;background-position:right 13px center}
 /* one field width, = Figma Value field 240 (Vit 29 Oct, fewer designs); long values truncate like a native select */
-.acc-sel.mono,.input.mono{font-family:var(--mono);font-size:14px}
+.acc-sel.mono,.input.mono{font-family:var(--mono);font-size:14px;line-height:20px}
 .acc-in{max-width:100%}
-.acc-foot{margin:0;padding:0 12px;font-size:13px;line-height:var(--lh-label);color:var(--muted);display:flex;gap:6px;align-items:flex-start}
+.acc-foot{margin:0;padding:0 12px;font-size:13px;line-height:var(--lh-label);color:var(--muted);display:flex;gap:8px;align-items:flex-start}
 .acc-foot svg{margin-top:1px}
 .acc-in12{padding:0 12px}
 .acc-stack{display:flex;flex-direction:column;gap:12px}
@@ -66,7 +66,7 @@
 button.acc-li:hover{background:var(--hover)}
 .acc-inv:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
 .acc-li>svg{color:var(--ink)}
-.acc-li .mono{font-size:14px;min-width:56px;text-align:right}
+.acc-li .mono{font-size:14px;line-height:20px;min-width:56px;text-align:right}
 .acc-av{width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 .acc-inv{display:flex;flex-direction:column;gap:8px;position:relative}
 .acc-inv:not(:last-child){padding-bottom:8px}
@@ -159,12 +159,12 @@ button.acc-si:hover{background:var(--hover)}
 .acc-band .tx>span{font:500 15px/var(--lh-body) var(--sans)}
 .acc-band small{font:400 12px/16px var(--sans);color:var(--muted)}
 .acc-app{flex-direction:row;align-items:center;gap:20px}
-.acc-app>div{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.acc-app>div{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .acc-app p{margin:0;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
 .acc-appicon{width:64px;height:64px;border-radius:14px;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,var(--top),var(--sunken))}
 .acc-appicon svg{width:44px;fill:var(--ink)}
 /* official App Store badge colours (used unmodified) */
-.acc-store{display:inline-flex;align-items:center;gap:6px;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:6px 14px 6px 10px}
+.acc-store{display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:8px 14px 8px 8px}
 .acc-store svg{width:22px;fill:#fff}
 .acc-store span{display:flex;flex-direction:column;font:500 19px/24px var(--sans);letter-spacing:-.19px;text-align:left}
 .acc-store small{font:400 9px/16px var(--sans);letter-spacing:0;margin-bottom:-2px}
@@ -213,7 +213,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-or{display:flex;align-items:center;gap:12px;font:400 12px/16px var(--sans);color:var(--faint)}
 .acc-or i{flex:1;height:1px;background:var(--rule)}
 .acc-obfoot{margin:0;font-size:12px;line-height:16px;color:var(--muted)}
-.acc-obfoot .link{font-size:12px;color:var(--muted)}
+.acc-obfoot .link{font-size:12px;line-height:16px;color:var(--muted)}
 .acc-code{display:flex;gap:8px}
 .acc-code input{flex:none;width:48px;min-width:0;height:56px;text-align:center;font:500 16px/22px var(--mono);border-radius:8px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
 .acc-code input:focus{outline:none;border:2px solid var(--accent)}
@@ -233,7 +233,7 @@ button.acc-si:hover{background:var(--hover)}
    the pair, the same one as "It proposes, you confirm" (.tl-steps); pairs sit further apart than the fields inside one */
 .acc-obinv{margin:0;padding:0;list-style:none;counter-reset:inv;display:flex;flex-direction:column;gap:var(--space-6)}
 .acc-obinv>li{counter-increment:inv;display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:var(--space-3);align-items:start}
-.acc-obinv>li::before{content:counter(inv);width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px}
+.acc-obinv>li::before{content:counter(inv);width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px;line-height:16px}
 .acc-obinv .acc-two{gap:12px;flex-wrap:nowrap}
 .acc-obinv .acc-two>.field:first-child{flex:1 1 auto;min-width:0}.acc-obinv .acc-two>.field:first-child .input{width:100%!important}  /* email takes what the number and role leave */
 .acc-obinv .acc-two>.field:last-child{flex:none}.acc-obinv .acc-two>.field:last-child .input{width:140px!important}
@@ -250,28 +250,28 @@ button.acc-si:hover{background:var(--hover)}
 .acc-win::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
 .acc-win>.acc-mini{transform:scale(var(--k));transform-origin:0 0;position:absolute;left:0;top:0}
 .acc-obthemes{display:grid;grid-template-columns:repeat(2,212px);gap:12px;align-items:start}
-.acc-obth{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:8px;border:1px solid var(--rule);text-align:left}
+.acc-obth{display:flex;flex-direction:column;gap:4px;padding:8px;border-radius:8px;border:1px solid var(--rule);text-align:left}
 .acc-obth:hover{border-color:var(--rule-strong)}
 .acc-obth.on{border:2px solid var(--ink)}
 .acc-obth .pv{position:relative;display:block;height:96px;border-radius:6px;overflow:hidden;background:var(--sunken)}
 .acc-obth .pv>.acc-mini{transform:scale(.3);transform-origin:0 0;position:absolute;left:0;top:0}
 /* Fits your genre badge: Figma's lime (color/poster/lime), the same in every theme and mode, like Ask (Vit 22 Oct, Q14) */
-.acc-obth .fits{position:absolute;left:8px;top:8px;padding:4px 10px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 13px/var(--lh-label) var(--sans);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.acc-obth .fits{position:absolute;left:8px;top:8px;padding:4px 12px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 13px/var(--lh-label) var(--sans);box-shadow:0 2px 6px rgba(0,0,0,.35)}
 .acc-obth .nm{display:flex;align-items:center;gap:var(--space-2);font:500 15px/var(--lh-body) var(--sans)}
 .acc-obth .d{font:400 12px/16px var(--sans);color:var(--muted)}
 
 /* mini dashboard, drawn at 1456x910 and scaled */
-.acc-mini{width:1456px;height:910px;background:var(--sunken);color:var(--ink);display:flex;flex-direction:column;font-size:15px;pointer-events:none;text-align:left}
+.acc-mini{width:1456px;height:910px;background:var(--sunken);color:var(--ink);display:flex;flex-direction:column;font-size:15px;line-height:var(--lh-body);pointer-events:none;text-align:left}
 .acc-mini .mt{height:58px;display:flex;align-items:center;gap:16px;padding:0 20px;flex:none}
 .acc-mini .mt .lg svg{height:24px;width:auto;fill:var(--ink);display:block}
-.acc-mini .mt small{font-size:12px;color:var(--faint)}
-.acc-mini .sp{display:flex;align-items:center;gap:8px;width:280px;height:34px;padding:0 12px;border-radius:8px;background:var(--well);color:var(--muted);font-size:14px}
-.acc-mini .you{width:28px;height:28px;border-radius:50%;background:var(--you);color:#000;display:grid;place-items:center;font-size:14px}
+.acc-mini .mt small{font-size:12px;line-height:16px;color:var(--faint)}
+.acc-mini .sp{display:flex;align-items:center;gap:8px;width:280px;height:34px;padding:0 12px;border-radius:8px;background:var(--well);color:var(--muted);font-size:14px;line-height:20px}
+.acc-mini .you{width:28px;height:28px;border-radius:50%;background:var(--you);color:#000;display:grid;place-items:center;font-size:14px;line-height:20px}
 .acc-mini .mb{flex:1;display:flex;gap:8px;padding:0 8px 8px;min-height:0}
 .acc-mini .ms{width:236px;background:var(--canvas);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:2px}
-.acc-mini .bd{display:flex;gap:10px;align-items:center;padding:8px;margin-bottom:8px}
-.acc-mini .bd .sq{width:32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:13px}
-.acc-mini .bd span{display:flex;flex-direction:column}.acc-mini .bd b{font-weight:500}.acc-mini .bd small{font-size:12px;color:var(--muted)}
+.acc-mini .bd{display:flex;gap:8px;align-items:center;padding:8px;margin-bottom:8px}
+.acc-mini .bd .sq{width:32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;line-height:var(--lh-label)}
+.acc-mini .bd span{display:flex;flex-direction:column}.acc-mini .bd b{font-weight:500}.acc-mini .bd small{font-size:12px;line-height:16px;color:var(--muted)}
 .acc-mini .ni{display:flex;align-items:center;gap:8px;height:34px;padding:0 8px;border-radius:8px}
 .acc-mini .ni.sub{padding-left:24px}
 .acc-mini .ni.on{background:var(--well);font-weight:500}
@@ -280,17 +280,17 @@ button.acc-si:hover{background:var(--hover)}
 .acc-mini h3{font:400 40px/48px var(--sans);margin:0}
 .acc-mini .mm>p{margin:0;color:var(--muted);max-width:620px}
 .acc-mini .ask{width:760px;background:var(--raised);border:1px solid var(--rule-strong);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:24px;color:var(--muted);text-align:left}
-.acc-mini .ar{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink)}
-.acc-mini .ar span{display:inline-flex;align-items:center;gap:6px}
+.acc-mini .ar{display:flex;align-items:center;gap:12px;font-size:13px;line-height:var(--lh-label);color:var(--ink)}
+.acc-mini .ar span{display:inline-flex;align-items:center;gap:8px}
 .acc-mini .send{height:30px;padding:0 12px;border-radius:999px;background:var(--ink);color:var(--canvas)}
 .acc-mini .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:760px}
-.acc-mini .chips span{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:var(--well);font-size:13px}
+.acc-mini .chips span{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;background:var(--well);font-size:13px;line-height:var(--lh-label)}
 .acc-mini h4{font:400 24px/32px var(--sans);margin:40px 0 0}
-.acc-mini .sm{margin:0;font-size:13px;color:var(--muted)}
+.acc-mini .sm{margin:0;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .acc-mini .cards{display:flex;gap:12px}
 .acc-mini .cards span{width:220px;background:var(--surface);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:4px;text-align:left}
 .acc-mini .cards img{width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px}
-.acc-mini .cards b{font-weight:500;font-size:14px}.acc-mini .cards small{font-size:12px;color:var(--muted)}
+.acc-mini .cards b{font-weight:500;font-size:14px;line-height:20px}.acc-mini .cards small{font-size:12px;line-height:16px;color:var(--muted)}
 
 /* other themes' token values for the theme-card previews (see note at the top) */
 
@@ -321,7 +321,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-pp{max-width:100%}
 .acc-pp textarea{width:100%;min-height:132px;line-height:20px}
 .acc-pph{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
-.acc-pph .help{display:inline-flex;gap:6px;align-items:center}
+.acc-pph .help{display:inline-flex;gap:8px;align-items:center}
 .acc-pph .help svg{flex:none}
 .acc-pph .mono{flex:none}
 .acc-ppact{gap:8px;margin-top:-4px}
@@ -336,13 +336,13 @@ button.acc-si:hover{background:var(--hover)}
 .acc-bands{display:flex;flex-direction:column;gap:12px}
 .acc-bandrow{display:flex;align-items:center;gap:12px}
 .acc-bandrow .acc-band{flex:1;min-width:0;margin:-8px 0 -8px -8px}
-.acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:8px;background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:600;overflow:hidden}
-.acc-bsq{width:40px;height:40px;font-size:14px}
+.acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:8px;background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:500;overflow:hidden}
+.acc-bsq{width:40px;height:40px;font-size:14px;line-height:20px}
 
 /* ---------- New band drawer ---------- */
 .acc-nbprev{width:96px;height:96px;border-radius:12px;font-size:28px}
 .acc-nbprev img{width:100%;height:100%;object-fit:cover}
-.acc-nblogo>div{gap:6px}
+.acc-nblogo>div{gap:8px}
 .sidebar .band .sq .acc-sqimg{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
 @media (max-width:599.98px){.acc-nbprev{width:72px;height:72px;font-size:22px}.acc-pph{flex-direction:column;gap:4px}}
 
@@ -448,7 +448,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-or{margin-bottom:-5px}
 /* sign-up: the email CTA sits 24 px under the email field (Vit 21 Oct: "space on top of the CTA") */
 .acc-obstack>.field+.btn{margin-top:12px}
-.acc-obtop .logo{display:flex;align-items:center;gap:10px} /* logo with "label as a service" beside it, as in the top bar */
+.acc-obtop .logo{display:flex;align-items:center;gap:8px} /* logo with "label as a service" beside it, as in the top bar */
 /* sign-up (Vit 21 Oct: "social buttons look exactly like input fields"): sign-in buttons are a soft solid fill with no border,
    fields keep the border. Onboarding fields are the standard 38 field (30 Oct, one Input / Select component; they
    were 48 with a 16 inset to match the large buttons) */

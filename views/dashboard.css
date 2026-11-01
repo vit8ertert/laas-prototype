@@ -119,9 +119,9 @@ button.d-kpi:hover{background:var(--raised)}
 .d-compbar .btn.accent svg.i{width:20px;height:20px}
 /* context pills: what the question is about, in the box and on the sent message (Vit 21 Oct). Outlined tag, icon, cross */
 .d-ctxs{display:flex;flex-wrap:wrap;gap:8px}
-.d-ctx{display:inline-flex;align-items:center;gap:6px;max-width:100%;height:28px;padding:0 4px 0 10px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--ink);font:400 13px/var(--lh-label) var(--sans)}
+.d-ctx{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:28px;padding:0 4px 0 12px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--ink);font:400 13px/var(--lh-label) var(--sans)}
 .d-ctx>.i{color:var(--muted);flex:none}.d-ctx>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.d-ctx:not(:has(button)){padding-right:10px}
+.d-ctx:not(:has(button)){padding-right:8px}
 .d-ctx button{display:grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;color:var(--muted)}.d-ctx button:hover{background:var(--state-hover);color:var(--ink)}
 .d-ctx button .i{width:12px;height:12px}
 .d-user .d-ctxs{margin-bottom:8px}.d-user .d-ctx{background:transparent}
@@ -231,7 +231,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-scrim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent)}.d-scrim0{background:transparent}
 .d-pal{width:min(640px,calc(100% - 32px));border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 24px 64px #00000066;display:flex;flex-direction:column}
 .d-pal .f{padding:16px 20px;gap:12px;border-bottom:0}.d-pal .ft{border-top:0}.d-pdiv{display:block;height:1px;flex:none;background:var(--rule)}.d-pal .f input{height:22px;padding:0}.d-pal .f>svg.i{width:20px;height:20px;color:var(--muted)}.d-pal .f input{font:400 15px/var(--lh-body) var(--sans)}
-.d-pal kbd.k{font:400 12px/16px var(--sans);color:var(--muted);padding:2px 6px;border-radius:4px;border:1px solid var(--rule-strong)}
+.d-pal kbd.k{font:400 12px/16px var(--sans);color:var(--muted);padding:2px 8px;border-radius:4px;border:1px solid var(--rule-strong)}
 .d-res{max-height:min(624px,calc(100vh - 240px));overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
 .d-pal .g{padding:0;display:flex;flex-direction:column;gap:2px}.d-pal .gl{padding:8px 12px;font:400 12px/16px var(--sans);color:var(--faint)}
 .d-pal .it{padding:12px;gap:12px;min-height:56px;border-radius:8px;font:400 15px/var(--lh-body) var(--sans)}.d-pal .it.on,.d-pal .it:hover{background:var(--hover)}
@@ -246,34 +246,34 @@ button.d-kpi:hover{background:var(--raised)}
 
 /* notifications (438:21857) */
 .d-notif{padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 80px);border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
-.d-nh{display:flex;align-items:center;gap:12px;padding:10px 4px 8px 16px}.d-nh b{flex:1;font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
+.d-nh{display:flex;align-items:center;gap:12px;padding:8px 4px 8px 16px}.d-nh b{flex:1;font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
 /* footer and header buttons keep their own 12 px padding; the bar insets 4 px so labels still line up at 16 (Vit 21 Oct: the See all hover touched the panel corner) */
 .d-notif .d-nset,.d-notif .d-nsee{padding:8px 12px}
 .d-nf{display:flex;gap:4px;padding:0 16px 8px}
-.d-nf button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:6px 12px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.d-nf button.on{background:var(--well);color:var(--ink)}
+.d-nf button{display:inline-flex;align-items:center;gap:8px;height:30px;padding:8px 12px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.d-nf button.on{background:var(--well);color:var(--ink)}
 .d-nl{overflow:auto;padding:0 8px 8px}
 .d-ng{font:400 12px/16px var(--sans);color:var(--faint);padding:8px 0 4px 8px}
 .d-ni{cursor:pointer;border-radius:8px}.d-ni .thumb{width:40px;height:40px;border-radius:8px}
 .d-nt{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.d-nt b{font:500 15px/var(--lh-body) var(--sans)}.d-nt small{font:400 12px/16px var(--sans)}
 .d-nt .btn{align-self:flex-start}
 .d-ni:not(.unread) b{font-weight:400;color:var(--muted)}
-.d-nft{display:flex;align-items:center;gap:12px;padding:6px 4px;border-top:1px solid var(--rule)}
+.d-nft{display:flex;align-items:center;gap:12px;padding:8px 4px;border-top:1px solid var(--rule)}
 
 /* theme menu (455:22247), band menu, share */
-.d-theme{width:300px;padding:6px;display:flex;flex-direction:column;border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 12px 32px #00000066}
-.d-mh{padding:6px 10px;font:400 12px/16px var(--sans);color:var(--faint)}
-.d-opt{display:flex;align-items:center;gap:10px;padding:6px 8px;min-height:50px;border-radius:8px;text-align:left;width:100%}
+.d-theme{width:300px;padding:8px;display:flex;flex-direction:column;border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 12px 32px #00000066}
+.d-mh{padding:8px 8px;font:400 12px/16px var(--sans);color:var(--faint)}
+.d-opt{display:flex;align-items:center;gap:8px;padding:8px 8px;min-height:50px;border-radius:8px;text-align:left;width:100%}
 .d-opt:hover{background:var(--well)}.d-opt.on{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 :root:not([data-theme="light"]) .d-opt.on{background:rgba(255,255,255,.12)}
 .d-opt>svg.i.s{width:16px;height:16px}
 .d-prev{width:56px;height:36px;border-radius:4px;overflow:hidden;display:flex;flex:none}.d-prev i{flex:1}
 .d-ot{flex:1;min-width:0;display:flex;flex-direction:column}.d-ot b{font:500 15px/var(--lh-body) var(--sans)}.d-ot small{font:400 12px/16px var(--sans);color:var(--muted)}
-.d-app{display:flex;flex-direction:column;gap:8px;padding:6px 10px 8px;font:400 12px/16px var(--sans)}
+.d-app{display:flex;flex-direction:column;gap:8px;padding:8px 8px 8px;font:400 12px/16px var(--sans)}
 .d-app .seg{display:flex}.d-app .seg button{flex:1 1 0;min-width:0}.d-app .seg button:last-child{flex:none}
 .d-app .seg button.on{font-weight:500;box-shadow:none}
 .d-div{display:block;height:1px;background:var(--rule);margin:0}
-.d-sug{display:flex;align-items:center;gap:10px;padding:8px 10px;font:400 12px/16px var(--sans);color:var(--muted)}.d-sug svg{flex:none;margin-top:0;fill:currentColor}
-.d-act{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:38px;border-radius:8px;width:100%;text-align:left;font:400 15px/var(--lh-body) var(--sans)}.d-act:hover{background:var(--well)}
+.d-sug{display:flex;align-items:center;gap:8px;padding:8px 8px;font:400 12px/16px var(--sans);color:var(--muted)}.d-sug svg{flex:none;margin-top:0;fill:currentColor}
+.d-act{display:flex;align-items:center;gap:8px;padding:8px 8px;min-height:38px;border-radius:8px;width:100%;text-align:left;font:400 15px/var(--lh-body) var(--sans)}.d-act:hover{background:var(--well)}
 .d-sq{width:32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans);flex:none}
 .d-share{width:318px;padding:8px;display:flex;flex-direction:column;gap:4px;border-radius:var(--r-lg);border:1px solid var(--rule-strong);box-shadow:0 12px 32px #00000073}
 /* grows with its text (it was 80 high and cut the note); the dismiss is a 32 px box centred on the title line, 4 from the edge (Figma Explainer) */
@@ -305,7 +305,7 @@ button.d-kpi:hover{background:var(--raised)}
 /* assistant history: link to What it can do */
 .d-hist{min-height:calc(100vh - 120px)}
 .d-hsp{flex:1}
-.d-hfoot{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--rule);text-align:left;width:100%}
+.d-hfoot{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid var(--rule);text-align:left;width:100%}
 .d-hfoot:hover{background:var(--surface)}.d-hfoot svg{margin-top:3px;flex:none}
 .d-hfoot span{display:flex;flex-direction:column;gap:2px;min-width:0}.d-hfoot b{font-weight:500}.d-hfoot small{font-size:12px;line-height:16px;color:var(--muted)}
 
@@ -315,19 +315,19 @@ button.d-kpi:hover{background:var(--raised)}
 .cs-col{display:flex;flex-direction:column;gap:16px;min-width:0}
 .cs-sec .d-lic{width:32px;height:32px}
 .cs-acc{align-items:center}.cs-acc::after{display:none}
-.cs-dir{flex-wrap:nowrap}.cs-dir button{display:inline-flex;align-items:center;gap:6px}
+.cs-dir{flex-wrap:nowrap}.cs-dir button{display:inline-flex;align-items:center;gap:8px}
 .cs-sub{padding:4px 12px 0}
 .cs-cal .cs-role{flex:none;white-space:nowrap}
 .cs-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--faint)}
 .cs-dot.gigs{background:var(--accent)}.cs-dot.personal{background:var(--ok)}.cs-dot.rehearse{background:var(--draft)}.cs-dot.mcal{background:var(--paid)}
-.cs-log{display:flex;flex-direction:column;gap:6px;padding:0 12px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
-.cs-log>span{display:flex;gap:12px}.cs-log .mono{width:120px;flex:none;font-size:12px}
+.cs-log{display:flex;flex-direction:column;gap:4px;padding:0 12px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
+.cs-log>span{display:flex;gap:12px}.cs-log .mono{width:120px;flex:none;font-size:12px;line-height:16px}
 .cs-cfs{display:flex;flex-direction:column;gap:12px;padding:0 12px}
 .cs-cf{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:var(--r-lg);border:1px solid var(--att);background:var(--canvas)}
-.cs-cfh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cs-cfh b{font-weight:500;flex:1;min-width:0}.cs-cfh .mono{font-size:13px;color:var(--muted)}
+.cs-cfh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cs-cfh b{font-weight:500;flex:1;min-width:0}.cs-cfh .mono{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 /* the title keeps at least 160 px, so on phones the tag wraps under it instead of squeezing the title to 4 lines (gate finding, 26 Oct) */
 .cs-cfh b{flex:1 1 160px}.cs-cfh{row-gap:4px}
-.cs-sides{display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
+.cs-sides{display:flex;flex-direction:column;gap:4px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .cs-sides span{display:flex;gap:8px;align-items:flex-start}.cs-sides svg{margin-top:2px;flex:none}
 .cs-cfa{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 /* the note box spans the card like the webcal box below it (Vit 26 Oct: left alignment) */
@@ -348,14 +348,14 @@ button.d-kpi:hover{background:var(--raised)}
 .tl-card .btn{align-self:flex-start}
 .tl-ch{display:flex;align-items:center;gap:8px}
 .tl-steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:8px}
-.tl-steps li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;column-gap:10px}
-.tl-steps li::before{content:counter(s);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px}
+.tl-steps li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;column-gap:8px}
+.tl-steps li::before{content:counter(s);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:12px;line-height:16px}
 .tl-steps b,.tl-out b{font-weight:500}.tl-steps small,.tl-out small{font-size:12px;line-height:16px;color:var(--muted)}
-.tl-out{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-.tl-out li{display:flex;gap:10px;align-items:flex-start}.tl-out li>svg{margin-top:3px;flex:none;color:var(--bad)}
+.tl-out{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.tl-out li{display:flex;gap:8px;align-items:flex-start}.tl-out li>svg{margin-top:3px;flex:none;color:var(--bad)}
 .tl-out span{display:flex;flex-direction:column;gap:2px}
 @media (max-width:1100px){.tl-grid{grid-template-columns:1fr}.tl-side{position:static}}
-@media (max-width:839.98px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 6px}
+@media (max-width:839.98px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 8px}
  .d-add{top:3px;right:2px;width:18px;height:18px;border:0;background:transparent;color:var(--muted);border-radius:4px}.d-add svg.i.s{width:12px;height:12px}.d-day.photo .d-add{color:var(--ink)}.cs-cal .cs-role{display:none}.cs-log>span{flex-direction:column;gap:0}.tl-f{align-self:stretch;flex-wrap:nowrap}.tl-f button{flex:1;padding:0 8px}}
 
 @media (max-width:1280px){.d-asst.withrec{grid-template-columns:280px minmax(0,1fr)}.d-asst .d-record,.d-ahd [data-act="asstpanel"]{display:none}}
@@ -365,7 +365,7 @@ button.d-kpi:hover{background:var(--raised)}
  .d-hist{display:none;position:static;max-height:none;border-right:0;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:16px}.d-hist.open{display:flex}
  .d-histbtn{display:inline-flex}.d-ahd{flex-wrap:wrap}.d-ahd .grow{order:-1;flex-basis:100%}.d-center{min-height:calc(100vh - 100px)}
  .d-one{flex-direction:column}.d-choices.three{grid-template-columns:1fr}.d-tiles{grid-template-columns:1fr 1fr}
- .d-day{min-height:72px;padding:4px}.d-ev{font-size:10px;padding:1px 4px}.d-wd span{padding:6px 4px}
+ .d-day{min-height:72px;padding:4px}.d-ev{font-size:10px;padding:1px 4px}.d-wd span{padding:8px 4px}
  .d-empty,.d-box{padding:32px 16px}
  .d-dh small{display:none}
 }
@@ -380,7 +380,7 @@ button.d-kpi:hover{background:var(--raised)}
 :root[data-genre="electronic"] .d-first .d-chip{box-shadow:inset 0 0 0 1px #ffffff1a;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 :root[data-genre="electronic"] .d-first .d-comp{box-shadow:inset 0 0 0 1px #ffffff24,0 16px 40px #00000059;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 :root[data-genre="electronic"] .d-first .d-mode{background:#ffffff14}
-.d-nf .c{font:400 12px/16px var(--sans);padding:1px 6px;border-radius:var(--r-pill)}
+.d-nf .c{font:400 12px/16px var(--sans);padding:1px 8px;border-radius:var(--r-pill)}
 
 /* group count says what it counts and ends on the same edge as the rows' arrows (Vit 21 Oct: "4 and 5 look misleading") */
 .tl-sec .acc-sh h2{flex:1}.tl-count{margin-left:auto;margin-right:12px}
@@ -419,7 +419,7 @@ button.d-kpi:hover{background:var(--raised)}
 @media (max-width:839.98px){.d-asst .d-ahd{display:flex!important}}
 /* "Tonight, LT-0041" on the hero photo: a white glass chip like the fact chips on booking photos, so it reads on any image
    (Vit 21 Oct: the lilac text was not visible) */
-.d-tonight .d-k{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);color:#fff;
+.d-tonight .d-k{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);color:#fff;
   background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 /* Electronic light: the scan lines over the aurora are much lighter, so text on top stays readable (Vit 21 Oct) */
 :root[data-genre="electronic"][data-theme="light"]{--aurlines:repeating-linear-gradient(rgba(10,16,32,.05) 0 1px,transparent 1px 4px)}
@@ -427,7 +427,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-busy{flex-direction:row!important;align-items:center;gap:12px!important}.d-busylogo{display:inline-flex;color:var(--ink)}.d-busylogo svg{width:72px;height:auto;--logo-bg:var(--canvas)}
 .d-comp.d-pulse{animation:d-pulse .9s ease-out}@keyframes d-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 10px transparent}}@media (prefers-reduced-motion:reduce){.d-comp.d-pulse{animation:none}}
 /* calendar event chip with the venue thumbnail; text on the plain day, full contrast */
-.d-ev{display:flex;align-items:center;gap:6px;min-width:0}
+.d-ev{display:flex;align-items:center;gap:8px;min-width:0}
 .d-ev .d-evth{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none;margin-left:-4px}
 .d-ev>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
@@ -437,7 +437,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-daylist,.d-more{display:none}
 @media (max-width:599.98px){
  .d-month{border:0;border-radius:0;background:none;overflow:visible}
- .d-wd{background:none}.d-wd span{padding:4px 0 6px;text-align:center}
+ .d-wd{background:none}.d-wd span{padding:4px 0 8px;text-align:center}
  .d-wk,.d-month.week .d-wk{min-height:0!important;box-shadow:inset 0 1px 0 var(--rule)}.d-wk::after{display:none}
  .d-day,.d-day:first-child{box-shadow:none!important;background:none!important;min-height:56px!important;padding:var(--space-1) 2px!important;align-items:center;gap:var(--space-1)!important;cursor:pointer}
  .d-dn{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font:400 15px/20px var(--sans)}
@@ -457,7 +457,7 @@ button.d-kpi:hover{background:var(--raised)}
  .d-dlr img,.d-dlr .ph0{width:36px;height:36px;border-radius:8px;object-fit:cover;flex:none;background:var(--well)}
  .d-dlr .tt{flex:1;min-width:0;font:500 15px/20px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .d-dlr>svg.i{width:14px;height:14px;color:var(--muted);flex:none}
- .d-dlr.add{color:var(--accent-ink)}.d-dlr.add .tt{font-weight:400}.d-dlr.add>svg.i{width:16px;height:16px;color:inherit;margin-inline:10px}
+ .d-dlr.add{color:var(--accent-ink)}.d-dlr.add .tt{font-weight:400}.d-dlr.add>svg.i{width:16px;height:16px;color:inherit;margin-inline:8px}
 }
 /* a ghost button that starts a line lines its label up with the text above; the -12 px margin keeps its hover area (Vit 26 Oct, Calendar sync) */
 .cs-cfa>.btn.ghost.s,.cs-page .acc-row .ctl>.btn.ghost.s:only-child{margin-left:-12px}
