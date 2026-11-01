@@ -130,7 +130,7 @@
 .bd-split .bd-prow::after{display:none}
 
 /* side panel: pad 20, gap 28; its sections indent the head and body by 12 */
-.bd-panel{background:var(--surface);border-radius:12px;padding:20px 12px;display:flex;flex-direction:column;gap:28px}
+.bd-panel{display:flex;flex-direction:column;gap:28px}
 .bd-pgroup{display:flex;flex-direction:column;gap:16px;padding:20px 0;border-radius:12px}
 .bd-actg.open{border-radius:8px}
 .bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:12px}

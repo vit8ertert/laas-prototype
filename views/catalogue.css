@@ -135,7 +135,7 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-drop>svg.i{width:20px;height:20px}
 .cat-drop:hover{background:var(--surface)}
 .cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}.cat-drop small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.cat-panel{background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:24px}
+.cat-panel{display:flex;flex-direction:column;gap:24px}
 .cat-panel h3{letter-spacing:-.1px}
 .cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:8px}
 .cat-panel .grp>.t-label{font:400 13px/var(--lh-label) var(--sans)}

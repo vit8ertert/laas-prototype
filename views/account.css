@@ -127,7 +127,7 @@ button.acc-li:hover{background:var(--hover)}
 .acc-th .d{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 
 /* Account cards (custom sections: no border, 20 padding, heading 18/24) */
-.acc-card{background:var(--surface);border-radius:12px;padding:var(--card);display:flex;flex-direction:column;gap:var(--stack)}
+.acc-card{display:flex;flex-direction:column;gap:var(--stack)}
 /* rows in a list touch; the divider separates them, as in the Figma List row (Vit 22 Oct: no extra spacing) */
 .acc-card>.acc-si+.acc-si,.acc-card>.acc-li+.acc-li{margin-top:calc(-1 * var(--stack))}
 .acc-ch{display:flex;align-items:center;gap:12px}
