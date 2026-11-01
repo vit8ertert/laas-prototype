@@ -2,8 +2,8 @@
    text in the full colour, fill the same colour at 6 %, a 1 px border the same colour at 19 % (drawn inside, takes no space).
    One rule for every tag-like element: tags, status chips, booking pills, calendar events, counts, record chips.
    Loaded after the area styles so it wins. Each element only sets --tc, the colour. */
-:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){--tc:var(--muted)}
-:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){
+:where(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs .c,.cat-tabs .c,.m-tabs .c,.ml-tabs .c,.aud-tabs .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){--tc:var(--muted)}
+:is(.tag,.schip,.bd-pill,.d-ev,.rec,.tabs .c,.bk-tabs .c,.cat-tabs .c,.m-tabs .c,.ml-tabs .c,.aud-tabs .c,.trk-fmt,.d-nf .c,.sidebar .nav .count){
   background:color-mix(in srgb,var(--tc) 6.3%,transparent)!important;
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 19%,transparent)!important;
   color:var(--tc)!important}
