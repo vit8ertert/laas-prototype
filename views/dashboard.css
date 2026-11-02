@@ -392,7 +392,7 @@ button.d-kpi:hover{background:var(--raised)}
 .d-hist{gap:4px;padding-right:32px}
 .d-hh{display:flex;align-items:center;gap:4px;margin:0 0 4px 0}.d-hh .grow{flex:1}
 .d-hh .btn.on{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
-.d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:8px 12px!important;margin-bottom:4px}
+.d-newchat{align-self:stretch!important;justify-content:center!important;padding:8px 12px!important;margin-bottom:4px}  /* the panel's main action, filled and above the search so it never reads as a second field (Vit 2 Nov) */
 .d-hsearch{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--faint);margin-bottom:4px}
 .d-hsearch input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font:400 14px/20px var(--sans)}
 .d-hsearch:focus-within{box-shadow:inset 0 0 0 1px var(--ink)}

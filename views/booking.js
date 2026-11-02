@@ -182,7 +182,7 @@ L.OVERLAYS.bdrecord=()=>{const opts=[['Leave 30 DKK open','The invoice stays par
  <div class="field"><label for="rh">How</label><select class="input" id="rh"><option>Bank transfer, business account</option><option>MobilePay</option><option>Cash</option></select></div>
  <div class="field"><label for="ri">Into</label><select class="input" id="ri"><option>Band account, Danske Bank</option><option>Mette Ravn, private MobilePay</option></select><span class="help">or a member’s private MobilePay</span></div></div>
  <div class="bd-gapq" role="radiogroup" aria-label="30 DKK is missing. What is it?"><p>30 DKK is missing. What is it?</p>${opts.map(([t,d],i)=>`<button class="bd-opt ${S.bdd.gap===i?'on':''}" role="radio" aria-checked="${S.bdd.gap===i}" data-act="bdgap" data-i="${i}"><i></i><span><span>${t}</span><small>${d}</small></span></button>`).join('')}</div>
- <div class="bd-mf"><span>Undo later records a correction; it does not take back the money.</span><button class="btn ghost" data-act="close">Cancel</button><button class="btn accent" data-act="recorded">${ic('check')}Record 1.470 DKK</button></div></div>`;};
+ <div class="bd-mf"><span>Undo later records a correction; it does not take back the money.</span><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="recorded">${ic('check')}Record 1.470 DKK</button></div></div>`;};
 
 /* ---------- pay page (what Mette sees) ---------- */
 L.VIEWS.paypage=()=>{const paid=S.bdd.venuePaid;

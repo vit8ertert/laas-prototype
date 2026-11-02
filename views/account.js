@@ -260,7 +260,7 @@ L.VIEWS.plan=()=>{const cur=S.plan,name={free:'Free',band:'Band',pro:'Pro'}[cur]
 L.OVERLAYS.accupgrade=()=>`<div class="scrim acc-scrim" data-act="close"></div><div class="modal acc-upg" role="dialog" aria-modal="true" aria-label="Invoices are on Pro"><h2 class="t-title">Invoices are on Pro</h2><p class="muted">Send this invoice with a pay link, and LAAS chases it for you. Your bookings and data stay the same on any plan.</p>
  ${['Invoices with a card and bank pay link','Automatic reminders before and after due','Settle a gig and split the payouts','Export for your bookkeeper'].map(f=>`<span class="acc-f">${ic('check','s')}${f}</span>`).join('')}
  <p class="acc-small">199 DKK a month for the whole band after 14 free days. Cancel any time, you go back to Band.</p>
- <div class="row"><button class="btn ghost" data-act="close">Not now</button><button class="btn accent" data-act="accstartpro">Try Pro free for 14 days</button></div></div>`;
+ <div class="row"><button class="btn secondary" data-act="close">Not now</button><button class="btn accent" data-act="accstartpro">Try Pro free for 14 days</button></div></div>`;
 /* call from any "Send invoice": L.needsPro(() => open the invoice) shows the upgrade when the band is not on Pro */
 L.needsPro=next=>{if(S.plan==='pro'){next&&next();return false;}A.afterPro=next||null;S.overlay={type:'accupgrade'};L.render();return true;};
 L.FLOWS.push(['Upgrade at the moment of need','Band plan presses Send invoice',()=>{S.plan='band';L.go('booking');setTimeout(()=>{S.overlay={type:'accupgrade'};L.render();},160);}]);
@@ -455,7 +455,7 @@ function obSteps(st){const ob=S.onboarding;
   <p class="acc-obfoot">Already have an account? <button class="link" data-act="obexit">Log in</button>. By continuing you accept the <button class="link" data-act="acctoast" data-msg="Terms open in a new tab">terms</button> and the <button class="link" data-act="acctoast" data-msg="Privacy policy opens in a new tab">privacy policy</button>.</p>`;
  case 1:return head('Check your inbox','We sent a 6-digit code and a sign-in link to vital@lowtide.dk. Both work for 15 minutes.')
   +`<div class="acc-code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" inputmode="numeric" maxlength="1" value="${d}" data-digit="${i}" ${i===3?'autofocus':''}>`).join('')}</div>
-  <div class="row"><button class="btn secondary" data-act="accoblink">${ic('mail')}Open Gmail</button><button class="btn ghost" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div>
+  <div class="row"><button class="btn secondary" data-act="accoblink">${ic('mail')}Open Gmail</button><button class="btn secondary" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div>
   <p class="acc-obfoot">Wrong address? <button class="link" data-ob="0">Use a different email</button>.</p>`;
  case 2:return head('About you','Takes a minute. You can change all of it in Account.')
   +`<div class="acc-obphoto"><img class="round" src="${S.photos.you||IMG('booker')}" alt=""><div><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label><span class="help">Square, at least 400 px. Shown on the day sheet.</span></div></div>
@@ -471,7 +471,7 @@ function obSteps(st){const ob=S.onboarding;
    <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${[...GENRES,...obGenres().filter(g=>!GENRES.includes(g))].map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${esc(g)}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. <button class="link" data-act="accgadd">Add “<span id="acc-gnew"></span>”</button></span></div>
    <span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
   <div class="field"><span class="acc-lbl">How many of you?</span><div class="segmented-control seg acc-size">${['Just me','2','3–4','5+'].map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>
-  <div class="row"><button class="btn ghost" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
+  <div class="row"><button class="btn secondary" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
   const desc={label:'The LAAS look, lilac on dark',metal:'Black and bone, hard type',electronic:'Electric navy and lime',classical:'Ivory, gold and burgundy'};
   /* Vit 21 Oct: genre and band size are asked on "Your band"; this step is the look only (Figma 443:19646 still has the older version) */
@@ -480,17 +480,17 @@ function obSteps(st){const ob=S.onboarding;
   return head('Pick your look',match==='label'?`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. You can change it any time in Settings.`:`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. We suggest ${TNAME[match]} for ${ob.genre.toLowerCase()}.`)
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
   <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
-  <div class="row"><button class="btn ghost" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
+  <div class="row"><button class="btn secondary" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
  case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
   +`<ol class="acc-obinv" aria-label="Bandmates to invite">${rows.map(([m,r],i)=>`<li><div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div></li>`).join('')}</ol>
   <button class="btn ghost s acc-add" data-act="accobrow">${ic('plus','s')}Add another</button>
   <p class="acc-obfoot">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only, good for a manager or family.</p>
-  <div class="row"><button class="btn ghost" data-act="accobskip">Skip for now</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}Send 2 invites</button></div>`;}
+  <div class="row"><button class="btn secondary" data-act="accobskip">Skip for now</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}Send 2 invites</button></div>`;}
  case 6:return `<div class="acc-join"><img src="${S.photos.band||IMG('band-collage')}" alt=""><div><b class="t-heading">Low Tide</b><span>Indie rock, Odense, 3 members</span></div></div>`
   +head('Vital invited you as Member','You’ll see gigs, the day sheet and your own payouts. Money and sending stay with Owner and Admin.')
   +fld('acc-jn','Your name','Mia Holm',360)+fsel('acc-jp','You play',['Bass','Drums','Guitar','Keys','Vocals'],240)
-  +`<div class="row"><button class="btn ghost" data-act="accnotme">Not me</button><button class="btn accent" data-act="accjoin">Join Low Tide</button></div>`;
+  +`<div class="row"><button class="btn secondary" data-act="accnotme">Not me</button><button class="btn accent" data-act="accjoin">Join Low Tide</button></div>`;
  }}
 L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.ob-ph:not(.in)').forEach(i=>{if(i.complete&&i.naturalWidth){OB_SEEN.add(i.dataset.ph);setTimeout(()=>i.classList.add('in'),20);}}),30);setTimeout(()=>{S.logoIntroTag=1},2300);const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;
  queueMicrotask(()=>{fitWin();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
