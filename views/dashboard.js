@@ -30,9 +30,9 @@ S.asstChat??='move';S.asstLog??={};S.asstWho??=null;S.asstCtxOff??={};S.askCtx??
 /* ---------- small building blocks ---------- */
 const tag=(k,l)=>`<span class="tag ${k}">${l}</span>`;
 const sh=(t,meta,act)=>`<div class="section-header d-sh"><h3 class="t-heading">${t}</h3>${meta?(act?`<button class="d-shm link-quiet" ${act}>${meta}</button>`:`<span class="d-shm">${meta}</span>`):''}</div>`;
-const kpi=(label,val,delta,o={})=>`<${o.go?'button':'div'} class="d-kpi ${o.att?'att':''}" ${o.go||''}><span class="d-kl">${label}</span><span class="d-kv ${o.faint?'faint':''}">${val}</span><span class="d-kd ${o.att?'attc':o.ok?'okc':''}">${delta}</span></${o.go?'button':'div'}>`;
+const kpi=(label,val,delta,o={})=>`<${o.go?'button':'div'} class="kpi-tile d-kpi ${o.att?'att':''}" ${o.go||''}><span class="d-kl">${label}</span><span class="d-kv ${o.faint?'faint':''}">${val}</span><span class="d-kd ${o.att?'attc':o.ok?'okc':''}">${delta}</span></${o.go?'button':'div'}>`;
 const card=(title,meta,t,go)=>`<button class="d-card" ${go}><span class="d-cb"><b>${title}</b><small>${meta}</small></span>${t||''}${ic('chevr','s')}</button>`;
-const tile=(img,t,m,go,cls='')=>`<button class="d-tile ${cls}" ${go}><img src="${IMG(img)}" alt=""><b>${t}</b><small>${m}</small></button>`;
+const tile=(img,t,m,go,cls='')=>`<button class="release-tile d-tile ${cls}" ${go}><img src="${IMG(img)}" alt=""><b>${t}</b><small>${m}</small></button>`;
 const roleViewer=()=>S.role==='viewer';
 const curBand=()=>(S.bands&&(S.bands.find(b=>b.id===S.bandId)||S.bands[0]))||{id:'lt',name:'Low Tide',ini:'LT',meta:'Owner: 3 members'};
 const bn=()=>esc(curBand().name);
@@ -70,7 +70,7 @@ function firstVisit(){const c0=FIRST[S.genre]||FIRST.label;const c={...c0,q:esc(
 /* ---------- dashboard sections ---------- */
 const DAY=[['14:00','Load-in','Back entrance, ask for Mette'],['16:30','Soundcheck','45 min, house engineer'],['19:00','Doors','Guest list 6, laminates at the desk'],['20:00','Set','75 min, encore allowed',1],['23:00','Curfew','Load-out by 23:45']];
 function tonight(){const v=roleViewer();
- return `<div class="d-tonight" data-sec="tonight" role="button" tabindex="0" data-go="gigday"><img src="${IMG('stagedive')}" alt=""><div class="d-tt">${tag('confirmed','Confirmed')}<span class="d-k">Tonight, LT-0041</span></div><span style="flex:1"></span>
+ return `<div class="tonight-card d-tonight" data-sec="tonight" role="button" tabindex="0" data-go="gigday"><img src="${IMG('stagedive')}" alt=""><div class="d-tt">${tag('confirmed','Confirmed')}<span class="d-k">Tonight, LT-0041</span></div><span style="flex:1"></span>
   <h2>Hotel gig, Hotel Skov, Aarhus</h2><div class="d-tm">${v?'Load-in 14:00, on stage 20:00':'<span>'+'Load-in 14:00, doors 19:00, set 20:00, 4.500 DKK, Mette +45 …'+'</span>'}${v?'':`<span class="btn secondary s" data-go="gigday">${ic('chevr','s')}Open day sheet</span>`}</div></div>`;}
 function daysheet(){const v=roleViewer();
  return `<section class="d-sec" data-sec="coming">${sh('Day sheet','Fri 24 Oct, v2, updated 16:40, crew copy')}
