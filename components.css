@@ -127,6 +127,8 @@ tbody tr:hover td{background:var(--hover)}
    Figma inside stroke; --ring for a tone: danger, attention, selected), radius 12, padded by --card (20, phones 12). List
    (a settings card of rows, .acc-sec) pads 8 at the sides on desktop, where its rows carry their own 16. Content sets its own gap. */
 :is(.iv-card,.iv-prog,.tl-card,.m-chart,.so-chart,.ml-lk,.acc-plan,.bd-openbox,.bd-amount,.bd-rate,.acc-sec,.acc-card,.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){--ring:var(--rule);background:var(--surface);border:0;box-shadow:inset 0 0 0 1px var(--ring);border-radius:var(--r-lg);padding:var(--card)}
+/* table and list frames are the Card container's List kind (census 19, screen residue): the ring instead of a 1 px border, so rows span the card like the Figma slot, no padding */
+:is(.bk-table,.ml-table,.cv-table,.cat-table,.cv-vlist,.so-clist,.ml-list,.ml-repw){border:0!important;background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule)}
 @media (min-width:600px){.acc-sec:not(.pad):not(.inset){padding:var(--card) var(--space-2)}}  /* phones: rows add no inset, so 12 like any card */
 /* Page header actions (census 7, Figma Page header Actions): buttons 8 apart at every width; the title block keeps 16 to
    them. On phones the header gap is 8 already (compact.css). */
