@@ -113,6 +113,8 @@
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:16px!important;margin-inline:-16px;padding-inline:16px}
   .tabs::-webkit-scrollbar{display:none}.tabs>*{flex:none}
   .tabs button{font-size:14px;line-height:20px}
+  /* the Catalogue tabs drop the row padding (.tabs.cat-tabs{padding:0}), so the -16 pull left them on the screen edge; on the gutter like every other tab row (Vit 2 Nov, Releases) */
+  .tabs.cat-tabs{margin-inline:0}
 }
 @media (max-width:599.98px){
   /* fact chips and filter chips: one scrolling line instead of three wrapped lines */
@@ -310,9 +312,6 @@
   .bk-tr:not(.ex-r)>.m:nth-child(3),.bk-tr:not(.ex-r)>.m:nth-child(6){display:none!important}
   .bk-tr:not(.ex-r) .tt img,.bk-tr:not(.ex-r) .bk-thumb{width:36px;height:36px}
   /* Send preview: Not now and Edit on one line, the send action full width below it */
-  .send>.row:last-child{flex-wrap:wrap;row-gap:8px}
-  .send>.row:last-child>.btn.accent{order:3;flex:1 1 100%;justify-content:center}
-  .send>.row:last-child>.btn.secondary{margin-left:auto}
   /* "Change" belongs to the address above it (4 px), the message card starts a new group (16 px) (Vit 26 Oct) */
   .send>.row.t-label>.link{margin-top:calc(var(--space-1) - 8px)}
   .send>.row.t-label{margin-bottom:calc(var(--space-4) - 8px)}
@@ -608,6 +607,12 @@
   .drawer .df>span:empty{display:none}
   .drawer .df>.btn:first-child:has(~span:empty){order:-1;flex-basis:100%}
   .bd-mf>span{order:9;flex:1 1 100%}
+  /* form footers in the page (Compose, the Booking and Thread send panels; Vit 2 Nov, Compose): the two main actions 50/50,
+     the ghost (Discard, Snooze, Not now) full width under them, the note above */
+  :is(.send>.row:last-child,.ml-cfoot){flex-wrap:wrap;gap:8px}
+  :is(.send>.row:last-child,.ml-cfoot)>span:empty{display:none}
+  :is(.send>.row:last-child,.ml-cfoot)>.btn{flex:1 1 calc(50% - 4px);min-width:0;margin-left:0;justify-content:center;height:44px;order:2}
+  :is(.send>.row:last-child,.ml-cfoot)>.btn.ghost{order:3;flex-basis:100%}
   /* found on the sweep: the New booking sheet kept its desktop 24 px inset on a phone */
   .drawer:has(.bk-nbd) .df{padding-inline:16px}
 }
