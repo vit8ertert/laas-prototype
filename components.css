@@ -127,6 +127,10 @@ tbody tr:hover td{background:var(--hover)}
    Figma inside stroke; --ring for a tone: danger, attention, selected), radius 12, padded by --card (20, phones 12). List
    (a settings card of rows, .acc-sec) pads 8 at the sides on desktop, where its rows carry their own 16. Content sets its own gap. */
 :is(.iv-card,.iv-prog,.tl-card,.m-chart,.so-chart,.ml-lk,.acc-plan,.bd-openbox,.bd-amount,.bd-rate,.acc-sec,.acc-card,.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){--ring:var(--rule);background:var(--surface);border:0;box-shadow:inset 0 0 0 1px var(--ring);border-radius:var(--r-lg);padding:var(--card)}
+/* search boxes are the search Input (census 19, screen residue): 38 high, radius 8, the strong ring, like .cat-search */
+:is(.acc-gsearch,.d-hsearch){height:38px!important;padding:0 12px!important;gap:8px!important;border:0!important;border-radius:8px!important;box-shadow:inset 0 0 0 1px var(--rule-strong)!important;background:var(--surface)!important}
+:is(.acc-gsearch,.d-hsearch) input{font:400 15px/var(--lh-body) var(--sans)!important}
+:is(.acc-gsearch,.d-hsearch):focus-within{box-shadow:inset 0 0 0 1px var(--ink)!important}
 /* table and list frames are the Card container's List kind (census 19, screen residue): the ring instead of a 1 px border, so rows span the card like the Figma slot, no padding */
 :is(.bk-table,.ml-table,.cv-table,.cat-table,.cv-vlist,.so-clist,.ml-list,.ml-repw){border:0!important;background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule)}
 @media (min-width:600px){.acc-sec:not(.pad):not(.inset){padding:var(--card) var(--space-2)}}  /* phones: rows add no inset, so 12 like any card */
