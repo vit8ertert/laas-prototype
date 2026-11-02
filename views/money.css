@@ -357,7 +357,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-bd .m-bdr .mono,.m-bd.out .m-bdr .mono{width:64px;text-align:right}
 .m-bd .m-bdr:hover{background:var(--hover)}
 .m-bd:has(.m-bdr[data-i="0"]:hover) .m-seg[data-i="0"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="1"]:hover) .m-seg[data-i="1"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="2"]:hover) .m-seg[data-i="2"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="3"]:hover) .m-seg[data-i="3"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="4"]:hover) .m-seg[data-i="4"]{stroke-width:24}
-@media (max-width:839.98px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center}.m-bdrs{width:100%}}
+@media (max-width:839.98px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center;padding:16px}.m-bdrs{width:100%}}
 
 /* stacked monthly bars */
 .m-bars12{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:100%}
