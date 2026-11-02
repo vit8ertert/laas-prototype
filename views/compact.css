@@ -119,7 +119,7 @@
   .cat-filters>*,.ml-chips>*,.cv-chips>*{flex:none}
 
 }
-@media (max-width:599.98px){.m-kpi,.cat-kpi,.aud-kpi{gap:4px!important}}
+@media (max-width:599.98px){.kpi-tile{gap:4px!important}}  /* every KPI tile, the Dashboard ones too (census 19) */
 @media (max-width:599.98px){
   .acc-row{row-gap:var(--space-2)!important}
   /* inputs at 16 px: iOS Safari zooms the page into any field set smaller */
