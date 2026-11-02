@@ -41,7 +41,8 @@
   .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up .34s cubic-bezier(.32,.72,0,1) both}
   .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
-  .modal{left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
+  /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
+  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 
@@ -594,3 +595,19 @@
 /* and the step itself is centred in the space under the logo (Vit 26 Oct, Sign-up: "center this vertically"); a step
    taller than the screen starts right under the logo and scrolls */
 @media (max-width:599.98px){.acc-ob .l>.acc-obform{margin-top:auto!important;margin-bottom:auto!important}}
+/* Step, sheet and dialog actions on a phone (research T459, Vit 2 Nov "Yes, apply them"): they fill the width and
+   are 44 high (Button L, the 44 pt touch target). One action is full width; two share the row 50/50 with the main
+   action on the right. In sheets and dialogs a label too long for half the row stacks the buttons, main action on
+   top (wrap-reverse), and a tertiary ghost (Full editor, Copy invite link, Reset) gets its own row under them.
+   Inline actions (header, list rows, settings rows, banners) keep their content width. */
+@media (max-width:599.98px){
+  .acc-obform>.row{flex-wrap:nowrap;gap:8px}
+  .acc-obform>.row>.btn{flex:1 1 0;min-width:0;justify-content:center;height:44px}
+  :is(.drawer .df,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:8px}
+  :is(.drawer .df,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px}
+  .drawer .df>span:empty{display:none}
+  .drawer .df>.btn:first-child:has(~span:empty){order:-1;flex-basis:100%}
+  .bd-mf>span{order:9;flex:1 1 100%}
+  /* found on the sweep: the New booking sheet kept its desktop 24 px inset on a phone */
+  .drawer:has(.bk-nbd) .df{padding-inline:16px}
+}
