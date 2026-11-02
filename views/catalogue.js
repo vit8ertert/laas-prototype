@@ -197,9 +197,9 @@ L.VIEWS.release=()=>{const r=R();
 /* ---------- past (imported) release ---------- */
 L.VIEWS.pastrelease=()=>{const r=PASTC.find(x=>x.id===S.params.id)||PASTC[0];const secs=r.tracks.reduce((a,t)=>{const [m,s]=t[1].split(':');return a+ +m*60+ +s},0);
  return `<div class="page cat-page cat-detail">${back('Releases','catalogue')}
- <div class="cat-rhead"><img class="cat-cover" src="${IMG(r.img)}" alt=""><div class="id"><span class="t-label muted">${r.kind}, ${r.tracks.length} track${r.tracks.length>1?'s':''}, ${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}</span><h1 class="t-display">${r.title}</h1><div class="sl">${tag(r.tag[0],r.tag[1])}<span class="muted">Out ${r.date}, imported today</span></div></div>
+ <div class="grid2 cat-ov"><div class="cat-col"><div class="cat-rhead"><img class="cat-cover" src="${IMG(r.img)}" alt=""><div class="id"><span class="t-label muted">${r.kind}, ${r.tracks.length} track${r.tracks.length>1?'s':''}, ${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}</span><h1 class="t-display">${r.title}</h1><div class="sl">${tag(r.tag[0],r.tag[1])}<span class="muted">Out ${r.date}, imported today</span></div></div>
   <div class="acts"><button class="btn secondary" data-act="copytext" data-text="https://laas.app/r/${r.id}">${ic('copy','s')}Copy link</button></div></div>
- <div class="grid2 cat-ov"><div class="cat-col"><section class="cat-sec"><div class="hd"><h3 class="t-heading cat-h">Tracks</h3></div>
+<section class="cat-sec"><div class="hd"><h3 class="t-heading cat-h">Tracks</h3></div>
   <div class="trk-list">${r.tracks.map((t,i)=>L.trow(i+1,t[0],t[1],r.title,{sub:t[2]?`<small class="c-att">${t[2]}</small>`:''})).join('')}</div></section></div>
  <aside class="cat-panel"><div class="grp"><h3 class="t-heading cat-h">Earning</h3>${[['Streams',`<span class="mono">${r.streams}</span>`],['Paid out',`<span class="mono">${r.earn}</span> DKK`],['Koda',r.koda],['Distributor',r.distributor]].map(([a,b])=>`<div class="key-value-row fact"><span class="t-label muted">${a}</span>${/^<span class="mono">[^<]*<\/span>$/.test(b)?b:`<span>${b}</span>`}</div>`).join('')}</div>
   ${L.storesPanel(r)}

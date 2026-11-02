@@ -201,6 +201,7 @@ button.acc-si:hover{background:var(--hover)}
 /* the tighter step keeps the same logo-to-progress-bar distance as every other step (32 px; Vit 22 Oct) */
 .acc-ob.snd .l>.acc-obtop+.bar4{margin-top:16px}
 .acc-obtop{display:flex;align-items:center;gap:12px;height:24px}
+.acc-obtop>.logo{order:-2}.acc-obtop>.flowbar{order:-1}  /* the prototype's flow switcher sits by the logo, so the step counter ends on the progress bar's right edge (Vit 2 Nov) */
 .acc-obtop .t-meta{color:var(--muted)}
 .acc-obtop .logo svg{height:24px;width:auto;fill:var(--ink);display:block}
 .acc-obform{margin:auto 0;width:440px;max-width:100%;display:flex;flex-direction:column;gap:20px}
