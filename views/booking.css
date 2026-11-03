@@ -2,7 +2,7 @@
    Exact pass 21 Oct 2026: every number below is from design/figma-dump/digest (Booking · detail 297:4814 and its siblings). */
 
 /* page: detail pages max 1200 px (width rule 27), centred like data pages */
-.page.bd-page{max-width:1200px;margin:0 auto;position:relative;isolation:isolate;gap:var(--section)}
+.page.bd-page{max-width:var(--layout-page-detail);margin:0 auto;position:relative;isolation:isolate;gap:var(--section)}
 .bd-tint{display:none}
 .page.bd-page.bd-gd{max-width:none}
 /* object colour header tint across the whole main panel (Hotel Royal tint from the venue data), scrolls with the page */
@@ -165,8 +165,8 @@
 .bd-rf{display:flex;justify-content:flex-end;gap:12px}
 
 /* modals: send preview 720 (Figma "Send preview": pad 20 24, gap 16, radius 12, border rule-strong on --top), dialogs 560 */
-.bd-modal.w720{width:min(720px,calc(100% - 32px));padding:20px 24px;gap:16px;border:1px solid var(--rule-strong);border-radius:12px}
-.bd-modal.w560{width:min(560px,calc(100% - 32px));top:72px;max-height:calc(100% - 96px)}
+.bd-modal.w720{width:min(var(--layout-dialog-wide),calc(100% - 32px));padding:20px 24px;gap:16px;border:1px solid var(--rule-strong);border-radius:12px}
+.bd-modal.w560{width:min(var(--layout-dialog),calc(100% - 32px));top:72px;max-height:calc(100% - 96px)}
 .bd-scrim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent)}
 .bd-send{display:flex;flex-direction:column;gap:16px}
 .bd-send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
@@ -211,7 +211,7 @@
 .bd-rules{display:flex;flex-direction:column;gap:16px}.bd-rules p{margin:0}
 
 /* pay page preview: the article is the Figma frame "Pay page · venue" (720, pad 48 80 64, gap 32, canvas); the ring only marks it as a preview */
-.page.bd-paywrap{max-width:1200px;margin:0 auto;align-items:center}
+.page.bd-paywrap{max-width:var(--layout-page-detail);margin:0 auto;align-items:center}
 .bd-prev{align-self:stretch;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .bd-pay{width:min(720px,100%);background:var(--canvas);box-shadow:0 0 0 1px var(--rule);border-radius:16px;padding:48px 80px 64px;display:flex;flex-direction:column;gap:32px}
 .bd-payhead{display:flex;align-items:center;gap:34px;height:18px}

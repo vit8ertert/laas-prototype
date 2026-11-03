@@ -38,11 +38,11 @@
   /* search takes the whole screen */
   .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}
   /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
-  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up var(--dur-4) var(--ease-emphasized) both}
+  .drawer{top:auto;left:0;width:100%;height:calc(100% - var(--layout-sheet-gap) - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up var(--dur-4) var(--ease-emphasized) both}
   .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 

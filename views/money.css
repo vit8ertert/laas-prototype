@@ -583,7 +583,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 @media (max-width:599.98px){.iv-steps{padding:12px}}
 
 /* wide drawer for invoices: lines fit on one row (Vit 21 Oct: "use more width, lots of overlaps") */
-.drawer.m-wide{width:min(640px,100%)}
+.drawer.m-wide{width:min(var(--layout-drawer-wide),100%)}
 .m-wide .m-iline{display:grid;grid-template-columns:minmax(0,1fr) 140px 150px;gap:12px}
 .m-wide .m-iline .m-w110{width:auto}
 .m-wide .m-dates{display:grid;grid-template-columns:1fr 1fr;gap:16px}.m-wide .m-dates .field{width:auto}

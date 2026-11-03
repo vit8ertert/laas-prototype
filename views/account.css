@@ -181,7 +181,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-since{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* Upgrade modal (520, Figma 435:22438) */
-.modal.acc-upg{width:min(520px,calc(100% - 32px));top:120px;padding:24px;gap:16px;border-radius:16px;background:var(--top);box-shadow:var(--elev-3)}
+.modal.acc-upg{width:min(var(--layout-dialog),calc(100% - 32px));top:120px;padding:24px;gap:16px;border-radius:16px;background:var(--top);box-shadow:var(--elev-3)}
 .acc-upg p{margin:0}
 .acc-upg>p.muted{font:400 15px/var(--lh-body) var(--sans)}
 .acc-f{display:flex;gap:8px;align-items:center;font:400 15px/var(--lh-body) var(--sans)}

@@ -73,7 +73,7 @@
 .cv-empty+.cv-foot{font:400 13px/var(--lh-label) var(--sans);gap:8px}
 
 /* ---- detail pages: Contact, Venue (page max 1200) ---- */
-.cv-detail{max-width:1200px;gap:24px;position:relative}
+.cv-detail{max-width:var(--layout-page-detail);gap:24px;position:relative}
 .cv-tint{position:absolute;left:0;right:0;top:0;height:var(--tint-h,320px);pointer-events:none;z-index:0;border-radius:12px 12px 0 0;background:linear-gradient(180deg,color-mix(in srgb,var(--tint) var(--tint-a,26%),transparent),color-mix(in srgb,var(--tint) 0%,transparent))}
 .cv-detail>*:not(.cv-tint){position:relative;z-index:1}
 .cv .btn.cv-back{align-self:flex-start;height:34px;gap:8px}

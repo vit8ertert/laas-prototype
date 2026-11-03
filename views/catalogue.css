@@ -2,7 +2,7 @@
    Exact pass 21 Oct 2026: every size below is from design/figma-dump/digest (section "UX · Catalogue & gear").
    Figma borders that sit inside the box (not counted in the frame size) are drawn as inset box-shadows. */
 .cat-page{gap:24px}
-.cat-detail{max-width:1200px;gap:28px}                       /* width rule: detail pages max 1200 */
+.cat-detail{max-width:var(--layout-page-detail);gap:28px}                       /* width rule: detail pages max 1200 */
 .cat-ph .grow{min-width:min(240px,100%)}
 .cat-ph .grow p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .cat-actions{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
