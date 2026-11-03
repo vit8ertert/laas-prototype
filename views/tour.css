@@ -1,14 +1,14 @@
 /* LAAS prototype · first-run tour. Card = popover values (radius 12, overlay, inside stroke 1 rule-strong,
    shadow 0 16 48 #00000073); dim = scrim value #00000059; spotlight ring accent-strong. Tokens only. */
-.tour{position:fixed;inset:0;z-index:80;pointer-events:none}
+.tour{position:fixed;inset:0;z-index:var(--z-toast);pointer-events:none}
 .tour.tour-dim{background:#00000059;pointer-events:auto}
-.tour-spot{position:fixed;border-radius:var(--r-lg);box-shadow:0 0 0 2px var(--accent-strong),0 0 0 9999px #00000059;transition:left .28s cubic-bezier(.2,.8,.2,1),top .28s cubic-bezier(.2,.8,.2,1),width .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1)}
+.tour-spot{position:fixed;border-radius:var(--r-lg);box-shadow:0 0 0 2px var(--accent-strong),0 0 0 9999px #00000059;transition:left var(--dur-3) var(--ease-standard),top var(--dur-3) var(--ease-standard),width var(--dur-3) var(--ease-standard),height var(--dur-3) var(--ease-standard)}
 .tour-card{position:fixed;width:340px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:8px;padding:20px;border-radius:var(--r-lg);background:var(--overlay);
-  box-shadow:inset 0 0 0 1px var(--rule-strong),0 16px 48px #00000073;pointer-events:auto;animation:tour-in .26s cubic-bezier(.2,.8,.2,1) both;
-  transition:left .28s cubic-bezier(.2,.8,.2,1),top .28s cubic-bezier(.2,.8,.2,1)}
+  box-shadow:inset 0 0 0 1px var(--rule-strong),var(--elev-3);pointer-events:auto;animation:tour-in var(--dur-3) var(--ease-standard) both;
+  transition:left var(--dur-3) var(--ease-standard),top var(--dur-3) var(--ease-standard)}
 .tour-card h3{margin:0}
 .tour-card p{margin:0}
-.tour-card.tour-center{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:400px;padding:24px;gap:12px;animation:tour-pop .3s cubic-bezier(.2,.8,.2,1) both}
+.tour-card.tour-center{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:400px;padding:24px;gap:12px;animation:tour-pop var(--dur-3) var(--ease-standard) both}
 .tour-mark{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;background:var(--accent-tint);color:var(--accent-ink)}
 .tour-mark svg.i{width:20px;height:20px}
 .tour-foot{display:flex;align-items:center;gap:8px;margin-top:8px}

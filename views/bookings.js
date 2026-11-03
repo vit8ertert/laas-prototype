@@ -131,11 +131,11 @@ document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.tar
 
 /* ---------- new booking drawer ---------- */
 const sel=(id,val,opts)=>`<span class="bk-sel"><select class="input" id="${id}">${opts.map(o=>`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}</select>${ic('down')}</span>`;
-const lead=(icon,id,val)=>`<span class="bk-lead">${ic(icon)}<input class="input" id="${id}" value="${esc(val)}"></span>`;
+const lead=(icon,id,val,pk)=>`<span class="bk-lead">${ic(icon)}<input class="input" id="${id}"${pk?` data-picker="${pk}"`:''} value="${esc(val)}"></span>`;
 DR.newbooking=(name='')=>{const what=name?cap(name):'Hotel gig';return {type:'drawer',title:'New booking',sub:'Five things to start, the rest later',
  body:`<div class="bk-nbd"><div class="bk-describe"><div class="r">${ic('ai','s')}<span>Hotel Skov, Friday 24 Oct, 20:00, 4.500 kr, Mette books</span></div><div class="m">${ic('check','s')}<span>Filled 5 of 5 from your words, venue and contact matched</span></div></div>
  <div class="field"><label for="nbw">What</label><input class="input" id="nbw" value="${esc(what)}"><span class="help">From your words, edit if wrong</span></div>
- <div class="field w-280"><label for="nbt">When</label>${lead('calendar','nbt','Fri 24 Oct 2026, 20:00')}</div>
+ <div class="field w-280"><label for="nbt">When</label>${lead('calendar','nbt','Fri 24 Oct 2026, 20:00','datetime')}</div>
  <div class="field w-240"><label for="nbk">Kind</label>${sel('nbk','Concert',['Concert','Rehearsal','Private','Corporate','Festival'])}</div>
  <div class="field"><label for="nbv">Where</label>${lead('pin','nbv','Hotel Skov, Aarhus')}<span class="help">Matched, capacity 300</span></div>
  <div class="field w-400"><label for="nbc">Who booked</label>${sel('nbc','Mette Krogh',['Mette Krogh','Jens Skov'])}<span class="help">Matched, 2 contacts at venue</span></div>
@@ -176,7 +176,7 @@ VIEWS.newbooking=()=>{const n=S.nb;
     ${field('Fee',`<input class="input" id="nbfee" value="4.500" inputmode="numeric">`,'DKK, before VAT','w-200')}
     ${field('Payment',sel('nbpay','Invoice, 14 days',['Invoice, 14 days','Invoice, 30 days','Cash on the night','Deposit and balance']),'Deposit optional','w-240')}</div></section>
    <section id="nb-day"><div class="sh"><h2 class="t-heading">Day</h2><span>times go straight to the day sheet</span></div>
-    <div class="bk-times">${field('Date',lead('calendar','nbdate','Fri 24 Oct 2026'),'','date')}${[['Load-in','14:00'],['Soundcheck','16:30'],['Doors','19:00'],['Set','20:00','75 min'],['Curfew','23:00']].map(([l,v,h])=>field(l,`<input class="input" value="${v}" inputmode="numeric" aria-label="${l}">`,h||'')).join('')}</div></section>
+    <div class="bk-times">${field('Date',lead('calendar','nbdate','Fri 24 Oct 2026','date'),'','date')}${[['Load-in','14:00'],['Soundcheck','16:30'],['Doors','19:00'],['Set','20:00','75 min'],['Curfew','23:00']].map(([l,v,h])=>field(l,`<input class="input" value="${v}" inputmode="numeric" aria-label="${l}" data-picker="time">`,h||'')).join('')}</div></section>
    <section id="nb-people"><div class="sh"><h2 class="t-heading">People</h2><span>who plays, who drives</span></div>
     <div class="bk-people">${[['Vital','Vital, vocals'],['Jonas','Jonas, drums, driver'],['Mia','Mia, bass'],['Dep','Dep guitarist needed']].map(([k,l])=>`<button class="bk-cb" role="checkbox" aria-checked="${!!n.people[k]}" data-act="nbperson" data-k="${k}"><span class="box ${n.people[k]?'on':''}">${n.people[k]?ic('check'):''}</span>${l}</button>`).join('')}</div></section>
    <section id="nb-files"><div class="sh"><h2 class="t-heading">Files</h2><span>attach or pull from the venue</span></div>

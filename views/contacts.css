@@ -65,8 +65,8 @@
 .cv-eh p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
 .cv-none .row{justify-content:center;gap:12px;margin:0}
 .cv-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%}
-.cv-card{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s}
-.cv-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.cv-card{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
+.cv-card:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cv-card img{width:100%;height:96px;object-fit:cover;border-radius:8px;display:block}
 .cv-card b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .cv-card small{font:400 12px/16px var(--sans);color:var(--muted)}
@@ -91,9 +91,8 @@
 .cv-acts{display:flex;align-items:center;gap:8px;flex:none}
 .cv-av{width:48px;height:48px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 24px/32px var(--sans);letter-spacing:-.3px;flex:none}
 .cv-av.s{width:32px;height:32px;font:400 13px/var(--lh-label) var(--sans);letter-spacing:0}
-.cv-save{display:inline-flex;align-items:center;gap:8px;font:400 12px/16px var(--sans);color:var(--muted);transition:opacity .3s}
-.cv-save svg{width:16px;height:16px;color:var(--muted);animation:cvspin 1s linear infinite}.cv-save.done svg{animation:none;color:var(--ok)}
-@keyframes cvspin{to{transform:rotate(360deg)}}
+.cv-save{display:inline-flex;align-items:center;gap:8px;font:400 12px/16px var(--sans);color:var(--muted);transition:opacity var(--dur-3)}
+.cv-save svg{width:16px;height:16px;color:var(--muted);animation:spin var(--dur-loop) linear infinite}.cv-save.done svg{animation:none;color:var(--ok)}
 .cv-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
 .cv-main{display:flex;flex-direction:column;gap:40px}
 .cv-panel{display:flex;flex-direction:column;gap:28px}
@@ -153,7 +152,7 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-orgf{width:100%}
 .cv-drawer .cv-orgf svg{left:12px;top:10px;width:18px;height:18px;color:var(--faint)}
 .cv-drawer .cv-orgf .input{padding-left:38px;background-image:none}
-.cv-cvr{display:flex;flex-direction:column;padding:8px;border:1px solid var(--rule-strong);box-shadow:0 8px 24px rgba(0,0,0,.35);border-radius:var(--r-lg);background:var(--surface)}
+.cv-cvr{display:flex;flex-direction:column;padding:8px;border:1px solid var(--rule-strong);box-shadow:var(--elev-2);border-radius:var(--r-lg);background:var(--surface)}
 .cv-cvr>.cv-cvrh{padding:8px 12px 4px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-cvr>.cv-cvrf{white-space:nowrap;padding:4px 12px 8px;font:400 13px/var(--lh-label) var(--sans);color:var(--faint)}
 .cv-cvrrow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;text-align:left;width:100%;position:relative}
@@ -178,8 +177,8 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-tech{display:flex;flex-direction:column;gap:8px}
 .cv-tech>.cv-lab{color:var(--muted)}
 .cv-tgrow{display:flex;align-items:center;gap:8px;text-align:left;font:400 15px/18px var(--sans);color:var(--ink);min-height:20px}
-.cv-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background .15s}
-.cv-tg:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s}
+.cv-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background var(--dur-1)}
+.cv-tg:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform var(--dur-1)}
 .cv-tg.on{background:var(--ink)}.cv-tg.on:after{transform:translateX(14px)}
 .cv-explain{height:80px;overflow:hidden;display:flex;align-items:flex-start;gap:12px;padding:12px 8px 12px 12px;border-radius:8px;background:var(--well)}
 .cv-explain .tx{flex:1;display:flex;flex-direction:column;gap:4px}
@@ -187,11 +186,6 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-explain small{font:400 12px/16px var(--sans);color:var(--muted)}
 .cv-explain img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex:none}
 .cv-explain .cv-x{width:14px;height:14px}.cv-explain .cv-x svg{width:14px;height:14px}
-.cv-drop{border:1px dashed var(--rule-strong);border-radius:8px;padding:24px;background:var(--sunken);display:flex;flex-direction:column;gap:12px}
-.cv-drop>svg{width:20px;height:20px;color:var(--ink)}
-.cv-drop b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
-.cv-drop small{font:400 12px/16px var(--sans);color:var(--muted)}
-.cv-drop .btn{align-self:flex-start;cursor:pointer}
 .cv-src,.cv-dups{display:flex;flex-direction:column;gap:2px;align-items:stretch}
 .cv-src>.cv-lab,.cv-dups>.cv-lab,.cv-maph,.cv-sum>.cv-lab{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-irow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 0;border-radius:8px}
@@ -214,7 +208,7 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-check input:checked{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:inset 0 0 0 1px var(--ink)}
 
 /* sort popover: 260 wide, padding 6, radius 12 */
-.pop.cv-sortpop{width:260px;padding:8px;border:1px solid var(--rule-strong);box-shadow:0 16px 48px #00000073}
+.pop.cv-sortpop{width:260px;padding:8px;border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
 .cv-poph{padding:8px 8px 4px;font:400 12px/16px var(--sans);color:var(--faint)}
 .cv-opt{display:flex;align-items:center;gap:8px;width:100%;padding:8px 8px;border-radius:8px;text-align:left;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .cv-opt:hover{background:var(--well)}
@@ -260,12 +254,12 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-mapc .land{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .cv-mapc .near{fill:color-mix(in srgb,var(--surface) 55%,transparent);stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
 .cv-town circle{fill:var(--faint)}.cv-town text{fill:var(--muted);font:400 12px/1 var(--sans)}
-.cv-pin{cursor:pointer;transition:opacity .2s}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3}
+.cv-pin{cursor:pointer;transition:opacity var(--dur-2)}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3}
 .cv-pin text{fill:var(--canvas);font:500 13px/1 var(--sans)}.cv-pin .lb{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .cv-pin.on circle{fill:var(--accent)}.cv-pin.on text:not(.lb){fill:var(--on-accent)}
 .cv-pin:hover circle{fill:var(--accent)}.cv-pin:focus-visible{outline:none}.cv-pin:focus-visible circle{stroke:var(--ink)}
 /* venue pins only in a city view; their names sit on a halo so streets of coastline never cut them */
-.cv-vpin{cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s}
+.cv-vpin{cursor:pointer;opacity:0;pointer-events:none;transition:opacity var(--dur-3)}
 .cv-vpin circle{fill:var(--muted);stroke:var(--surface);stroke-width:3}.cv-vpin.on circle{fill:var(--accent)}
 .cv-vpin text{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .cv-vpin:hover circle,.cv-vpin:focus-visible circle{fill:var(--accent-strong)}.cv-vpin:focus-visible{outline:none}.cv-vpin:hover text{text-decoration:underline}

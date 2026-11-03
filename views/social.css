@@ -19,7 +19,7 @@
 @media (max-width:599.98px){.so .bk-tr.so-p{height:auto}}
 .so-st{display:flex;align-items:center;gap:8px}
 .so-prog{display:inline-block;width:48px;height:6px;border-radius:999px;background:var(--well);overflow:hidden;flex:none}
-.so-prog i{display:block;height:100%;border-radius:999px;background:var(--accent);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.so-prog i{display:block;height:100%;border-radius:999px;background:var(--accent);transition:width var(--dur-4) var(--ease-standard)}
 .so-prog.wide{flex:1;width:auto;max-width:240px}
 
 /* ---------- accounts strip on Social posts: card grid 240–360 ---------- */
@@ -79,7 +79,7 @@
 .so-chart .m-chh h3{flex:1;min-width:200px}
 .so-bars{display:flex;justify-content:space-between;align-items:flex-end;gap:4px;height:184px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
 .so-bars>div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:40px;flex:1;height:100%}
-.so-bars i{display:block;width:20px;border-radius:4px 4px 0 0;background:var(--accent);transition:height .3s cubic-bezier(.2,.8,.2,1)}
+.so-bars i{display:block;width:20px;border-radius:4px 4px 0 0;background:var(--accent);transition:height var(--dur-3) var(--ease-standard)}
 .so-bars .v{font:400 12px/16px var(--mono);color:var(--muted);min-height:16px}
 .so-bars small{font:400 12px/16px var(--sans);color:var(--faint);white-space:nowrap;padding-bottom:8px}
 .so-chart .table-wrap{max-width:420px}
@@ -109,7 +109,7 @@
 .so-up:hover{color:var(--ink);border-color:var(--ink)}
 .so-seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
 .so-seg button{padding:0 12px;height:30px;border-radius:7px;font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
-.so-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.so-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--elev-1)}
 .seg.so-fit{align-self:flex-start}
 .so-when{display:flex;gap:16px;flex-wrap:wrap}
 .so-w160{width:160px}.so-w240{width:240px}.so-w320{max-width:320px}.so-w400{max-width:400px}
@@ -128,9 +128,6 @@
 .so-quote img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex:none}
 .so-quote p{margin:0;font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 
-/* ---------- spinner ---------- */
-.so-spin{animation:so-spin 1s linear infinite}
-@keyframes so-spin{to{transform:rotate(360deg)}}
 
 /* ---------- narrow screens ---------- */
 @media (max-width:839.98px){.so-choice .bk-choices.two{grid-template-columns:1fr;max-width:360px}}

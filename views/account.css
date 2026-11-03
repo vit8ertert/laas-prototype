@@ -6,7 +6,7 @@
 .acc-ph{display:flex;align-items:flex-start;gap:16px}
 .acc-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .acc-ph p{margin:0;color:var(--muted)}
-.acc-save{display:inline-flex;align-items:center;gap:8px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted);opacity:0;transition:opacity .4s;white-space:nowrap}
+.acc-save{display:inline-flex;align-items:center;gap:8px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted);opacity:0;transition:opacity var(--dur-4);white-space:nowrap}
 .acc-save.on{opacity:1}
 .acc-save.err{color:var(--bad)}
 .acc-save.err .btn{color:var(--bad);height:28px}
@@ -31,16 +31,11 @@
 .acc-sh{display:flex;align-items:center;gap:8px;padding-left:12px}
 .acc-sh h2:not(:only-child){flex:1;min-width:0}
 .acc-dr{display:contents}
-.acc-dr .radio{padding:12px 16px}
-.acc-dr .radio>span{display:flex;flex-direction:column;gap:var(--space-half)}
-.acc-dr .radio .strong{font:500 15px/var(--lh-body) var(--sans)}
-.acc-dr .radio br{display:none}
-.acc-dr .radio .t-meta{display:block}
 /* ghost button flush on its right edge */
 .btn.ghost.s.acc-gr{padding-right:0}
 .btn.ghost.s.acc-gfl{padding-left:0}
 .acc-rows{display:flex;flex-direction:column;gap:4px}
-.acc-row{display:flex;align-items:center;gap:24px;padding:var(--row-y) 12px;border-radius:8px;transition:background .12s}
+.acc-row{display:flex;align-items:center;gap:24px;padding:var(--row-y) 12px;border-radius:8px;transition:background var(--dur-1)}
 .acc-row:hover{background:var(--hover)}
 .acc-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-half);font:400 15px/var(--lh-body) var(--sans)}
 .acc-row .tx span{font-size:15px;line-height:var(--lh-body)}
@@ -75,8 +70,8 @@ button.acc-li:hover{background:var(--hover)}
 .acc-invact{display:flex;gap:8px;padding-left:12px;flex-wrap:wrap}
 
 /* Toggle 34x20: track rule-strong / ink, knob 16 surface, 2 px inset */
-.acc-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background .15s}
-.acc-tg i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s}
+.acc-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background var(--dur-1)}
+.acc-tg i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform var(--dur-1)}
 .acc-tg.on{background:var(--ink)}
 .acc-tg.on i{transform:translateX(14px)}
 
@@ -186,13 +181,12 @@ button.acc-si:hover{background:var(--hover)}
 .acc-since{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* Upgrade modal (520, Figma 435:22438) */
-.modal.acc-upg{width:min(520px,calc(100% - 32px));top:120px;padding:24px;gap:16px;border-radius:16px;background:var(--top);box-shadow:0 24px 64px rgba(0,0,0,.45)}
+.modal.acc-upg{width:min(520px,calc(100% - 32px));top:120px;padding:24px;gap:16px;border-radius:16px;background:var(--top);box-shadow:var(--elev-3)}
 .acc-upg p{margin:0}
 .acc-upg>p.muted{font:400 15px/var(--lh-body) var(--sans)}
 .acc-f{display:flex;gap:8px;align-items:center;font:400 15px/var(--lh-body) var(--sans)}
 .acc-f svg{color:var(--ink)}
 .acc-upg .row{justify-content:flex-end;gap:12px}
-.acc-radios{display:flex;flex-direction:column;gap:8px}
 
 /* ---------- onboarding ---------- */
 .acc-ob{display:grid;grid-template-columns:600px minmax(0,1fr);height:100%;background:var(--canvas);padding:16px 16px 16px 0;box-sizing:border-box}
@@ -246,7 +240,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-ob .r img{width:100%;height:100%;object-fit:cover;display:block}
 .acc-live{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px;padding:0 48px;background:linear-gradient(160deg,var(--surface),var(--sunken) 70%)!important}
 .acc-live .cap{font:400 13px/var(--lh-label) var(--sans);color:#ffffff99}
-.acc-win{--k:.5;position:relative;width:100%;max-width:728px;height:455px;border-radius:12px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.acc-win{--k:.5;position:relative;width:100%;max-width:728px;height:455px;border-radius:12px;overflow:hidden;box-shadow:var(--elev-3)}
 .acc-win::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
 .acc-win>.acc-mini{transform:scale(var(--k));transform-origin:0 0;position:absolute;left:0;top:0}
 .acc-obthemes{display:grid;grid-template-columns:repeat(2,212px);gap:12px;align-items:start}
@@ -256,7 +250,7 @@ button.acc-si:hover{background:var(--hover)}
 .acc-obth .pv{position:relative;display:block;height:96px;border-radius:6px;overflow:hidden;background:var(--sunken)}
 .acc-obth .pv>.acc-mini{transform:scale(.3);transform-origin:0 0;position:absolute;left:0;top:0}
 /* Fits your genre badge: Figma's lime (color/poster/lime), the same in every theme and mode, like Ask (Vit 22 Oct, Q14) */
-.acc-obth .fits{position:absolute;left:8px;top:8px;padding:4px 12px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 13px/var(--lh-label) var(--sans);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.acc-obth .fits{position:absolute;left:8px;top:8px;padding:4px 12px;border-radius:999px;background:var(--poster-lime);color:var(--on-lime);font:500 13px/var(--lh-label) var(--sans);box-shadow:var(--elev-1)}
 .acc-obth .nm{display:flex;align-items:center;gap:var(--space-2);font:500 15px/var(--lh-body) var(--sans)}
 .acc-obth .d{font:400 12px/16px var(--sans);color:var(--muted)}
 
@@ -395,7 +389,7 @@ button.acc-si:hover{background:var(--hover)}
 .aud-empty .hd{display:flex;flex-direction:column;gap:8px;text-align:center}
 .aud-empty .hd p{margin:0;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
 .aud-empty .ch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;align-items:start}
-.aud-choice{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:background .12s}
+.aud-choice{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:background var(--dur-1)}
 .aud-choice:hover{background:var(--raised)}
 .aud-choice img{width:100%;height:96px;border-radius:8px;object-fit:cover;display:block}
 .aud-choice b{font:500 15px/var(--lh-body) var(--sans)}
@@ -454,7 +448,7 @@ button.acc-si:hover{background:var(--hover)}
    were 48 with a 16 inset to match the large buttons) */
 .acc-obstack .btn.secondary.lg{background:color-mix(in srgb,var(--ink) 11%,var(--canvas))!important;box-shadow:none!important;border:0!important}
 /* onboarding photo: the panel shows its own background while the photo loads, then the photo fades in and settles */
-.acc-ob .r img.ob-ph{opacity:0;transform:scale(1.03);transition:opacity .6s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.acc-ob .r img.ob-ph{opacity:0;transform:scale(1.03);transition:opacity var(--dur-5) ease,transform 1.2s var(--ease-standard)}
 .acc-ob .r img.ob-ph.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.acc-ob .r img.ob-ph{transition:none}}
 /* Invite actions on phones (Vit 26 Oct, Members: "all elements left aligned"): the invite row has no inset on phones,

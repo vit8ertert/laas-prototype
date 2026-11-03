@@ -10,10 +10,10 @@
   /* M4: no permanent assistant bar; Ask lives in the tab bar */
   .abar,.abar-mini-wrap{display:none!important}
   .sheet{bottom:16px}
-  .tabbar{display:flex;align-items:center;gap:8px;padding:6px max(12px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:30}
+  .tabbar{display:flex;align-items:center;gap:8px;padding:6px max(12px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:var(--z-nav)}
   .tabbar .tb-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:560px;margin:0 auto}
   .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 12px/16px var(--sans);border-radius:var(--r-lg)}
-  .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background .15s}
+  .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background var(--dur-1)}
   .tb-tab .tl{white-space:nowrap}
   .tb-tab:hover .ti{background:var(--state-hover)}
   .tb-tab.on{color:var(--ink)}.tb-tab.on .ti{background:var(--well)}
@@ -31,23 +31,23 @@
   .cx-group:not(.ph):not(.bk-ph){flex-wrap:nowrap}
 
   /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
-  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up .28s cubic-bezier(.32,.72,0,1) both!important}
+  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up var(--dur-3) var(--ease-emphasized) both!important}
   .pop:not(.pal)::before{content:"";position:absolute;top:12px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
   .scrim[style*="transparent"]{background:var(--scrim)!important}
   /* search takes the whole screen */
   .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}
   /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
-  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up .34s cubic-bezier(.32,.72,0,1) both}
+  .drawer{top:auto;left:0;width:100%;height:calc(100% - 24px - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up var(--dur-4) var(--ease-emphasized) both}
   .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up .3s cubic-bezier(.32,.72,0,1) both}
+  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - 24px);border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 
 /* ---------- sheets of our own (More, Ask, ⋯) ---------- */
-.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up .28s cubic-bezier(.32,.72,0,1) both}
+.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
 @media (min-width:600px){.cx-sheet{left:50%;right:auto;width:min(560px,100%);margin-left:max(-280px,-50%)}}
 /* sheet rows 44 high (Vit 26 Oct: less space between the More sheet rows; 44 keeps a comfortable tap target) */
 .cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0 12px;border-radius:var(--r-md);text-align:left}
@@ -95,7 +95,7 @@
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
   .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-pay,.cv-main,
-  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.strip,.drop{padding:var(--card)!important}
+  :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.strip,.drop:not(.drop-row){padding:var(--card)!important}
   /* columns with no card behind them on a phone sit on the page edge, like the page header (sweep 22 Oct: Today, Money, Settle, booking pages, past release) */
   :is(.d-left,.m-left,.bd-main>.bd-sec,.cat-col,.cat-ov){padding:0!important}
   .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:var(--section)!important}
@@ -135,7 +135,7 @@
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i.s{width:14px!important;height:14px!important}
   .acc-si svg.acc-i32,.cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.ml-emptyic svg,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
   .acc-si{gap:12px!important}
-  .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.cat-coverdrop .ph svg{width:28px!important;height:28px!important}
+  .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.drop-ph svg{width:28px!important;height:28px!important}
   .acc-appicon svg{width:36px}
   .bell svg{width:18px;height:18px}
 }
@@ -283,13 +283,13 @@
 @media (max-width:839.98px){
   html,body{overflow:hidden;overscroll-behavior:none}
   .app{height:100dvh;grid-template-rows:auto minmax(0,1fr)!important}
-  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:31}
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:calc(var(--z-nav) + 1)}
   .main{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
   body:has(.bk-nbe) .tabbar{display:none}
   /* the editor's assistant bar starts collapsed to its Ask button; a tap opens the full bar (M4) */
-  .bk-abar:not(.cx-open){position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:auto;width:auto!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:32}
+  .bk-abar:not(.cx-open){position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:auto;width:auto!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:calc(var(--z-nav) + 2)}
   .bk-abar:not(.cx-open)>:not([data-act="nbask"]){display:none!important}
-  .bk-abar:not(.cx-open)>[data-act="nbask"]{height:48px;padding:0 18px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .bk-abar:not(.cx-open)>[data-act="nbask"]{height:48px;padding:0 18px;box-shadow:var(--elev-2)}
 }
 
 /* Vit's second phone review (22 Oct) */

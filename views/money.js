@@ -325,7 +325,7 @@ L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Mat
  ${steps}
  <div class="iv-grid">${paper}${side}</div></div>${L.abar(d.title,'Ask about this invoice — send it to accounts instead, split it, write it off')}`;};
 L.DR.invpay=id=>{const d=invoiceData(id);const st=invState(d);return {type:'mnydrawer',title:`Record payment, ${d.r[0]}`,sub:`${d.company.split(',')[0]}, ${L.kr(st.due)} DKK open`,
- body:`${field('ipa','Amount, DKK',`<input class="input mono" id="ipa" inputmode="decimal" value="${L.kr(st.due)}">`,'Less than the total keeps the rest open.','m-w160')}${field('ipd','Paid on',`<input class="input" id="ipd" value="21 Oct 2026">`,'','m-w160')}${field('ipw','Into',`<select class="input m-w320" id="ipw"><option>Band account, Danske Bank</option><option>MobilePay box 2214 88</option><option>Cash</option></select>`)}
+ body:`${field('ipa','Amount, DKK',`<input class="input mono" id="ipa" inputmode="decimal" value="${L.kr(st.due)}">`,'Less than the total keeps the rest open.','m-w160')}${field('ipd','Paid on',`<span class="bk-lead">${ic('calendar')}<input class="input" id="ipd" data-picker="date" value="21 Oct 2026"></span>`,'','m-w160')}${field('ipw','Into',`<select class="input m-w320" id="ipw"><option>Band account, Danske Bank</option><option>MobilePay box 2214 88</option><option>Cash</option></select>`)}
  <p class="m-foot m-nopad">Most payments are matched by the bank on their own. Record one here when it came another way, or before the bank shows it.</p>`,
  foot:`<span style="flex:1"></span>${btn('secondary','Cancel','data-act="close"')}${btn('accent','Record payment',`data-act="invpayok" data-id="${id}"`,'check')}`};};
 
@@ -382,7 +382,7 @@ L.DR.newinvoice=()=>{M.inv={lines:2,m2:'',incl:false,remind:true,interest:false}
   <div class="money-line m-line m-tl"><span class="m-tx">To pay, incl. moms</span><span class="m-amt mono" id="mi-ti">4.012</span></div>
   <button class="m-inclsw" data-act="mnyincl" id="mi-sw">Prices shown excl. moms, switch</button></div>
  <div class="m-dates">${field('mi-due','Due',`<span class="m-ifld">${ic('calendar')}<textarea class="m-fin" id="mi-due" rows="1">25 Oct 2026, on the gig date</textarea></span>`,'House default, Net 7 for other invoices')}
- ${field('mi-send','Send on',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="mi-send" value="18 Oct 2026"></span>`,'7 days before due')}</div>
+ ${field('mi-send','Send on',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="mi-send" data-picker="date" value="18 Oct 2026"></span>`,'7 days before due')}</div>
  ${toggle('remind','Reminders, 7 days before, on the day, 3 days after, then by hand')}${toggle('interest','Late interest, reference rate + 8 %')}
  <p class="m-foot m-nopad">Approve books the invoice and locks number 2026-032. Send is a separate step, so you can approve now and send on 18 Oct.</p>`,
  foot:`${btn('ghost s','Cancel','data-act="close"')}<span style="flex:1"></span>${btn('secondary','Save draft','data-act="mnydraft"')}${btn('accent','Approve','data-act="mnyinvapprove"','check').replace("class=\"i s\"","class=\"i\"")}`};};
@@ -394,7 +394,7 @@ L.CHANGE.push(t=>{if(t.classList&&t.classList.contains('m-moms')){t.classList.to
 L.INPUT.push(t=>{if(t.classList&&t.classList.contains('m-amtin')){recalc();return true;}return false;});
 
 L.DR.addexpense=()=>({type:'mnydrawer',title:'Add expense',sub:'A photo of the receipt is enough',
- body:`<label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong" id="rcpt">${S.rcpt?esc(S.rcpt):'Add a photo or PDF of the receipt'}</b><span class="t-meta muted">We read the amount and the date from it.</span><input type="file" accept="image/*,.pdf" hidden data-receipt></label>
+ body:`${L.drop({tid:'rcpt',title:S.rcpt?esc(S.rcpt):'Add a photo or PDF of the receipt',note:'We read the amount and the date from it.',input:'<input type="file" accept="image/*,.pdf" hidden data-receipt>'})}
  ${field('exw','What',`<input class="input" id="exw" value="Parking, Aarhus">`)}
  ${field('exa','Amount, DKK',`<input class="input mono" id="exa" inputmode="decimal" value="480">`,'','m-w160')}
  ${field('exf','For',`<select class="input m-w320" id="exf"><option>Saturday hotel gig</option><option>Club night</option><option>Gear</option><option>Band, general</option></select>`)}
@@ -555,10 +555,10 @@ L.DR.jnew=(pre={})=>{M.jd={tpl:pre.tpl||'blank',paid:1000,editNo:pre.editNo||nul
  return {type:'mldrawer',cls:'ml-wide',title:e&&pre.editNo?`Edit draft ${e.no}`:'New journal entry',sub:e&&pre.editNo?'Still a draft, nothing is booked until you post':`Gets number ${Math.max(...M.je.map(x=>x.no))+1} when saved, every entry must balance`,
  body:`${pre.editNo?'':`<div class="field"><label>Start from</label><div class="m-modes">${Object.entries(TPL).map(([k,[l]])=>`<button class="chip m-chip ${M.jd.tpl===k?'on':''}" data-act="jtpl" data-t="${k}" aria-pressed="${M.jd.tpl===k}">${l}</button>`).join('')}</div><span class="help">Paired entries: the usual two sides are filled, you add the amount</span></div>`}
  <div id="jd-paid">${paidSeg()}</div>
- <div class="m-dates">${field('jd-date','Date',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="jd-date" value="${esc(e?e.date+' 2026':'21 Oct 2026')}"></span>`)}${field('jd-ref','Reference',`<input class="input mono" id="jd-ref" value="${esc(e?e.ref:'')}" placeholder="Receipt or invoice no.">`)}</div>
+ <div class="m-dates">${field('jd-date','Date',`<span class="m-ifld">${ic('calendar')}<input class="m-fin" id="jd-date" data-picker="date" value="${esc(e?e.date+' 2026':'21 Oct 2026')}"></span>`)}${field('jd-ref','Reference',`<input class="input mono" id="jd-ref" value="${esc(e?e.ref:'')}" placeholder="Receipt or invoice no.">`)}</div>
  ${field('jd-desc','Description',`<input class="input" id="jd-desc" value="${esc(e?e.desc:pre.desc||TPL[M.jd.tpl][1])}" placeholder="What happened, in plain words">`)}
  ${field('jd-cp','Counterparty',`<select class="input m-w320" id="jd-cp">${CP.map(c=>`<option ${e&&e.cp===c?'selected':''}>${c}</option>`).join('')}</select>`,'A contact or venue, optional')}
- <label class="drop ml-drop">${ic('clip','s')}<span class="ml-tt"><b id="jd-att">${M.jd.att?esc(M.jd.att):'Attach a receipt or invoice'}</b><small>Image or PDF, kept with the entry for the bookkeeper</small></span><input type="file" accept="image/*,.pdf" hidden data-jfile></label>
+ ${L.drop({row:true,cls:'ml-drop',icon:'clip',tid:'jd-att',title:M.jd.att?esc(M.jd.att):'Attach a receipt or invoice',note:'Image or PDF, kept with the entry for the bookkeeper',input:'<input type="file" accept="image/*,.pdf" hidden data-jfile>'})}
  <div class="m-lines"><span class="m-ll">Lines</span><div id="jd-lines" class="ml-jls">${lines.map(jLine).join('')}</div></div>
  <div class="m-add">${ghostBtn('Add line','data-act="jaddline"','plus')}</div>
  <div class="m-tot"><div class="money-line m-line m-tl"><span class="m-tx">Debit</span><span class="m-amt mono" id="jd-td">0</span></div>
@@ -766,7 +766,7 @@ A.exsave=()=>{const e=exById(S.overlay.exid);const v=id=>(document.getElementByI
  S.overlay=null;L.render();exUndo('Expense saved',snap);};
 const exReceipt=e=>e.rc&&!e.none?`<div class="ex-paper tok-label-light" aria-label="Receipt from ${esc(e.shop)}"><b>${esc(e.shop.split(',')[0])}</b><span>${exDate(e.d)} 2026, ${e.d%2?'14:12':'09:40'}</span><hr><div><span>${esc(e.what)}</span><span>${L.kr(e.amt)}</span></div><div class="faint"><span>Moms 25 %</span><span>${L.kr(Math.round(e.amt*0.2))}</span></div><hr><div><b>Total DKK</b><b>${L.kr(e.amt)}</b></div><span class="faint">${e.how.includes('cash')?'Cash':'Card ****'+(e.by==='Band'?'4410':'7731')}</span></div>`
  :e.none?`<div class="ex-nor">${ic('filetext','s')}<span><b>No receipt</b><br><span class="muted">${esc(e.none)}</span></span></div>`
- :`<div class="ex-drop"><label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong">Add a photo or PDF of the receipt</b><span class="t-meta muted">Drop it here, or take a photo with your phone. We read the date and amount.</span><input type="file" accept="image/*,.pdf" hidden data-exrcpt="${e.id}"></label>
+ :`<div class="ex-drop">${L.drop({title:'Add a photo or PDF of the receipt',note:'Drop it here, or take a photo with your phone. We read the date and amount.',input:`<input type="file" accept="image/*,.pdf" hidden data-exrcpt="${e.id}">`})}
   <div class="ex-dropacts">${btn('secondary s','Use a sample photo',`data-act="exrcpt" data-id="${e.id}"`,'upload')}${e.by!=='Band'?btn('secondary s',`Ask ${e.by}`,`data-act="mnyaskmette" data-who="${e.by}"`):''}${ghostBtn('No receipt','data-act="exnoform"')}</div>
   <div class="field" id="exnrw" hidden><label for="exnr">Why is there no receipt?</label><input class="input" id="exnr" placeholder="Parking meter, no receipt printed"><span class="help">The reason goes to the bookkeeper with the expense.</span>${btn('secondary s','Save reason','data-act="exnorc"')}</div></div>`;
 L.DR.expense=id=>{const e=exById(id);const locked=e.rf==='done';
@@ -775,7 +775,7 @@ L.DR.expense=id=>{const e=exById(id);const locked=e.rf==='done';
  body:`<section class="ex-dsec">${exReceipt(e)}</section>
  ${e.by!=='Band'?`<div class="ex-dpay ${e.rf}">${ic(e.rf==='done'?'check':'users','s')}<span>${e.rf==='done'?`Paid back to ${EXWHO[e.by]}. Amount and payer are locked.`:`${EXWHO[e.by]} paid ${L.kr(e.amt)} DKK from their own pocket. It goes on their next payout.`}</span>${e.rf==='to'?btn('secondary s','Mark paid back','data-act="exdpaid"'):''}</div>`:''}
  ${field('exdw','What',`<input class="input" id="exdw" value="${esc(e.what)}">`)}
- <div class="ex-d2">${field('exda','Amount, DKK',`<input class="input mono" id="exda" inputmode="decimal" value="${L.kr(e.amt)}" ${locked?'disabled':''}>`)}${field('exdd','Date',`<input class="input" id="exdd" value="${exDate(e.d)} 2026">`)}</div>
+ <div class="ex-d2">${field('exda','Amount, DKK',`<input class="input mono" id="exda" inputmode="decimal" value="${L.kr(e.amt)}" ${locked?'disabled':''}>`)}${field('exdd','Date',`<span class="bk-lead">${ic('calendar')}<input class="input" id="exdd" data-picker="date" value="${exDate(e.d)} 2026"></span>`)}</div>
  <div class="ex-d2">${field('exdf','For',`<select class="input" id="exdf">${EXFOR.map(g=>`<option ${g===e.for?'selected':''}>${esc(g)}</option>`).join('')}</select>`,'Counts in the gig\'s result on settle.')}${field('exdc','Category',`<select class="input" id="exdc">${EXCATS.map(c=>`<option ${c===e.cat?'selected':''}>${c}</option>`).join('')}</select>`,'Books it to the matching account.')}</div>
  ${field('exdb','Paid by',`<input class="input" id="exdb" value="${e.by==='Band'?'Band account':EXWHO[e.by]}, ${esc(e.how)}" disabled>`)}
  ${ghostBtn('Split across gigs','data-act="exsplit"','plus')}
