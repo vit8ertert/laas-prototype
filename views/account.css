@@ -114,10 +114,16 @@ button.acc-li:hover{background:var(--hover)}
 .acc-th{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;background:var(--sunken);text-align:left}
 .acc-th:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}.theme-tile.on{background:var(--accent-tint);box-shadow:inset 0 0 0 1px var(--accent-strong)}
 .acc-th .sw{display:flex;height:36px;border-radius:8px;overflow:hidden}
+/* Current and Suggested sit on the tile's top edge, right (Vit 4 Nov, phone: "current and suggested need to be
+   improved"; same place as "Fits your genre" in onboarding): the colours stay whole and the name row is the name only,
+   so names and descriptions line up across the grid at both widths. Rows are 20 apart so the badge clears the tile above.
+   The badge is a solid tag (tags.css .tag.solid, Figma Tag Style=Solid): a tint would show the edge through it. */
+.acc-themes{row-gap:var(--space-5);padding-top:var(--space-2)}
+.acc-th{position:relative}
+.acc-th>.tag{position:absolute;top:calc(var(--space-3) * -1);right:var(--space-3)}
 .acc-th .sw i{flex:1}
 .acc-th .nm{display:flex;align-items:center;gap:8px}
 .acc-th .nm>span:first-child{font:400 15px/var(--lh-body) var(--sans)}
-.acc-th .nm>span:first-child:not(:only-child){flex:1}
 .acc-th.on .nm>span:first-child{color:var(--accent-ink)}
 .acc-th .d{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 
@@ -454,8 +460,3 @@ button.acc-si:hover{background:var(--hover)}
 /* Invite actions on phones (Vit 26 Oct, Members: "all elements left aligned"): the invite row has no inset on phones,
    so its actions start at the same x as the email (Resend's outline at the text edge); Revoke stays --bad */
 @media (max-width:599.98px){.acc-invact{padding-left:0}}
-/* Theme tile badges (Vit 26 Oct, Theme: "fix for both, suggested badge"): the name row wraps, so a badge that does not
-   fit beside the name ("Suggested for you" in a 160 px tile) goes under it instead of running out of the tile */
-.acc-th .nm{flex-wrap:wrap;row-gap:var(--space-1)}
-.acc-th .nm>span:first-child:not(:only-child){flex:1 0 auto}
-.acc-th .nm>.tag{max-width:100%}

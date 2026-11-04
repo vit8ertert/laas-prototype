@@ -255,3 +255,8 @@ input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 /* Venues map city card (Vit 22 Oct: "we need to fix padding?"): the card has no inner padding, so its rows do not bleed;
    they take the row inset and line up with the city heading (16) */
 .cv-mapl .cv-vrow{margin:0!important;width:100%!important;padding:var(--row-y) 16px!important}
+
+/* Solid tag (Vit 4 Nov, theme tiles: "not transparent badge"): the full status colour with dark-on-light / light-on-dark
+   text, for a badge that sits over two surfaces (a tile edge). Figma: Tag Style=Solid. Accent uses the lilac accent. */
+.tag.tag.solid{background:var(--tc)!important;box-shadow:none!important;color:var(--on-dark)!important;font-weight:500}
+.tag.accent.solid{background:var(--accent)!important;color:var(--on-accent)!important}
