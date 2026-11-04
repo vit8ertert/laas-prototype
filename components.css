@@ -356,3 +356,7 @@ html.gated body>*:not(.gate){display:none!important}
 .batch{position:sticky;top:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent-ink);margin-bottom:var(--space-2)}
 .batch b{font:500 15px/var(--lh-body) var(--sans)}
 .batch .btn.ghost{color:var(--accent-ink)}.batch .btn.ghost.bad{color:var(--bad)}
+/* KPI tiles: the note under the number stays on one line (Vit 4 Nov, Audience: three tiles were taller only because
+   the fourth note wrapped). Too long ellipsises; write notes that fit (about 34 characters in a 4-up row).
+   Figma: KPI tile Delta truncates after 1 line. Covers Dashboard, Money, Catalogue and Audience tiles. */
+.kpi-tile>:nth-child(3){white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:100%}

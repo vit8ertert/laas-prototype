@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=80fb68b">
+<link rel="stylesheet" href="tokens.css?v=861890c">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=80fb68b">
-<link rel="stylesheet" href="components.css?v=80fb68b">
-<link rel="stylesheet" href="views/tour.css?v=80fb68b">
-<link rel="stylesheet" href="views/dashboard.css?v=80fb68b">
-<link rel="stylesheet" href="views/bookings.css?v=80fb68b">
-<link rel="stylesheet" href="views/booking.css?v=80fb68b">
-<link rel="stylesheet" href="views/contacts.css?v=80fb68b">
-<link rel="stylesheet" href="views/money.css?v=80fb68b">
-<link rel="stylesheet" href="views/catalogue.css?v=80fb68b">
-<link rel="stylesheet" href="views/account.css?v=80fb68b">
-<link rel="stylesheet" href="views/mail.css?v=80fb68b">
-<link rel="stylesheet" href="views/social.css?v=80fb68b">
-<link rel="stylesheet" href="views/logomotion.css?v=80fb68b">
-<link rel="stylesheet" href="tags.css?v=80fb68b">
-<link rel="stylesheet" href="views/compact.css?v=80fb68b">
+<link rel="stylesheet" href="shell.css?v=861890c">
+<link rel="stylesheet" href="components.css?v=861890c">
+<link rel="stylesheet" href="views/tour.css?v=861890c">
+<link rel="stylesheet" href="views/dashboard.css?v=861890c">
+<link rel="stylesheet" href="views/bookings.css?v=861890c">
+<link rel="stylesheet" href="views/booking.css?v=861890c">
+<link rel="stylesheet" href="views/contacts.css?v=861890c">
+<link rel="stylesheet" href="views/money.css?v=861890c">
+<link rel="stylesheet" href="views/catalogue.css?v=861890c">
+<link rel="stylesheet" href="views/account.css?v=861890c">
+<link rel="stylesheet" href="views/mail.css?v=861890c">
+<link rel="stylesheet" href="views/social.css?v=861890c">
+<link rel="stylesheet" href="views/logomotion.css?v=861890c">
+<link rel="stylesheet" href="tags.css?v=861890c">
+<link rel="stylesheet" href="views/compact.css?v=861890c">
 
 <div id="app"></div>
 
@@ -438,7 +438,7 @@ VIEWS.audience=()=>{const t=S.atab;const head=`<div class="page-header ph"><div 
  const rel=`<section class="card" style="border:1px solid var(--rule);display:flex;flex-direction:column;gap:12px"><h3 class="t-title">First 28 days per release</h3>${AUD.rel.map(([a,b,n])=>`<button class="row" data-go="catalogue" style="text-align:left;gap:12px"><span style="flex:1"><span>${a}</span><br><span class="t-meta muted">${b}</span></span><span class="mono">${n}</span></button>`).join('')}<span class="t-meta muted">Streams in the first 28 days. Pitching on time is the one lever you control; the release plan reminds you.</span></section>`;
  let body;
  if(t==='overview')body=`${S.audBanner!==false?`<div class="banner info">${ic('ai')}<div class="tx"><b>Late Shift pre-save link is live, 112 saves so far</b><span class="t-label muted">Saves show up here daily from Feature.fm. Release day lift is usually 3–5× your current daily listeners; that is the number to beat on 14 Nov.</span></div><button class="btn secondary s" data-go="release">Open the plan</button><button class="btn ghost icon" aria-label="Dismiss" data-act="audbanner" style="width:32px;height:32px">${ic('x','s')}</button></div>`:''}
- <div class="row" style="gap:12px;align-items:stretch">${kpi('Monthly listeners','2.340','Spotify, +18 % vs September',1)}${kpi('Followers','1.102','Spotify 870, YouTube 232',1)}${kpi('Streams, last 28 days','14.800','Spotify, “Low Tide” is 61 %')}${kpi('Figures by hand',S.figures.length+' entries','Tidal, Apple Music, Deezer and more, last 1 Oct')}</div>
+ <div class="row" style="gap:12px;align-items:stretch">${kpi('Monthly listeners','2.340','Spotify, +18 % vs September',1)}${kpi('Followers','1.102','Spotify 870, YouTube 232',1)}${kpi('Streams, last 28 days','14.800','Spotify, “Low Tide” is 61 %')}${kpi('Figures by hand',S.figures.length+' entries','Tidal, Apple Music and more, 1 Oct')}</div>
  <div class="grid2 aud"><div style="display:flex;flex-direction:column;gap:16px">${chart}${services}</div><div style="display:flex;flex-direction:column;gap:16px">${where}${rel}</div></div>`;
  else if(t==='streaming')body=`<div class="grid2 aud"><div style="display:flex;flex-direction:column;gap:16px">${chart}<section class="card" style="border:1px solid var(--rule);padding:20px 20px 4px"><h3 class="t-title">Top songs, last 28 days</h3>${AUD.songs.map(([n,p,c],i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:20px">${i+1}</span><span class="tx"><b>${n}</b><small>${p} of streams</small></span><span class="mono">${c}</span></div>`).join('')}</section></div><div style="display:flex;flex-direction:column;gap:16px">${where}</div></div>`;
  else if(t==='hand')body=`<section class="card" style="border:1px solid var(--rule);padding:20px 20px 4px"><div class="sec-h"><h3 class="t-title" style="flex:1">Figures by hand</h3><button class="btn secondary s" data-act="addfigures">${ic('plus','s')}Add figures</button></div>${S.figures.map(([d,sv,what,n])=>`<div class="list-row" style="cursor:default"><span class="mono muted" style="width:64px">${d}</span><span class="tx"><b>${sv}</b><small>${what}</small></span><span class="mono">${n}</span></div>`).join('')}</section><p class="t-meta muted" style="margin:0">Typed-in figures are kept apart from API figures and drawn dashed on charts.</p>`;
@@ -716,21 +716,21 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=80fb68b"></script>
-<script src="views/bookings.js?v=80fb68b"></script>
-<script src="views/booking.js?v=80fb68b"></script>
-<script src="views/denmark.js?v=80fb68b"></script>
-<script src="views/contacts.js?v=80fb68b"></script>
-<script src="views/money.js?v=80fb68b"></script>
-<script src="views/catalogue.js?v=80fb68b"></script>
-<script src="views/brands.js?v=80fb68b"></script>
-<script src="views/account.js?v=80fb68b"></script>
-<script src="views/mail.js?v=80fb68b"></script>
-<script src="views/social.js?v=80fb68b"></script>
-<script src="views/tour.js?v=80fb68b"></script>
-<script src="views/motion.js?v=80fb68b"></script>
-<script src="views/logomotion.js?v=80fb68b"></script>
-<script src="views/compact.js?v=80fb68b"></script>
-<script src="views/picker.js?v=80fb68b"></script>
-<script src="views/overflow.js?v=80fb68b"></script>
+<script src="views/dashboard.js?v=861890c"></script>
+<script src="views/bookings.js?v=861890c"></script>
+<script src="views/booking.js?v=861890c"></script>
+<script src="views/denmark.js?v=861890c"></script>
+<script src="views/contacts.js?v=861890c"></script>
+<script src="views/money.js?v=861890c"></script>
+<script src="views/catalogue.js?v=861890c"></script>
+<script src="views/brands.js?v=861890c"></script>
+<script src="views/account.js?v=861890c"></script>
+<script src="views/mail.js?v=861890c"></script>
+<script src="views/social.js?v=861890c"></script>
+<script src="views/tour.js?v=861890c"></script>
+<script src="views/motion.js?v=861890c"></script>
+<script src="views/logomotion.js?v=861890c"></script>
+<script src="views/compact.js?v=861890c"></script>
+<script src="views/picker.js?v=861890c"></script>
+<script src="views/overflow.js?v=861890c"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
