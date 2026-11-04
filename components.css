@@ -341,7 +341,7 @@ html.gated body>*:not(.gate){display:none!important}
 .cf-acts{display:flex;justify-content:flex-end;gap:var(--space-2)}
 .btn.danger{background:var(--bad);color:var(--on-dark)}.btn.danger:hover{filter:brightness(1.08)}
 .btn.ghost.bad{color:var(--bad)}
-/* AI label: marks what the assistant made; sparkles + "AI draft", accent tint pill, Label type */
+/* AI label: marks what the assistant made; the assistant mark (Vit's two-sparkle glyph) + "AI draft", accent tint pill, Label type */
 .ai-label{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-2);border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:500 13px/var(--lh-label) var(--sans);white-space:nowrap}
 .ai-label svg.i{width:14px;height:14px}
 .ml-sendh{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
