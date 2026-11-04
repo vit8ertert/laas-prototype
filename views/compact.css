@@ -464,12 +464,47 @@
 @media (max-width:599.98px){
   /* every banner kind: the text under the title stops after two lines, whatever element holds it (span, small, p) */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>:not(:first-child){display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:16px}
-  /* Assistant, empty chat: greeting and suggestions sit above the composer, left-aligned, one suggestion per row
-     (phone chat apps put them where the thumb is) */
-  .d-newc{justify-content:flex-end!important;align-items:stretch!important;text-align:left!important}
-  .d-newc :is(h1,h2,p){text-align:left!important}
-  .d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important}
-  .d-newc .d-chip{justify-content:flex-start!important;text-align:left!important;height:auto!important;min-height:40px;padding:8px 12px!important;border-radius:var(--r-lg)!important;white-space:normal}
+  /* Assistant on a phone (Vit 4 Nov: "the suggestion bubbles not working on mobile"; Claude, ChatGPT and Gemini):
+     the mark and greeting centred in the free space; three suggestions as plain rows (topic icon + text, no box) right
+     above the composer, where the thumb is; Chats is a round icon button */
+  .d-newc{justify-content:flex-start!important;align-items:stretch!important;gap:0!important;padding:0!important;flex:1}
+  /* the empty chat fits the screen between the top bar and the tab bar: no scroll */
+  .d-asst.d-page:has(.d-newc){min-height:calc(100dvh - var(--layout-topbar) - var(--layout-tabbar))!important;display:flex!important;flex-direction:column}
+  .d-asst:has(.d-newc) .d-center{min-height:0!important;flex:1;display:flex;flex-direction:column}
+  .d-greet{display:flex!important;flex-direction:column;align-items:center;gap:var(--space-2);margin-block:auto;padding-block:var(--space-6);text-align:center}
+  .d-greet :is(h2,p){text-align:center!important;margin:0}
+  .d-greet p{max-width:300px}
+  .d-mark{display:grid!important;place-items:center;color:var(--accent);margin-bottom:var(--space-1)}
+  .d-newc .d-mark svg.i{width:32px!important;height:32px!important}
+  .d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:0!important}
+  .d-newc .d-chip{justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important;height:auto!important;min-height:44px;gap:var(--space-3)!important;padding:10px var(--space-1)!important;border-radius:var(--r-md)!important;background:none!important;box-shadow:none!important;white-space:normal;font:400 15px/var(--lh-body) var(--sans)!important;color:var(--ink)!important}
+  .d-newc .d-chip:nth-child(n+4){display:none!important}
+  .d-newc .d-ci-ai{display:none!important}
+  .d-newc .d-ci-t{display:inline-flex!important;color:var(--muted);margin-top:2px}
+  .d-newc .d-chip .d-ci-t svg.i.s{width:20px!important;height:20px!important;fill:none!important}
+  .d-histbtn{width:40px;height:40px;padding:0!important;justify-content:center;border-radius:var(--r-pill)!important}
+  .d-histbtn .lbl{display:none}
+  /* an open conversation stays inside the screen: the chat column may shrink below its widest card (it was 520 on 390) */
+  .d-asst>.d-center{min-width:0!important}
+  /* the composer is one pill: + (opens Add to chat: attach, context, the Plan switch), the text, Send */
+  .d-comp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1)!important;padding:6px!important;border-radius:28px!important}
+  .d-comp>.d-ctxs{flex:1 0 100%;padding:4px 6px 2px}
+  .d-comp>.d-compbar{display:contents!important}
+  .d-comp textarea{order:2;flex:1 1 0;min-width:0;min-height:40px!important;height:40px;max-height:120px;padding:10px var(--space-1)!important;field-sizing:content}
+  .d-comp .d-addctx{order:1;width:40px;height:40px;padding:0!important;justify-content:center;border-radius:var(--r-pill)!important}  /* no fill (Vit 4 Nov: "plus without a BG") */
+  .d-comp .d-send{order:3;width:40px;height:40px;padding:0!important;justify-content:center;border-radius:var(--r-pill)!important}
+  .d-comp :is(.d-mode,.d-sp,.lbl){display:none!important}
+  /* Send shows only once there is something to send, as an up arrow (Vit 4 Nov: "on mobile references I cannot see
+     actually anyone use send icon"; Claude, ChatGPT and Gemini show it only after typing) */
+  .d-comp:has(textarea:placeholder-shown) .d-send{display:none!important}
+  .d-comp .d-send svg[data-i=send]{display:none}.d-comp .d-send svg[data-i=arrowUp]{display:block}
+  /* Add to chat sheet: a round close, the title centred, attach tiles, then rows */
+  .cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 8px 12px}
+  .cx-add-h b{text-align:center}
+  .cx-add-h .btn{width:40px;height:40px;padding:0;border-radius:var(--r-pill)}
+  .cx-add-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .cx-add-mode .settings-row{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:var(--space-3)!important;padding:var(--space-2) var(--space-3)!important;border:0!important;background:none!important}
+  .cx-add-mode .settings-row>.tx{flex:1;min-width:0}.cx-add-mode .settings-row>.ctl{flex:none;width:auto!important}
 }
 /* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child{padding-right:0!important;margin-right:0!important}  /* not an icon button: it keeps its square (Vit 31 Oct) */

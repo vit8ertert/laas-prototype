@@ -465,3 +465,8 @@ button.d-kpi:hover{background:var(--raised)}
 /* a ghost button that starts a line lines its label up with the text above; the -12 px margin keeps its hover area (Vit 26 Oct, Calendar sync) */
 .cs-cfa>.btn.ghost.s,.cs-page .acc-row .ctl>.btn.ghost.s:only-child{margin-left:-12px}
 @media (max-width:599.98px){.acc-url>.btn.ghost.s:first-of-type{margin-left:-12px}}
+/* empty chat: the greeting wrapper and the phone-only parts stay out of the desktop layout */
+.d-greet{display:contents}.d-mark,.d-ci-t{display:none}.d-ci-ai{display:contents}
+/* the Plan pill shows the mode on a phone, where the pill composer has no mode menu; desktop shows the menu instead */
+@media (min-width:600px){.d-ctx-mode{display:none!important}.d-ctxs:not(:has(.d-ctx:not(.d-ctx-mode))){display:none}}
+.d-send svg[data-i=arrowUp]{display:none}

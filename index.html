@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=861890c">
+<link rel="stylesheet" href="tokens.css?v=e98f0f2">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=861890c">
-<link rel="stylesheet" href="components.css?v=861890c">
-<link rel="stylesheet" href="views/tour.css?v=861890c">
-<link rel="stylesheet" href="views/dashboard.css?v=861890c">
-<link rel="stylesheet" href="views/bookings.css?v=861890c">
-<link rel="stylesheet" href="views/booking.css?v=861890c">
-<link rel="stylesheet" href="views/contacts.css?v=861890c">
-<link rel="stylesheet" href="views/money.css?v=861890c">
-<link rel="stylesheet" href="views/catalogue.css?v=861890c">
-<link rel="stylesheet" href="views/account.css?v=861890c">
-<link rel="stylesheet" href="views/mail.css?v=861890c">
-<link rel="stylesheet" href="views/social.css?v=861890c">
-<link rel="stylesheet" href="views/logomotion.css?v=861890c">
-<link rel="stylesheet" href="tags.css?v=861890c">
-<link rel="stylesheet" href="views/compact.css?v=861890c">
+<link rel="stylesheet" href="shell.css?v=e98f0f2">
+<link rel="stylesheet" href="components.css?v=e98f0f2">
+<link rel="stylesheet" href="views/tour.css?v=e98f0f2">
+<link rel="stylesheet" href="views/dashboard.css?v=e98f0f2">
+<link rel="stylesheet" href="views/bookings.css?v=e98f0f2">
+<link rel="stylesheet" href="views/booking.css?v=e98f0f2">
+<link rel="stylesheet" href="views/contacts.css?v=e98f0f2">
+<link rel="stylesheet" href="views/money.css?v=e98f0f2">
+<link rel="stylesheet" href="views/catalogue.css?v=e98f0f2">
+<link rel="stylesheet" href="views/account.css?v=e98f0f2">
+<link rel="stylesheet" href="views/mail.css?v=e98f0f2">
+<link rel="stylesheet" href="views/social.css?v=e98f0f2">
+<link rel="stylesheet" href="views/logomotion.css?v=e98f0f2">
+<link rel="stylesheet" href="tags.css?v=e98f0f2">
+<link rel="stylesheet" href="views/compact.css?v=e98f0f2">
 
 <div id="app"></div>
 
@@ -41,6 +41,8 @@ else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select()
 /* ---------- icons (Lucide paths) ---------- */
 const P={
  dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+ arrowUp:'<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
+ camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
  ai:'<path fill="currentColor" stroke="none" d="M 10.427 5.833 C 10.413 5.766 10.354 5.718 10.285 5.718 L 9.583 5.718 C 9.515 5.718 9.456 5.766 9.442 5.833 L 8.481 10.503 C 8.267 11.546 7.493 12.386 6.47 12.686 L 2.47 13.86 C 2.409 13.878 2.367 13.935 2.367 13.998 L 2.367 14.719 C 2.367 14.783 2.409 14.839 2.47 14.857 L 6.47 16.031 C 7.493 16.331 8.267 17.171 8.481 18.215 L 9.442 22.885 C 9.456 22.952 9.515 23 9.583 23 L 10.285 23 C 10.354 23 10.413 22.952 10.427 22.885 L 11.387 18.215 C 11.602 17.171 12.376 16.331 13.399 16.031 L 17.399 14.857 C 17.46 14.839 17.502 14.783 17.502 14.719 L 17.502 13.998 C 17.502 13.935 17.46 13.878 17.399 13.86 L 13.399 12.686 C 12.376 12.386 11.602 11.546 11.387 10.503 L 10.427 5.833 Z"/><path fill="currentColor" stroke="none" d="M 17.771 1.063 C 17.763 1.026 17.731 1 17.694 1 L 17.31 1 C 17.273 1 17.241 1.026 17.233 1.063 L 16.709 3.612 C 16.592 4.182 16.169 4.641 15.611 4.804 L 13.427 5.445 C 13.394 5.455 13.371 5.486 13.371 5.521 L 13.371 5.914 C 13.371 5.949 13.394 5.98 13.427 5.99 L 15.611 6.63 C 16.169 6.794 16.592 7.253 16.709 7.823 L 17.233 10.372 C 17.241 10.409 17.273 10.435 17.31 10.435 L 17.694 10.435 C 17.731 10.435 17.763 10.409 17.771 10.372 L 18.295 7.823 C 18.412 7.253 18.835 6.794 19.393 6.63 L 21.577 5.99 C 21.61 5.98 21.633 5.949 21.633 5.914 L 21.633 5.521 C 21.633 5.486 21.61 5.455 21.577 5.445 L 19.393 4.804 C 18.835 4.641 18.412 4.182 18.295 3.612 L 17.771 1.063 Z"/>',
  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/>',
  money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
@@ -716,21 +718,21 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=861890c"></script>
-<script src="views/bookings.js?v=861890c"></script>
-<script src="views/booking.js?v=861890c"></script>
-<script src="views/denmark.js?v=861890c"></script>
-<script src="views/contacts.js?v=861890c"></script>
-<script src="views/money.js?v=861890c"></script>
-<script src="views/catalogue.js?v=861890c"></script>
-<script src="views/brands.js?v=861890c"></script>
-<script src="views/account.js?v=861890c"></script>
-<script src="views/mail.js?v=861890c"></script>
-<script src="views/social.js?v=861890c"></script>
-<script src="views/tour.js?v=861890c"></script>
-<script src="views/motion.js?v=861890c"></script>
-<script src="views/logomotion.js?v=861890c"></script>
-<script src="views/compact.js?v=861890c"></script>
-<script src="views/picker.js?v=861890c"></script>
-<script src="views/overflow.js?v=861890c"></script>
+<script src="views/dashboard.js?v=e98f0f2"></script>
+<script src="views/bookings.js?v=e98f0f2"></script>
+<script src="views/booking.js?v=e98f0f2"></script>
+<script src="views/denmark.js?v=e98f0f2"></script>
+<script src="views/contacts.js?v=e98f0f2"></script>
+<script src="views/money.js?v=e98f0f2"></script>
+<script src="views/catalogue.js?v=e98f0f2"></script>
+<script src="views/brands.js?v=e98f0f2"></script>
+<script src="views/account.js?v=e98f0f2"></script>
+<script src="views/mail.js?v=e98f0f2"></script>
+<script src="views/social.js?v=e98f0f2"></script>
+<script src="views/tour.js?v=e98f0f2"></script>
+<script src="views/motion.js?v=e98f0f2"></script>
+<script src="views/logomotion.js?v=e98f0f2"></script>
+<script src="views/compact.js?v=e98f0f2"></script>
+<script src="views/picker.js?v=e98f0f2"></script>
+<script src="views/overflow.js?v=e98f0f2"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
