@@ -225,7 +225,7 @@
 /* amount and currency share one baseline at any size (Vit 22 Oct: "alignment of the currency needs to be fixed", it sat 5 px low on phones); the copy button stays centred */
 .bd-amt .n{align-self:baseline}.bd-amt>.btn{align-self:center}
 .bd-amt .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
-.bd-told{background:var(--sunken);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:12px}
+.bd-told{background:var(--sunken);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:12px}
 .bd-told p{margin:0}.bd-pay .t-title{letter-spacing:-.3px}
 .bd-told .bd-2col .input{max-width:none}
 .bd-told .bd-plan{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}

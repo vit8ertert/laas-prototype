@@ -73,7 +73,7 @@ button.m-line:hover{background:var(--raised)}
 .m-ghost i{flex:1;border-radius:4px;background:var(--rule-strong)}.m-ghost i.on{background:var(--accent-strong)}
 
 /* Needs you tasks */
-.m-task{background:var(--sunken);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px}
+.m-task{background:var(--sunken);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:12px}
 .m-task-h{display:flex;align-items:center;gap:8px}
 .m-task p{margin:0;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .m-tacts{display:flex;gap:8px}
