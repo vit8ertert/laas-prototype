@@ -9,6 +9,7 @@ const {S,ic,esc,hl,IMG,V,VENUES,STATUS}=L;
 /* ---------- icons missing from the core set (lucide.dev) ---------- */
 L.P.user??='<circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/>';
 L.P.loader??='<path d="M21 12a9 9 0 1 1-6.219-8.56"/>';
+L.P.download??='<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>';
 L.P.lock??='<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
 
 /* ---------- state ---------- */
@@ -102,9 +103,10 @@ function peopleList(q){
  return rows;
 }
 function peopleBody(q){
- const rows=peopleList(q);const total=S.imported?222:24;
+ const rows=peopleList(q);const total=S.imported?222:24;const sel=S.cv.sel||(S.cv.sel=[]);
  if(!rows.length)return noMatch(q,false);
- const table=`<div class="table-wrap cv-table"><table><colgroup><col><col class="k"><col class="w"><col class="l"><col class="s"><col class="b"></colgroup><thead><tr><th>Name</th><th>Kind</th><th>Where</th><th>Last contact</th><th>Status</th><th class="num">Bookings</th></tr></thead><tbody>${rows.map(c=>`<tr data-go="contact" data-id="${c.id}" tabindex="0"><td class="tt"><b>${hl(c.name,q)}</b></td><td class="m">${hl(c.kind,q)}</td><td class="m">${hl(c.where,q)}</td><td>${c.last}</td><td>${c.status?`<span class="tag ${c.status[0]}">${c.status[1]}</span>`:''}</td><td class="num mono">${c.n}</td></tr>`).join('')}</tbody></table></div>`;
+ const bar=sel.length?L.batch(sel.length,[['mail','Email','cvselmail'],['download','Export','cvselexport'],['trash','Delete','cvseldel',1]],'cvselclear'):'';
+ const table=bar+`<div class="table-wrap cv-table${sel.length?' selecting':''}"><table><colgroup><col><col class="k"><col class="w"><col class="l"><col class="s"><col class="b"></colgroup><thead><tr><th><span class="sel-cell"><input type="checkbox" class="cb" data-cvselall ${sel.length&&sel.length===rows.length?'checked':''} ${sel.length&&sel.length<rows.length?'data-mixed':''} aria-label="Select all ${rows.length}">Name</span></th><th>Kind</th><th>Where</th><th>Last contact</th><th>Status</th><th class="num">Bookings</th></tr></thead><tbody>${rows.map(c=>`<tr data-go="contact" data-id="${c.id}" tabindex="0" ${sel.includes(c.id)?'aria-selected="true"':''}><td class="tt"><input type="checkbox" class="cb" data-cvsel="${c.id}" ${sel.includes(c.id)?'checked':''} aria-label="Select ${esc(c.name)}"><b>${hl(c.name,q)}</b></td><td class="m">${hl(c.kind,q)}</td><td class="m">${hl(c.where,q)}</td><td>${c.last}</td><td>${c.status?`<span class="tag ${c.status[0]}">${c.status[1]}</span>`:''}</td><td class="num mono">${c.n}</td></tr>`).join('')}</tbody></table></div>`;
  const foot=q.trim()
   ?`<div class="cv-foot"><span>${rows.length} of ${total} match “${esc(q.trim())}” in name, venue or city</span><button class="btn ghost s cv-link" data-act="clearcsearch">Clear search</button></div>`
   :`<div class="cv-foot"><span>Showing ${rows.length} of ${total}, sorted by ${SORTS[S.cv.sort]}</span><button class="btn ghost s cv-link" data-act="cvall">${S.cv.all?'Show fewer':`Show all ${total}`}</button></div>`;
@@ -350,4 +352,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='cvorg
 /* flow entry for the empty state; the import flow starts from a filled list */
 {const imp=L.FLOWS.find(f=>f[0]==='Contacts import');if(imp&&!imp.cv){const fn=imp[2];imp[2]=()=>{S.cv.empty=false;S.cv.tab='people';fn();};imp.cv=1;}}
 if(!L.FLOWS.some(f=>f[0]==='Contacts, empty'))L.FLOWS.splice(L.FLOWS.findIndex(f=>f[0]==='Contacts import')+1,0,['Contacts, empty','No contacts yet, add, import or from email',()=>{S.cv.empty=true;S.cv.tab='people';L.go('contacts');}]);
+/* ---------- selection and batch actions (T476): desktop checkbox before the name; phone long-press starts selecting ---------- */
+{const A=L.ACTIONS,sel=()=>S.cv.sel||(S.cv.sel=[]),R=()=>L.render();
+ document.addEventListener('click',e=>{const one=e.target.closest('[data-cvsel]'),all=e.target.closest('[data-cvselall]');if(!one&&!all)return;e.stopPropagation();
+  const s=sel();if(one){const id=one.dataset.cvsel,i=s.indexOf(id);i<0?s.push(id):s.splice(i,1);}else{const ids=peopleList(S.contactSearch||'').map(c=>c.id);S.cv.sel=s.length===ids.length?[]:ids;}R();},true);
+ document.addEventListener('click',e=>{const tr=e.target.closest('.cv-table.selecting tbody tr');if(!tr||e.target.closest('.cb'))return;e.stopPropagation();e.preventDefault();const s=sel(),id=tr.dataset.id,i=s.indexOf(id);i<0?s.push(id):s.splice(i,1);R();},true);
+ let lp=0;document.addEventListener('touchstart',e=>{const tr=e.target.closest('.cv-table tbody tr');if(!tr||sel().length)return;lp=setTimeout(()=>{sel().push(tr.dataset.id);R();},500);},{passive:true});
+ for(const ev of ['touchend','touchmove'])document.addEventListener(ev,()=>clearTimeout(lp),{passive:true});
+ A.cvselclear=()=>{S.cv.sel=[];R();};
+ A.cvselexport=()=>{const n=sel().length;L.toast(`Exported ${n} contact${n===1?'':'s'} as a CSV file`);};
+ A.cvselmail=()=>{const n=sel().length;S.cv.sel=[];L.toast(`New mail to ${n} contact${n===1?'':'s'}`);L.go('compose');};
+ A.cvseldel=()=>{const n=sel().length;L.open('modal',{html:L.confirmM(`Delete ${n} contact${n===1?'':'s'}?`,'Bookings keep the names. You can undo for 10 seconds.','Keep them','cvseldelok',`Delete ${n}`,true)});};
+ A.cvseldelok=()=>{const ids=sel().slice(),gone=PEOPLE.filter(c=>ids.includes(c.id)),at=gone.map(c=>PEOPLE.indexOf(c));gone.forEach(c=>PEOPLE.splice(PEOPLE.indexOf(c),1));S.cv.sel=[];L.close();
+  L.toast(`Deleted ${ids.length} contact${ids.length===1?'':'s'}`,()=>{gone.forEach((c,k)=>PEOPLE.splice(at[k],0,c));});};}
+
 })();

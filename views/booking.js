@@ -44,7 +44,7 @@ const people=rows=>`<div class="bd-rows">${rows.map(([ini,n,note,right,cls])=>`<
 const BICON={info:'ai',attention:'alert',success:'check'};
 const banner=(kind,icon,title,body,btn,id)=>id&&S.bdd.bannerOff[id]?'':`<div class="bd-banner ${kind}">${ic(BICON[kind]||icon)}<div class="tx"><b>${title}</b><span>${body}</span></div>${btn||''}${id?`<button class="bd-x" data-act="bdbannerx" data-id="${id}" aria-label="Dismiss">${ic('x','s')}</button>`:''}</div>`;
 /* status chip: dot, label, chevron opens the status menu; plain = the Tag the Confirmed detail screens use */
-const pill=(cls,label,menu=true,dot=menu)=>menu?`<button class="status-chip bd-pill ${cls}" data-act="statusmenu2" title="Change status">${dot?'<i></i>':''}${label}${ic('down','s')}</button>`:`<span class="tag ${cls} status-chip bd-pill plain ${dot?'dot':''}">${dot?'<i></i>':''}${label}</span>`;
+const pill=(cls,label,menu=true,dot=menu)=>menu?`<button class="status-chip bd-pill ${cls}" data-act="statusmenu2" data-tip="Change status">${dot?'<i></i>':''}${label}${ic('down','s')}</button>`:`<span class="tag ${cls} status-chip bd-pill plain ${dot?'dot':''}">${dot?'<i></i>':''}${label}</span>`;
 const checklist=(k,list)=>`<div class="bd-check">${Object.entries(list).map(([t,on])=>`<label><input type="checkbox" ${on?'checked':''} data-bdcheck="${esc(k)}|${esc(t)}"><span class="bx">${ic('check','s')}</span><span>${t}</span></label>`).join('')}</div>`;
 const ACTS={
  enquiry:[['6 Oct','Mail from Mette Kjær read by the assistant'],['6 Oct','Booking created as Enquiry'],['6 Oct','Reply drafted for you to check']],

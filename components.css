@@ -328,3 +328,29 @@ html.gated body>*:not(.gate){display:none!important}
 .pk-time:hover{background:var(--state-hover)}.pk-time.on{background:var(--accent);color:var(--on-accent)}
 .pk-day:focus-visible,.pk-time:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (max-width:599.98px){.picker.pk-sheet{left:0;right:0;bottom:0;top:auto;justify-content:center;flex-wrap:wrap;padding:var(--space-4) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom,0px));border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:inset 0 1px 0 var(--rule-strong),var(--elev-3);animation:cx-up var(--dur-3) var(--ease-emphasized) both}.picker.pk-sheet .pk-cal{width:min(100%,320px)}.picker.pk-sheet .pk-dow,.picker.pk-sheet .pk-grid{grid-template-columns:repeat(7,40px)}.picker.pk-sheet .pk-day{width:40px;height:40px}.picker.datetime{flex-direction:column;align-items:center}.picker.datetime .pk-times{flex-direction:row;width:268px;max-height:none;overflow-x:auto;gap:var(--space-1)}.picker.datetime .pk-time{width:64px}}
+/* ---------- T476 Should components (4 Nov) ---------- */
+/* Progress bar 1:1 with Figma "Progress bar": 4 high, pill, well track, accent fill; determinate only (a wait without a number is the Spinner) */
+.progress{display:block;height:4px;border-radius:var(--r-pill);background:var(--well);overflow:hidden}
+.progress>i{display:block;height:100%;border-radius:inherit;background:var(--accent-strong);transition:width var(--dur-3) var(--ease-standard)}
+.cat-prog{width:300px;max-width:100%}
+/* Tooltip: one line, ink on top surface, radius sm, LAAS/Elevation/2, layer pop; never holds anything you must click */
+.tip{position:fixed;z-index:var(--z-pop);max-width:280px;padding:var(--space-1) var(--space-2);border-radius:var(--r-sm);background:var(--top);color:var(--ink);font:400 13px/var(--lh-label) var(--sans);box-shadow:var(--elev-2);pointer-events:none;animation:fade var(--dur-1)}
+/* Confirmation dialog: the dialog size; Cancel then the action, right-aligned; danger action is red */
+.modal:has(>.cf-acts){width:min(var(--layout-dialog),calc(100% - 32px))}
+.cf-body{margin:0}
+.cf-acts{display:flex;justify-content:flex-end;gap:var(--space-2)}
+.btn.danger{background:var(--bad);color:var(--on-dark)}.btn.danger:hover{filter:brightness(1.08)}
+.btn.ghost.bad{color:var(--bad)}
+/* AI label: marks what the assistant made; sparkles + "AI draft", accent tint pill, Label type */
+.ai-label{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-2);border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:500 13px/var(--lh-label) var(--sans);white-space:nowrap}
+.ai-label svg.i{width:14px;height:14px}
+.ml-sendh{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+/* Checkbox in tables (Figma Checkbox 142:626, 18 box) and the Batch bar over a table while rows are selected */
+.cb{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent-strong);cursor:pointer}
+.cb[data-mixed]{opacity:.6}
+.sel-cell{display:inline-flex;align-items:center;gap:var(--space-3)}
+.cv-table td.tt{gap:var(--space-3)}
+.cv-table tbody tr[aria-selected="true"]{background:var(--state-selected)}
+.batch{position:sticky;top:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent-ink);margin-bottom:var(--space-2)}
+.batch b{font:500 15px/var(--lh-body) var(--sans)}
+.batch .btn.ghost{color:var(--accent-ink)}.batch .btn.ghost.bad{color:var(--bad)}

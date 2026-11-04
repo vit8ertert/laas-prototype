@@ -158,7 +158,7 @@ const passedList=n=>`<ul class="cat-sub">${['Artwork 3000 × 3000, RGB','No URLs
 function trackRows(){const r=R(),up=r.stage==='uploading',ready=r.stage==='ready'||r.stage==='delivered';
  return LS_TRACKS.slice(0,r.tracks).map((t,i)=>{const last=up&&i===r.tracks-1&&r.progress<100;
   const sub=up?(i===0||last?'':'<small>Checking…</small>'):t[2]&&r.stage!=='delivered'?`<small class="c-att">${t[2]}</small>`:'';
-  if(up)return `<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx">${sub||last?`<b>${t[0]}</b>`:t[0]}${sub}${last?`<span class="cat-prog"><i style="width:${r.progress}%"></i></span>`:''}</span><span class="mono muted">${last?r.progress+' %':t[1]}</span></div>`;
+  if(up)return `<div class="cat-row"><span class="mono faint n">${i+1}</span><span class="tx">${sub||last?`<b>${t[0]}</b>`:t[0]}${sub}${last?L.progress(r.progress,{cls:'cat-prog',label:'Upload'}):''}</span><span class="mono muted">${last?r.progress+' %':t[1]}</span></div>`;
   return L.trow(i+1,t[0],t[1],r.title,{sub});}).join('');}
 
 function relTabBody(){const r=R(),t=S.rtab,st=r.stage;
@@ -188,7 +188,7 @@ L.VIEWS.release=()=>{const r=R();
   <section class="cat-sec"><div class="hd"><h3 class="t-heading cat-h">Tracks</h3><button class="btn ghost s flush" data-act="addtracks">Add track</button></div>
    ${r.tracks?trackRows():`<label class="cat-drop">${ic('upload')}<span class="tx"><span>Drop WAV files here, or add tracks one by one</span><small>Titles come from the file names; you can fix them after.</small></span><input type="file" accept=".wav,audio/*" multiple hidden data-wav></label>`}</section></div>
  <aside class="cat-panel"><div class="grp"><h3 class="t-heading cat-h">Facts</h3>${[['Release date','Fri 14 Nov 2026'],['Distributor','DistroKid'],['UPC',created?'After delivery':st==='delivered'?'<span class="mono">0196922731452</span>':'Pending, from DistroKid'],['Catalogue no.','LT-004'],['Rights','℗ 2026 Low Tide']].map(([a,b])=>`<div class="key-value-row fact"><span class="t-label muted">${a}</span>${/^<span class="mono">[^<]*<\/span>$/.test(b)?b:`<span>${b}</span>`}</div>`).join('')}</div>
-  <div class="grp"><h3 class="t-heading cat-h">Credits and splits</h3>${created?'':`<span class="cat-avs">${PEOPLE.map(p=>`<span title="${p[1]}">${p[0]}</span>`).join('')}</span>`}<span class="t-label muted">${created?'Added per song when tracks are in. Everyone signs before delivery.':'40 / 30 / 30 on all 4 songs. Signed by all three on 3 Oct; locks on delivery.'}</span></div>
+  <div class="grp"><h3 class="t-heading cat-h">Credits and splits</h3>${created?'':`<span class="cat-avs">${PEOPLE.map(p=>`<span data-tip="${p[1]}">${p[0]}</span>`).join('')}</span>`}<span class="t-label muted">${created?'Added per song when tracks are in. Everyone signs before delivery.':'40 / 30 / 30 on all 4 songs. Signed by all three on 3 Oct; locks on delivery.'}</span></div>
   <div class="grp tight"><h3 class="t-heading cat-h">Stores</h3><span class="t-label muted">${created?'Chosen at delivery. Most bands pick all.':st==='delivered'?'Delivered to Spotify, Apple Music, YouTube Music, TikTok and Bandcamp.':'Bandcamp pre-order is live. Spotify, Apple Music, YouTube Music and TikTok go out on delivery.'}</span></div></aside></div>`:relTabBody()}
  <button class="cat-activity" data-act="relactivity">${ic(S.rel.activity?'down':'right','s')}<span>Activity, ${created?'1 event. Vital created the release, just now':'12 events. Last: Sofie added track notes, yesterday'}</span></button>
  ${S.rel.activity?`<div class="cat-acts">${acts.map(a=>`<div><span class="t-label muted">${a[0]}</span><span class="t-label">${a[1]}</span></div>`).join('')}</div>`:''}
@@ -203,7 +203,7 @@ L.VIEWS.pastrelease=()=>{const r=PASTC.find(x=>x.id===S.params.id)||PASTC[0];con
   <div class="trk-list">${r.tracks.map((t,i)=>L.trow(i+1,t[0],t[1],r.title,{sub:t[2]?`<small class="c-att">${t[2]}</small>`:''})).join('')}</div></section></div>
  <aside class="cat-panel"><div class="grp"><h3 class="t-heading cat-h">Earning</h3>${[['Streams',`<span class="mono">${r.streams}</span>`],['Paid out',`<span class="mono">${r.earn}</span> DKK`],['Koda',r.koda],['Distributor',r.distributor]].map(([a,b])=>`<div class="key-value-row fact"><span class="t-label muted">${a}</span>${/^<span class="mono">[^<]*<\/span>$/.test(b)?b:`<span>${b}</span>`}</div>`).join('')}</div>
   ${L.storesPanel(r)}
-  <div class="grp tight"><h3 class="t-heading cat-h">Credits and splits</h3><span class="cat-avs">${PEOPLE.map(p=>`<span title="${p[1]}">${p[0]}</span>`).join('')}</span><span class="t-label muted">40 / 30 / 30, imported from the distributor.</span></div></aside></div></div>${L.abar(r.title)}`;};
+  <div class="grp tight"><h3 class="t-heading cat-h">Credits and splits</h3><span class="cat-avs">${PEOPLE.map(p=>`<span data-tip="${p[1]}">${p[0]}</span>`).join('')}</span><span class="t-label muted">40 / 30 / 30, imported from the distributor.</span></div></aside></div></div>${L.abar(r.title)}`;};
 
 /* ---------- Gear ---------- */
 const gearList=()=>{const g=S.gear,q=g.q.trim().toLowerCase();

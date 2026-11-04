@@ -43,25 +43,13 @@
 :root[data-theme="light"] .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}}
 
-/* light versions of Metal and Electronic (Vit 21 Oct: "metal theme used but no difference whether light or dark").
-   Figma's Light values for these two were copies of Default light (lilac on paper), so switching mode lost the theme.
-   Metal light = ink on bone paper, monochrome like its dark; Electronic light = navy on cool white with the lime accent.
-   Pending in Figma (LAAS · Theme variables, Light mode). Same selectors as tokens.css, loaded later, so these win. */
-:root[data-genre="metal"][data-theme="light"]{--sunken:#e6e2da;--canvas:#efece6;--surface:#faf8f4;--raised:#faf8f4;--overlay:#faf8f4;--top:#faf8f4;--hover:#e9e5dd;--well:#e4e0d7;--rule:#dcd7cd;--rule-strong:#c2bcb0;--ink:#0a0a0a;--muted:#5f5a52;--faint:#857e74;--on-dark:#faf8f4;--accent:#161616;--accent-strong:#0a0a0a;--accent-tint:#e4e0d7;--accent-ink:#0a0a0a;--on-accent:#f3eee4;--draft-tint:#e9e5dd;--draft:#5f5a52}
-@media (prefers-color-scheme: light){:root[data-genre="metal"]:not([data-theme="dark"]){--sunken:#e6e2da;--canvas:#efece6;--surface:#faf8f4;--raised:#faf8f4;--overlay:#faf8f4;--top:#faf8f4;--hover:#e9e5dd;--well:#e4e0d7;--rule:#dcd7cd;--rule-strong:#c2bcb0;--ink:#0a0a0a;--muted:#5f5a52;--faint:#857e74;--on-dark:#faf8f4;--accent:#161616;--accent-strong:#0a0a0a;--accent-tint:#e4e0d7;--accent-ink:#0a0a0a;--on-accent:#f3eee4;--draft-tint:#e9e5dd;--draft:#5f5a52}}
-:root[data-genre="electronic"][data-theme="light"]{--sunken:#e3e9f5;--canvas:#eef2fa;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f3f6fc;--well:#e3e9f5;--rule:#d8e0ef;--rule-strong:#b9c5dc;--ink:#0a1020;--muted:#55627d;--faint:#75819a;--on-dark:#ffffff;--accent:#d9f25a;--accent-strong:#b6cf2e;--accent-tint:#f1f8c8;--accent-ink:#4a5a00;--on-accent:#0a1020;--draft-tint:#e6ebf5;--draft:#55627d}
-@media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--sunken:#e3e9f5;--canvas:#eef2fa;--surface:#ffffff;--raised:#ffffff;--overlay:#ffffff;--top:#ffffff;--hover:#f3f6fc;--well:#e3e9f5;--rule:#d8e0ef;--rule-strong:#b9c5dc;--ink:#0a1020;--muted:#55627d;--faint:#75819a;--on-dark:#ffffff;--accent:#d9f25a;--accent-strong:#b6cf2e;--accent-tint:#f1f8c8;--accent-ink:#4a5a00;--on-accent:#0a1020;--draft-tint:#e6ebf5;--draft:#55627d}}
+/* light Metal and Electronic, and faint text at 3:1 in light mode: now in Figma (LAAS · Theme) and generated into tokens.css (T477, 4 Nov) */
 
 /* detail sections: text and rows line up with the section heading (Vit 21 Oct: "alignment is bad").
    Rows keep 12 px inside for their hover box and bleed 12 px out; plain text and footnotes have no inset */
 .bd-sec :is(.bd-prow,.bd-mrow){margin-inline:-12px}
 .bd-sec>:is(.bd-prose,.bd-foot),.bd-sec .bd-body>:is(.bd-prose,.bd-foot){padding-inline:0}
 
-/* faint text readable in light mode (3:1 or more on surface): Figma's light faint was 2.3:1 on canvas (Vit 21 Oct: "check all") */
-:root[data-theme="light"]:not([data-genre="metal"]):not([data-genre="electronic"]):not([data-genre="classical"]){--faint:#878781}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]):not([data-genre="metal"]):not([data-genre="electronic"]):not([data-genre="classical"]){--faint:#878781}}
-:root[data-genre="classical"][data-theme="light"]{--faint:#857b69}
-@media (prefers-color-scheme: light){:root[data-genre="classical"]:not([data-theme="dark"]){--faint:#857b69}}
 
 /* hover underline: the 'text-decoration: underline' shorthand used across the views resets thickness, offset and colour,
    so the soft underline is forced here (Vit 21 Oct: "still default underline on hover"). Mail subjects keep their fade-in. */
@@ -146,9 +134,7 @@
 :is(.input,input,textarea,select):focus-visible{outline:none!important}
 /* table headers one step darker (Vit 21 Oct, reference: the sidebar "Theme: Label" row): labels in ink, and in light mode the header row sits
    one shade down (sunken instead of canvas); dark mode keeps canvas, a step darker would read as a black bar */
-:root{--th-ink:var(--ink);--th-bg:var(--canvas)}
-:root[data-theme="light"]{--th-bg:var(--sunken)}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--th-bg:var(--sunken)}}
+:root{--th-ink:var(--ink)}  /* --th-bg comes from Figma color/table/header (tokens.css, T477) */
 :is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr){background:var(--th-bg)!important}
 :is(.bk-th,.ml-th,.ec-th,.ml-lth,.cv-table thead tr,.cv-table thead tr th),:is(.bk-th,.ml-th,.ec-th,.ml-lth)>span,table:not(.iv-lines) th{color:var(--th-ink)!important}
 /* no outer frame around the panels (Vit 21 Oct: "we don't need left bottom border, check all outside borders"):

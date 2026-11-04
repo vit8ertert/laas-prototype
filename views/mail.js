@@ -134,7 +134,7 @@ const avatar=(t)=>`<span class="ml-av" aria-hidden="true">${esc(t.ini)}</span>`;
 const linkChip=(t,tag='span')=>t.link?`<${tag} class="ml-link" ${tag==='button'?`data-act="maillink" data-id="${t.id}"`:''}><img src="${IMG(t.link.img)}" alt="">${esc(t.link.label)}</${tag}>`:'';
 const bookingChip=id=>{const b=L.BOOKINGS.find(x=>x.id===id);if(!b)return '';const v=b.venue&&L.V(b.venue);
  return `<span class="ml-link">${v?`<img src="${IMG(v.img)}" alt="">`:`<span class="ml-linkic">${ic('calendar','s')}</span>`}${esc(b.title)}</span>`;};
-const iconBtn=(icon,label,act,id,extra='')=>`<button class="btn ghost icon s" data-act="${act}" data-id="${id}" aria-label="${label}" title="${label}" ${extra}>${ic(icon,'s')}</button>`;
+const iconBtn=(icon,label,act,id,extra='')=>`<button class="btn ghost icon s" data-act="${act}" data-id="${id}" aria-label="${label}" data-tip="${label}" ${extra}>${ic(icon,'s')}</button>`;
 const rowActs=(t,f)=>{const st=M.starred.includes(t.id);
  if(f==='spam')return iconBtn('inbox','Not spam','mailnotspam',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
  if(f==='trash')return iconBtn('undo','Restore','mailrestore',t.id)+iconBtn('trash','Delete for good','maildelete',t.id);
@@ -152,7 +152,7 @@ const row=(t,q)=>{const f=M.folder,sent=f==='sent',lastMe=sent?[...t.msgs].rever
  <span class="ml-text"><b>${L.hl(t.subject,q)}</b><span>${L.hl(sent?lastMe.body:t.excerpt,q)}</span></span>
  <span class="ml-linkcol">${linkChip(t,'button')}</span>
  <span class="ml-status">${f==='spam'?'<span class="tag danger">Looks like a scam</span>':waiting?'<span class="tag draft">No reply yet</span>':(!sent&&t.needs&&f!=='trash')?'<span class="tag attention">Needs reply</span>':''}</span>
- <span class="ml-time">${st?`<span class="ml-flag" title="Flagged" aria-label="Flagged">${ic('flag','s')}</span>`:''}${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
+ <span class="ml-time">${st?`<span class="ml-flag" data-tip="Flagged" aria-label="Flagged">${ic('flag','s')}</span>`:''}${sent?lastMe.time.replace(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) /,''):t.time}</span>
  <span class="ml-acts">${rowActs(t,f)}</span>
 </div>`;};
 const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
@@ -161,7 +161,7 @@ const draftRow=(d,q)=>{const names=d.to.map(r=>r.name||r.email).join(', ');
  <span class="ml-from">${names?L.hl('To: '+names,q):'<span class="muted">No recipient yet</span>'}<small class="ml-drl">Draft</small></span>
  <span class="ml-text"><b>${d.subj?L.hl(d.subj,q):'<span class="muted">No subject</span>'}</b><span>${L.hl(d.body||'Empty',q)}</span></span>
  <span class="ml-linkcol">${bookingChip(d.booking)}</span>
- <span class="ml-status">${d.att.length?`<span class="ml-clip" title="${d.att.length} attachment${d.att.length>1?'s':''}">${ic('paperclip','s')}${d.att.length}</span>`:''}</span>
+ <span class="ml-status">${d.att.length?`<span class="ml-clip" data-tip="${d.att.length} attachment${d.att.length>1?'s':''}">${ic('paperclip','s')}${d.att.length}</span>`:''}</span>
  <span class="ml-time">${d.time}</span>
  <span class="ml-acts">${iconBtn('trash','Discard draft','maildraftdel',d.id)}</span>
 </div>`;};
@@ -212,7 +212,7 @@ L.VIEWS.mail=()=>{
 const replyBox=t=>{const d=t.draft,k=t.id;
  if(!d)return `<p class="t-meta muted ml-quiet">${ic('check','s')}Sent ${esc(t.time)}. Replies land in Inbox and stay linked to the booking.</p>`;
  if(M.sent[k])return `<div class="ml-sent">${ic('check','s')}<span style="flex:1">Reply sent ${M.sent[k]}</span><button class="btn ghost s" data-act="mailunsend" data-id="${k}">${ic('undo','s')}Undo</button></div>`;
- return `<div class="send ml-send"><div><h3 class="t-heading">${d.t}</h3><p class="muted" style="margin:2px 0 0">${d.s}</p></div>
+ return `<div class="send ml-send"><div><div class="ml-sendh"><h3 class="t-heading">${d.t}</h3>${/^Drafted by the assistant/.test(d.s)?L.ailabel():''}</div><p class="muted" style="margin:2px 0 0">${d.s}</p></div>
  <div class="row t-label"><span class="muted">To</span>${M.toEdit?`<input class="input" style="flex:1;min-width:200px;height:32px" id="mltoedit" value="${esc(M.toVal[k]||d.to)}" aria-label="To"><button class="link" data-act="mailto">Done</button>`:`<span style="font-size:15px">${esc(M.toVal[k]||d.to)}</span><button class="link" data-act="mailto">Change</button>`}<button class="link" data-act="mailreplyfull" data-id="${k}">Add Cc or attachments</button></div>
  <div class="msg ${M.full?'full':''}"><b class="strong">${esc(d.subj)}</b>${M.edit?`<textarea class="input" id="mlmsgedit" rows="5" aria-label="Message">${esc(M.msgVal[k]||d.body)}</textarea>`:`<p>${esc(M.msgVal[k]||d.body)}</p>`}<button class="link" style="align-self:flex-start" data-act="mailfull">${M.full?'Show less':'Show full message'}</button></div>
  <div class="row"><button class="btn ghost flush" data-act="mailnotnow">Not now</button><span style="flex:1"></span><button class="btn secondary" data-act="mailedit">${ic(M.edit?'check':'pencil','s')}${M.edit?'Done editing':'Edit text'}</button><button class="btn accent" data-act="mailsend" data-id="${k}">${ic('send','s')}Send</button></div></div>`;};
@@ -222,7 +222,7 @@ L.VIEWS.thread=()=>{const t=T(L.S.params.id),p=t.panel,fo=folderOf(t),st=M.starr
  const arch=fo==='archive';
  const acts=fo==='spam'?`<button class="btn secondary" data-act="mailnotspam" data-id="${t.id}" data-back="1">${ic('inbox','s')}Not spam</button><button class="btn ghost" data-act="maildelete" data-id="${t.id}">${ic('trash','s')}Delete for good</button>`
   :fo==='trash'?`<button class="btn secondary" data-act="mailrestore" data-id="${t.id}" data-back="1">${ic('undo','s')}Restore</button><button class="btn ghost" data-act="maildelete" data-id="${t.id}">${ic('trash','s')}Delete for good</button>`
-  :`<button class="btn ghost icon" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Remove flag':'Flag'}" title="${st?'Remove flag':'Flag'}">${ic('flag')}</button><button class="btn ghost icon" data-act="mailtrash" data-id="${t.id}" data-back="1" aria-label="Move to Trash" title="Move to Trash">${ic('trash')}</button><button class="btn ghost" data-act="mailunread" data-id="${t.id}">${ic('mail','s')}Mark unread</button><button class="btn secondary" data-act="mailarchive" data-id="${t.id}" data-back="1">${ic(arch?'inbox':'archive','s')}${arch?'Move to inbox':'Archive'}</button>`;
+  :`<button class="btn ghost icon" data-act="mailstar" data-id="${t.id}" aria-pressed="${st}" aria-label="${st?'Remove flag':'Flag'}" data-tip="${st?'Remove flag':'Flag'}">${ic('flag')}</button><button class="btn ghost icon" data-act="mailtrash" data-id="${t.id}" data-back="1" aria-label="Move to Trash" data-tip="Move to Trash">${ic('trash')}</button><button class="btn ghost" data-act="mailunread" data-id="${t.id}">${ic('mail','s')}Mark unread</button><button class="btn secondary" data-act="mailarchive" data-id="${t.id}" data-back="1">${ic(arch?'inbox':'archive','s')}${arch?'Move to inbox':'Archive'}</button>`;
  const banner=fo==='spam'?`<div class="banner danger">${ic('shieldalert')}<div class="tx"><b>This looks like a scam</b><span class="t-label">${esc(t.spamWhy||'')} Links and images are off in Spam.</span></div></div>`
   :fo==='trash'?`<div class="banner info">${ic('trash')}<div class="tx"><b>In Trash</b><span class="t-label muted">Deleted for good 30 days after it was moved here. Restore it to keep it.</span></div></div>`:'';
  const panel=p?`<aside class="panel ml-panel ${fo==='spam'?'ml-off':''}"><div class="ml-photo"><img src="${IMG(p.img)}" alt=""><span class="tag ${p.tag[0]}">${p.tag[1]}</span></div>
@@ -254,7 +254,7 @@ const touched=()=>{const c=M.cmp;if(!c)return;if(c.fresh){c.fresh=false;M.drafts
 const recipField=(k,label)=>{const c=M.cmp,q=M.cmpQ[k]||'',qq=q.trim().toLowerCase();
  const sug=qq?RECIPS.filter(r=>(r.name+' '+r.org+' '+r.email).toLowerCase().includes(qq)&&!c[k].some(x=>x.email===r.email)).slice(0,5):[];
  const err=k==='to'&&M.cmpErr==='to';
- return `<div class="ml-cf ${err?'err':''}"><label class="ml-cl" for="ml-${k}">${label}</label><div class="ml-chips">${c[k].map((r,i)=>`<span class="ml-rc" title="${esc(r.email)}">${esc(r.name||r.email)}<button data-act="mlrm" data-k="${k}" data-i="${i}" aria-label="Remove ${esc(r.name||r.email)}">${ic('x','s')}</button></span>`).join('')}<input id="ml-${k}" class="ml-ci" value="${esc(q)}" placeholder="${c[k].length?'':'Name or email'}" autocomplete="off" aria-label="${label}" ${err?'aria-invalid="true" aria-describedby="ml-toerr"':''}>
+ return `<div class="ml-cf ${err?'err':''}"><label class="ml-cl" for="ml-${k}">${label}</label><div class="ml-chips">${c[k].map((r,i)=>`<span class="ml-rc" data-tip="${esc(r.email)}">${esc(r.name||r.email)}<button data-act="mlrm" data-k="${k}" data-i="${i}" aria-label="Remove ${esc(r.name||r.email)}">${ic('x','s')}</button></span>`).join('')}<input id="ml-${k}" class="ml-ci" value="${esc(q)}" placeholder="${c[k].length?'':'Name or email'}" autocomplete="off" aria-label="${label}" ${err?'aria-invalid="true" aria-describedby="ml-toerr"':''}>
  ${sug.length?`<div class="ml-sug" role="listbox">${sug.map(r=>`<button role="option" data-act="mladd" data-k="${k}" data-e="${esc(r.email)}"><span class="ml-av">${esc(initials(r.name))}</span><span class="tx"><b>${L.hl(r.name,q)}</b><small>${r.org?L.hl(r.org,q)+', ':''}${L.hl(r.email,q)}</small></span></button>`).join('')}</div>`:qq&&qq.includes('@')?`<div class="ml-sug"><button data-act="mladdq" data-k="${k}"><span class="ml-av">${ic('mail','s')}</span><span class="tx"><b>${esc(q.trim())}</b><small>Not in Contacts yet</small></span></button></div>`:''}</div>
  ${k==='to'?`<span class="ml-ccb">${c.showCc?'':'<button class="link" data-act="mlshow" data-k="cc">Cc</button>'}${c.showBcc?'':'<button class="link" data-act="mlshow" data-k="bcc">Bcc</button>'}</span>`:''}</div>
  ${err?`<p class="ml-errmsg" id="ml-toerr">${ic('alertc','s')}Add at least one recipient before you send.</p>`:''}`;};

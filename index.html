@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=871cd8c">
+<link rel="stylesheet" href="tokens.css?v=6959a92">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -17,21 +17,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=871cd8c">
-<link rel="stylesheet" href="components.css?v=871cd8c">
-<link rel="stylesheet" href="views/tour.css?v=871cd8c">
-<link rel="stylesheet" href="views/dashboard.css?v=871cd8c">
-<link rel="stylesheet" href="views/bookings.css?v=871cd8c">
-<link rel="stylesheet" href="views/booking.css?v=871cd8c">
-<link rel="stylesheet" href="views/contacts.css?v=871cd8c">
-<link rel="stylesheet" href="views/money.css?v=871cd8c">
-<link rel="stylesheet" href="views/catalogue.css?v=871cd8c">
-<link rel="stylesheet" href="views/account.css?v=871cd8c">
-<link rel="stylesheet" href="views/mail.css?v=871cd8c">
-<link rel="stylesheet" href="views/social.css?v=871cd8c">
-<link rel="stylesheet" href="views/logomotion.css?v=871cd8c">
-<link rel="stylesheet" href="tags.css?v=871cd8c">
-<link rel="stylesheet" href="views/compact.css?v=871cd8c">
+<link rel="stylesheet" href="shell.css?v=6959a92">
+<link rel="stylesheet" href="components.css?v=6959a92">
+<link rel="stylesheet" href="views/tour.css?v=6959a92">
+<link rel="stylesheet" href="views/dashboard.css?v=6959a92">
+<link rel="stylesheet" href="views/bookings.css?v=6959a92">
+<link rel="stylesheet" href="views/booking.css?v=6959a92">
+<link rel="stylesheet" href="views/contacts.css?v=6959a92">
+<link rel="stylesheet" href="views/money.css?v=6959a92">
+<link rel="stylesheet" href="views/catalogue.css?v=6959a92">
+<link rel="stylesheet" href="views/account.css?v=6959a92">
+<link rel="stylesheet" href="views/mail.css?v=6959a92">
+<link rel="stylesheet" href="views/social.css?v=6959a92">
+<link rel="stylesheet" href="views/logomotion.css?v=6959a92">
+<link rel="stylesheet" href="tags.css?v=6959a92">
+<link rel="stylesheet" href="views/compact.css?v=6959a92">
 
 <div id="app"></div>
 
@@ -125,7 +125,8 @@ const ACT=[['12 Oct','Agreement signed by Mette Kjær'],['10 Oct','Deposit invoi
 const payCat=b=>b.pay==='Deposit overdue'?'Overdue':b.pay==='Invoiced, not paid'?'Invoiced, not paid':b.pay==='Deposit paid'?'Deposit paid':/Paid|Settled/.test(b.pay)?'Paid':'No fee yet';
 const CHIPS={kind:{label:'Kind',opts:['Concert','Rehearsal','Private','Corporate'],n:o=>BOOKINGS.filter(b=>b.type===o).length},pay:{label:'Payment',opts:['Paid','Deposit paid','Invoiced, not paid','Overdue','No fee yet'],n:o=>BOOKINGS.filter(b=>payCat(b)===o).length},ckind:{label:'Kind',opts:[...new Set(CONTACTS.map(c=>c.kind))],n:o=>CONTACTS.filter(c=>c.kind===o).length},vkind:{label:'Kind',opts:[...new Set(VENUES.map(v=>v.kind))],n:o=>VENUES.filter(v=>v.kind===o).length}};
 const chip=k=>`<button class="chip ${S.filters[k].length?'on':''}" data-act="chipmenu" data-key="${k}">${CHIPS[k].label}: ${S.filters[k].join(', ')||'all'} ${ic('down','s')}</button>`;
-const confirmM=(title,body,no,act,label,danger)=>`<h2 class="t-title">${title}</h2><p class="muted" style="margin:0">${body}</p><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">${no}</button><button class="btn ${danger?'':'accent'}" data-act="${act}" style="${danger?'background:var(--bad);color:#fff':''}">${label}</button></div>`;
+// Confirmation dialog (T476): title, one or two sentences, Cancel and the action (danger = red); the dialog size, not the wide one
+const confirmM=(title,body,no,act,label,danger)=>`<h2 class="t-title">${title}</h2><p class="muted cf-body">${body}</p><div class="cf-acts"><button class="btn secondary" data-act="close">${no}</button><button class="btn ${danger?'danger':'accent'}" data-act="${act}">${label}</button></div>`;
 const kvs=pairs=>S.params.edit?`<div style="display:flex;flex-direction:column;gap:14px">${pairs.map(([l,v],i)=>`<div class="field"><label for="kv${l}">${l}</label><input class="input" id="kv${l}" value="${esc(v)}" data-autosave></div>`).join('')}</div>`:`<dl class="kv">${pairs.map(([l,v])=>`<dt>${l}</dt><dd>${v}</dd>`).join('')}</dl>`;
 let lastFocus=null;
 const reduceMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -141,7 +142,7 @@ const toast=(msg,undo)=>{S.toast={msg,undo};clearTimeout(toastTimer);toastTimer=
 
 /* ---------- shell ---------- */
 function sidebar(){
- const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social',booking:'bookings',gigday:'bookings',integrations:'settings'};const tip=l=>S.collapsed?`title="${l}"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${(v===id&&!ALIAS[v])||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
+ const v=S.view;const ALIAS={thread:'mail',compose:'mail',mailaccounts:'mail',contact:'contacts',venue:'venues',post:'social',booking:'bookings',gigday:'bookings',integrations:'settings'};const tip=l=>S.collapsed?`data-tip="${l}" data-tip-pos="right"`:'';const nav=(id,label,icon,extra='',cls='')=>`<button class="nav ${cls} ${(v===id&&!ALIAS[v])||ALIAS[v]===id||(S.navAlias===id)?'active':''}" data-go="${id}" ${tip(label)}>${icon?ic(icon):''}<span>${label}</span>${extra}</button>`;
  /* a group opens only on its own pages (Vit 21 Oct: Gigs open on the Assistant page looked like the wrong page; Figma draws Gigs open everywhere) */
  /* clicking the open group's header folds it (Vit 21 Oct); it opens again on a click or when you come back to its pages */
  const area0=LAAS.areaOf(v);if(S.navShut&&S.navShut!==area0)S.navShut=null;
@@ -152,7 +153,7 @@ function sidebar(){
   ${nav('dashboard','Dashboard','dashboard','','group')}${nav('assistant','Assistant','ai','','group')}
   <div class="sb-gap"></div>
   ${grp('gigs','Gigs','file','bookings')}
-  ${S.collapsed?`<div class="sb-rail">${[['calendar','Calendar','calendar'],['contacts','Contacts','users'],['mail','Mail','mail']].map(([id,l,i])=>`<button class="nav ${v===id||(id==='contacts'&&['contact','venues','venue'].includes(v))||(id==='mail'&&v==='thread')?'active':''}" data-go="${id}" title="${l}">${ic(i)}<span>${l}</span></button>`).join('')}</div>`:''}
+  ${S.collapsed?`<div class="sb-rail">${[['calendar','Calendar','calendar'],['contacts','Contacts','users'],['mail','Mail','mail']].map(([id,l,i])=>`<button class="nav ${v===id||(id==='contacts'&&['contact','venues','venue'].includes(v))||(id==='mail'&&v==='thread')?'active':''}" data-go="${id}" data-tip="${l}" data-tip-pos="right">${ic(i)}<span>${l}</span></button>`).join('')}</div>`:''}
   ${area==='gigs'?`<div class="sb-sub">${nav('bookings','Bookings','','<span class="count">12</span>','sub')}${nav('calendar','Calendar','','<span class="count">3</span>','sub')}${nav('contacts','Contacts','','','sub')}${nav('venues','Venues','','','sub')}${(()=>{const n=S.mail&&S.mail.threads?S.mail.threads.filter(t=>t.unread&&!(S.mail.archived||[]).includes(t.id)).length:4;return nav('mail','Mail','',n?`<span class="alert">${n}</span>`:'','sub')})()}</div>`:''}
   ${grp('money','Money','money','money')}
   ${area==='money'?`<div class="sb-sub">${[['owed','Owed to you'],['invoices','Invoices'],['expenses','Expenses'],['payouts','Payouts'],['reports','Reports'],['books','Books']].map(([k,l])=>{const on=(v==='money'&&S.mtab===k)||(k==='invoices'&&v==='invoice')||(k==='payouts'&&v==='settle')||(k==='books'&&['ledger','journal','accounts','ledgerreport'].includes(v));return `<button class="nav sub ${on?'active':''}" data-go="money" data-mt="${k}"><span>${l}</span></button>`}).join('')}</div>`:''}
@@ -163,7 +164,7 @@ function sidebar(){
   <div class="sb-spacer"></div>
   <button class="nav" data-act="guide" ${tip('Guide')}>${ic('help')}<span>Guide</span></button><button class="nav" data-act="thememenu" ${tip('Theme')}><i class="th-dot" aria-hidden="true"></i><span>Theme: ${TNAMES[S.genre]}</span><span class="chev">${ic('down','s')}</span></button>
   ${nav('integrations','Integrations','plug')}${nav('settings','Band settings','settings')}
-  ${S.collapsed?`<button class="nav" data-act="collapse" title="Expand menu (⌘\\)" aria-label="Expand menu">${ic('right')}</button>`:''}
+  ${S.collapsed?`<button class="nav" data-act="collapse" data-tip="Expand menu (⌘\\)" data-tip-pos="right" aria-label="Expand menu">${ic('right')}</button>`:''}
  </nav>`;
 }
 function topbar(){
@@ -174,8 +175,8 @@ function topbar(){
  <button class="me" data-act="memenu" aria-haspopup="menu" aria-label="Your account menu"><span class="avatar-you">V</span><span class="nm">Vital</span>${ic('down','s')}</button></div></header>`;
 }
 function abar(ctx,ph){
- if(S.abarHidden)return `<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" title="Show the assistant bar (⌘J)">${ic('ai','s')}<span>Ask</span></button></div>`;
- return `${S.booking.sheet?assistantSheet():''}<div class="assistant-bar abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" title="Hide until you open it again (⌘J)">${ic('x','s')}</button></div>`;
+ if(S.abarHidden)return `<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" data-tip="Show the assistant bar (⌘J)">${ic('ai','s')}<span>Ask</span></button></div>`;
+ return `${S.booking.sheet?assistantSheet():''}<div class="assistant-bar abar">${ic('ai','s')}${ctx&&S.abarCtxOff!==S.view?`<span class="rec">${esc(ctx)}<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic('x','s')}</button></span>`:''}<input id="ask" placeholder="${esc(ph||(ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'))}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-go="assistant">Open</button><button class="btn accent" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" data-tip="Hide until you open it again (⌘J)">${ic('x','s')}</button></div>`;
 }
 
 /* ---------- views ---------- */
@@ -233,7 +234,7 @@ VIEWS.booking=()=>{const st=S.booking.state;const s=S.booking.cancelled?['danger
  return `<div class="page">
  <button class="btn ghost s flush" data-go="bookings" style="align-self:flex-start">${ic('left','s')}Bookings</button>
  <div class="photo-hero hero"><img src="${IMG(v.img)}" alt=""><div class="tx"><span class="k">Concert at Hotel Royal, Aarhus</span><h1>Saturday hotel gig</h1><div class="facts"><span>Sat 25 Oct</span><span>Doors 20:00</span><span>On stage 21:30</span><span>Fee 4.500 DKK</span></div></div></div>
- <div class="row"><button class="tag ${s[0]}" data-act="statusmenu2" title="Change status">${s[1]} ${ic('down','s')}</button><span class="t-meta muted">${['Enquiry','Hold','Offer out','Confirmed','Completed'].map((l,i)=>`<span style="${BSTATES[i]===st?'color:var(--ink);font-weight:500':''}">${l}</span>`).join(' → ')}</span><span style="flex:1"></span>${secondary?`<button class="btn secondary" data-act="${secondary[1]}">${secondary[0]}</button>`:''}<button class="btn accent" data-act="${primary[1]}">${primary[0]}</button><button class="btn secondary icon" aria-label="More" data-act="bookingmore">${ic('more')}</button></div>
+ <div class="row"><button class="tag ${s[0]}" data-act="statusmenu2" data-tip="Change status">${s[1]} ${ic('down','s')}</button><span class="t-meta muted">${['Enquiry','Hold','Offer out','Confirmed','Completed'].map((l,i)=>`<span style="${BSTATES[i]===st?'color:var(--ink);font-weight:500':''}">${l}</span>`).join(' → ')}</span><span style="flex:1"></span>${secondary?`<button class="btn secondary" data-act="${secondary[1]}">${secondary[0]}</button>`:''}<button class="btn accent" data-act="${primary[1]}">${primary[0]}</button><button class="btn secondary icon" aria-label="More" data-act="bookingmore">${ic('more')}</button></div>
  ${S.booking.cancelled?`<div class="banner danger">${ic('alert')}<div class="tx"><b>Cancelled today</b><span class="t-label">Mette got the cancellation mail. The 1.500 DKK deposit goes back within 5 days.</span></div><button class="btn secondary s" data-act="uncancel" style="color:var(--ink)">Restore booking</button></div>`:banner}
  ${st==='confirmed'&&!S.booking.depositPaid?sendPreview('reminder'):''}
  ${st==='completed'&&!S.booking.rated?rateCard():''}
@@ -370,7 +371,7 @@ ${S.rtab==='overview'?`
  <div class="grid2"><div style="display:flex;flex-direction:column;gap:32px"><section class="sec"><div class="sec-h"><h3 class="t-heading">Next steps</h3><button class="btn ghost s flush" data-act="allsteps">${S.allSteps?'Show fewer':'Show all 7'}</button></div>
   ${[['24 Oct','Deliver to the distributor',ready?'In 4 days. Ready, press Deliver.':created?'In 4 days. Needs tracks and a cover.':'In 4 days. Needs the blocker fixed first.'],['24 Oct','Register the 4 works at Koda','Not started'],['4 Nov','Apple Music for Artists pitch','Waits for delivery'],...(S.allSteps?[['31 Oct','Pre-save link goes live','Ready to share'],['7 Nov','Spotify editorial pitch','Needs delivery first'],['14 Nov','Release day','Out everywhere at 00:00'],['21 Nov','First-week check','Streams, saves and playlist adds']]:[])].map((s,i)=>`<div class="list-row" style="cursor:default"><span class="mono" style="width:64px;${i?'color:var(--muted)':''}">${s[0]}</span><span class="tx"><b class="${i?'':'strong'}">${s[1]}</b><small>${s[2]}</small></span></div>`).join('')}</section>
   <section class="sec"><div class="sec-h"><h3 class="t-heading">Tracks</h3><button class="btn ghost s flush" data-act="addtracks">Add track</button></div>
-  ${R.tracks?tracks.map((t,i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:24px">${i+1}</span><span class="tx"><b>${t[0]}</b>${up?(i===R.tracks-1&&R.progress<100?`<div class="progress" style="margin-top:4px;width:60%"><b style="width:${R.progress}%"></b></div>`:'<small>Checking…</small>'):t[2]&&!ready?`<small style="color:var(--att)">${t[2]}</small>`:''}</span><span class="mono muted">${up&&i===R.tracks-1&&R.progress<100?R.progress+' %':t[1]}</span></div>`).join('')
+  ${R.tracks?tracks.map((t,i)=>`<div class="list-row" style="cursor:default"><span class="mono faint" style="width:24px">${i+1}</span><span class="tx"><b>${t[0]}</b>${up?(i===R.tracks-1&&R.progress<100?`${progress(R.progress,{label:'Upload',style:'margin-top:4px;width:60%'})}`:'<small>Checking…</small>'):t[2]&&!ready?`<small style="color:var(--att)">${t[2]}</small>`:''}</span><span class="mono muted">${up&&i===R.tracks-1&&R.progress<100?R.progress+' %':t[1]}</span></div>`).join('')
   :`<div class="drop" style="flex-direction:row;align-items:center;gap:12px">${ic('upload')}<span style="flex:1">Drop WAV files here, or add tracks one by one<br><span class="t-label muted">Titles come from the file names; you can fix them after.</span></span></div>`}</section></div>
  <aside class="panel"><div class="sec"><h3 class="t-heading">Facts</h3><dl class="kv" style="grid-template-columns:104px 1fr"><dt>Release date</dt><dd>Fri 14 Nov 2026</dd><dt>Distributor</dt><dd>DistroKid</dd><dt>UPC</dt><dd>${created?'After delivery':'Pending, from DistroKid'}</dd><dt>Catalogue no.</dt><dd class="mono">LT-004</dd></dl></div>
  <div class="sec"><h3 class="t-heading">Credits and splits</h3><span class="t-label muted">${R.tracks?'40 / 30 / 30 on all songs. Signed by all three on 3 Oct; locks on delivery.':'Added per song when tracks are in. Everyone signs before delivery.'}</span></div>
@@ -428,7 +429,7 @@ VIEWS.audience=()=>{const t=S.atab;const head=`<div class="page-header ph"><div 
  const tabs=`<div class="tabs" role="tablist">${[['overview','Overview'],['streaming','Streaming'],['hand','Figures by hand',S.figures.length],['releases','Releases']].map(([k,l,c])=>`<button role="tab" class="${t===k?'on':''}" data-atab="${k}">${l}${c?`<span class="c">${c}</span>`:''}</button>`).join('')}</div>`;
  const max=Math.max(...AUD.listeners);
  const chart=`<section class="card" style="border:1px solid var(--rule);display:flex;flex-direction:column;gap:12px"><div class="sec-h"><h3 class="t-title" style="flex:1">Listeners, last 12 months</h3><button class="btn ghost s" data-act="datatable">${ic(S.dataTable?'x':'right','s')}${S.dataTable?'Hide data table':'Show data table'}</button></div>
-  <div style="display:flex;align-items:flex-end;gap:8px;height:96px">${AUD.listeners.map((n,i)=>`<div title="${AUD.months[i]}: ${kr(n)}" style="flex:1;height:${Math.round(n/max*60)}px;border-radius:3px;background:${i===11?'var(--accent)':'var(--top)'}"></div>`).join('')}</div>
+  <div style="display:flex;align-items:flex-end;gap:8px;height:96px">${AUD.listeners.map((n,i)=>`<div data-tip="${AUD.months[i]}: ${kr(n)}" style="flex:1;height:${Math.round(n/max*60)}px;border-radius:3px;background:${i===11?'var(--accent)':'var(--top)'}"></div>`).join('')}</div>
   <div class="row t-meta"><span class="muted">Nov 2025 → Oct 2026, Spotify monthly listeners</span><span><span style="color:var(--accent)">●</span> release months: Feb, May</span></div>
   ${S.dataTable?`<div class="table-wrap" style="background:var(--raised)"><table style="min-width:0"><thead><tr><th>Month</th><th class="num">Listeners</th></tr></thead><tbody>${AUD.months.map((m,i)=>`<tr style="cursor:default"><td>${m}${AUD.releases.includes(m)?' <span class="tag accent" style="height:20px">release</span>':''}</td><td class="num mono">${kr(AUD.listeners[i])}</td></tr>`).join('')}</tbody></table></div>`:''}
   <span class="t-meta muted">One source per line. Hand-entered figures are drawn dashed and never mixed into a total with API figures.</span></section>`;
@@ -686,7 +687,23 @@ const drop=o=>{const t=o.tag||'label';return `<${t} class="drop${o.row?' drop-ro
 for(const [ev,on] of [['dragenter',1],['dragover',1],['dragleave',0],['drop',0]])document.addEventListener(ev,e=>{const z=e.target.closest&&e.target.closest('.drop');if(z)z.classList.toggle('over',!!on&&!(ev==='dragleave'&&z.contains(e.relatedTarget)));},true);
 // Skeleton lines for content still loading (T472): widths in %, the first one a title line
 const skel=(ws=[40,90,75])=>`<div class="skel-rows" aria-busy="true" aria-label="Loading">${ws.map((w,i)=>`<span class="skel${i?'':' title'}" style="width:${w}%"></span>`).join('')}</div>`;
-const LAAS=window.LAAS={radio,drop,skel,TNAMES,tokCls,S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STATUS,PAST,ACT,payCat,CHIPS,chip,confirmM,kvs,go,open,close,toast,refresh,render,abar,VIEWS,DR,FLOWS,filteredBookings,sendPreview,rateCard,assistantSheet,contactsPage,settingsShell,SC,SETNAV,THEMES,themeSw,themeCards,appearanceSeg,AUD,audAbar,onboarding,flowBtnInline,
+// Progress bar (T476): determinate, 0-100; o.label names it for screen readers
+const progress=(pct,o={})=>`<span class="progress${o.cls?' '+o.cls:''}" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}"${o.label?` aria-label="${o.label}"`:''}${o.style?` style="${o.style}"`:''}><i style="width:${pct}%"></i></span>`;
+// AI label (T476): marks content the assistant made, beside its title
+const ailabel=(t='AI draft')=>`<span class="ai-label">${ic('ai','s')}${t}</span>`;
+// Batch bar (T476): shows over a table while rows are selected; acts = [[icon,label,act,danger]]
+const batch=(n,acts,clear)=>`<div class="batch" role="toolbar" aria-label="${n} selected"><b>${n} selected</b><span class="grow"></span>${acts.map(([i,l,a,d])=>`<button class="btn ghost s${d?' bad':''}" data-act="${a}" aria-label="${l}">${ic(i,'s')}<span>${l}</span></button>`).join('')}<button class="btn ghost s" data-act="${clear}">Cancel</button></div>`;
+// Tooltip (T476): any element with data-tip; hover after 400 ms, keyboard focus at once, Esc hides; data-tip-pos="right" beside it (the collapsed sidebar)
+{let tipEl=null,tipT=0,tipFor=null;const hideTip=()=>{clearTimeout(tipT);tipFor=null;if(tipEl)tipEl.hidden=true;};
+ const showTip=el=>{if(!el.isConnected)return;if(!tipEl){tipEl=document.createElement('div');tipEl.className='tip';tipEl.id='tip';tipEl.setAttribute('role','tooltip');document.body.appendChild(tipEl);}
+  tipEl.textContent=el.dataset.tip;tipEl.hidden=false;tipEl.dataset.pos=el.dataset.tipPos||'top';el.setAttribute('aria-describedby','tip');const r=el.getBoundingClientRect(),t=tipEl.getBoundingClientRect();let x,y;
+  if(el.dataset.tipPos==='right'){x=r.right+8;y=r.top+r.height/2-t.height/2;}else{x=r.left+r.width/2-t.width/2;y=r.top-t.height-8;if(y<8){y=r.bottom+8;tipEl.dataset.pos='bottom';}}
+  tipEl.style.left=Math.max(8,Math.min(innerWidth-t.width-8,x))+'px';tipEl.style.top=y+'px';};
+ document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const el=e.target.closest&&e.target.closest('[data-tip]');if(el===tipFor)return;hideTip();if(!el)return;tipFor=el;tipT=setTimeout(()=>showTip(el),400);});
+ document.addEventListener('focusin',e=>{const el=e.target.closest&&e.target.closest('[data-tip]');hideTip();if(el&&el.matches(':focus-visible')){tipFor=el;showTip(el);}});
+ document.addEventListener('focusout',hideTip);document.addEventListener('scroll',hideTip,true);document.addEventListener('pointerdown',hideTip);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&tipEl&&!tipEl.hidden){hideTip();e.stopPropagation();}},true);}
+const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P,ic,LOGO,IMG,esc,kr,hl,VENUES,V,BOOKINGS,CONTACTS,STATUS,PAST,ACT,payCat,CHIPS,chip,confirmM,kvs,go,open,close,toast,refresh,render,abar,VIEWS,DR,FLOWS,filteredBookings,sendPreview,rateCard,assistantSheet,contactsPage,settingsShell,SC,SETNAV,THEMES,themeSw,themeCards,appearanceSeg,AUD,audAbar,onboarding,flowBtnInline,
  ACTIONS:{},OVERLAYS:{},INPUT:[],CHANGE:[],ONBOARDING:null,
  AREAS:{gigs:['bookings','booking','gigday','calendar','calsync','contacts','contact','venues','venue','mail','thread','mailaccounts','compose','rate','paypage'],money:['money','settle','invoice','ledger','journal','accounts','ledgerreport'],catalogue:['catalogue','release','pastrelease','gear'],audience:['audience','social','post','comments','keywords','deliveries']},
  areaOf(v){for(const [a,list] of Object.entries(this.AREAS))if(list.includes(v))return a;return ''},
@@ -699,21 +716,21 @@ const LAAS=window.LAAS={radio,drop,skel,TNAMES,tokCls,S,P,ic,LOGO,IMG,esc,kr,hl,
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=871cd8c"></script>
-<script src="views/bookings.js?v=871cd8c"></script>
-<script src="views/booking.js?v=871cd8c"></script>
-<script src="views/denmark.js?v=871cd8c"></script>
-<script src="views/contacts.js?v=871cd8c"></script>
-<script src="views/money.js?v=871cd8c"></script>
-<script src="views/catalogue.js?v=871cd8c"></script>
-<script src="views/brands.js?v=871cd8c"></script>
-<script src="views/account.js?v=871cd8c"></script>
-<script src="views/mail.js?v=871cd8c"></script>
-<script src="views/social.js?v=871cd8c"></script>
-<script src="views/tour.js?v=871cd8c"></script>
-<script src="views/motion.js?v=871cd8c"></script>
-<script src="views/logomotion.js?v=871cd8c"></script>
-<script src="views/compact.js?v=871cd8c"></script>
-<script src="views/picker.js?v=871cd8c"></script>
-<script src="views/overflow.js?v=871cd8c"></script>
+<script src="views/dashboard.js?v=6959a92"></script>
+<script src="views/bookings.js?v=6959a92"></script>
+<script src="views/booking.js?v=6959a92"></script>
+<script src="views/denmark.js?v=6959a92"></script>
+<script src="views/contacts.js?v=6959a92"></script>
+<script src="views/money.js?v=6959a92"></script>
+<script src="views/catalogue.js?v=6959a92"></script>
+<script src="views/brands.js?v=6959a92"></script>
+<script src="views/account.js?v=6959a92"></script>
+<script src="views/mail.js?v=6959a92"></script>
+<script src="views/social.js?v=6959a92"></script>
+<script src="views/tour.js?v=6959a92"></script>
+<script src="views/motion.js?v=6959a92"></script>
+<script src="views/logomotion.js?v=6959a92"></script>
+<script src="views/compact.js?v=6959a92"></script>
+<script src="views/picker.js?v=6959a92"></script>
+<script src="views/overflow.js?v=6959a92"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

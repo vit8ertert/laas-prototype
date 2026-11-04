@@ -418,7 +418,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ex-nor{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-radius:var(--r-md);background:var(--well)}
 .ex-drop{display:flex;flex-direction:column;gap:12px}
 .ex-dropacts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.ex-dpay{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--attention-tint,var(--well));font:400 14px/20px var(--sans)}
+.ex-dpay{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--att-tint);font:400 14px/20px var(--sans)}
 .ex-dpay.done{background:var(--well)}.ex-dpay>span{flex:1}.ex-dpay>.i{flex:none}
 .ex-d2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .ex-hist{display:flex;flex-direction:column;gap:8px;padding-top:8px;border-top:1px solid var(--rule)}
@@ -426,10 +426,7 @@ button.ml-ltr:hover{background:var(--raised)}
 @media (max-width:839.98px){.ex-kpis{grid-template-columns:1fr}.ex-bar{flex-wrap:wrap}.ex-search{width:100%}.ex-d2{grid-template-columns:1fr}.ex-owe{flex-wrap:wrap}}
 
 /* Where it went in colour too (Vit 21 Oct: "make them both in colours, also the same height").
-   Own hues for spending, so they never read as an income type: rose, teal, gold, brown, slate. */
-.m-bd.out{--c-n0:#e0577a;--c-n1:#1fa595;--c-n2:#c9a227;--c-n3:#a07a5c;--c-n4:#8a94a6}
-:root[data-theme="light"] .m-bd.out{--c-n0:#c63c62;--c-n1:#0f8a7c;--c-n2:#a5820f;--c-n3:#8a6446;--c-n4:#6b7588}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .m-bd.out{--c-n0:#c63c62;--c-n1:#0f8a7c;--c-n2:#a5820f;--c-n3:#8a6446;--c-n4:#6b7588}}
+   Own hues for spending, so they never read as an income type: rose, teal, gold, brown, slate (Figma color/chart/out/*, --c-n0..4 in tokens.css since T477). */
 .m-bd :is(.m-seg,.m-sw).n0{--sc:var(--c-n0)}.m-bd :is(.m-seg,.m-sw).n1{--sc:var(--c-n1)}.m-bd :is(.m-seg,.m-sw).n2{--sc:var(--c-n2)}.m-bd :is(.m-seg,.m-sw).n3{--sc:var(--c-n3)}.m-bd :is(.m-seg,.m-sw).n4{--sc:var(--c-n4)}
 .m-bdcols{align-items:stretch}.m-bd{height:100%}.m-bd .m-bdl{flex:1}
 /* the Balanced line sits in the report card as its last row, with room around it (Vit 21 Oct: "green text is squeezed") */
