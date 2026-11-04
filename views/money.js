@@ -315,7 +315,7 @@ L.VIEWS.invoice=()=>{const d=invoiceData(S.params.id||'2026-031');const moms=Mat
    <p class="iv-note"><b>3 sent automatically</b>, the last on 15 Oct. Next is yours: a free reminder, then rykker letters from 22 Oct.</p>
    ${S.ivLadder?`<ol class="iv-ladder">${ladder.map(([t,w,ok])=>`<li class="${ok?'done':''}"><i></i><span>${t}<small>${w}</small></span></li>`).join('')}</ol><p class="iv-note faint">Danish rules: at most 100 DKK a letter, 3 fee letters, 10 days apart, none before the due date.</p>`:''}
    <div class="iv-btns">${btn('ghost s','Pause reminders','data-act="mnystoprem"')}</div></section>`:''}
-  <section class="iv-card"><h3 class="t-heading">Activity</h3><ol class="iv-act">${hist.map(([i,t,w])=>`<li><span class="iv-ai">${ic(i,'s')}</span><span>${t}<small>${w}</small></span></li>`).join('')}</ol>
+  <section class="iv-card"><h3 class="t-heading">Activity</h3><ol class="iv-act">${hist.map(([i,t,w])=>`<li><span class="iv-ico">${ic(i,'s')}</span><span>${t}<small>${w}</small></span></li>`).join('')}</ol>
    <label class="iv-cmt"><input class="input" id="ivnote" placeholder="Add a note for the band"><button class="btn ghost s" data-act="ivnote">Add</button></label></section>
  </aside>`;
  return `<div class="m-tint" aria-hidden="true"></div><div class="page m-page m-detail m-inv iv">
