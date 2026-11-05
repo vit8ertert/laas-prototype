@@ -434,11 +434,15 @@ const obGenres=()=>S.onboarding.genres||(S.onboarding.genres=[S.onboarding.genre
    strip from prototype/lab/ (strip.css, strip.js, loaded only then); ?obstep=3 opens that step for a test session;
    &skin=hw|te|console|tx adds a hardware skin (glow, pocket, console, aluminium).
    Off by default: the intro, the DS and Figma are unchanged until the musician test passes (notes/research/hardware-controls.md). */
-const LAB_Q=new URLSearchParams(location.search),LABS=(LAB_Q.get('lab')||'').split(','),LAB_STRIP=LABS.includes('strip'),LAB_KNOB=LABS.includes('knob');
+const LAB_Q=new URLSearchParams(location.search),LABS=(LAB_Q.get('lab')||'').split(','),LAB_STRIP=LABS.includes('strip');let LAB_KNOB=LABS.includes('knob');
 /* LAB, T491 (Vit 5 Nov: "only soundcheck animation"): ?lab=knob plays the Soundcheck between the intro and the dashboard
    (prototype/lab/soundcheck.css + .js, loaded only then), once per band. Off by default: the intro is unchanged without it. */
-if(LAB_KNOB){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/soundcheck.css';document.head.appendChild(l);
- const sc=document.createElement('script');sc.src='lab/soundcheck.js';document.head.appendChild(sc);}
+const loadSoundcheck=()=>{if(document.querySelector('link[href="lab/soundcheck.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='lab/soundcheck.css';document.head.appendChild(l);
+ const sc=document.createElement('script');sc.src='lab/soundcheck.js';document.head.appendChild(sc);};
+if(LAB_KNOB)loadSoundcheck();
+/* the Claude artifact does not pass ?lab=knob to the page (Vit 5 Nov: "the artifact does not have the animation"), so a
+   Flows entry turns the Soundcheck on and opens the last intro step; replay it from Flows again */
+L.FLOWS.push(['Soundcheck (lab)','The knob moment between the intro and the dashboard',()=>{LAB_KNOB=true;loadSoundcheck();A.sounded={};S.onboarding.step=5;L.go('onboarding');}]);
 if((LAB_STRIP||LAB_KNOB)&&LAB_Q.get('obstep')){const st=parseInt(LAB_Q.get('obstep'),10);if(st>=0&&st<=6)S.onboarding.step=st;}
 if(LAB_STRIP){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/strip.css';document.head.appendChild(l);
  const sc=document.createElement('script');sc.src='lab/strip.js';document.head.appendChild(sc);
