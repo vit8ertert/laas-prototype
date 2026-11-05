@@ -486,6 +486,9 @@
   .d-histbtn .lbl{display:none}
   /* an open conversation stays inside the screen: the chat column may shrink below its widest card (it was 520 on 390) */
   .d-asst>.d-center{min-width:0!important}
+  /* the pill sits 12 above the tab bar (Vit 4 Nov: "move lower the pill"; it was 40 up: page 24 + dock 16) */
+  .d-asst.d-page{padding-bottom:0!important}
+  .d-asst .d-dock{padding-bottom:var(--space-3)!important}
   /* the composer is one pill: + (opens Add to chat: attach, context, the Plan switch), the text, Send */
   .d-comp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1)!important;padding:6px!important;border-radius:28px!important}
   .d-comp>.d-ctxs{flex:1 0 100%;padding:4px 6px 2px}

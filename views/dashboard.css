@@ -470,3 +470,6 @@ button.d-kpi:hover{background:var(--raised)}
 /* the Plan pill shows the mode on a phone, where the pill composer has no mode menu; desktop shows the menu instead */
 @media (min-width:600px){.d-ctx-mode{display:none!important}.d-ctxs:not(:has(.d-ctx:not(.d-ctx-mode))){display:none}}
 .d-send svg[data-i=arrowUp]{display:none}
+/* desktop: the composer ends on the same line as the chats panel and its "What it can do" card (Vit 4 Nov: "make sure the
+   desktop aligned"); phones keep 12 above the tab bar (compact.css) */
+.d-asst .d-dock{padding-bottom:0}
