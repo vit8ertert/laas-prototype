@@ -434,15 +434,18 @@ const obGenres=()=>S.onboarding.genres||(S.onboarding.genres=[S.onboarding.genre
    strip from prototype/lab/ (strip.css, strip.js, loaded only then); ?obstep=3 opens that step for a test session;
    &skin=hw|te|console|tx adds a hardware skin (glow, pocket, console, aluminium).
    Off by default: the intro, the DS and Figma are unchanged until the musician test passes (notes/research/hardware-controls.md). */
-const LAB_Q=new URLSearchParams(location.search),LABS=(LAB_Q.get('lab')||'').split(','),LAB_STRIP=LABS.includes('strip');let LAB_KNOB=LABS.includes('knob');
-/* LAB, T491 (Vit 5 Nov: "only soundcheck animation"): ?lab=knob plays the Soundcheck between the intro and the dashboard
-   (prototype/lab/soundcheck.css + .js, loaded only then), once per band. Off by default: the intro is unchanged without it. */
+const LAB_Q=new URLSearchParams(location.search),LABS=(LAB_Q.get('lab')||'').split(','),LAB_STRIP=LABS.includes('strip');
+/* the Soundcheck plays every time the intro ends (Vit 5 Nov: "on the live site I want to see it every time I finish the
+   intro steps"); ?lab=noknob turns it off for one visit */
+let LAB_KNOB=!LABS.includes('noknob');
+/* T491 (Vit 5 Nov: "only soundcheck animation"): the Soundcheck plays between the intro and the dashboard, every time the
+   intro ends (prototype/lab/soundcheck.css + .js). It stays a prototype moment: not in Figma or the DS. */
 const loadSoundcheck=()=>{if(document.querySelector('link[href="lab/soundcheck.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='lab/soundcheck.css';document.head.appendChild(l);
  const sc=document.createElement('script');sc.src='lab/soundcheck.js';document.head.appendChild(sc);};
-if(LAB_KNOB)loadSoundcheck();
+loadSoundcheck();
 /* the Claude artifact does not pass ?lab=knob to the page (Vit 5 Nov: "the artifact does not have the animation"), so a
-   Flows entry turns the Soundcheck on and opens the last intro step; replay it from Flows again */
-L.FLOWS.push(['Soundcheck (lab)','The knob moment between the intro and the dashboard',()=>{LAB_KNOB=true;loadSoundcheck();A.sounded={};S.onboarding.step=5;L.go('onboarding');}]);
+   Flows entry opens the last intro step, one click from the Soundcheck */
+L.FLOWS.push(['Soundcheck','The knob moment between the intro and the dashboard',()=>{LAB_KNOB=true;loadSoundcheck();S.onboarding.step=5;L.go('onboarding');}]);
 if((LAB_STRIP||LAB_KNOB)&&LAB_Q.get('obstep')){const st=parseInt(LAB_Q.get('obstep'),10);if(st>=0&&st<=6)S.onboarding.step=st;}
 if(LAB_STRIP){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/strip.css';document.head.appendChild(l);
  const sc=document.createElement('script');sc.src='lab/strip.js';document.head.appendChild(sc);
@@ -526,9 +529,9 @@ AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the lin
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
 AC.accobrow=()=>{A.obRows++;L.render();};
 /* the intro's three exits into the app; with ?lab=knob the Soundcheck plays first, the first time each band comes up */
-const enterApp=(msg)=>{const go=()=>{L.go('dashboard');L.toast(msg);};const b=curBand();A.sounded=A.sounded||{};
+const enterApp=(msg)=>{const go=()=>{L.go('dashboard');L.toast(msg);};const b=curBand();
  /* returns a promise while the Soundcheck plays, so the first-run tour (tour.js) waits for the dashboard */
- if(LAB_KNOB&&window.LAAS_SOUNDCHECK&&!A.sounded[b.id]){A.sounded[b.id]=true;return new Promise(res=>window.LAAS_SOUNDCHECK.play(b.name,()=>{go();res();}));}go();};
+ if(LAB_KNOB&&window.LAAS_SOUNDCHECK){return new Promise(res=>window.LAAS_SOUNDCHECK.play(b.name,()=>{go();res();}));}go();};
 AC.accobskip=()=>enterApp('Welcome to LAAS. Invite the band any time from Members');
 AC.accobsend=()=>{const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;return enterApp(n?`Welcome to LAAS. ${n} invite${n===1?'':'s'} sent`:'Welcome to LAAS');};
 AC.accnotme=()=>{S.onboarding.step=0;L.render();L.toast('Invite left as it was. Sign in with your own email');};
