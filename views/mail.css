@@ -25,7 +25,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-row.unread .ml-time{color:var(--ink)}
 .ml-acts{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;gap:2px;background:var(--raised);padding-left:8px}
 .ml-acts .btn.icon.s{width:32px;height:32px}
-.ml-row:is(:hover,[data-state="hover"]) .ml-acts,.ml-row:focus-within .ml-acts{display:flex}
+.ml-row:is(:hover,[data-state="hover"]) .ml-acts,.ml-row:is(:focus-within,[data-state="focus"]) .ml-acts{display:flex}
 .ml-measure{max-width:560px}
 
 /* thread: conversation 720, linked panel 348 */
@@ -81,7 +81,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 
 .ml-banner .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .ml-star{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;color:var(--faint);margin-left:0;visibility:hidden}
-.ml-star.on,.ml-row:is(:hover,[data-state="hover"]) .ml-star,.ml-row:focus-within .ml-star{visibility:visible}
+.ml-star.on,.ml-row:is(:hover,[data-state="hover"]) .ml-star,.ml-row:is(:focus-within,[data-state="focus"]) .ml-star{visibility:visible}
 .ml-star:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--state-hover)}.ml-star.on{color:var(--accent-ink)}
 .ml-star svg{width:16px;height:16px}
 .ml-star.on svg{fill:currentColor}
@@ -99,7 +99,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-cmpw{max-width:720px;display:flex;flex-direction:column;gap:16px}
 .ml-ed{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);display:flex;flex-direction:column}
 .ml-cf{display:flex;align-items:center;gap:12px;padding:8px 16px;min-height:52px;border-bottom:1px solid var(--rule)}
-.ml-cf:focus-within{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.ml-cf:is(:focus-within,[data-state="focus"]){background:color-mix(in srgb,var(--ink) 3%,transparent)}
 .ml-cf.err{box-shadow:inset 3px 0 0 var(--bad)}
 .ml-cl{width:56px;flex:none;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .ml-chips{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;position:relative}
@@ -183,4 +183,4 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 /* From is a borderless field like To and Subject (Vit 21 Oct: "fix the email field spacing"); the general field ring
    drew a box with the text on its edge. The chevron stays; focus shows on the whole row. */
 .ml-cf .ml-fromsel{box-shadow:none!important;background-color:transparent!important;border-radius:0;padding-right:32px;cursor:pointer}
-.ml-cf .ml-fromsel:focus,.ml-cf .ml-fromsel:is(:focus-visible,[data-state="focus"]){box-shadow:none!important;outline:none!important}
+.ml-cf .ml-fromsel:is(:focus,[data-state="focus"]),.ml-cf .ml-fromsel:is(:focus-visible,[data-state="focus"]){box-shadow:none!important;outline:none!important}

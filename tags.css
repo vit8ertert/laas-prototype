@@ -112,7 +112,7 @@
 /* focus ring (Vit 21 Oct, "Continue with email" looked double-bordered): keyboard focus only, 2 px in the text colour,
    2 px away, following the element's own shape; never on mouse click */
 :is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink)!important;outline-offset:2px}
-:focus:not(:is(:focus-visible,[data-state="focus"])){outline:none!important}
+:is(:focus,[data-state="focus"]):not(:is(:focus-visible,[data-state="focus"])){outline:none!important}
 
 /* long popovers scroll inside themselves instead of running off the window (Vit 21 Oct, Flows list) */
 .pop.flowmenu{max-height:calc(100vh - 76px);overflow-y:auto;overscroll-behavior:contain}

@@ -173,7 +173,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Chip 153:948: row gap 8, pad 8 12, pill, inside stroke rule, surface; hover fill hover; selected (153:939) raised */
 .cat-search{position:relative;display:flex;align-items:center;gap:8px;width:260px;max-width:100%;height:38px;padding:0 12px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--muted)}
 .cat-search svg.i{width:18px;height:18px}
-.cat-search:focus-within,.cat-search.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.cat-search:is(:focus-within,[data-state="focus"]),.cat-search.on{box-shadow:inset 0 0 0 2px var(--ink)}
 .cat-search input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);padding:0}
 .cat-search input::placeholder{color:var(--muted)}
 .cat-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}

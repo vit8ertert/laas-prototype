@@ -206,7 +206,7 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 /* Figma Input "Field" frame as its own box (row, gap 8, pad 8 12, radius 8, surface, inside stroke rule-strong; focus 2 ink),
    holding the leading icon 18 and a bare control, so a 2-line value or a leading icon sits in the flow like Figma */
 .m-ifld{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--muted);cursor:text}
-.m-ifld:focus-within{box-shadow:inset 0 0 0 2px var(--ink)}
+.m-ifld:is(:focus-within,[data-state="focus"]){box-shadow:inset 0 0 0 2px var(--ink)}
 .m-ifld>svg.i{width:18px;height:18px;flex:none}
 .m-fin{flex:1;min-width:0;width:100%;margin:0;padding:0;border:0;background:none;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);outline:none;resize:none;overflow:hidden}
 .m-tg{display:flex;align-items:center;gap:8px;text-align:left;font-size:15px;line-height:18px;color:var(--ink)}
@@ -256,7 +256,7 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-search svg{position:absolute;left:12px;color:var(--muted);pointer-events:none}
 .ml-search input{width:100%;height:100%;padding:8px 12px 8px 38px;background:none;border:0;outline:none;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .ml-search input::placeholder{color:var(--muted)}
-.ml-search:focus-within{box-shadow:inset 0 0 0 2px var(--ink)}
+.ml-search:is(:focus-within,[data-state="focus"]){box-shadow:inset 0 0 0 2px var(--ink)}
 
 /* grid tables, as the bookings table: one column fills, the rest fixed */
 .ml-table{border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow-x:auto;overflow-y:hidden}

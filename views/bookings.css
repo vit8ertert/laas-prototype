@@ -37,8 +37,8 @@
 .bk-search svg.i{position:absolute;left:12px;color:var(--muted);pointer-events:none}
 .bk-search input{width:100%;height:100%;padding:8px 12px 8px 38px;background:none;border:0;outline:none;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-search input::placeholder{color:var(--muted)}
-.bk-search:focus-within,.bk-search:has(input:not(:placeholder-shown)){box-shadow:inset 0 0 0 2px var(--ink)}
-.bk-search:focus-within svg.i{color:var(--ink)}
+.bk-search:is(:focus-within,[data-state="focus"]),.bk-search:has(input:not(:placeholder-shown)){box-shadow:inset 0 0 0 2px var(--ink)}
+.bk-search:is(:focus-within,[data-state="focus"]) svg.i{color:var(--ink)}
 
 /* ---------- table: one column (title) fills, the rest fixed ----------
    Figma "table" has strokesIncludedInLayout, so its 1 px stroke takes space (rows 1114 in 1116): a real border.
