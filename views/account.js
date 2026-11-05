@@ -430,6 +430,21 @@ const head=(t,p)=>`<div class="acc-obh"><h1 class="t-title">${t}</h1><p>${p}</p>
 const GENRES=L.GENRES=['Indie and rock','Shoegaze and dream pop','Punk','Metal and hardcore','Electronic','Hip-hop and soul','R&B','Pop','Folk','Singer-songwriter','Country and Americana','Blues','Jazz','Classical','Reggae and ska','Latin','World','Ambient and experimental'];
 const COUNTRIES=L.COUNTRIES=['Denmark','Sweden','Norway','Finland','Iceland','Germany','Netherlands','United Kingdom','Ireland','France','Spain','Another country'];
 const obGenres=()=>S.onboarding.genres||(S.onboarding.genres=[S.onboarding.genre]);
+/* LAB, T491 (Vit 5 Nov: "we can try this for our intro steps"): ?lab=strip swaps "How many of you?" for the stepped
+   strip from prototype/lab/ (strip.css, strip.js, loaded only then); ?obstep=3 opens that step for a test session;
+   &skin=hw|te|console|tx adds a hardware skin (glow, pocket, console, aluminium).
+   Off by default: the intro, the DS and Figma are unchanged until the musician test passes (notes/research/hardware-controls.md). */
+const LAB_Q=new URLSearchParams(location.search),LAB_STRIP=LAB_Q.get('lab')==='strip';
+if(LAB_STRIP){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/strip.css';document.head.appendChild(l);
+ const sc=document.createElement('script');sc.src='lab/strip.js';document.head.appendChild(sc);
+ const st=parseInt(LAB_Q.get('obstep'),10);if(st>=0&&st<=6)S.onboarding.step=st;
+ const sk=LAB_Q.get('skin');if(['hw','te','console','tx'].includes(sk))document.documentElement.dataset.skin=sk;}
+const OB_SIZES=['Just me','2','3–4','5+'];
+const obSizeField=()=>LAB_STRIP?`<div class="field"><div class="ev-row" id="acc-sizestrip"></div></div>`
+ :`<div class="field"><span class="acc-lbl">How many of you?</span><div class="segmented-control seg acc-size">${OB_SIZES.map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>`;
+const mountSizeStrip=()=>{const h=document.getElementById('acc-sizestrip');if(!h||h.firstChild)return;if(!window.LAAS_STRIP)return void setTimeout(mountSizeStrip,50);
+ LAAS_STRIP.fader(h,{name:'How many of you?',levels:OB_SIZES,short:OB_SIZES,value:Math.max(0,OB_SIZES.indexOf(A.size)),h:true,
+  text:v=>v?`${OB_SIZES[v]} people in the band`:'Just me',onChange:v=>{A.size=OB_SIZES[v];}});};
 
 /* mini dashboard used for the live window and the theme card previews (tokens, so it follows the theme) */
 function mini(g=S.genre){const h={metal:'What are we unleashing first?',classical:'What is on the programme first?'}[g]||'What should we set up first?';
@@ -470,7 +485,7 @@ function obSteps(st){const ob=S.onboarding;
    <div class="acc-gsearch">${ic('search','s')}<input id="acc-gq" placeholder="Search genres" aria-label="Search genres" autocomplete="off"></div>
    <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${[...GENRES,...obGenres().filter(g=>!GENRES.includes(g))].map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${esc(g)}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. <button class="link" data-act="accgadd">Add “<span id="acc-gnew"></span>”</button></span></div>
    <span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
-  <div class="field"><span class="acc-lbl">How many of you?</span><div class="segmented-control seg acc-size">${['Just me','2','3–4','5+'].map(s=>`<button class="${A.size===s?'on':''}" data-accsize="${s}">${s}</button>`).join('')}</div></div>
+  ${obSizeField()}
   <div class="row"><button class="btn secondary" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
   const desc={label:'The LAAS look, lilac on dark',metal:'Black and bone, hard type',electronic:'Electric navy and lime',classical:'Ivory, gold and burgundy'};
@@ -493,7 +508,7 @@ function obSteps(st){const ob=S.onboarding;
   +`<div class="row"><button class="btn secondary" data-act="accnotme">Not me</button><button class="btn accent" data-act="accjoin">Join Low Tide</button></div>`;
  }}
 L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.ob-ph:not(.in)').forEach(i=>{if(i.complete&&i.naturalWidth){OB_SEEN.add(i.dataset.ph);setTimeout(()=>i.classList.add('in'),20);}}),30);setTimeout(()=>{S.logoIntroTag=1},2300);const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;
- queueMicrotask(()=>{fitWin();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
+ queueMicrotask(()=>{fitWin();if(LAB_STRIP&&st===3)mountSizeStrip();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
  const right=st===4?`<div class="r acc-live"><div class="acc-win">${mini()}</div>${lookPicker()}</div>`:`<div class="r"><img class="ob-ph ${OB_SEEN.has(photo)?'in':''}" src="${IMG(photo)}" alt="" decoding="async" fetchpriority="high" data-ph="${photo}"></div>`;
  return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.logoMotion?L.logoMotion(S.logoIntro?'idle':(S.logoIntro=1,'intro')):L.LOGO}<small class="muted t-meta ${S.logoIntroTag?'':'lm-tag'}">label as a service</small></span><span style="flex:1"></span>${prog?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${L.flowBtnInline()}</div>
  ${prog?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}

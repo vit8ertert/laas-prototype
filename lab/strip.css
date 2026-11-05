@@ -1,0 +1,209 @@
+/* LAAS lab, T491: the stepped strip (a fader). Test only, not in the design system.
+   Used by lab/hardware-controls.html and, behind ?lab=strip, by the intro's "How many of you?" (views/account.js).
+   Tokens only. Horizontal (.h) is the strip; vertical is the mixer channel on wide screens. */
+.fader{--fh:184px;display:flex;flex-direction:column;align-items:center;gap:12px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;border-radius:var(--r-md);padding-top:12px}
+.fader:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.f-track{position:relative;width:44px;height:var(--fh)}
+.f-track::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;margin-left:-2px;border-radius:2px;background:var(--well);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.f-fill{position:absolute;left:50%;bottom:0;width:4px;margin-left:-2px;border-radius:2px;background:var(--accent)}
+.f-det{position:absolute;left:8px;right:8px;height:1px;background:var(--rule-strong);transform:translateY(50%)}
+.f-cap{position:absolute;left:4px;right:4px;height:24px;margin-bottom:-12px;border-radius:var(--r-sm);background:var(--top);box-shadow:var(--elev-1),inset 0 0 0 1px var(--rule-strong);transition:bottom var(--dur-1) var(--ease-standard)}
+.f-cap::after{content:"";position:absolute;left:6px;right:6px;top:11px;height:2px;border-radius:1px;background:var(--accent)}
+.fader.drag .f-cap,.fader.drag .f-fill{transition:none}
+.f-fill{transition:height var(--dur-1) var(--ease-standard)}
+.f-name{font:500 13px/var(--lh-label) var(--sans);color:var(--ink);text-align:center}
+.f-val{font:400 12px/16px var(--mono);color:var(--muted);text-align:center;min-height:32px}
+/* phone: one horizontal fader per topic (a row, like the switch rows it replaces); sideways only, so the page still
+   scrolls; each stop label sits on its stop and the whole strip is a 44-high press target */
+.fader.h{width:100%;align-items:stretch;gap:4px;padding:0;cursor:ew-resize;touch-action:pan-y}
+.fh-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.fader.h .f-name{text-align:left;font-size:15px;line-height:20px}
+.fader.h .f-val{min-height:0;font-size:13px;line-height:20px;color:var(--ink)}
+.fader.h .f-track{width:auto;height:44px}
+.fader.h .f-track::before{left:14px;right:14px;top:50%;bottom:auto;width:auto;height:4px;margin:-2px 0 0}
+.f-in{position:absolute;inset:0}
+.fader.h .f-in{left:14px;right:14px}
+.fader.h .f-det{left:auto;right:auto;top:12px;bottom:12px;width:1px;height:auto;transform:translateX(-50%)}
+.fader.h .f-fill{left:0;bottom:auto;top:50%;height:4px;margin:-2px 0 0;width:0;transition:width var(--dur-1) var(--ease-standard)}
+.fader.h .f-cap{left:0;right:auto;top:6px;width:28px;height:32px;margin:0 0 0 -14px;transition:left var(--dur-1) var(--ease-standard)}
+.fader.h .f-cap::after{left:13px;right:auto;top:7px;bottom:7px;width:2px;height:auto}
+.fh-labs{position:relative;height:16px;margin:0 14px}
+.fh-labs span{position:absolute;transform:translateX(-50%);font:400 12px/16px var(--sans);color:var(--faint);white-space:nowrap}
+.fh-labs span.on{color:var(--ink);font-weight:500}
+.fh-labs span:first-child{transform:translateX(-14px)}.fh-labs span:last-child{transform:translateX(calc(-100% + 14px))}
+/* inside a form (the intro), the strip's name reads like every other field label */
+.field .fader.h .f-name{font:400 13px/var(--lh-label) var(--sans)}
+.field .fader.h .f-val{font-size:12px;line-height:var(--lh-label)}
+.ev-row{display:flex;flex-direction:column;gap:4px}
+.ev-row .help{font:400 12px/16px var(--sans);color:var(--muted)}
+@media (max-width:599.98px){.fader{--fh:168px}.fader:not(.h) .f-name{font-size:12px;line-height:16px}}
+/* 3D, like a real fader (Vit 5 Nov: "knobs maybe look like real 3d ones"; reference Neural DSP Parallax X): the cap
+   is lit from above (--on-photo, white) and casts a shadow (--scrim-base, black), has grip ridges and sinks 1 px while
+   held; the track is a recessed slot. Tokens only, so it follows every theme. */
+.fader{--lit:color-mix(in srgb,var(--on-photo) 14%,var(--top));--shade:color-mix(in srgb,var(--scrim-base) 22%,var(--top));
+  --rim:color-mix(in srgb,var(--on-photo) 30%,transparent);--drop:color-mix(in srgb,var(--scrim-base) 45%,transparent);
+  --ridge-d:color-mix(in srgb,var(--scrim-base) 30%,transparent);--ridge-l:color-mix(in srgb,var(--on-photo) 16%,transparent)}
+.f-track::before{background:var(--sunken);box-shadow:inset 0 1px 2px var(--drop),inset 0 -1px 0 var(--ridge-l),inset 0 0 0 1px var(--rule-strong)}
+.fader.h .f-track::before{height:6px;margin-top:-3px;border-radius:3px}
+.fader:not(.h) .f-track::before{width:6px;margin-left:-3px;border-radius:3px}
+.f-cap{background:linear-gradient(180deg,var(--lit),var(--top) 48%,var(--shade));
+  box-shadow:0 1px 1px var(--drop),0 4px 10px var(--drop),inset 0 1px 0 var(--rim),inset 0 -1px 0 var(--ridge-d),inset 0 0 0 1px var(--rule-strong);
+  transition:bottom var(--dur-1) var(--ease-standard),left var(--dur-1) var(--ease-standard),transform var(--dur-1) var(--ease-standard),box-shadow var(--dur-1) var(--ease-standard)}
+.f-cap::before{content:"";position:absolute;inset:5px 4px;border-radius:2px;
+  background:repeating-linear-gradient(0deg,var(--ridge-d) 0 1px,var(--ridge-l) 1px 2px,transparent 2px 4px)}
+.fader.h .f-cap::before{background:repeating-linear-gradient(90deg,var(--ridge-d) 0 1px,var(--ridge-l) 1px 2px,transparent 2px 4px)}
+.f-cap::after{z-index:1;box-shadow:0 0 0 2px var(--top)}
+.fader.drag .f-cap{transform:translateY(1px);box-shadow:0 1px 1px var(--drop),0 1px 3px var(--drop),inset 0 1px 0 var(--rim),inset 0 0 0 1px var(--rule-strong)}
+.fader:focus-visible .f-cap{box-shadow:0 0 0 2px var(--accent),0 4px 10px var(--drop),inset 0 1px 0 var(--rim)}
+.fader.h:focus-visible{outline:none}
+/* Hardware skin, skeuomorphic (Vit 5 Nov, a graphic EQ render with brushed metal and glowing purple caps: "something
+   that feels like skeuomorphism"). On with <html data-skin="hw">. What makes the reference feel physical, kept here:
+   a brushed-metal panel, deep black slots, printed tick scales beside each slot, a translucent cap that glows in the
+   accent with a bright core, the value printed above and the name below. No fill line (a real fader has none: the
+   lit cap is the value). Colours are tokens (accent, top, muted, sunken; light from --on-photo, dark from --scrim-base);
+   the grain is a grey SVG noise, a texture, not a colour. */
+[data-skin="hw"]{--metal:color-mix(in srgb,var(--top) 78%,var(--muted));
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+[data-skin="hw"] .pane.hw,[data-skin="hw"] .ev-g{background-color:var(--metal);
+  background-image:var(--grain),repeating-linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 3%,transparent) 0 1px,transparent 1px 3px,color-mix(in srgb,var(--scrim-base) 4%,transparent) 3px 4px,transparent 4px 7px),linear-gradient(100deg,color-mix(in srgb,var(--on-photo) 12%,transparent),transparent 45%,color-mix(in srgb,var(--scrim-base) 16%,transparent));
+  background-blend-mode:overlay,normal,normal;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on-photo) 28%,transparent),inset 0 -2px 0 color-mix(in srgb,var(--scrim-base) 30%,transparent),0 8px 20px color-mix(in srgb,var(--scrim-base) 35%,transparent)}
+[data-skin="hw"] .ev-g{padding:var(--card);border-radius:var(--r-md)}
+[data-skin="hw"] .pane.hw .pane-l,[data-skin="hw"] .ev-grp>h3{color:var(--ink);opacity:.7}
+/* mixer scale: printed in ink, and lined up with the slot now that the value sits above it (16 + 12 gap) */
+[data-skin="hw"] .fader:not(.h){gap:16px}
+[data-skin="hw"] .mx-scale{margin-top:44px}
+[data-skin="hw"] .mx-scale span,[data-skin="hw"] .fh-labs span{color:color-mix(in srgb,var(--ink) 75%,transparent)}
+[data-skin="hw"] .fh-labs span.on{color:var(--ink)}
+[data-skin="hw"] .ev-row .help{color:color-mix(in srgb,var(--ink) 75%,transparent)}
+/* slot: a deep black cut in the panel */
+[data-skin="hw"] .f-track{isolation:isolate}
+[data-skin="hw"] .f-track::before{z-index:1;background:color-mix(in srgb,var(--scrim-base) 88%,var(--sunken));
+  box-shadow:inset 0 2px 4px var(--scrim-base),inset 0 -1px 0 color-mix(in srgb,var(--on-photo) 22%,transparent),0 1px 0 color-mix(in srgb,var(--on-photo) 18%,transparent)}
+[data-skin="hw"] .fader:not(.h) .f-track::before{width:10px;margin-left:-5px;border-radius:5px}
+[data-skin="hw"] .fader.h .f-track::before{height:10px;margin-top:-5px;border-radius:5px}
+[data-skin="hw"] .f-fill{display:none}
+/* printed scale: tick marks either side of the slot */
+[data-skin="hw"] .f-det{z-index:0;background:color-mix(in srgb,var(--ink) 45%,transparent)}
+[data-skin="hw"] .fader:not(.h) .f-det{left:2px;right:2px}
+[data-skin="hw"] .fader.h .f-det{top:6px;bottom:6px}
+/* the cap: translucent accent, lit from inside */
+[data-skin="hw"] .f-cap{z-index:2;border-radius:4px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 55%,var(--on-photo)),var(--accent) 45%,color-mix(in srgb,var(--accent) 72%,var(--scrim-base)));
+  box-shadow:0 0 6px var(--accent),0 0 20px color-mix(in srgb,var(--accent) 60%,transparent),0 2px 4px color-mix(in srgb,var(--scrim-base) 50%,transparent),
+    inset 0 1px 0 color-mix(in srgb,var(--on-photo) 70%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,var(--on-photo))}
+[data-skin="hw"] .fader:not(.h) .f-cap{left:9px;right:9px;height:30px;margin-bottom:-15px}
+[data-skin="hw"] .fader.h .f-cap{width:30px;height:26px;top:9px;margin-left:-15px}
+[data-skin="hw"] .f-cap::before{inset:4px;border-radius:2px;background:repeating-linear-gradient(0deg,color-mix(in srgb,var(--on-photo) 18%,transparent) 0 1px,transparent 1px 3px);opacity:.6}
+[data-skin="hw"] .fader.h .f-cap::before{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--on-photo) 18%,transparent) 0 1px,transparent 1px 3px)}
+[data-skin="hw"] .f-cap::after{left:50%;right:auto;top:50%;bottom:auto;width:12px;height:8px;margin:-4px 0 0 -6px;border-radius:3px;
+  background:radial-gradient(closest-side,var(--on-photo),color-mix(in srgb,var(--accent) 40%,var(--on-photo)) 55%,transparent);box-shadow:0 0 8px color-mix(in srgb,var(--on-photo) 70%,transparent)}
+[data-skin="hw"] .fader.drag .f-cap{transform:none;box-shadow:0 0 10px var(--accent),0 0 32px color-mix(in srgb,var(--accent) 75%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 80%,transparent),inset 0 0 0 1px var(--on-photo)}
+[data-skin="hw"] .fader:focus-visible .f-cap{box-shadow:0 0 0 2px var(--ink),0 0 20px var(--accent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 70%,transparent)}
+/* printed text: value above the slot, name below, as on the panel */
+[data-skin="hw"] .fader:not(.h) .f-val{order:-1;min-height:16px;color:var(--ink);font-weight:500}
+[data-skin="hw"] .f-name{font-weight:600}
+/* Pocket skin (Vit 5 Nov, Teenage Engineering EP-133 K.O. II: "also i am a fan of this"). On with data-skin="te".
+   Matte panel, no texture; a thin dark slot; a round grey cap with a hairline through it; small capitals; a small
+   LED dot over every stop that lights in the one signal colour (the theme accent, as TE uses orange). */
+[data-skin="te"] .pane.hw,[data-skin="te"] .ev-g{background:color-mix(in srgb,var(--raised) 90%,var(--muted));border-radius:6px;
+  box-shadow:inset 0 0 0 1px var(--rule-strong),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 18%,transparent)}
+[data-skin="te"] .ev-g{padding:var(--card)}
+[data-skin="te"] .f-fill{display:none}
+[data-skin="te"] .f-track::before{background:color-mix(in srgb,var(--ink) 85%,transparent);box-shadow:none}
+[data-skin="te"] .fader:not(.h) .f-track::before{width:3px;margin-left:-1.5px;border-radius:2px}
+[data-skin="te"] .fader.h .f-track::before{height:3px;margin-top:-1.5px;border-radius:2px}
+[data-skin="te"] .f-det{opacity:.6}
+[data-skin="te"] .fader:not(.h) .f-det{left:14px;right:14px}
+[data-skin="te"] .fader.h .f-det{top:15px;bottom:15px}
+[data-skin="te"] .f-cap{border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--on-photo) 35%,var(--muted)),var(--muted) 58%,color-mix(in srgb,var(--scrim-base) 28%,var(--muted)));
+  box-shadow:0 2px 4px color-mix(in srgb,var(--scrim-base) 40%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 22%,transparent)}
+[data-skin="te"] .fader:not(.h) .f-cap{left:9px;right:9px;height:26px;margin-bottom:-13px}
+[data-skin="te"] .fader:not(.h){gap:16px}
+[data-skin="te"] .fader.h .f-cap{width:26px;height:26px;top:9px;margin-left:-13px}
+[data-skin="te"] .f-cap::before{inset:auto;left:-8px;right:-8px;top:50%;height:1px;border-radius:0;background:var(--ink);opacity:1}
+[data-skin="te"] .fader.h .f-cap::before{left:50%;right:auto;top:-8px;bottom:-8px;width:1px;height:auto;background:var(--ink)}
+[data-skin="te"] .f-cap::after{display:none}
+[data-skin="te"] .fader.drag .f-cap{transform:translateY(1px);box-shadow:0 1px 2px color-mix(in srgb,var(--scrim-base) 40%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 22%,transparent)}
+[data-skin="te"] .fader:focus-visible .f-cap{box-shadow:0 0 0 2px var(--accent),0 2px 4px color-mix(in srgb,var(--scrim-base) 40%,transparent)}
+[data-skin="te"] .f-name,[data-skin="te"] .fh-labs span,[data-skin="te"] .mx-scale span,[data-skin="te"] .ev-grp>h3,[data-skin="te"] .pane.hw .pane-l{text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+[data-skin="te"] .fader.h .f-name,[data-skin="te"] .field .fader.h .f-name{font:500 12px/18px var(--sans);letter-spacing:.06em}
+[data-skin="te"] .f-val{text-transform:uppercase;font-size:12px}
+/* LED dots: one over each stop, lit = chosen */
+[data-skin="te"] .fh-labs{height:28px}
+[data-skin="te"] .fh-labs span{display:flex;flex-direction:column;align-items:center;gap:4px}
+[data-skin="te"] .fh-labs span:first-child{align-items:flex-start}[data-skin="te"] .fh-labs span:last-child{align-items:flex-end}
+[data-skin="te"] .fh-labs span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rule-strong)}
+[data-skin="te"] .fh-labs span.on::before{background:var(--accent);box-shadow:0 0 6px var(--accent)}
+[data-skin="te"] .fader:not(.h) .f-val::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:1px;background:var(--accent);box-shadow:0 0 6px var(--accent)}
+
+/* Console skin (Vit 5 Nov, a channel-strip guitar plugin: chrome faders, scale on both sides, lit selections).
+   On with data-skin="console". Dark brushed console panel; slots with a grey bezel; wide chrome caps with a dark
+   groove; tick scale either side; the chosen stop is lit in the accent like a backlit legend. */
+[data-skin="console"] .pane.hw,[data-skin="console"] .ev-g{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--top) 72%,var(--scrim-base)),color-mix(in srgb,var(--raised) 70%,var(--scrim-base)));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on-photo) 16%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 50%,transparent),0 6px 16px color-mix(in srgb,var(--scrim-base) 35%,transparent);
+  --ink:color-mix(in srgb,var(--on-photo) 88%,var(--scrim-base));--muted:color-mix(in srgb,var(--on-photo) 62%,var(--scrim-base));--faint:color-mix(in srgb,var(--on-photo) 50%,var(--scrim-base))}
+[data-skin="console"] .ev-g{padding:var(--card);border-radius:var(--r-md)}
+[data-skin="console"] .f-fill{display:none}
+[data-skin="console"] .f-track{isolation:isolate}
+[data-skin="console"] .f-track::before{z-index:1;background:color-mix(in srgb,var(--scrim-base) 90%,var(--sunken));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--on-photo) 22%,transparent),0 0 0 3px color-mix(in srgb,var(--scrim-base) 50%,transparent),inset 0 2px 3px var(--scrim-base)}
+[data-skin="console"] .fader:not(.h) .f-track::before{width:8px;margin-left:-4px;border-radius:4px}
+[data-skin="console"] .fader.h .f-track::before{height:8px;margin-top:-4px;border-radius:4px}
+[data-skin="console"] .f-det{z-index:0;background:color-mix(in srgb,var(--on-photo) 45%,transparent)}
+[data-skin="console"] .fader:not(.h) .f-det{left:0;right:0}
+[data-skin="console"] .fader.h .f-det{top:4px;bottom:4px}
+[data-skin="console"] .f-cap{z-index:2;border-radius:3px;--c:var(--muted);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 88%,var(--c)) 0%,color-mix(in srgb,var(--on-photo) 55%,var(--c)) 28%,var(--c) 46%,color-mix(in srgb,var(--scrim-base) 45%,var(--c)) 52%,color-mix(in srgb,var(--on-photo) 35%,var(--c)) 78%,color-mix(in srgb,var(--on-photo) 75%,var(--c)) 100%);
+  box-shadow:0 4px 8px color-mix(in srgb,var(--scrim-base) 55%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 40%,transparent)}
+[data-skin="console"] .fader.h .f-cap{background:linear-gradient(90deg,color-mix(in srgb,var(--on-photo) 88%,var(--c)) 0%,color-mix(in srgb,var(--on-photo) 55%,var(--c)) 28%,var(--c) 46%,color-mix(in srgb,var(--scrim-base) 45%,var(--c)) 52%,color-mix(in srgb,var(--on-photo) 35%,var(--c)) 78%,color-mix(in srgb,var(--on-photo) 75%,var(--c)) 100%)}
+[data-skin="console"] .fader:not(.h) .f-cap{left:0;right:0;height:34px;margin-bottom:-17px}
+[data-skin="console"] .fader.h .f-cap{width:30px;height:38px;top:3px;margin-left:-15px}
+[data-skin="console"] .f-cap::before{display:none}
+[data-skin="console"] .f-cap::after{left:5px;right:5px;top:50%;height:2px;margin-top:-1px;background:color-mix(in srgb,var(--scrim-base) 65%,transparent);box-shadow:0 1px 0 color-mix(in srgb,var(--on-photo) 40%,transparent)}
+[data-skin="console"] .fader.h .f-cap::after{left:50%;right:auto;top:5px;bottom:5px;width:2px;height:auto;margin:0 0 0 -1px}
+[data-skin="console"] .fader.drag .f-cap{transform:translateY(1px)}
+[data-skin="console"] .fader:focus-visible .f-cap{box-shadow:0 0 0 2px var(--accent),0 4px 8px color-mix(in srgb,var(--scrim-base) 55%,transparent)}
+/* backlit legend: the chosen stop and the value glow in the accent */
+[data-skin="console"] .fh-labs span.on,[data-skin="console"] .f-val{color:var(--accent);text-shadow:0 0 8px color-mix(in srgb,var(--accent) 70%,transparent)}
+[data-skin="console"] .f-name,[data-skin="console"] .mx-scale span{text-transform:uppercase;letter-spacing:.05em}
+[data-skin="console"] .fader:not(.h) .f-val{order:-1;min-height:16px}
+/* the tall chrome cap overhangs the slot by 17 px: more gap above and below, and the scale follows (12 + 16 + 20) */
+[data-skin="console"] .fader:not(.h){gap:20px}
+[data-skin="console"] .mx-scale{margin-top:48px}
+/* Aluminium skin (Vit 5 Nov, Teenage Engineering TX-6 and teenage.engineering/store). On with data-skin="tx".
+   A milled aluminium face (black in dark themes, as the TX-6 comes in both); a deep rounded slot with a light milled
+   rim; a small round cap sitting inside the slot; a column of LED dots beside it that light up to the chosen level,
+   like the TX-6's dotted meter; plain lowercase-friendly labels; the accent as the one signal colour (orange on TE). */
+[data-skin="tx"] .pane.hw,[data-skin="tx"] .ev-g{border-radius:12px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--on-photo) 10%,var(--alu)),var(--alu) 40%,color-mix(in srgb,var(--scrim-base) 6%,var(--alu)));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on-photo) 35%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 12%,transparent),0 10px 24px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+[data-skin="tx"]{--alu:color-mix(in srgb,var(--top) 82%,var(--muted))}
+[data-skin="tx"] .ev-g{padding:var(--card)}
+[data-skin="tx"] .pane.hw .pane-l,[data-skin="tx"] .ev-grp>h3{color:var(--ink);opacity:.65}
+[data-skin="tx"] .f-fill{display:none}
+[data-skin="tx"] .f-track{isolation:isolate}
+[data-skin="tx"] .f-track::before{z-index:1;background:linear-gradient(90deg,color-mix(in srgb,var(--scrim-base) 92%,var(--alu)),color-mix(in srgb,var(--scrim-base) 70%,var(--alu)) 50%,color-mix(in srgb,var(--scrim-base) 92%,var(--alu)));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--on-photo) 45%,var(--alu)),0 0 0 3px color-mix(in srgb,var(--scrim-base) 18%,transparent),inset 0 3px 5px var(--scrim-base)}
+[data-skin="tx"] .fader:not(.h) .f-track::before{width:14px;margin-left:-7px;border-radius:7px}
+[data-skin="tx"] .fader.h .f-track::before{height:14px;margin-top:-7px;border-radius:7px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 92%,var(--alu)),color-mix(in srgb,var(--scrim-base) 70%,var(--alu)) 50%,color-mix(in srgb,var(--scrim-base) 92%,var(--alu)))}
+/* LED dots: one per stop, beside the slot, lit up to the level */
+[data-skin="tx"] .f-det{z-index:0;width:5px;height:5px;border-radius:50%;background:color-mix(in srgb,var(--ink) 30%,transparent)}
+[data-skin="tx"] .f-det.on{background:var(--accent-strong);box-shadow:0 0 6px var(--accent)}
+[data-skin="tx"] .fader:not(.h) .f-det{left:auto;right:calc(50% + 13px);margin-bottom:-2.5px;transform:none}
+[data-skin="tx"] .fader.h .f-det{top:2px;bottom:auto;width:5px;height:5px;transform:translateX(-50%)}
+/* cap: a small round knob inside the slot */
+[data-skin="tx"] .f-cap{z-index:2;border-radius:50%;
+  background:radial-gradient(circle at 40% 30%,color-mix(in srgb,var(--on-photo) 85%,var(--muted)),color-mix(in srgb,var(--on-photo) 45%,var(--muted)) 55%,color-mix(in srgb,var(--scrim-base) 20%,var(--muted)));
+  box-shadow:0 2px 3px color-mix(in srgb,var(--scrim-base) 60%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+[data-skin="tx"] .fader:not(.h) .f-cap{left:12px;right:12px;height:20px;margin-bottom:-10px}
+[data-skin="tx"] .fader.h .f-cap{width:20px;height:20px;top:12px;margin-left:-10px}
+[data-skin="tx"] .f-cap::before,[data-skin="tx"] .f-cap::after{display:none}
+[data-skin="tx"] .fader.drag .f-cap{transform:scale(.94)}
+[data-skin="tx"] .fader:focus-visible .f-cap{box-shadow:0 0 0 2px var(--accent),0 2px 3px color-mix(in srgb,var(--scrim-base) 60%,transparent)}
+[data-skin="tx"] .f-name{font-weight:400}
+[data-skin="tx"] .fh-labs span.on{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.f-cap,.f-fill{transition:none}}

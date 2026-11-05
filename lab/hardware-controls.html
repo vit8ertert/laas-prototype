@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hardware controls lab</title>
+<!-- LAAS lab, T491 (5 Nov 2026; strip only after Vit's choice the same day): hardware-style controls for testing with musicians. Test only: not in the design
+     system, not linked from the app, no Figma component. Findings and test plan: notes/research/hardware-controls.md -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../views/account.css">
+<link rel="stylesheet" href="strip.css">
+<style>
+/* page */
+body{background:var(--canvas);min-height:100%}
+.lab{max-width:1200px;margin:0 auto;padding:var(--hero-y) var(--gutter) 64px;display:flex;flex-direction:column;gap:var(--section)}
+.lab-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.lab-head h1{margin:0}
+.lab a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.lab-head p{margin:4px 0 0;max-width:640px}
+.lab-theme{display:flex;gap:8px}.lab-theme .input{width:auto;min-width:140px}
+.lab-flag{display:flex;gap:8px;align-items:flex-start;padding:12px 16px;border-radius:var(--r-lg);background:var(--att-tint);color:var(--ink);font:400 13px/var(--lh-label) var(--sans)}
+.lab-flag b{font-weight:500}
+/* a candidate: header + Now | Hardware */
+.cand{background:var(--surface);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:20px}
+.cand-h{display:flex;flex-direction:column;gap:4px}
+.cand-h .t-meta{color:var(--muted)}
+.cand-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:var(--card)}
+.pane{border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--rule);padding:var(--card);display:flex;flex-direction:column;gap:16px;min-width:0}
+.pane-l{font:400 12px/16px var(--sans);color:var(--faint);text-transform:none}
+.pane.hw{background:var(--canvas)}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.why b{display:block;color:var(--ink);font-weight:500;margin-bottom:2px}
+
+/* consequence line under a strip: what the chosen stop means in money or days */
+.conseq{margin:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.sched{justify-content:flex-start !important}
+
+/* Mixer: vertical faders, role=slider aria-orientation=vertical */
+.mixer{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:0 8px;width:100%;max-width:520px;margin:0 auto}
+.mx-scale{position:relative;width:56px;height:var(--fh);margin-top:12px}
+.mx-scale span{position:absolute;right:0;transform:translateY(50%);font:400 12px/16px var(--sans);color:var(--faint);white-space:nowrap}
+.mixer>.mx-scale{grid-row:1}
+.mixer.rows{display:flex;flex-direction:column;gap:20px;max-width:none}
+/* mixer scale is shared with fader height */
+.mixer{--fh:184px}
+
+/* Now panes (current controls, reproduced) */
+.now-f{display:flex;flex-direction:column;gap:8px}
+.now-f label{font:400 13px/var(--lh-label) var(--sans)}
+.now-f .help{font:400 12px/16px var(--sans);color:var(--muted)}
+.sched{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sched span{padding:4px 8px;border-radius:var(--r-pill);background:var(--well);font:400 12px/16px var(--mono);color:var(--ink)}
+.sched span.fee{background:var(--att-tint)}
+.tasks{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;color:var(--ink)}
+.tasks li::marker{color:var(--faint)}
+
+/* section 4: strips in two columns on wide screens, one on phones */
+.ev-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+.ev-grp{display:flex;flex-direction:column;gap:20px;min-width:0}
+.ev-grp>h3{margin:0;font:400 12px/16px var(--sans);color:var(--faint)}
+@media (max-width:899.98px){.ev-g{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:899.98px){
+  .cand-g{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:599.98px){
+  .why{grid-template-columns:1fr}
+  .mixer{--fh:168px;gap:0 4px}
+  .lab-theme{width:100%}.lab-theme .input{flex:1;min-width:0}
+}
+</style>
+
+<main class="lab">
+  <header class="lab-head">
+    <div>
+      <p class="t-meta faint" style="margin:0">LAAS lab · T491 · 5 Nov 2026</p>
+      <h1 class="t-display">Hardware controls</h1>
+      <p class="t-body muted">A stepped strip (a fader lying down) and a mixer, after Braun and Teenage Engineering, next to the control LAAS uses today. Tap a stop or drag along the strip; keyboard: arrows, Home/End. The knob was dropped on 5 Nov: it fits none of the settings rows, so it could not be used everywhere.</p>
+    </div>
+    <div class="lab-theme">
+      <select class="input" id="genre" aria-label="Theme">
+        <option value="">Label (default)</option><option value="metal">Metal</option><option value="electronic">Electronic</option><option value="classical">Classical</option><option value="minimal">Minimal</option><option value="folk">Folk</option><option value="hiphop">Hip-hop &amp; soul</option><option value="pop">Pop</option>
+      </select>
+      <select class="input" id="skin" aria-label="Skin"><optgroup label="In the test"><option value="tx" selected>Aluminium · TX</option><option value="te">Pocket · TE</option></optgroup><optgroup label="Not in the test"><option value="hw">Hardware · glow</option><option value="console">Console · chrome</option><option value="">Flat 3D</option></optgroup></select>
+      <select class="input" id="mode" aria-label="Appearance"><option value="dark">Dark</option><option value="light">Light</option></select>
+    </div>
+  </header>
+
+  <p class="lab-flag" role="note"><span><b>Test only.</b> Not in the design system, not in Figma, not on any screen. For testing with 3–5 musicians before anything is adopted. Findings and test plan: notes/research/hardware-controls.md.</span></p>
+
+  <!-- 1 Deposit -->
+  <section class="cand" aria-labelledby="c1">
+    <div class="cand-h">
+      <h2 class="t-title" id="c1">1 · Deposit on signing</h2>
+      <span class="t-meta">Settings › Band › Deposit. Today's three presets, as stops.</span>
+    </div>
+    <div class="cand-g">
+      <div class="pane">
+        <span class="pane-l">Now · select</span>
+        <div class="now-f"><label for="dep-now">Deposit</label>
+          <select class="input" id="dep-now"><option>30 % on signing</option><option>50 % on signing</option><option>No deposit</option></select>
+          <span class="help">Default on every new offer, full payment inside 28 days of the gig</span></div>
+      </div>
+      <div class="pane hw">
+        <span class="pane-l">Strip · 3 stops</span>
+        <div class="ev-row" id="s-dep"></div>
+        <p class="conseq" id="dep-c" aria-hidden="true"></p></div>
+      </div>
+    </div>
+    <p class="why"><span><b>Might be better</b>All the options and the chosen one are visible without opening anything, and the amount in DKK shows as you move.</span><span><b>Might not</b>A select with three options is one tap too, and the strip takes a whole row.</span></p>
+  </section>
+
+  <!-- 2 Reminder policy -->
+  <section class="cand" aria-labelledby="c2">
+    <div class="cand-h">
+      <h2 class="t-title" id="c2">2 · Reminder policy</h2>
+      <span class="t-meta">Settings › Money › Reminders. An ordered choice, gentle to firm.</span>
+    </div>
+    <div class="cand-g">
+      <div class="pane">
+        <span class="pane-l">Now · select</span>
+        <div class="now-f"><label for="pol-now">Policy</label>
+          <select class="input" id="pol-now"><option>Calm</option><option selected>Recommended</option><option>Tight</option></select>
+          <span class="help">Calm: 7 days before, due date, 3 days after, then by hand. Recommended adds a free reminder at +7. Tight adds the first fee reminder at +10 automatically (still behind Confirm).</span></div>
+      </div>
+      <div class="pane hw">
+        <span class="pane-l">Strip · 3 stops, gentle to firm</span>
+        <div class="ev-row" id="s-pol"></div>
+        <div class="sched" id="pol-s" aria-hidden="true"></div>
+        <p class="conseq">Nothing is sent without a tick</p></div>
+      </div>
+    </div>
+    <p class="why"><span><b>Might be better</b>Shows where you sit on the scale from gentle to firm, which a closed select hides; the schedule updates as you move.</span><span><b>Might not</b>Each option needs its explanation anyway, and the select's help text already gives it.</span></p>
+  </section>
+
+  <!-- 3 Notifications mixer -->
+  <section class="cand" aria-labelledby="c3">
+    <div class="cand-h">
+      <h2 class="t-title" id="c3">3 · Notifications as a mixer</h2>
+      <span class="t-meta">Account › Notifications. One fader per topic; up is louder: in app only, morning summary, email, push.</span>
+    </div>
+    <div class="cand-g">
+      <div class="pane">
+        <span class="pane-l">Now · switches</span>
+        <div class="acc-nl" id="nt-now"></div>
+        <span class="help t-meta muted">In-app always; email and push per person</span>
+      </div>
+      <div class="pane hw">
+        <span class="pane-l">Strips · mixer, 4 levels (rows on a phone)</span>
+        <div class="mixer" id="mixer" role="group" aria-label="Notification levels"></div>
+      </div>
+    </div>
+    <p class="why"><span><b>Might be better</b>The whole mix is visible at once, and “what” is split from “how loud”, which the switches blur.</span><span><b>Might not</b>Email versus push is not louder for everyone, and four faders take more room than four rows on a phone.</span></p>
+  </section>
+
+  <!-- 4 Everywhere: one control for every ordered choice (Vit 5 Nov: "if we add one thing we need to have it everywhere") -->
+  <section class="cand" aria-labelledby="c5">
+    <div class="cand-h">
+      <h2 class="t-title" id="c5">4 · If it goes everywhere</h2>
+      <span class="t-meta">Every ordered choice with 3 or more stops in the prototype, as the same stepped strip. Switches (yes/no) and unordered choices (accounts, formats, Dark/Light) stay as they are.</span>
+    </div>
+    <div class="ev-g" id="every"></div>
+    <p class="why"><span><b>What it shows</b>The same strip as above in all 12 places: settings rows, onboarding, a dialog, phones, 3–5 stops.</span><span><b>What it costs</b>A new design-system component (Figma first, both widths) replacing the Select in 10 rows and the segmented control in 2, and every screen rebuilt.</span></p>
+  </section>
+
+  <section class="cand" aria-labelledby="c6">
+    <div class="cand-h"><h2 class="t-title" id="c6">In the real intro</h2><span class="t-meta">The same strip on “How many of you?” in the onboarding step Your band, behind a lab switch. Without the switch the intro is unchanged.</span></div>
+    <p class="t-body" style="margin:0"><a class="btn secondary" data-intro="../index.html?view=onboarding&amp;lab=strip&amp;obstep=3" href="../index.html?view=onboarding&amp;lab=strip&amp;obstep=3">Open Your band with the strip</a> <a class="btn ghost" data-intro="../index.html?view=onboarding&amp;lab=strip" href="../index.html?view=onboarding&amp;lab=strip">Start the intro from sign-up</a></p>
+  </section>
+
+  <section class="cand" aria-labelledby="c4">
+    <div class="cand-h"><h2 class="t-title" id="c4">Tasks for the session</h2><span class="t-meta">Read aloud; the same for both versions. Half start with Now, half with the strips. Run tasks 1–6 in one skin (Aluminium · TX or Pocket · TE, alternating per person), then switch skins for task 7.</span></div>
+    <ol class="tasks t-body">
+      <li>You want half the fee up front. Set the deposit for new offers.</li>
+      <li>Your venues pay late a lot. Make reminders firmer.</li>
+      <li>You only want your phone to buzz for gig-day changes; money news can wait for the morning summary.</li>
+      <li>Laptop, keyboard only: repeat task 1.</li>
+      <li>From sign-up, go through the intro to Your band and set how many you are.</li>
+      <li>Look at section 4. Imagine every one of these settings looked like this: good or tiring?</li>
+      <li>Switch the Skin (Aluminium · TX ↔ Pocket · TE) and repeat task 3. Which one would you use every day, and why?</li>
+      <li>Which would you rather have in LAAS, and why? What did the strips make you think of?</li>
+    </ol>
+  </section>
+</main>
+
+<script src="strip.js"></script>
+<script>
+(function(){
+"use strict";
+const Fader=window.LAAS_STRIP.fader;
+
+/* 1 Deposit: today's presets as stops, on the prototype's example 5.000 DKK fee */
+const fee=5000,dkk=x=>x.toLocaleString('da-DK')+' DKK';
+const depC=document.getElementById('dep-c'),DEP=[0,30,50];
+const depTxt=v=>DEP[v]?`${dkk(fee*DEP[v]/100)} of a ${dkk(fee)} fee on signing, balance on the gig date`:`No deposit: ${dkk(fee)} on the gig date`;
+Fader(document.getElementById('s-dep'),{name:'Deposit on signing',levels:['No deposit','30 % on signing','50 % on signing'],short:['None','30 %','50 %'],value:1,h:true,
+  text:v=>`${DEP[v]?DEP[v]+' percent on signing':'No deposit'}. ${depTxt(v)}`,onChange:v=>{depC.textContent=depTxt(v);}});
+
+/* 2 Reminder policy: 3 stops, gentle to firm */
+const POL=[['Calm',['−7','due','+3'],'then by hand','7 days before, on the due date and 3 days after, then by hand'],
+ ['Recommended',['−7','due','+3','+7 free'],'','7 days before, on the due date, 3 days after, and a free one 7 days after'],
+ ['Tight',['−7','due','+3','+7 free','+10 fee'],'','as Recommended, plus a fee reminder 10 days after']];
+const polS=document.getElementById('pol-s');
+Fader(document.getElementById('s-pol'),{name:'Reminder policy',levels:POL.map(p=>p[0]),short:POL.map(p=>p[0]),value:1,h:true,
+  text:v=>`${POL[v][0]}: reminders ${POL[v][3]}`,
+  onChange:v=>{polS.innerHTML=POL[v][1].map(d=>`<span class="${/fee/.test(d)?'fee':''}">${d}</span>`).join('')+(POL[v][2]?`<span>${POL[v][2]}</span>`:'');}});
+
+/* 3 Notifications: the four switches today, and a 4-level mixer */
+const NOTIF=[['n1','Email me when a venue opens or signs an offer',true],['n2','A short summary every morning at 08:00',true],['n3','Push on gig day: leave times and changes',true],['n4','Product news, a few times a year',false]];
+document.getElementById('nt-now').innerHTML=NOTIF.map(([k,l,on])=>`<div class="acc-nr"><button class="toggle acc-tg ${on?'on':''}" role="switch" aria-checked="${on}" aria-label="${l}"><i></i></button><span>${l}</span></div>`).join('');
+document.getElementById('nt-now').addEventListener('click',e=>{const b=e.target.closest('.acc-tg');if(!b)return;const on=!b.classList.contains('on');b.classList.toggle('on',on);b.setAttribute('aria-checked',on);});
+const LV=['In app only','Morning summary','Email','Push'],SHORT=['App','Summary','Email','Push'];
+const TOPICS=[['Offers','Offers and signatures',2],['Money','Money',2],['Gig day','Gig day',3],['News','Product news',0]];
+const mx=document.getElementById('mixer'),rowsMQ=matchMedia('(max-width:599.98px), (pointer:coarse)');
+/* vertical mixer with a mouse on a wide screen; on phones and touch screens the same faders lie down as rows */
+function buildMixer(){const h=rowsMQ.matches;mx.innerHTML='';mx.classList.toggle('rows',h);
+  if(!h){const sc=document.createElement('div');sc.className='mx-scale';sc.setAttribute('aria-hidden','true');
+    sc.innerHTML=SHORT.map((l,i)=>`<span style="bottom:${i/(LV.length-1)*100}%">${l}</span>`).join('');mx.appendChild(sc);}
+  TOPICS.forEach(t=>Fader(mx,{name:h?t[1]:t[0],label:t[1],levels:LV,short:SHORT,value:t[2],h,onChange:v=>{t[2]=v;}}));}
+buildMixer();rowsMQ.addEventListener('change',buildMixer);
+
+/* 4 Everywhere: [group, [name, stops, value index, where it lives]] */
+const EVERY=[['Settings › Band',[
+  ['Deposit',['None','30 %','50 %'],1,'Default on every new offer'],
+  ['Balance due',['Gig date','+7 days','+14 days'],0,'After the gig'],
+  ['Cancellation window',['7 days','14 days','30 days'],1,'Deposit kept inside this window'],
+  ['Travel included',['Always charged','Up to 50 km','Up to 100 km'],2,'Added as a line beyond this']]],
+ ['Settings › Money',[
+  ['Other invoices due',['7 days','8 days','14 days','30 days'],0,'Net 7 is the Danish norm'],
+  ['Reminder policy',['Calm','Recommended','Tight'],1,'Nothing is sent without a tick'],
+  ['Fee per reminder',['No fee','50 DKK','100 DKK'],2,'100 DKK is the legal cap, so it is the last stop']]],
+ ['Calendar feed, onboarding, Social',[
+  ['Lead time',['When confirmed','2 weeks','1 month'],0,'Calendar feed: gigs appear this long before'],
+  ['How many of you?',['Just me','2','3–4','5+'],2,'Onboarding, band size'],
+  ['Visibility',['Private','Unlisted','Public'],2,'Social › new video']]],
+ ['Account › Notifications',[
+  ['Offers and signatures',LV,2,''],['Money',LV,2,''],['Gig day',LV,3,''],['Product news',LV,0,'']]]];
+const ev=document.getElementById('every');
+EVERY.forEach(([g,rows])=>{const box=document.createElement('div');box.className='ev-grp';box.innerHTML=`<h3>${g}</h3>`;ev.appendChild(box);
+  rows.forEach(([name,stops,val,help])=>{const row=document.createElement('div');row.className='ev-row';box.appendChild(row);
+    Fader(row,{name,label:name,levels:stops,short:stops===LV?SHORT:stops,value:val,h:true});
+    if(help){const hp=document.createElement('span');hp.className='help';hp.textContent=help;row.appendChild(hp);}});});
+
+/* theme */
+const root=document.documentElement,g=document.getElementById('genre'),m=document.getElementById('mode'),sk=document.getElementById('skin');
+const apply=()=>{g.value?root.setAttribute('data-genre',g.value):root.removeAttribute('data-genre');root.setAttribute('data-theme',m.value);
+  sk.value?root.setAttribute('data-skin',sk.value):root.removeAttribute('data-skin');
+  /* the intro links carry the chosen skin */
+  document.querySelectorAll('a[data-intro]').forEach(a=>{a.href=a.dataset.intro+(sk.value?'&skin='+sk.value:'');});};
+g.addEventListener('change',apply);m.addEventListener('change',apply);sk.addEventListener('change',apply);apply();
+})();
+</script>
+</html>
