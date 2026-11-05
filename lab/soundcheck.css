@@ -1,0 +1,41 @@
+/* LAAS lab, T491: the Soundcheck moment (Vit 5 Nov: "only soundcheck animation"). A full-screen pause between the
+   intro and the dashboard: the black metal knob turns up once from zero to full while the band is set up, the white arc
+   fills, the copy follows the turn, then it fades into the app. Loaded only with ?lab=knob (views/account.js).
+   Tokens only; motion tokens for the fades; reduced motion shows the knob already turned up. */
+.sc{position:fixed;inset:0;z-index:var(--z-top);display:grid;place-items:center;background:var(--sunken);
+  opacity:0;transition:opacity var(--dur-3) var(--ease-standard)}
+.sc.in{opacity:1}.sc.out{opacity:0}
+.sc-in{display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px;text-align:center}
+.sc-t{margin:0;min-height:22px;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
+.sc-t b{color:var(--ink);font-weight:500}
+.sc-skip{font:400 12px/16px var(--sans);color:var(--faint)}
+
+.sc-k{position:relative;width:240px;height:240px}
+.sc-k svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.sc-k .tr{fill:none;stroke:var(--rule-strong);stroke-width:3;stroke-linecap:round}
+.sc-k .ar{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;
+  transition:stroke-dashoffset 1.2s cubic-bezier(.45,0,.15,1)}
+.sc-k .tk{stroke:var(--faint);stroke-width:1.5;stroke-linecap:round;transition:stroke var(--dur-2)}
+.sc-k .tk.on{stroke:var(--ink)}
+/* the knob: lighting on the still body, only the orange notch turns (the light stays where the room's light is) */
+.sc-k .bd{position:absolute;left:50%;top:50%;width:124px;height:124px;margin:-62px 0 0 -62px;border-radius:50%;
+  --base:color-mix(in srgb,var(--top) 55%,var(--scrim-base));
+  background:radial-gradient(circle at 38% 30%,color-mix(in srgb,var(--on-photo) 26%,var(--base)),var(--base) 55%,color-mix(in srgb,var(--scrim-base) 30%,var(--base))),
+    repeating-radial-gradient(circle,color-mix(in srgb,var(--on-photo) 5%,transparent) 0 1px,transparent 1px 3px),var(--base);
+  box-shadow:0 16px 28px color-mix(in srgb,var(--scrim-base) 55%,transparent),0 3px 5px color-mix(in srgb,var(--scrim-base) 50%,transparent),
+    inset 0 0 0 2px color-mix(in srgb,var(--on-photo) 14%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 30%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 55%,transparent)}
+.sc-k .tn{position:absolute;inset:0;border-radius:50%;transform:rotate(-135deg);transition:transform 1.2s cubic-bezier(.45,0,.15,1)}
+.sc-k .nt{position:absolute;left:50%;top:12%;width:5px;height:22%;margin-left:-2.5px;border-radius:3px;background:var(--you)}
+.sc.up .sc-k .tn{transform:rotate(135deg)}
+.sc.up .sc-k .ar{stroke-dashoffset:0}
+
+/* light theme: a light aluminium knob (Vit 5 Nov: "knob lighter on light theme please"); the orange notch and the
+   ink arc stay, so the value still reads */
+[data-theme="light"] .sc-k .bd{--base:color-mix(in srgb,var(--top) 86%,var(--muted));
+  box-shadow:0 14px 24px color-mix(in srgb,var(--scrim-base) 18%,transparent),0 2px 4px color-mix(in srgb,var(--scrim-base) 16%,transparent),
+    inset 0 0 0 2px color-mix(in srgb,var(--on-photo) 60%,transparent),inset 0 -2px 3px color-mix(in srgb,var(--scrim-base) 8%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 14%,transparent)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .sc-k .bd{--base:color-mix(in srgb,var(--top) 86%,var(--muted));
+  box-shadow:0 14px 24px color-mix(in srgb,var(--scrim-base) 18%,transparent),0 2px 4px color-mix(in srgb,var(--scrim-base) 16%,transparent),
+    inset 0 0 0 2px color-mix(in srgb,var(--on-photo) 60%,transparent),inset 0 -2px 3px color-mix(in srgb,var(--scrim-base) 8%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 14%,transparent)}}
+@media (max-width:599.98px){.sc-k{width:200px;height:200px}.sc-k .bd{width:108px;height:108px;margin:-54px 0 0 -54px}}
+@media (prefers-reduced-motion:reduce){.sc,.sc-k .tn,.sc-k .ar,.sc-k .tk{transition:none}}

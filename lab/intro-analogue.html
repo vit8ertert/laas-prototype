@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-skin="tx">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analogue intro demo</title>
+<!-- LAAS lab, T491 (5 Nov 2026, Vit: "just as demo"): the intro step Your band as one hardware faceplate, after the
+     Teenage Engineering TX-6 (black and aluminium) and EP-133. A demo to judge whether the analogue feeling needs the
+     whole surface (notes/research/hardware-controls.md, "one real-looking control doesn't make the intro analogue").
+     Not the real intro, not in the DS or Figma. Real inputs and buttons underneath; tokens only for colour. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="strip.css">
+<style>
+body{background:var(--sunken);min-height:100%}
+.demo{min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,min(48vw,672px));gap:8px;padding:8px}
+.l{display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 24px 40px;overflow:auto}
+.r{border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+.r img{width:100%;height:100%;object-fit:cover;display:block}
+.bar{width:100%;max-width:560px;display:flex;justify-content:space-between;align-items:center;gap:12px;font:400 12px/16px var(--sans);color:var(--muted)}
+.bar a{color:var(--muted)}
+
+/* the faceplate: one object, milled metal (black in dark, aluminium in light), rounded like the TX-6 */
+.plate{--alu:color-mix(in srgb,var(--top) 82%,var(--muted));--lcd:color-mix(in srgb,var(--scrim-base) 88%,var(--sunken));--lcd-ink:color-mix(in srgb,var(--on-photo) 92%,var(--accent));
+  --key:color-mix(in srgb,var(--top) 70%,var(--scrim-base));--key-ink:color-mix(in srgb,var(--on-photo) 88%,var(--key));--key-lit:color-mix(in srgb,var(--on-photo) 14%,var(--key));--print:color-mix(in srgb,var(--ink) 72%,transparent);
+  width:100%;max-width:560px;border-radius:22px;padding:28px 28px 32px;display:flex;flex-direction:column;gap:22px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--on-photo) 9%,var(--alu)),var(--alu) 40%,color-mix(in srgb,var(--scrim-base) 7%,var(--alu)));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on-photo) 30%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 14%,transparent),
+    0 24px 48px color-mix(in srgb,var(--scrim-base) 40%,transparent),0 2px 4px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.plate-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.model{margin:0;font:300 40px/1 var(--sans);letter-spacing:-.5px;color:var(--ink)}
+.model small{display:block;margin-top:8px;font:400 13px/18px var(--sans);letter-spacing:0;color:var(--print)}
+/* LED step bar: four dots, lit up to the current step */
+.steps{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.leds{display:flex;gap:10px}
+.leds i{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--ink) 25%,transparent)}
+.leds i.on{background:var(--accent-strong);box-shadow:0 0 6px var(--accent)}
+.steps span{font:400 12px/16px var(--mono);color:var(--print)}
+
+/* dark = black anodised like the black TX-6 (keys a shade lighter than the plate); light = aluminium */
+/* light: EP-133-style light keycaps with printed dark text on the aluminium plate */
+[data-theme="light"] .plate{--key:color-mix(in srgb,var(--top) 90%,var(--muted));--key-lit:var(--top);--key-ink:var(--ink)}
+[data-theme="dark"] .plate{--alu:color-mix(in srgb,var(--top) 52%,var(--scrim-base));--key:color-mix(in srgb,var(--top) 72%,var(--scrim-base))}
+/* printed labels: lowercase-friendly, like "shift" and "FX" on the TX-6 */
+.f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.f>label,.f>.lb{font:400 14px/18px var(--sans);color:var(--print)}
+.f .help{font:400 12px/16px var(--sans);color:var(--print);opacity:.85}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+
+/* display windows: recessed, black glass, white mono text (the TX-6 OLED) */
+.lcd{height:48px;border:0;border-radius:10px;padding:0 14px;width:100%;background:var(--lcd);color:var(--lcd-ink);font:400 16px/1 var(--mono);
+  box-shadow:inset 0 2px 5px var(--scrim-base),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 60%,transparent),0 1px 0 color-mix(in srgb,var(--on-photo) 22%,transparent);caret-color:var(--accent)}
+.lcd:focus{outline:none;box-shadow:inset 0 2px 5px var(--scrim-base),0 0 0 2px var(--accent)}
+.lcd::placeholder{color:color-mix(in srgb,var(--on-photo) 40%,transparent)}
+/* country: the window with prev/next keys either side (preset browsing on hardware) */
+.sel{display:flex;gap:8px;align-items:center}
+.sel .lcd{display:flex;align-items:center;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* keys: keycaps with depth; pressed sinks; an LED dot lights on chosen ones */
+.key{position:relative;min-height:44px;padding:12px 14px 10px 24px;border-radius:7px;background:linear-gradient(180deg,var(--key-lit),var(--key));color:var(--key-ink);
+  font:400 14px/18px var(--sans);text-align:left;
+  box-shadow:0 3px 0 color-mix(in srgb,var(--scrim-base) 55%,var(--key)),0 5px 9px color-mix(in srgb,var(--scrim-base) 35%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 18%,transparent);
+  transition:transform var(--dur-1) var(--ease-standard),box-shadow var(--dur-1) var(--ease-standard)}
+.key::before{content:"";position:absolute;left:10px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:color-mix(in srgb,var(--on-photo) 18%,var(--key))}
+.key[aria-pressed="true"]::before{background:var(--accent-strong);box-shadow:0 0 6px var(--accent)}
+.key:active,.key.down{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--scrim-base) 55%,var(--key)),0 2px 4px color-mix(in srgb,var(--scrim-base) 35%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 18%,transparent)}
+.key:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.key.sq{width:44px;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
+.key.sq::before{display:none}
+.key.sq svg{width:18px;height:18px}
+.keys{display:flex;flex-wrap:wrap;gap:10px 8px}
+
+/* round buttons: the TX-6 FX buttons, a ring with an inlay; Continue's inlay is the accent */
+.go{display:flex;justify-content:flex-end;gap:28px;padding-top:4px}
+.rb{display:flex;flex-direction:column;align-items:center;gap:8px;font:400 14px/18px var(--sans);color:var(--print)}
+.rb i{position:relative;width:68px;height:68px;border-radius:50%;
+  background:radial-gradient(circle at 40% 32%,color-mix(in srgb,var(--on-photo) 16%,var(--key)),var(--key) 60%,color-mix(in srgb,var(--scrim-base) 30%,var(--key)));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--scrim-base) 30%,var(--alu)),0 6px 12px color-mix(in srgb,var(--scrim-base) 45%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 20%,transparent);
+  transition:transform var(--dur-1) var(--ease-standard)}
+.rb i::after{content:"";position:absolute;left:14px;right:14px;top:50%;height:16px;margin-top:-8px;border-radius:4px;background:color-mix(in srgb,var(--on-photo) 75%,var(--muted));box-shadow:inset 0 1px 2px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.rb.rb-go i::after{background:var(--accent-strong)}
+.rb:active i{transform:translateY(2px) scale(.98)}
+.rb:focus-visible{outline:none}.rb:focus-visible i{box-shadow:0 0 0 3px var(--accent),0 6px 12px color-mix(in srgb,var(--scrim-base) 45%,transparent)}
+
+/* the strip sits in the plate (Aluminium skin from strip.css); its name is a printed label */
+.plate .fader.h .f-name{font:400 14px/18px var(--sans);color:var(--print)}
+.plate .fader.h .f-val{font:400 13px/18px var(--mono);color:var(--ink)}
+
+.note{max-width:560px;margin:0;font:400 12px/16px var(--sans);color:var(--muted);text-align:center}
+.note b{color:var(--ink);font-weight:500}
+
+@media (max-width:899.98px){.demo{grid-template-columns:minmax(0,1fr)}.r{display:none}}
+@media (max-width:599.98px){.l{padding:12px 12px 32px}.plate{padding:20px 16px 24px;border-radius:18px;gap:18px}.model{font-size:32px}.two{grid-template-columns:minmax(0,1fr)}.go{justify-content:space-between}}
+@media (prefers-reduced-motion:reduce){.key,.rb i{transition:none}}
+</style>
+
+<div class="demo">
+  <div class="l">
+    <div class="bar"><span>LAAS lab · analogue intro demo</span><span><a href="hardware-controls.html">Back to the lab</a> · <button class="link" id="mode" type="button">Light</button></span></div>
+
+    <form class="plate" aria-labelledby="t" onsubmit="return false">
+      <div class="plate-top">
+        <h1 class="model" id="t">Your band<small>One account can run several bands. Start with this one.</small></h1>
+        <div class="steps" aria-label="Step 2 of 4"><div class="leds" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></div><span aria-hidden="true">step 2/4</span></div>
+      </div>
+
+      <div class="f"><label for="bn">band name</label><input class="lcd" id="bn" value="Low Tide" autocomplete="organization"></div>
+
+      <div class="two">
+        <div class="f"><span class="lb" id="co-l">country</span>
+          <div class="sel" role="group" aria-labelledby="co-l">
+            <button class="key sq" type="button" id="co-p" aria-label="Previous country"><svg class="i" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+            <output class="lcd" id="co" aria-live="polite">Denmark</output>
+            <button class="key sq" type="button" id="co-n" aria-label="Next country"><svg class="i" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+          <span class="help">sets currency, VAT and time zone</span></div>
+        <div class="f"><label for="hc">home city</label><input class="lcd" id="hc" value="Odense"><span class="help">travel distances start here</span></div>
+      </div>
+
+      <div class="f"><span class="lb" id="g-l">what do you play?</span>
+        <div class="keys" role="group" aria-labelledby="g-l" id="genres"></div>
+        <span class="help">pick all that fit; the first one picks the look on the next step</span></div>
+
+      <div class="f"><div class="ev-row" id="size"></div></div>
+
+      <div class="go">
+        <button class="rb" type="button"><i aria-hidden="true"></i>back</button>
+        <button class="rb rb-go" type="submit"><i aria-hidden="true"></i>continue</button>
+      </div>
+    </form>
+
+    <p class="note"><b>Demo only.</b> The whole step as one faceplate, to judge whether the analogue feeling needs the whole surface. Not the real intro, not in the design system.</p>
+  </div>
+  <div class="r"><img src="../img/account-folk.jpg" alt=""></div>
+</div>
+
+<script src="strip.js"></script>
+<script>
+(function(){
+"use strict";
+const COUNTRIES=['Denmark','Sweden','Norway','Finland','Iceland','Germany','Netherlands','United Kingdom','Ireland','France','Spain','Another country'];
+let ci=0;const co=document.getElementById('co');
+const step=d=>{ci=(ci+d+COUNTRIES.length)%COUNTRIES.length;co.textContent=COUNTRIES[ci];};
+document.getElementById('co-p').addEventListener('click',()=>step(-1));
+document.getElementById('co-n').addEventListener('click',()=>step(1));
+
+const GENRES=['Indie and rock','Shoegaze','Punk','Metal and hardcore','Electronic','Hip-hop and soul','Folk','Jazz'];
+const on=new Set(['Metal and hardcore']);
+document.getElementById('genres').innerHTML=GENRES.map(g=>`<button class="key" type="button" aria-pressed="${on.has(g)}">${g}</button>`).join('');
+document.getElementById('genres').addEventListener('click',e=>{const b=e.target.closest('.key');if(!b)return;const p=b.getAttribute('aria-pressed')!=='true';
+  if(!p&&document.querySelectorAll('#genres [aria-pressed="true"]').length===1)return;b.setAttribute('aria-pressed',p);});
+
+const SZ=['Just me','2','3–4','5+'];
+LAAS_STRIP.fader(document.getElementById('size'),{name:'how many of you?',label:'How many of you?',levels:SZ,short:SZ,value:2,h:true,text:v=>v?`${SZ[v]} people in the band`:'Just me'});
+
+const root=document.documentElement,mb=document.getElementById('mode');
+mb.addEventListener('click',()=>{const light=root.dataset.theme!=='light';root.dataset.theme=light?'light':'dark';mb.textContent=light?'Dark':'Light';});
+root.dataset.theme='dark';
+})();
+</script>
+</html>

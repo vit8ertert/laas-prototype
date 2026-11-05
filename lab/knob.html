@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knob lab</title>
+<!-- LAAS lab, T491 (5 Nov 2026, Vit: "can I preview the knob only"): the rotary knob on its own, for looking at.
+     Dropped from the test ("strip only": a knob can't sit in a settings row); kept here as a reference. Not in the DS.
+     role=slider, arrows/Page/Home/End, mouse drag up or right, touch swipe sideways (the page still scrolls),
+     −/+ steppers, tap a scale label, double-click to reset. Tokens only for colour. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../components.css">
+<style>
+body{background:var(--canvas);min-height:100%}
+.lab{max-width:960px;margin:0 auto;padding:var(--hero-y) var(--gutter) 64px;display:flex;flex-direction:column;gap:var(--section)}
+.lab-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.lab-head h1{margin:0}.lab-head p{margin:4px 0 0;max-width:560px}
+.lab-theme{display:flex;flex-wrap:wrap;gap:8px}.lab-theme .input{width:auto;min-width:140px}
+.lab-flag{margin:0;padding:12px 16px;border-radius:var(--r-lg);background:var(--att-tint);font:400 13px/var(--lh-label) var(--sans)}
+.stage{border-radius:var(--r-lg);padding:48px var(--card);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:48px;background:var(--surface)}
+/* each knob has a fixed-width column, so a longer value line never re-centres the row and pushes the other knob
+   (Vit 5 Nov: "when I change the knob … I think the width changes and pushes the other knob") */
+.unit{display:flex;flex-direction:column;align-items:center;gap:12px;width:300px;flex:none;max-width:100%}
+.unit h2{margin:0;font:500 13px/var(--lh-label) var(--sans);color:var(--ink);text-align:center}
+.v{font:500 16px/22px var(--mono);color:var(--ink);min-width:10ch;text-align:center}
+.c{font:400 13px/var(--lh-label) var(--sans);color:var(--muted);text-align:center;width:100%;min-height:36px}
+.hint{font:400 12px/16px var(--sans);color:var(--faint);text-align:center}
+.ctl{display:flex;align-items:center;gap:12px}
+.ctl .btn.icon{width:44px;height:44px;padding:0;justify-content:center}.ctl .btn.icon svg{width:20px;height:20px}
+.ctl .btn.icon:disabled{opacity:.4;cursor:default}
+
+/* knob: an SVG scale (ticks, arc, labels) around an HTML body that turns */
+.knob{position:relative;width:220px;height:220px;flex:none;touch-action:pan-y;user-select:none;-webkit-user-select:none;border-radius:50%}
+.knob:focus-visible{outline:none}
+.knob svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.k-track{fill:none;stroke:var(--rule-strong);stroke-width:3;stroke-linecap:round}
+/* progress arc: plain white (ink in light mode, so it stays visible), not the accent (Vit 5 Nov) */
+.k-val{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.k-tick{stroke:var(--faint);stroke-width:1.5;stroke-linecap:round}.k-tick.on{stroke:var(--ink)}
+.k-lab{font:400 12px/1 var(--sans);fill:var(--muted);cursor:pointer}.k-lab.on{fill:var(--ink);font-weight:500}
+.k-labhit{fill:transparent;cursor:pointer}
+.k-body{position:absolute;left:50%;top:50%;width:var(--d);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--d)/-2);border-radius:50%;cursor:ns-resize;--d:112px}
+.k-turn{position:absolute;inset:0;border-radius:50%;transition:transform var(--dur-1) var(--ease-standard)}
+.knob.drag .k-turn{transition:none}
+.k-ind{position:absolute;left:50%;top:8px;width:4px;height:26px;margin-left:-2px;border-radius:2px}
+.knob:focus-visible .k-body{box-shadow:0 0 0 3px var(--canvas),0 0 0 5px var(--accent)}
+@media (prefers-reduced-motion:reduce){.k-turn{transition:none}}
+
+/* Aluminium · TX: a milled metal knob, brushed in a circle (conic), lit from the top left */
+[data-skin="tx"] .k-body{
+  background:radial-gradient(circle at 35% 28%,color-mix(in srgb,var(--on-photo) 55%,transparent),transparent 55%),
+    conic-gradient(from 20deg,color-mix(in srgb,var(--on-photo) 82%,var(--muted)),color-mix(in srgb,var(--on-photo) 40%,var(--muted)) 12%,color-mix(in srgb,var(--on-photo) 88%,var(--muted)) 25%,color-mix(in srgb,var(--on-photo) 35%,var(--muted)) 40%,color-mix(in srgb,var(--on-photo) 80%,var(--muted)) 55%,color-mix(in srgb,var(--on-photo) 38%,var(--muted)) 70%,color-mix(in srgb,var(--on-photo) 85%,var(--muted)) 85%,color-mix(in srgb,var(--on-photo) 82%,var(--muted)));
+  box-shadow:0 10px 18px color-mix(in srgb,var(--scrim-base) 45%,transparent),0 2px 3px color-mix(in srgb,var(--scrim-base) 40%,transparent),
+    inset 0 0 0 3px color-mix(in srgb,var(--on-photo) 30%,var(--muted)),inset 0 -6px 10px color-mix(in srgb,var(--scrim-base) 25%,transparent)}
+[data-skin="tx"] .k-turn::after{content:"";position:absolute;inset:10px;border-radius:50%;
+  background:repeating-radial-gradient(circle,color-mix(in srgb,var(--scrim-base) 6%,transparent) 0 1px,transparent 1px 3px)}
+[data-skin="tx"] .k-ind{background:color-mix(in srgb,var(--scrim-base) 75%,var(--muted));box-shadow:0 1px 0 color-mix(in srgb,var(--on-photo) 60%,transparent)}
+
+/* Pocket · TE: a matte round knob, white body, soft shadow, one accent pointer (EP-133 volume / BPM) */
+[data-skin="te"] .k-body{--d:104px;
+  background:radial-gradient(circle at 38% 30%,var(--on-photo),color-mix(in srgb,var(--on-photo) 82%,var(--muted)) 60%,color-mix(in srgb,var(--on-photo) 62%,var(--muted)));
+  box-shadow:0 8px 14px color-mix(in srgb,var(--scrim-base) 35%,transparent),0 1px 2px color-mix(in srgb,var(--scrim-base) 35%,transparent),inset 0 -3px 6px color-mix(in srgb,var(--scrim-base) 15%,transparent)}
+[data-skin="te"] .k-ind{top:10px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--accent-strong)}
+
+/* Black metal · TX-6 (Vit 5 Nov: "the knobs with those metal rigid surface", then "the dashes around look strange",
+   then "it's ok to not see the knurl, just the top of the knob"). A pure front view: only the top face shows, smooth,
+   slightly domed, fine lathe rings, a white notch; the knob's height reads from its drop shadow alone. */
+[data-skin^="knurl"] .k-body{--d:116px;--base:color-mix(in srgb,var(--top) 55%,var(--scrim-base));
+  box-shadow:0 14px 24px color-mix(in srgb,var(--scrim-base) 55%,transparent),0 3px 5px color-mix(in srgb,var(--scrim-base) 50%,transparent)}
+/* the top face: smooth, slightly domed, lit from the top left, fine lathe rings, a soft chamfer at the edge.
+   Painted on .k-body, which does not turn, so the light stays where the room's light is while the knob rotates
+   (Vit 5 Nov: "the light should not go around when the switch is rotating"); only the notch turns. */
+[data-skin^="knurl"] .k-body{
+  background:radial-gradient(circle at 38% 30%,color-mix(in srgb,var(--on-photo) 26%,var(--base)),var(--base) 55%,color-mix(in srgb,var(--scrim-base) 30%,var(--base))),
+    repeating-radial-gradient(circle,color-mix(in srgb,var(--on-photo) 5%,transparent) 0 1px,transparent 1px 3px),var(--base);
+  box-shadow:0 14px 24px color-mix(in srgb,var(--scrim-base) 55%,transparent),0 3px 5px color-mix(in srgb,var(--scrim-base) 50%,transparent),
+    inset 0 0 0 2px color-mix(in srgb,var(--on-photo) 14%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 30%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 55%,transparent)}
+[data-skin^="knurl"] .k-ind{z-index:1;top:14px;width:5px;height:24px;margin-left:-2.5px;border-radius:3px;background:var(--on-photo);
+  box-shadow:inset 0 1px 2px color-mix(in srgb,var(--scrim-base) 40%,transparent)}
+
+/* Braun (Vit 5 Nov, Braun knob references: SK/regie radios, the "systems" panels, ET66 era). The scale is printed
+   on the panel, numbers and short ticks, and there is no lit arc: the pointer against the print is the value. The knob
+   is a small matte grey cylinder with a slightly dished top and one thin line as the pointer, in our orange (colour
+   only as a signal). Few named positions get the Braun petal lever instead of a round knob. */
+.k-petal{display:none}
+[data-skin="braun"] .k-track,[data-skin="braun"] .k-val{display:none}
+[data-skin="braun"] .k-tick{stroke:var(--ink);stroke-width:1.2}
+[data-skin="braun"] .k-lab{fill:var(--ink)}
+[data-skin="braun"] .k-lab.on{font-weight:600}
+[data-skin="braun"] .k-body{--d:92px;--base:color-mix(in srgb,var(--on-photo) 62%,var(--muted));
+  background:radial-gradient(circle at 50% 58%,color-mix(in srgb,var(--scrim-base) 12%,var(--base)),var(--base) 58%,color-mix(in srgb,var(--on-photo) 45%,var(--base)) 88%,color-mix(in srgb,var(--scrim-base) 18%,var(--base)));
+  box-shadow:0 10px 18px color-mix(in srgb,var(--scrim-base) 35%,transparent),0 2px 3px color-mix(in srgb,var(--scrim-base) 30%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 60%,transparent)}
+[data-skin="braun"] .k-ind{top:6px;width:3px;height:38px;margin-left:-1.5px;border-radius:2px;background:var(--you)}
+/* the petal lever: a teardrop that turns about its round end; the tip is the pointer */
+/* the petal's shadow is cast by the still body, so it stays below the petal whichever way the petal points */
+[data-skin="braun"] .knob.petal .k-body{--d:116px;background:none;box-shadow:none;
+  filter:drop-shadow(0 8px 10px color-mix(in srgb,var(--scrim-base) 35%,transparent)) drop-shadow(0 1px 1px color-mix(in srgb,var(--scrim-base) 30%,transparent))}
+[data-skin="braun"] .knob.petal .k-turn{transform-origin:50% 60%}
+[data-skin="braun"] .knob.petal .k-petal{display:block;position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+[data-skin="braun"] .knob.petal .k-petal path{fill:color-mix(in srgb,var(--on-photo) 82%,var(--muted));stroke:color-mix(in srgb,var(--on-photo) 95%,transparent);stroke-width:.8}
+[data-skin="braun"] .knob.petal .k-ind{top:4px;width:3px;height:16px;margin-left:-1.5px}
+[data-skin="braun"] .knob.petal:focus-visible .k-body{box-shadow:none}
+[data-skin="braun"] .knob.petal:focus-visible .k-petal path{stroke:var(--accent);stroke-width:2}
+
+/* Hardware · glow: a dark knob with a lit pointer */
+[data-skin="hw"] .k-body{
+  background:radial-gradient(circle at 40% 30%,color-mix(in srgb,var(--on-photo) 18%,var(--top)),var(--top) 55%,color-mix(in srgb,var(--scrim-base) 40%,var(--top)));
+  box-shadow:0 10px 18px color-mix(in srgb,var(--scrim-base) 55%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 25%,transparent),inset 0 0 0 1px var(--rule-strong)}
+/* pointer: our orange (the avatar orange, --you), flat, no glow (Vit 5 Nov) */
+[data-skin="hw"] .k-ind{background:var(--you);box-shadow:none}
+
+@media (max-width:599.98px){.knob{width:200px;height:200px}.stage{gap:32px;padding:32px 16px}.lab-theme .input{flex:1;min-width:0}}
+</style>
+
+<main class="lab">
+  <header class="lab-head">
+    <div>
+      <p class="t-meta faint" style="margin:0">LAAS lab · T491 · knob only</p>
+      <h1 class="t-display">Knob</h1>
+      <p class="t-body muted">The rotary knob on its own. Drag up or right with a mouse, swipe sideways on a phone, tap a label, use − and +, or arrows and Home/End. Double-click resets.</p>
+    </div>
+    <div class="lab-theme">
+      <select class="input" id="skin" aria-label="Look"><option value="braun">Braun · grey</option><option value="knurl">Black metal · TX-6</option><option value="tx">Aluminium · TX</option><option value="te">Pocket · TE</option><option value="hw">Dark · orange pointer</option></select>
+      <select class="input" id="genre" aria-label="Theme"><option value="">Label (default)</option><option value="metal">Metal</option><option value="electronic">Electronic</option><option value="classical">Classical</option><option value="minimal">Minimal</option><option value="folk">Folk</option><option value="hiphop">Hip-hop &amp; soul</option><option value="pop">Pop</option></select>
+      <select class="input" id="mode" aria-label="Appearance"><option value="dark">Dark</option><option value="light">Light</option></select>
+    </div>
+  </header>
+  <p class="lab-flag" role="note"><b>Reference only.</b> Not in the test and not in the design system: the test uses the strip, because a knob can't sit in a settings row. See notes/research/hardware-controls.md.</p>
+
+  <section class="stage" aria-label="Knobs">
+    <div class="unit">
+      <h2 id="l-dep">Deposit on signing</h2>
+      <div class="knob" id="k-dep" aria-labelledby="l-dep"></div>
+      <div class="ctl" data-for="k-dep"><span class="v" id="dep-v" aria-hidden="true"></span></div>
+      <span class="c" id="dep-c" aria-hidden="true"></span>
+    </div>
+    <div class="unit">
+      <h2 id="l-pol">Reminder policy</h2>
+      <div class="knob petal" id="k-pol" aria-labelledby="l-pol"></div>
+      <div class="ctl" data-for="k-pol"><span class="v" id="pol-v" aria-hidden="true"></span></div>
+      <span class="c" id="pol-c" aria-hidden="true"></span>
+    </div>
+  </section>
+  <p class="hint" id="hint"></p>
+</main>
+
+<script>
+(function(){
+"use strict";
+const NS='http://www.w3.org/2000/svg',coarse=matchMedia('(pointer:coarse)');
+const el=(t,a,p)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);p&&p.appendChild(n);return n;};
+const pol=(r,d)=>{const a=d*Math.PI/180;return [110+r*Math.sin(a),110-r*Math.cos(a)];};
+const arc=(r,a0,a1)=>{const [x0,y0]=pol(r,a0),[x1,y1]=pol(r,a1);return `M${x0} ${y0}A${r} ${r} 0 ${Math.abs(a1-a0)>180?1:0} 1 ${x1} ${y1}`;};
+const tick=()=>{try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}};
+
+function Knob(host,o){
+  const n=Math.round((o.max-o.min)/o.step),sweep=o.sweep||270,a0=-sweep/2,ang=v=>a0+sweep*(v-o.min)/(o.max-o.min);
+  host.setAttribute('role','slider');host.tabIndex=0;host.setAttribute('aria-valuemin',o.min);host.setAttribute('aria-valuemax',o.max);
+  const svg=el('svg',{viewBox:'0 0 220 220','aria-hidden':'true'},host);
+  el('path',{class:'k-track',d:arc(72,a0,a0+sweep)},svg);const val=el('path',{class:'k-val'},svg);
+  const ticks=[];for(let i=0;i<=n;i++){const v=o.min+i*o.step,big=o.labels.some(l=>l[0]===v),[x0,y0]=pol(78,ang(v)),[x1,y1]=pol(big?86:83,ang(v));ticks.push([v,el('line',{class:'k-tick',x1:x0,y1:y0,x2:x1,y2:y1},svg)]);}
+  /* scale labels outside the ticks; each is a 48-high tap area */
+  const labs=o.labels.map(([v,t])=>{const [x,y]=pol(o.labR||96,ang(v)),g=el('g',{},svg),side=Math.abs(x-110)<8?0:(x<110?-1:1),w=Math.max(48,t.length*8+12);
+    el('rect',{class:'k-labhit',x:side===0?x-w/2:(side<0?x-w+6:x-6),y:y-24,width:w,height:48,rx:8},g);
+    const tx=el('text',{class:'k-lab',x:x-side*2,y:y+4,'text-anchor':side===0?'middle':(side<0?'end':'start')},g);tx.textContent=t;
+    g.addEventListener('pointerdown',e=>{e.stopPropagation();e.preventDefault();set(v,true);host.focus({preventScroll:true});});return [v,tx];});
+  const body=document.createElement('div');body.className='k-body';body.innerHTML='<div class="k-turn"><svg class="k-petal" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 3 C56 3 60 23 72 41 A30 30 0 1 1 28 41 C40 23 44 3 50 3 Z"/></svg><i class="k-ind"></i></div>';host.appendChild(body);
+  const turn=body.firstChild;let v=null;
+  const ctl=document.querySelector(`.ctl[data-for="${host.id}"]`),name=document.getElementById(host.getAttribute('aria-labelledby')).textContent.toLowerCase();
+  const mk=(d,path,lab)=>{const b=document.createElement('button');b.type='button';b.className='btn secondary icon';b.tabIndex=-1;b.setAttribute('aria-label',`${lab} ${name}`);
+    b.innerHTML=`<svg class="i" viewBox="0 0 24 24"><path d="${path}"/></svg>`;b.addEventListener('click',()=>set(v+d*o.step,true));return b;};
+  const dn=mk(-1,'M5 12h14','Lower'),up=mk(1,'M5 12h14M12 5v14','Raise');ctl.prepend(dn);ctl.append(up);
+  function set(nv,user){nv=Math.min(o.max,Math.max(o.min,Math.round((nv-o.min)/o.step)*o.step+o.min));if(nv===v)return;const first=v===null;v=nv;
+    turn.style.transform=`rotate(${ang(v)}deg)`;val.setAttribute('d',ang(v)-a0<.5?'':arc(72,a0,ang(v)));
+    ticks.forEach(([t,l])=>l.classList.toggle('on',t<=v));labs.forEach(([lv,t])=>t.classList.toggle('on',lv===v));
+    host.setAttribute('aria-valuenow',v);host.setAttribute('aria-valuetext',o.text(v));dn.disabled=v<=o.min;up.disabled=v>=o.max;o.onChange(v);if(user&&!first)tick();}
+  set(o.value);
+  host.addEventListener('keydown',e=>{const big=o.big||o.step*2,m={ArrowUp:o.step,ArrowRight:o.step,ArrowDown:-o.step,ArrowLeft:-o.step,PageUp:big,PageDown:-big}[e.key];
+    if(m!==undefined){set(v+m,true);e.preventDefault();}else if(e.key==='Home'){set(o.min,true);e.preventDefault();}else if(e.key==='End'){set(o.max,true);e.preventDefault();}});
+  /* mouse: drag up or right; touch: sideways only, so a vertical swipe scrolls the page */
+  const px=Math.max(10,Math.min(40,180/n));
+  body.addEventListener('pointerdown',e=>{e.preventDefault();host.focus({preventScroll:true});const sx=e.clientX,sy=e.clientY,sv=v,touch=e.pointerType!=='mouse';host.classList.add('drag');body.setPointerCapture(e.pointerId);
+    const mv=ev=>set(sv+Math.round(((touch?0:sy-ev.clientY)+(ev.clientX-sx))/px)*o.step,true);
+    const end=()=>{host.classList.remove('drag');body.removeEventListener('pointermove',mv);body.removeEventListener('pointerup',end);body.removeEventListener('pointercancel',end);};
+    body.addEventListener('pointermove',mv);body.addEventListener('pointerup',end);body.addEventListener('pointercancel',end);});
+  body.addEventListener('dblclick',()=>set(o.def,true));
+}
+
+const fee=5000,dkk=x=>x.toLocaleString('da-DK')+' DKK',depV=document.getElementById('dep-v'),depC=document.getElementById('dep-c');
+Knob(document.getElementById('k-dep'),{min:0,max:50,step:5,big:10,value:30,def:30,labels:[[0,'0'],[10,'10'],[20,'20'],[30,'30'],[40,'40'],[50,'50 %']],
+  text:v=>v?`${v} percent on signing, ${dkk(fee*v/100)} of a ${dkk(fee)} fee`:'No deposit',
+  onChange:v=>{depV.textContent=v?`${v} %`:'None';depC.textContent=v?`${dkk(fee*v/100)} of a ${dkk(fee)} fee on signing`:`${dkk(fee)} on the gig date`;}});
+const POL=[['Calm','7 days before, due date, 3 days after, then by hand'],['Recommended','adds a free reminder 7 days after'],['Tight','adds a fee reminder 10 days after']];
+const polV=document.getElementById('pol-v'),polC=document.getElementById('pol-c');
+Knob(document.getElementById('k-pol'),{min:0,max:2,step:1,big:1,value:1,def:1,sweep:180,labR:94,labels:POL.map((p,i)=>[i,p[0]]),
+  text:v=>`${POL[v][0]}: ${POL[v][1]}`,onChange:v=>{polV.textContent=POL[v][0];polC.textContent=POL[v][1];}});
+
+document.getElementById('hint').textContent=coarse.matches?'Swipe sideways on a knob, tap a label, or use − and +.':'Drag up or right, click a label, double-click to reset. Keyboard: arrows, Page Up/Down, Home/End.';
+const root=document.documentElement,sk=document.getElementById('skin'),g=document.getElementById('genre'),m=document.getElementById('mode');
+const apply=()=>{root.dataset.skin=sk.value;g.value?root.setAttribute('data-genre',g.value):root.removeAttribute('data-genre');root.setAttribute('data-theme',m.value);};
+[sk,g,m].forEach(x=>x.addEventListener('change',apply));apply();
+})();
+</script>
+</html>

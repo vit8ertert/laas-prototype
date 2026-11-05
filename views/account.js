@@ -434,10 +434,14 @@ const obGenres=()=>S.onboarding.genres||(S.onboarding.genres=[S.onboarding.genre
    strip from prototype/lab/ (strip.css, strip.js, loaded only then); ?obstep=3 opens that step for a test session;
    &skin=hw|te|console|tx adds a hardware skin (glow, pocket, console, aluminium).
    Off by default: the intro, the DS and Figma are unchanged until the musician test passes (notes/research/hardware-controls.md). */
-const LAB_Q=new URLSearchParams(location.search),LAB_STRIP=LAB_Q.get('lab')==='strip';
+const LAB_Q=new URLSearchParams(location.search),LABS=(LAB_Q.get('lab')||'').split(','),LAB_STRIP=LABS.includes('strip'),LAB_KNOB=LABS.includes('knob');
+/* LAB, T491 (Vit 5 Nov: "only soundcheck animation"): ?lab=knob plays the Soundcheck between the intro and the dashboard
+   (prototype/lab/soundcheck.css + .js, loaded only then), once per band. Off by default: the intro is unchanged without it. */
+if(LAB_KNOB){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/soundcheck.css';document.head.appendChild(l);
+ const sc=document.createElement('script');sc.src='lab/soundcheck.js';document.head.appendChild(sc);}
+if((LAB_STRIP||LAB_KNOB)&&LAB_Q.get('obstep')){const st=parseInt(LAB_Q.get('obstep'),10);if(st>=0&&st<=6)S.onboarding.step=st;}
 if(LAB_STRIP){const l=document.createElement('link');l.rel='stylesheet';l.href='lab/strip.css';document.head.appendChild(l);
  const sc=document.createElement('script');sc.src='lab/strip.js';document.head.appendChild(sc);
- const st=parseInt(LAB_Q.get('obstep'),10);if(st>=0&&st<=6)S.onboarding.step=st;
  const sk=LAB_Q.get('skin');if(['hw','te','console','tx'].includes(sk))document.documentElement.dataset.skin=sk;}
 const OB_SIZES=['Just me','2','3–4','5+'];
 const obSizeField=()=>LAB_STRIP?`<div class="field"><div class="ev-row" id="acc-sizestrip"></div></div>`
@@ -451,13 +455,13 @@ function mini(g=S.genre){const h={metal:'What are we unleashing first?',classica
  return `<div class="acc-mini" aria-hidden="true"><div class="mt"><span class="lg">${L.LOGO}</span><small>label as a service</small><span style="flex:1"></span><span class="sp">${ic('search','s')}Search for anything</span>${ic('bell','s')}<span class="you">V</span><span>Vital</span></div>
  <div class="mb"><div class="ms"><div class="bd"><span class="sq">LT</span><span><b>Low Tide</b><small>Owner: 3 members</small></span></div>${[['dashboard','Dashboard',1],['ai','Assistant'],['file','Gigs'],['','Bookings'],['','Calendar'],['','Contacts'],['','Venues'],['','Mail'],['money','Money'],['disc','Catalogue'],['radio','Audience']].map(([i,l,on])=>`<span class="ni ${on?'on':''} ${i?'':'sub'}">${i?ic(i,'s'):''}${l}</span>`).join('')}<span style="flex:1"></span><span class="ni"><i class="dot"></i>Theme: ${SLOTNAME[g]}</span><span class="ni">${ic('plug','s')}Integrations</span><span class="ni">${ic('settings','s')}Band settings</span></div>
  <div class="mm"><h3>${h}</h3><p>Low Tide has nothing on the calendar. Silence, for now. Ask, or pick a start below; nothing is written until you confirm.</p>
- <div class="ask"><span>Add a gig, find who owes us, move a rehearsal…</span><div class="ar"><span>${ic('plus','s')}Add context</span><span style="flex:1"></span><span>Ask ${ic('down','s')}</span><span class="send">${ic('send','s')}Send</span></div></div>
+ <div class="ask"><span class="add">${ic('plus','s')}</span><span class="ph">Add a gig, find who owes us, move a rehearsal…</span></div>
  <div class="chips">${['Add our next gig','Import my calendar','Who still owes us an invoice?','Show me a sample band'].map(c=>`<span>${ic('ai','s')}${c}</span>`).join('')}</div>
  <h4>Or start by hand</h4><p class="sm">Create the first booking, import a calendar, or look around a sample band marked as test.</p>
  <div class="cards">${[['odense-live','Create a booking','Date, venue, fee, people'],['notebook','Import calendar','Google, Microsoft 365 or .ics'],['studio-b','Sample band','Marked as test, delete any time']].map(([im,t,s])=>`<span><img src="${IMG(im)}" alt=""><b>${t}</b><small>${s}</small></span>`).join('')}</div></div></div></div>`;}
 /* theme options as compact swatch cards: three colours and the name; "Fits your genre" in the top right corner */
 const lookOrder=()=>{const match=GENRE_THEME[S.onboarding.genre]||'label';return [match,...['label','metal','electronic','classical'].filter(x=>x!==match)];};
-function lookPicker(order=lookOrder(),match=order[0]){return `<div class="acc-looks" role="radiogroup" aria-label="Look">${order.map(id=>{const t=L.THEMES.find(x=>x[0]===id)||[id,TNAME[id],'',[]];return `<button class="theme-tile acc-look ${S.genre===id?'on':''}" role="radio" data-genre="${id}" aria-checked="${S.genre===id}"><span class="sw">${t[3].slice(0,3).map(c=>`<i style="background:${c}"></i>`).join('')}</span><span class="nm">${TNAME[id]}</span>${id===match&&match!=='label'?'<span class="fits">Fits your genre</span>':''}</button>`;}).join('')}</div>`;}
+function lookPicker(order=lookOrder(),match=order[0]){return `<div class="acc-looks" role="radiogroup" aria-label="Look">${order.map(id=>{const t=L.THEMES.find(x=>x[0]===id)||[id,TNAME[id],'',[]];return `<button class="theme-tile acc-look ${S.genre===id?'on':''}" role="radio" data-genre="${id}" aria-checked="${S.genre===id}"><span class="sw">${t[3].slice(0,3).map(c=>`<i class="${L.tokCls(id)}" style="background:${c}"></i>`).join('')}</span><span class="nm">${TNAME[id]}</span>${id===match&&match!=='label'?'<span class="fits">Fits your genre</span>':''}</button>`;}).join('')}</div>`;}
 function fitWin(){document.querySelectorAll('.acc-win').forEach(w=>{const s=w.clientWidth/1456;w.style.setProperty('--k',s);w.style.height=(910*s)+'px';});}
 addEventListener('resize',fitWin);
 
@@ -517,10 +521,14 @@ L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.o
 AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the link in your inbox');};
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
 AC.accobrow=()=>{A.obRows++;L.render();};
-AC.accobskip=()=>{L.go('dashboard');L.toast('Welcome to LAAS. Invite the band any time from Members');};
-AC.accobsend=()=>{const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;L.go('dashboard');L.toast(n?`Welcome to LAAS. ${n} invite${n===1?'':'s'} sent`:'Welcome to LAAS');};
+/* the intro's three exits into the app; with ?lab=knob the Soundcheck plays first, the first time each band comes up */
+const enterApp=(msg)=>{const go=()=>{L.go('dashboard');L.toast(msg);};const b=curBand();A.sounded=A.sounded||{};
+ /* returns a promise while the Soundcheck plays, so the first-run tour (tour.js) waits for the dashboard */
+ if(LAB_KNOB&&window.LAAS_SOUNDCHECK&&!A.sounded[b.id]){A.sounded[b.id]=true;return new Promise(res=>window.LAAS_SOUNDCHECK.play(b.name,()=>{go();res();}));}go();};
+AC.accobskip=()=>enterApp('Welcome to LAAS. Invite the band any time from Members');
+AC.accobsend=()=>{const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;return enterApp(n?`Welcome to LAAS. ${n} invite${n===1?'':'s'} sent`:'Welcome to LAAS');};
 AC.accnotme=()=>{S.onboarding.step=0;L.render();L.toast('Invite left as it was. Sign in with your own email');};
-AC.accjoin=()=>{L.go('dashboard');L.toast('You joined Low Tide as Member');};
+AC.accjoin=()=>enterApp('You joined Low Tide as Member');
 L.INPUT.push(t=>{
  if(t.dataset&&t.dataset.digit!==undefined){t.value=t.value.replace(/\D/g,'').slice(-1);const i=+t.dataset.digit;if(t.value&&i<5)document.querySelector(`[data-digit="${i+1}"]`)?.focus();
   const all=[...document.querySelectorAll('[data-digit]')].every(x=>x.value);if(all){S.onboarding.step=2;setTimeout(()=>{L.render();L.toast('Email confirmed');},150);}return true;}

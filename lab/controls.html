@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hardware controls sheet</title>
+<!-- LAAS lab, T491 (5 Nov 2026, Vit: "take more references from Akai and TE devices: buttons, switchers etc").
+     Buttons, pads and switches after Akai (MPC pads and backlit function buttons, MPK mini) and Teenage Engineering
+     (EP-133 two-label keys, TX-6 round inlay buttons, OP-1 field paddle switch, TP-7 rocker), each next to the LAAS
+     control it would replace. A sheet to judge the language; not in the DS, not in Figma. Real buttons, switches and
+     radios underneath; tokens only for colour. Findings: notes/research/hardware-controls.md -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../components.css">
+<style>
+body{background:var(--sunken);min-height:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:var(--hero-y) var(--gutter) 64px;display:flex;flex-direction:column;gap:var(--section)}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.head h1{margin:0}.head p{margin:4px 0 0;max-width:620px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}.opts .input{width:auto;min-width:140px}
+.flag{margin:0;padding:12px 16px;border-radius:var(--r-lg);background:var(--att-tint);font:400 13px/var(--lh-label) var(--sans)}
+
+/* the faceplate every control sits on: black anodised (dark) or aluminium (light), as in the intro demo */
+.plate{--alu:color-mix(in srgb,var(--top) 82%,var(--muted));--key:color-mix(in srgb,var(--top) 90%,var(--muted));--key-lit:var(--top);--key-ink:var(--ink);
+  --print:color-mix(in srgb,var(--ink) 72%,transparent);--well:color-mix(in srgb,var(--scrim-base) 85%,var(--sunken));
+  border-radius:22px;padding:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--on-photo) 9%,var(--alu)),var(--alu) 40%,color-mix(in srgb,var(--scrim-base) 7%,var(--alu)));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on-photo) 30%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 14%,transparent),0 24px 48px color-mix(in srgb,var(--scrim-base) 35%,transparent)}
+[data-theme="dark"] .plate{--alu:color-mix(in srgb,var(--top) 52%,var(--scrim-base));--key:color-mix(in srgb,var(--top) 72%,var(--scrim-base));--key-lit:color-mix(in srgb,var(--on-photo) 14%,var(--key));--key-ink:color-mix(in srgb,var(--on-photo) 88%,var(--key))}
+
+.cell{display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:14px;background:color-mix(in srgb,var(--scrim-base) 6%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--scrim-base) 10%,transparent)}
+.cell h2{margin:0;font:500 14px/18px var(--sans);color:var(--ink)}
+.cell .ref{font:400 12px/16px var(--sans);color:var(--print)}
+.cell .stage{min-height:120px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.cell .map{margin:0;font:400 12px/16px var(--sans);color:var(--print);border-top:1px solid color-mix(in srgb,var(--scrim-base) 14%,transparent);padding-top:10px}
+.cell .map b{color:var(--ink);font-weight:500}
+.cell .state{font:400 12px/16px var(--mono);color:var(--ink);text-align:center;min-height:16px}
+
+/* 1 two-label key (EP-133): main function on the dark upper half, shift function on the light lower half */
+.k2{width:84px;height:84px;border-radius:7px;overflow:hidden;display:flex;flex-direction:column;text-align:center;
+  box-shadow:0 3px 0 color-mix(in srgb,var(--scrim-base) 45%,var(--key)),0 5px 10px color-mix(in srgb,var(--scrim-base) 30%,transparent);transition:transform var(--dur-1),box-shadow var(--dur-1)}
+.k2 span{flex:1;display:flex;align-items:center;justify-content:center;font:400 12px/14px var(--sans);letter-spacing:.04em;text-transform:uppercase}
+.k2 .up{background:linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 12%,var(--scrim-base) 88%),color-mix(in srgb,var(--scrim-base) 92%,var(--muted)));color:color-mix(in srgb,var(--on-photo) 90%,transparent)}
+.k2 .dn{background:linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 92%,var(--muted)),color-mix(in srgb,var(--on-photo) 78%,var(--muted)));color:color-mix(in srgb,var(--scrim-base) 80%,transparent)}
+.k2.rec .up{background:linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 18%,var(--accent-strong)),var(--accent-strong));color:var(--on-accent)}
+.k2:active,.k2.down{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--scrim-base) 45%,var(--key)),0 2px 4px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.k2:focus-visible,.pad:focus-visible,.ledb:focus-visible,.rocker button:focus-visible,.rb:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.shiftk{min-height:44px;padding:0 16px;border-radius:7px;background:linear-gradient(180deg,var(--key-lit),var(--key));color:var(--key-ink);font:400 13px/1 var(--sans);
+  box-shadow:0 3px 0 color-mix(in srgb,var(--scrim-base) 45%,var(--key)),0 5px 9px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.shiftk[aria-pressed="true"]{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--scrim-base) 45%,var(--key)),0 0 0 2px var(--accent)}
+
+/* 2 round inlay button (TX-6 FX) */
+.rb{display:flex;flex-direction:column;align-items:center;gap:8px;font:400 13px/18px var(--sans);color:var(--print)}
+.rb i{position:relative;width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(circle at 40% 32%,color-mix(in srgb,var(--on-photo) 16%,var(--key)),var(--key) 60%,color-mix(in srgb,var(--scrim-base) 25%,var(--key)));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--scrim-base) 25%,var(--alu)),0 6px 12px color-mix(in srgb,var(--scrim-base) 40%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 22%,transparent);transition:transform var(--dur-1)}
+.rb i::after{content:"";position:absolute;left:15px;right:15px;top:50%;height:16px;margin-top:-8px;border-radius:4px;background:color-mix(in srgb,var(--on-photo) 72%,var(--muted));box-shadow:inset 0 1px 2px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.rb.go i::after{background:var(--accent-strong)}
+.rb:active i{transform:translateY(2px) scale(.98)}
+
+/* 3 backlit pad (MPC): rubber, lit from underneath; colour = state */
+.pads{display:grid;grid-template-columns:repeat(2,64px);gap:10px}
+.pad{width:64px;height:64px;border-radius:8px;position:relative;
+  background:radial-gradient(circle at 50% 120%,color-mix(in srgb,var(--glow,transparent) 55%,transparent),transparent 70%),linear-gradient(180deg,color-mix(in srgb,var(--on-photo) 8%,var(--key)),var(--key));
+  box-shadow:0 0 0 2px var(--well),0 0 0 3px color-mix(in srgb,var(--glow,transparent) 80%,transparent),0 0 16px color-mix(in srgb,var(--glow,transparent) 50%,transparent),inset 0 -2px 4px color-mix(in srgb,var(--scrim-base) 25%,transparent);
+  font:400 11px/1 var(--sans);color:var(--key-ink);display:flex;align-items:flex-end;justify-content:flex-start;padding:7px;transition:transform var(--dur-1),box-shadow var(--dur-2)}
+.pad[aria-pressed="true"]{--glow:var(--accent)}
+.pad.need{--glow:var(--att)}
+.pad:active{transform:scale(.97)}
+
+/* 4 tri-state backlit button (MPC function buttons): unlit = not available, dim = available, lit = on */
+.ledb{min-width:96px;min-height:44px;padding:16px 14px 10px;border-radius:6px;position:relative;font:500 12px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--key-ink);
+  background:linear-gradient(180deg,var(--key-lit),var(--key));box-shadow:0 3px 0 color-mix(in srgb,var(--scrim-base) 45%,var(--key)),0 5px 9px color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.ledb::before{content:"";position:absolute;left:12px;right:12px;top:6px;height:4px;border-radius:2px;background:color-mix(in srgb,var(--ink) 18%,transparent)}
+.ledb[data-state="ready"]::before{background:color-mix(in srgb,var(--att) 55%,transparent)}
+.ledb[data-state="on"]::before{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.ledb:disabled{opacity:.55;cursor:default}
+.ledb:active:not(:disabled){transform:translateY(2px)}
+
+/* 5 lever toggle (the bat switch on the EQ and channel-strip references): role=switch */
+.lever{width:56px;height:96px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font:500 11px/1 var(--sans);letter-spacing:.06em;color:var(--print)}
+.lever .nut{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  background:radial-gradient(circle at 40% 30%,color-mix(in srgb,var(--on-photo) 80%,var(--muted)),color-mix(in srgb,var(--on-photo) 40%,var(--muted)) 60%,color-mix(in srgb,var(--scrim-base) 30%,var(--muted)));
+  box-shadow:0 3px 6px color-mix(in srgb,var(--scrim-base) 45%,transparent)}
+.lever .bat{position:absolute;left:50%;top:50%;width:12px;height:26px;margin-left:-6px;border-radius:6px;transform-origin:50% 0;transform:rotate(180deg);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--on-photo) 55%,var(--muted)),color-mix(in srgb,var(--on-photo) 92%,var(--muted)) 40%,color-mix(in srgb,var(--on-photo) 45%,var(--muted)));
+  box-shadow:0 4px 6px color-mix(in srgb,var(--scrim-base) 45%,transparent);transition:transform var(--dur-2) var(--ease-standard)}
+.lever[aria-checked="true"] .bat{transform:rotate(0deg) translateY(-26px)}
+.lever .on,.lever .off{position:relative;z-index:1}
+.lever[aria-checked="true"] .on{color:var(--accent-strong)}.lever[aria-checked="false"] .off{color:var(--ink)}
+.lever:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+
+/* 6 slide switch, 3 positions (the original OP-1 power slider, hardware mode switches): a radio group */
+.slide{position:relative;display:grid;grid-template-columns:repeat(3,1fr);width:240px;max-width:100%;height:44px;border-radius:22px;background:var(--well);
+  box-shadow:inset 0 2px 5px var(--scrim-base),0 1px 0 color-mix(in srgb,var(--on-photo) 20%,transparent)}
+.slide input{position:absolute;opacity:0;pointer-events:none}
+.slide label{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--sans);color:color-mix(in srgb,var(--on-photo) 60%,transparent);cursor:pointer}
+.slide input:checked+label{color:var(--key-ink)}
+.slide .thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/3);border-radius:18px;transition:transform var(--dur-2) var(--ease-standard);
+  background:linear-gradient(180deg,var(--key-lit),var(--key));box-shadow:0 2px 4px var(--scrim-base),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 25%,transparent)}
+.slide:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+
+/* 7 rocker (TP-7 wind/rewind, OP-1 field paddle): one seesaw with two halves */
+.rocker{display:flex;width:140px;height:52px;border-radius:12px;overflow:hidden;transform-style:preserve-3d;perspective:300px;
+  box-shadow:0 0 0 3px var(--well),0 6px 12px color-mix(in srgb,var(--scrim-base) 40%,transparent)}
+.rocker button{flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--key-lit),var(--key));color:var(--key-ink);transition:transform var(--dur-1)}
+.rocker button svg{width:20px;height:20px}
+.rocker button+button{box-shadow:inset 1px 0 0 color-mix(in srgb,var(--scrim-base) 30%,transparent)}
+.rocker button:first-child:active{transform:rotateY(-14deg)}.rocker button:last-child:active{transform:rotateY(14deg)}
+
+@media (max-width:599.98px){.plate{padding:16px;border-radius:18px;grid-template-columns:minmax(0,1fr)}.opts .input{flex:1;min-width:0}}
+@media (prefers-reduced-motion:reduce){.k2,.rb i,.pad,.lever .bat,.slide .thumb,.rocker button{transition:none}}
+</style>
+
+<main class="wrap">
+  <header class="head">
+    <div>
+      <p class="t-meta faint" style="margin:0">LAAS lab · T491 · controls sheet</p>
+      <h1 class="t-display">Buttons, pads and switches</h1>
+      <p class="t-body muted">After Akai (MPC, MPK mini) and Teenage Engineering (EP-133, TX-6, OP-1 field, TP-7). Each one sits next to the LAAS control it would replace. <a href="hardware-controls.html">Back to the lab</a></p>
+    </div>
+    <div class="opts">
+      <select class="input" id="genre" aria-label="Theme"><option value="">Label (default)</option><option value="metal">Metal</option><option value="electronic">Electronic</option><option value="classical">Classical</option><option value="minimal">Minimal</option><option value="folk">Folk</option><option value="hiphop">Hip-hop &amp; soul</option><option value="pop">Pop</option></select>
+      <select class="input" id="mode" aria-label="Plate"><option value="dark">Black</option><option value="light">Aluminium</option></select>
+    </div>
+  </header>
+  <p class="flag" role="note"><b>Demo only.</b> A sheet to judge the language. Like the strip, any of these would have to replace every control of its kind, and only makes sense as part of a whole hardware look.</p>
+
+  <section class="plate" aria-label="Controls">
+    <div class="cell"><h2>Two-label key</h2><span class="ref">EP-133: main function on top, shift function below; one orange key for the irreversible one</span>
+      <div class="stage">
+        <button class="k2" type="button" aria-label="Save draft; with shift: Duplicate"><span class="up">save</span><span class="dn">duplicate</span></button>
+        <button class="k2 rec" type="button" aria-label="Send; with shift: Schedule"><span class="up">send</span><span class="dn">schedule</span></button>
+        <button class="shiftk" type="button" aria-pressed="false" id="shift">shift</button>
+      </div>
+      <span class="state" id="k2s" aria-live="polite"></span>
+      <p class="map"><b>In LAAS:</b> secondary and primary buttons; the second label is the "more" action (today a ⋯ menu). <b>Doubt:</b> a hidden shift layer is expert-only.</p></div>
+
+    <div class="cell"><h2>Round inlay button</h2><span class="ref">TX-6 FX buttons: a ring with a coloured inlay, label printed under</span>
+      <div class="stage"><button class="rb" type="button"><i aria-hidden="true"></i>back</button><button class="rb go" type="button"><i aria-hidden="true"></i>continue</button></div>
+      <p class="map"><b>In LAAS:</b> the step and dialog actions (Back, Continue, Send). <b>Doubt:</b> 72 px round buttons take more room than the 44 px pill.</p></div>
+
+    <div class="cell"><h2>Backlit pads</h2><span class="ref">MPC / MPK mini pads: rubber, lit from underneath; the colour says the state</span>
+      <div class="stage"><div class="pads" role="group" aria-label="Look">
+        <button class="pad" type="button" aria-pressed="true">label</button><button class="pad" type="button" aria-pressed="false">metal</button>
+        <button class="pad need" type="button" aria-pressed="false" aria-describedby="need">folk</button><button class="pad" type="button" aria-pressed="false">pop</button></div></div>
+      <span class="ref" id="need">amber = needs you (an unread or a blocker), accent = chosen</span>
+      <p class="map"><b>In LAAS:</b> big choice tiles (Pick your look, Add to chat), and the "needs you" count chips. <b>Doubt:</b> colour alone can't carry state; keep the text.</p></div>
+
+    <div class="cell"><h2>Backlit function buttons</h2><span class="ref">MPC function buttons: unlit = not available, dim = available, lit = on</span>
+      <div class="stage">
+        <button class="ledb" type="button" data-state="on" aria-pressed="true">paid</button>
+        <button class="ledb" type="button" data-state="ready" aria-pressed="false">overdue</button>
+        <button class="ledb" type="button" data-state="off" disabled>drafts</button>
+      </div>
+      <p class="map"><b>In LAAS:</b> filter buttons and chips (Bookings, Money filters). The three LED states map to off / available / on. <b>Doubt:</b> amber and green also mean attention and paid in LAAS.</p></div>
+
+    <div class="cell"><h2>Lever toggle</h2><span class="ref">The bat switch on the EQ and channel-strip references: ON up, OFF down</span>
+      <div class="stage"><button class="lever" type="button" role="switch" aria-checked="true" aria-label="Late interest"><span class="on">ON</span><i class="nut"></i><i class="bat"></i><span class="off">OFF</span></button></div>
+      <span class="state" id="levs">Late interest: on</span>
+      <p class="map"><b>In LAAS:</b> the Toggle (142:635, <code>.acc-tg</code>), 14 switches. <b>Doubt:</b> 96 px tall; a settings row is 44.</p></div>
+
+    <div class="cell"><h2>Slide switch</h2><span class="ref">Original OP-1 power slider, hardware mode switches: 2–3 fixed positions</span>
+      <div class="stage"><div class="slide" role="radiogroup" aria-label="Appearance">
+        <input type="radio" name="ap" id="ap1" value="dark" checked><label for="ap1">dark</label>
+        <input type="radio" name="ap" id="ap2" value="light"><label for="ap2">light</label>
+        <input type="radio" name="ap" id="ap3" value="system"><label for="ap3">system</label>
+        <i class="thumb" aria-hidden="true"></i></div></div>
+      <p class="map"><b>In LAAS:</b> the segmented control (Appearance, Dashboard starts with, Single/EP). <b>Fits:</b> same height as today, same keyboard (arrows).</p></div>
+
+    <div class="cell"><h2>Rocker</h2><span class="ref">TP-7 wind / rewind seesaw, OP-1 field paddle</span>
+      <div class="stage"><div class="rocker" role="group" aria-label="Guests on the list">
+        <button type="button" aria-label="One fewer guest" id="rk-"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+        <button type="button" aria-label="One more guest" id="rk+"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button></div>
+        <span class="state" id="rks" aria-live="polite">4 guests</span></div>
+      <p class="map"><b>In LAAS:</b> − / + steppers (counts, the strip's steppers). <b>Fits:</b> one object for "less / more", 52 high.</p></div>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+/* shift layer on the two-label keys: with shift held (or latched), the key does its lower label */
+const sh=document.getElementById('shift'),k2s=document.getElementById('k2s');
+sh.addEventListener('click',()=>sh.setAttribute('aria-pressed',sh.getAttribute('aria-pressed')!=='true'));
+document.querySelectorAll('.k2').forEach(k=>k.addEventListener('click',()=>{const s=sh.getAttribute('aria-pressed')==='true';
+  k2s.textContent=(s?k.querySelector('.dn'):k.querySelector('.up')).textContent+(s?' (shift)':'');}));
+/* pads: one chosen at a time, like a look picker */
+document.querySelectorAll('.pad').forEach(p=>p.addEventListener('click',()=>{document.querySelectorAll('.pad').forEach(x=>x.setAttribute('aria-pressed',x===p));}));
+/* function buttons: available <-> on */
+document.querySelectorAll('.ledb:not(:disabled)').forEach(b=>b.addEventListener('click',()=>{const on=b.dataset.state!=='on';b.dataset.state=on?'on':'ready';b.setAttribute('aria-pressed',on);}));
+/* lever */
+const lv=document.querySelector('.lever'),levs=document.getElementById('levs');
+lv.addEventListener('click',()=>{const on=lv.getAttribute('aria-checked')!=='true';lv.setAttribute('aria-checked',on);levs.textContent='Late interest: '+(on?'on':'off');});
+/* slide: the thumb follows the checked radio */
+const sl=document.querySelector('.slide'),th=sl.querySelector('.thumb');
+const place=()=>{const i=[...sl.querySelectorAll('input')].findIndex(x=>x.checked);th.style.transform=`translateX(${i*100}%)`;};
+sl.addEventListener('change',place);place();
+/* rocker */
+let n=4;const rks=document.getElementById('rks');
+document.getElementById('rk-').addEventListener('click',()=>{n=Math.max(0,n-1);rks.textContent=n+' guest'+(n===1?'':'s');});
+document.getElementById('rk+').addEventListener('click',()=>{n=Math.min(20,n+1);rks.textContent=n+' guests';});
+/* theme */
+const root=document.documentElement,g=document.getElementById('genre'),m=document.getElementById('mode');
+const apply=()=>{g.value?root.setAttribute('data-genre',g.value):root.removeAttribute('data-genre');root.dataset.theme=m.value;};
+g.addEventListener('change',apply);m.addEventListener('change',apply);apply();
+})();
+</script>
+</html>

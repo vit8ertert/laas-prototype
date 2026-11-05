@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knob moments</title>
+<!-- LAAS lab, T491 (5 Nov 2026, Vit: "I feel it should be somewhere not in the main UI … or maybe a small animation
+     featuring the one metal with orange"; then "do demo locally all of them"). The black metal knob with the orange
+     pointer and the white arc, in four places outside the main UI: (1) a soundcheck at the end of the intro, (2) a light/dark
+     dimmer on Pick your look, (3) an empty-state illustration, (4) brand moments (404, sign-up panel).
+     Demo only: the real intro and app are unchanged. Tokens only for colour; motion tokens; reduced motion respected. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../components.css">
+<style>
+body{background:var(--canvas);min-height:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:var(--hero-y) var(--gutter) 64px;display:flex;flex-direction:column;gap:var(--section)}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.head h1{margin:0}.head p{margin:4px 0 0;max-width:640px}
+.opts{display:flex;gap:8px}.opts .input{width:auto;min-width:120px}
+.flag{margin:0;padding:12px 16px;border-radius:var(--r-lg);background:var(--att-tint);font:400 13px/var(--lh-label) var(--sans)}
+.moment{background:var(--surface);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:16px}
+.moment>header{display:flex;flex-direction:column;gap:4px}
+.moment>header h2{margin:0}.moment>header p{margin:0;color:var(--muted);font:400 13px/var(--lh-label) var(--sans);max-width:720px}
+.why{margin:0;font:400 12px/16px var(--sans);color:var(--muted)}.why b{color:var(--ink);font-weight:500}
+
+/* ---------- the knob: black metal top face (light on the still body), orange notch, white progress arc ---------- */
+.kn{position:relative;width:var(--s,200px);height:var(--s,200px);flex:none;user-select:none;-webkit-user-select:none}
+.kn svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.kn .tr{fill:none;stroke:var(--rule-strong);stroke-width:3;stroke-linecap:round}
+.kn .ar{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.kn .tk{stroke:var(--faint);stroke-width:1.5;stroke-linecap:round;transition:stroke var(--dur-2)}
+.kn .tk.on{stroke:var(--ink)}
+.kn .lb{font:400 12px/1 var(--sans);fill:var(--muted);cursor:pointer}.kn .lb.on{fill:var(--ink);font-weight:500}
+.kn .hit{fill:transparent;cursor:pointer}
+.kn .bd{position:absolute;left:50%;top:50%;width:var(--d,104px);height:var(--d,104px);margin:calc(var(--d,104px)/-2) 0 0 calc(var(--d,104px)/-2);border-radius:50%;
+  --base:color-mix(in srgb,var(--top) 55%,var(--scrim-base));
+  background:radial-gradient(circle at 38% 30%,color-mix(in srgb,var(--on-photo) 26%,var(--base)),var(--base) 55%,color-mix(in srgb,var(--scrim-base) 30%,var(--base))),
+    repeating-radial-gradient(circle,color-mix(in srgb,var(--on-photo) 5%,transparent) 0 1px,transparent 1px 3px),var(--base);
+  box-shadow:0 14px 24px color-mix(in srgb,var(--scrim-base) 55%,transparent),0 3px 5px color-mix(in srgb,var(--scrim-base) 50%,transparent),
+    inset 0 0 0 2px color-mix(in srgb,var(--on-photo) 14%,transparent),inset 0 1px 0 color-mix(in srgb,var(--on-photo) 30%,transparent),0 0 0 1px color-mix(in srgb,var(--scrim-base) 55%,transparent)}
+.kn .tn{position:absolute;inset:0;border-radius:50%}
+.kn .nt{position:absolute;left:50%;top:12%;width:5px;height:22%;margin-left:-2.5px;border-radius:3px;background:var(--you)}
+.kn.int .bd{cursor:ew-resize}
+.kn.int:focus-visible{outline:none}.kn.int:focus-visible .bd{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--accent),0 14px 24px color-mix(in srgb,var(--scrim-base) 55%,transparent)}
+/* motion: a short ease for steps; the soundcheck sweep is slower and eased like a real knob */
+.kn .tn{transition:transform var(--dur-2) var(--ease-standard)}
+.kn .ar{transition:stroke-dashoffset var(--dur-2) var(--ease-standard)}
+.kn.sweep .tn{transition:transform 1.2s cubic-bezier(.45,0,.15,1)}
+.kn.sweep .ar{transition:stroke-dashoffset 1.2s cubic-bezier(.45,0,.15,1)}
+.kn.still .tk,.kn.still .tr{opacity:.6}
+
+/* ---------- 1 soundcheck ---------- */
+.po{position:relative;min-height:420px;border-radius:var(--r-lg);overflow:hidden;background:var(--sunken);display:grid;place-items:center}
+.po-boot,.po-dash{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity var(--dur-4) var(--ease-standard)}
+.po-boot .t{font:400 15px/var(--lh-body) var(--sans);color:var(--muted);min-height:22px}
+.po-boot .t b{color:var(--ink);font-weight:500}
+.po-dash{opacity:0;pointer-events:none;gap:12px;padding:24px;text-align:center}
+.po-dash h3{margin:0;font:400 var(--fs-display)/var(--lh-display) var(--sans)}
+.po-dash p{margin:0;color:var(--muted);max-width:420px}
+.po.done .po-boot{opacity:0}.po.done .po-dash{opacity:1;pointer-events:auto}
+.po-ctl{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- 2 dimmer on Pick your look ---------- */
+.pk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:var(--card);align-items:center}
+.pk-l{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.pk-l h3{margin:0}.pk-l p{margin:0;color:var(--muted)}
+.pk-dial{display:flex;flex-direction:column;align-items:center;gap:8px;align-self:center}
+.pk-dial .v{font:500 15px/22px var(--mono);color:var(--ink)}
+.pk-dial .ctl{display:flex;align-items:center;gap:12px}
+.pk-dial .btn.icon{width:44px;height:44px;padding:0;justify-content:center}
+/* the preview resolves its own theme mode from the dial, through the generated token classes */
+.pv{border-radius:var(--r-lg);overflow:hidden;background:var(--canvas);color:var(--ink);box-shadow:var(--elev-2),inset 0 0 0 1px var(--rule-strong);transition:background var(--dur-3),color var(--dur-3)}
+.pv .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--sunken);font:400 12px/16px var(--sans);color:var(--muted)}
+.pv .bar i{width:8px;height:8px;border-radius:50%;background:var(--rule-strong)}
+.pv .body{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:8px;min-height:220px}
+.pv .side{background:var(--surface);border-radius:var(--r-md);padding:8px;display:flex;flex-direction:column;gap:6px}
+.pv .side span{height:10px;border-radius:4px;background:var(--well)}.pv .side span.on{background:var(--accent);opacity:.7}
+.pv .main{background:var(--surface);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;text-align:center}
+.pv .main b{font:400 18px/24px var(--sans)}.pv .main small{color:var(--muted);font:400 12px/16px var(--sans)}
+.pv .pill{width:80%;height:30px;border-radius:999px;background:var(--canvas);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+
+/* ---------- 3 empty state ---------- */
+.es{display:flex;align-items:center;justify-content:center;gap:32px;padding:32px;border-radius:var(--r-lg);background:var(--canvas);flex-wrap:wrap}
+.es .tx{max-width:380px;display:flex;flex-direction:column;gap:8px}
+.es h3{margin:0;font:400 var(--fs-title)/var(--lh-title) var(--sans)}.es p{margin:0;color:var(--muted)}
+
+/* ---------- 4 brand moments ---------- */
+.br{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--card)}
+.nf{border-radius:var(--r-lg);background:var(--canvas);padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.nf h3{margin:0;font:400 var(--fs-title)/var(--lh-title) var(--sans)}.nf p{margin:0;color:var(--muted);max-width:300px}
+.nf .code{font:400 12px/16px var(--mono);color:var(--faint)}
+.su{border-radius:var(--r-lg);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;
+  background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--on-photo) 6%,var(--surface)),var(--sunken) 70%)}
+.su .lock{display:flex;flex-direction:column;align-items:center;gap:6px}
+.su .lock b{font:500 13px/var(--lh-label) var(--sans);letter-spacing:.02em;color:var(--ink)}
+.su .lock small{font:400 12px/16px var(--sans);color:var(--faint)}
+
+@media (max-width:899.98px){.pk,.br{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:599.98px){.opts{width:100%}.opts .input{flex:1;min-width:0}.po{min-height:380px}.es{padding:24px 16px;gap:20px}}
+@media (prefers-reduced-motion:reduce){.kn .tn,.kn .ar,.kn.sweep .tn,.kn.sweep .ar,.po-boot,.po-dash,.pv{transition:none}}
+</style>
+
+<main class="wrap">
+  <header class="head">
+    <div>
+      <p class="t-meta faint" style="margin:0">LAAS lab · T491 · knob moments</p>
+      <h1 class="t-display">Knob moments</h1>
+      <p class="t-body muted">The black metal knob with the orange pointer, outside the main UI: four places to judge. <a href="hardware-controls.html">Back to the lab</a></p>
+    </div>
+    <div class="opts">
+      <select class="input" id="genre" aria-label="Theme"><option value="">Label (default)</option><option value="metal">Metal</option><option value="electronic">Electronic</option><option value="classical">Classical</option><option value="minimal">Minimal</option><option value="folk">Folk</option><option value="hiphop">Hip-hop &amp; soul</option><option value="pop">Pop</option></select>
+      <select class="input" id="mode" aria-label="Appearance"><option value="dark">Dark</option><option value="light">Light</option></select>
+    </div>
+  </header>
+  <p class="flag" role="note"><b>Demo only.</b> The real intro and app are unchanged. Four candidate moments; pick the ones worth keeping.</p>
+
+  <section class="moment" aria-labelledby="m1">
+    <header><h2 class="t-title" id="m1">1 · Soundcheck, at the end of the intro</h2><p>After the last intro step, before the dashboard: the knob turns up once from zero to full while the band is set up, then the dashboard fades in. A knob brings a level up rather than switching something on, so the copy follows the turn. Once per band; replaces a spinner.</p></header>
+    <div class="po" id="po">
+      <div class="po-boot"><div class="kn" id="k-po" style="--s:220px;--d:116px" aria-hidden="true"></div><p class="t" id="po-t" role="status" aria-live="polite">Ready when you are</p></div>
+      <div class="po-dash" aria-hidden="true"><h3>What should we set up first?</h3><p>Low Tide is ready. Ask, or pick a start below; nothing is written until you confirm.</p></div>
+    </div>
+    <div class="po-ctl"><button class="btn accent s" type="button" id="po-play">Play</button><button class="btn secondary s" type="button" id="po-reset">Reset</button></div>
+    <p class="why"><b>Why here:</b> a moment that happens once, says “label as a service” through hardware, and is never a control. With reduced motion the knob is shown already turned up.</p>
+  </section>
+
+  <section class="moment" aria-labelledby="m2">
+    <header><h2 class="t-title" id="m2">2 · Light or dark, as a dimmer on Pick your look</h2><p>The one interactive use: three positions, dark · match system · light. The preview beside it changes as you turn.</p></header>
+    <div class="pk">
+      <div class="pk-l">
+        <h3 class="t-title">Pick your look</h3>
+        <p>Do you prefer light or dark?</p>
+        <div class="pk-dial">
+          <div class="kn int" id="k-dim" style="--s:220px;--d:104px"></div>
+          <div class="ctl" data-for="k-dim"><span class="v" id="dim-v" aria-hidden="true"></span></div>
+        </div>
+      </div>
+      <div class="pv" id="pv" aria-label="Preview" role="img">
+        <div class="bar"><i></i><i></i><i></i><span style="margin-left:8px">Low Tide</span></div>
+        <div class="body"><div class="side"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+          <div class="main"><b>What should we set up first?</b><small>Nothing on the calendar yet</small><span class="pill"></span></div></div>
+      </div>
+    </div>
+    <p class="why"><b>Why here:</b> it is in the intro, so it stays out of the main UI, and the result is visible at once. Keyboard: arrows; tap a label; − and +.</p>
+  </section>
+
+  <section class="moment" aria-labelledby="m3">
+    <header><h2 class="t-title" id="m3">3 · Empty state, as an illustration</h2><p>A still knob at zero next to the empty dashboard's line. It does not move and cannot be turned.</p></header>
+    <div class="es"><div class="kn still" id="k-es" style="--s:160px;--d:84px" aria-hidden="true"></div>
+      <div class="tx"><h3>Nothing on the calendar.</h3><p>Silence, for now. Add your next gig or import a calendar, and Low Tide comes up.</p></div></div>
+    <p class="why"><b>Doubt:</b> people may try to turn it. Keep it plainly decorative (no shadow on hover, no pointer cursor).</p>
+  </section>
+
+  <section class="moment" aria-labelledby="m4">
+    <header><h2 class="t-title" id="m4">4 · Brand moments, outside the app</h2><p>A 404 page with the knob at zero, and the sign-up screen's right panel with the knob as the mark instead of a photo.</p></header>
+    <div class="br">
+      <div class="nf"><div class="kn still" id="k-nf" style="--s:150px;--d:80px" aria-hidden="true"></div><span class="code">404</span><h3>Signal lost</h3><p>This page is off the dial. The rest of Low Tide is where you left it.</p><a class="btn secondary s" href="#m1" style="text-decoration:none">Back to the dashboard</a></div>
+      <div class="su"><div class="kn" id="k-su" style="--s:220px;--d:120px" aria-hidden="true"></div><div class="lock"><b>LAAS</b><small>label as a service</small></div></div>
+    </div>
+    <p class="why"><b>Later:</b> belongs to the brand work (logo motion, marketing), not to this test.</p>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);p&&p.appendChild(n);return n;};
+const pol=(r,d)=>{const a=d*Math.PI/180;return [110+r*Math.sin(a),110-r*Math.cos(a)];};
+const arcD=(r,a0,a1)=>{const [x0,y0]=pol(r,a0),[x1,y1]=pol(r,a1);return `M${x0} ${y0}A${r} ${r} 0 ${Math.abs(a1-a0)>180?1:0} 1 ${x1} ${y1}`;};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+
+/* draw a knob; steps = number of stops (0 = continuous 0..1); labels = [[stop, text]] */
+function Knob(host,o){
+  const sweep=o.sweep||270,a0=-sweep/2,n=o.steps||10,ang=f=>a0+sweep*f;
+  const svg=el('svg',{viewBox:'0 0 220 220','aria-hidden':'true'},host);
+  el('path',{class:'tr',d:arcD(72,a0,a0+sweep)},svg);
+  const ar=el('path',{class:'ar',d:arcD(72,a0,a0+sweep),pathLength:'1'},svg);
+  const ticks=[];for(let i=0;i<=n;i++){const f=i/n,big=(o.labels||[]).some(l=>l[0]===i),[x0,y0]=pol(78,ang(f)),[x1,y1]=pol(big?86:83,ang(f));ticks.push(el('line',{class:'tk',x1:x0,y1:y0,x2:x1,y2:y1},svg));}
+  const labs=(o.labels||[]).map(([i,t])=>{const [x,y]=pol(96,ang(i/n)),side=Math.abs(x-110)<8?0:(x<110?-1:1),g=el('g',{},svg),w=Math.max(48,t.length*8+12);
+    el('rect',{class:'hit',x:side===0?x-w/2:(side<0?x-w+6:x-6),y:y-24,width:w,height:48,rx:8},g);
+    const tx=el('text',{class:'lb',x:x-side*2,y:y+4,'text-anchor':side===0?'middle':(side<0?'end':'start')},g);tx.textContent=t;return [i,g,tx];});
+  const bd=document.createElement('div');bd.className='bd';bd.innerHTML='<div class="tn"><i class="nt"></i></div>';host.appendChild(bd);const tn=bd.firstChild;
+  let v=0;
+  function set(i){v=Math.max(0,Math.min(n,i));const f=v/n;tn.style.transform=`rotate(${ang(f)}deg)`;ar.style.strokeDashoffset=String(1-f);
+    ticks.forEach((t,k)=>t.classList.toggle('on',k<=v&&v>0));labs.forEach(([k,,tx])=>tx.classList.toggle('on',k===v));}
+  set(o.value||0);
+  return {set,get:()=>v,n,labs,bd};
+}
+
+/* 1 soundcheck: the knob turns up from zero to full in one eased sweep; the copy follows the turn (a knob brings a
+   level up, it does not switch on: Vit 5 Nov); then the dashboard fades in */
+const po=document.getElementById('po'),pt=document.getElementById('po-t'),kp=Knob(document.getElementById('k-po'),{steps:10});
+let timers=[];const clear=()=>{timers.forEach(clearTimeout);timers=[];};
+document.getElementById('po-play').addEventListener('click',()=>{clear();po.classList.remove('done');const host=document.getElementById('k-po');
+  if(reduce.matches){kp.set(10);pt.innerHTML='<b>Levels set. Low Tide is ready.</b>';timers.push(setTimeout(()=>po.classList.add('done'),600));return;}
+  host.classList.remove('sweep');kp.set(0);void host.offsetWidth;host.classList.add('sweep');
+  pt.textContent='Soundcheck… bringing up the levels';
+  timers.push(setTimeout(()=>kp.set(10),80));
+  timers.push(setTimeout(()=>{pt.innerHTML='<b>Levels set. Low Tide is ready.</b>';},1350));
+  timers.push(setTimeout(()=>po.classList.add('done'),2300));});
+document.getElementById('po-reset').addEventListener('click',()=>{clear();po.classList.remove('done');const host=document.getElementById('k-po');host.classList.remove('sweep');kp.set(0);pt.textContent='Ready when you are';});
+
+/* 2 dimmer: three stops on a 180° sweep; the preview takes the matching token class */
+const DIM=['Dark','Match system','Light'],dimHost=document.getElementById('k-dim'),pv=document.getElementById('pv'),dimV=document.getElementById('dim-v');
+const kd=Knob(dimHost,{steps:2,sweep:180,labels:DIM.map((t,i)=>[i,t]),value:0});
+const sysLight=matchMedia('(prefers-color-scheme: light)');
+function setDim(i,user){kd.set(i);const v=kd.get(),mode=v===2?'light':v===0?'dark':(sysLight.matches?'light':'dark');
+  const g=document.getElementById('genre').value||'label';pv.className='pv tok-'+g+'-'+mode;dimV.textContent=DIM[v];
+  dimHost.setAttribute('aria-valuenow',v);dimHost.setAttribute('aria-valuetext',DIM[v]+(v===1?` (now ${mode})`:''));dn.disabled=v===0;up.disabled=v===2;
+  pv.setAttribute('aria-label',`Preview in ${mode} mode`);}
+dimHost.setAttribute('role','slider');dimHost.tabIndex=0;dimHost.setAttribute('aria-label','Light or dark');dimHost.setAttribute('aria-valuemin',0);dimHost.setAttribute('aria-valuemax',2);
+const ctl=document.querySelector('.ctl[data-for="k-dim"]');
+const mk=(d,path,lab)=>{const b=document.createElement('button');b.type='button';b.className='btn secondary icon';b.tabIndex=-1;b.setAttribute('aria-label',lab);
+  b.innerHTML=`<svg class="i" viewBox="0 0 24 24"><path d="${path}"/></svg>`;b.addEventListener('click',()=>setDim(kd.get()+d,true));return b;};
+const dn=mk(-1,'M5 12h14','Darker'),up=mk(1,'M5 12h14M12 5v14','Lighter');ctl.prepend(dn);ctl.append(up);
+dimHost.addEventListener('keydown',e=>{const m={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];if(m!==undefined){setDim(kd.get()+m,true);e.preventDefault();}
+  else if(e.key==='Home'){setDim(0,true);e.preventDefault();}else if(e.key==='End'){setDim(2,true);e.preventDefault();}});
+kd.labs.forEach(([i,g])=>g.addEventListener('pointerdown',e=>{e.preventDefault();setDim(i,true);dimHost.focus({preventScroll:true});}));
+kd.bd.addEventListener('pointerdown',e=>{e.preventDefault();dimHost.focus({preventScroll:true});const sx=e.clientX,sv=kd.get();kd.bd.setPointerCapture(e.pointerId);
+  const mv=ev=>setDim(sv+Math.round((ev.clientX-sx)/48),true);const end=()=>{kd.bd.removeEventListener('pointermove',mv);kd.bd.removeEventListener('pointerup',end);kd.bd.removeEventListener('pointercancel',end);};
+  kd.bd.addEventListener('pointermove',mv);kd.bd.addEventListener('pointerup',end);kd.bd.addEventListener('pointercancel',end);});
+setDim(0);
+
+/* 3 and 4: still knobs; the sign-up mark sits on, the 404 knob at zero */
+Knob(document.getElementById('k-es'),{steps:10,value:0});
+Knob(document.getElementById('k-nf'),{steps:10,value:0});
+const ks=Knob(document.getElementById('k-su'),{steps:10,value:7});
+
+/* theme */
+const root=document.documentElement,g=document.getElementById('genre'),m=document.getElementById('mode');
+const apply=()=>{g.value?root.setAttribute('data-genre',g.value):root.removeAttribute('data-genre');root.dataset.theme=m.value;setDim(kd.get());};
+g.addEventListener('change',apply);m.addEventListener('change',apply);apply();
+})();
+</script>
+</html>

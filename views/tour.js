@@ -198,7 +198,9 @@ L.ACTIONS.guide=()=>{const g=S.view==='dashboard'?'first':guideFor(S.view);if(g)
 
 // first run: when sign-up ends on the dashboard (skip invites or send them)
 for(const a of ['accobskip','accobsend']){const f=L.ACTIONS[a];if(!f)continue;
-  L.ACTIONS[a]=function(){const r=f.apply(this,arguments);const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')start('first');return r;};}
+  L.ACTIONS[a]=function(){const r=f.apply(this,arguments);const go=()=>{const ft=get('laas-tour');if(ft!=='done'&&ft!=='skipped')start('first');};
+  /* an exit that plays a moment first (the lab Soundcheck) returns a promise; the tour waits for the dashboard */
+  if(r&&typeof r.then==='function')r.then(go);else go();return r;};}
 // localhost only: ?tour=<name>&step=<n> opens a tour at a step (for Figma captures of tour states); names are fixed above
 if(location.hostname==='localhost'){const q=new URLSearchParams(location.search),tn=q.get('tour'),sn=parseInt(q.get('step')||'0',10)||0;
   if(tn&&TOURS[tn])setTimeout(()=>{start(tn);setTimeout(()=>step(Math.min(sn,TOURS[tn].length-1)),400);},900);}
