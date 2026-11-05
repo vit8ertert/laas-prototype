@@ -26,8 +26,8 @@
    a 2 px lilac bar on the left edge and the row's title underlined. Only rows that open something get it (Vit 21 Oct) */
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow){position:relative}
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,:focus-visible)::before{opacity:1}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,:focus-visible) b:first-of-type,.cv-table tbody tr[data-go]:hover td:first-child b{text-decoration:underline;text-underline-offset:3px}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"]))::before{opacity:1}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
 
 /* brand logo tile (views/brands.js): Para recipe in the brand colour */
 .brand{display:inline-grid;place-items:center;flex:none;border-radius:var(--r-md);color:var(--bc);
@@ -58,7 +58,7 @@
 
 /* ghost buttons that sit flush to a page or card edge (no padding on that side) say "hover" with an underline, not a fill,
    so the fill never touches their text (Vit 21 Oct, "Add another") */
-.btn.ghost:is(.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.cat-storelist .btn.ghost.s:hover,.m-chh .btn.ghost:hover{background:none!important;text-decoration:underline}
+.btn.ghost:is(.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]),.cat-storelist .btn.ghost.s:is(:hover,[data-state="hover"]),.m-chh .btn.ghost:is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}
 
 /* ===== List row (Vit 21 Oct: "define in DS and apply across all pages") =====
    One pattern for every text strip that lists things in a section or card:
@@ -85,10 +85,10 @@
 
 /* Mail rows use ::before for their divider, so their hover bar is the same 2 px bar on ::after (was a full-height edge line) */
 .ml-row{position:relative}.ml-row::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
-.ml-row:is(:hover,:focus-visible)::after{opacity:1}
-.ml-row:hover,.ml-row:focus-visible{box-shadow:none!important}
+.ml-row:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"]))::after{opacity:1}
+.ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:none!important}
 /* rows that open nothing get no hover fill either, so a hover always means "this opens" (settings rows keep their Figma hover) */
-:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.cv-row,.acc-si,.acc-li,.aud-rel):not(button,a,[data-go],[data-act],[role=button]):hover{background:transparent!important}
+:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.cv-row,.acc-si,.acc-li,.aud-rel):not(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]){background:transparent!important}
 
 /* Electronic light: lime is too faint as a 2 px line on cool white, so the row line uses the olive accent ink */
 :root[data-genre="electronic"][data-theme="light"]{--row-bar:var(--accent-ink)}
@@ -103,16 +103,16 @@
    Neutral controls (secondary and ghost buttons, chips, the Ask mode picker, chat history items) keep their own
    background and get the same state overlay on hover: 4 % ink in light, 6 % white in dark (--state-hover).
    Accent and lime buttons brighten; rows keep fill + line; edge-flush text buttons underline. */
-:is(.btn.secondary,.btn.ghost,.d-chip,.d-mode,.d-hi,.d-hfoot,.qtag,.chip):not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover{
+:is(.btn.secondary,.btn.ghost,.d-chip,.d-mode,.d-hi,.d-hfoot,.qtag,.chip):not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]){
   background-image:linear-gradient(var(--state-hover),var(--state-hover))}
-.btn.secondary:not([disabled]):hover{background-color:var(--surface)}
-.btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):hover,.d-hi:hover,.d-hfoot:hover{background-color:transparent}
-.d-chip:hover{background-color:var(--surface)}
+.btn.secondary:not([disabled]):is(:hover,[data-state="hover"]){background-color:var(--surface)}
+.btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]),.d-hi:is(:hover,[data-state="hover"]),.d-hfoot:is(:hover,[data-state="hover"]){background-color:transparent}
+.d-chip:is(:hover,[data-state="hover"]){background-color:var(--surface)}
 
 /* focus ring (Vit 21 Oct, "Continue with email" looked double-bordered): keyboard focus only, 2 px in the text colour,
    2 px away, following the element's own shape; never on mouse click */
-:focus-visible{outline:2px solid var(--ink)!important;outline-offset:2px}
-:focus:not(:focus-visible){outline:none!important}
+:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink)!important;outline-offset:2px}
+:focus:not(:is(:focus-visible,[data-state="focus"])){outline:none!important}
 
 /* long popovers scroll inside themselves instead of running off the window (Vit 21 Oct, Flows list) */
 .pop.flowmenu{max-height:calc(100vh - 76px);overflow-y:auto;overscroll-behavior:contain}
@@ -120,7 +120,7 @@
 /* status tags on photos keep their colour but sit on dark glass, so they read on any image */
 :is(.d-tonight,.hero,.bd-hero) :is(.tag,.schip){background:color-mix(in srgb,var(--scrim-base) 50%,transparent)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 /* inputs inside a composed field (search boxes, composers) show focus on the field, not a second ring inside it */
-:is(input,textarea):not(.input):focus-visible{outline:none!important}
+:is(input,textarea):not(.input):is(:focus-visible,[data-state="focus"]){outline:none!important}
 /* sidebar numbers (Vit 21 Oct: some stuck out over the hover fill, alignment differed): every count and alert
    ends on the row's 8 px padding, the same line as the chevrons; same 20 px height, at least 24 wide, digits centred,
    so 1, 12 and 123 sit on one right edge. Grey = how many; lilac = needs you (unread mail, a catalogue problem). */
@@ -131,7 +131,7 @@
 /* banners: icon and text start at the top, the action button sits in the vertical middle (Vit 21 Oct) */
 .banner>.btn,.banner>.ml-bact,.banner>div:last-child:has(>.btn){align-self:center}
 /* text fields show focus once: their own 2 px inner ring, no outer outline on top (Vit 21 Oct: "two focus borders") */
-:is(.input,input,textarea,select):focus-visible{outline:none!important}
+:is(.input,input,textarea,select):is(:focus-visible,[data-state="focus"]){outline:none!important}
 /* table headers one step darker (Vit 21 Oct, reference: the sidebar "Theme: Label" row): labels in ink, and in light mode the header row sits
    one shade down (sunken instead of canvas); dark mode keeps canvas, a step darker would read as a black bar */
 :root{--th-ink:var(--ink)}  /* --th-bg comes from Figma color/table/header (tokens.css, T477) */
@@ -181,7 +181,7 @@
 /* collapsible section headers say they open: a chevron on the right, the whole line is the button (Vit 21 Oct) */
 .bd-acth{display:flex!important;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
 .bd-acth .bd-chev{display:grid;place-items:center;width:20px;height:20px;color:var(--muted);flex:none}
-.bd-acth:hover .bd-chev{color:var(--ink)}
+.bd-acth:is(:hover,[data-state="hover"]) .bd-chev{color:var(--ink)}
 /* money lines on a booking open nothing: no hover inset, text on the heading edge, amounts on the card's right edge
    (Vit 21 Oct: "this Money card looks broken", rows sat 16 px in and the amounts 16 px past the action) */
 :is(.bd-sec,.bd-panel) .bd-mrow:not(button,a,[data-go],[data-act]){margin-inline:0!important;width:100%!important;padding-inline:0!important}
@@ -200,7 +200,7 @@
 .ev-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-top:var(--space-1)}
 .ev-venue{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 3px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 .ev-venue img{width:22px;height:22px;border-radius:50%;object-fit:cover}
-.ev-venue:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+.ev-venue:is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 /* booking progress: six steps, done filled, current half, late red, cancelled stops */
 .bk-prog{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .bk-prog li{display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -216,8 +216,8 @@
 
 /* checkbox and toggle states, matching Figma (21–22 Oct audit): hover shows a soft halo, disabled is 45 % and inert;
    keyboard focus is the global 2 px ink ring */
-:is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):hover{box-shadow:0 0 0 4px var(--state-hover)}
-input[type=checkbox]:not(:disabled):hover{border-radius:4px}
+:is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):is(:hover,[data-state="hover"]){box-shadow:0 0 0 4px var(--state-hover)}
+input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radius:4px}
 :is(input[type=checkbox],[role=checkbox],[role=switch]):is(:disabled,[aria-disabled=true]){opacity:.45;cursor:not-allowed;pointer-events:none}
 :is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;color:var(--muted)}
 
@@ -243,7 +243,7 @@ input[type=checkbox]:not(:disabled):hover{border-radius:4px}
 .sx.sx-l{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 40px),transparent)}
 .sx.sx-l.sx-r{-webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent)}
 .sx-btn{position:absolute;z-index:2;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule-strong),var(--elev-1)}
-.sx-btn:hover{background:var(--hover)}
+.sx-btn:is(:hover,[data-state="hover"]){background:var(--hover)}
 .sx-btn svg.i{width:16px;height:16px}
 .sx-btn[hidden]{display:none}
 /* Phones: a scroll bar under the table instead of the arrow buttons (Vit 26 Oct). 4 px track on the rule, thumb on

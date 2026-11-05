@@ -71,7 +71,7 @@
 /* Figma "head" row (gap 8) is the title alone when a section has no action */
 .bd-sec>.bd-sh>h2{display:flex;align-items:center;column-gap:8px}
 .btn.bd-act{gap:8px;padding:8px 0 8px 12px;height:34px;font:500 13px/var(--lh-label) var(--sans)}
-.btn.bd-act:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.btn.bd-act:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 /* booking pages: section actions are Figma's ghost s button, pad 8 12; actions on a card's edge keep 8 0 8 12 */
 .bd-bk .btn.bd-act{padding:8px 12px}
 .bd-bk .bd-details>.bd-sh .btn.bd-act,.bd-bk .bd-card>.bd-sh .btn.bd-act,.bd-bk .bd-openbox>.bd-sh .btn.bd-act,.bd-bk .bd-open .btn.bd-act{padding:8px 0 8px 12px}
@@ -119,7 +119,7 @@
 .amt.mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
 .bd-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 .bd-av.obj{background:var(--signal);color:var(--on-lime)}
-.bd-frow:hover{background:var(--raised)}
+.bd-frow:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bd-frow>svg{color:var(--muted)}
 /* split rows: no left padding, amount right after the text */
 .bd-split{display:flex;flex-direction:column;gap:12px}
@@ -142,7 +142,7 @@
 /* checked: ink box with the check in the page colour. Figma 142:626 strokes the check in ink on an ink box, so it never shows (Vit 21 Oct) */
 .bd-check input:checked+.bx{background:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);color:var(--surface)}
 .bd-check input:checked+.bx svg.i.s{visibility:visible}
-.bd-check input:focus-visible+.bx{outline:2px solid var(--accent);outline-offset:2px}
+.bd-check input:is(:focus-visible,[data-state="focus"])+.bx{outline:2px solid var(--accent);outline-offset:2px}
 .bd-acth{text-align:left;width:100%}
 .bd-acth h2{display:block}
 .bd-actg.open>.bd-acth{padding-left:0}
@@ -205,7 +205,7 @@
 .bd-opt.on{background:var(--accent-tint);border:0;padding:12px}
 .bd-opt.on i{box-shadow:inset 0 0 0 5px var(--accent-strong)}
 .bd-opt.on>span>span{color:var(--accent-ink)}
-.bd-opt:not(.on):hover{background:var(--raised)}
+.bd-opt:not(.on):is(:hover,[data-state="hover"]){background:var(--raised)}
 .bd-mf{display:flex;align-items:center;gap:8px}.bd-mf>span{flex:1;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-mf .btn svg.i{width:20px;height:20px}
 .bd-rules{display:flex;flex-direction:column;gap:16px}.bd-rules p{margin:0}
@@ -234,7 +234,7 @@
 .bd-btns .btn svg.i{width:20px;height:20px}
 .bd-pay footer{display:flex;flex-direction:column;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-pay footer p{margin:0}.bd-pay footer p:last-child{color:var(--accent-ink)}
-.bd-acc{color:var(--accent-ink);text-decoration:none;font:400 13px/var(--lh-label) var(--sans)}.bd-acc:hover{text-decoration:underline}
+.bd-acc{color:var(--accent-ink);text-decoration:none;font:400 13px/var(--lh-label) var(--sans)}.bd-acc:is(:hover,[data-state="hover"]){text-decoration:underline}
 
 /* gig day (Gig day · timeline 421:19199) */
 .bd-pill.plain.dot{padding:4px 12px;font-weight:500;gap:8px}

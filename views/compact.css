@@ -15,7 +15,7 @@
   .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 12px/16px var(--sans);border-radius:var(--r-lg)}
   .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background var(--dur-1)}
   .tb-tab .tl{white-space:nowrap}
-  .tb-tab:hover .ti{background:var(--state-hover)}
+  .tb-tab:is(:hover,[data-state="hover"]) .ti{background:var(--state-hover)}
   .tb-tab.on{color:var(--ink)}.tb-tab.on .ti{background:var(--well)}
   .tb-n{position:absolute;top:-2px;left:28px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
   /* Ask: the lime of the assistant, the same in every theme */
@@ -52,12 +52,12 @@
 /* sheet rows 44 high (Vit 26 Oct: less space between the More sheet rows; 44 keeps a comfortable tap target) */
 .cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0 12px;border-radius:var(--r-md);text-align:left}
 .cx-it>span{display:flex;align-items:center;gap:12px}
-.cx-it:hover{background:var(--well)}.cx-it>svg{color:var(--faint)}
+.cx-it:is(:hover,[data-state="hover"]){background:var(--well)}.cx-it>svg{color:var(--faint)}
 .cx-g{padding:4px 0;border-top:1px solid var(--rule)}.cx-g:first-of-type{border-top:0}
 .cx-gl{padding:8px 12px 4px;color:var(--faint);font:500 12px/16px var(--sans)}
 .cx-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 4px 12px}
 .cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 14px/18px var(--sans);text-align:left}
-.cx-tile:hover{background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
+.cx-tile:is(:hover,[data-state="hover"]){background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
 .cx-it.on{background:var(--well)}
 /* Add to chat (sheet on a phone, popover on desktop): a round close, the title centred, attach tiles, then rows */
 .cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 8px 12px}
@@ -192,7 +192,7 @@
   .bd-steps>.bd-step.cx-later{display:none}
   .cx-showall{align-self:flex-start;margin:0 0 4px}
   .cx-fold-b{display:inline-flex;align-items:center;gap:8px;margin-left:auto;min-height:32px;padding:0 4px 0 12px;border-radius:var(--r-pill);color:var(--muted);font:400 13px/var(--lh-label) var(--sans)}
-  .cx-fold-b:hover{background:var(--state-hover)}
+  .cx-fold-b:is(:hover,[data-state="hover"]){background:var(--state-hover)}
   .bd-pgroup>.bd-sh{display:flex;align-items:center;gap:8px}
 }
 @media (max-width:599.98px){
@@ -500,11 +500,11 @@
 }
 /* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child{padding-right:0!important;margin-right:0!important}  /* not an icon button: it keeps its square (Vit 31 Oct) */
-:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:hover{background:none!important;text-decoration:underline}
+:is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}
 /* touch screens get a pressed state instead of hover: a brief tint while the finger is down (Material state layer) */
 @media (hover:none){
-  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):active{background-color:var(--state-pressed)!important}
-  .tb-tab:active .ti{background:var(--state-pressed)}
+  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
+  .tb-tab:is(:active,[data-state="pressed"]) .ti{background:var(--state-pressed)}
 }
 
 @media (max-width:599.98px){
@@ -588,7 +588,7 @@
   .main .acc-nav::-webkit-scrollbar{display:none}
   .main .acc-nav .nav{min-height:0!important;padding:12px 4px 14px!important;border-radius:0!important;background:none!important;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)!important;box-shadow:inset 0 -2px 0 transparent}
   .main .acc-nav .nav>svg.i{display:none}
-  .main .acc-nav .nav:hover{color:var(--ink);box-shadow:inset 0 -2px 0 var(--rule-strong)}
+  .main .acc-nav .nav:is(:hover,[data-state="hover"]){color:var(--ink);box-shadow:inset 0 -2px 0 var(--rule-strong)}
   .main .acc-nav .nav.active{color:var(--ink);font-weight:500!important;box-shadow:inset 0 -2px 0 var(--accent-strong)}
 }
 /* Release header on phones (Vit 22 Oct, comment on Figma 740:49152: "this is better layout-wise, use this part like in

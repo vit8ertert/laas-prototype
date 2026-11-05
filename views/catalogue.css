@@ -23,7 +23,7 @@
 .cat-tabs .cat-tabrow button.on::after{content:none}
 .cat-tabs .in{display:flex;align-items:center;gap:8px;padding:12px 4px;white-space:nowrap}
 .cat-tabs .ind{display:block;height:2px;background:transparent}
-.cat-tabs button:hover .ind{background:var(--rule-strong)}
+.cat-tabs button:is(:hover,[data-state="hover"]) .ind{background:var(--rule-strong)}
 .cat-tabs button.on .ind{background:var(--accent-strong);animation:tabline var(--dur-3) var(--ease-standard) both}
 .cat-tabs .c{font:400 13px/var(--lh-label) var(--sans);padding:2px 8px;border-radius:var(--r-pill);background:var(--sunken);color:var(--muted)}
 .cat-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
@@ -49,7 +49,7 @@
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;align-items:start}
 .cat-tilewrap{display:flex;flex-direction:column;gap:8px;max-width:360px}
 .cat-tile{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;background:var(--surface);text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
-.cat-tile:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
+.cat-tile:is(:hover,[data-state="hover"]){transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cat-tile .art{width:100%;height:152px;border-radius:8px;object-fit:cover;display:block}
 .cat-tile b{font:500 15px/18px var(--sans)}
 .cat-tile small{font:400 12px/16px var(--sans);color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}  /* description at most 2 lines (Vit 2 Nov) */
@@ -65,7 +65,7 @@
 .cat-emptystate .hd p{margin:0;font:400 15px/var(--lh-body) var(--sans)}   /* Figma Body fills the head (1052 at 1440) */
 .cat-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;width:100%}
 .cat-choice{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:12px;background:var(--canvas);text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
-.cat-choice:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
+.cat-choice:is(:hover,[data-state="hover"]){transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cat-choice img{width:100%;height:96px;object-fit:cover;border-radius:8px;display:block}
 .cat-choice b{font:500 15px/var(--lh-body) var(--sans)}
 .cat-choice small{font:400 12px/16px var(--sans);color:var(--muted)}
@@ -111,12 +111,12 @@
 .cat-checks .sum h3{letter-spacing:-.1px}
 .cat-checks .sum .grow{flex:1;min-width:160px;font:400 15px/var(--lh-body) var(--sans)}
 .cat-checks .meter{gap:2px}
-.btn.cat-run{padding:0 0 0 12px}.cat-run:hover{background:none;text-decoration:underline}
+.btn.cat-run{padding:0 0 0 12px}.cat-run:is(:hover,[data-state="hover"]){background:none;text-decoration:underline}
 /* a check is a List row (components.css), flush in its card: the card's 20 inset, the rule across the card */
 .cat-checks .cat-chk{padding:12px 20px;border-radius:0}
 .cat-checks .cat-chk::after{left:0;right:0}
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
-button.cat-chk:hover{background:var(--hover)}
+button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
 .cat-sub{margin:0;padding:0 20px 14px 70px;color:var(--muted);font-size:13px;line-height:22px}
 
@@ -131,7 +131,7 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-sec .cat-row{border-top:1px solid var(--rule)}
 .cat-drop{display:flex;align-items:center;gap:12px;padding:20px 16px;border:1px solid var(--rule-strong);border-radius:10px;cursor:pointer}
 .cat-drop>svg.i{width:20px;height:20px}
-.cat-drop:hover{background:var(--surface)}
+.cat-drop:is(:hover,[data-state="hover"]){background:var(--surface)}
 .cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}.cat-drop small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cat-panel{display:flex;flex-direction:column;gap:24px}
 .cat-panel h3{letter-spacing:-.1px}
@@ -141,7 +141,7 @@ button.cat-chk:hover{background:var(--hover)}
 .cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 12px/16px var(--sans)}
 .cat-activity{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
 .cat-activity svg.i{width:16px;height:16px}
-.cat-activity:hover{color:var(--ink)}
+.cat-activity:is(:hover,[data-state="hover"]){color:var(--ink)}
 .cat-acts{display:flex;flex-direction:column;gap:4px;padding-left:26px;margin-top:-16px}
 .cat-acts div{display:flex;gap:12px}.cat-acts .muted{width:72px;flex:none}
 
@@ -208,11 +208,11 @@ button.cat-chk:hover{background:var(--hover)}
 .trk-row :is(.trk-n,.trk-d){font-size:14px;line-height:20px}
 .trk-play,.trk-info{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
 .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
-.trk-play:hover{background:var(--hover)}
+.trk-play:is(:hover,[data-state="hover"]){background:var(--hover)}
 .trk.on .trk-play{background:var(--ink);color:var(--on-dark);box-shadow:none}
 .trk-play svg.i{width:14px;height:14px}
 .trk-info{color:var(--muted)}
-.trk-info:hover,.trk.open .trk-info{background:var(--hover);color:var(--ink)}
+.trk-info:is(:hover,[data-state="hover"]),.trk.open .trk-info{background:var(--hover);color:var(--ink)}
 .trk-fmt{flex:none;padding:2px 8px;border-radius:var(--r-pill);background:var(--well);color:var(--muted)}
 .trk-d{flex:none;width:44px;text-align:right}
 /* timeline: elapsed, a thin line you can click or drag to jump, length (Vit 21 Oct: a line, not a waveform) */
@@ -222,7 +222,7 @@ button.cat-chk:hover{background:var(--hover)}
 .trk-wave::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--rule-strong)}
 .trk-done{position:absolute;left:0;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--accent-strong)}
 .trk-knob{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--surface);opacity:0;transition:opacity var(--dur-1)}
-.trk-wave:hover .trk-knob,.trk-wave:focus-visible .trk-knob{opacity:1}
+.trk-wave:is(:hover,[data-state="hover"]) .trk-knob,.trk-wave:is(:focus-visible,[data-state="focus"]) .trk-knob{opacity:1}
 /* file details */
 .trk-dl{margin:0;padding:4px 0 16px 80px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
 @media (max-width:839.98px){.trk-fmt{display:none}.trk-tl,.trk-dl{padding-left:0}.trk-dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -268,7 +268,7 @@ button.cat-chk:hover{background:var(--hover)}
 .ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1}.ec-fs .chip .c{margin-left:8px;color:var(--muted)}
 .ec-grp{border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
 .ec-gh{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;text-align:left}
-.ec-gh:hover{background:var(--hover)}.ec-gh:hover b{text-decoration:underline}
+.ec-gh:is(:hover,[data-state="hover"]){background:var(--hover)}.ec-gh:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 .ec-art{width:40px;height:40px;border-radius:6px;object-fit:cover;flex:none}
 .ec-gt{flex:1;min-width:0;display:flex;flex-direction:column}.ec-gt b{font:500 15px/var(--lh-body) var(--sans)}.ec-gt small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .ec-chev{color:var(--muted);display:grid;place-items:center;width:20px}

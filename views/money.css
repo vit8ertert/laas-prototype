@@ -19,8 +19,8 @@
 .m-tabs button{display:flex;flex-direction:column;padding:0;color:var(--muted);white-space:nowrap;flex:none}
 .m-tabs .in{display:flex;align-items:center;gap:8px;padding:12px 4px;font:400 15px/var(--lh-body) var(--sans)}
 .m-tabs .ind{height:2px;align-self:stretch}
-.m-tabs button:hover .ind{background:var(--rule-strong)}
-.m-tabs button:hover{color:var(--ink)}
+.m-tabs button:is(:hover,[data-state="hover"]) .ind{background:var(--rule-strong)}
+.m-tabs button:is(:hover,[data-state="hover"]){color:var(--ink)}
 .m-tabs button.on{color:var(--ink)}
 .m-tabs button.on .in{font-weight:500}
 .m-tabs button.on .ind{background:var(--accent-strong);animation:tabline var(--dur-3) var(--ease-standard) both}
@@ -58,8 +58,8 @@
 .m-line{display:flex;align-items:center;gap:16px;padding:var(--row-y) 12px;border-radius:8px;width:100%;text-align:left;color:var(--ink)}
 .m-line.m-flush{padding:var(--row-y) 12px;margin:0 -12px;width:calc(100% + 24px)}
 .m-line.m-fl{padding-left:0}
-button.m-line.m-fl:hover{padding-left:12px;margin-left:-12px;width:calc(100% + 12px)}
-button.m-line:hover{background:var(--raised)}
+button.m-line.m-fl:is(:hover,[data-state="hover"]){padding-left:12px;margin-left:-12px;width:calc(100% + 12px)}
+button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .m-th{width:36px;height:36px;border-radius:8px;object-fit:cover;flex:none;background:var(--well);display:grid;place-items:center;color:var(--muted)}
 .m-thp svg{width:12px;height:12px}
 .m-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;line-height:var(--lh-body)}
@@ -94,7 +94,7 @@ button.m-line:hover{background:var(--raised)}
 .m-empty-h p{margin:0;color:var(--muted)}
 .m-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start}
 .m-choice{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;max-width:360px;width:100%;justify-self:center;transition:transform var(--dur-2) var(--ease-standard)}
-.m-choice:hover{transform:translateY(-2px)}
+.m-choice:is(:hover,[data-state="hover"]){transform:translateY(-2px)}
 .m-prev{position:relative;isolation:isolate;height:96px;border-radius:8px;overflow:hidden;background:var(--raised);color:var(--c);padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
 .m-prev::before{content:"";position:absolute;inset:0;background:var(--c);opacity:.22;z-index:-1}
 .m-prev::after{content:"";position:absolute;left:158px;top:-40px;width:245px;height:140px;border-radius:50%;background:var(--c);opacity:.35;filter:blur(15px);z-index:-1}
@@ -106,7 +106,7 @@ button.m-line:hover{background:var(--raised)}
 
 /* expenses */
 .m-erow{display:flex;align-items:center;gap:24px;padding:12px 8px;border-radius:8px}
-.m-erow:hover{background:var(--raised)}
+.m-erow:is(:hover,[data-state="hover"]){background:var(--raised)}
 .m-ed{width:64px;font-size:13px;line-height:var(--lh-label);color:var(--muted);flex:none}
 /* core .chip (Chip 153:948); the selected chips in Figma are the Default chip with fill raised */
 .m-chip{justify-content:center;white-space:nowrap}.m-chip.on{background:var(--raised);box-shadow:inset 0 0 0 1px var(--rule)}
@@ -201,7 +201,7 @@ button.m-line:hover{background:var(--raised)}
 .m-tot{background:var(--sunken);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .m-tot .m-line{padding:12px}
 .m-inclsw{align-self:flex-start;padding:4px 12px;font-size:13px;line-height:var(--lh-label);color:var(--accent-ink);text-align:left}
-.m-inclsw:hover{text-decoration:underline}
+.m-inclsw:is(:hover,[data-state="hover"]){text-decoration:underline}
 .m-dates{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}.m-dates .field{width:210px}
 /* Figma Input "Field" frame as its own box (row, gap 8, pad 8 12, radius 8, surface, inside stroke rule-strong; focus 2 ink),
    holding the leading icon 18 and a bare control, so a 2-line value or a leading icon sits in the flow like Figma */
@@ -294,7 +294,7 @@ button.m-line:hover{background:var(--raised)}
 .ml-rep{min-width:520px}
 .ml-rep td.ml-no{width:64px;color:var(--muted)}
 .ml-rep tr[data-act]{cursor:pointer}
-.ml-rep tr[data-act]:hover,.ml-rep tr[data-act]:focus-visible{background:var(--raised);outline:none}
+.ml-rep tr[data-act]:is(:hover,[data-state="hover"]),.ml-rep tr[data-act]:is(:focus-visible,[data-state="focus"]){background:var(--raised);outline:none}
 .ml-rep .ml-grp td{background:var(--sunken);font:500 13px/var(--lh-label) var(--sans);color:var(--ink);padding:11px 16px}  /* Group row 40, the books Group row (ml-gh) */
 .ml-rep .ml-sub td{border-top:1px solid var(--rule-strong)}
 .ml-rep .ml-res td{border-top:2px solid var(--ink)}
@@ -308,11 +308,11 @@ button.m-line:hover{background:var(--raised)}
 /* drawers: entry detail, new entry (560, an editor), account */
 .ml-wide{width:min(560px,100%)}
 
-.ml-file{display:inline-flex;align-items:center;gap:8px;color:var(--accent-ink)}.ml-file:hover{text-decoration:underline}
+.ml-file{display:inline-flex;align-items:center;gap:8px;color:var(--accent-ink)}.ml-file:is(:hover,[data-state="hover"]){text-decoration:underline}
 .ml-lt{border:1px solid var(--rule);border-radius:12px;overflow:hidden}
 .ml-ltr{display:grid;grid-template-columns:minmax(0,1fr) 88px 88px;gap:12px;align-items:center;padding:8px 12px;width:100%;text-align:left;color:var(--ink);border-bottom:1px solid var(--rule)}
 .ml-ltr:last-child{border-bottom:0}
-button.ml-ltr:hover{background:var(--raised)}
+button.ml-ltr:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-lth{background:var(--canvas);font-size:13px;line-height:var(--lh-label);color:var(--muted);padding:8px 12px}
 .ml-ltt{font-weight:500}
 .ml-ltr .n{text-align:right}.ml-ltr .mono{font-size:14px;line-height:20px}
@@ -354,8 +354,8 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-bd .m-bdr .m-tx{flex:1;min-width:0}
 .m-pc{font:400 13px/var(--lh-label) var(--sans);color:var(--muted);width:44px;text-align:right;flex:none}
 .m-bd .m-bdr .mono,.m-bd.out .m-bdr .mono{width:64px;text-align:right}
-.m-bd .m-bdr:hover{background:var(--hover)}
-.m-bd:has(.m-bdr[data-i="0"]:hover) .m-seg[data-i="0"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="1"]:hover) .m-seg[data-i="1"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="2"]:hover) .m-seg[data-i="2"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="3"]:hover) .m-seg[data-i="3"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="4"]:hover) .m-seg[data-i="4"]{stroke-width:24}
+.m-bd .m-bdr:is(:hover,[data-state="hover"]){background:var(--hover)}
+.m-bd:has(.m-bdr[data-i="0"]:is(:hover,[data-state="hover"])) .m-seg[data-i="0"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="1"]:is(:hover,[data-state="hover"])) .m-seg[data-i="1"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="2"]:is(:hover,[data-state="hover"])) .m-seg[data-i="2"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="3"]:is(:hover,[data-state="hover"])) .m-seg[data-i="3"]{stroke-width:24}.m-bd:has(.m-bdr[data-i="4"]:is(:hover,[data-state="hover"])) .m-seg[data-i="4"]{stroke-width:24}
 @media (max-width:839.98px){.m-bd .m-bdl{grid-template-columns:1fr;justify-items:center;padding:16px}.m-bdrs{width:100%}}
 
 /* stacked monthly bars */
@@ -398,7 +398,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ex-av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--well);color:var(--ink);font:500 12px/1 var(--sans)}
 .ex-av.band .i{width:14px;height:14px}
 .ex-cat{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 8px 0 12px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
-.ex-cat .i{width:14px;height:14px;color:var(--muted)}.ex-cat:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+.ex-cat .i{width:14px;height:14px;color:var(--muted)}.ex-cat:is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 .ex-rc{display:inline-flex;align-items:center;gap:8px;font:400 14px/20px var(--sans);color:var(--muted)}.ex-rc .i{width:14px;height:14px}
 .ex-add{display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ex-add .i{width:12px;height:12px}
 .bk-tr.ex-r .n{text-align:right;justify-self:end}
@@ -407,7 +407,7 @@ button.ml-ltr:hover{background:var(--raised)}
 .ex-tot>span:nth-child(3){color:var(--muted)}.ex-tot .mono{font-weight:500}
 .ex-cb{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--rule-strong);background:var(--surface);color:var(--on-accent)}
 .ex-cb.on{background:var(--accent);box-shadow:none}.ex-cb .i{width:12px;height:12px}
-.ex-cb:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}.ex-cb.on:hover{box-shadow:none}
+.ex-cb:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1.5px var(--ink)}.ex-cb.on:is(:hover,[data-state="hover"]){box-shadow:none}
 .ex-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:40px 16px;text-align:center}
 /* drawer */
 .ex-dsec{margin-bottom:4px}
@@ -434,13 +434,13 @@ button.ml-ltr:hover{background:var(--raised)}
 .m-dr .ml-bal{padding:4px 0}
 /* attachment: a file chip with real padding (Vit 21 Oct) */
 .ml-file{height:36px;padding:0 14px 0 12px;border-radius:var(--r-md);background:var(--well);gap:8px;font:400 14px/20px var(--sans);text-decoration:none}
-.ml-file:hover{text-decoration:underline}
+.ml-file:is(:hover,[data-state="hover"]){text-decoration:underline}
 /* reports read like a statement: denser rows, the DS row hover, group headings, totals (Vit 21 Oct: "is this page well thought?") */
 .ml-rep th{padding:8px 16px;white-space:nowrap}.ml-rep td{padding:12px 16px;white-space:nowrap}
 .ml-rep tbody tr[data-act]{position:relative}
-.ml-rep tbody tr[data-act]:is(:hover,:focus-visible){background:var(--hover)!important}
-.ml-rep tbody tr[data-act]:is(:hover,:focus-visible) td:first-child{box-shadow:inset 2px 0 0 var(--row-bar,var(--accent-strong))}
-.ml-rep tbody tr[data-act]:is(:hover,:focus-visible) td:nth-child(2){text-decoration:underline}
+.ml-rep tbody tr[data-act]:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])){background:var(--hover)!important}
+.ml-rep tbody tr[data-act]:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) td:first-child{box-shadow:inset 2px 0 0 var(--row-bar,var(--accent-strong))}
+.ml-rep tbody tr[data-act]:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) td:nth-child(2){text-decoration:underline}
 .ml-content .m-kpis{margin-bottom:16px}
 .ml-per{margin-left:8px}
 /* journal: missing receipt tag, no "none" text */
@@ -453,9 +453,9 @@ button.ml-ltr:hover{background:var(--raised)}
 .ml-facts{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .ml-fact{display:flex;flex-direction:column;gap:2px;min-width:0}
 .ml-fact>span:first-child{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.ml-fact>span:last-child{font:400 15px/var(--lh-body) var(--sans);overflow-wrap:anywhere}
-.ml-link{display:inline-flex;align-items:center;gap:4px;color:var(--accent-ink);text-align:left}.ml-link:hover{text-decoration:underline}.ml-link .i{width:14px;height:14px}
+.ml-link{display:inline-flex;align-items:center;gap:4px;color:var(--accent-ink);text-align:left}.ml-link:is(:hover,[data-state="hover"]){text-decoration:underline}.ml-link .i{width:14px;height:14px}
 .ml-fcard{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);text-align:left}
-button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
+button.ml-fcard:is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 .ml-fic{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:var(--well);color:var(--muted);flex:none}
 .ml-ft{flex:1;min-width:0;display:flex;flex-direction:column}.ml-ft b{font:500 14px/20px var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ml-ft small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .ml-fo{font:400 14px/20px var(--sans);color:var(--accent-ink)}
@@ -484,7 +484,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .m-sdot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:currentColor;box-shadow:0 0 0 2px var(--surface);pointer-events:none;z-index:2}
 .m-stip{position:absolute;z-index:3;padding:4px 8px;border-radius:6px;background:var(--ink);color:var(--canvas);font:400 12px/16px var(--sans);white-space:nowrap;pointer-events:none}
 .m-strip .m-now{right:12px}
-.m-strip:hover .m-now{opacity:0}
+.m-strip:is(:hover,[data-state="hover"]) .m-now{opacity:0}
 
 /* ---------- Invoice page: the invoice is the page (Vit 21 Oct; research 30-invoice-detail) ---------- */
 .iv .m-ph{margin-bottom:20px}
@@ -560,7 +560,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 /* the paper ignores the app's table and link colours: it is the printed page in every theme */
 .iv-paper :is(table,thead,tbody,tr,th,td){background:transparent!important;color:inherit}
 .iv-paper .iv-lines td{color:#1a1a1a}.iv-paper .iv-lines td.muted,.iv-paper .iv-lines th{color:#6b6b66}
-.iv-paper .iv-lines tr:hover td{background:transparent!important}
+.iv-paper .iv-lines tr:is(:hover,[data-state="hover"]) td{background:transparent!important}
 .iv-paper .link{color:#1a1a1a;text-decoration-color:#1a1a1a80}
 /* lifecycle as a full-width card; the last step ends on the right edge (Vit 21 Oct) */
 .iv-steps{display:flex;gap:0;padding:16px 20px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
@@ -576,7 +576,7 @@ button.ml-fcard:hover{background-image:linear-gradient(var(--state-hover),var(--
 .iv-sum{gap:4px}.iv-sum .iv-kvs{margin-top:8px}
 /* back links sit flush with the page title, like other edge text buttons (Vit 21 Oct: "looks misaligned") */
 .btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back){padding-left:0;padding-right:4px;margin-left:0}
-.btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back):hover{background:none!important;text-decoration:underline}
+.btn.ghost:is(.m-up,.cv-back,.bd-back,.cat-back):is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}
 @media (max-width:599.98px){.iv-steps{padding:12px}}
 
 /* wide drawer for invoices: lines fit on one row (Vit 21 Oct: "use more width, lots of overlaps") */

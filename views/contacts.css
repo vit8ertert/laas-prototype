@@ -39,14 +39,14 @@
 .cv-table td.tt b{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .cv-table th:last-child,.cv-table td:last-child{justify-content:flex-end;text-align:right}
 .cv-table tbody tr{cursor:pointer}
-.cv-table tbody tr:hover,.cv-table tbody tr:focus-visible{background:var(--hover);outline:none}
-.cv-table tbody tr:hover td{background:none}
-.cv-table tbody tr:is(:hover,:focus-visible) td:first-child{text-decoration:underline}
+.cv-table tbody tr:is(:hover,[data-state="hover"]),.cv-table tbody tr:is(:focus-visible,[data-state="focus"]){background:var(--hover);outline:none}
+.cv-table tbody tr:is(:hover,[data-state="hover"]) td{background:none}
+.cv-table tbody tr:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) td:first-child{text-decoration:underline}
 .cv-foot{display:flex;align-items:center;gap:0;justify-content:space-between;margin-top:16px;min-height:34px;font:400 12px/16px var(--sans);color:var(--muted)}
 .cv-foot>span{min-width:0;flex:1}
 .cv-vfoot{margin-top:24px;gap:8px;font:400 13px/var(--lh-label) var(--sans)}
 .cv .btn.cv-link{height:34px;padding:8px 0 8px 12px;font:500 13px/var(--lh-label) var(--sans);color:var(--ink);gap:8px;flex:none}
-.cv .btn.cv-link:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.cv .btn.cv-link:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 
 /* venue rows: list padding 8, gap 4; row 66, padding 12, gap 12 */
 /* Venues rows = Contacts rows: flush to the card, 12 16 padding, a full-width rule between rows, square fill
@@ -55,7 +55,7 @@
 /* the rows are List rows (components.css); this card only makes them flush: 16 side padding, square fill, full-width rules */
 :is(.cv-vlist,.cv-mapl) .cv-vrow{width:100%!important;margin:0!important;padding:12px 16px!important;border-radius:0!important}
 :is(.cv-vlist,.cv-mapl) .cv-vrow::after{left:0!important;right:0!important}
-:is(.cv-row,.cv-vrow):hover{background:var(--hover)}
+:is(.cv-row,.cv-vrow):is(:hover,[data-state="hover"]){background:var(--hover)}
 :is(.cv-row,.cv-vrow) .tag{flex:none}
 
 /* no results and empty: radius 16, padding 48 32, gap 24; head gap 8 */
@@ -66,7 +66,7 @@
 .cv-none .row{justify-content:center;gap:12px;margin:0}
 .cv-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%}
 .cv-card{background:var(--canvas);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
-.cv-card:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
+.cv-card:is(:hover,[data-state="hover"]){transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cv-card img{width:100%;height:96px;object-fit:cover;border-radius:8px;display:block}
 .cv-card b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .cv-card small{font:400 12px/16px var(--sans);color:var(--muted)}
@@ -100,7 +100,7 @@
 .cv-sh{display:flex;align-items:center;gap:8px;min-height:34px}.cv-sh h2{flex:1;font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0}
 .cv-panel .cv-sh{padding-left:12px}
 .cv .btn.cv-act{height:34px;padding:8px 12px;gap:8px}
-.cv .btn.cv-act:hover{background:var(--surface)}
+.cv .btn.cv-act:is(:hover,[data-state="hover"]){background:var(--surface)}
 .cv-rows{display:flex;flex-direction:column}
 .cv-sq{border-radius:8px;background:var(--sunken);color:var(--ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 /* Figma "Body": column gap 12, pad 0; each row pad 0 12, gap 16, label 140 */
@@ -132,7 +132,7 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-drawer .dh .t-meta{font:400 12px/16px var(--sans);color:var(--muted)}
 /* head close: Button S ghost, pad 8 0 8 12 (flush right) */
 .cv-drawer .btn.cv-close{padding:8px 0 8px 12px}
-.cv-drawer .btn.cv-close:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.cv-drawer .btn.cv-close:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 .cv-banner{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px}
 .cv-banner>svg:first-child{width:18px;height:18px;color:currentColor;margin-top:2px}
 .cv-banner .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -157,7 +157,7 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-cvr>.cv-cvrf{white-space:nowrap;padding:4px 12px 8px;font:400 13px/var(--lh-label) var(--sans);color:var(--faint)}
 .cv-cvrrow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;text-align:left;width:100%;position:relative}
 .cv-cvrrow:not(:nth-last-child(2)):after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
-.cv-cvrrow:hover,.cv-cvrrow.on{background:var(--raised)}
+.cv-cvrrow:is(:hover,[data-state="hover"]),.cv-cvrrow.on{background:var(--raised)}
 .cv-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
 .cv-lrow{display:flex;align-items:flex-start;justify-content:space-between;gap:0}
 .cv-lrow .help{font:400 12px/16px var(--sans);color:var(--muted);text-align:right}
@@ -192,7 +192,7 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-irow>svg:first-child{width:32px;height:32px;color:var(--ink);flex:none;stroke-width:1.25}
 .cv-irow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .cv-irow b{font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}.cv-irow small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-button.cv-irow:hover b{text-decoration:underline}
+button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 .cv-file{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--rule-strong);border-radius:10px}
 .cv-file>svg{width:32px;height:32px;color:var(--accent-ink);flex:none;stroke-width:1.25}
 .cv-file .tx{display:flex;flex-direction:column;gap:2px;min-width:0}.cv-file b{font:400 15px/var(--lh-body) var(--sans)}.cv-file small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
@@ -202,7 +202,7 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-sumrow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-sumrow b{font:400 15px/var(--lh-body) var(--sans);color:var(--ink);text-align:right}
 .cv-dups .btn.cv-link{align-self:flex-start;height:34px;padding:8px 12px 8px 0;font:500 13px/var(--lh-label) var(--sans)}
-.cv-dups .btn.cv-link:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.cv-dups .btn.cv-link:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 .cv-check{display:flex;align-items:center;gap:8px;cursor:pointer;font:400 15px/18px var(--sans);color:var(--ink)}
 .cv-check input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;margin:0;box-shadow:inset 0 0 0 1px var(--rule-strong);display:grid;place-items:center;flex:none;cursor:pointer}
 .cv-check input:checked{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:inset 0 0 0 1px var(--ink)}
@@ -211,7 +211,7 @@ button.cv-irow:hover b{text-decoration:underline}
 .pop.cv-sortpop{width:260px;padding:8px;border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
 .cv-poph{padding:8px 8px 4px;font:400 12px/16px var(--sans);color:var(--faint)}
 .cv-opt{display:flex;align-items:center;gap:8px;width:100%;padding:8px 8px;border-radius:8px;text-align:left;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
-.cv-opt:hover{background:var(--well)}
+.cv-opt:is(:hover,[data-state="hover"]){background:var(--well)}
 .cv-opt i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none}
 .cv-opt.on i{box-shadow:inset 0 0 0 5px var(--ink)}
 
@@ -257,12 +257,12 @@ button.cv-irow:hover b{text-decoration:underline}
 .cv-pin{cursor:pointer;transition:opacity var(--dur-2)}.cv-pin circle{fill:var(--ink);stroke:var(--surface);stroke-width:3}
 .cv-pin text{fill:var(--canvas);font:500 13px/1 var(--sans)}.cv-pin .lb{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .cv-pin.on circle{fill:var(--accent)}.cv-pin.on text:not(.lb){fill:var(--on-accent)}
-.cv-pin:hover circle{fill:var(--accent)}.cv-pin:focus-visible{outline:none}.cv-pin:focus-visible circle{stroke:var(--ink)}
+.cv-pin:is(:hover,[data-state="hover"]) circle{fill:var(--accent)}.cv-pin:is(:focus-visible,[data-state="focus"]){outline:none}.cv-pin:is(:focus-visible,[data-state="focus"]) circle{stroke:var(--ink)}
 /* venue pins only in a city view; their names sit on a halo so streets of coastline never cut them */
 .cv-vpin{cursor:pointer;opacity:0;pointer-events:none;transition:opacity var(--dur-3)}
 .cv-vpin circle{fill:var(--muted);stroke:var(--surface);stroke-width:3}.cv-vpin.on circle{fill:var(--accent)}
 .cv-vpin text{fill:var(--ink);font:500 13px/1 var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
-.cv-vpin:hover circle,.cv-vpin:focus-visible circle{fill:var(--accent-strong)}.cv-vpin:focus-visible{outline:none}.cv-vpin:hover text{text-decoration:underline}
+.cv-vpin:is(:hover,[data-state="hover"]) circle,.cv-vpin:is(:focus-visible,[data-state="focus"]) circle{fill:var(--accent-strong)}.cv-vpin:is(:focus-visible,[data-state="focus"]){outline:none}.cv-vpin:is(:hover,[data-state="hover"]) text{text-decoration:underline}
 .zoomed .cv-vpin{opacity:1;pointer-events:auto}.zoomed .cv-pin,.zoomed .cv-town{opacity:0;pointer-events:none}
 @media (max-width:599.98px){.cv-town.minor{display:none}}
 .cv-mapall{position:absolute;top:12px;left:12px}

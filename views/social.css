@@ -10,7 +10,7 @@
 .so .bk-tr.so-k{grid-template-columns:minmax(180px,1fr) 240px 160px 110px 110px;min-width:860px}
 .so .bk-tr.so-d{grid-template-columns:minmax(200px,1fr) 120px 100px 150px 170px 80px;min-width:920px}
 .so .bk-tr.so-k.sel{background:var(--well)}
-.so .bk-tr.so-k.sel:hover{background:var(--well)}
+.so .bk-tr.so-k.sel:is(:hover,[data-state="hover"]){background:var(--well)}
 .so-pt{display:flex;flex-direction:column;min-width:0}
 .so-pt b{font:500 15px/20px var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so-pt small{font:400 12px/16px var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -43,7 +43,7 @@
 .so-ch b{font:500 15px/var(--lh-body) var(--sans)}
 .so-ch small{font:400 12px/16px var(--sans);color:var(--muted)}
 .so-ch small .link{font-size:12px;line-height:16px;color:var(--muted)}
-.so-ch small .link:hover{color:var(--ink)}
+.so-ch small .link:is(:hover,[data-state="hover"]){color:var(--ink)}
 .so-ch .tag{margin-left:auto}
 .so-c p{margin:0;max-width:65ch;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .so-c mark,.so-hits mark{background:none;color:var(--accent-ink);font-weight:500}
@@ -63,7 +63,7 @@
 .so-tags{color:var(--muted)}
 .so-stats table{min-width:0}
 .so-crow{text-align:left}
-.so-crow:hover{background:var(--raised)}
+.so-crow:is(:hover,[data-state="hover"]){background:var(--raised)}
 .so-crow small{display:block!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so-phone{display:flex;flex-direction:column;border-radius:12px;background:var(--canvas);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
 .so-ph-h{display:flex;align-items:center;gap:8px;padding:8px 12px;font:500 13px/var(--lh-label) var(--sans)}
@@ -106,7 +106,7 @@
 .so-picks button img{width:100%;height:100%;object-fit:cover;display:block}
 .so-picks button.on{box-shadow:0 0 0 2px var(--canvas),0 0 0 4px var(--accent)}
 .so-up{display:grid;place-items:center;border:1px dashed var(--rule-strong);color:var(--muted);cursor:pointer}
-.so-up:hover{color:var(--ink);border-color:var(--ink)}
+.so-up:is(:hover,[data-state="hover"]){color:var(--ink);border-color:var(--ink)}
 .so-seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
 .so-seg button{padding:0 12px;height:30px;border-radius:7px;font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
 .so-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--elev-1)}
@@ -145,7 +145,7 @@
 .so-post .bd-main .so-stats{margin-inline:0}
 /* Connect on an account card: even padding, pulled 8 px into the card's right padding (Vit 21 Oct: "fix connect button") */
 .so-acc .btn.bd-act{padding:8px 12px!important;margin-right:-8px;flex:none}
-.so-acc .btn.bd-act:hover{background:var(--hover)!important}
+.so-acc .btn.bd-act:is(:hover,[data-state="hover"]){background:var(--hover)!important}
 /* Deliveries: destination with its logo, a Format column (Vit 21 Oct) */
 .so .bk-tr.so-d{grid-template-columns:minmax(180px,1fr) 140px 100px 80px 140px 150px 72px;min-width:960px}
 .so-dest{display:inline-flex;align-items:center;gap:8px}

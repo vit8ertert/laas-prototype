@@ -17,7 +17,7 @@
 .btn.s>svg.i{width:16px;height:16px}
 .btn.primary{background:var(--ink);color:var(--on-dark)}
 .btn.secondary{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--ink)}
-.btn.secondary:hover{background:var(--hover)}
+.btn.secondary:is(:hover,[data-state="hover"]){background:var(--hover)}
 .btn.ghost{background:none}
 .btn.accent{background:var(--accent-strong);color:var(--on-accent)}
 /* icon-only (Show label off): pad 8 16 around a 20 icon = 52×36 */
@@ -30,7 +30,7 @@
 /* Chip 153:948: one chip for every chip-shaped choice (30 Oct, census checklist 2: the Rate tone tags .qtag, the Gear filters
    .cat-chip and the assistant suggestions .d-chip were their own chips; phones keep the empty chat's stacked suggestions) */
 .chip{height:auto;gap:8px;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink)}
-.chip:hover{background:var(--hover)}
+.chip:is(:hover,[data-state="hover"]){background:var(--hover)}
 .chip>svg.i{width:14px;height:14px}
 
 /* Input / Select 132:118 / 142:616: column gap 8; Label 13/18 ink; Field pad 8 12, radius 8, inside stroke 1 rule-strong, surface;
@@ -57,7 +57,7 @@ textarea.input{height:auto;padding:8px 12px}
    tab row, 30 Oct); label Body strong 15/22;
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
 .tabs button{height:auto;padding:12px 4px 8px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
-.tabs button:hover{border-bottom-color:var(--rule-strong)}
+.tabs button:is(:hover,[data-state="hover"]){border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
    the line under it an inset rule (no border that adds height, no separate rule element), scrolls sideways when full.
@@ -67,7 +67,7 @@ textarea.input{height:auto;padding:8px 12px}
 
 /* Table row 140:357: pad 12 16, gap 24, bottom stroke 1 rule (inside), surface; hover fill hover */
 td{padding:12px 16px;border-top:0;box-shadow:inset 0 -1px 0 var(--rule);background:var(--surface)}
-tbody tr:hover td{background:var(--hover)}
+tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 
 /* Toast 299:5237: gap 12, pad 12 12 12 16, radius 12, stroke 1 rule-strong that takes space (strokesIncludedInLayout: a real border), overlay, shadow 0 8 24 #00000059;
    Figma places it 110 above the frame bottom */
@@ -116,7 +116,7 @@ tbody tr:hover td{background:var(--hover)}
 .sidebar .nav .alert{background:var(--accent);color:var(--on-accent)}
 .sidebar .nav>svg.i{width:18px;height:18px;flex:none}
 .sidebar .nav .chev svg.i,.sidebar .nav>.chev{width:16px;height:16px}
-.nav:hover{background:var(--surface)}
+.nav:is(:hover,[data-state="hover"]){background:var(--surface)}
 .nav.active{background:var(--well);font-weight:500}
 
 /* Record chip (28 screens, e.g. 297:4814): pad 4 8, gap 8, radius pill, Label 13/18, accent-tint / accent-ink */
@@ -163,7 +163,7 @@ tbody tr:hover td{background:var(--hover)}
 .smenu{width:360px;padding:8px;display:flex;flex-direction:column;border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
 .smenu-h{padding:8px 12px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .smenu-it{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r-md);text-align:left;width:100%;color:var(--ink)}
-.smenu-it:hover,.smenu-it.on{background:var(--hover)}
+.smenu-it:is(:hover,[data-state="hover"]),.smenu-it.on{background:var(--hover)}
 .smenu-d{flex:1;min-width:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .smenu-it>svg.i{width:14px;height:14px;flex:none}
 .smenu-rule{border:0;height:1px;margin:0;background:var(--rule)}
@@ -200,7 +200,7 @@ tbody tr:hover td{background:var(--hover)}
 /* Drawer head Close (203:3658): ghost S with x, pad 8 0 8 12 (flush on the drawer's right padding), 69×34 */
 /* symmetric padding with a -12 px margin: the label stays flush on the drawer's right padding, the hover fill is even (Vit 21 Oct) */
 .drawer .dh>.btn.ghost[data-act=close]{padding:8px 12px;margin-right:-12px}
-.drawer .dh>.btn.ghost[data-act=close]:hover{background:var(--hover)}
+.drawer .dh>.btn.ghost[data-act=close]:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* Theme switch while its menu is open (455:22247): state-selected at 12 % */
 body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srgb,var(--state-selected) 12%,transparent)}
@@ -222,20 +222,20 @@ html.gated body>*:not(.gate){display:none!important}
 .gate-card .btn{align-self:flex-start}
 .gate-pw{position:relative;display:block}.gate-pw .input{width:100%;padding-right:44px}
 .gate-eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-md);background:none;color:var(--muted);cursor:pointer}
-.gate-eye:hover{background:var(--state-hover);color:var(--ink)}
+.gate-eye:is(:hover,[data-state="hover"]){background:var(--state-hover);color:var(--ink)}
 .gate-eye svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* Ask (the assistant's own action) in Figma's lime (color/poster/lime, the same in every theme and mode), so it never competes
    with the lilac page action (Vit 21 Oct: "the lime colour from the Figma file for Ask") */
 /* lime is always light, so its text and icon are always near-black, whatever the theme's on-accent is (Metal light has a bone on-accent) */
 .btn[data-act=ask],.btn[data-act=nbask]{background:var(--poster-lime);color:var(--on-lime)}
-.btn[data-act=ask]:hover,.btn[data-act=nbask]:hover{filter:brightness(1.06)}
+.btn[data-act=ask]:is(:hover,[data-state="hover"]),.btn[data-act=nbask]:is(:hover,[data-state="hover"]){filter:brightness(1.06)}
 .abar-mini{background:var(--poster-lime);color:var(--on-lime);border-color:transparent}
-.abar-mini:hover{background:var(--poster-lime);filter:brightness(1.06)}
+.abar-mini:is(:hover,[data-state="hover"]){background:var(--poster-lime);filter:brightness(1.06)}
 
 /* Assistant bar hide: a 32 px × right after Ask (Vit 21 Oct: closer to Ask, a cross not a chevron); 12 bar gap − 8 = 4 */
 .abar .abar-hide{width:32px;height:32px;padding:0;margin-left:-8px;justify-content:center;border-radius:var(--r-pill);color:var(--muted)}
-.abar .abar-hide:hover{background:var(--hover);color:var(--ink)}
+.abar .abar-hide:is(:hover,[data-state="hover"]){background:var(--hover);color:var(--ink)}
 .abar .abar-hide svg.i{width:16px;height:16px}
 
 /* drawer close: slide back to the right, scrim fades (views/motion.js keeps a copy while it leaves) */
@@ -266,7 +266,7 @@ html.gated body>*:not(.gate){display:none!important}
    Cells: .w / .ml-d date (Label), .tt / .ml-tt title (Body strong) with meta, .m / .ml-m muted (Body tight), .mono code, .n number (right).
    Figma: Table cell 1141:62568 */
 :is(.bk-th,.ml-th){background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-:is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,:focus-visible){background:var(--hover);outline:none}
+:is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])){background:var(--hover);outline:none}
 :is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 15px/18px var(--sans);color:var(--muted)}
 .ml-tr.ml-gh{font:500 13px/var(--lh-label) var(--sans)}
 /* 30 Oct (drawn-sweep card 3, Vit: "every screen is lacking" on a Gear row): the Gear table (.cat-gr), the Contacts table
@@ -281,7 +281,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.cat-gr,.cv-table,.ml-rep) .mono{font:400 14px/20px var(--mono);color:var(--muted)}
 :is(.cat-gr,.cv-table,.ml-rep) .mono:is(.n,.num){color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) :is(.n,.num){text-align:right}
-:is(.cat-gr:not(.head),.cv-table tbody tr):is(:hover,:focus-visible){background:var(--hover);outline:none}
+:is(.cat-gr:not(.head),.cv-table tbody tr):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])){background:var(--hover);outline:none}
 
 /* List row: one pattern for list rows (pattern census card 2, 29 Oct): settings and account lists (.acc-li) and the booking
    person rows (.bd-prow) are the same row: leading (avatar, brand, icon), title over meta, one trailing item, chevron when it
@@ -324,15 +324,15 @@ html.gated body>*:not(.gate){display:none!important}
 .pk-dow,.pk-grid{display:grid;grid-template-columns:repeat(7,36px);justify-content:space-between}
 .pk-dow span{font:400 12px/16px var(--sans);color:var(--faint);text-align:center;padding-block:var(--space-1)}
 .pk-day{width:36px;height:36px;border-radius:50%;font:400 14px/1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums;transition:background var(--dur-1) var(--ease-standard)}
-.pk-day:hover{background:var(--state-hover)}.pk-day.out{color:var(--faint)}
+.pk-day:is(:hover,[data-state="hover"]){background:var(--state-hover)}.pk-day.out{color:var(--faint)}
 .pk-day.today{box-shadow:inset 0 0 0 1px var(--muted)}
 .pk-day.on{background:var(--accent);color:var(--on-accent);font-weight:500;box-shadow:none}
 .pk-foot{display:flex;border-top:1px solid var(--rule);padding-top:var(--space-2)}
 .pk-times{display:flex;flex-direction:column;width:88px;max-height:300px;overflow-y:auto;scrollbar-width:thin}
 .picker.time .pk-times{max-height:240px}
 .pk-time{flex:none;height:36px;border-radius:var(--r-md);font:400 14px/1 var(--mono);color:var(--ink);text-align:center}
-.pk-time:hover{background:var(--state-hover)}.pk-time.on{background:var(--accent);color:var(--on-accent)}
-.pk-day:focus-visible,.pk-time:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pk-time:is(:hover,[data-state="hover"]){background:var(--state-hover)}.pk-time.on{background:var(--accent);color:var(--on-accent)}
+.pk-day:is(:focus-visible,[data-state="focus"]),.pk-time:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink);outline-offset:2px}
 @media (max-width:599.98px){.picker.pk-sheet{left:0;right:0;bottom:0;top:auto;justify-content:center;flex-wrap:wrap;padding:var(--space-4) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom,0px));border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:inset 0 1px 0 var(--rule-strong),var(--elev-3);animation:cx-up var(--dur-3) var(--ease-emphasized) both}.picker.pk-sheet .pk-cal{width:min(100%,320px)}.picker.pk-sheet .pk-dow,.picker.pk-sheet .pk-grid{grid-template-columns:repeat(7,40px)}.picker.pk-sheet .pk-day{width:40px;height:40px}.picker.datetime{flex-direction:column;align-items:center}.picker.datetime .pk-times{flex-direction:row;width:268px;max-height:none;overflow-x:auto;gap:var(--space-1)}.picker.datetime .pk-time{width:64px}}
 /* ---------- T476 Should components (4 Nov) ---------- */
 /* Progress bar 1:1 with Figma "Progress bar": 4 high, pill, well track, accent fill; determinate only (a wait without a number is the Spinner) */
@@ -345,7 +345,7 @@ html.gated body>*:not(.gate){display:none!important}
 .modal:has(>.cf-acts){width:min(var(--layout-dialog),calc(100% - 32px))}
 .cf-body{margin:0}
 .cf-acts{display:flex;justify-content:flex-end;gap:var(--space-2)}
-.btn.danger{background:var(--bad);color:var(--on-dark)}.btn.danger:hover{filter:brightness(1.08)}
+.btn.danger{background:var(--bad);color:var(--on-dark)}.btn.danger:is(:hover,[data-state="hover"]){filter:brightness(1.08)}
 .btn.ghost.bad{color:var(--bad)}
 /* AI label: marks what the assistant made; the assistant mark (Vit's two-sparkle glyph) + "AI draft", accent tint pill, Label type */
 .ai-label{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-2);border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:500 13px/var(--lh-label) var(--sans);white-space:nowrap}

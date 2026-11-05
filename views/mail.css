@@ -7,7 +7,7 @@
 .ml-list{background:var(--surface);border-radius:var(--r-lg);overflow:hidden}
 .ml-row{display:grid;grid-template-columns:8px 32px 160px minmax(240px,520px) 180px minmax(160px,1fr) 104px;gap:16px;align-items:center;padding:12px 16px;cursor:pointer;position:relative;transition:background var(--dur-1)}
 .ml-row+.ml-row::before{content:"";position:absolute;top:0;left:16px;right:16px;height:1px;background:var(--rule)}
-.ml-row:hover,.ml-row:focus-visible{background:var(--raised)}
+.ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){background:var(--raised)}
 .ml-dot{width:8px;height:8px;border-radius:50%}
 .ml-row.unread .ml-dot{background:var(--accent)}
 .ml-from{min-width:0;display:flex;flex-direction:column;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -18,14 +18,14 @@
 .ml-row.unread .ml-from,.ml-row.unread .ml-text b{font-weight:500}
 .ml-row:not(.unread) .ml-from{color:var(--muted)}
 .ml-link{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:26px;padding:0 12px 0 3px;border-radius:999px;background:var(--well);font-size:13px;line-height:var(--lh-label);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
-button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
+button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-link img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
 .ml-status{display:flex;justify-content:flex-start;align-items:center;gap:8px}
 .ml-time{font-size:13px;line-height:var(--lh-label);color:var(--muted);text-align:right;white-space:nowrap}
 .ml-row.unread .ml-time{color:var(--ink)}
 .ml-acts{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;gap:2px;background:var(--raised);padding-left:8px}
 .ml-acts .btn.icon.s{width:32px;height:32px}
-.ml-row:hover .ml-acts,.ml-row:focus-within .ml-acts{display:flex}
+.ml-row:is(:hover,[data-state="hover"]) .ml-acts,.ml-row:focus-within .ml-acts{display:flex}
 .ml-measure{max-width:560px}
 
 /* thread: conversation 720, linked panel 348 */
@@ -77,12 +77,12 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent-strong);animation:tabline var(--dur-3) var(--ease-standard) both}
 .ml-tabs .c{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font:400 13px/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
 .ml-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
-.ml-tabs button:hover:not(.on){color:var(--ink)}
+.ml-tabs button:is(:hover,[data-state="hover"]):not(.on){color:var(--ink)}
 
 .ml-banner .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .ml-star{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;color:var(--faint);margin-left:0;visibility:hidden}
-.ml-star.on,.ml-row:hover .ml-star,.ml-row:focus-within .ml-star{visibility:visible}
-.ml-star:hover{color:var(--ink);background:var(--state-hover)}.ml-star.on{color:var(--accent-ink)}
+.ml-star.on,.ml-row:is(:hover,[data-state="hover"]) .ml-star,.ml-row:focus-within .ml-star{visibility:visible}
+.ml-star:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--state-hover)}.ml-star.on{color:var(--accent-ink)}
 .ml-star svg{width:16px;height:16px}
 .ml-star.on svg{fill:currentColor}
 .ml-acts .btn[aria-pressed="true"] svg,.ml-tacts .btn[aria-pressed="true"] svg{fill:var(--accent-ink);color:var(--accent-ink)}
@@ -107,10 +107,10 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-ci::placeholder,.ml-body::placeholder{color:var(--faint)}
 .ml-rc{display:inline-flex;align-items:center;gap:2px;height:28px;max-width:100%;padding:0 2px 0 12px;border-radius:999px;background:var(--well);font-size:13px;line-height:var(--lh-label);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ml-rc button{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:50%;color:var(--muted)}
-.ml-rc button:hover{color:var(--ink);background:var(--raised)}
+.ml-rc button:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--raised)}
 .ml-sug{position:absolute;top:calc(100% + 8px);left:0;width:min(400px,100%);z-index:6;background:var(--top);border:1px solid var(--rule-strong);border-radius:var(--r-lg);padding:8px;box-shadow:var(--elev-2);display:flex;flex-direction:column}
 .ml-sug button{display:flex;align-items:center;gap:8px;width:100%;padding:8px;border-radius:8px;text-align:left}
-.ml-sug button:hover,.ml-sug button:focus-visible{background:var(--raised)}
+.ml-sug button:is(:hover,[data-state="hover"]),.ml-sug button:is(:focus-visible,[data-state="focus"]){background:var(--raised)}
 .ml-sug .tx{min-width:0;display:flex;flex-direction:column}
 .ml-sug .tx b{font-weight:500;font-size:14px;line-height:20px}
 .ml-sug .tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -122,7 +122,7 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-file .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .ml-file small{color:var(--muted);font-size:12px;line-height:16px;white-space:nowrap}
 .ml-file button{width:24px;height:24px;display:grid;place-items:center;border-radius:6px;color:var(--muted);flex:none}
-.ml-file button:hover{color:var(--ink);background:var(--raised)}
+.ml-file button:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--raised)}
 .ml-attsug{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 16px 14px}
 .ml-attsug .chip{height:30px;background:var(--well)}
 .ml-errmsg{display:flex;align-items:center;gap:8px;margin:0;padding:8px 16px;font-size:13px;line-height:var(--lh-label);color:var(--bad);border-bottom:1px solid var(--rule)}
@@ -170,17 +170,17 @@ button.ml-link:hover{box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-row .ml-text b::after{content:"";width:14px;height:14px;flex:none;background:currentColor;opacity:0;transform:translateX(-4px);transition:opacity var(--dur-1),transform var(--dur-1);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat}
-.ml-row:hover .ml-text b,.ml-row:focus-visible .ml-text b{text-decoration-color:currentColor}
-.ml-row:hover .ml-text b::after,.ml-row:focus-visible .ml-text b::after{opacity:1;transform:none}
-.ml-row:hover,.ml-row:focus-visible{box-shadow:inset 2px 0 0 var(--accent-strong)}
-.ml-row:focus-visible{outline:none}
+.ml-row:is(:hover,[data-state="hover"]) .ml-text b,.ml-row:is(:focus-visible,[data-state="focus"]) .ml-text b{text-decoration-color:currentColor}
+.ml-row:is(:hover,[data-state="hover"]) .ml-text b::after,.ml-row:is(:focus-visible,[data-state="focus"]) .ml-text b::after{opacity:1;transform:none}
+.ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:inset 2px 0 0 var(--accent-strong)}
+.ml-row:is(:focus-visible,[data-state="focus"]){outline:none}
 @media (prefers-reduced-motion:reduce){.ml-row .ml-text b::after{transition:none}}
 /* flag at the end of the row, by the time (Vit 21 Oct: stars not intuitive) */
 .ml-flag{display:inline-flex;margin-right:8px;color:var(--att)}.ml-flag .i{width:14px;height:14px;fill:currentColor}
 .ml-time{display:inline-flex;align-items:center;justify-content:flex-end}
 /* the booking chip is a pill: hover outlines it, never underlines (Vit 21 Oct) */
-.ml-link,.ml-link *,.ml-link:hover{text-decoration:none!important}
+.ml-link,.ml-link *,.ml-link:is(:hover,[data-state="hover"]){text-decoration:none!important}
 /* From is a borderless field like To and Subject (Vit 21 Oct: "fix the email field spacing"); the general field ring
    drew a box with the text on its edge. The chevron stays; focus shows on the whole row. */
 .ml-cf .ml-fromsel{box-shadow:none!important;background-color:transparent!important;border-radius:0;padding-right:32px;cursor:pointer}
-.ml-cf .ml-fromsel:focus,.ml-cf .ml-fromsel:focus-visible{box-shadow:none!important;outline:none!important}
+.ml-cf .ml-fromsel:focus,.ml-cf .ml-fromsel:is(:focus-visible,[data-state="focus"]){box-shadow:none!important;outline:none!important}
