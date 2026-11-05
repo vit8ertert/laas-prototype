@@ -242,8 +242,11 @@ button.acc-si:hover{background:var(--hover)}
 .acc-join img{width:64px;height:64px;border-radius:12px;object-fit:cover}
 .acc-join div{display:flex;flex-direction:column;gap:4px}
 .acc-join span{font:400 12px/16px var(--sans);color:var(--muted)}
-.acc-ob .r{border-radius:16px;overflow:hidden;background:var(--sunken)}
-.acc-ob .r img{width:100%;height:100%;object-fit:cover;display:block}
+.acc-ob .r{position:relative;border-radius:16px;overflow:hidden;background:var(--sunken)}
+.acc-ob .r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* the intro fills the window by itself (Vit 5 Nov, the downloaded file opened in Chrome: the photo stopped at the form's
+   height because the page's 100 % height chain was missing); the photo never sets the height, it covers the panel */
+.acc-ob{min-height:100vh;min-height:100dvh}
 .acc-live{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px;padding:0 48px;background:linear-gradient(160deg,var(--surface),var(--sunken) 70%)!important}
 .acc-live .cap{font:400 13px/var(--lh-label) var(--sans);color:#ffffff99}
 .acc-win{--k:.5;position:relative;width:100%;max-width:728px;height:455px;border-radius:12px;overflow:hidden;box-shadow:var(--elev-3)}
