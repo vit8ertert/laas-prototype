@@ -466,7 +466,19 @@ button.d-kpi:hover{background:var(--raised)}
 .cs-cfa>.btn.ghost.s,.cs-page .acc-row .ctl>.btn.ghost.s:only-child{margin-left:-12px}
 @media (max-width:599.98px){.acc-url>.btn.ghost.s:first-of-type{margin-left:-12px}}
 /* empty chat: the greeting wrapper and the phone-only parts stay out of the desktop layout */
-.d-greet{display:contents}.d-mark,.d-ci-t{display:none}.d-ci-ai{display:contents}
+.d-greet{display:contents}
+/* empty chat, every width (Vit 5 Nov on the artifact: "these on mobile and desktop should look as the same component"):
+   the assistant mark above the greeting and three suggestions as plain rows (Figma Suggestion row 1828:36998); desktop
+   centres the list at 480 under the greeting, a phone puts it above the composer (compact.css) */
+.d-mark{display:grid!important;place-items:center;color:var(--accent);margin-bottom:var(--space-1)}
+.d-newc .d-mark svg.i{width:32px!important;height:32px!important}
+.d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:0!important}
+.d-newc .d-chip{justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important;height:auto!important;min-height:44px;gap:var(--space-3)!important;padding:10px var(--space-1)!important;border-radius:var(--r-md)!important;background:none!important;box-shadow:none!important;white-space:normal;font:400 15px/var(--lh-body) var(--sans)!important;color:var(--ink)!important}
+.d-newc .d-chip:nth-child(n+4){display:none!important}
+.d-newc .d-ci-ai{display:none!important}
+.d-newc .d-ci-t{display:inline-flex!important;color:var(--muted);margin-top:2px}
+.d-newc .d-chip .d-ci-t svg.i.s{width:20px!important;height:20px!important;fill:none!important}
+.d-newc .d-chips{width:min(100%,480px)}
 /* the Plan pill shows the mode on a phone, where the pill composer has no mode menu; desktop shows the menu instead */
 @media (min-width:600px){.d-ctx-mode{display:none!important}.d-ctxs:not(:has(.d-ctx:not(.d-ctx-mode))){display:none}}
 .d-send svg[data-i=arrowUp]{display:none}
