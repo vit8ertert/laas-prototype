@@ -1,5 +1,6 @@
 /* LAAS lab, T491: the Soundcheck moment. LAAS_SOUNDCHECK.play(bandName, done) shows it full-screen, then calls done
-   (which opens the dashboard). About 2.4 s; any key or click skips to the end. Loaded only with ?lab=knob.
+   (which opens the dashboard). About 3.9 s, so each line can be read (Vit 5 Nov: "not able to read the text under the knob,
+   too fast"): the knob turns for 1.8 s under the first line, the second line holds 1.8 s; any key or click skips to the end. Loaded only with ?lab=knob.
    A knob brings a level up, it does not switch on (Vit 5 Nov), so the copy follows the turn. */
 (function(){
 "use strict";
@@ -22,7 +23,7 @@ function play(band,done){
   document.body.appendChild(o);
   o.tabIndex=-1;o.focus({preventScroll:true});
   let timers=[],ended=false;
-  const lightTicks=()=>ticks.forEach((tk,i)=>timers.push(setTimeout(()=>tk.classList.add('on'),80+i*110)));
+  const lightTicks=()=>ticks.forEach((tk,i)=>timers.push(setTimeout(()=>tk.classList.add('on'),80+i*170)));
   const finish=()=>{if(ended)return;ended=true;timers.forEach(clearTimeout);o.classList.add('up');ticks.forEach(tk=>tk.classList.add('on'));
     t.innerHTML=`<b>Levels set. ${name} is ready.</b>`;removeEventListener('keydown',skip,true);
     /* the dashboard renders under the overlay first, then the overlay fades away over it (no flash of the intro) */
@@ -31,10 +32,10 @@ function play(band,done){
   const skip=e=>{e.preventDefault();finish();};
   addEventListener('keydown',skip,true);o.addEventListener('click',finish);
   requestAnimationFrame(()=>{o.classList.add('in');
-    if(reduce.matches){o.classList.add('up');ticks.forEach(tk=>tk.classList.add('on'));t.innerHTML=`<b>Levels set. ${name} is ready.</b>`;timers.push(setTimeout(finish,900));return;}
-    timers.push(setTimeout(()=>{o.classList.add('up');lightTicks();},200));
-    timers.push(setTimeout(()=>{t.innerHTML=`<b>Levels set. ${name} is ready.</b>`;},1500));
-    timers.push(setTimeout(finish,2400));});
+    if(reduce.matches){o.classList.add('up');ticks.forEach(tk=>tk.classList.add('on'));t.innerHTML=`<b>Levels set. ${name} is ready.</b>`;timers.push(setTimeout(finish,2000));return;}
+    timers.push(setTimeout(()=>{o.classList.add('up');lightTicks();},250));
+    timers.push(setTimeout(()=>{t.innerHTML=`<b>Levels set. ${name} is ready.</b>`;},2100));
+    timers.push(setTimeout(finish,3900));});
 }
 window.LAAS_SOUNDCHECK={play};
 })();
