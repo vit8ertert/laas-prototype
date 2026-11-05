@@ -479,7 +479,7 @@ button.d-kpi:hover{background:var(--raised)}
 /* empty chat, every width (Vit 5 Nov on the artifact: "these on mobile and desktop should look as the same component"):
    the assistant mark above the greeting and three suggestions as plain rows (Figma Suggestion row 1828:36998); desktop
    centres the list at 480 under the greeting, a phone puts it above the composer (compact.css) */
-.d-mark{display:grid!important;place-items:center;color:var(--accent);margin-bottom:var(--space-1)}
+.d-mark{display:grid!important;place-items:center;color:var(--accent-ink);margin-bottom:var(--space-1)}
 .d-newc .d-mark svg.i{width:32px!important;height:32px!important}
 .d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:0!important}
 .d-newc .d-chip{justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important;height:auto!important;min-height:44px;gap:var(--space-3)!important;padding:10px var(--space-1)!important;border-radius:var(--r-md)!important;background:none!important;box-shadow:none!important;white-space:normal;font:400 15px/var(--lh-body) var(--sans)!important;color:var(--ink)!important}
