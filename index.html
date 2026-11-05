@@ -4,34 +4,37 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=be80673">
+<link rel="stylesheet" href="tokens.css?v=1399fb9">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
 document.documentElement.classList.add('gated');
 addEventListener('DOMContentLoaded',()=>{const d=document.createElement('div');d.className='gate';
-d.innerHTML='<form class="gate-card"><h1 class="t-title">LAAS prototype</h1><p class="t-body muted">Enter the password you were given.</p><label class="field"><span>Password</span><input class="input" type="password" autocomplete="current-password" autofocus required></label><p class="gate-err t-label" hidden>That password is not right.</p><button class="btn primary" type="submit">Open</button></form>';
-document.body.appendChild(d);d.querySelector('input').focus();
+d.innerHTML='<form class="gate-card"><h1 class="t-title">LAAS prototype</h1><p class="t-body muted">Enter the password you were given.</p><label class="field"><span>Password</span><span class="gate-pw"><input class="input" type="password" autocomplete="current-password" autofocus required><button class="gate-eye" type="button" aria-label="Show password" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"></svg></button></span></label><p class="gate-err t-label" hidden>That password is not right.</p><button class="btn primary" type="submit">Open</button></form>';
+document.body.appendChild(d);const pi=d.querySelector('input'),eb=d.querySelector('.gate-eye');
+const EYE='<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',EYEOFF='<path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/>';
+const pwSet=on=>{pi.type=on?'text':'password';eb.setAttribute('aria-pressed',on);eb.setAttribute('aria-label',on?'Hide password':'Show password');eb.firstChild.innerHTML=on?EYEOFF:EYE};pwSet(false);
+eb.addEventListener('click',e=>{e.preventDefault();const p=pi.selectionStart;pwSet(pi.type==='password');pi.focus();try{pi.setSelectionRange(p,p)}catch(_){}});pi.focus();
 d.querySelector('form').addEventListener('submit',async e=>{e.preventDefault();const v=d.querySelector('input').value;
 const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prototype:'+v));const hx=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=be80673">
-<link rel="stylesheet" href="components.css?v=be80673">
-<link rel="stylesheet" href="views/tour.css?v=be80673">
-<link rel="stylesheet" href="views/dashboard.css?v=be80673">
-<link rel="stylesheet" href="views/bookings.css?v=be80673">
-<link rel="stylesheet" href="views/booking.css?v=be80673">
-<link rel="stylesheet" href="views/contacts.css?v=be80673">
-<link rel="stylesheet" href="views/money.css?v=be80673">
-<link rel="stylesheet" href="views/catalogue.css?v=be80673">
-<link rel="stylesheet" href="views/account.css?v=be80673">
-<link rel="stylesheet" href="views/mail.css?v=be80673">
-<link rel="stylesheet" href="views/social.css?v=be80673">
-<link rel="stylesheet" href="views/logomotion.css?v=be80673">
-<link rel="stylesheet" href="tags.css?v=be80673">
-<link rel="stylesheet" href="views/compact.css?v=be80673">
+<link rel="stylesheet" href="shell.css?v=1399fb9">
+<link rel="stylesheet" href="components.css?v=1399fb9">
+<link rel="stylesheet" href="views/tour.css?v=1399fb9">
+<link rel="stylesheet" href="views/dashboard.css?v=1399fb9">
+<link rel="stylesheet" href="views/bookings.css?v=1399fb9">
+<link rel="stylesheet" href="views/booking.css?v=1399fb9">
+<link rel="stylesheet" href="views/contacts.css?v=1399fb9">
+<link rel="stylesheet" href="views/money.css?v=1399fb9">
+<link rel="stylesheet" href="views/catalogue.css?v=1399fb9">
+<link rel="stylesheet" href="views/account.css?v=1399fb9">
+<link rel="stylesheet" href="views/mail.css?v=1399fb9">
+<link rel="stylesheet" href="views/social.css?v=1399fb9">
+<link rel="stylesheet" href="views/logomotion.css?v=1399fb9">
+<link rel="stylesheet" href="tags.css?v=1399fb9">
+<link rel="stylesheet" href="views/compact.css?v=1399fb9">
 
 <div id="app"></div>
 
@@ -718,21 +721,21 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=be80673"></script>
-<script src="views/bookings.js?v=be80673"></script>
-<script src="views/booking.js?v=be80673"></script>
-<script src="views/denmark.js?v=be80673"></script>
-<script src="views/contacts.js?v=be80673"></script>
-<script src="views/money.js?v=be80673"></script>
-<script src="views/catalogue.js?v=be80673"></script>
-<script src="views/brands.js?v=be80673"></script>
-<script src="views/account.js?v=be80673"></script>
-<script src="views/mail.js?v=be80673"></script>
-<script src="views/social.js?v=be80673"></script>
-<script src="views/tour.js?v=be80673"></script>
-<script src="views/motion.js?v=be80673"></script>
-<script src="views/logomotion.js?v=be80673"></script>
-<script src="views/compact.js?v=be80673"></script>
-<script src="views/picker.js?v=be80673"></script>
-<script src="views/overflow.js?v=be80673"></script>
+<script src="views/dashboard.js?v=1399fb9"></script>
+<script src="views/bookings.js?v=1399fb9"></script>
+<script src="views/booking.js?v=1399fb9"></script>
+<script src="views/denmark.js?v=1399fb9"></script>
+<script src="views/contacts.js?v=1399fb9"></script>
+<script src="views/money.js?v=1399fb9"></script>
+<script src="views/catalogue.js?v=1399fb9"></script>
+<script src="views/brands.js?v=1399fb9"></script>
+<script src="views/account.js?v=1399fb9"></script>
+<script src="views/mail.js?v=1399fb9"></script>
+<script src="views/social.js?v=1399fb9"></script>
+<script src="views/tour.js?v=1399fb9"></script>
+<script src="views/motion.js?v=1399fb9"></script>
+<script src="views/logomotion.js?v=1399fb9"></script>
+<script src="views/compact.js?v=1399fb9"></script>
+<script src="views/picker.js?v=1399fb9"></script>
+<script src="views/overflow.js?v=1399fb9"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>

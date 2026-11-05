@@ -220,6 +220,10 @@ html.gated body>*:not(.gate){display:none!important}
 .gate-card h1,.gate-card p{margin:0}
 .gate-err{color:var(--bad)}
 .gate-card .btn{align-self:flex-start}
+.gate-pw{position:relative;display:block}.gate-pw .input{width:100%;padding-right:44px}
+.gate-eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-md);background:none;color:var(--muted);cursor:pointer}
+.gate-eye:hover{background:var(--state-hover);color:var(--ink)}
+.gate-eye svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* Ask (the assistant's own action) in Figma's lime (color/poster/lime, the same in every theme and mode), so it never competes
    with the lilac page action (Vit 21 Oct: "the lime colour from the Figma file for Ask") */
