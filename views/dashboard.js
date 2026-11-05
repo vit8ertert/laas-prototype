@@ -222,7 +222,7 @@ L.OVERLAYS.addsheet=(o={})=>{const plan=S.dashMode==='Plan';const p=o.pop;const 
  <div class="cx-add-h"><button class="btn secondary icon" data-act="close" aria-label="Close">${ic('x','s')}</button><b class="t-heading">Add to chat</b><span class="cx-add-sp"></span></div>
  <div class="cx-tiles cx-add-tiles">${[['camera','Camera'],['image','Photos'],['file','Files']].map(([i,l])=>`<button class="more-tile cx-tile" data-act="ctxpick" data-text="file">${ic(i)}<span>${l}</span></button>`).join('')}</div>
  <div class="cx-g"><div class="cx-gl">About</div>${row('calendar','A booking','booking')}${row('users','A contact or venue','contact')}${row('mail','An email thread','mail')}</div>
- <div class="cx-g cx-add-mode">${csRow('Plan changes',plan?'Drafts changes behind Confirm':'Off: answers, changes nothing',`<button class="toggle acc-tg ${plan?'on':''}" role="switch" aria-checked="${plan}" aria-label="Plan changes" data-act="modetoggle"></button>`)}</div>
+ <div class="cx-g cx-add-mode">${csRow('Plan changes',plan?'Drafts changes behind Confirm':'Off: answers, changes nothing',`<button class="toggle acc-tg ${plan?'on':''}" role="switch" aria-checked="${plan}" aria-label="Plan changes" data-act="modetoggle"><i></i></button>`)}</div>
 </div>`;};
 
 /* ---------- overlays: palette, notifications, theme menu, band menu, share ---------- */

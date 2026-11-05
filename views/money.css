@@ -211,8 +211,8 @@ button.m-line:hover{background:var(--raised)}
 .m-fin{flex:1;min-width:0;width:100%;margin:0;padding:0;border:0;background:none;font:400 15px/var(--lh-body) var(--sans);color:var(--muted);outline:none;resize:none;overflow:hidden}
 .m-tg{display:flex;align-items:center;gap:8px;text-align:left;font-size:15px;line-height:18px;color:var(--ink)}
 .m-track2{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);padding:0 2px;display:flex;align-items:center;flex:none;transition:background var(--dur-1)}
-.m-track2 i{width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform var(--dur-1)}
-.m-tg[aria-checked="true"] .m-track2{background:var(--ink)}.m-tg[aria-checked="true"] .m-track2 i{transform:translateX(14px)}
+.m-track2 i{width:16px;height:16px;border-radius:50%;background:var(--muted);transition:transform var(--dur-1),background var(--dur-1)}
+.m-tg[aria-checked="true"] .m-track2{background:var(--ink)}.m-tg[aria-checked="true"] .m-track2 i{transform:translateX(14px);background:var(--surface)}  /* off knob muted, as every switch (T490) */
 .m-menu{width:260px;padding:8px}.m-menu .it{color:var(--ink);font-size:15px;line-height:var(--lh-body);display:flex;width:100%;text-align:left;padding:8px 8px;border-radius:8px}
 
 /* table */

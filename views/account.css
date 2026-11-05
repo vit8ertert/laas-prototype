@@ -71,8 +71,9 @@ button.acc-li:hover{background:var(--hover)}
 
 /* Toggle 34x20: track rule-strong / ink, knob 16 surface, 2 px inset */
 .acc-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background var(--dur-1)}
-.acc-tg i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform var(--dur-1)}
-.acc-tg.on{background:var(--ink)}
+.acc-tg i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:transform var(--dur-1),background var(--dur-1)}
+.acc-tg.on{background:var(--ink)}.acc-tg.on i{background:var(--surface)}
+/* off: a muted knob on the rule track, so it shows on dark themes too (it was the panel colour, nearly invisible on dark) */
 .acc-tg.on i{transform:translateX(14px)}
 
 /* Banners and explainer */

@@ -178,8 +178,8 @@ svg.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-st
 .cv-tech>.cv-lab{color:var(--muted)}
 .cv-tgrow{display:flex;align-items:center;gap:8px;text-align:left;font:400 15px/18px var(--sans);color:var(--ink);min-height:20px}
 .cv-tg{width:34px;height:20px;border-radius:999px;background:var(--rule-strong);position:relative;flex:none;transition:background var(--dur-1)}
-.cv-tg:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform var(--dur-1)}
-.cv-tg.on{background:var(--ink)}.cv-tg.on:after{transform:translateX(14px)}
+.cv-tg:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:transform var(--dur-1),background var(--dur-1)}
+.cv-tg.on{background:var(--ink)}.cv-tg.on:after{transform:translateX(14px);background:var(--surface)}  /* off knob muted, as every switch (T490) */
 .cv-explain{height:80px;overflow:hidden;display:flex;align-items:flex-start;gap:12px;padding:12px 8px 12px 12px;border-radius:8px;background:var(--well)}
 .cv-explain .tx{flex:1;display:flex;flex-direction:column;gap:4px}
 .cv-explain b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
