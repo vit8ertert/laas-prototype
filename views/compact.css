@@ -59,6 +59,20 @@
 .cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 14px/18px var(--sans);text-align:left}
 .cx-tile:hover{background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
 .cx-it.on{background:var(--well)}
+/* Add to chat (sheet on a phone, popover on desktop): a round close, the title centred, attach tiles, then rows */
+.cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 8px 12px}
+.cx-add-h b{text-align:center}
+.cx-add-h .btn{width:40px;height:40px;padding:0;border-radius:var(--r-pill)}
+.cx-add-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.cx-add-mode .settings-row{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:var(--space-3)!important;padding:var(--space-2) var(--space-3)!important;border:0!important;background:none!important}
+.cx-add-mode .settings-row{margin:0!important;width:auto!important}  /* the switch row lines up with the rows above it (it hung 16 out on both sides) */
+.cx-add-mode .settings-row>.tx{flex:1;min-width:0}.cx-add-mode .settings-row>.ctl{flex:none;width:auto!important}
+/* desktop: the same content as a popover anchored to + (Vit 5 Nov, after Claude's + menu); no header, Esc or a click
+   outside closes it */
+.cx-addpop{position:fixed;width:340px;max-width:calc(100vw - 16px);padding:8px;border-radius:var(--r-lg)}
+.cx-addpop .cx-add-h{display:none}
+.cx-addpop .cx-add-tiles{padding:0 0 8px}
+.cx-addpop .cx-tile{min-height:64px}
 .cx-sep{height:1px;margin:4px 4px;background:var(--rule)}
 .cx-band{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px 12px;text-align:left}
 .cx-band .sq{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans)}
@@ -482,25 +496,7 @@
   /* the pill sits 12 above the tab bar (Vit 4 Nov: "move lower the pill"; it was 40 up: page 24 + dock 16) */
   .d-asst.d-page{padding-bottom:0!important}
   .d-asst .d-dock{padding-bottom:var(--space-3)!important}
-  /* the composer is one pill: + (opens Add to chat: attach, context, the Plan switch), the text, Send */
-  .d-comp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1)!important;padding:6px!important;border-radius:28px!important}
-  .d-comp>.d-ctxs{flex:1 0 100%;padding:4px 6px 2px}
-  .d-comp>.d-compbar{display:contents!important}
-  .d-comp textarea{order:2;flex:1 1 0;min-width:0;min-height:40px!important;height:40px;max-height:120px;padding:10px var(--space-1)!important;field-sizing:content}
-  .d-comp .d-addctx{order:1;width:40px;height:40px;padding:0!important;justify-content:center;border-radius:var(--r-pill)!important}  /* no fill (Vit 4 Nov: "plus without a BG") */
-  .d-comp .d-send{order:3;width:40px;height:40px;padding:0!important;justify-content:center;border-radius:var(--r-pill)!important}
-  .d-comp :is(.d-mode,.d-sp,.lbl){display:none!important}
-  /* Send shows only once there is something to send, as an up arrow (Vit 4 Nov: "on mobile references I cannot see
-     actually anyone use send icon"; Claude, ChatGPT and Gemini show it only after typing) */
-  .d-comp:has(textarea:placeholder-shown) .d-send{display:none!important}
-  .d-comp .d-send svg[data-i=send]{display:none}.d-comp .d-send svg[data-i=arrowUp]{display:block}
-  /* Add to chat sheet: a round close, the title centred, attach tiles, then rows */
-  .cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 8px 12px}
-  .cx-add-h b{text-align:center}
-  .cx-add-h .btn{width:40px;height:40px;padding:0;border-radius:var(--r-pill)}
-  .cx-add-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .cx-add-mode .settings-row{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:var(--space-3)!important;padding:var(--space-2) var(--space-3)!important;border:0!important;background:none!important}
-  .cx-add-mode .settings-row>.tx{flex:1;min-width:0}.cx-add-mode .settings-row>.ctl{flex:none;width:auto!important}
+  /* the pill composer and Send ↑ are the same at every width: dashboard.css (Vit 5 Nov) */
 }
 /* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child{padding-right:0!important;margin-right:0!important}  /* not an icon button: it keeps its square (Vit 31 Oct) */

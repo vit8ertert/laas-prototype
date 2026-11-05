@@ -111,12 +111,18 @@ button.d-kpi:hover{background:var(--raised)}
 .d-askfirst{gap:32px}
 .d-hero h1{width:100%}.d-first .d-hero h1{font-weight:400} /* Display is Regular (LAAS/Display); Vit 21 Oct: no semibold headings */
 .d-sub{margin:0;max-width:600px;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
-.d-comp{width:100%;display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:16px;background:var(--surface);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
-.d-comp textarea{width:100%;min-height:44px;resize:none;border:0;outline:none;background:none;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);padding:0}
+/* the composer is one pill at every width (Vit 5 Nov, after Claude and ChatGPT: "yes, all three"): + (opens Add to chat:
+   attach, context, the Plan switch), the text, Send ↑ only once there is text. Context pills wrap above the text */
+.d-comp{width:100%;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1);padding:6px;border-radius:28px;background:var(--surface);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
+.d-comp>.d-ctxs{flex:1 0 100%;padding:4px 6px 2px}
+.d-comp>.d-compbar{display:contents}
+.d-comp textarea{order:2;flex:1 1 0;min-width:0;min-height:40px;height:40px;max-height:160px;resize:none;border:0;outline:none;background:none;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);padding:10px var(--space-1);field-sizing:content}
 .d-comp textarea::placeholder{color:var(--faint)}
-.d-compbar{display:flex;align-items:center;gap:8px}
-.d-mode{display:inline-flex;align-items:center;gap:4px;height:auto;padding:8px 12px;border-radius:8px;background:var(--canvas);font:400 13px/var(--lh-label) var(--sans)}.d-mode svg.i.s{width:14px;height:14px}
-.d-compbar .btn.accent svg.i{width:20px;height:20px}
+.d-comp .d-addctx{order:1;width:40px;height:40px;padding:0;justify-content:center;border-radius:var(--r-pill)}  /* no fill (Vit 4 Nov: "plus without a BG") */
+.d-comp .d-send{order:3;width:40px;height:40px;padding:0;justify-content:center;border-radius:var(--r-pill)}
+.d-comp .d-send svg.i{width:20px;height:20px}
+.d-comp:has(textarea:placeholder-shown) .d-send{display:none}
+.d-comp .d-send svg[data-i=send]{display:none}
 /* context pills: what the question is about, in the box and on the sent message (Vit 21 Oct). Outlined tag, icon, cross */
 .d-ctxs{display:flex;flex-wrap:wrap;gap:8px}
 .d-ctx{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:28px;padding:0 4px 0 12px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface);color:var(--ink);font:400 13px/var(--lh-label) var(--sans)}
@@ -380,7 +386,6 @@ button.d-kpi:hover{background:var(--raised)}
 .d-pal .it:not(.on) .d-it>span:first-child:has(mark){color:var(--muted)}.d-pal .it mark{color:var(--ink)}
 :root[data-genre="electronic"] .d-first .d-chip{box-shadow:inset 0 0 0 1px #ffffff1a;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 :root[data-genre="electronic"] .d-first .d-comp{box-shadow:inset 0 0 0 1px #ffffff24,var(--elev-3);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-:root[data-genre="electronic"] .d-first .d-mode{background:#ffffff14}
 .d-nf .c{font:400 12px/16px var(--sans);padding:1px 8px;border-radius:var(--r-pill)}
 
 /* group count says what it counts and ends on the same edge as the rows' arrows (Vit 21 Oct: "4 and 5 look misleading") */
@@ -479,9 +484,16 @@ button.d-kpi:hover{background:var(--raised)}
 .d-newc .d-ci-t{display:inline-flex!important;color:var(--muted);margin-top:2px}
 .d-newc .d-chip .d-ci-t svg.i.s{width:20px!important;height:20px!important;fill:none!important}
 .d-newc .d-chips{width:min(100%,480px)}
-/* the Plan pill shows the mode on a phone, where the pill composer has no mode menu; desktop shows the menu instead */
-@media (min-width:600px){.d-ctx-mode{display:none!important}.d-ctxs:not(:has(.d-ctx:not(.d-ctx-mode))){display:none}}
-.d-send svg[data-i=arrowUp]{display:none}
+/* desktop empty chat (Vit 5 Nov, after ChatGPT and Claude): the mark and greeting, the composer right under them, then
+   the suggestions, all centred in the column; once there is a conversation the composer docks at the bottom */
+@media (min-width:600px){
+  .d-asst .d-center:has(.d-newc){justify-content:center;gap:var(--space-3);padding-bottom:var(--space-12)}
+  .d-center:has(.d-newc)>.d-conv,.d-newc{display:contents}
+  .d-newc .d-greet{order:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-2);padding-bottom:var(--space-3);text-align:center}
+  .d-newc .d-greet :is(h2,p){margin:0}
+  .d-center:has(.d-newc)>.d-dock{order:2;align-self:stretch;position:static;padding:0;background:none}
+  .d-newc .d-chips{order:3;align-self:center}
+}
 /* desktop: the composer ends on the same line as the chats panel and its "What it can do" card (Vit 4 Nov: "make sure the
    desktop aligned"); phones keep 12 above the tab bar (compact.css) */
 .d-asst .d-dock{padding-bottom:0}

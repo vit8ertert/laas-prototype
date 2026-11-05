@@ -46,7 +46,7 @@ const CTXK={booking:['calendar',['LT-0041, Hotel Skov, 25 Oct','LT-0038, Loppen,
 const ctxPill=(i,t,act,idx)=>`<span class="d-ctx">${ic(i,'s')}<span>${esc(t)}</span><button data-act="${act}" ${idx!=null?`data-i="${idx}"`:''} aria-label="Remove ${esc(t)}">${ic('x','s')}</button></span>`;
 const ctxRow=(list,act)=>list.length?`<div class="d-ctxs">${list.map((c,n)=>act?ctxPill(c[0],c[1],act,n):`<span class="d-ctx">${ic(c[0],'s')}<span>${esc(c[1])}</span></span>`).join('')}</div>`:'';
 const composer=(ph,chip)=>`<div class="d-comp">${chip||S.askCtx.length||S.dashMode==='Plan'?`<div class="d-ctxs">${S.dashMode==='Plan'?`<span class="d-ctx d-ctx-mode">${ic('check','s')}<span>Plan</span><button data-act="modetoggle" aria-label="Turn off Plan">${ic('x','s')}</button></span>`:''}${chip?ctxPill(chip[0],chip[1],'asstctxoff'):''}${S.askCtx.map((c,n)=>ctxPill(c[0],c[1],'askctxrm',n)).join('')}</div>`:''}<textarea id="ask" rows="2" placeholder="${esc(matchMedia('(max-width:599.98px)').matches?(/^Reply/.test(ph)?'Reply…':`Ask about ${bn()}`):ph)}" aria-label="Ask the assistant">${esc(S.askDraft||'')}</textarea>
- <div class="d-compbar"><button class="btn ghost s d-addctx" data-act="addctx" aria-label="Add context">${ic('plus','s')}<span class="lbl">Add context</span></button><span class="d-sp" style="flex:1"></span><button class="d-mode" data-act="askmode">${S.dashMode}${ic('down','s')}</button><button class="btn accent d-send" data-act="ask" aria-label="Send">${ic('send','s')}${ic('arrowUp','s')}<span class="lbl">Send</span></button></div></div>`;
+ <div class="d-compbar"><button class="btn ghost s d-addctx" data-act="addctx" aria-label="Add context">${ic('plus','s')}</button><button class="btn accent d-send" data-act="ask" aria-label="Send">${ic('send','s')}${ic('arrowUp','s')}</button></div></div>`;
 const chips=list=>`<div class="d-chips">${list.map(([t,a,q])=>`<button class="chip d-chip" data-act="${a}" ${q?`data-q="${esc(q)}"`:''}>${ic('ai','s')}${t}</button>`).join('')}</div>`;
 
 /* ---------- copy per genre for the first visit (UX · Themes & mode tests) ---------- */
@@ -217,8 +217,8 @@ L.VIEWS.assistant=()=>{
 
 /* ---------- Add to chat (phone): the composer's + (Vit 4 Nov, after Claude's Add to Chat and Gemini's + sheet): attach
    tiles first, then what the question is about, then the mode as a switch; same actions as the desktop menus ---------- */
-L.OVERLAYS.addsheet=()=>{const plan=S.dashMode==='Plan';const row=(i,l,k)=>`<button class="sheet-item cx-it" data-act="ctxpick" data-text="${k}"><span>${ic(i)}${l}</span>${ic('right','s')}</button>`;
- return `<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-add" role="dialog" aria-label="Add to chat">
+L.OVERLAYS.addsheet=(o={})=>{const plan=S.dashMode==='Plan';const p=o.pop;const row=(i,l,k)=>`<button class="sheet-item cx-it" data-act="ctxpick" data-text="${k}"><span>${ic(i)}${l}</span>${ic('right','s')}</button>`;
+ return `<div class="scrim" ${p?'style="background:transparent" ':''}data-act="close"></div><div class="pop ${p?'cx-addpop':'cx-sheet'} cx-add" ${p?`style="left:${p.x}px;${p.b!=null?`bottom:${p.b}px`:`top:${p.t}px`}" `:''}role="dialog" aria-label="Add to chat">
  <div class="cx-add-h"><button class="btn secondary icon" data-act="close" aria-label="Close">${ic('x','s')}</button><b class="t-heading">Add to chat</b><span class="cx-add-sp"></span></div>
  <div class="cx-tiles cx-add-tiles">${[['camera','Camera'],['image','Photos'],['file','Files']].map(([i,l])=>`<button class="more-tile cx-tile" data-act="ctxpick" data-text="file">${ic(i)}<span>${l}</span></button>`).join('')}</div>
  <div class="cx-g"><div class="cx-gl">About</div>${row('calendar','A booking','booking')}${row('users','A contact or venue','contact')}${row('mail','An email thread','mail')}</div>
@@ -294,14 +294,14 @@ A.asksugg=t=>{const k=t.dataset.q;if(k==='plan'){S.asst='plan';S.asstMove='plan'
 A.askq=t=>{S.asst='q';S.asstQ=t.dataset.q;asstWork();L.go('assistant');};
 A.palask=t=>{S.asst='q';S.asstQ=t.dataset.q||'Ask about '+curBand().name;asstWork();L.go('assistant');};
 A.palnew=()=>{S.overlay=L.DR.newbooking(S.overlay?.q||'');L.render();};
-A.addctx=(t,r)=>matchMedia('(max-width:599.98px)').matches?L.open('addsheet'):L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['A booking','ctxpick',0,'booking'],['A contact or venue','ctxpick',0,'contact'],['A file or photo','ctxpick',0,'file'],['An email thread','ctxpick',0,'mail']]});
+/* + opens Add to chat: a bottom sheet on a phone, the same content as a popover anchored to + on desktop (Vit 5 Nov),
+   opening upwards when the composer is low on the screen (docked), downwards when it is high (dashboard hero) */
+A.addctx=(t,r)=>matchMedia('(max-width:599.98px)').matches?L.open('addsheet'):L.open('addsheet',{pop:{x:Math.max(8,Math.min(r.left,innerWidth-348)),...(r.top>innerHeight/2?{b:Math.round(innerHeight-r.top+8)}:{t:Math.round(r.bottom+8)})}});
 /* picking adds the next example of that kind as a pill; the typed text survives the re-render */
 L.INPUT.push(t=>{if(t.id==='ask'){S.askDraft=t.value;return true;}});
 const keepAsk=fn=>{fn();L.render();const n=document.getElementById('ask');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
 A.ctxpick=t=>{const [i,opts]=CTXK[t.dataset.text]||CTXK.file;const pick=opts.find(o=>!S.askCtx.some(c=>c[1]===o));L.close();if(!pick){L.toast('Already added');return;}keepAsk(()=>S.askCtx.push([i,pick]));};
 A.askctxrm=t=>keepAsk(()=>S.askCtx.splice(+t.dataset.i,1));
-A.askmode=(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items:[['Ask: answers, changes nothing','modeask'],['Plan: drafts changes behind Confirm','modeplan']]});
-A.modeask=()=>{S.dashMode='Ask';L.close();};A.modeplan=()=>{S.dashMode='Plan';L.close();};
 A.modetoggle=()=>{S.dashMode=S.dashMode==='Plan'?'Ask':'Plan';L.render();};
 A.importcal=()=>L.open('modal',{html:`<h2 class="t-title">Import a calendar</h2><p class="muted" style="margin:0">Dates come in as holds you confirm one by one. Nothing is sent to anyone.</p>${[['Google Calendar','Two-way, holds stay tentative'],['Microsoft 365','Two-way, holds stay tentative']].map(([a,b])=>`<div class="list-row" style="cursor:default">${ic('calendar')}<span class="tx"><b>${a}</b><small>${b}</small></span><button class="btn secondary s" data-act="close" data-msg="${a} connected. 14 dates found, waiting for you to confirm">Connect</button></div>`).join('')}<label class="drop" style="cursor:pointer">${ic('upload')}<b class="strong">Or drop an .ics or CSV file</b><span class="t-meta muted">From your old tool, one-off.</span><input type="file" accept=".ics,.csv" hidden data-dcal></label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button></div>`});
 A.sampleband=()=>{S.dashFirst=false;S.dashStart='overview';L.go('dashboard');L.toast('Sample band loaded, marked as test',()=>{S.dashFirst=true;});};
