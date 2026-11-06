@@ -113,6 +113,7 @@
 
   .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-pay,.cv-main,
   :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.strip,.drop:not(.drop-row){padding:var(--card)!important}
+  .drawer .dh,.drawer .db{padding:20px 16px!important}  /* Drawer Compact 1821:36997: head and body 20 16, not the card inset */
   /* columns with no card behind them on a phone sit on the page edge, like the page header (sweep 22 Oct: Today, Money, Settle, booking pages, past release) */
   :is(.d-left,.m-left,.bd-main>.bd-sec,.cat-col,.cat-ov){padding:0!important}
   .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:var(--section)!important}
@@ -342,7 +343,7 @@
   .pop.cx-welcome{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
   .cx-wl{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:20px}.cx-wl svg{margin-top:2px;flex:none}
   /* full-width sheet button = Figma Button Size=L (Body strong 15, 46 high in Compact) */
-  .cx-full{width:100%;justify-content:center;height:46px!important;font:500 15px/var(--lh-body) var(--sans)!important}
+  .cx-full{width:100%;justify-content:center;height:44px!important;font:500 15px/var(--lh-body) var(--sans)!important}
 }
 @media (max-width:599.98px){
   .bk-table>.bk-tr.bk-th{display:none!important}
@@ -632,8 +633,8 @@
 @media (max-width:599.98px){
   .acc-obform>.row{flex-wrap:nowrap;gap:8px}
   .acc-obform>.row>.btn{flex:1 1 0;min-width:0;justify-content:center;height:44px}
-  :is(.drawer .df,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:8px}
-  :is(.drawer .df,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px}
+  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:8px}
+  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px}
   .drawer .df>span:empty{display:none}
   .drawer .df>.btn:first-child:has(~span:empty){order:-1;flex-basis:100%}
   .bd-mf>span{order:9;flex:1 1 100%}
@@ -649,7 +650,7 @@
 /* T476 phone: table checkboxes only while selecting (a long press starts it); confirmation actions 50/50 at Button L */
 @media (max-width:599.98px){
   .cv-table:not(.selecting) .cb{display:none}
-  .cf-acts>.btn{flex:1;justify-content:center;padding-block:13px}
+  .cf-acts>.btn{flex:1;justify-content:center;height:48px;padding:13px 24px;font-size:15px;line-height:22px}  /* Confirmation dialog Compact 1841:37499: Button L, 48 high, 50/50 */
   .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:10px}
   .batch{border-radius:0;margin:0 calc(-1 * var(--space-4)) var(--space-2);padding-inline:var(--space-4) var(--space-2)}
 }
