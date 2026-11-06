@@ -41,6 +41,7 @@
 .input{height:38px;padding:8px 12px;border:0;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 .input:is(:focus,[data-state="focus"]){outline:none;box-shadow:inset 0 0 0 2px var(--ink)}
 .input.err,.field.err .input{box-shadow:inset 0 0 0 1px var(--bad)}
+.input:disabled{background-color:var(--sunken);color:var(--faint);cursor:not-allowed}
 .field.err .help{color:var(--bad)}
 textarea.input{height:auto;padding:8px 12px}
 
@@ -56,7 +57,7 @@ textarea.input{height:auto;padding:8px 12px}
 /* Tab 298:5098: 12 + label line + 12 + indicator 2 = 48 on desktop, 46 on phones (line 22 / 20; one height for every
    tab row, 30 Oct); label Body strong 15/22;
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
-.tabs button{height:auto;padding:12px 4px 8px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
+.tabs button{height:auto;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
 .tabs button:is(:hover,[data-state="hover"]){border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
@@ -83,6 +84,7 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 .segmented-control button{height:28px;padding:0 12px;gap:8px;border-radius:var(--r-sm);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .segmented-control button svg.i{width:14px;height:14px}
 .segmented-control button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--elev-1)}
+.segmented-control button:not(.on):is(:hover,[data-state="hover"]){background:var(--state-hover)}  /* 611:40463 State=Hover: the hovered, unselected segment fills 4 % (gate, 6 Nov) */
 
 /* Banner 299:5204: gap 12, pad 12 16, radius 8, icon 18; text column gap 2 */
 .banner{gap:12px;padding:var(--row-y) var(--row-x);border-radius:var(--r-md)}
@@ -314,7 +316,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.m-kvr,.facts-dl>div,.trk-dl>div)>:first-child{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 :is(.m-kvr,.facts-dl>div,.trk-dl>div)>:nth-child(2){margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--ink);overflow-wrap:anywhere}
 :is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>.mono:nth-child(2){font-size:14px;line-height:20px}
-@media (max-width:599.98px){.bd-pay .bd-payrow{flex-wrap:wrap;align-items:center;row-gap:var(--space-1)}.bd-payrow>.l:first-child{width:100%}}
+@media (max-width:599.98px){.bd-pay .bd-payrow{flex-wrap:wrap;align-items:center;row-gap:var(--space-1)}.bd-pay .bd-payrow>.l:first-child{width:100%}}  /* only the pay page stacks label over value on phones; Key-value row Compact (666:41362) keeps the 120 label column */
 
 /* Date and time picker (T473): a pop under the field. 7 x 36 day grid, Monday first; today ringed, selected filled with the
    accent; days of other months faint. Time list 15-minute steps. Datetime puts the list beside the grid (under it on a phone) */
@@ -328,8 +330,8 @@ html.gated body>*:not(.gate){display:none!important}
 .pk-day.today{box-shadow:inset 0 0 0 1px var(--muted)}
 .pk-day.on{background:var(--accent);color:var(--on-accent);font-weight:500;box-shadow:none}
 .pk-foot{display:flex;border-top:1px solid var(--rule);padding-top:var(--space-2)}
-.pk-times{display:flex;flex-direction:column;width:88px;max-height:300px;overflow-y:auto;scrollbar-width:thin}
-.picker.time .pk-times{max-height:240px}
+.pk-times{display:flex;flex-direction:column;width:88px;max-height:288px;overflow-y:auto;scrollbar-width:thin}
+.picker.time .pk-times{max-height:288px}  /* Time list 1814:36669: 8 rows of 36 = 288 in every kind (gate, 6 Nov; was 300 / 240) */
 .pk-time{flex:none;height:36px;border-radius:var(--r-md);font:400 14px/1 var(--mono);color:var(--ink);text-align:center}
 .pk-time:is(:hover,[data-state="hover"]){background:var(--state-hover)}.pk-time.on{background:var(--accent);color:var(--on-accent)}
 .pk-day:is(:focus-visible,[data-state="focus"]),.pk-time:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink);outline-offset:2px}
@@ -357,7 +359,7 @@ html.gated body>*:not(.gate){display:none!important}
 .sel-cell{display:inline-flex;align-items:center;gap:var(--space-3)}
 .cv-table td.tt{gap:var(--space-3)}
 .cv-table tbody tr[aria-selected="true"]{background:var(--state-selected)}
-.batch{position:sticky;top:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent-ink);margin-bottom:var(--space-2)}
+.batch{position:sticky;top:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent-ink);margin-bottom:var(--space-2);min-height:52px}  /* Figma Batch bar 1841:37468: 52 tall, items centred (6 Nov gate) */
 .batch b{font:500 15px/var(--lh-body) var(--sans)}
 .batch .btn.ghost{color:var(--accent-ink)}.batch .btn.ghost.bad{color:var(--bad)}
 /* KPI tiles: the note under the number stays on one line (Vit 4 Nov, Audience: three tiles were taller only because

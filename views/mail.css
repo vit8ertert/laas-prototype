@@ -103,7 +103,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-cf.err{box-shadow:inset 3px 0 0 var(--bad)}
 .ml-cl{width:56px;flex:none;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
 .ml-chips{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;position:relative}
-.ml-ci{flex:1;min-width:120px;height:38px;border:0;background:transparent;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);outline:none;padding:0}
+.ml-ci{flex:1;min-width:120px;height:34px;border:0;background:transparent;color:var(--ink);font:400 15px/var(--lh-body) var(--sans);outline:none;padding:0}
 .ml-ci::placeholder,.ml-body::placeholder{color:var(--faint)}
 .ml-rc{display:inline-flex;align-items:center;gap:2px;height:28px;max-width:100%;padding:0 2px 0 12px;border-radius:999px;background:var(--well);font-size:13px;line-height:var(--lh-label);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ml-rc button{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:50%;color:var(--muted)}

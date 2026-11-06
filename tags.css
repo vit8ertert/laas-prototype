@@ -12,7 +12,7 @@
 :is(.tag,.schip,.bd-pill,.d-ev).attention,.schip.hold{--tc:var(--att)}
 :is(.tag,.schip).danger{--tc:var(--bad)}
 :is(.tag,.schip,.bd-pill,.d-ev).draft,.schip.enquiry{--tc:var(--draft)}
-.schip.completed{--tc:var(--ink)}
+.schip.completed,.bd-pill.completed{--tc:var(--ink)}  /* Status chip 301:5131 Completed: ink in both forms (gate, 6 Nov) */
 .tag.accent,.tag.cat-acc,.schip.offer,.bd-pill.offer,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c{--tc:var(--accent-ink)}
 /* "Needs you" count in the notifications panel: attention, it is the work waiting on you */
 .d-nf .c{--tc:var(--att)}
@@ -214,12 +214,12 @@
 /* booking and gig day open without a photo now, so they use the shared detail-page tint, not the venue-photo brown */
 .main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)!important}
 
-/* checkbox and toggle states, matching Figma (21–22 Oct audit): hover shows a soft halo, disabled is 45 % and inert;
-   keyboard focus is the global 2 px ink ring */
-:is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):is(:hover,[data-state="hover"]){box-shadow:0 0 0 4px var(--state-hover)}
+/* checkbox and toggle states, matching Figma (21–22 Oct audit, gate 6 Nov): hover lays the 4 % state layer over the box or
+   track, disabled is 45 % and inert; keyboard focus is the global 2 px ink ring */
+:is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radius:4px}
 :is(input[type=checkbox],[role=checkbox],[role=switch]):is(:disabled,[aria-disabled=true]){opacity:.45;cursor:not-allowed;pointer-events:none}
-:is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;color:var(--muted)}
+:is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;opacity:.45}
 
 /* Icon sizes (Vit 22 Oct, rule 14/16/18/20, "fix everywhere"): small buttons carry 16 (the medium-button 20 leaked in
    through .btn>svg.i), the top-bar bell is navigation 18, and no icon goes below 14 */

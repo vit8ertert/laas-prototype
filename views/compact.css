@@ -32,7 +32,7 @@
 
   /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
   .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up var(--dur-3) var(--ease-emphasized) both!important}
-  .pop:not(.pal)::before{content:"";position:absolute;top:12px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
+  .pop:not(.pal)::before{content:"";position:absolute;top:13px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
   .scrim[style*="transparent"]{background:var(--scrim)!important}
   /* search takes the whole screen */
@@ -40,9 +40,11 @@
   /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
   .drawer{top:auto;left:0;width:100%;height:calc(100% - var(--layout-sheet-gap) - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up var(--dur-4) var(--ease-emphasized) both}
   .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
+  /* Drawer Compact (1821:36997): a grab handle row of 16 over the head, like the sheets */
+  .drawer{padding-top:16px}.drawer::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 
@@ -57,6 +59,7 @@
 .cx-gl{padding:8px 12px 4px;color:var(--faint);font:500 12px/16px var(--sans)}
 .cx-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 4px 12px}
 .cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 14px/18px var(--sans);text-align:left}
+.cx-tile>svg.i{width:16px;height:16px}
 .cx-tile:is(:hover,[data-state="hover"]){background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
 .cx-it.on{background:var(--well)}
 /* Add to chat (sheet on a phone, popover on desktop): a round close, the title centred, attach tiles, then rows */
@@ -257,7 +260,7 @@
   .acc-appicon{width:44px!important;height:44px!important;border-radius:10px!important}.acc-appicon svg{width:30px!important}
   .acc-app p{font-size:13px!important;line-height:16px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .acc-store{padding:4px 8px 4px 8px!important;border-radius:6px!important}.acc-store svg{width:16px!important;height:16px!important}
-  .acc-store span{font-size:14px!important;line-height:16px!important}.acc-store small{font-size:8px!important;line-height:10px!important}
+  .acc-store span{font-size:14px!important;line-height:16px!important}.acc-store small{font-size:8px!important;line-height:10px!important;margin-bottom:0!important}
   /* banners: less padding and space between lines */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner){gap:8px!important;row-gap:4px!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx{gap:2px!important}
@@ -646,7 +649,7 @@
 /* T476 phone: table checkboxes only while selecting (a long press starts it); confirmation actions 50/50 at Button L */
 @media (max-width:599.98px){
   .cv-table:not(.selecting) .cb{display:none}
-  .cf-acts>.btn{flex:1;justify-content:center;padding-block:12px}
+  .cf-acts>.btn{flex:1;justify-content:center;padding-block:13px}
   .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:10px}
   .batch{border-radius:0;margin:0 calc(-1 * var(--space-4)) var(--space-2);padding-inline:var(--space-4) var(--space-2)}
 }

@@ -53,7 +53,7 @@
 .bk-tr .tt b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis}
 .bk-tr .n{text-align:right}
 .bk-tr .mono{font:400 14px/20px var(--mono);color:var(--ink)}
-.bk-tr .tag{height:26px;padding:4px 8px;font:400 13px/var(--lh-label) var(--sans)}
+.bk-tr .tag{font:400 13px/var(--lh-label) var(--sans)}  /* 6 Nov gate: the Tag master is 24 (Figma Table row Status tag 24), no 26 override */
 .bk-tr mark,.bk-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
 .bk-thumb{width:32px;height:32px;border-radius:8px;object-fit:cover;flex:none}
 .bk-thumb.none{display:grid;place-items:center;background:var(--well);border-radius:6px;color:var(--ink)}

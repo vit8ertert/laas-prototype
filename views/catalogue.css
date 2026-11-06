@@ -95,10 +95,10 @@
 .cat-rhead>.id{align-self:end}
 .cat-rhead>.acts{grid-column:2}
 .cat-cover{width:176px;height:176px;border-radius:8px;object-fit:cover;flex:none;display:block}
-.cat-cover-ph{background:var(--raised);display:grid;place-items:center;color:var(--muted)}
+.cat-cover-ph{background:var(--hover);display:grid;place-items:center;color:var(--muted)}  /* surface/hover like Figma Release tile 171:2528 Artwork (gate 6 Nov; was raised = white on a white tile) */
 .cat-cover.cat-cover-ph{border-radius:0}
 .cat-cover-ph svg{width:40px;height:40px;stroke-width:1}
-.cat-tile .art.cat-cover-ph{height:152px}
+.cat-tile .art.cat-cover-ph{height:152px;display:grid}  /* .cat-tile .art{display:block} beat the placeholder's grid: the disc sat top left; Figma centres it (gate 6 Nov) */
 .cat-rhead .id{min-width:0;display:flex;flex-direction:column;gap:4px}
 .cat-rhead .id>.t-label{font:400 13px/var(--lh-label) var(--sans)}
 .cat-rhead .sl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:400 15px/var(--lh-body) var(--sans)}
@@ -117,7 +117,7 @@
 .cat-checks .cat-chk::after{left:0;right:0}
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
 button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
-.cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
+.cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico svg.i{width:16px;height:16px}  /* Figma Leading icon: 16 Expanded, 14 Compact (6 Nov gate) */@media (max-width:599.98px){.cat-chk .ico svg.i{width:14px;height:14px}}.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
 .cat-sub{margin:0;padding:0 20px 14px 70px;color:var(--muted);font-size:13px;line-height:22px}
 
 /* overview: 720 column + 348 panel, 48 apart */

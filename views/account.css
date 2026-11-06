@@ -6,10 +6,12 @@
 .acc-ph{display:flex;align-items:flex-start;gap:16px}
 .acc-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .acc-ph p{margin:0;color:var(--muted)}
-.acc-save{display:inline-flex;align-items:center;gap:8px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted);opacity:0;transition:opacity var(--dur-4);white-space:nowrap}
-.acc-save.on{opacity:1}
+.acc-save{display:inline-flex;align-items:center;gap:8px;font-size:12px;line-height:16px;color:var(--muted);opacity:0;transition:opacity var(--dur-4);white-space:nowrap}
+.acc-ph>.acc-save{padding-top:12px} /* the page-header seat, not the component (Figma Save status 423:19572 has no padding) */
+.acc-save.on{opacity:1}.acc-save.saving svg{animation:spin var(--dur-loop) linear infinite}
+.acc-save.off{color:var(--att)} /* Figma State=Offline */
 .acc-save.err{color:var(--bad)}
-.acc-save.err .btn{color:var(--bad);height:28px}
+.acc-save.err .btn{color:var(--ink);padding:8px 0 8px 4px} /* Figma State=Error: Retry is a Ghost S in ink, hugging the text */
 .acc-grid{display:grid;grid-template-columns:220px minmax(0,720px);gap:32px;align-items:start}
 .acc-nav{display:flex;flex-direction:column;gap:2px;position:sticky;top:0}
 .acc-nav .nav{min-height:34px}
@@ -37,6 +39,7 @@
 .acc-rows{display:flex;flex-direction:column;gap:4px}
 .acc-row{display:flex;align-items:center;gap:24px;padding:var(--row-y) 12px;border-radius:8px;transition:background var(--dur-1)}
 .acc-row:is(:hover,[data-state="hover"]){background:var(--hover)}
+.acc-row.disabled{opacity:.45;pointer-events:none}  /* Settings row State=Disabled (298:5071): the row at 45 % */
 .acc-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-half);font:400 15px/var(--lh-body) var(--sans)}
 .acc-row .tx span{font-size:15px;line-height:var(--lh-body)}
 .acc-row .tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted)}
@@ -151,7 +154,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-si .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .acc-nl{display:flex;flex-direction:column;gap:16px}
 .acc-nr{display:flex;align-items:center;gap:8px}
-.acc-nr>span{font:400 15px/18px var(--sans)}
+.acc-nr>span{font:400 15px/18px var(--sans)}.acc-nr:has(>.acc-tg:disabled)>span{opacity:.45}
 .acc-small{margin:0;font:400 12px/16px var(--sans);color:var(--muted)}
 .acc-band{display:flex;align-items:center;gap:12px;text-align:left;padding:8px;margin:-8px;border-radius:8px}
 .acc-band:is(:hover,[data-state="hover"]){background:var(--hover)}
@@ -162,8 +165,10 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-app{flex-direction:row;align-items:center;gap:20px}
 .acc-app>div{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .acc-app p{margin:0;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
-.acc-appicon{width:64px;height:64px;border-radius:14px;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,var(--top),var(--sunken))}
-.acc-appicon svg{width:44px;fill:var(--ink)}
+/* App icon · iOS (Figma 466:23436): a brand asset, the same in both modes: dark gradient, a lilac glow (accent, 35 %, blur 18) off the bottom-right, white wordmark */
+.acc-appicon{width:64px;height:64px;border-radius:22.5%;flex:none;display:grid;place-items:center;position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,#1f1c29 0%,#08080a 71.4%)}
+.acc-appicon::before{content:"";position:absolute;left:31.25%;top:46.875%;width:109.375%;height:109.375%;border-radius:50%;background:var(--accent);opacity:.35;filter:blur(9px)}
+.acc-appicon svg{width:44px;fill:#fff;position:relative}
 /* official App Store badge colours (used unmodified) */
 .acc-store{display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:8px 14px 8px 8px}
 .acc-store svg{width:22px;fill:#fff}

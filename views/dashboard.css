@@ -44,12 +44,12 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 .d-banner{border-radius:8px;padding:12px 16px;gap:12px}.d-banner .tx{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}.d-banner .tx .t-label{font:400 13px/var(--lh-label) var(--sans)}.d-banner>svg.i{width:18px;height:18px;margin:0;fill:currentColor}
 
 /* tonight */
-.d-tonight{position:relative;height:240px;border-radius:var(--r-lg);overflow:hidden;padding:20px;display:flex;flex-direction:column;color:#fff;cursor:pointer;text-align:left}
+.d-tonight{position:relative;height:240px;border-radius:var(--r-lg);overflow:hidden;padding:20px;display:flex;flex-direction:column;gap:8px;color:#fff;cursor:pointer;text-align:left}  /* gap 8 between title and facts like Figma 676:41318 (gate 6 Nov; compact.css had it already) */
 .d-tonight>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform var(--dur-5) var(--ease-standard)}
 .d-tonight:is(:hover,[data-state="hover"])>img{transform:scale(1.02)}
 .d-tonight::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 0%,transparent),color-mix(in srgb,var(--scrim-base) 85%,transparent));z-index:0}
 .d-tonight>*:not(img){position:relative;z-index:1}
-.d-tt{display:flex;align-items:center;gap:12px}.d-tt .tag{height:26px;font:400 13px/var(--lh-label) var(--sans)}.d-k{font:400 12px/16px var(--sans);color:#cdbdff}
+.d-tt{display:flex;align-items:center;gap:12px}.d-tt .tag{height:24px;font:400 13px/var(--lh-label) var(--sans)}  /* 24 like every Tag (Figma Tonight card 676:41318, gate 6 Nov) */.d-k{font:400 12px/16px var(--sans);color:#cdbdff}
 .d-tonight h2{font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0;max-width:640px}
 .d-tm{display:flex;align-items:center;gap:12px;min-height:34px;font-size:12px;line-height:16px;color:#d9d9d9}.d-tm>span:first-child{flex:1;min-width:0}
 .d-tm .btn{flex:none}
@@ -411,7 +411,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-hg{gap:2px;margin-top:12px}.d-hg .d-hgl{padding:0 12px 4px}
 .d-hg.miss,.d-hi.miss{display:none}
 .d-hnone{margin:12px 0 0;padding:0 12px;font-size:13px;line-height:var(--lh-label)}
-.d-hfoot{margin-top:12px}
+.d-hist>.d-hfoot{margin-top:12px}
 /* collapsed: a narrow rail with the toggle, search and new conversation */
 /* rail = a 36 px icon column with 32 px to the divider, the same as the page edge on the left (Vit 21 Oct) */
 .d-asst:has(.d-hist.col){grid-template-columns:69px minmax(0,1fr)}
@@ -440,7 +440,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-comp.d-pulse{animation:d-pulse var(--dur-loop) ease-out}@keyframes d-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 10px transparent}}@media (prefers-reduced-motion:reduce){.d-comp.d-pulse{animation:none}}
 /* calendar event chip with the venue thumbnail; text on the plain day, full contrast */
 .d-ev{display:flex;align-items:center;gap:8px;min-width:0}
-.d-ev .d-evth{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none;margin-left:-4px}
+.d-ev .d-evth{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none} /* Figma Calendar event: thumb at the 8 px padding */
 .d-ev>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* Calendar on phones, Apple-style (Vit 26 Oct, research notes/research/calendar-mobile-grid.md): no cell borders, only a rule between
