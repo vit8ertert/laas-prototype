@@ -258,5 +258,5 @@ input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radiu
 
 /* Solid tag (Vit 4 Nov, theme tiles: "not transparent badge"): the full status colour with dark-on-light / light-on-dark
    text, for a badge that sits over two surfaces (a tile edge). Figma: Tag Style=Solid. Accent uses the lilac accent. */
-.tag.tag.solid{background:var(--tc)!important;box-shadow:none!important;color:var(--on-dark)!important;font-weight:500}
+.tag.tag.solid{background:var(--tc)!important;box-shadow:0 1px 3px rgb(0 0 0/.2)!important;color:var(--on-dark)!important;font-weight:500}
 .tag.accent.solid{background:var(--accent)!important;color:var(--on-accent)!important}

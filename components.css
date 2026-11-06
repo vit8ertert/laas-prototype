@@ -45,7 +45,7 @@
 textarea.input{height:auto;padding:8px 12px}
 
 /* Tag 132:131: pad 4 8, radius pill, Label 13/18; tint + ink per status */
-.tag{height:auto;padding:4px 8px;border-radius:var(--r-pill);font:400 13px/var(--lh-label) var(--sans)}
+.tag{height:auto;padding:3px 8px;border-radius:var(--r-pill);font:400 13px/18px var(--sans)}
 .tag.draft{background:var(--draft-tint);color:var(--draft)}
 .tag.confirmed{background:var(--ok-tint);color:var(--ok)}
 .tag.paid{background:var(--paid-tint);color:var(--paid)}
