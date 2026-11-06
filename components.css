@@ -57,7 +57,7 @@ textarea.input{height:auto;padding:8px 12px}
 /* Tab 298:5098: 12 + label line + 12 + indicator 2 = 48 on desktop, 46 on phones (line 22 / 20; one height for every
    tab row, 30 Oct); label Body strong 15/22;
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
-.tabs button{height:auto;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:500 15px/var(--lh-body) var(--sans)}
+.tabs button{height:auto;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:400 15px/var(--lh-body) var(--sans)}
 .tabs button:is(:hover,[data-state="hover"]){border-bottom-color:var(--rule-strong)}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,

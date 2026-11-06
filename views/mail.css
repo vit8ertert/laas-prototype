@@ -184,3 +184,5 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
    drew a box with the text on its edge. The chevron stays; focus shows on the whole row. */
 .ml-cf .ml-fromsel{box-shadow:none!important;background-color:transparent!important;border-radius:0;padding-right:32px;cursor:pointer}
 .ml-cf .ml-fromsel:is(:focus,[data-state="focus"]),.ml-cf .ml-fromsel:is(:focus-visible,[data-state="focus"]){box-shadow:none!important;outline:none!important}
+
+.ml-rc button svg.i{width:14px;height:14px} /* chip close icon: 14 inside chips (icon sizes rule; Recipient chip 1840:37326) */

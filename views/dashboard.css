@@ -129,7 +129,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-ctx>.i{color:var(--muted);flex:none}.d-ctx>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .d-ctx:not(:has(button)){padding-right:8px}
 .d-ctx button{display:grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;color:var(--muted)}.d-ctx button:is(:hover,[data-state="hover"]){background:var(--state-hover);color:var(--ink)}
-.d-ctx button .i{width:12px;height:12px}
+.d-ctx button .i{width:14px;height:14px}
 .d-user .d-ctxs{margin-bottom:8px}.d-user .d-ctx{background:transparent}
 .d-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.d-chips.left{justify-content:flex-start}
 .d-chip svg.i.s{width:14px;height:14px;fill:currentColor}
