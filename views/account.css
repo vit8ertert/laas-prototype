@@ -170,7 +170,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-appicon::before{content:"";position:absolute;left:31.25%;top:46.875%;width:109.375%;height:109.375%;border-radius:50%;background:var(--accent);opacity:.35;filter:blur(9px)}
 .acc-appicon svg{width:44px;fill:#fff;position:relative}
 /* official App Store badge colours (used unmodified) */
-.acc-store{display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:8px 14px 8px 8px}
+.acc-store{display:inline-flex;align-items:center;gap:8px;width:fit-content;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:8px;padding:8px 14px 8px 8px;text-decoration:none}
 .acc-store svg{width:22px;fill:#fff}
 .acc-store span{display:flex;flex-direction:column;font:500 19px/24px var(--sans);letter-spacing:-.19px;text-align:left}
 .acc-store small{font:400 9px/16px var(--sans);letter-spacing:0;margin-bottom:-2px}
