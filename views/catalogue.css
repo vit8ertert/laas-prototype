@@ -256,7 +256,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 @media (max-width:839.98px){.trk-roy{padding-left:0}}
 
 /* status on cover art: a filled, opaque tag so it reads on any photo (Vit 21 Oct: "badges not visible, use BG colour filled") */
-.cat-page .cat-tilewrap .st .tag{background:linear-gradient(color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent),color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent)),var(--surface)!important;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* catalogue tile tags use the shared On photo tag (tags.css, Vit 7 Nov) */
 /* equal-height release cards */
 .cat-grid{align-items:stretch}.cat-tilewrap{height:100%}.cat-tile{flex:1}
 
