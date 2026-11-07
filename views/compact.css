@@ -634,7 +634,7 @@
   .acc-obform>.row{flex-wrap:nowrap;gap:8px}
   .acc-obform>.row>.btn{flex:1 1 0;min-width:0;justify-content:center;height:44px}
   :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:8px}
-  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px}
+  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px;font:500 15px/var(--lh-body) var(--sans)} /* 15 px labels at 44 (Figma Dialog / Drawer Compact, 7 Nov) */
   .drawer .df>span:empty{display:none}
   .drawer .df>.btn:first-child:has(~span:empty){order:-1;flex-basis:100%}
   .bd-mf>span{order:9;flex:1 1 100%}

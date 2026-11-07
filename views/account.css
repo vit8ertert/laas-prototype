@@ -40,6 +40,8 @@
 .acc-row{display:flex;align-items:center;gap:24px;padding:var(--row-y) 12px;border-radius:8px;transition:background var(--dur-1)}
 .acc-row:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-row.disabled{opacity:.45;pointer-events:none}  /* Settings row State=Disabled (298:5071): the row at 45 % */
+/* the row's 45 % already says disabled: its control keeps its normal look, no second dimming (Figma Settings row State=Disabled, 7 Nov) */
+.acc-row.disabled .input:disabled{background-color:var(--surface);color:var(--ink)}
 .acc-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-half);font:400 15px/var(--lh-body) var(--sans)}
 .acc-row .tx span{font-size:15px;line-height:var(--lh-body)}
 .acc-row .tx small{font-size:13px;line-height:var(--lh-label);color:var(--muted)}

@@ -59,6 +59,9 @@ textarea.input{height:auto;padding:8px 12px}
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
 .tabs button{height:auto;padding:12px 4px;gap:8px;border-bottom:2px solid transparent;font:400 15px/var(--lh-body) var(--sans)}
 .tabs button:is(:hover,[data-state="hover"]){border-bottom-color:var(--rule-strong)}
+:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs) button:is(:hover,[data-state="hover"]){color:var(--ink)} /* Figma Tab State=Hover: the label in ink (7 Nov) */
+/* a scrolling tab row clips anything outside it, so the focus ring sits 2 px inside the tab (Figma Tab State=Focus, 7 Nov) */
+:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs) button:is(:focus-visible,[data-state="focus"]){outline-offset:-2px}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
    the line under it an inset rule (no border that adds height, no separate rule element), scrolls sideways when full.
@@ -214,6 +217,7 @@ body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srg
 /* Collapsed rail (466:23760 "Rail"): 64 wide, no fill (on the sunken page), gap 4; band square 36, initials Label 13/18 */
 .collapsed .sidebar{background:none;gap:4px}
 .collapsed .sidebar .band .sq{width:36px;height:36px;font:500 13px/var(--lh-label) var(--sans)}
+.sidebar .band{margin-bottom:10px} /* + the 2 px gap = 12 under the switcher, the same step as an .sb-gap between groups (Figma Sidebar, 7 Nov) */
 
 /* Password gate on the public GitHub Pages copy: card on the sunken page, popover values */
 html.gated body>*:not(.gate){display:none!important}
@@ -275,7 +279,7 @@ html.gated body>*:not(.gate){display:none!important}
    (.cv-table) and the ledger reports (.ml-rep) are this table too, on the same cell kinds: plain = Text (Body),
    .w date (Label), .tt b title (Body strong), .m muted (Body tight), .mono code (muted), .mono.n / .mono.num number (ink, right).
    Figma: Table cell 1141:62568 in Table row · Gear / Contacts / Report */
-:is(.cat-gr.head,.cv-table thead tr,.ml-rep thead th){background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.cat-gr.head,.cv-table thead tr,.ml-rep thead th){background:var(--th-bg);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)} /* header = color/table/header + ink (T261; Figma table rows, 7 Nov) */
 :is(.cat-gr:not(.head),.cv-table td,.ml-rep td){font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) .w{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) .tt b{font:500 15px/var(--lh-body) var(--sans);color:var(--ink)}
@@ -328,7 +332,7 @@ html.gated body>*:not(.gate){display:none!important}
 .pk-day{width:36px;height:36px;border-radius:50%;font:400 14px/1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums;transition:background var(--dur-1) var(--ease-standard)}
 .pk-day:is(:hover,[data-state="hover"]){background:var(--state-hover)}.pk-day.out{color:var(--faint)}
 .pk-day.today{box-shadow:inset 0 0 0 1px var(--muted)}
-.pk-day.on{background:var(--accent);color:var(--on-accent);font-weight:500;box-shadow:none}
+.pk-day.on{background:var(--accent);color:var(--on-accent);font-weight:400;box-shadow:none}
 .pk-foot{display:flex;border-top:1px solid var(--rule);padding-top:var(--space-2)}
 .pk-times{display:flex;flex-direction:column;width:88px;max-height:288px;overflow-y:auto;scrollbar-width:thin}
 .picker.time .pk-times{max-height:288px}  /* Time list 1814:36669: 8 rows of 36 = 288 in every kind (gate, 6 Nov; was 300 / 240) */
