@@ -44,7 +44,10 @@
   .drawer{padding-top:16px}.drawer::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:24px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:36px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  /* Dialog Compact (1821:37049, Vit 7 Nov): a 16 px grab-handle row, handle at 10, then the 20 px head padding */
+  :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg)::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
+  .modal:has(>.cf-acts){padding-top:24px}.modal:has(>.cf-acts)::before{content:none} /* Confirmation Compact 1841:37499: no handle, 24 top */
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 

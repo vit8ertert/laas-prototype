@@ -82,7 +82,7 @@ svg.i.s{width:16px;height:16px}
 .input:is(:focus,[data-state="focus"]){outline:none;border-color:var(--ink)}
 textarea.input{height:auto;min-height:76px;padding:8px 12px;resize:vertical}
 .search{position:relative;width:280px;max-width:100%}.search svg{position:absolute;left:10px;top:11px;color:var(--faint)}.search .input{padding-left:34px}
-.seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:max-content;justify-content:start;gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
 .seg button{padding:0 12px;white-space:nowrap;height:30px;border-radius:7px;font-size:13px;line-height:var(--lh-label);color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px}
 .seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--elev-1)}
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);overflow-x:auto}
@@ -133,10 +133,12 @@ mark{background:none;color:var(--accent-ink);font-weight:500}
 .drawer .dh{display:flex;align-items:flex-start;gap:12px;padding:20px 24px;border-bottom:1px solid var(--rule)}.drawer .dh .grow{flex:1}
 .drawer .db{flex:1;overflow:auto;padding:4px 24px 24px;display:flex;flex-direction:column;gap:20px}
 .drawer .df{display:flex;gap:12px;padding:16px 24px;border-top:1px solid var(--rule);align-items:center;background:var(--surface)}
-.modal{position:fixed;left:50%;top:96px;transform:translateX(-50%);width:min(var(--layout-dialog-wide),calc(100% - 32px));max-height:calc(100% - 120px);overflow:auto;background:var(--top);border-radius:var(--r-xl);z-index:calc(var(--z-overlay) + 1);padding:24px;display:flex;flex-direction:column;gap:16px;animation:pop var(--dur-2);box-shadow:var(--elev-3)}
+.modal{position:fixed;left:50%;top:96px;transform:translateX(-50%);width:min(var(--layout-dialog),calc(100% - 32px));max-height:calc(100% - 120px);overflow:auto;background:var(--top);border-radius:var(--r-xl);z-index:calc(var(--z-overlay) + 1);padding:20px 24px 16px;display:flex;flex-direction:column;gap:16px;animation:pop var(--dur-2);box-shadow:var(--elev-3)}
 .pop{position:fixed;z-index:calc(var(--z-overlay) + 1);background:var(--overlay);border:1px solid var(--rule-strong);border-radius:var(--r-lg);box-shadow:var(--elev-3);animation:pop var(--dur-1)}
 @keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(30px);opacity:.4}}@keyframes pop{from{transform:translate(var(--tx,0),6px);opacity:0}}
 .modal{--tx:-50%}
+.modal.w720{width:min(var(--layout-dialog-wide),calc(100% - 32px))} /* a dialog that holds a full preview (send reminder); every other dialog is 560 (Figma Dialog, Vit 7 Nov) */
+.modal>.row:last-child{margin-top:var(--space-4)} /* the footer sits 32 under the body: body 16 + footer 16 (Figma Dialog 1821:37030) */
 /* first-visit wash spans the whole main panel, not just the 1440 px page; more air above the heading */
 .main>.page.d-first{position:static}
 .main>.page.d-first>.d-aurora{left:0;right:0;width:auto}

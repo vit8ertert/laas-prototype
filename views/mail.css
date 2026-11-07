@@ -7,7 +7,7 @@
 .ml-list{background:var(--surface);border-radius:var(--r-lg);overflow:hidden}
 .ml-row{display:grid;grid-template-columns:8px 32px 160px minmax(240px,520px) 180px minmax(160px,1fr) 104px;gap:16px;align-items:center;padding:12px 16px;cursor:pointer;position:relative;transition:background var(--dur-1)}
 .ml-row+.ml-row::before{content:"";position:absolute;top:0;left:16px;right:16px;height:1px;background:var(--rule)}
-.ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){background:var(--raised)}
+.ml-row:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-dot{width:8px;height:8px;border-radius:50%}
 .ml-row.unread .ml-dot{background:var(--accent)}
 .ml-from{min-width:0;display:flex;flex-direction:column;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -170,10 +170,10 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-row .ml-text b::after{content:"";width:14px;height:14px;flex:none;background:currentColor;opacity:0;transform:translateX(-4px);transition:opacity var(--dur-1),transform var(--dur-1);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat}
-.ml-row:is(:hover,[data-state="hover"]) .ml-text b,.ml-row:is(:focus-visible,[data-state="focus"]) .ml-text b{text-decoration-color:currentColor}
-.ml-row:is(:hover,[data-state="hover"]) .ml-text b::after,.ml-row:is(:focus-visible,[data-state="focus"]) .ml-text b::after{opacity:1;transform:none}
-.ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:inset 2px 0 0 var(--accent-strong)}
-.ml-row:is(:focus-visible,[data-state="focus"]){outline:none}
+.ml-row:is(:hover,[data-state="hover"]) .ml-text b{text-decoration-color:currentColor}
+.ml-row:is(:hover,[data-state="hover"]) .ml-text b::after{opacity:1;transform:none}
+.ml-row:is(:hover,[data-state="hover"]){box-shadow:inset 2px 0 0 var(--accent-strong)}
+.ml-row:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink);outline-offset:-2px} /* focus = the ring only, no hover look (Figma List row Focus, Vit 7 Nov); inside, the list clips */
 @media (prefers-reduced-motion:reduce){.ml-row .ml-text b::after{transition:none}}
 /* flag at the end of the row, by the time (Vit 21 Oct: stars not intuitive) */
 .ml-flag{display:inline-flex;margin-right:8px;color:var(--att)}.ml-flag .i{width:14px;height:14px;fill:currentColor}

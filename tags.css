@@ -26,8 +26,8 @@
    a 2 px lilac bar on the left edge and the row's title underlined. Only rows that open something get it (Vit 21 Oct) */
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow){position:relative}
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"]))::before{opacity:1}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"])::before{opacity:1}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
 
 /* brand logo tile (views/brands.js): Para recipe in the brand colour */
 .brand{display:inline-grid;place-items:center;flex:none;border-radius:var(--r-md);color:var(--bc);
@@ -85,7 +85,7 @@
 
 /* Mail rows use ::before for their divider, so their hover bar is the same 2 px bar on ::after (was a full-height edge line) */
 .ml-row{position:relative}.ml-row::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
-.ml-row:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"]))::after{opacity:1}
+.ml-row:is(:hover,[data-state="hover"])::after{opacity:1}
 .ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:none!important}
 /* rows that open nothing get no hover fill either, so a hover always means "this opens" (settings rows keep their Figma hover) */
 :is(.m-line,.m-erow,.bd-mrow,.bd-prow,.cv-row,.acc-si,.acc-li,.aud-rel):not(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]){background:transparent!important}

@@ -364,7 +364,7 @@ L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mod
 /* ---------- drawers ---------- */
 L.OVERLAYS.mnydrawer=o=>`<div class="scrim" data-act="close"></div><aside class="drawer m-dr ${o.cls||''}" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s m-close" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
 L.OVERLAYS.mnymenu=o=>`<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop m-menu" style="top:${o.y}px;right:${o.r}px">${o.items.map(([l,a,x])=>`<button class="it" data-act="${a}" ${x||''}>${l}</button>`).join('')}</div>`;
-L.OVERLAYS.mnyrem=()=>`<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true">${L.sendPreview('reminder').replace(/data-act="sendreminder"/g,'data-act="mnysendrem"')}</div>`;
+L.OVERLAYS.mnyrem=()=>`<div class="scrim" data-act="close"></div><div class="modal w720" role="dialog" aria-modal="true">${L.sendPreview('reminder').replace(/data-act="sendreminder"/g,'data-act="mnysendrem"')}</div>`;
 
 const field=(id,label,ctl,help,cls='')=>`<div class="field ${cls}"><label for="${id}">${label}</label>${ctl}${help?`<span class="help" ${help.id?`id="${help.id}"`:''}>${help.t||help}</span>`:''}</div>`;
 /* Figma: one row per line, Description fills (2 lines, 60 px), Excl. moms and Moms 110 px each, gap 8 */

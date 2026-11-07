@@ -39,9 +39,9 @@
 .cv-table td.tt b{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .cv-table th:last-child,.cv-table td:last-child{justify-content:flex-end;text-align:right}
 .cv-table tbody tr{cursor:pointer}
-.cv-table tbody tr:is(:hover,[data-state="hover"]),.cv-table tbody tr:is(:focus-visible,[data-state="focus"]){background:var(--hover);outline:none}
+.cv-table tbody tr:is(:hover,[data-state="hover"]){background:var(--hover);outline:none}
 .cv-table tbody tr:is(:hover,[data-state="hover"]) td{background:none}
-.cv-table tbody tr:is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])) td:first-child{text-decoration:underline}
+.cv-table tbody tr:is(:hover,[data-state="hover"]) td:first-child{text-decoration:underline}
 .cv-foot{display:flex;align-items:center;gap:0;justify-content:space-between;margin-top:16px;min-height:34px;font:400 12px/16px var(--sans);color:var(--muted)}
 .cv-foot>span{min-width:0;flex:1}
 .cv-vfoot{margin-top:24px;gap:8px;font:400 13px/var(--lh-label) var(--sans)}

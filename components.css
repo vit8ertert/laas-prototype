@@ -272,7 +272,7 @@ html.gated body>*:not(.gate){display:none!important}
    Cells: .w / .ml-d date (Label), .tt / .ml-tt title (Body strong) with meta, .m / .ml-m muted (Body tight), .mono code, .n number (right).
    Figma: Table cell 1141:62568 */
 :is(.bk-th,.ml-th){background:var(--canvas);font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-:is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])){background:var(--hover);outline:none}
+:is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,[data-state="hover"]){background:var(--hover);outline:none}
 :is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 15px/18px var(--sans);color:var(--muted)}
 .ml-tr.ml-gh{font:500 13px/var(--lh-label) var(--sans)}
 /* 30 Oct (drawn-sweep card 3, Vit: "every screen is lacking" on a Gear row): the Gear table (.cat-gr), the Contacts table
@@ -287,7 +287,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.cat-gr,.cv-table,.ml-rep) .mono{font:400 14px/20px var(--mono);color:var(--muted)}
 :is(.cat-gr,.cv-table,.ml-rep) .mono:is(.n,.num){color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) :is(.n,.num){text-align:right}
-:is(.cat-gr:not(.head),.cv-table tbody tr):is(:is(:hover,[data-state="hover"]),:is(:focus-visible,[data-state="focus"])){background:var(--hover);outline:none}
+:is(.cat-gr:not(.head),.cv-table tbody tr):is(:hover,[data-state="hover"]){background:var(--hover);outline:none}
 
 /* List row: one pattern for list rows (pattern census card 2, 29 Oct): settings and account lists (.acc-li) and the booking
    person rows (.bd-prow) are the same row: leading (avatar, brand, icon), title over meta, one trailing item, chevron when it
@@ -348,7 +348,7 @@ html.gated body>*:not(.gate){display:none!important}
 /* Tooltip: one line, ink on top surface, radius sm, LAAS/Elevation/2, layer pop; never holds anything you must click */
 .tip{position:fixed;z-index:var(--z-pop);max-width:280px;padding:var(--space-1) var(--space-2);border-radius:var(--r-sm);background:var(--top);color:var(--ink);font:400 13px/var(--lh-label) var(--sans);box-shadow:var(--elev-2);pointer-events:none;animation:fade var(--dur-1)}
 /* Confirmation dialog: the dialog size; Cancel then the action, right-aligned; danger action is red */
-.modal:has(>.cf-acts){width:min(var(--layout-dialog),calc(100% - 32px))}
+.modal:has(>.cf-acts){width:min(var(--layout-dialog),calc(100% - 32px));padding:24px} /* Confirmation dialog 1841:37469: 24 all round (the Dialog is 20/24/16) */
 .cf-body{margin:0}
 .cf-acts{display:flex;justify-content:flex-end;gap:var(--space-2)}
 .btn.danger{background:var(--bad);color:var(--on-dark)}.btn.danger:is(:hover,[data-state="hover"]){filter:brightness(1.08)}
