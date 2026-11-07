@@ -270,7 +270,7 @@ Object.assign(A,{
  bookingmore:(t,r)=>{const st=S.booking.state;const items=[];
   if(st==='offer')items.push(['Mark as signed','signed']);
   items.push(['Preview what Mette sees','bdpreview'],['Open day sheet','day'],['Duplicate booking','dupbooking'],['Download agreement PDF','toast2'],['Copy offer link','copytext',0,'https://laas.app/o/LT-2026-031'],[S.booking.cancelled?'Restore booking':'Cancel booking',S.booking.cancelled?'uncancel':'cancelbooking',!S.booking.cancelled]);
-  L.open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items});},
+  L.open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items});},
  bdpreview:()=>L.go('paypage'),
  bdnew:()=>{const i=document.getElementById('ask');if(i){i.value='';i.focus();}S.booking.sheet=false;L.render();T('New conversation about this booking');},
  bdrecx:()=>T('Context removed. The next question is about Low Tide',()=>{}),
@@ -282,7 +282,7 @@ Object.assign(A,{
  /* gig day */
  bdpdf:()=>T('Day sheet PDF is ready, without money'),
  bdsendday:()=>T('Day sheet sent to 3 members and Kasper',()=>{}),
- bddaymore:(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Open the booking','bdgobooking'],[S.collapsed?'Expand the menu':'Collapse the menu','bdcollapse'],['Copy day sheet link','copytext',0,'https://laas.app/d/LT-2026-031']]}),
+ bddaymore:(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Open the booking','bdgobooking'],[S.collapsed?'Expand the menu':'Collapse the menu','bdcollapse'],['Copy day sheet link','copytext',0,'https://laas.app/d/LT-2026-031']]}),
  bdgobooking:()=>L.go('booking'),
  bdcollapse:()=>{S.overlay=null;S.collapsed=!S.collapsed;L.render();},
  edit:()=>{S.params.edit=!S.params.edit;L.render();if(!S.params.edit&&S.view!=='booking')T('Saved');},

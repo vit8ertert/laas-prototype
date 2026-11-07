@@ -240,9 +240,11 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-pal kbd.k{font:400 12px/16px var(--sans);color:var(--muted);padding:2px 8px;border-radius:4px;border:1px solid var(--rule-strong)}
 .d-res{max-height:min(624px,calc(100vh - 240px));overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
 .d-pal .g{padding:0;display:flex;flex-direction:column;gap:2px}.d-pal .gl{padding:8px 12px;font:400 12px/16px var(--sans);color:var(--faint)}
-.d-pal .it{padding:12px;gap:12px;min-height:56px;border-radius:8px;font:400 15px/var(--lh-body) var(--sans)}.d-pal .it.on,.d-pal .it:is(:hover,[data-state="hover"]){background:var(--hover)}
+.d-pal .it{position:relative;padding:12px 16px;gap:12px;min-height:52px;border-radius:8px;font:400 15px/var(--lh-body) var(--sans)}.d-pal .it.on,.d-pal .it:is(:hover,[data-state="hover"]){background:var(--hover)}
 .d-pal .it mark{background:none;color:inherit;font-weight:500}
-.d-pal svg.i.d-big{width:32px;height:32px;stroke-width:1.5;color:var(--ink)}
+.d-pal svg.i.d-big{width:28px;height:28px;stroke-width:1.5;color:var(--ink)}.d-pal .d-av{width:28px;height:28px}
+/* the selected or hovered row is a List row Hover (Figma Search palette 414:15930): hover fill, 2 px bar, title underlined */
+.d-pal .it::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--accent-strong);opacity:0;pointer-events:none}.d-pal .it:is(.on,:is(:hover,[data-state="hover"]))::before{opacity:1}.d-pal .it:is(.on,:is(:hover,[data-state="hover"])) .d-it>span:first-child{text-decoration:underline;text-underline-offset:3px}
 .d-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
 .d-lic{width:32px;height:32px;border-radius:8px;background:var(--well);display:grid;place-items:center;flex:none;color:var(--muted)}
 .d-it{display:flex;flex-direction:column;gap:2px;min-width:0}.d-it small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}

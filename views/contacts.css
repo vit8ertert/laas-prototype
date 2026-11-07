@@ -114,7 +114,7 @@
 .cv-lock{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-lock svg.i{width:14px!important;height:14px!important;flex:none;color:var(--muted);margin:0}
 .cv-rate{display:flex;align-items:center;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted);min-height:18px}
-.cv-stars{display:inline-flex;gap:8px}
+.cv-stars{display:inline-flex;align-items:center;gap:8px;height:14px;vertical-align:middle}
 svg.cv-star,svg.i.s.cv-star{color:var(--faint);width:14px;height:14px;stroke-width:1.6}svg.cv-star.on{color:var(--break);fill:var(--break)}  /* Star rating 1805:36454 Size=S: 14 px; svg.i.s (16) used to win over .cv-star (gate, 6 Nov) */
 .cv-tstars{display:inline-flex;font:400 15px/var(--lh-body) var(--sans);color:var(--accent-ink)}
 .cv-tstars button{font:inherit;color:inherit;padding:0;line-height:22px}

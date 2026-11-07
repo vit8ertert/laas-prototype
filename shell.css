@@ -53,7 +53,7 @@ svg.i.s{width:16px;height:16px}
 .sb-gap{height:8px}.sb-spacer{flex:1}
 .sb-rail{display:none}.collapsed .sb-rail{display:flex;flex-direction:column;gap:2px}.collapsed .sidebar .band>svg{display:none}.collapsed .sidebar .sb-sub{display:none}
 .collapsed .sidebar .nav span,.collapsed .sidebar .nav .count,.collapsed .sidebar .band div,.collapsed .sidebar .chev,.collapsed .sidebar .nav.sub{display:none}
-.collapsed .sidebar .nav{justify-content:center;padding:0}
+.collapsed .sidebar .nav{justify-content:center;padding:0;width:40px;height:40px;min-height:40px;flex:none;align-self:center}.collapsed .sidebar .nav>svg.i{width:20px;height:20px}  /* Rail item (Figma Sidebar State=Collapsed 526:25160): 40 × 40, 20 px icon */
 .collapsed .sidebar .nav .alert{position:absolute;margin:0;min-width:8px;height:8px;padding:0;font-size:0;transform:translate(10px,-10px)}
 .main{min-width:0;overflow:auto;background:var(--canvas);border-radius:12px;position:relative;display:flex;flex-direction:column}
 .main>.page{flex:1 0 auto;width:100%}
@@ -305,6 +305,8 @@ kbd.k{font:400 11px var(--mono);border:1px solid var(--rule-strong);border-radiu
 .flowbar{display:flex}
 .grid2.aud{grid-template-columns:minmax(0,1fr) 400px;gap:24px}
 .pop .it:is(:hover,[data-state="hover"]){background:var(--well)}
+/* Menu (Figma: Menu 251:3564): 240 wide, 8 padding, 2 gap; items 8/12, 15/18, 16 px icon 12 from the label; a 1 px divider between groups */
+.menu{width:240px;padding:8px;display:flex;flex-direction:column;gap:2px}.menu .it{display:flex;align-items:center;gap:12px;width:100%;padding:8px 12px;border-radius:8px;text-align:left;font:400 15px/18px var(--sans);color:var(--ink)}.menu .it>svg{width:16px;height:16px;flex:none}.menu .it.danger{color:var(--bad)}.menu .div{display:block;height:1px;background:var(--rule);flex:none}
 .bars{display:flex;align-items:flex-end;gap:16px;height:160px;padding-top:8px}.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}.bars .b{display:flex;gap:4px;align-items:flex-end;height:130px}.bars .b i{width:18px;border-radius:4px 4px 0 0}
 .flowmenu{right:16px;top:60px;width:300px;padding:8px}
 .flowmenu button{display:flex;width:100%;text-align:left;padding:8px 12px;border-radius:8px;gap:8px;align-items:center}

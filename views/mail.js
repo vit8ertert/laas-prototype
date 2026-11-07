@@ -387,7 +387,7 @@ A.mailsend=el=>{const id=el.dataset.id,t=T(id);const nt=t.needs;M.sent[id]='just
 A.mailunsend=el=>{const id=el.dataset.id,t=T(id);delete M.sent[id];t.needs=(THREADS.find(x=>x.id===id)||{}).needs||false;t.msgs=t.msgs.filter(m=>!m.sentNow);R();L.toast('Reply taken back, it was not delivered');};
 A.maillinkchange=()=>L.open('menu',{x:Math.max(8,innerWidth-300),y:200,items:[['Link to another booking','maillinkpick'],['Link to a venue only','maillinkpick'],['Unlink this thread','maillinkpick',1]]});
 A.maillinkpick=()=>{L.close();L.toast('Link changed. The assistant learns from it',()=>{});};
-A.mailmenu=(el,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Sync now','mailsync'],['Mail accounts','mailsettings'],['Disconnect Gmail','maildisconnect',1]]});
+A.mailmenu=(el,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Sync now','mailsync'],['Mail accounts','mailsettings'],['Disconnect Gmail','maildisconnect',1]]});
 A.mailsync=()=>{L.close();L.toast('Synced. No new threads');};
 A.mailsettings=()=>{L.close();L.go('mailaccounts');};
 A.maildisconnect=()=>{L.S.overlay={type:'modal',html:L.confirmM('Disconnect Gmail?','LAAS stops reading new mail. Threads already linked stay on their bookings. Nothing in Gmail changes.','Keep connected','maildisconnectok','Disconnect',1)};R();};
@@ -464,7 +464,7 @@ A.mlsmtpsave=()=>{const e=smtpCheck();if(e){M.smtp={...M.smtp,test:'err',msg:e};
  else{const n={id:'a'+Date.now(),kind:'smtp',email,state:'ok',meta:`IMAP ${smtpVal('imap')}, SMTP ${smtpVal('smtp')}, synced just now`};M.accounts.push(n);undo=()=>{M.accounts=M.accounts.filter(x=>x!==n);syncConnected();};}
  M.smtpF={};syncConnected();L.S.overlay=null;R();L.toast(`${email} ${a?'reconnected':'connected'}. Saving never sends anything`,undo);};
 A.mlaccmenu=(el,r)=>{const a=M.accounts.find(x=>x.id===el.dataset.id);M.menuAcc=a.id;
- L.open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Sync now','mlaccsync'],...(a.kind==='smtp'?[['Edit server settings','mlfix']]:[]),['Use for new mail','mlaccdef'],[`Disconnect ${a.email}`,'mlaccdisc',1]]});};
+ L.open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Sync now','mlaccsync'],...(a.kind==='smtp'?[['Edit server settings','mlfix']]:[]),['Use for new mail','mlaccdef'],[`Disconnect ${a.email}`,'mlaccdisc',1]]});};
 A.mlaccsync=()=>{L.close();const a=M.accounts.find(x=>x.id===M.menuAcc);L.toast(a.state==='error'?`Couldn’t sync ${a.email}: sign-in failed. Fix the password first`:`Synced ${a.email}. No new threads`);};
 A.mlaccdef=()=>{L.close();const a=M.accounts.find(x=>x.id===M.menuAcc);if(a.state==='error'){L.toast(`${a.email} can’t send until the sign-in is fixed`);return;}
  const i=M.accounts.indexOf(a);M.accounts.splice(i,1);M.accounts.unshift(a);R();L.toast(`New mail now goes from ${a.email}`,()=>{M.accounts.splice(0,1);M.accounts.splice(i,0,a);});};

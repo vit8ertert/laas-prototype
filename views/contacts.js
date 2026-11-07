@@ -318,7 +318,7 @@ Object.assign(L.ACTIONS,{
  cvedit:t=>{const k=t.dataset.k;S.cv.edit=S.cv.edit===k?null:k;S.cv.editFor=S.view+':'+(S.params.id||'');if(!S.cv.edit&&S.cv.save){S.cv.save='';}L.render();if(S.cv.edit){const f=document.querySelector('.cv-form input,.cv-notes-in');if(f)f.focus();}},
  cvrate:t=>{S.cv.rating=+t.dataset.n;L.render();saveFlash();},
  cvmore:(t,r)=>{const m=t.dataset.m;const items=m==='venues'?[['Export venues as CSV','cvexport'],['Merge duplicates','cvmerge']]:m==='venue'?[['Copy address','cvcopy'],['Merge with another venue','cvmerge'],['Delete venue','cvdelete',true]]:[['Copy email','cvcopy'],['Merge with another contact','cvmerge'],['Delete contact','cvdelete',true]];
-  L.open('menu',{items,x:Math.max(8,Math.min(r.right-260,innerWidth-268)),y:r.bottom+6});},
+  L.open('menu',{items,x:Math.max(8,Math.min(r.right-240,innerWidth-268)),y:r.bottom+6});},
  cvcopy:()=>{L.close();L.toast(S.view==='venue'?'Address copied':'Email copied');},
  cvexport:()=>{L.close();L.toast('venues.csv is ready in Downloads');},
  cvmerge:()=>{L.close();L.toast('No duplicates found');},

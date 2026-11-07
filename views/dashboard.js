@@ -233,7 +233,7 @@ const PAL_B=[['Saturday hotel gig','Fri 24 Oct, Hotel Skov, booked by Mette Krog
 const initials=n=>n.split(/[ ,]+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase();
 L.OVERLAYS.palette=o=>{const q=(o.q||'').trim().toLowerCase();const res=[];const ask=q.startsWith('>');
  if(ask){res.push(['Assistant',[[`Ask the assistant: “${esc(o.q.slice(1).trim()||'…')}”`,'',{act:'palask',q:o.q.slice(1).trim()},'ai']]]);}
- else if(!q){res.push(['Recent',[['Saturday hotel gig','Booking, Fri 24 Oct, Hotel Skov',{go:'booking',p:{id:'b1'}},'img:hotel-skov'],['Mette Krogh, Hotel Skov','Contact, venue booker',{go:'contact',p:{id:'c1'}},'av'],['Late Shift EP','Release, out 14 Nov',{go:'release',p:{}},'img:cover-late-shift']]]);res.push(['Jump to',[['Bookings','',{go:'bookings',p:{}},'right'],['Calendar','',{go:'calendar',p:{}},'calendar'],['Money','',{go:'money',p:{}},'money'],['Gig day','',{go:'gigday',p:{}},'right']]]);}
+ else if(!q){res.push(['Recent',[['Saturday hotel gig','Booking, Fri 24 Oct, Hotel Skov',{go:'booking',p:{id:'b1'}},'big:calendar'],['Mette Krogh, Hotel Skov','Contact, booker',{go:'contact',p:{id:'c1'}},'av'],['Invoice 2026-014','Invoice, Hotel Royal, due 25 Oct',{go:'money',p:{}},'big:filetext']]]);res.push(['Jump to',[['Bookings','',{go:'bookings',p:{}},'big:calendar'],['Money · Owed to you','',{go:'money',p:{}},'big:money'],['New booking','',{act:'palnew'},'big:plus']]]);}
  else{const hit=r=>(r[0]+' '+r[1]+' '+(r[4]||'')).toLowerCase().includes(q);
   const c=PAL_C.concat(L.CONTACTS.filter(x=>!PAL_C.some(y=>y[0]===x.name)).map(x=>[x.name,x.kind+', '+x.where,{go:'contact',p:{id:x.id}},'av'])).filter(hit).slice(0,3);
   const b=PAL_B.concat(L.BOOKINGS.filter(x=>x.id!=='b1'&&!PAL_B.some(y=>y[0]===x.title)).map(x=>[x.title,x.when.replace(/ \d\d:\d\d$/,'')+', '+(x.venue?L.V(x.venue).name:'No venue'),{go:'booking',p:{id:x.id}},'big:calendar'])).filter(hit).slice(0,3);
@@ -433,7 +433,7 @@ Object.assign(A,{
  csdir:t=>{CS[t.dataset.a==='g'?'gdir':'mdir']=t.dataset.v;L.render();csSaved();},
  csms:()=>{CS.ms=true;CS.mdir='push';L.render();L.toast('Microsoft 365 connected, push only to start. Nothing was written yet',()=>{CS.ms=false;L.render();});},
  csgconnect:()=>{CS.g=true;L.render();L.toast('Google Calendar connected again, two-way');},
- csmore:(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Sync this calendar now','cssync'],['See what was sent','cslog'],[t.dataset.a==='g'?'Disconnect Google Calendar':'Disconnect Microsoft 365',t.dataset.a==='g'?'csdisc':'csdiscm']]}),
+ csmore:(t,r)=>L.open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Sync this calendar now','cssync'],['See what was sent','cslog'],[t.dataset.a==='g'?'Disconnect Google Calendar':'Disconnect Microsoft 365',t.dataset.a==='g'?'csdisc':'csdiscm']]}),
  cslog:()=>{L.close();document.querySelector('.cs-log')?.scrollIntoView({block:'center',behavior:'smooth'});},
  csdisc:()=>L.open('modal',{html:L.confirmM('Disconnect Google Calendar?','Gigs already in Google stay there but stop updating. Nothing in LAAS is deleted, and conflicts are cleared.','Keep connected','csdiscok','Disconnect',1)}),
  csdiscok:()=>{const prev=CS.conf.slice();CS.g=false;CS.conf=[];S.overlay=null;L.render();L.toast('Google Calendar disconnected',()=>{CS.g=true;CS.conf=prev;L.render();});},

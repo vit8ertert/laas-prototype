@@ -513,6 +513,9 @@
   :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
   .tb-tab:is(:active,[data-state="pressed"]) .ti{background:var(--state-pressed)}
 }
+/* the static Pressed state (Figma State=Pressed, the gate and the catalogue) shows at every width: only the live press stays touch-only */
+:is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi)[data-state="pressed"]{background-color:var(--state-pressed)!important}
+.tb-tab[data-state="pressed"] .ti{background:var(--state-pressed)}
 
 @media (max-width:599.98px){
   /* Social posts use the Bookings row: when · accounts, post and reach, status; comments live in the post */

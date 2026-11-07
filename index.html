@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=222c2c2">
+<link rel="stylesheet" href="tokens.css?v=1a4021e">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -20,21 +20,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=222c2c2">
-<link rel="stylesheet" href="components.css?v=222c2c2">
-<link rel="stylesheet" href="views/tour.css?v=222c2c2">
-<link rel="stylesheet" href="views/dashboard.css?v=222c2c2">
-<link rel="stylesheet" href="views/bookings.css?v=222c2c2">
-<link rel="stylesheet" href="views/booking.css?v=222c2c2">
-<link rel="stylesheet" href="views/contacts.css?v=222c2c2">
-<link rel="stylesheet" href="views/money.css?v=222c2c2">
-<link rel="stylesheet" href="views/catalogue.css?v=222c2c2">
-<link rel="stylesheet" href="views/account.css?v=222c2c2">
-<link rel="stylesheet" href="views/mail.css?v=222c2c2">
-<link rel="stylesheet" href="views/social.css?v=222c2c2">
-<link rel="stylesheet" href="views/logomotion.css?v=222c2c2">
-<link rel="stylesheet" href="tags.css?v=222c2c2">
-<link rel="stylesheet" href="views/compact.css?v=222c2c2">
+<link rel="stylesheet" href="shell.css?v=1a4021e">
+<link rel="stylesheet" href="components.css?v=1a4021e">
+<link rel="stylesheet" href="views/tour.css?v=1a4021e">
+<link rel="stylesheet" href="views/dashboard.css?v=1a4021e">
+<link rel="stylesheet" href="views/bookings.css?v=1a4021e">
+<link rel="stylesheet" href="views/booking.css?v=1a4021e">
+<link rel="stylesheet" href="views/contacts.css?v=1a4021e">
+<link rel="stylesheet" href="views/money.css?v=1a4021e">
+<link rel="stylesheet" href="views/catalogue.css?v=1a4021e">
+<link rel="stylesheet" href="views/account.css?v=1a4021e">
+<link rel="stylesheet" href="views/mail.css?v=1a4021e">
+<link rel="stylesheet" href="views/social.css?v=1a4021e">
+<link rel="stylesheet" href="views/logomotion.css?v=1a4021e">
+<link rel="stylesheet" href="tags.css?v=1a4021e">
+<link rel="stylesheet" href="views/compact.css?v=1a4021e">
 
 <div id="app"></div>
 
@@ -480,7 +480,7 @@ function overlay(){const o=S.overlay;if(!o)return '';if(LAAS.OVERLAYS[o.type])re
  if(o.type==='statusmenu'){const opts=['Confirmed','Draft','Attention','Paid','Completed'];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:8px" role="dialog" aria-label="Filter by status"><div class="t-meta faint" style="padding:8px 8px">Status</div>${opts.map(s=>`<label class="row" style="padding:8px 8px;gap:8px;cursor:pointer"><input type="checkbox" data-sf="${s}" ${S.statusFilter.includes(s)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${s}</span><span class="t-meta faint">${BOOKINGS.filter(b=>STATUS[b.status][1]===s).length}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearfilter">Clear</button></div></div>`;}
  if(o.type==='statusmenu2')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop smenu" role="menu" style="left:${o.x}px;top:${o.y}px"><div class="smenu-h">Status follows documents</div>${[['enquiry','Enquiry','Someone asked. Reply or hold the date.'],['hold','Hold','Date reserved until an expiry. Band availability asked.'],['offer','Offer out','Moves here when the offer link is sent.'],['confirmed','Confirmed','Moves here when the offer is signed or the deposit paid.'],['completed','Completed','Moves here after the gig date, once you settle.']].map(([k,l,d])=>`<button class="smenu-it ${S.booking.state===k&&!S.booking.cancelled?'on':''}" role="menuitem" data-bstate="${k}"><span class="schip ${k}"><i></i>${l}</span><span class="smenu-d">${d}</span>${S.booking.state===k&&!S.booking.cancelled?ic('check','s'):''}</button>`).join('')}<hr class="smenu-rule"><button class="smenu-it ${S.booking.cancelled?'on':''}" role="menuitem" data-act="${S.booking.cancelled?'uncancel':'cancelbooking'}"><span class="schip cancelled"><i></i>Cancelled</span><span class="smenu-d">Asks for a reason and what happens to the deposit.</span>${S.booking.cancelled?ic('check','s'):''}</button><div class="smenu-f">Moving by hand is logged with your name. The assistant can propose moves; nothing changes without Confirm.</div></div>`;
  if(o.type==='chipmenu'){const c=CHIPS[o.key];return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:8px" role="dialog" aria-label="Filter by ${c.label}"><div class="t-meta faint" style="padding:8px 8px">${c.label}</div>${c.opts.map(x=>`<label class="row" style="padding:8px 8px;gap:8px;cursor:pointer"><input type="checkbox" data-cf="${o.key}|${x}" ${S.filters[o.key].includes(x)?'checked':''} style="width:16px;height:16px;accent-color:var(--ink)"><span style="flex:1">${x}</span><span class="t-meta faint">${c.n(x)}</span></label>`).join('')}<div style="border-top:1px solid var(--rule);padding:4px"><button class="btn ghost s" data-act="clearchip" data-key="${o.key}">Clear</button></div></div>`;}
- if(o.type==='menu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop" style="left:${o.x}px;top:${o.y}px;width:260px;padding:8px" role="menu">${o.items.map(([l,a,danger,text])=>`<button class="it row" role="menuitem" style="width:100%;padding:8px 8px;border-radius:8px;text-align:left;${danger?'color:var(--bad)':''}" data-act="${a}" ${text?`data-text="${text}"`:''}>${l}</button>`).join('')}</div>`;
+ if(o.type==='menu')return `<div class="scrim" style="background:transparent" data-act="close"></div><div class="pop menu" style="left:${o.x}px;top:${o.y}px" role="menu">${o.items.map(([l,a,danger,text,icon])=>l==='-'?'<i class="div" role="separator"></i>':`<button class="it${danger?' danger':''}" role="menuitem" data-act="${a}" ${text?`data-text="${text}"`:''}>${icon?ic(icon,'s'):''}${l}</button>`).join('')}</div>`;
  if(o.type==='modal')return `<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true">${o.html}</div>`;
  if(o.type==='drawer')return `<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${esc(o.title)}"><div class="dh"><div class="grow"><h2 class="t-title">${o.title}</h2><span class="t-meta muted">${o.sub||''}</span></div><button class="btn ghost s" data-act="close">${ic('x','s')}Close</button></div><div class="db">${o.body}</div><div class="df">${o.foot}</div></aside>`;
  return '';}
@@ -603,7 +603,7 @@ document.addEventListener('click',e=>{
   connectspotify:()=>{S.audConnected=true;S.atab='overview';S.overlay=null;go('audience');toast((t.dataset.svc||'Spotify for Artists')+' connected, read-only');},connectyoutube:()=>{S.audConnected=true;S.atab='overview';go('audience');toast('YouTube connected, read-only');},
   disconnect:()=>{S.overlay={type:'modal',html:confirmM('Disconnect this service?','Its figures stay in history, but nothing new comes in. You can connect again any time.','Keep connected','confirmdisc','Disconnect',1)};render();},
   confirmdisc:()=>{S.audConnected=false;S.overlay=null;go('audience');toast('Disconnected',()=>{S.audConnected=true});},
-  audmore:()=>open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Export figures as CSV','audexport'],['Who can see this','audwho'],['Disconnect everything','disconnect',1]]}),
+  audmore:()=>open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Export figures as CSV','audexport'],['Who can see this','audwho'],['Disconnect everything','disconnect',1]]}),
   audexport:()=>{close();toast('Figures exported: audience-2026.csv');},audwho:()=>{close();toast('Owner and Admin only. Venues never see audience numbers');},
   audbanner:()=>{S.audBanner=false;render();},datatable:()=>{S.dataTable=!S.dataTable;render();},
 
@@ -611,7 +611,7 @@ document.addEventListener('click',e=>{
   chipmenu:()=>open('chipmenu',{key:t.dataset.key,x:Math.min(r.left,innerWidth-276),y:r.bottom+6}),
   clearchip:()=>{S.filters[t.dataset.key]=[];close();},clearfilters:()=>{S.search='';S.statusFilter=[];S.filters.kind=[];S.filters.pay=[];render();},
   export:()=>open('modal',{html:`<h2 class="t-title">Export bookings</h2><div class="field"><label>Format</label><div class="segmented-control seg"><button class="on">CSV</button><button>Excel</button><button>PDF</button></div></div><label class="row" style="gap:8px"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--ink)">Only the ${filteredBookings().length} shown now</label><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Export ready: ${filteredBookings().length} bookings">Export</button></div>`}),
-  bookingmore:()=>open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Duplicate booking','dupbooking'],['Download agreement PDF','toast2'],['Copy offer link','copytext',0,'https://laas.app/o/LT-2026-031'],[S.booking.cancelled?'Restore booking':'Cancel booking',S.booking.cancelled?'uncancel':'cancelbooking',!S.booking.cancelled]]}),
+  bookingmore:()=>open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Duplicate booking','dupbooking'],['Download agreement PDF','toast2'],['Copy offer link','copytext',0,'https://laas.app/o/LT-2026-031'],[S.booking.cancelled?'Restore booking':'Cancel booking',S.booking.cancelled?'uncancel':'cancelbooking',!S.booking.cancelled]]}),
   dupbooking:()=>{close();toast('Copy made: Saturday hotel gig (2), as a Draft');},toast2:()=>{close();toast('Agreement PDF is ready, signed 12 Oct');},
   cancelbooking:()=>{S.overlay={type:'modal',html:confirmM('Cancel Saturday hotel gig?','Mette gets a cancellation mail and the 1.500 DKK deposit is refunded. The band and the day sheet are told.','Keep booking','confirmcancel','Cancel booking',1)};render();},
   confirmcancel:()=>{S.booking.cancelled=true;S.overlay=null;render();toast('Booking cancelled',()=>{S.booking.cancelled=false});},uncancel:()=>{S.booking.cancelled=false;S.overlay=null;render();toast('Booking restored');},
@@ -630,7 +630,7 @@ document.addEventListener('click',e=>{
   compare:()=>document.getElementById('plancards')?.scrollIntoView({behavior:'smooth',block:'center'}),
   importcat:()=>{S.overlay=DR.importcat(t.dataset.src);render();},importcatdone:()=>{S.catalog=PAST;S.overlay=null;go('catalogue');toast('3 releases imported',()=>{S.catalog=null});},
   previewlinks:()=>open('modal',{html:`<h2 class="t-title">Links for ${S.release.title}</h2>${[['Pre-save page','laas.app/r/late-shift','Live now'],['Bandcamp pre-order','lowtide.bandcamp.com/album/late-shift','Live now'],['Spotify, Apple Music','After delivery','Waiting']].map(([a,b,c])=>`<div class="list-row" style="cursor:default"><span class="tx"><b>${a}</b><small class="mono">${b}</small></span>${c==='Waiting'?'<span class="tag draft">Waiting</span>':`<button class="btn secondary s" data-act="copytext" data-text="https://${b}">${ic('copy','s')}Copy</button>`}</div>`).join('')}<div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Close</button></div>`}),
-  releasemore:()=>open('menu',{x:Math.max(8,Math.min(r.right-260,innerWidth-276)),y:r.bottom+6,items:[['Change release date','changedate'],['Duplicate as new release','duprelease'],['Delete this release','deleterelease',1]]}),
+  releasemore:()=>open('menu',{x:Math.max(8,Math.min(r.right-240,innerWidth-276)),y:r.bottom+6,items:[['Change release date','changedate'],['Duplicate as new release','duprelease'],['Delete this release','deleterelease',1]]}),
   changedate:()=>{S.overlay={type:'modal',html:`<h2 class="t-title">Change release date</h2><div class="field"><label for="rd2">Release date</label><span class="bk-lead">${ic('calendar')}<input class="input" id="rd2" data-picker="date" value="Fri 21 Nov 2026"></span><span class="help">The plan moves with it: delivery, Koda and pitches.</span></div><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Cancel</button><button class="btn accent" data-act="close" data-msg="Release date moved; the plan moved with it" data-undo="1">Save</button></div>`};render();},
   duprelease:()=>{close();toast('Copy made as a draft: Late Shift (2)');},
   deleterelease:()=>{S.overlay={type:'modal',html:confirmM('Delete '+S.release.title+'?','Tracks, credits and the plan are removed. Nothing has gone to stores yet.','Keep it','confirmdelrel','Delete release',1)};render();},
@@ -646,7 +646,7 @@ document.addEventListener('click',e=>{
   abarctxoff:()=>{S.abarCtxOff=S.view;render();},
   abarnew:()=>{S.asst='new';S.asstEdit=false;go('assistant');},
   readall:()=>{S.notifs.forEach(n=>n.unread=false);render();},
-  memenu:()=>{const b=t.getBoundingClientRect();open('menu',{x:Math.max(8,Math.round(b.right-260)),y:Math.round(b.bottom+6),items:[['Your account','meacc'],['Band settings','meband'],['Switch band','meswitch'],['Guide','meguide'],['Sign out','mesignout']]});},
+  memenu:()=>{const b=t.getBoundingClientRect();open('menu',{x:Math.max(8,Math.round(b.right-240)),y:Math.round(b.bottom+6),items:[['Your account','meacc'],['Band settings','meband'],['Switch band','meswitch'],['Guide','meguide'],['Sign out','mesignout']]});},
   meacc:()=>{S.overlay=null;go('account');},meband:()=>{S.overlay=null;go('settings');},meswitch:()=>{S.overlay=null;render();const b=document.querySelector('.sidebar [data-act="bandmenu"]');if(b)b.click();},
   meguide:()=>{S.overlay=null;render();L.tour&&L.tour.start('first');},mesignout:()=>{S.overlay=null;render();toast('Signed out. This is a prototype, so you stay in.');},
   undo:()=>{if(S.toast&&typeof S.toast.undo==='function')S.toast.undo();S.toast=null;render();},
@@ -721,21 +721,21 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=222c2c2"></script>
-<script src="views/bookings.js?v=222c2c2"></script>
-<script src="views/booking.js?v=222c2c2"></script>
-<script src="views/denmark.js?v=222c2c2"></script>
-<script src="views/contacts.js?v=222c2c2"></script>
-<script src="views/money.js?v=222c2c2"></script>
-<script src="views/catalogue.js?v=222c2c2"></script>
-<script src="views/brands.js?v=222c2c2"></script>
-<script src="views/account.js?v=222c2c2"></script>
-<script src="views/mail.js?v=222c2c2"></script>
-<script src="views/social.js?v=222c2c2"></script>
-<script src="views/tour.js?v=222c2c2"></script>
-<script src="views/motion.js?v=222c2c2"></script>
-<script src="views/logomotion.js?v=222c2c2"></script>
-<script src="views/compact.js?v=222c2c2"></script>
-<script src="views/picker.js?v=222c2c2"></script>
-<script src="views/overflow.js?v=222c2c2"></script>
+<script src="views/dashboard.js?v=1a4021e"></script>
+<script src="views/bookings.js?v=1a4021e"></script>
+<script src="views/booking.js?v=1a4021e"></script>
+<script src="views/denmark.js?v=1a4021e"></script>
+<script src="views/contacts.js?v=1a4021e"></script>
+<script src="views/money.js?v=1a4021e"></script>
+<script src="views/catalogue.js?v=1a4021e"></script>
+<script src="views/brands.js?v=1a4021e"></script>
+<script src="views/account.js?v=1a4021e"></script>
+<script src="views/mail.js?v=1a4021e"></script>
+<script src="views/social.js?v=1a4021e"></script>
+<script src="views/tour.js?v=1a4021e"></script>
+<script src="views/motion.js?v=1a4021e"></script>
+<script src="views/logomotion.js?v=1a4021e"></script>
+<script src="views/compact.js?v=1a4021e"></script>
+<script src="views/picker.js?v=1a4021e"></script>
+<script src="views/overflow.js?v=1a4021e"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
