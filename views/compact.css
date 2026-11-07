@@ -463,7 +463,7 @@
   /* long help under a field: one line on a phone, a tap shows all of it (Carbon: truncate descriptions, never labels) */
   .field .help:not(.err):not(.cx-full){display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
   /* Today: the day sheet header on one line; the record row wraps instead of overlapping */
-  .d-sh{flex-wrap:nowrap!important;min-width:0}.d-sh h3{white-space:nowrap;flex:none}
+  .d-sh{flex-wrap:nowrap!important;min-width:0}.d-sh h3{white-space:nowrap;flex:none}.d-sh>h3+*{margin-left:auto}  /* the trailing meta or button stays flush right (Figma Section header Heading Compact) */
   .d-sh>:not(h3){min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .d-dh{flex-wrap:wrap!important;row-gap:4px!important;column-gap:8px!important}
   .d-dh>b{order:5;flex:1 1 100%!important;width:auto!important;height:auto!important}
