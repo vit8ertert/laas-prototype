@@ -278,7 +278,7 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-tr mark,.ml-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
 .ml-att{display:flex;color:var(--muted)}.ml-none{font-size:12px;line-height:16px;color:var(--faint)}
 .ml-pair{display:inline-flex;align-items:center;gap:4px;vertical-align:top;color:var(--accent-ink)}.ml-pair svg{width:16px;height:16px}  /* 6 Nov gate: Figma Table cell Title and meta 1141:62560: Link 16, the meta line stays 18 (vertical-align: top keeps the inline-flex out of the baseline) */
-.main.enter .ml-tr:not(.ml-th){animation:rise var(--dur-2) var(--ease-standard) both;animation-delay:calc(.12s + var(--i,0) * 30ms)}
+
 .ml-foot{display:flex;align-items:center;gap:8px;min-height:34px}
 .ml-foot>span{flex:1;font-size:12px;line-height:16px;color:var(--muted);max-width:75ch}
 
