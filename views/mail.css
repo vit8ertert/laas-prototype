@@ -53,6 +53,8 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-points{list-style:none;margin:8px 0 0;padding:0;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;max-width:720px;color:var(--muted);font-size:13px;line-height:var(--lh-label)}
 .ml-points li{display:flex;align-items:center;gap:8px}
 
+.ml-linkcol{display:flex} /* the link chip alone, no line box around it (the doctype: standards mode adds a 22 px strut) */
+
 @media (max-width:1100px){
  .ml-row{grid-template-columns:8px 32px 140px minmax(0,1fr) 104px}
  .ml-linkcol,.ml-status{display:none}

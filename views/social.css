@@ -8,6 +8,7 @@
 /* ---------- tables: own columns on the shared bk-table ---------- */
 .so .bk-tr.so-p{grid-template-columns:150px minmax(240px,1fr) 170px 110px 72px 88px;min-width:960px}
 .so .bk-tr.so-k{grid-template-columns:minmax(180px,1fr) 240px 160px 110px 110px;min-width:860px}
+.so-d>span:has(>.trk-fmt){display:flex} /* the format tag alone: no 22 px line box */
 .so .bk-tr.so-d{grid-template-columns:minmax(200px,1fr) 120px 100px 150px 170px 80px;min-width:920px}
 .so .bk-tr.so-k.sel{background:var(--well)}
 .so .bk-tr.so-k.sel:is(:hover,[data-state="hover"]){background:var(--well)}

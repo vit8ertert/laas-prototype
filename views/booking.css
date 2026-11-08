@@ -100,7 +100,7 @@
 .bd-details>.bd-f-m{max-width:400px}
 .bd-stack{margin:0;display:flex;flex-direction:column;gap:12px}
 .bd-stack dt{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-stack dd{margin:-8px 0 0;font:400 15px/var(--lh-body) var(--sans)}
+.bd-stack dd{margin:-8px 0 0;font:400 15px/var(--lh-body) var(--sans)}.bd-stack dd:has(>.link){display:flex} /* a lone link button: no 22 px line box around it */
 .bd-panel .bd-stack{padding:0 12px}
 /* row form (Figma "Row": label over value, gap 4, pad 0 12) */
 .bd-panel .bd-stack.rows{padding:0}
