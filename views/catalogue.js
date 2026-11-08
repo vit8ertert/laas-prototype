@@ -108,11 +108,12 @@ function tabBody(){const c=listCounts();const t=S.cat.tab;
  if(t==='earning'){
   if(!c.past.length)return `<div class="empty cat-empty"><h3 class="t-title">Nothing to check yet</h3><p class="muted">The earning check runs on songs that are out. Import your catalogue to start it.</p><div class="row" style="justify-content:center"><button class="btn secondary" data-act="importcat" data-src="Spotify">${ic('upload','s')}Import catalogue</button></div></div>`;
   /* release by release, song by song (Vit 21 Oct: with 5 albums and 3 singles a flat list of every song does not scale):
-     releases with a problem come first and open; releases where every song earns fold to one line. */
+     releases with a problem come first; every release starts folded to one line (Vit 8 Nov: "this should be collapsed
+     by default"; was: the ones with a problem open) and its tag says what to check. */
   const chk=x=>{const t=x[2]||'';const k=!/not registered at koda/i.test(t),g=!/not at gramex/i.test(t);return {k,g,ok:k&&g};};
   const rel=c.past.map(r=>{const songs=r.tracks.map(x=>({x,...chk(x)}));return {r,songs,bad:songs.filter(s=>!s.ok).length};}).sort((a,b)=>b.bad-a.bad);
   const nBad=rel.reduce((a,g)=>a+g.bad,0),nAll=rel.reduce((a,g)=>a+g.songs.length,0),f=S.cat.ef||'all';
-  S.cat.eopen??=Object.fromEntries(rel.map(g=>[g.r.id,g.bad>0]));
+  S.cat.eopen??={};
   const cell=(ok,miss,act,id)=>ok?`<span class="ec-ok">${ic('check','s')}Registered</span>`:`<button class="tag attention ec-fix" data-act="ecfix" data-what="${miss}" data-song="${esc(id)}">${ic('plus','s')}Register</button>`;
   const grp=g=>{const open=S.cat.eopen[g.r.id];const songs=f==='check'?g.songs.filter(s=>!s.ok):g.songs;if(f==='check'&&!songs.length)return '';
    return `<div class="ec-grp ${open?'open':''}"><button class="ec-gh" data-act="ecgrp" data-id="${g.r.id}" aria-expanded="${!!open}"><img class="ec-art" src="${L.IMG(g.r.img)}" alt=""><span class="ec-gt"><b>${esc(g.r.title)}</b><small>${g.r.kind}, ${g.songs.length} ${g.songs.length===1?'song':'songs'}, ${g.r.date}, ${g.r.distributor}</small></span>${g.bad?tag('attention',`${g.bad} to check`):tag('confirmed','All earning')}<span class="ec-chev">${ic(open?'down':'right','s')}</span></button>
