@@ -64,7 +64,8 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 /* Chip 153:948 (version chip, calendar pills, suggestion chips): pad 8 12, gap 8, pill, inside stroke rule, Body tight 15/18 */
 .d-v,.d-pill{display:inline-flex;align-items:center;gap:8px;height:auto;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink);white-space:nowrap}
 .d-v:is(:hover,[data-state="hover"]),.d-pill:is(:hover,[data-state="hover"]){background:var(--hover)}
-:root[data-theme="light"],:root[data-genre]{--d-head:var(--surface);--d-idc:var(--accent-ink)}
+:root{--d-head:var(--surface)}  /* Gig sheet header on surface in every mode (Figma 1176:64960); the old rule left "Match system" with the default look on a hard-coded #1f1f1f, dark under light text (found building the Django Dashboard, 8 Nov) */
+:root[data-theme="light"],:root[data-genre]{--d-idc:var(--accent-ink)}@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--d-idc:var(--accent-ink)}}
 .d-row{display:flex;align-items:center;gap:16px;padding:11px 16px 12px;border-top:1px solid var(--rule);width:100%;text-align:left;min-height:60px}
 .d-row:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-time{width:72px;flex:none;font:500 16px/22px var(--mono)}
