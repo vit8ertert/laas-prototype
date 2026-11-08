@@ -204,8 +204,6 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 .cv-dups .btn.cv-link{align-self:flex-start;height:34px;padding:8px 12px 8px 0;font:500 13px/var(--lh-label) var(--sans)}
 .cv-dups .btn.cv-link:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 .cv-check{display:flex;align-items:center;gap:8px;cursor:pointer;font:400 15px/18px var(--sans);color:var(--ink)}
-.cv-check input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;margin:0;box-shadow:inset 0 0 0 1px var(--rule-strong);display:grid;place-items:center;flex:none;cursor:pointer}
-.cv-check input:checked{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:inset 0 0 0 1px var(--ink)}
 
 /* sort popover: 260 wide, padding 6, radius 12 */
 .pop.cv-sortpop{width:260px;padding:8px;border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
@@ -236,8 +234,6 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 .cv-cvrrow b{font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}.cv-cvrrow small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* light mode: the ink box is near-black, so the check is white */
-:root[data-theme="light"] .cv-check input:checked{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .cv-check input:checked{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")}}
 /* one page tint for detail pages (Vit 21 Oct: venue background "not aligned with other pages"): the shared .m-tint, full
    panel width; pages that open on a photo (venue, booking) have none, the photo is the colour */
 .cv-tint{display:none}

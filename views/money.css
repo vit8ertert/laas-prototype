@@ -139,7 +139,7 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .m-check[disabled]{cursor:default}
 .m-box{width:18px;height:18px;border-radius:4px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);display:grid;place-items:center;flex:none;color:var(--canvas)}
 .m-check.on .m-box{background:var(--ink);box-shadow:none}
-.m-box svg{width:14px;height:14px;stroke-width:2.5}
+.m-box svg{width:14px;height:14px;stroke-width:2.86}
 
 /* ledger */
 .m-ledger{display:flex;flex-direction:column;gap:24px}

@@ -106,7 +106,7 @@
 .bk-menu .ft{margin-top:0;padding:4px 4px 0;border-top:1px solid var(--rule)}
 .bk-menu .box,.bk-cb .box{display:grid;place-items:center;width:16px;height:16px;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none;color:var(--canvas)}
 .bk-menu .box.on,.bk-cb .box.on{background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
-.bk-menu .box svg.i{width:12px;height:12px;stroke-width:3}
+.bk-menu .box svg.i{width:12px;height:12px;stroke-width:2.86} /* every check in a box has the Figma Checkbox line (2.86 on the 24 grid, 8 Nov: was 3) */
 
 /* ---------- dialogs: 560 (width rule) ---------- */
 .modal:has(.bk-modal){width:min(560px,calc(100% - 32px))}
@@ -191,7 +191,7 @@
 .bk-cb{display:flex;align-items:center;gap:8px;font:400 15px/18px var(--sans);color:var(--ink)}
 .bk-cb .box{width:18px;height:18px;box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface)}
 .bk-cb .box.on{box-shadow:inset 0 0 0 1px var(--ink)}
-.bk-cb .box svg.i{width:14px;height:14px;stroke-width:3}
+.bk-cb .box svg.i{width:14px;height:14px;stroke-width:2.86}
 .bk-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;align-items:start}
 .bk-file{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left}
 .bk-file:is(:hover,[data-state="hover"]){background:var(--raised)}

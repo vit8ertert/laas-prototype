@@ -361,8 +361,15 @@ html.gated body>*:not(.gate){display:none!important}
 .ai-label svg.i{width:14px;height:14px}
 .ml-sendh{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
 /* Checkbox in tables (Figma Checkbox 142:626, 18 box) and the Batch bar over a table while rows are selected */
-.cb{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent-strong);cursor:pointer}
-.cb[data-mixed]{opacity:.6}
+/* Checkbox (Figma Checkbox 142:626): one look for every checkbox (Vit 8 Nov: "the checkmark is too thick", the browser drew
+   its own). 18 box, radius 4, a rule-strong ring on surface; on = ink with the Lucide check, 14 px at Figma's 1.67 px line,
+   in surface (a mask, so it follows every theme); some selected (data-mixed or :indeterminate) = ink with a dash. */
+input[type=checkbox]{--ck:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.86' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:0;flex:none;border-radius:4px;background-color:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);display:inline-grid;place-items:center;vertical-align:middle;cursor:pointer}
+input[type=checkbox]::after{content:"";width:14px;height:14px;background:var(--surface);-webkit-mask:var(--ck) center/14px 14px no-repeat;mask:var(--ck) center/14px 14px no-repeat;visibility:hidden}
+input[type=checkbox]:is(:checked,:indeterminate,[data-mixed]){background-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+input[type=checkbox]:is(:checked,:indeterminate,[data-mixed])::after{visibility:visible}
+input[type=checkbox]:is(:indeterminate,[data-mixed]){--ck:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.86' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E")}
+input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--ink);outline-offset:2px}
 .sel-cell{display:inline-flex;align-items:center;gap:var(--space-3)}
 .cv-table td.tt{gap:var(--space-3)}
 .cv-table tbody tr[aria-selected="true"]{background:var(--state-selected)}
