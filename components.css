@@ -305,6 +305,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk) .tx>b{font-weight:inherit}  /* a <b> title (Contacts rows, for the hover underline) is Body like every List row title */
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk) .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk)>:is(.acc-av,.bd-av,.cv-av.s,.cv-sq){width:28px;height:28px}  /* one list-row avatar size, the List row component's 28 (30 Oct: booking rows drew 32) */
+.list-row>:is(.ml-av,.thumb.s){width:28px;height:28px}  /* the same 28 in a plain List row (Mail thread panel, 8 Nov: was 32, the Mail row avatar) */
 
 /* Sections (pattern census card 3, 30 Oct; Vit: keep two phone title sizes): a page section (Contacts, Money, Booking) has
    16 between its header and body at both widths, a sub-section inside a card (Dashboard, Catalogue) 12. Header levels:
