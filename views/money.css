@@ -402,6 +402,8 @@ button.ml-ltr:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ex-cat .i{width:14px;height:14px;color:var(--muted)}.ex-cat:is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 .ex-rc{display:inline-flex;align-items:center;gap:8px;font:400 14px/20px var(--sans);color:var(--muted)}.ex-rc .i{width:14px;height:14px}
 .ex-add{display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ex-add .i{width:12px;height:12px}
+/* the Receipt cell holds one inline-flex chip: a flex cell keeps it the chip's height in standards mode too (Django, the artifact), as quirks mode (index.html, Pages) already draws it; otherwise the line box adds 4 px and the chip sits 2 px high (T495 step 7) */
+.ex-r>span:has(>.ex-rc,>.ex-add){display:flex}
 .bk-tr.ex-r .n{text-align:right;justify-self:end}
 .bk-tr.ex-r .mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
 .ex-tot{background:var(--canvas)!important;min-height:0;padding-top:8px;padding-bottom:8px;cursor:default;font:400 14px/20px var(--sans)}
