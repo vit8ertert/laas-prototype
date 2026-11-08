@@ -8,7 +8,7 @@
  --aurgrid:radial-gradient(circle,rgba(242,242,242,.18) 1px,transparent 1.2px) 1px 1px/48px 48px;
  --aurlines:repeating-linear-gradient(rgba(0,0,0,.35) 0 1px,transparent 1px 4px)}
 :root[data-genre="classical"]{--aur1:#c9a04a;--aur1o:.65;--aur2:#e3c98e;--aur2o:.75;--aur3:#e9cdbb;--aur3o:.5;--aur4:#f3e6c8;--aur4o:.8;--aur5:#d49a3a;--aur5o:.5}
-:root[data-genre="classical"]:not([data-theme="light"]){--aur1o:.35;--aur2o:.35;--aur3o:.25;--aur4o:.25;--aur5o:.3}
+:root[data-genre="classical"][data-theme="dark"]{--aur1o:.35;--aur2o:.35;--aur3o:.25;--aur4o:.25;--aur5o:.3}@media (prefers-color-scheme: dark){:root[data-genre="classical"]:not([data-theme]){--aur1o:.35;--aur2o:.35;--aur3o:.25;--aur4o:.25;--aur5o:.3}}
 
 .d-page{position:relative}
 .d-page>*{position:relative;z-index:1}
@@ -187,7 +187,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-dn{font:400 14px/20px var(--mono)}
 .d-day.out .d-dn{color:var(--faint)}
 .d-day.today{background:var(--d-today,var(--accent-tint))}.d-day.today .d-dn{color:var(--d-todayc,var(--accent-ink))}
-:root:not([data-theme="light"]):not([data-genre]){--d-today:#2a3012;--d-todayc:#e4f77a}
+/* dark only: "Match system" has no data-theme, so a light system must not get these (8 Nov) */:root[data-theme="dark"]:not([data-genre]){--d-today:#2a3012;--d-todayc:#e4f77a}@media (prefers-color-scheme: dark){:root:not([data-theme]):not([data-genre]){--d-today:#2a3012;--d-todayc:#e4f77a}}
 .d-day.photo{background-size:cover;background-position:center;background-repeat:no-repeat}
 .d-ev{display:block;width:100%;padding:2px 8px;border-radius:4px;font:400 12px/16px var(--sans);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .d-ev.confirmed{background:var(--ok-tint);color:var(--ok)}.d-ev.draft{background:var(--draft-tint);color:var(--draft)}.d-ev.attention{background:var(--att-tint);color:var(--att)}.d-ev.paid{background:var(--paid-tint);color:var(--accent-ink)}
@@ -273,7 +273,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-mh{padding:8px 8px;font:400 12px/16px var(--sans);color:var(--faint)}
 .d-opt{display:flex;align-items:center;gap:8px;padding:8px 8px;min-height:50px;border-radius:8px;text-align:left;width:100%}
 .d-opt:is(:hover,[data-state="hover"]){background:var(--well)}.d-opt.on{background:color-mix(in srgb,var(--ink) 12%,transparent)}
-:root:not([data-theme="light"]) .d-opt.on{background:rgba(255,255,255,.12)}
+:root[data-theme="dark"] .d-opt.on{background:rgba(255,255,255,.12)}@media (prefers-color-scheme: dark){:root:not([data-theme]) .d-opt.on{background:rgba(255,255,255,.12)}}
 .d-opt>svg.i.s{width:16px;height:16px}
 .d-prev{width:56px;height:36px;border-radius:4px;overflow:hidden;display:flex;flex:none}.d-prev i{flex:1}
 .d-ot{flex:1;min-width:0;display:flex;flex-direction:column}.d-ot b{font:500 15px/var(--lh-body) var(--sans)}.d-ot small{font:400 12px/16px var(--sans);color:var(--muted)}
