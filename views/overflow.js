@@ -44,10 +44,10 @@ function scrollCues(){document.querySelectorAll(`.main :is(${TABLES},${ROWS})`).
  edges(el);});}
 
 function bannerClamp(){document.querySelectorAll(`.main ${BANNERS}`).forEach(b=>{
- b.classList.remove('cx-clamp');b.querySelector(':scope>.cx-more')?.remove();if(!compact.matches)return;
+ b.classList.remove('cx-clamp');b.querySelector(':scope>.cx-showmore')?.remove();if(!compact.matches)return;
  const key=(b.querySelector('.tx')?.textContent||'').trim().slice(0,60);if((S.cxBannerOpen||{})[key])return;
  const lines=Math.round((b.getBoundingClientRect().height-16)/18);if(lines<=3)return;
- b.classList.add('cx-clamp');const m=document.createElement('button');m.type='button';m.className='cx-more';m.textContent='Show more';
+ b.classList.add('cx-clamp');const m=document.createElement('button');m.type='button';m.className='cx-showmore';m.textContent='Show more';
  m.addEventListener('click',e=>{e.stopPropagation();(S.cxBannerOpen??={})[key]=true;b.classList.remove('cx-clamp');m.remove();});b.appendChild(m);});}
 
 const prev=L.afterRender;

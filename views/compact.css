@@ -569,9 +569,8 @@
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:4px;margin:0!important}
   /* longer than three lines (views/overflow.js): two lines, then the action and "Show more" on the next line */
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.tx{display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-  .main .cx-more{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
-  .main .cx-clamp>.tx+.cx-more{margin-left:0}
-  .cx-group>.cx-more{display:grid;place-items:center}  /* the header ⋯ shares the class with the banner Show more link above (display:inline); centre its icon, standards mode puts it 2 px high */
+  .main .cx-showmore{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+  .main .cx-clamp>.tx+.cx-showmore{margin-left:0}  /* the banner's Show more link; was .cx-more, which the header ⋯ button also carries (it took 75 % opacity, 8 Nov) */
 }
 /* Contact and venue pages on phones (Vit 22 Oct): the Bookings and People sections have no card, so their rows do not
    bleed past the page gutter; the text starts on the section heading's edge (16 from the screen) */
