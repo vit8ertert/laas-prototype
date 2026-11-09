@@ -60,7 +60,7 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 .d-sheet{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden}
 .d-dh{display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:58px;background:var(--d-head,#1f1f1f)}
 .d-dh b{flex:1;min-width:0;font:500 15px/var(--lh-body) var(--sans)}.d-dh small{font:400 12px/16px var(--sans);color:var(--muted)}
-.d-id{font:400 14px/20px var(--mono);color:var(--d-idc,#8e7bd6)}.d-dh .d-id{width:72px;flex:none}
+.d-id{font:400 14px/20px var(--mono);color:var(--d-idc,#8e7bd6)}.d-dh .d-id{min-width:72px;flex:none;white-space:nowrap}.d-id{white-space:nowrap}
 /* Chip 153:948 (version chip, calendar pills, suggestion chips): pad 8 12, gap 8, pill, inside stroke rule, Body tight 15/18 */
 .d-v,.d-pill{display:inline-flex;align-items:center;gap:8px;height:auto;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink);white-space:nowrap}
 .d-v:is(:hover,[data-state="hover"]),.d-pill:is(:hover,[data-state="hover"]){background:var(--hover)}

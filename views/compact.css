@@ -201,6 +201,11 @@
   .cx-fold-b{display:inline-flex;align-items:center;gap:8px;margin-left:auto;min-height:32px;padding:0 4px 0 12px;border-radius:var(--r-pill);color:var(--muted);font:400 13px/var(--lh-label) var(--sans)}
   .cx-fold-b:is(:hover,[data-state="hover"]){background:var(--state-hover)}
   .bd-pgroup>.bd-sh{display:flex;align-items:center;gap:8px}
+  /* (Vit 9 Nov, "cards padding are 0px"): tags.css zeroes sections inside a side card, but on phones the rail is
+     display:contents and each group is its own card; a folded group escapes that rule, an unfolded one (short or
+     empty) lost its padding. one class more specific than that rule. The timeline card stretches even with no steps. */
+  .bd-gdgrid>.bd-rail.bd-panel>.bd-pgroup:not(.cx-folded){padding:var(--card)!important}
+  .bd-gdgrid>.bd-tl{align-self:stretch}
 }
 @media (max-width:599.98px){
   .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{align-self:stretch;width:100%}

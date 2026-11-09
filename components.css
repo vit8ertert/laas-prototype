@@ -380,3 +380,9 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
    the fourth note wrapped). Too long ellipsises; write notes that fit (about 34 characters in a 4-up row).
    Figma: KPI tile Delta truncates after 1 line. Covers Dashboard, Money, Catalogue and Audience tiles. */
 .kpi-tile>:nth-child(3){white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:100%}
+/* Empty state, Kind=Inline (Figma 2021:38125, 9 Nov): an empty section inside a card says so in one muted Body line,
+   optional Ghost S action after it; no box of its own (the section is the card) */
+.empty-inline{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-2);margin:0;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
+
+/* in a table the empty line takes a row's place: the row's inset and surface */
+.bk-table>.empty-inline{padding:var(--space-3) var(--space-4);background:var(--surface);min-height:56px;box-sizing:border-box}
