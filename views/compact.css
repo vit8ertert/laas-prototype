@@ -328,20 +328,20 @@
   .bk-filters>.bk-search input{width:100%!important;padding-left:36px}
   .bk-table{min-width:0!important;overflow:visible!important}
   .bk-table>.bk-th{display:none!important}
-  .bk-table>.bk-tr:not(.ex-r){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
-  .bk-tr:not(.ex-r)>.tt{grid-area:tt;min-width:0}.bk-tr>.tt b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr:not(.ex-r)>.n{grid-area:n;align-self:center}
-  .bk-tr:not(.ex-r)>.w{grid-area:w;font-size:13px;line-height:16px;color:var(--muted);padding-left:48px}
-  .bk-tr:not(.ex-r)>.m:nth-child(4){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr:not(.ex-r)>.m:nth-child(4)::before{content:"· "}
-  .bk-tr:not(.ex-r)>span:nth-child(5){grid-area:s;justify-self:end}
-  .bk-tr:not(.ex-r)>.m:nth-child(3),.bk-tr:not(.ex-r)>.m:nth-child(6){display:none!important}
-  .bk-tr:not(.ex-r) .tt img,.bk-tr:not(.ex-r) .bk-thumb{width:36px;height:36px}
+  .bk-table>.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h,.bk-th)){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.tt{grid-area:tt;min-width:0}.bk-tr>.tt b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.n{grid-area:n;align-self:center}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.w{grid-area:w;font-size:13px;line-height:16px;color:var(--muted);padding-left:48px}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"· "}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>span:nth-child(5){grid-area:s;justify-self:end}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(3),.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(6){display:none!important}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .tt img,.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .bk-thumb{width:36px;height:36px}
   /* the thumb is centred on the whole two-line row, not on the title line (Vit 9 Nov: "the icon needs better
      vertically aligned with content"); the title keeps its 48 px start, the same as the line under it */
-  .bk-table>.bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h){position:relative}
-  .bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h)>.tt>:is(img,.bk-thumb){position:absolute;left:var(--row-x);top:50%;transform:translateY(-50%)}
-  .bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h)>.tt:has(>:is(img,.bk-thumb)){padding-left:48px}
+  .bk-table>.bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h)){position:relative}
+  .bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h))>.tt>:is(img,.bk-thumb){position:absolute;left:var(--row-x);top:50%;transform:translateY(-50%)}
+  .bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h))>.tt:has(>:is(img,.bk-thumb)){padding-left:48px}
   /* Send preview: Not now and Edit on one line, the send action full width below it */
   /* "Change" belongs to the address above it (4 px), the message card starts a new group (16 px) (Vit 26 Oct) */
   .send>.row.t-label>.link{margin-top:calc(var(--space-1) - 8px)}
@@ -376,6 +376,9 @@
   .ex-bar{flex-direction:column!important;align-items:stretch!important;gap:8px!important}
   .ex-fs,.cx-chiprow{display:flex;flex:none;flex-wrap:nowrap!important;gap:8px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
   .ex-fs>*,.cx-chiprow>*{flex:none}
+  /* never wider than the screen plus its bleed, so the fade sits on the screen's edge (Vit 9 Nov: "some have the
+     gradient on the right edge, some not": in a column the row grew to its chips' width, 490 on a 390 screen) */
+  .ex-fs,.cx-chiprow{max-width:calc(100% + 16px);min-width:0}
   .ex-search{width:100%!important;order:-1}
   :is(.bk-filters,.ml-filters){display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:8px!important}
   :is(.bk-filters,.ml-filters)>:is(.bk-search,.search){order:-1;width:100%!important;max-width:none!important}
@@ -671,3 +674,69 @@
   .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:10px}
   .batch{border-radius:0;margin:0 calc(-1 * var(--space-4)) var(--space-2);padding-inline:var(--space-4) var(--space-2)}
 }
+
+/* Compact row (Figma 2029:38225; Vit 9 Nov: "hide on mobile the content that is not critical, or use accordion").
+   On phones a Money table row is two lines: what it is and its amount; which or when, and its state. No picture, no
+   checkbox, no buttons. A row with more (details or actions) shows a chevron and opens in place (.cx-open, views/rows.js). */
+@media (max-width:599.98px){
+  .bk-table>:is(.iv-r,.po-m,.po-g,.po-h):not(.bk-th):not(.ex-tot){display:grid!important;column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important;align-items:center}
+  .bk-table>:is(.iv-r,.po-m,.po-g,.po-h).bk-th{display:none!important}
+  :is(.iv-r,.po-m,.po-g,.po-h) :is(.bk-thumb,.ex-av,img){display:none!important}
+  :is(.iv-r,.po-m,.po-g,.po-h) b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
+  :is(.iv-r,.po-m,.po-g,.po-h) small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 12px/16px var(--sans);color:var(--muted)}
+  :is(.iv-r,.po-m,.po-g,.po-h)>.n{justify-self:end;text-align:right}
+  .cx-more::after,:is(.iv-r,.po-m):not(.bk-th):not(.ex-tot)::after{content:"";width:16px;height:16px;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/16px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/16px no-repeat;transition:transform var(--dur-1,.15s) var(--ease-standard,ease)}
+  :is(.iv-r,.po-m).cx-open::after{transform:rotate(180deg)}
+  :is(.iv-r,.po-m).cx-open{background:var(--well)!important}
+
+  /* Invoices: venue · amount / number · due · status ⌄ ; open: the gig, then Approve / Remind / PDF and Open */
+  .bk-table>.iv-r:not(.bk-th):not(.ex-tot){grid-template-columns:auto minmax(0,1fr) auto 16px!important;grid-template-areas:"tt tt n n" "no due s cv"}
+  .iv-r>.ex-cb{display:none!important}
+  .iv-r>:nth-child(2){grid-area:no;font:400 12px/16px var(--mono);color:var(--muted)}
+  .iv-r>.ex-tt{grid-area:tt;min-width:0}
+  .iv-r>.ex-tt small{display:none}
+  .iv-r>:nth-child(4){grid-area:due;font:400 12px/16px var(--sans);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .iv-r>:nth-child(4)::before{content:"· "}
+  .iv-r>:nth-child(5){grid-area:s;justify-self:end}
+  .iv-r>:nth-child(6){grid-area:n}
+  .iv-r>:nth-child(7){display:none!important}
+  .iv-r::after{grid-area:cv}
+  .bk-table>.iv-r.cx-open{grid-template-areas:"tt tt n n" "no due s cv" "x x x x"!important}
+  .iv-r.cx-open>.ex-tt small{display:block}
+  .iv-r.cx-open>:nth-child(7){display:flex!important;grid-area:x;flex-wrap:wrap;gap:8px;padding-top:8px;justify-self:start}
+
+  /* Payouts · Members: name · to pay out / bank · state ⌄ ; open: shares, expenses, paid in 30 days, Record payout */
+  .bk-table>.po-m:not(.bk-th):not(.ex-tot){grid-template-columns:minmax(0,1fr) auto 16px!important;grid-template-areas:"who due due" "who s cv"}
+  .po-m>.ex-who{grid-area:who;min-width:0;display:block}
+  .po-m>:nth-child(4){grid-area:due}
+  .po-m>:nth-child(2),.po-m>:nth-child(3),.po-m>:nth-child(5){display:none!important}
+  .po-m>:nth-child(6){grid-area:s;justify-self:end}
+  .po-m>:nth-child(6)>form{display:none}
+  .po-m::after{grid-area:cv}
+  .bk-table>.po-m.cx-open{grid-template-areas:"who due due" "who s cv" "a a a" "b b b" "c c c" "f f f"!important}
+  .po-m.cx-open>:nth-child(2){display:flex!important;grid-area:a}.po-m.cx-open>:nth-child(3){display:flex!important;grid-area:b}.po-m.cx-open>:nth-child(5){display:flex!important;grid-area:c}
+  .po-m.cx-open>:is(:nth-child(2),:nth-child(3),:nth-child(5)){justify-self:stretch;justify-content:space-between;font:400 13px/20px var(--mono)}
+  .po-m.cx-open>:nth-child(2)::before{content:"Gig shares";font-family:var(--sans);color:var(--muted)}
+  .po-m.cx-open>:nth-child(3)::before{content:"Expenses paid";font-family:var(--sans);color:var(--muted)}
+  .po-m.cx-open>:nth-child(5)::before{content:"Paid, last 30 days";font-family:var(--sans);color:var(--muted)}
+  .po-m.cx-open>:nth-child(6)>form{display:block;grid-area:f}
+  .po-m.cx-open>:nth-child(6){grid-area:f;justify-self:start;padding-top:8px}
+
+  /* Payouts · Gigs: gig · each / date, venue · state (net and split stay on the gig) */
+  .bk-table>.po-g:not(.bk-th){grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"tt n" "tt s"}
+  .po-g>.ex-tt{grid-area:tt;min-width:0}
+  .po-g>:nth-child(2),.po-g>:nth-child(3){display:none!important}
+  .po-g>:nth-child(4){grid-area:s;justify-self:end}
+  .po-g>:nth-child(5){grid-area:n}
+
+  /* the totals row: what it counts on the left, the total on the right */
+  .bk-table>:is(.iv-r,.po-m).ex-tot{display:flex!important;justify-content:space-between;align-items:center;gap:8px;min-width:0!important;padding:var(--row-y) var(--row-x)!important}
+  .bk-table>:is(.iv-r,.po-m).ex-tot>:empty,.bk-table>.iv-r.ex-tot>.m,.bk-table>.po-m.ex-tot>:nth-child(5){display:none!important}
+  /* Payout history: who · amount / what · date (how stays on the payout) */
+  .bk-table>.po-h:not(.bk-th){grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"tt n" "tt d"}
+  .po-h>.ex-tt{grid-area:tt;min-width:0}
+  .po-h>:nth-child(1){grid-area:d;justify-self:end;font:400 12px/16px var(--sans);color:var(--muted)}
+  .po-h>:nth-child(3){display:none!important}
+  .po-h>:nth-child(4){grid-area:n}
+}
+
