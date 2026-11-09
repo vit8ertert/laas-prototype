@@ -386,3 +386,12 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 
 /* in a table the empty line takes a row's place: the row's inset and surface */
 .bk-table>.empty-inline{padding:var(--space-3) var(--space-4);background:var(--surface);min-height:56px;box-sizing:border-box}
+/* Pagination (Figma 2022:38151; notes/page-states.md rule 1): desktop = range + Previous/Next, phones = Load more */
+.pager{padding:var(--space-3) 0}
+.pager-x{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.pager-range,.pager-shown{font:400 12px/16px var(--sans);color:var(--muted)}
+.pager-btns{display:flex;gap:var(--space-2)}
+.pager-c{display:none;flex-direction:column;align-items:center;gap:var(--space-2)}
+.pager-c>.pager-more{align-self:stretch;justify-content:center}
+@media (max-width:599.98px){.pager-x{display:none}.pager-c{display:flex}}
+.pager-demo-c .pager-x{display:none}.pager-demo-c .pager-c{display:flex}
