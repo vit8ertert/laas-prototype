@@ -339,9 +339,9 @@
   .bk-tr:not(.ex-r) .tt img,.bk-tr:not(.ex-r) .bk-thumb{width:36px;height:36px}
   /* the thumb is centred on the whole two-line row, not on the title line (Vit 9 Nov: "the icon needs better
      vertically aligned with content"); the title keeps its 48 px start, the same as the line under it */
-  .bk-table>.bk-tr:not(.ex-r){position:relative}
-  .bk-tr:not(.ex-r)>.tt>:is(img,.bk-thumb){position:absolute;left:var(--row-x);top:50%;transform:translateY(-50%)}
-  .bk-tr:not(.ex-r)>.tt:has(>:is(img,.bk-thumb)){padding-left:48px}
+  .bk-table>.bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h){position:relative}
+  .bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h)>.tt>:is(img,.bk-thumb){position:absolute;left:var(--row-x);top:50%;transform:translateY(-50%)}
+  .bk-tr:not(.ex-r):not(.so-d):not(.so-p):not(.so-k):not(.iv-r):not(.po-m):not(.po-g):not(.po-h)>.tt:has(>:is(img,.bk-thumb)){padding-left:48px}
   /* Send preview: Not now and Edit on one line, the send action full width below it */
   /* "Change" belongs to the address above it (4 px), the message card starts a new group (16 px) (Vit 26 Oct) */
   .send>.row.t-label>.link{margin-top:calc(var(--space-1) - 8px)}
