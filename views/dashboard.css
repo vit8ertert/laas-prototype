@@ -60,6 +60,12 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 .d-sheet{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden}
 .d-dh{display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:58px;background:var(--d-head,#1f1f1f)}
 .d-dh b{flex:1;min-width:0;font:500 15px/var(--lh-body) var(--sans)}.d-dh small{font:400 12px/16px var(--sans);color:var(--muted)}
+/* the head is two lines (Vit 10 Nov: "this is way too busy row"): title, then id · venue · fee; the version chip went
+   (the section header says "v2, updated 16:40", the versions are in the Share menu) */
+.d-dht{flex:1;min-width:0;display:flex;flex-direction:column}
+.d-dht>b,.d-dht>small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.d-dht .d-id,.d-next .d-rt .d-id{font:400 12px/16px var(--mono);min-width:0}
+.d-next .d-rt>*{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}  /* the next booking reads the same: what, then id · when */
 .d-id{font:400 14px/20px var(--mono);color:var(--d-idc,#8e7bd6)}.d-dh .d-id{min-width:72px;flex:none;white-space:nowrap}.d-id{white-space:nowrap}
 /* Chip 153:948 (version chip, calendar pills, suggestion chips): pad 8 12, gap 8, pill, inside stroke rule, Body tight 15/18 */
 .d-v,.d-pill{display:inline-flex;align-items:center;gap:8px;height:auto;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 15px/18px var(--sans);color:var(--ink);white-space:nowrap}
@@ -230,7 +236,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-record{position:sticky;top:0;display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--rule);min-height:min(682px,calc(100vh - 120px))}
 .d-rh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.d-rh b{flex:1;min-width:0}
 .d-kvr{display:flex;flex-direction:column;gap:2px;padding:8px 0 7px;border-bottom:1px solid var(--rule);font:400 15px/18px var(--sans)}.d-kvr small{font:400 12px/16px var(--sans);color:var(--faint)}
-.d-rh .d-id{font:400 14px/20px var(--mono);color:var(--accent-ink)}.d-rh b.t-heading{letter-spacing:-.1px}
+.d-rh .d-id{font:400 12px/16px var(--mono);color:var(--accent-ink)}.d-rh{flex-wrap:nowrap}  /* title, then id · venue, date; the tag beside them (10 Nov, the Gig sheet head pattern) */.d-rh b.t-heading{letter-spacing:-.1px}
 .d-record>.btn{justify-content:flex-start!important}
 .main:has(.d-asst)>.abar{display:none}
 
@@ -377,7 +383,6 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
  .d-one{flex-direction:column}.d-choices.three{grid-template-columns:1fr}.d-tiles{grid-template-columns:1fr 1fr}
  .d-day{min-height:72px;padding:4px}.d-ev{font-size:10px;padding:1px 4px}.d-wd span{padding:8px 4px}
  .d-empty,.d-box{padding:32px 16px}
- .d-dh small{display:none}
 }
 @media (max-width:599.98px){.d-tiles{grid-template-columns:1fr}.d-tm{flex-wrap:wrap}.d-compbar .btn.ghost.s{padding:0 8px}}
 .d-andmore{align-self:flex-start;height:34px;padding:0 12px;font:500 13px/var(--lh-label) var(--sans)}

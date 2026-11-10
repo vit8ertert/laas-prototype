@@ -478,11 +478,8 @@
   /* Today: the day sheet header on one line; the record row wraps instead of overlapping */
   .d-sh{flex-wrap:nowrap!important;min-width:0}.d-sh h3{white-space:nowrap;flex:none}.d-sh>h3+*{margin-left:auto}  /* the trailing meta or button stays flush right (Figma Section header Heading Compact) */
   .d-sh>:not(h3){min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .d-dh{flex-wrap:wrap!important;row-gap:4px!important;column-gap:8px!important}
-  .d-dh>b{order:5;flex:1 1 100%!important;width:auto!important;height:auto!important}
-  .d-dh>small{order:6;flex:1 1 100%!important;width:auto!important;height:auto!important;display:block!important}
-  .d-dh>.tag{margin-left:auto}
-  .d-dh>.d-v,.d-dh>.btn{order:7}
+  .d-dh{column-gap:8px!important}
+  .d-dh>.btn{width:34px;padding:0!important;justify-content:center;font-size:0;gap:0}  /* phones: Share is its icon (the menu says what it does) */
   /* tonight's card: facts above, the button on its own line */
   .d-tonight .d-tm{flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
   .d-tonight .d-tm>span:first-child{font-size:13px;line-height:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
