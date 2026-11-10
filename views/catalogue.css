@@ -204,8 +204,17 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .trk-row .tx b{font:400 15px/var(--lh-body) var(--sans)}
 .trk-row .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .trk.on .trk-row .tx b{font-weight:500}
-.trk-n{width:16px;text-align:right;flex:none}
-.trk-row :is(.trk-n,.trk-d){font-size:14px;line-height:20px}
+/* one leading slot (Vit 10 Nov: "number seems in wrong position … make this row more intuitive"): the track number
+   at rest, play when the row is hovered or focused, pause while it plays (Spotify, Apple Music). Touch screens have no
+   hover, so they show play */
+.trk-play .trk-n{font-size:14px;line-height:20px;color:var(--faint)}
+.trk-play>svg.i{display:none}
+.trk:not(.on) .trk-play{background:none;box-shadow:none}
+.trk:is(:hover,[data-state="hover"]) .trk-play>svg.i,.trk:is(:focus-within,[data-state="focus"]) .trk-play>svg.i,.trk.on .trk-play>svg.i{display:block}
+.trk:is(:hover,[data-state="hover"]) .trk-play .trk-n,.trk:is(:focus-within,[data-state="focus"]) .trk-play .trk-n,.trk.on .trk-play .trk-n{display:none}
+.trk:is(:hover,[data-state="hover"]):not(.on) .trk-play,.trk:is(:focus-within,[data-state="focus"]):not(.on) .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+@media (hover:none){.trk-play>svg.i{display:block}.trk-play .trk-n{display:none}.trk:not(.on) .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}}
+.trk-row .trk-d{font-size:14px;line-height:20px}
 .trk-play,.trk-info{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
 .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .trk-play:is(:hover,[data-state="hover"]){background:var(--hover)}
@@ -216,7 +225,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .trk-fmt{flex:none;padding:2px 8px;border-radius:var(--r-pill);background:var(--well);color:var(--muted)}
 .trk-d{flex:none;width:44px;text-align:right}
 /* timeline: elapsed, a thin line you can click or drag to jump, length (Vit 21 Oct: a line, not a waveform) */
-.trk-tl{display:flex;align-items:center;gap:12px;padding:0 0 12px 80px}
+.trk-tl{display:flex;align-items:center;gap:12px;padding:0 0 12px 48px}  /* under the title: the 32 slot + 16 gap */
 .trk-now{width:36px;color:var(--ink)}
 .trk-wave{position:relative;flex:1;height:20px;cursor:pointer}
 .trk-wave::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--rule-strong)}
@@ -224,7 +233,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .trk-knob{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--surface);opacity:0;transition:opacity var(--dur-1)}
 .trk-wave:is(:hover,[data-state="hover"]) .trk-knob,.trk-wave:is(:focus-visible,[data-state="focus"]) .trk-knob{opacity:1}
 /* file details */
-.trk-dl{margin:0;padding:4px 0 16px 80px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
+.trk-dl{margin:0;padding:4px 0 16px 48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 24px}
 @media (max-width:839.98px){.trk-fmt{display:none}.trk-tl,.trk-dl{padding-left:0}.trk-dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* status badge on the artwork's top-right corner (Vit 21 Oct); tile padding 12 + 8 inset */
@@ -252,7 +261,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-storelist li.missing .brand{filter:grayscale(1);opacity:.5}
 .cat-storelist li.pending .brand{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--att) 50%,transparent)}
 /* royalties under a track's file details */
-.trk-roy{padding:0 0 16px 80px}
+.trk-roy{padding:0 0 16px 48px}
 @media (max-width:839.98px){.trk-roy{padding-left:0}}
 
 /* status on cover art: a filled, opaque tag so it reads on any photo (Vit 21 Oct: "badges not visible, use BG colour filled") */

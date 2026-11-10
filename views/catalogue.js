@@ -346,9 +346,8 @@ L.trow=(n,title,dur,release,opts={})=>{const key=slug(release+'-'+title),P=S.pla
   const d=secs(dur),pct=on?Math.min(100,P.t/d*100):0;
   return `<div class="track-row trk ${on?'on':''} ${open?'open':''}" data-trk="${key}" data-dur="${d}">
    <div class="trk-row">
-    <button class="trk-play" data-tplay="${key}" aria-label="${on&&P.playing?'Pause':'Play'} ${esc(title)}">${ic(on&&P.playing?'pause':'play','s')}</button>
-    <span class="mono faint trk-n">${n}</span>
-    <span class="tx"><b>${esc(title)}</b>${opts.sub??(release?`<small>${esc(release)}</small>`:'')}</span>
+    <button class="trk-play" data-tplay="${key}" aria-label="${on&&P.playing?'Pause':'Play'} ${esc(title)}"><span class="mono trk-n">${n}</span>${ic(on&&P.playing?'pause':'play','s')}</button>
+    <span class="tx"><b>${esc(title)}</b>${opts.sub??(release&&release!==title?`<small>${esc(release)}</small>`:'')}</span>
     <span class="trk-fmt t-meta">WAV 24/48</span>
     <span class="mono muted trk-d">${dur}</span>
     <button class="trk-info" data-tinfo="${key}" aria-expanded="${open}" aria-label="File details for ${esc(title)}">${ic('info','s')}</button>
