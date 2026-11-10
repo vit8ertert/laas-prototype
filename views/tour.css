@@ -13,8 +13,6 @@
 .tour-mark svg.i{width:20px;height:20px}
 .tour-foot{display:flex;align-items:center;gap:8px;margin-top:8px}
 .tour-grow{flex:1}
-.tour-foot .btn.ghost{margin-left:0}
-.tour-foot .tour-grow+.btn.ghost{margin-left:0}
 /* the small arrow points at the target */
 .tour-arrow{position:absolute;width:12px;height:12px;background:var(--overlay);transform:rotate(45deg)}
 .tour-card[data-side=below] .tour-arrow{top:-6px;left:calc(var(--ax) - 6px);box-shadow:inset 1px 1px 0 var(--rule-strong)}
