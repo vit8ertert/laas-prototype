@@ -521,7 +521,12 @@
 /* a text button that starts an action row puts its label on the text edge above it: it bleeds left by its own padding,
    so the hover pill grows outward (Vit 10 Nov, tour card Skip: "invisible bg so it looks like it is not left aligned").
    The mirror of the trailing-link rule below; the comment actions (.so-cacts) and plan actions (.acc-ppact) already did it */
-:is(.tour-foot,.ml-attrow)>.btn.ghost.s:not(.icon):first-child{margin-left:calc(-1 * var(--space-3))}
+.ml-attrow>.btn.ghost.s:not(.icon):first-child,.drawer .df>.btn.ghost.s:not(.icon):first-child{margin-left:calc(-1 * var(--space-3))}
+.drawer .df>.btn.ghost:not(.s):not(.icon):first-child{margin-left:calc(-1 * var(--space-4))}
+/* …but when the row is a choice (the alternative to its primary action, nothing else beside it), that alternative is a
+   Secondary button with a visible ring, not a text button: the tour's Skip and Back (Vit 10 Nov: "use bg for this
+   button skip"). A text button stays for a third, lesser action (Reset, Back, Full editor, Copy invite link next to
+   Cancel and the primary) */
 /* trailing links in section headers sit flush on the right edge, as text links at row ends do (DS: one right line) */
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child{padding-right:0!important;margin-right:0!important}  /* not an icon button: it keeps its square (Vit 31 Oct) */
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}

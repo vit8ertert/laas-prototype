@@ -112,9 +112,9 @@ const offLink=()=>`<button class="tour-off" data-tour="off">Skip the tour and al
 function card(s){
   const n=steps().length-firstReal(),k=i-firstReal()+1;
   if(s.start)return `<div class="tour-card tour-center"><div class="tour-mark">${L.ic('ai')}</div><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
-    <div class="tour-foot"><button class="btn ghost s" data-tour="skip">Skip</button><span class="tour-grow"></span><button class="btn primary s" data-tour="next">Show me</button></div>${offLink()}</div>`;
+    <div class="tour-foot"><button class="btn secondary s" data-tour="skip">Skip</button><span class="tour-grow"></span><button class="btn primary s" data-tour="next">Show me</button></div>${offLink()}</div>`;
   return `<div class="tour-card"><span class="tour-arrow"></span><span class="t-meta faint">${n>1?`${k} of ${n}`:'Guide'}</span><h3 class="t-heading">${s.t}</h3><p class="t-body muted">${s.b}</p>
-    <div class="tour-foot">${s.last?'':`<button class="btn ghost s" data-tour="skip">${tour==='first'?'Skip tour':'Skip'}</button>`}<span class="tour-grow"></span>${i>firstReal()?'<button class="btn ghost s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div>${s.last?'':offLink()}</div>`;
+    <div class="tour-foot">${s.last?'':`<button class="btn secondary s" data-tour="skip">${tour==='first'?'Skip tour':'Skip'}</button>`}<span class="tour-grow"></span>${i>firstReal()?'<button class="btn secondary s" data-tour="back">Back</button>':''}<button class="btn primary s" data-tour="${s.last?'done':'next'}">${s.last?'Done':'Next'}</button></div>${s.last?'':offLink()}</div>`;
 }
 function place(){
   if(i<0||!root)return;
