@@ -264,6 +264,8 @@ L.OVERLAYS.accupgrade=()=>`<div class="scrim acc-scrim" data-act="close"></div><
 /* call from any "Send invoice": L.needsPro(() => open the invoice) shows the upgrade when the band is not on Pro */
 L.needsPro=next=>{if(S.plan==='pro'){next&&next();return false;}A.afterPro=next||null;S.overlay={type:'accupgrade'};L.render();return true;};
 L.FLOWS.push(['Upgrade at the moment of need','Band plan presses Send invoice',()=>{S.plan='band';L.go('booking');setTimeout(()=>{S.overlay={type:'accupgrade'};L.render();},160);}]);
+L.FLOWS.push(['Sign in','The login page: email, password with show, forgot password',()=>{S.onboarding.step=7;L.go('onboarding');}]);
+L.FLOWS.push(['Forgot password','Reset link by email, then set a new password',()=>{S.onboarding.step=8;L.go('onboarding');}]);
 L.FLOWS.push(['A member joins','Invite link, join the band',()=>{S.onboarding.step=6;L.go('onboarding');}]);
 
 /* ---------- drawers ---------- */
@@ -416,7 +418,7 @@ L.VIEWS.audience=()=>{const t=S.atab,AUD=L.AUD,kr=L.kr;
  return `<div class="page aud">${head}${tabs}${body}</div>${L.audAbar()}`;};
 
 /* ---------- onboarding (full screen): L.ONBOARDING ---------- */
-const OB_PHOTO=['stagedive','notebook','rehearsal','account-folk',null,'account-dj','hotel-royal'];
+const OB_PHOTO=['stagedive','notebook','rehearsal','account-folk',null,'account-dj','hotel-royal','stagedive','notebook','notebook','stagedive'];
 /* onboarding photos fade in once, softly; all of them load ahead so steps switch without a flash (Vit 21 Oct: "jumpy") */
 const OB_SEEN=new Set();let obPre=false;
 const obPreload=()=>{if(obPre)return;obPre=true;OB_PHOTO.filter(Boolean).forEach(p=>{const im=new Image();im.decoding='async';im.onload=()=>OB_SEEN.add(p);im.src=IMG(p);});};
@@ -425,7 +427,11 @@ const GOOGLE=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"
 const APPLE=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" data-i="logo-apple" style="fill:currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>`;
 const fld=(id,label,val,w,help,ph)=>`<div class="field"><label for="${id}">${label}</label><input class="input" id="${id}" ${w?`style="width:${w}px"`:''} ${val?`value="${esc(val)}"`:''} ${ph?`placeholder="${esc(ph)}"`:''}>${help?`<span class="help">${help}</span>`:''}</div>`;
 const fsel=(id,label,opts,w,help)=>`<div class="field"><label for="${id}">${label}</label><select class="input" id="${id}" style="width:${w}px">${opts.map(o=>`<option>${o}</option>`).join('')}</select>${help?`<span class="help">${help}</span>`:''}</div>`;
+L.P.eyeoff='<path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/>';
 const head=(t,p)=>`<div class="acc-obh"><h1 class="t-title">${t}</h1><p>${p}</p></div>`;
+/* a labelled field; type password gets the show/hide eye (the same .gate-pw as the prototype password gate); extra sits
+   on the label row's right (Forgot password?) */
+const pwFld=(id,label,type,ph,ac,extra='')=>`<div class="field"><span class="acc-lrow"><label class="acc-lbl" for="${id}">${label}</label>${extra}</span>${type==='password'?`<span class="gate-pw"><input class="input" id="${id}" type="password" autocomplete="${ac}" ${ph?`placeholder="${ph}"`:''}><button class="gate-eye" type="button" data-act="pweye" aria-label="Show password" aria-pressed="false">${ic('eye','s')}</button></span>`:`<input class="input" id="${id}" type="${type}" autocomplete="${ac}" placeholder="${ph}">`}</div>`;
 /* Vit 21 Oct: "we need country and more genres" (onboarding and Settings share these lists) */
 const GENRES=L.GENRES=['Indie and rock','Shoegaze and dream pop','Punk','Metal and hardcore','Electronic','Hip-hop and soul','R&B','Pop','Folk','Singer-songwriter','Country and Americana','Blues','Jazz','Classical','Reggae and ska','Latin','World','Ambient and experimental'];
 const COUNTRIES=L.COUNTRIES=['Denmark','Sweden','Norway','Finland','Iceland','Germany','Netherlands','United Kingdom','Ireland','France','Spain','Another country'];
@@ -478,7 +484,7 @@ function obSteps(st){const ob=S.onboarding;
   +`<div class="acc-obstack"><button class="btn secondary lg acc-wide" data-ob="1">${GOOGLE}Continue with Google</button><button class="btn secondary lg acc-wide" data-ob="1">${APPLE}Continue with Apple</button></div>
   <div class="acc-or"><i></i><span>or</span><i></i></div>
   <div class="acc-obstack"><div class="field"><input class="input" id="acc-obe" type="email" autocomplete="email" aria-label="Email" placeholder="you@band.dk"></div><button class="btn accent lg acc-wide" data-ob="1">Continue with email</button></div>
-  <p class="acc-obfoot">Already have an account? <button class="link" data-act="obexit">Log in</button>. By continuing you accept the <button class="link" data-act="acctoast" data-msg="Terms open in a new tab">terms</button> and the <button class="link" data-act="acctoast" data-msg="Privacy policy opens in a new tab">privacy policy</button>.</p>`;
+  <p class="acc-obfoot">Already have an account? <button class="link" data-ob="7">Log in</button>. By continuing you accept the <button class="link" data-act="acctoast" data-msg="Terms open in a new tab">terms</button> and the <button class="link" data-act="acctoast" data-msg="Privacy policy opens in a new tab">privacy policy</button>.</p>`;
  case 1:return head('Check your inbox','We sent a 6-digit code and a sign-in link to vital@lowtide.dk. Both work for 15 minutes.')
   +`<div class="acc-code">${[4,1,7,'','',''].map((d,i)=>`<input aria-label="Digit ${i+1}" inputmode="numeric" maxlength="1" value="${d}" data-digit="${i}" ${i===3?'autofocus':''}>`).join('')}</div>
   <div class="row"><button class="btn secondary" data-act="accoblink">${ic('mail')}Open Gmail</button><button class="btn secondary" data-act="resend" ${S.resent?'disabled':''}>${S.resent?'Code sent again':'Resend in 30 s'}</button></div>
@@ -513,6 +519,21 @@ function obSteps(st){const ob=S.onboarding;
   <button class="btn ghost s acc-add" data-act="accobrow">${ic('plus','s')}Add another</button>
   <p class="acc-obfoot">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only, good for a manager or family.</p>
   <div class="row"><button class="btn secondary" data-act="accobskip">Skip for now</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}Send 2 invites</button></div>`;}
+ /* Sign in and password recovery (Vit 10 Nov: "create a login page … more into our brand and professional. maybe logo.
+    and the password recovery? view password icon in the field?"). The sign-up layout: logo on top, the form, the photo
+    on the right on desktop. Django: web/login.html and web/password_*.html with the same markup. */
+ case 7:return head('Welcome back','Sign in to your band’s gigs, money and music.')
+  +`<form class="acc-obstack acc-login" data-act="obsignin" onsubmit="return false">${pwFld('acc-le','Email','email','you@band.dk','email')}${pwFld('acc-lp','Password','password','','current-password',`<button class="link acc-forgot" type="button" data-ob="8">Forgot password?</button>`)}
+  <button class="btn accent lg acc-wide" type="submit" data-act="obsignin">Sign in</button></form>
+  <p class="acc-obfoot">New to LAAS? <button class="link" data-ob="0">Create an account</button>.</p>`;
+ case 8:return head('Reset your password','Type the email you sign in with. We send a link to set a new password.')
+  +`<form class="acc-obstack acc-login" onsubmit="return false">${pwFld('acc-fe','Email','email','you@band.dk','email')}<button class="btn accent lg acc-wide" type="submit" data-ob="9">Send the link</button></form>
+  <p class="acc-obfoot"><button class="link" data-ob="7">Back to sign in</button></p>`;
+ case 9:return head('Check your inbox','If an account uses vital@lowtide.dk, a link to set a new password is on its way. It works for 3 days.')
+  +`<div class="row"><button class="btn secondary" data-act="accoblink2">${ic('mail')}Open Gmail</button><button class="btn accent" data-ob="10">I have the link</button></div>
+  <p class="acc-obfoot">Nothing came? Check spam, or <button class="link" data-ob="8">send it again</button>.</p>`;
+ case 10:return head('Set a new password','At least 10 characters. Your other devices stay signed in until they next ask.')
+  +`<form class="acc-obstack acc-login" onsubmit="return false">${pwFld('acc-n1','New password','password','','new-password')}${pwFld('acc-n2','Type it again','password','','new-password')}<button class="btn accent lg acc-wide" type="submit" data-act="obpwdone">Save and sign in</button></form>`;
  case 6:return `<div class="acc-join"><img src="${S.photos.band||IMG('band-collage')}" alt=""><div><b class="t-heading">Low Tide</b><span>Indie rock, Odense, 3 members</span></div></div>`
   +head('Vital invited you as Member','You’ll see gigs, the day sheet and your own payouts. Money and sending stay with Owner and Admin.')
   +fld('acc-jn','Your name','Mia Holm',360)+fsel('acc-jp','You play',['Bass','Drums','Guitar','Keys','Vocals'],240)
@@ -525,6 +546,10 @@ L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.o
  ${prog?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}
  <div class="acc-obform">${obSteps(st)}</div></div>${right}</div>`;};
 
+AC.pweye=t=>{const i=t.previousElementSibling,on=i.type==='password';i.type=on?'text':'password';t.setAttribute('aria-pressed',on);t.setAttribute('aria-label',on?'Hide password':'Show password');t.innerHTML=L.ic(on?'eyeoff':'eye','s');};
+AC.obsignin=()=>{L.go('dashboard');L.toast('Signed in as Vital');};
+AC.obpwdone=()=>{L.go('dashboard');L.toast('Password saved. You are signed in');};
+AC.accoblink2=()=>{S.onboarding.step=10;L.render();};
 AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the link in your inbox');};
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
 AC.accobrow=()=>{A.obRows++;L.render();};

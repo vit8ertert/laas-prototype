@@ -177,6 +177,8 @@
 .bk-form .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .bk-form .help{font-size:12px;line-height:16px}
 .bk-times{display:grid;grid-template-columns:180px repeat(5,minmax(96px,1fr));gap:16px;align-items:start}
+.bk-form{container-type:inline-size}
+@container (max-width:759.98px){.bk-times{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}.bk-times>.date{grid-column:span 2}}  /* the times wrap inside the form column (Vit 10 Nov: "full booking editor has overlaps on desktop": six fixed columns needed 740 px, the column is ~560 between the index and the preview) */
 .bk-times .input{padding:0 12px}.bk-times .bk-lead .input{padding-left:38px}
 .bk-vf{position:relative}
 .bk-vlist{position:absolute;left:0;right:0;top:72px;z-index:5;max-width:400px;padding:8px;border-radius:12px;background:var(--overlay);border:1px solid var(--rule-strong);box-shadow:var(--elev-2);display:flex;flex-direction:column;gap:2px}

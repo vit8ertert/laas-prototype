@@ -473,3 +473,8 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Invite actions on phones (Vit 26 Oct, Members: "all elements left aligned"): the invite row has no inset on phones,
    so its actions start at the same x as the email (Resend's outline at the text edge); Revoke stays --bad */
 @media (max-width:599.98px){.acc-invact{padding-left:0}}
+/* sign in: a label row (label left, Forgot password? right), the eye in the password field */
+.acc-lrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.acc-forgot{font-size:13px;line-height:var(--lh-label)}
+.acc-login .field{gap:8px}
+.acc-login .gate-pw .input{width:100%}
