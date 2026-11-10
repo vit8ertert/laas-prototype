@@ -68,10 +68,10 @@ function owed(){
   <div class="m-left">
    <section class="m-sec">${secHead('Owed to you',ghostBtn('All invoices','data-mtab="invoices"','ext'))}
     <div class="m-body">
-     ${line({img:'royal',label:'Hotel Royal, deposit',note:'2026-031, due 12 Oct',tg:late()?tag('attention','Attention'):tag('paid','Paid'),amt:late()?'1.500':'1.470',attrs:'data-go="invoice" data-id="2026-031"'})}
+     ${late()?line({img:'royal',label:'Hotel Royal, deposit',note:'2026-031, 6 days overdue',amt:'1.500',attrs:'data-go="invoice" data-id="2026-031"',cls:'overdue'}):line({img:'royal',label:'Hotel Royal, deposit',note:'2026-031, due 12 Oct',tg:tag('paid','Paid'),amt:'1.470',attrs:'data-go="invoice" data-id="2026-031"'})}
      ${line({img:'mono',label:'Club Mono, balance',note:'2026-030, due 28 Oct',tg:tag('draft','Draft'),amt:'4.000',attrs:'data-go="invoice" data-id="2026-030"'})}
      ${line({img:'studiob',label:'Studio B, rehearsals',note:'2026-029, due 31 Oct',tg:tag('confirmed','Confirmed'),amt:'3.000',attrs:'data-go="invoice" data-id="2026-029"'})}
-     ${foot('Draft = sent, not opened, Confirmed = opened, Attention = past due. Paid invoices move to "In this month".')}
+     ${foot('Draft = sent, not opened, Confirmed = opened, red = past due. Paid invoices move to "In this month".')}
     </div></section>
    <section class="m-sec">${secHead('In this month',ghostBtn('Report','data-mtab="reports"','ext'))}
     <div class="m-body m-g12">
@@ -117,9 +117,9 @@ const invoices=()=>{const all=S.invoices.map(ivRow),q=M.ivq.trim().toLowerCase()
   :`<div class="ex-bar"><div class="ex-fs">${[['all','All',all.length],['draft','Drafts',cnt(x=>x.st==='draft')],['open','Open',cnt(x=>x.st==='open'||x.st==='late')],['late','Overdue',cnt(x=>x.st==='late')],['paid','Paid',cnt(x=>x.st==='paid')]].map(([k,l,n])=>`<button class="chip ${M.ivf===k?'on':''}" data-act="ivfilter" data-f="${k}" aria-pressed="${M.ivf===k}">${l}<span class="c">${n}</span></button>`).join('')}</div><label class="search ex-search">${ic('search','s')}<input class="input" id="ivq" placeholder="Number, venue, gig" value="${esc(M.ivq)}" aria-label="Search invoices"></label></div>`;
  const act=x=>x.st==='draft'?`<button class="btn secondary s" data-act="mnyinvsend" data-id="${x.r[0]}">Approve</button>`:x.st==='late'?`<button class="btn secondary s" data-act="mnyremind">Remind</button>`:x.st==='open'?`<button class="btn ghost s" data-act="mnycopylink">${ic('copy','s')}Link</button>`:`<button class="btn ghost s" data-act="mnypdf" data-id="${x.r[0]}">${ic('filetext','s')}PDF</button>`;
  const head=`<div class="table-row bk-tr bk-th iv-r" role="row">${exBox(sel.length&&sel.length===rows.length,'data-act="ivselall"','Select all')}<span>No.</span><span>Venue and gig</span><span>Due</span><span>Status</span><span class="n">Amount, DKK</span><span></span></div>`;
- const row=(x,i)=>`<div class="table-row bk-tr iv-r ${sel.includes(x.r[0])?'sel':''}" role="row" tabindex="0" data-go="invoice" data-id="${x.r[0]}" style="--i:${i}">${exBox(sel.includes(x.r[0]),`data-act="ivsel" data-id="${x.r[0]}"`,'Select '+x.r[0])}
+ const row=(x,i)=>`<div class="table-row bk-tr iv-r ${x.st==='late'?'late':''} ${sel.includes(x.r[0])?'sel':''}" role="row" tabindex="0" data-go="invoice" data-id="${x.r[0]}" style="--i:${i}">${exBox(sel.includes(x.r[0]),`data-act="ivsel" data-id="${x.r[0]}"`,'Select '+x.r[0])}
   <span class="mono m">${x.r[0]}</span><span class="ex-tt po-gt"><img class="bk-thumb" src="${IMG(V(x.r[7]).img)}" alt=""><span class="ex-tt"><b>${esc(x.r[1])}</b><small>${esc(x.r[2])}</small></span></span>
-  <span class="m ${x.st==='late'?'c-bad':''}">${x.when}</span><span>${tag(x.cls,x.label)}</span><span class="n mono">${x.r[6]}</span><span class="n">${act(x)}</span></div>`;
+  <span class="m ${x.st==='late'?'c-bad':''}">${x.st==='late'?`<span class="iv-due">${x.when}</span><span class="iv-late">6 days overdue</span>`:x.when}</span><span>${tag(x.cls,x.label)}</span><span class="n mono">${x.r[6]}</span><span class="n">${act(x)}</span></div>`;
  const tot=rows.reduce((a,x)=>a+x.amt,0);
  return `${tiles}${bar}<div class="bk-table iv-table" role="table" aria-label="Invoices">${head}${rows.length?rows.map(row).join('')+`<div class="table-row bk-tr iv-r ex-tot" role="row"><span></span><span></span><span>${rows.length===all.length?`${all.length} invoices`:`${rows.length} of ${all.length}`}</span><span></span><span class="m">Total</span><span class="n mono">${L.kr(tot)}</span><span></span></div>`:`<div class="ex-empty"><b>No invoices match</b>${btn('secondary s','Show all','data-act="ivfilter" data-f="all"')}</div>`}</div>
  <p class="m-foot m-nopad">Open an invoice to see it as the venue gets it, its pay page, reminders and history. Drafts keep their number reserved until you approve them.</p>`;};

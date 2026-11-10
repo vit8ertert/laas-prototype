@@ -707,6 +707,10 @@
   .iv-r>:nth-child(6){grid-area:n}
   .iv-r>:nth-child(7){display:none!important}
   .iv-r::after{grid-area:cv}
+  /* overdue is said once (Vit 10 Nov: "maybe Overdue 6 days badge … somewhere more smart"): line 2 turns red and reads
+     "6 days overdue"; no badge. Desktop keeps the due date and the Status column */
+  .iv-r.late .iv-due{display:none}.iv-r.late .iv-late{display:inline}
+  .bk-table>.iv-r.late:not(.bk-th)>:nth-child(5){display:none!important}
   .bk-table>.iv-r.cx-open{grid-template-areas:"tt tt n n" "no due s cv" "x x x x"!important}
   .iv-r.cx-open>.ex-tt small{display:block}
   .iv-r.cx-open>:nth-child(7){display:flex!important;grid-area:x;flex-wrap:wrap;gap:8px;padding-top:8px;justify-self:start}
@@ -782,4 +786,4 @@
   .po-h>:nth-child(3){display:none!important}
   .po-h>:nth-child(4){grid-area:n}
 }
-
+.iv-r .iv-late{display:none}  /* the phone wording of an overdue due date (Compact row, 10 Nov) */
