@@ -333,7 +333,7 @@
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.n{grid-area:n;align-self:center}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.w{grid-area:w;font-size:13px;line-height:16px;color:var(--muted);padding-left:48px}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"· "}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"·";margin-right:6px}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>span:nth-child(5){grid-area:s;justify-self:end}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(3),.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(6){display:none!important}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .tt img,.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .bk-thumb{width:36px;height:36px}
@@ -393,7 +393,7 @@
      the booking link, status and row actions live in the thread */
   .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;align-items:start!important}
   .ml-row>.ml-dot,.ml-row>.ml-linkcol,.ml-row>.ml-status,.ml-row>.ml-acts{display:none!important}
-  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:13px;line-height:var(--lh-label);align-self:start;margin-top:2px}
+  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:13px;line-height:var(--lh-label);align-self:center}  /* centred on the row like every leading picture (Compact row, 10 Nov; was top + 2) */
   .ml-row>.ml-from{grid-area:from;display:block!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;line-height:var(--lh-body)}
   .ml-row>.ml-from small{display:inline!important;margin-left:4px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
   .ml-row>.ml-time{grid-area:time;font-size:12px;line-height:var(--lh-body);color:var(--muted);display:flex;gap:4px;align-items:center;white-space:nowrap}
@@ -446,7 +446,7 @@
   .ex-r>.m{grid-area:d;font-size:13px;line-height:16px;color:var(--muted)}
   .ex-r>.ex-who{grid-area:who;min-width:0;font-size:13px;line-height:16px;color:var(--muted)}
   .ex-r>.ex-who>.ex-av,.ex-r>.ex-who small{display:none}
-  .ex-r>.ex-who::before{content:"· "}
+  .ex-r>.ex-who::before{content:"·";margin-right:6px}
   .ex-r>span:nth-child(7){grid-area:s;justify-self:end}
   .bk-table:has(.ex-r)>.bk-th{display:none!important}
 }
@@ -536,8 +536,14 @@
   .bk-tr.so-p>span:nth-child(4){grid-area:s;justify-self:end}
   .bk-tr.so-p>.n:nth-child(5){grid-area:n}
   .bk-tr.so-p>.m:nth-child(3){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr.so-p>.m:nth-child(3)::before{content:"· "}
+  .bk-tr.so-p>.m:nth-child(3)::before{content:"·";margin-right:6px}
   .bk-tr.so-p .so-pt small{display:none}
+  /* the picture is a 40 px column beside both lines, centred, as on Deliveries (Compact row, 10 Nov) */
+  .so .bk-table>.bk-tr.so-p:not(.bk-th){grid-template-columns:40px auto minmax(0,1fr) auto!important;grid-template-areas:"img tt tt n" "img w wh s"!important;grid-template-rows:20px minmax(24px,auto);column-gap:var(--space-2)!important;row-gap:2px!important;align-items:center}
+  .bk-tr.so-p>.tt{display:contents}
+  .bk-tr.so-p>.tt>img{grid-area:img;align-self:center;width:40px;height:40px;border-radius:var(--r-sm)}
+  .bk-tr.so-p>.tt>.so-pt{grid-area:tt;min-width:0}
+  .bk-tr.so-p>.w{grid-area:w;justify-self:start!important;text-align:left!important;padding-left:0!important;font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
   /* Contacts table becomes list rows: name and status, then kind · where · last contact */
   .table-wrap.cv-table{overflow:visible!important}
   .cv-table table,.cv-table tbody{display:block;width:100%;min-width:0!important}
@@ -696,7 +702,7 @@
   .iv-r>.ex-tt{grid-area:tt;min-width:0}
   .iv-r>.ex-tt small{display:none}
   .iv-r>:nth-child(4){grid-area:due;font:400 12px/16px var(--sans);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .iv-r>:nth-child(4)::before{content:"· "}
+  .iv-r>:nth-child(4)::before{content:"·";margin-right:6px}
   .iv-r>:nth-child(5){grid-area:s;justify-self:end}
   .iv-r>:nth-child(6){grid-area:n}
   .iv-r>:nth-child(7){display:none!important}
@@ -728,6 +734,43 @@
   .po-g>:nth-child(2),.po-g>:nth-child(3){display:none!important}
   .po-g>:nth-child(4){grid-area:s;justify-self:end}
   .po-g>:nth-child(5){grid-area:n}
+
+  /* Journal: description · amount / date · no. · state (reference, file and the long note stay on the entry) */
+  .ml-table:has(>.ml-j),.ml-table:has(>.ml-a),.cat-table:has(>.gear-r){overflow:visible!important}
+  .ml-tr.ml-th,.cat-gr.gear-r.head{display:none!important}
+  .ml-tr.ml-j:not(.ml-th){grid-template-columns:auto auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt tt n" "d no . s";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
+  .ml-j>.ml-d{grid-area:d;font:400 12px/16px var(--sans);color:var(--muted)}
+  .ml-j>.ml-no{grid-area:no;font:400 12px/16px var(--mono)!important;color:var(--muted)}
+  .ml-j>.ml-no::before{content:"·";margin-right:6px}
+  .ml-j>.ml-tt{grid-area:tt;min-width:0}
+  .ml-j>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
+  .ml-j>.ml-tt small,.ml-j>.ml-m,.ml-j>.ml-att{display:none!important}
+  .ml-j>:nth-child(6){grid-area:s;justify-self:end}
+  .ml-j>.n{grid-area:n;justify-self:end}
+  /* Chart of accounts: name · balance / no. · type; the group rows stay one line */
+  .ml-tr.ml-a:not(.ml-th){grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "no ty .";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
+  .ml-a>.ml-no{grid-area:no;font:400 12px/16px var(--mono)!important;color:var(--muted)}
+  .ml-a>.ml-tt{grid-area:tt;min-width:0}
+  .ml-a>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
+  .ml-a>:nth-child(3){grid-area:ty;font:400 12px/16px var(--sans)!important}
+  .ml-a>:nth-child(3)::before{content:"·";margin-right:6px}
+  .ml-a>:nth-child(4),.ml-a>:nth-child(5){display:none!important}
+  .ml-a>:nth-child(6){grid-area:n;justify-self:end}
+  .ml-tr.ml-gh.ml-a{grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"no tt n"}
+  .ml-gh.ml-a>:first-child{grid-area:no;font:500 13px/18px var(--mono)!important;color:inherit}
+  .ml-gh.ml-a>:nth-child(2){grid-area:tt}
+  .ml-gh.ml-a>:nth-child(3),.ml-gh.ml-a>:nth-child(3)::before{display:none!important;content:none}
+  /* Gear: item · value / category · owner · status (insured and last service stay on the item) */
+  .cat-gr.gear-r:not(.head),.ml-tr.ml-j:not(.ml-th){grid-template-rows:20px minmax(24px,auto)}
+  .cat-gr.gear-r:not(.head){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "c o s";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important;align-items:center}
+  .gear-r>.tt{grid-area:tt;min-width:0}
+  .gear-r>.tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
+  .gear-r>:nth-child(2){grid-area:c;font:400 12px/16px var(--sans)!important}
+  .gear-r>:nth-child(5){grid-area:o;font:400 12px/16px var(--sans)!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gear-r>:nth-child(5)::before{content:"·";margin-right:6px}
+  .gear-r>:nth-child(3),.gear-r>:nth-child(4){display:none!important}
+  .gear-r>:nth-child(6){grid-area:s;justify-self:end}
+  .gear-r>.n{grid-area:n;justify-self:end}
 
   /* the totals row: what it counts on the left, the total on the right */
   .bk-table>:is(.iv-r,.po-m).ex-tot{display:flex!important;justify-content:space-between;align-items:center;gap:8px;min-width:0!important;padding:var(--row-y) var(--row-x)!important}

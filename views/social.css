@@ -181,9 +181,16 @@
    Left column: title, destination, status. Right column: streams, date, visibility. The destination is a secondary line
    like the date and visibility, 13 on the label line height (census 15, 1 Nov: Table cell Meta S) */
 @media (max-width:599.98px){
- .so .bk-tr.so-d{grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"img tt n" "img dest w" "img st vis"!important;column-gap:var(--space-3)!important;row-gap:var(--space-1)!important;align-items:center}
+ .so .bk-table>.bk-tr.so-d{grid-template-columns:40px auto minmax(0,1fr) auto!important;grid-template-areas:"img tt tt n" "img dest w st"!important;grid-template-rows:20px minmax(24px,auto)!important;column-gap:var(--space-2)!important;row-gap:2px!important;align-items:center}
  .so .bk-tr.so-d>.tt{display:contents}
- .so .bk-tr.so-d>.tt>img{grid-area:img;align-self:start;width:40px;height:40px;border-radius:var(--r-sm)}
+ .so .bk-tr.so-d>.tt>img{grid-area:img;align-self:center;width:40px;height:40px;border-radius:var(--r-sm)}
+ /* take 3 (Vit 10 Nov, Compact row): two lines. Title · streams / destination · date · status; visibility and the upload
+    bar stay on the delivery */
+ .so .bk-tr.so-d>.m:not(.so-dest){display:none!important}
+ .so .bk-tr.so-d>.w{justify-self:start!important;text-align:left!important;font-size:13px;line-height:var(--lh-label);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .so .bk-tr.so-d>.w::before{content:"·";margin-right:6px}
+ .so .bk-tr.so-d>:nth-child(6){justify-self:end!important}
+ .so .bk-tr.so-d>:nth-child(6) .so-prog{display:none}
  .so .bk-tr.so-d>.tt>b{grid-area:tt;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  .so .bk-tr.so-d>.so-dest>.brand{display:none}
  .so .bk-tr.so-d>.so-dest{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;font-size:13px;line-height:var(--lh-label)}
