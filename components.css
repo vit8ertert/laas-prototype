@@ -395,3 +395,6 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 .pager-c>.pager-more{align-self:stretch;justify-content:center}
 @media (max-width:599.98px){.pager-x{display:none}.pager-c{display:flex}}
 .pager-demo-c .pager-x{display:none}.pager-demo-c .pager-c{display:flex}
+/* System pages: the Empty state centred in the free space (Not found; Figma Screens · System 2046:38221) */
+.sys-page{justify-content:center;align-items:center;min-height:calc(100dvh - var(--layout-topbar) - 96px)}
+.sys-page>.bk-empty{width:min(760px,100%)}

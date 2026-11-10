@@ -535,3 +535,12 @@ new MutationObserver(after).observe(document.getElementById('app'),{childList:tr
   document.addEventListener('click',e=>{if(e.target.closest('[data-go="assistant"]')){S.asst='new';S.asstHist=false;S.asstEdit=false;}},true);
   addEventListener('hashchange',()=>{if(decodeURIComponent(location.hash.slice(1))==='assistant')S.asst='new';});
 })();
+
+/* System pages (10 Nov, notes/page-states.md; Figma Screens · System 2046:38221). Not found: a wrong link, or a page the
+   role cannot open, inside the shell (Django 404.html). Server error: no shell, the sign-in gate card (Django 500.html). */
+(function(){const L=window.LAAS;
+ L.VIEWS.notfound=()=>`<div class="page sys-page"><div class="bk-empty"><div class="hd"><h2 class="t-title">This page isn't here</h2><p>The link may be old, or this page is for another role in the band.</p></div><div class="acts"><button class="btn secondary" data-go="dashboard">Go to Dashboard</button></div></div></div>`;
+ L.VIEWS.servererror=()=>`<div class="gate"><div class="gate-card"><span class="logo">${L.LOGO||'LAAS'}</span><h1 class="t-title">Something broke on our side</h1><p class="t-body muted">Nothing you did. Try again in a minute; if it keeps happening, tell us what you were doing.</p><div class="row" style="gap:8px"><button class="btn accent" data-go="dashboard">Try again</button><button class="btn secondary" data-go="dashboard">Go to Dashboard</button></div></div></div>`;
+ L.FLOWS.push(['Not found','A wrong link, or a page your role cannot open',()=>L.go('notfound')]);
+ L.FLOWS.push(['Server error','Something broke on our side: no shell, try again',()=>L.go('servererror')]);
+})();
