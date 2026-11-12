@@ -90,7 +90,7 @@
 .bd-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:12px 16px;margin:0;padding:0;align-items:baseline}
 /* row form (Figma Key-value "Row": label 140, gap 16, pad 0 12; rows 12 apart) */
 .bd-kv:has(>div){display:flex;flex-direction:column;gap:12px;padding:0}
-.bd-kv>div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px;padding:0;align-items:baseline}
+.bd-kv>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:0;align-items:baseline}  /* = Key-value row 298:5054: 120 label column, 12 gap (12 Nov; was 160 / 16, its own copy) */
 .bd-kv dt{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-kv dd{margin:0;font:400 15px/var(--lh-body) var(--sans);max-width:65ch}
 /* Details on the Confirmed screen: rows 16 apart, no side padding */
@@ -323,7 +323,7 @@
 @media (max-width:1100px){.bd-grid,.bd-gdgrid{grid-template-columns:1fr}}
 @media (max-width:839.98px){
  .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:8px}
- .bd-kv>div{grid-template-columns:1fr;gap:2px}.bd-kv>div dd{margin-bottom:0}
+ .bd-kv>div{grid-template-columns:1fr;gap:4px}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}
  /* same as the Money line on phones (Vit 26 Oct): amount on top, status tag under it, both in the right column */
  .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:12px;row-gap:var(--space-1);align-items:start}

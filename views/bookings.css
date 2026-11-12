@@ -243,7 +243,7 @@
 }
 @media (max-width:599.98px){
  .bk-search{width:100%}.bk-filters .sp{display:none}
- .bk-empty{padding:32px 16px}
+ .bk-empty{padding:31px 15px}  /* 32 / 16 with the 1 px border, as the desktop 47 / 31 (12 Nov) */
  .bk-form .g2{grid-template-columns:1fr}
  .bk-times{grid-template-columns:repeat(2,minmax(0,1fr))}.bk-times .date{grid-column:1/-1}
  .bk-ebar{height:auto;flex-wrap:wrap;padding:8px 12px}.bk-ebar .ti{order:-1;flex-basis:100%;justify-content:flex-start}

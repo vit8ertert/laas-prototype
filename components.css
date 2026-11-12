@@ -228,7 +228,7 @@ html.gated body>*:not(.gate){display:none!important}
 .gate-err{color:var(--bad)}
 .gate-card .btn{align-self:flex-start}
 .gate-pw{position:relative;display:block}.gate-pw .input{width:100%;padding-right:44px}
-.gate-eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-md);background:none;color:var(--muted);cursor:pointer}
+.gate-eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-md);background:none;color:var(--ink);cursor:pointer}  /* = Input 132:118 Action icon: 18, ink (12 Nov; was 14, muted) */
 .gate-eye:is(:hover,[data-state="hover"]){background:var(--state-hover);color:var(--ink)}
 .gate-eye svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
