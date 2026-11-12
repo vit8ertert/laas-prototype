@@ -23,12 +23,17 @@ S.bdd??={bannerOff:{},invoiceSent:false,refunded:false,actOpen:{},venuePaid:fals
   paid:{'Agreement signed':true,'Deposit received':true,'Rider sent to venue':false,'Invoice for balance sent':false,'Set list shared with band':false},
   completed:{'Settle and record payouts':false,'Thank the venue, ask for a photo':false,'Add to the live history':true},
   cancelled:{'Refund the deposit':false,'Send the credit note':false,'Offer a new date':false,'Tell the band':true}}};
+/* the venue's reply to an offer (path audit 8 Nov: "Offer out" could only move on through the status menu). Signing
+   confirms the booking (the existing Confirmed states); the other three answers each get a state of their own. */
+S.bdd.check.declined??={'Tell the band the date is free':false,'Release the hold on 25 Oct':true,'Ask Mette about spring':false};
+S.bdd.check.counter??={'Answer the counter offer':false,'Check the split at 4.000':false,'Hold kept until Fri 17 Oct':true};
+S.bdd.check.expired??={'Send the offer again, or let the date go':false,'Tell the band':false,'Date freed in the calendar':true};
 S.bdd.check.overdue??={'Agreement signed':true,'Deposit received':false,'Rider sent to venue':false,'Balance invoice sent, 18 Oct':false,'Day sheet to the band':false};
 S.rating.tags=S.rating.tags||[];
 
 const VEN=L.V('royal');
 /* key of the Figma screen this booking state shows */
-const keyOf=()=>{const b=S.booking;if(b.cancelled)return 'cancelled';if(b.state==='confirmed')return b.depositPaid?'paid':'overdue';return b.state;};
+const keyOf=()=>{const b=S.booking;if(b.cancelled)return 'cancelled';if(b.state==='confirmed')return b.depositPaid?'paid':'overdue';if(b.state==='offer'&&S.bdd.reply)return S.bdd.reply;return b.state;};
 
 /* ---------- small parts (Figma components: Section 298:5025, Banner 299:5129, Status chip 301:5098, rows 299:5064 / 299:5019) ---------- */
 const act=(icon,label,a,extra='')=>`<button class="btn ghost s bd-act" data-act="${a}" ${extra}>${ic(icon,'s')}${label}</button>`;
@@ -49,6 +54,9 @@ const ACTS={
  enquiry:[['6 Oct','Mail from Mette Kjær read by the assistant'],['6 Oct','Booking created as Enquiry'],['6 Oct','Reply drafted for you to check']],
  hold:[['8 Oct','Jonas reminded in the band app'],['6 Oct','Date held until Fri 10 Oct'],['6 Oct','Band asked who can play'],['6 Oct','Enquiry from Mette by email']],
  offer:[['8 Oct','Offer opened by Mette Kjær, 09:14'],['7 Oct','Offer sent by Vital'],['6 Oct','Date held, 2 of 3 said yes'],['6 Oct','Enquiry from Mette by email']],
+ declined:[['9 Oct','Offer declined by Mette Kjær, 11:02'],['8 Oct','Offer opened by Mette Kjær, 09:14'],['7 Oct','Offer sent by Vital'],['6 Oct','Enquiry from Mette by email']],
+ counter:[['9 Oct','Counter offer from Mette Kjær: 4.000 DKK, travel included'],['8 Oct','Offer opened by Mette Kjær, 09:14'],['7 Oct','Offer sent by Vital'],['6 Oct','Enquiry from Mette by email']],
+ expired:[['10 Oct','Offer expired unsigned, 18:00'],['9 Oct','Nudge sent to Mette Kjær'],['8 Oct','Offer opened by Mette Kjær, 09:14'],['7 Oct','Offer sent by Vital']],
  overdue:[['16 Oct','Invoice 2026-031 opened again by the venue'],['15 Oct','Reminder 3 days after the due date sent'],['12 Oct','Reminder on the due date sent'],['9 Oct','Agreement signed by Mette Kjær'],['5 Oct','Deposit invoice 2026-031 sent']],
  paid:[['3 Oct','Deposit 1.500 DKK received'],['28 Sep','Deposit invoice 2026-031 sent'],['21 Sep','Booking confirmed by venue'],['14 Sep','Created from an email thread by the assistant']],
  completed:[['27 Oct','Balance 3.500 DKK received'],['26 Oct','Travel receipt added by Jonas'],['25 Oct','Gig played'],['16 Oct','Deposit 1.500 DKK received']],
@@ -71,7 +79,7 @@ const evHead=({tile,kicker,title,facts,today})=>`<header class="event-header ev-
   <div class="ev-meta"><button class="ev-venue" data-go="venue" data-id="royal"><img src="${IMG(VEN.img)}" alt="">Hotel Royal, Aarhus</button>${facts.map(f=>`<span class="tag">${f}</span>`).join('')}</div></div></header>`;
 const BK_STEPS=['Enquiry','Hold','Offer','Confirmed','Played','Settled'];
 const bkProg=k=>{if(k==='cancelled')return `<ol class="booking-progress bk-prog cancelled" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<4?'done':'off'}"><i></i><span>${i===3?'Cancelled 14 Oct':t}</span></li>`).join('')}</ol>`;
- const cur={enquiry:0,hold:1,offer:2,overdue:3,paid:4,completed:S.booking.settled?6:5}[k]??0;
+ const cur={enquiry:0,hold:1,offer:2,declined:2,counter:2,expired:2,overdue:3,paid:4,completed:S.booking.settled?6:5}[k]??0;
  return `<ol class="booking-progress bk-prog" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<cur?'done':i===cur?(k==='overdue'?'att':'now'):'todo'}" ${i===cur?'aria-current="step"':''}><i></i><span>${t}${i===cur&&k==='overdue'?', deposit late':''}${i===cur&&k==='paid'?', 25 Oct':''}</span></li>`).join('')}</ol>`;};
 
 /* ---------- booking states ---------- */
@@ -101,6 +109,27 @@ const STATES={
   main:sec('Offer sent 7 Oct',goAct('arrowUpRight','View as venue','paypage'),kv([['Set','2 × 45 min, from 21:00, hotel bar'],['Fee','5.000 DKK, plus travel 640 DKK'],['Deposit','1.500 DKK on signing, MobilePay or bank'],['Balance','3.500 DKK on 25 Oct, invoice sent 7 days before'],['Cancellation','Free until 11 Oct, deposit kept after'],['Signed by','Nobody yet']]),'Changing anything sends a new link; the old one stops working.'),
   panel:panel('offer'),
   ph:'Ask about this offer — nudge Mette, extend the expiry, change the deposit'}),
+ declined:()=>({
+  pill:pill('draft','Declined'),
+  btns:hb('secondary','','Close booking','bdclose')+hb('accent','send','Send a new offer','bdnewoffer'),
+  banner:banner('attention','alert','Mette Kjær declined the offer on 9 Oct','“We went with a DJ for this one, but would love to have you in spring.” The hold on 25 Oct is released; nothing was invoiced.','<button class="btn secondary s" data-act="reply">Reply to Mette</button>'),
+  main:sec('Offer sent 7 Oct, declined',goAct('arrowUpRight','View as venue','paypage'),kv([['Set','2 × 45 min, from 21:00, hotel bar'],['Fee','5.000 DKK, plus travel 640 DKK'],['Deposit','1.500 DKK on signing, MobilePay or bank'],['Balance','3.500 DKK on 25 Oct, invoice sent 7 days before'],['Cancellation','Free until 11 Oct, deposit kept after'],['Answer','Declined by Mette Kjær, 9 Oct 11:02']]),'A new offer gets a new link. Closing moves this booking to Past as Declined.'),
+  panel:panel('declined'),
+  ph:'Ask about this booking — reply to Mette, offer a spring date, who else asked for 25 Oct'}),
+ counter:()=>({
+  pill:pill('attention','Counter offer'),
+  btns:hb('secondary','','Decline','bddeclinecounter')+hb('accent','check','Accept 4.000','bdacceptcounter'),
+  banner:banner('attention','alert','Mette Kjær asks for 4.000 DKK, travel included','Your offer was 5.000 plus 640 travel. At 4.000 each of the four gets 840 after the van. Accepting sends the changed offer for her to sign.','<button class="btn secondary s" data-act="reply">Reply with another fee</button>'),
+  main:sec('What Mette changed',goAct('arrowUpRight','View as venue','paypage'),kv([['Fee','4.000 DKK, was 5.000'],['Travel','Included, was 640 DKK extra'],['Deposit','1.200 DKK on signing, was 1.500'],['Set','2 × 45 min, from 21:00, unchanged'],['Cancellation','Free until 11 Oct, unchanged'],['Her note','“Our budget for the bar nights is 4.000 all in.”']]),'Nothing changes until you accept or send another offer.'),
+  panel:panel('counter'),
+  ph:'Ask about this counter offer — what is our floor, what did they pay last time, draft a reply at 4.500'}),
+ expired:()=>({
+  pill:pill('draft','Expired'),
+  btns:hb('secondary','','Let the date go','bdclose')+hb('accent','send','Send again','bdsendagain'),
+  banner:banner('attention','alert','The offer expired on Fri 10 Oct, 18:00, unsigned','Mette opened it on 8 Oct and did not answer the nudge. 25 Oct is free in the calendar again. Sending again holds the date for 7 more days.','<button class="btn secondary s" data-act="reply">Write to Mette</button>'),
+  main:sec('Offer sent 7 Oct, expired',goAct('arrowUpRight','View as venue','paypage'),kv([['Set','2 × 45 min, from 21:00, hotel bar'],['Fee','5.000 DKK, plus travel 640 DKK'],['Deposit','1.500 DKK on signing, MobilePay or bank'],['Balance','3.500 DKK on 25 Oct, invoice sent 7 days before'],['Cancellation','Free until 11 Oct, deposit kept after'],['Signed by','Nobody, expired 10 Oct']]),'The old link shows “This offer has expired” to the venue.'),
+  panel:panel('expired'),
+  ph:'Ask about this offer — send it again, try another contact at Hotel Royal, free the date'}),
  overdue:()=>({
   pill:pill('confirmed','Confirmed'),
   btns:hb('secondary','money','Record a payment','record'),
@@ -257,6 +286,11 @@ Object.assign(A,{
  recorded:()=>{const g=S.bdd.gap;S.overlay=null;S.booking.depositPaid=g!==0;S.checklist['Deposit received']=g!==0;S.bdd.check.paid['Deposit received']=true;S.bdd.check.overdue['Deposit received']=g!==0;L.render();T(g===0?'1.470 DKK recorded, 30 DKK left open on 2026-031':'1.470 DKK recorded on invoice 2026-031',()=>{S.booking.depositPaid=false;S.checklist['Deposit received']=false;});},
  sendreminder:()=>{S.editMsg=false;S.toEdit=false;S.sentReminder=true;L.render();T('Reminder sent to Hotel Royal',()=>{S.sentReminder=false;});},
  bdresend:()=>T('Offer sent again to Mette Kjær',()=>{}),
+ bdnewoffer:()=>{S.bdd.reply=null;L.render();T('New offer sent to Mette Kjær, expires Fri 17 Oct');},
+ bdsendagain:()=>{S.bdd.reply=null;L.render();T('Offer sent again, 25 Oct held until Fri 17 Oct');},
+ bdacceptcounter:()=>{S.bdd.reply=null;L.render();T('Offer changed to 4.000 DKK and sent for signing');},
+ bddeclinecounter:()=>{S.bdd.reply='declined';L.render();T('Counter offer declined, Mette is told');},
+ bdclose:()=>{S.bdd.reply=null;S.booking.cancelled=true;L.render();T('Booking closed, 25 Oct is free',()=>{S.booking.cancelled=false;L.render();});},
  bdextend:()=>{S.bdd.extended=!S.bdd.extended;L.render();if(S.bdd.extended)T('Hold extended to Fri 17 Oct, Mette is told',()=>{S.bdd.extended=false;});},
  bdaskband:()=>{S.bdd.askedBand=true;L.render();T('Jonas asked again in the band app');},
  bdrules:()=>{S.overlay={type:'modal',html:`<div class="bd-rules"><h2 class="t-title">Why these rules?</h2><p class="muted">Danish law lets a business send a reminder with a fee of up to 100 DKK once a payment is 10 days late, at most three times, at least 10 days apart. A reminder before that is free and friendly. LAAS follows that ladder and never sends anything without your Confirm.</p><div class="row" style="justify-content:flex-end"><button class="btn secondary" data-act="close">Got it</button></div></div>`};L.render();},
@@ -301,3 +335,9 @@ L.CHANGE.push(t=>{if(t.dataset.bdcheck){const [k,x]=t.dataset.bdcheck.split('|')
 let svT;L.INPUT.push(t=>{if(t.dataset.bdautosave===undefined)return;const s=document.getElementById('bdsave');if(!s)return true;
  s.innerHTML=`${ic('loader','s')}Saving…`;s.className='bd-save on saving';clearTimeout(svT);svT=setTimeout(()=>{s.innerHTML=`${ic('check','s')}Saved`;s.className='bd-save on';svT=setTimeout(()=>{s.className='bd-save';},3000);},600);return true;});
 })();
+
+/* Flows: the three answers a venue can give besides signing */
+(function(){const L=window.LAAS,S=L.S;const go=(r)=>()=>{S.booking.cancelled=false;S.booking.state='offer';S.bdd.reply=r;L.go('booking');};
+ L.FLOWS.push(['Venue declines an offer','The offer comes back declined: reply, send a new one or close',go('declined')]);
+ L.FLOWS.push(['Venue sends a counter offer','A lower fee comes back: accept, decline or answer',go('counter')]);
+ L.FLOWS.push(['An offer expires','Nobody signed in time: send again or let the date go',go('expired')]);})();
