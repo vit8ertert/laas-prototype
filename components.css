@@ -11,6 +11,7 @@
 /* a button stretched to fill a row keeps its label centred (Vit 4 Nov, Dialog and Drawer footers; Figma Button: centred
    in every variant). Left-aligned buttons say so themselves: .d-newchat, .d-record */
 .btn>svg.i{width:20px;height:20px;flex:none}
+.btn.center{justify-content:center}  /* a full-width button in a panel keeps its label centred (12 Nov; was an inline style) */
 .btn.s{height:auto;padding:8px 12px;font:500 13px/var(--lh-label) var(--sans)}
 /* Size=L (Vit 21 Oct: the sign-up buttons felt small): 48 high, for full-width calls to action on sign-up and onboarding */
 .btn.lg{height:auto;min-height:48px;padding:13px 24px;font:500 15px/var(--lh-body) var(--sans);gap:8px}.btn.lg>svg{width:20px;height:20px}

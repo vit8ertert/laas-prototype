@@ -677,6 +677,7 @@
   :is(.send>.row:last-child,.ml-cfoot)>.btn{flex:1 1 calc(50% - 4px);min-width:0;margin-left:0;justify-content:center;height:44px;order:2;font:500 15px/var(--lh-body) var(--sans)}
   :is(.send>.row:last-child,.ml-cfoot)>.btn>svg.i:is(.s,*){width:16px!important;height:16px!important}  /* 44 high = Button L on phones: 15 px label like Dialog and Drawer rows (8 Nov) */
   :is(.send>.row:last-child,.ml-cfoot)>.btn.ghost{order:3;flex-basis:100%}
+  .drawer .df>.btn:not(.s)>svg.i:is(.s,*){width:16px!important;height:16px!important}  /* the same in a Drawer footer: Button L on phones carries a 16 icon (12 Nov; an 's' icon came out 14) */
   /* found on the sweep: the New booking sheet kept its desktop 24 px inset on a phone */
   .drawer:has(.bk-nbd) .df{padding-inline:16px}
 }
