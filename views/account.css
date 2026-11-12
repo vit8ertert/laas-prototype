@@ -448,7 +448,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-genres .acc-gc.more{display:none}
 .acc-genres.all .acc-gc.more,.acc-genres.q .acc-gc.more.hit{display:inline-flex}
 .acc-genres .acc-gc.miss{display:none!important}
-.acc-gall{align-self:center;padding:0 4px}
+.acc-gall{align-self:center}
 .acc-genres.q .acc-gall{display:none}
 .acc-gnone{display:none;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.acc-genres.nohit .acc-gnone{display:block}
 /* onboarding: the Back / Continue row sits apart from the form, 40 px below the last field on every step (Vit 21 Oct) */

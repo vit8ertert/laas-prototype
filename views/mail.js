@@ -186,11 +186,9 @@ const EMPTY={
 
 L.VIEWS.mail=()=>{
  if(!M.connected)return `<div class="page ml-page">${header('Not connected yet','')}
-  <div class="ml-empty"><span class="ml-emptyic">${ic('mail')}</span><h2 class="t-title">Connect your mail</h2>
-  <p class="muted">LAAS reads the threads with your venues and contacts and links each one to its booking, venue and people. It only reads: nothing is sent unless you press Send.</p>
-  <div class="row" style="justify-content:center"><button class="btn secondary" data-act="mailconnect" data-svc="Gmail">${GOOGLE}Connect Gmail</button><button class="btn secondary" data-act="mloauth" data-kind="m365">${MSFT}Connect Microsoft 365</button></div>
-  <button class="link" data-act="mlsmtp">Other mail, with SMTP and IMAP</button>
-  <ul class="ml-points"><li>${ic('users','s')}Only threads with people in Contacts</li><li>${ic('lock','s')}Never sends on its own</li><li>${ic('plug','s')}Disconnect any time in Mail accounts</li></ul></div></div>${L.abar()}`;
+  <div class="bk-empty"><div class="hd"><h2 class="t-title">Connect your mail</h2><p>LAAS reads the threads with your venues and contacts and links each one to its booking, venue and people. It only reads: nothing is sent unless you press Send.</p></div>
+  <div class="acts"><button class="btn secondary" data-act="mailconnect" data-svc="Gmail">${GOOGLE}Connect Gmail</button><button class="btn secondary" data-act="mloauth" data-kind="m365">${MSFT}Connect Microsoft 365</button></div></div>
+  <div class="ml-trust"><p class="t-meta muted">Only threads with people in Contacts. Never sends on its own. Disconnect any time in Mail accounts.</p><button class="btn ghost s" data-act="mlsmtp">Other mail, with SMTP and IMAP</button></div></div>${L.abar()}`;
  const f=M.folder,c=counts(),q=M.q,l=filtered(),u=unreadN(),n=list('inbox').filter(t=>t.needs).length;
  const chips=[['all','All',c.all],['needs','Needs reply',c.needs],['booking','Linked to a booking',c.booking]];
  const acc=okAccs()[0]||M.accounts.find(a=>a.state!=='off');const more=M.accounts.filter(a=>a.state!=='off').length-1;

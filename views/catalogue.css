@@ -273,11 +273,10 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .ec{display:flex;flex-direction:column;gap:16px}
 .ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}.ec-fs::-webkit-scrollbar{display:none}.ec-fs .chip{flex:none;white-space:nowrap}  /* chips never wrap to two lines; the row scrolls (12 Nov) */.ec-fs .chip .c{margin-left:8px;color:var(--muted)}
 .ec-grp{border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
-.ec-gh{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;text-align:left}
+.ec-gh{display:flex;align-items:center;gap:12px;width:100%;padding:var(--row-y) 16px;text-align:left}
 .ec-gh:is(:hover,[data-state="hover"]){background:var(--hover)}.ec-gh:is(:hover,[data-state="hover"]) b{text-decoration:underline}
-.ec-art{width:40px;height:40px;border-radius:6px;object-fit:cover;flex:none}
-.ec-gt{flex:1;min-width:0;display:flex;flex-direction:column}.ec-gt b{font:500 15px/var(--lh-body) var(--sans)}.ec-gt small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.ec-chev{color:var(--muted);display:grid;place-items:center;width:20px}
+.ec-art{width:28px;height:28px;border-radius:var(--r-sm);object-fit:cover;flex:none}  /* List row Leading thumb: 28 (12 Nov; was 40) */
+.ec-gh .tx{flex:1;min-width:0;display:flex;flex-direction:column}.ec-gh .tx b{font:400 15px/var(--lh-body) var(--sans)}.ec-gh .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.ec-gh>svg.i{flex:none;color:var(--muted)}  /* = List row 299:5063 (12 Nov: title 400, chevron direct; was its own row) */
 .ec-t{border-top:1px solid var(--rule)}
 .ec-r{display:grid;grid-template-columns:minmax(180px,1fr) 150px 170px 110px minmax(150px,220px);column-gap:16px;align-items:center;padding:8px 16px;min-height:52px;box-shadow:inset 0 1px 0 var(--rule)}
 .ec-r:first-child{box-shadow:none}

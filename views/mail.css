@@ -46,12 +46,6 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-panel .list-row{padding:8px 0}
 
 /* empty: not connected */
-.ml-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:64px 24px;border-radius:var(--r-lg);background:var(--surface)}
-.ml-empty p{margin:0;max-width:560px}
-.ml-emptyic{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--well);color:var(--ink)}
-.ml-emptyic svg{width:24px;height:24px}
-.ml-points{list-style:none;margin:8px 0 0;padding:0;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;max-width:720px;color:var(--muted);font-size:13px;line-height:var(--lh-label)}
-.ml-points li{display:flex;align-items:center;gap:8px}
 
 .ml-linkcol{display:flex} /* the link chip alone, no line box around it (the doctype: standards mode adds a 22 px strut) */
 
@@ -188,3 +182,5 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-cf .ml-fromsel:is(:focus,[data-state="focus"]),.ml-cf .ml-fromsel:is(:focus-visible,[data-state="focus"]){box-shadow:none!important;outline:none!important}
 
 .ml-rc button svg.i{width:14px;height:14px} /* chip close icon: 14 inside chips (icon sizes rule; Recipient chip 1840:37326) */
+
+.ml-trust{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);text-align:center}.ml-trust p{margin:0;max-width:560px}  /* under the connect box (12 Nov: the box is the standard empty state) */

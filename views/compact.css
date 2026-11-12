@@ -154,7 +154,7 @@
 @media (max-width:599.98px){
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i{width:16px!important;height:16px!important}
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i.s{width:14px!important;height:14px!important}
-  .acc-si svg.acc-i32,.cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.ml-emptyic svg,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
+  .acc-si svg.acc-i32,.cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
   .acc-si{gap:12px!important}
   .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.drop-ph svg{width:28px!important;height:28px!important}
   .acc-appicon svg{width:36px}
