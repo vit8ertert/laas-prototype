@@ -190,7 +190,7 @@ L.VIEWS.mail=()=>{
   <p class="muted">LAAS reads the threads with your venues and contacts and links each one to its booking, venue and people. It only reads: nothing is sent unless you press Send.</p>
   <div class="row" style="justify-content:center"><button class="btn secondary" data-act="mailconnect" data-svc="Gmail">${GOOGLE}Connect Gmail</button><button class="btn secondary" data-act="mloauth" data-kind="m365">${MSFT}Connect Microsoft 365</button></div>
   <button class="link" data-act="mlsmtp">Other mail, with SMTP and IMAP</button>
-  <ul class="ml-points"><li>${ic('users','s')}Only threads with people in Contacts</li><li>${ic('send','s')}Never sends on its own</li><li>${ic('plug','s')}Disconnect any time in Mail accounts</li></ul></div></div>${L.abar()}`;
+  <ul class="ml-points"><li>${ic('users','s')}Only threads with people in Contacts</li><li>${ic('lock','s')}Never sends on its own</li><li>${ic('plug','s')}Disconnect any time in Mail accounts</li></ul></div></div>${L.abar()}`;
  const f=M.folder,c=counts(),q=M.q,l=filtered(),u=unreadN(),n=list('inbox').filter(t=>t.needs).length;
  const chips=[['all','All',c.all],['needs','Needs reply',c.needs],['booking','Linked to a booking',c.booking]];
  const acc=okAccs()[0]||M.accounts.find(a=>a.state!=='off');const more=M.accounts.filter(a=>a.state!=='off').length-1;
