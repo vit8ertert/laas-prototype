@@ -32,7 +32,7 @@
    header pad 8 16 on canvas, Label 13/18 muted; body rows pad 12 16, top stroke 1 rule inside, hover fill hover */
 .cv-table{border:1px solid var(--rule);border-radius:var(--r-lg);background:var(--surface);padding:0;overflow:hidden}
 .cv-table table,.cv-table thead,.cv-table tbody{display:block;min-width:0}
-.cv-table tr{display:grid;grid-template-columns:minmax(0,1fr) 140px 130px 130px 110px 80px;column-gap:var(--space-6);align-items:center;padding:var(--space-3) var(--space-4);box-shadow:inset 0 1px 0 var(--rule)}
+.cv-table tr{display:grid;grid-template-columns:minmax(200px,1fr) 140px 130px 130px 110px 80px;column-gap:var(--space-6);align-items:center;padding:var(--space-3) var(--space-4);box-shadow:inset 0 1px 0 var(--rule)}
 .cv-table thead tr{padding:var(--space-2) var(--space-4);box-shadow:none}
 .cv-table th,.cv-table td{display:flex;align-items:center;min-width:0;padding:0;border:0;box-shadow:none;background:none}
 .cv-table td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -283,3 +283,4 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 .cv-actions.cv-person>.cv-av{margin-top:9px}
 .cv-actions.cv-person>.cv-acts{align-self:center}
 @media (max-width:599.98px){.cv-actions.cv-person>.cv-av{margin-top:var(--space-1)!important}}
+/* the Name column never goes under 200: between phone and desktop widths the table scrolls sideways instead of crushing it (12 Nov, Vit: "overlap columns on table") */
