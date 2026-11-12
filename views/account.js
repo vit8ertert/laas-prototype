@@ -493,17 +493,20 @@ function obSteps(st){const ob=S.onboarding;
   +`<div class="acc-obphoto"><img class="round" src="${S.photos.you||IMG('booker')}" alt=""><div><label class="btn secondary s" style="cursor:pointer">${ic('upload','s')}Change photo<input type="file" accept="image/*" hidden data-photo="you"></label><span class="help">Square, at least 400 px. Shown on the day sheet.</span></div></div>
   ${fld('acc-yn','Your name','Vital Sinkevich',360)}
   <div class="acc-two">${fsel('acc-yp','You play',['Vocals, guitar','Vocals','Guitar','Bass','Drums','Keys'],212,'Used for line-ups and day sheets')}${fsel('acc-yl','Language',['Dansk','English'],212,'Mails to venues use it')}</div>
-  <div class="row"><button class="btn accent" data-ob="3">Continue</button></div>`;
- case 3:return head('Your band','One account can run several bands. Start with this one.')
-  /* Vit 21 Oct: wider column, fewer genres with search, no photo here (it moves to Settings, Band) */
+  <div class="row"><button class="btn accent" data-act="accobsub" data-sub="0">Continue</button></div>`;
+ /* Vit 12 Nov: "this step has too many questions, divide it in at least two": the band's basics first (name, country,
+    city, size), then its own screen for the genres. Five progress steps instead of four; the step number stays 3
+    with S.onboarding.sub 0 | 1, so every other step keeps its number. */
+ case 3:if(!ob.sub)return head('Your band','One account can run several bands. Start with this one.')
   +`${fld('acc-bn','Band name','Low Tide')}
   <div class="acc-two acc-flex">${fsel('acc-bco','Country',COUNTRIES,0,'Sets currency, VAT and time zone')}${fld('acc-bc','Home city','Odense',0,'Travel distances start here')}</div>
-  <div class="field"><span class="acc-lbl">What do you play?</span>
-   <div class="acc-gsearch">${ic('search','s')}<input id="acc-gq" placeholder="Search genres" aria-label="Search genres" autocomplete="off"></div>
-   <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${[...GENRES,...obGenres().filter(g=>!GENRES.includes(g))].map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${esc(g)}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. <button class="link" data-act="accgadd">Add “<span id="acc-gnew"></span>”</button></span></div>
-   <span class="help">Pick all that fit. The first one picks the look on the next step.</span></div>
   ${obSizeField()}
-  <div class="row"><button class="btn secondary" data-ob="2">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
+  <div class="row"><button class="btn secondary" data-ob="2">Back</button><button class="btn accent" data-act="accobsub" data-sub="1">Continue</button></div>`;
+  return head('What do you play?','Pick all that fit. The first one picks the look on the next step.')
+  +`<div class="field">
+   <div class="acc-gsearch">${ic('search','s')}<input id="acc-gq" placeholder="Search genres" aria-label="Search genres" autocomplete="off"></div>
+   <div class="acc-genres ${A.allGenres?'all':''}" id="acc-glist">${[...GENRES,...obGenres().filter(g=>!GENRES.includes(g))].map((g,i)=>{const on=obGenres().includes(g);return `<button class="acc-gc ${on?'on':''} ${i>=8&&!on?'more':''}" data-obgenre="${esc(g)}" aria-pressed="${on}">${g}</button>`;}).join('')}<button class="link acc-gall" data-act="accgall">${A.allGenres?'Show fewer':`Show all ${GENRES.length}`}</button><span class="acc-gnone">No genre matches. <button class="link" data-act="accgadd">Add “<span id="acc-gnew"></span>”</button></span></div></div>
+  <div class="row"><button class="btn secondary" data-act="accobsub" data-sub="0">Back</button><button class="btn accent" data-act="accobband">Continue</button></div>`;
  case 4:{const match=GENRE_THEME[ob.genre]||'label';const order=[match,...['label','metal','electronic','classical'].filter(x=>x!==match)];
   const desc={label:'The LAAS look, lilac on dark',metal:'Black and bone, hard type',electronic:'Electric navy and lime',classical:'Ivory, gold and burgundy'};
   /* Vit 21 Oct: genre and band size are asked on "Your band"; this step is the look only (Figma 443:19646 still has the older version) */
@@ -512,7 +515,7 @@ function obSteps(st){const ob=S.onboarding;
   return head('Pick your look',match==='label'?`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. You can change it any time in Settings.`:`Choose one of the looks ${L.isNarrow&&L.isNarrow()?'below':'on the right'}. We suggest ${TNAME[match]} for ${ob.genre.toLowerCase()}.`)
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
   <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
-  <div class="row"><button class="btn secondary" data-ob="3">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
+  <div class="row"><button class="btn secondary" data-act="accobsub" data-sub="1">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
  case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
   +`<ol class="acc-obinv" aria-label="Bandmates to invite">${rows.map(([m,r],i)=>`<li><div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div></li>`).join('')}</ol>
@@ -539,11 +542,11 @@ function obSteps(st){const ob=S.onboarding;
   +fld('acc-jn','Your name','Mia Holm',360)+fsel('acc-jp','You play',['Bass','Drums','Guitar','Keys','Vocals'],240)
   +`<div class="row"><button class="btn secondary" data-act="accnotme">Not me</button><button class="btn accent" data-act="accjoin">Join Low Tide</button></div>`;
  }}
-L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.ob-ph:not(.in)').forEach(i=>{if(i.complete&&i.naturalWidth){OB_SEEN.add(i.dataset.ph);setTimeout(()=>i.classList.add('in'),20);}}),30);setTimeout(()=>{S.logoIntroTag=1},2300);const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;
+L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.ob-ph:not(.in)').forEach(i=>{if(i.complete&&i.naturalWidth){OB_SEEN.add(i.dataset.ph);setTimeout(()=>i.classList.add('in'),20);}}),30);setTimeout(()=>{S.logoIntroTag=1},2300);const st=S.onboarding.step|0;const photo=OB_PHOTO[st];const prog=st>=2&&st<=5;const pos=st===2?1:st===3?(S.onboarding.sub?3:2):st===4?4:5;
  queueMicrotask(()=>{fitWin();if(LAB_STRIP&&st===3)mountSizeStrip();if(st===1){const d=document.querySelector('[data-digit="3"]');if(d&&document.activeElement===document.body)d.focus();}});
  const right=st===4?`<div class="r acc-live"><div class="acc-win">${mini()}</div>${lookPicker()}</div>`:`<div class="r"><img class="ob-ph ${OB_SEEN.has(photo)?'in':''}" src="${IMG(photo)}" alt="" decoding="async" fetchpriority="high" data-ph="${photo}"></div>`;
- return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.logoMotion?L.logoMotion(S.logoIntro?'idle':(S.logoIntro=1,'intro')):L.LOGO}<small class="muted t-meta ${S.logoIntroTag?'':'lm-tag'}">label as a service</small></span><span style="flex:1"></span>${prog?`<span class="t-meta muted">Step ${st-1} of 4</span>`:''}${L.flowBtnInline()}</div>
- ${prog?`<div class="bar4">${[1,2,3,4].map(i=>`<i class="${i<=st-1?'on':''}"></i>`).join('')}</div>`:''}
+ return `<div class="acc-ob ${st===4?'snd':''}"><div class="l"><div class="acc-obtop"><span class="logo">${L.logoMotion?L.logoMotion(S.logoIntro?'idle':(S.logoIntro=1,'intro')):L.LOGO}<small class="muted t-meta ${S.logoIntroTag?'':'lm-tag'}">label as a service</small></span><span style="flex:1"></span>${prog?`<span class="t-meta muted acc-step">Step ${pos} of 5</span>`:''}${L.flowBtnInline()}</div>
+ ${prog?`<div class="bar4">${[1,2,3,4,5].map(i=>`<i class="${i<=pos?'on':''}"></i>`).join('')}</div>`:''}
  <div class="acc-obform">${obSteps(st)}</div></div>${right}</div>`;};
 
 AC.pweye=t=>{const i=t.previousElementSibling,on=i.type==='password';i.type=on?'text':'password';t.setAttribute('aria-pressed',on);t.setAttribute('aria-label',on?'Hide password':'Show password');t.innerHTML=L.ic(on?'eyeoff':'eye','s');};
@@ -551,6 +554,7 @@ AC.obsignin=()=>{L.go('dashboard');L.toast('Signed in as Vital');};
 AC.obpwdone=()=>{L.go('dashboard');L.toast('Password saved. You are signed in');};
 AC.accoblink2=()=>{S.onboarding.step=10;L.render();};
 AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the link in your inbox');};
+AC.accobsub=t=>{S.onboarding.sub=+t.dataset.sub;S.onboarding.step=3;L.render();};
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
 AC.accobrow=()=>{A.obRows++;L.render();};
 /* the intro's three exits into the app; with ?lab=knob the Soundcheck plays first, the first time each band comes up */

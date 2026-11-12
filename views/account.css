@@ -478,3 +478,4 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-forgot{font-size:13px;line-height:var(--lh-label)}
 .acc-login .field{gap:8px}
 .acc-login .gate-pw .input{width:100%}
+.acc-step{white-space:nowrap;flex:none}  /* "Step 2 of 5" never breaks over two lines (it did on phones beside the tagline) */
