@@ -271,10 +271,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* earnings check: release by release, song by song */
 .ec{display:flex;flex-direction:column;gap:16px}
-.ec-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.ec-kpis>div{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
-.ec-kpis span{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}.ec-kpis b{font:400 32px/40px var(--sans)}.ec-kpis small{font:400 13px/var(--lh-label) var(--sans)}
-.ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1}.ec-fs .chip .c{margin-left:8px;color:var(--muted)}
+.ec-bar{display:flex;align-items:center;gap:8px}.ec-fs{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}.ec-fs::-webkit-scrollbar{display:none}.ec-fs .chip{flex:none;white-space:nowrap}  /* chips never wrap to two lines; the row scrolls (12 Nov) */.ec-fs .chip .c{margin-left:8px;color:var(--muted)}
 .ec-grp{border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);overflow:hidden}
 .ec-gh{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;text-align:left}
 .ec-gh:is(:hover,[data-state="hover"]){background:var(--hover)}.ec-gh:is(:hover,[data-state="hover"]) b{text-decoration:underline}
@@ -289,4 +286,8 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .ec-ok{display:inline-flex;align-items:center;gap:8px;font:400 14px/20px var(--sans);color:var(--muted)}.ec-ok .i{width:14px;height:14px;color:var(--ok)}
 .ec-fix{display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ec-fix .i{width:12px;height:12px}
 .ec-r .n{justify-self:end;text-align:right}.ec-why{font:400 13px/var(--lh-label) var(--sans)}
-@media (max-width:839.98px){.ec-kpis{grid-template-columns:1fr}.ec-t{overflow-x:auto}.ec-r{min-width:760px}}
+@media (max-width:839.98px){.ec-t{overflow-x:auto}.ec-r{min-width:760px}}
+/* registration form and list (Drawer): the note sits flush under the details */
+.ec-note{padding:0;margin-top:var(--space-5)}
+.ec-list{display:flex;flex-direction:column}
+

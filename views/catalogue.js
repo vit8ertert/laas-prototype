@@ -99,7 +99,7 @@ function listCounts(){const past=S.catalog||[];const n=(hasRel()?1:0)+past.lengt
  const secs=[...(hasRel()?LS_TRACKS.slice(0,R().tracks):[]),...past.flatMap(r=>r.tracks)].reduce((a,t)=>{const [m,s]=t[1].split(':');return a+ +m*60+ +s},0);
  return {n,tracks,min:Math.round(secs/60),past};}
 
-const kpisE=(n,bad,r)=>`<div class="ec-kpis"><div><span>Songs out</span><b>${n}</b><small>on ${r} releases</small></div><div><span>Earning everywhere</span><b>${n-bad}</b><small class="c-ok">Koda, Gramex and stores</small></div><div><span>Missing money</span><b>${bad}</b><small class="${bad?'c-att':'c-ok'}">${bad?'songs not registered somewhere':'nothing missing'}</small></div></div>`;
+const kpisE=(n,bad,r)=>`<div class="cat-kpis">${kpi('Songs out',n,`on ${r} releases`)}${kpi('Earning everywhere',n-bad,'Koda, Gramex and stores','ok')}${kpi('Missing money',bad,bad?'songs not registered somewhere':'nothing missing',bad?'attention':'ok')}</div>`;  /* the standard KPI tile (12 Nov: the page had its own cards) */
 function tabBody(){const c=listCounts();const t=S.cat.tab;
  if(t==='tracks'){const rows=[...(hasRel()?LS_TRACKS.slice(0,R().tracks).map(x=>[...x,R().title]):[]),...c.past.flatMap(r=>r.tracks.map(x=>[x[0],x[1],x[2],r.title]))];
   if(!rows.length)return `<div class="empty cat-empty"><h3 class="t-title">No tracks yet</h3><p class="muted">Tracks come with a release. Add them on the release page.</p></div>`;
@@ -262,9 +262,29 @@ L.DR.gearitem=(id)=>{const x=GEAR.find(g=>g.id===id)||GEAR[0];return {type:'draw
 const A=L.ACTIONS;const open=o=>{S.overlay=o;L.render();};
 A.ecgrp=el=>{S.cat.eopen[el.dataset.id]=!S.cat.eopen[el.dataset.id];L.render();};
 A.ecf=el=>{S.cat.ef=el.dataset.f;L.render();};
-A.ecfix=el=>{const w=el.dataset.what,song=el.dataset.song;L.open('modal',{html:L.confirmM?L.confirmM(`Register “${song}” at ${w}?`,`LAAS fills in the ${w} form with the song, the writers and the splits from Credits. You check it and send it from your ${w} account.`,'Not now',`ecfixok" data-what="${w}" data-song="${song}`,'Open the form'):''});};
-A.ecfixok=el=>{const w=el.dataset.what,song=el.dataset.song;for(const r of (S.catalog||[]))for(const x of r.tracks)if(x[0]===song&&x[2]){x[2]=w==='Koda'?(/gramex/i.test(x[2])?x[2]:''):(/koda/i.test(x[2])&&/not registered/i.test(x[2])?x[2]:'');}S.overlay=null;L.render();L.toast(`${w} form for “${song}” is ready to send, marked as registered here`);};
-A.ecall=()=>{for(const r of (S.catalog||[]))for(const x of r.tracks)x[2]='';S.overlay=null;L.render();L.toast('All missing registrations prepared, open each form to send it');};
+/* Registering a song (path audit 8 Nov: "Fix all" and "Register" ended at "open each form to send it" with no form;
+   Vit 12 Nov: "next step"). Register opens the form itself in a Drawer, filled from Credits: Koda registers the song
+   (who wrote it), Gramex the recording (who plays on it). LAAS never sends it: you copy it into your own Koda or
+   Gramex account, then mark it registered here. Fix all opens the list of every missing registration; each row opens
+   its form and comes back to the list. */
+const EC_MISSING=()=>{const out=[];for(const r of (S.catalog||[]))for(const x of r.tracks){const t=x[2]||'';if(/not registered at koda/i.test(t))out.push({song:x[0],w:'Koda',rel:r.title});if(/not at gramex/i.test(t))out.push({song:x[0],w:'Gramex',rel:r.title});}return out;};
+const ecForm=(song,w)=>{const r=(S.catalog||[]).find(r=>r.tracks.some(x=>x[0]===song))||{title:'',date:'',tracks:[]};const x=r.tracks.find(x=>x[0]===song)||[song,''];const n=r.tracks.indexOf(x)+1;
+ const rows=w==='Koda'?[['Title',song],['Writers','Mette Ravn, music and lyrics, 50&nbsp;%<br>Sofie Lund, music, 30&nbsp;%<br>Jonas Holm, music, 20&nbsp;%'],['Publisher','None, self-published'],['Length',x[1]||''],['First released',`${r.date||''}, on ${r.title}`]]
+  :[['Title',song],['ISRC',`DK-LT1-26-${String(n).padStart(5,'0')}`],['Performers','Mette Ravn, vocals and guitar<br>Sofie Lund, synth<br>Jonas Holm, drums'],['Label','Low Tide, own label'],['Length',x[1]||''],['Released',`${r.date||''}, on ${r.title}`]];
+ return {type:'drawer',title:`Register at ${w}`,sub:w==='Koda'?`“${esc(song)}”, the song: who wrote it`:`“${esc(song)}”, the recording: who plays on it`,
+  body:`<div class="cv-kv">${rows.map(([k,v])=>`<div><span>${k}</span><span>${v}</span></div>`).join('')}</div>
+  <p class="acc-foot ec-note">${ic('lock','s')}<span>Filled in from Credits. LAAS never sends this: copy it into your own ${w} account, then mark it as registered here.</span></p>`,
+  foot:`<button class="btn ghost s" data-act="eccopy" data-what="${w}">${ic('copy','s')}Copy the details</button><span style="flex:1"></span><button class="btn secondary" data-act="${S.cat.ecList?'ecall':'close'}">${S.cat.ecList?'Back':'Cancel'}</button><button class="btn accent" data-act="ecfixok" data-what="${w}" data-song="${esc(song)}">${ic('check','s')}Mark as registered</button>`};};
+A.ecfix=el=>{S.cat.ecList=!!el.closest('.ec-list');S.overlay=ecForm(el.dataset.song,el.dataset.what);L.render();};
+A.eccopy=el=>L.toast(`Copied. Paste it into the ${el.dataset.what} form`);
+A.ecfixok=el=>{const w=el.dataset.what,song=el.dataset.song;for(const r of (S.catalog||[]))for(const x of r.tracks)if(x[0]===song&&x[2]){x[2]=w==='Koda'?(/gramex/i.test(x[2])?x[2]:''):(/koda/i.test(x[2])&&/not registered/i.test(x[2])?x[2]:'');}
+ if(S.cat.ecList&&EC_MISSING().length){A.ecall();L.toast(`“${song}” marked as registered at ${w}`);return;}
+ S.cat.ecList=false;S.overlay=null;L.render();L.toast(`“${song}” marked as registered at ${w}`);};
+A.ecall=()=>{const m=EC_MISSING();S.cat.ecList=true;
+ S.overlay={type:'drawer',title:`${m.length} ${m.length===1?'registration':'registrations'} to make`,sub:'One form per song and society. Each takes about a minute.',
+  body:m.length?`<div class="ec-list">${m.map(x=>`<button class="list-row" data-act="ecfix" data-what="${x.w}" data-song="${esc(x.song)}"><span class="tx"><b>${esc(x.song)}</b><small>${x.w}, ${x.w==='Koda'?'the song':'the recording'}, on ${esc(x.rel)}</small></span>${ic('right','s')}</button>`).join('')}</div>`:`<div class="empty-inline"><span>Every song is registered.</span></div>`,
+  foot:`<span style="flex:1"></span><button class="btn accent" data-act="ecalldone">Done</button>`};L.render();};
+A.ecalldone=()=>{S.cat.ecList=false;S.overlay=null;L.render();};
 
 const menu=(r,items)=>{L.open('menu',{x:Math.max(8,Math.min(r.left,innerWidth-276)),y:r.bottom+6,items});};
 A.newrelease=()=>{S.newCover=null;open(L.DR.newrelease());};
