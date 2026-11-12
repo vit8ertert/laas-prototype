@@ -436,7 +436,8 @@ A.mnyaddline=()=>{const w=document.getElementById('mi-lines');if(!w)return;M.inv
 A.mnyaddrcpt=()=>{const w=document.getElementById('mi-lines');if(!w)return;M.inv.lines++;w.insertAdjacentHTML('beforeend',invLine(M.inv.lines,'Parking, Aarhus, receipt 16 Oct','384','25'));recalc();};
 A.mnydraft=()=>{S.overlay=null;L.render();L.toast('Draft saved, 2026-032 stays reserved');};
 A.mnyinvapprove=()=>{const missing=[...document.querySelectorAll('.m-dr .m-moms')].filter(s=>s.value==='');
- if(missing.length){missing[0].focus();missing[0].classList.add('m-err');return;}
+ /* every empty Moms field turns red AND says what to do, and a toast says why nothing was approved (path audit 8 Nov: it turned red with no message) */
+ if(missing.length){missing.forEach(m=>{m.classList.add('m-err');m.setAttribute('aria-invalid','true');const f=m.closest('.field'),h=f&&f.querySelector('.help');if(h){h.textContent='Pick 25 % or Momsfri';h.classList.add('err');}else m.insertAdjacentHTML('afterend','<span class="help err">Pick 25 % or Momsfri</span>');});missing[0].focus();L.toast(missing.length===1?'Pick the moms for one line, then approve':`Pick the moms for ${missing.length} lines, then approve`);return;}
  const r=S.invoices.find(x=>x[0]==='2026-032');const old=r?r.slice():null;if(r){r[3]='sends 18 Oct';r[4]='confirmed';r[5]='Approved';r[6]=document.getElementById('mi-ti')?.textContent||r[6];}
  S.overlay=null;S.mtab='invoices';L.go('money');L.toast('Invoice 2026-032 approved, it sends on 18 Oct',()=>{if(r&&old)r.splice(0,r.length,...old);});};
 A.saveexpense=()=>{const v=id=>(document.getElementById(id)||{}).value||'';const what=v('exw'),amt=num(v('exa')),by=v('exb');
