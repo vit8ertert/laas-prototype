@@ -81,6 +81,9 @@ const fchip=(k,anyWord='all')=>`<button class="chip cv-chip ${S.filters[k].lengt
 const chev=ic('right','s');
 const lock=t=>`<span class="cv-lock">${ic('lock','s')}${t}</span>`;
 const secHead=(title,btn)=>`<div class="section-header cv-sh${btn?'':' solo'}"><h2>${title}</h2>${btn||''}</div>`;
+/* a list inside a page shows 5 rows, then "Show all N" in its header (notes/page-states.md rule 2; Django _section) */
+const secRows=r=>S.cv.secAll?r:r.slice(0,5);
+const secAll=r=>r.length>5?`<button class="btn ghost s cv-act" data-act="cvsecall">${S.cv.secAll?'Show fewer':`Show all ${r.length}`}</button>`:'';
 const actBtn=(icon,label,act,extra='')=>`<button class="btn ghost s cv-act" data-act="${act}" ${extra}>${icon?ic(icon,'s'):''}${label}</button>`;
 const editBtn=key=>S.cv.edit===key?actBtn('','Done','cvedit',`data-k="${key}"`):actBtn('pencil','Edit','cvedit',`data-k="${key}"`);
 const saveState=()=>S.cv.save?`<span class="cv-save ${S.cv.save==='Saved'?'done':''}" id="cvsave">${S.cv.save==='Saved'?ic('check','s'):ic('loader','s')}${S.cv.save}</span>`:'';
@@ -219,7 +222,7 @@ L.VIEWS.contact=()=>{editScope();
  <!-- a contact page is about the person, not the venue photo (Vit 21 Oct) -->
  <div class="cv-actions contact-header cv-person"><span class="avatar cv-av cv-av-l">${d.ini}</span><div class="cv-who"><h1 class="t-display">${esc(d.name)}</h1><p class="cv-role">${esc(d.kind)} at <button class="link" data-act="cvgo" data-v="venue" data-id="${v.id}">${esc(d.org)}</button></p><div class="cv-facts"><span class="tag">${esc(d.where)}</span><span class="tag">${d.n} bookings together</span><span class="tag">Contacted ${esc(d.last)}</span></div></div><div class="cv-acts">${saveState()}<button class="btn secondary" data-act="cvedit" data-k="details">Edit</button><button class="btn accent" data-act="emailcontact">${ic('mail','s')}Email</button><button class="btn secondary icon cv-more" data-act="cvmore" data-m="contact" aria-label="More">${ic('more','s')}</button></div></div>
  <div class="cv-grid"><div class="cv-main">
-  <section class="cv-sec">${secHead('Bookings together',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${rows.map(r=>bookRow(r,'HR')).join('')||'<p class="muted cv-in">None yet</p>'}</div></section>
+  <section class="cv-sec">${secHead('Bookings together',secAll(rows)+actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${secRows(rows).map(r=>bookRow(r,'HR')).join('')||'<div class="empty-inline"><span>No bookings together yet.</span></div>'}</div></section>
   <section class="cv-sec">${secHead('Details',editBtn('details'))}${kvSec('details',d.details)}</section>
  </div>
  <aside class="cv-panel"><section class="cv-sec">${secHead('Notes',editBtn('notes'))}<div class="cv-pbody">${S.cv.edit==='notes'?`<textarea class="input cv-notes-in" id="cvnotes" data-cvsave data-nid="${id}" rows="5">${esc(notes)}</textarea>`:`<p class="cv-note">${esc(notes)}</p>`}${lock('Band only, never in offers, invoices or the calendar feed')}</div></section>
@@ -242,7 +245,7 @@ L.VIEWS.venue=()=>{editScope();
  <div class="cv-grid"><div class="cv-main">
   <section class="cv-sec">${secHead('On stage',editBtn('stage'))}${kvSec('stage',(VDET[v.id]||VDET.royal).stage)}</section>
   <section class="cv-sec">${secHead('Getting there',editBtn('getting'))}${kvSec('getting',(VDET[v.id]||VDET.royal).getting,'<p class="cv-fn">Written once, reused in every day sheet for this venue. Members see it; venues and the calendar feed do not.</p>')}</section>
-  <section class="cv-sec">${secHead('Bookings here',actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${brows.map(r=>bookRow(r)).join('')||'<p class="muted cv-in">No bookings here yet</p>'}</div></section>
+  <section class="cv-sec">${secHead('Bookings here',secAll(brows)+actBtn('plus','New booking','newbooking'))}<div class="cv-rows">${secRows(brows).map(r=>bookRow(r)).join('')||'<div class="empty-inline"><span>No bookings here yet.</span></div>'}</div></section>
  </div>
  <aside class="cv-panel"><section class="cv-sec">${secHead('People here',actBtn('plus','Add person','newcontact'))}<div class="cv-rows">${people.map(([ini,n,s,id])=>`<button class="cv-row" data-act="cvgo" data-v="contact" data-id="${id}"><span class="avatar cv-av s">${ini}</span><span class="tx"><b>${n}</b><small>${s}</small></span>${chev}</button>`).join('')||'<p class="muted cv-in">Nobody linked yet</p>'}</div></section>
   <section class="cv-sec">${secHead('Notes',editBtn('vnotes'))}<div class="cv-pbody">${S.cv.edit==='vnotes'?`<textarea class="input cv-notes-in" id="cvnotes" data-cvsave data-nid="${nid}" rows="5">${esc(notes)}</textarea>`:`<p class="cv-note">${esc(notes)}</p>`}${lock('Band only')}
@@ -322,6 +325,7 @@ Object.assign(L.ACTIONS,{
  cvcopy:()=>{L.close();L.toast(S.view==='venue'?'Address copied':'Email copied');},
  cvexport:()=>{L.close();L.toast('venues.csv is ready in Downloads');},
  cvmerge:()=>{L.close();L.toast('No duplicates found');},
+ cvsecall:()=>{S.cv.secAll=!S.cv.secAll;L.render();},
  cvdelete:()=>{const isV=S.view==='venue';S.overlay={type:'modal',html:L.confirmM(isV?'Delete this venue?':'Delete this contact?',isV?'Bookings here keep their venue name. You can undo for 10 seconds.':'Bookings keep the name. You can undo for 10 seconds.','Keep it','cvdeleteok',isV?'Delete venue':'Delete contact',true)};L.render();},
  cvdeleteok:()=>{const isV=S.view==='venue';const p={...S.params};L.go(isV?'venues':'contacts');L.toast(isV?'Venue deleted':'Contact deleted',()=>{L.go(isV?'venue':'contact',p);});},
  cvuseexisting:()=>{S.overlay=null;L.go('contact',{id:'c1'});L.toast('Opened Mette Kjær');},
