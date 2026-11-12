@@ -8,30 +8,30 @@
 /* object colour header tint across the whole main panel (Hotel Royal tint from the venue data), scrolls with the page */
 .main:has(.bd-tint[data-obj="royal"]){--bd-obj:#4a1a1c}
 .main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--bd-obj) 34%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)}
-.bd-back{align-self:flex-start;gap:8px;font:500 13px/var(--lh-label) var(--sans)}
+.bd-back{align-self:flex-start;gap:var(--space-2);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .grow{flex:1}
 
 /* photo hero 280, text 32 from the left and 28 from the bottom: kicker 13/18 at 85 %, title 52/52 -1.04, facts 12/16 pills */
 .bd-hero{min-height:280px;height:280px;background:#1a1a1a}
-.bd-hero .tx{gap:8px;padding:0 32px 28px}
-.bd-hero .k{font:400 13px/var(--lh-label) var(--sans);opacity:1;color:rgba(255,255,255,.85)}
+.bd-hero .tx{gap:var(--space-2);padding:0 var(--space-8) 28px}
+.bd-hero .k{font:400 var(--fs-label)/var(--lh-label) var(--sans);opacity:1;color:rgba(255,255,255,.85)}
 .bd-hero h1{font:400 52px/52px var(--sans);letter-spacing:-1.04px}
-.bd-hero .facts span{font:400 12px/16px var(--sans);padding:4px 8px}
+.bd-hero .facts span{font:400 var(--fs-meta)/16px var(--sans);padding:var(--space-1) var(--space-2)}
 
 /* page header: status chip left, actions right (gap 8); buttons 38, secondary on surface; More 52 × 36 */
-.bd-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bd-bar{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
 .bd-bar>.grow{flex:1}
 /* Figma "Page header" (gap 16): "Title block" fills (column, gap 8), "actions" hug (gap 8) */
-.bd-bar.hd{gap:16px}
-.bd-tb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.bd-hacts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bd-bar.hd{gap:var(--space-4)}
+.bd-tb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2)}
+.bd-hacts{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
 .bd-hacts .btn.secondary,.bd-bar .btn.secondary,.bd-banner .btn.secondary,.bd-tones .btn.secondary,.bd-rf .btn.secondary{background:var(--surface)}
 .bd-bar .btn svg.i{width:20px;height:20px}
 .bd-bar .bd-more{width:52px;height:36px;padding:0}
-.bd-pill{display:inline-flex;align-items:center;gap:8px;height:26px;padding:4px 8px 4px 12px;border-radius:999px;font:500 13px/var(--lh-label) var(--sans);cursor:pointer;white-space:nowrap}
+.bd-pill{display:inline-flex;align-items:center;gap:var(--space-2);height:26px;padding:var(--space-1) var(--space-2) var(--space-1) var(--space-3);border-radius:var(--r-pill);font:500 var(--fs-label)/var(--lh-label) var(--sans);cursor:pointer;white-space:nowrap}
 .bd-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
 .bd-pill svg.i.s{width:12px;height:12px}
-.bd-pill.plain{padding:4px 8px;font-weight:400;cursor:default}
+.bd-pill.plain{padding:var(--space-1) var(--space-2);font-weight:400;cursor:default}
 .bd-pill.enquiry{background:var(--sunken);color:var(--muted)}
 .bd-pill.attention{background:var(--att-tint);color:var(--att)}
 .bd-pill.offer{background:var(--accent-tint);color:var(--accent-ink)}
@@ -41,103 +41,103 @@
 .bd-pill.cancelled{height:28px;border:1px solid var(--rule-strong);color:var(--muted)}
 .bd-pill.draft{background:var(--draft-tint);color:var(--draft)}
 .bd-recx{display:inline-grid;place-items:center;color:inherit;margin-left:2px}.bd-recx svg.i.s{width:14px;height:14px}
-.bd-save{display:inline-flex;align-items:center;gap:8px;font:400 12px/16px var(--sans);color:var(--muted);opacity:0;transition:opacity var(--dur-4)}
+.bd-save{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);opacity:0;transition:opacity var(--dur-4)}
 .bd-save.on{opacity:1}.bd-save.saving svg{animation:spin var(--dur-loop) linear infinite}
 
 /* banner (299:5129): pad 12 16, gap 12, radius 8, icon 18, title 15/22, body 13/18; info = well, attention, success */
-.bd-banner{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px;background:var(--well)}
+.bd-banner{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--r-md);background:var(--well)}
 .bd-banner>svg.i{width:18px;height:18px;margin-top:2px}
 .bd-banner.info>svg{color:var(--ink)}
 .bd-banner .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.bd-banner .tx b{font:400 15px/var(--lh-body) var(--sans)}
-.bd-banner .tx span{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-banner .tx b{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-banner .tx span{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-banner.attention{background:var(--att-tint);color:var(--att)}
 .bd-banner.success{background:var(--ok-tint);color:var(--ok)}
 .bd-banner.danger{background:var(--bad-tint);color:var(--bad)} /* Figma Banner Kind=Danger */
 .bd-banner.attention .tx span,.bd-banner.success .tx span,.bd-banner.danger .tx span{color:inherit}
-.bd-banner .btn.secondary{color:var(--ink);font:500 13px/var(--lh-label) var(--sans)}
+.bd-banner .btn.secondary{color:var(--ink);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 /* Action keeps its ink on every kind; the × takes the kind colour (Figma Banner) */
 .bd-banner:is(.attention,.success,.danger) .bd-x{color:inherit}
 .bd-banner .bd-x{width:16px;height:16px;display:grid;place-items:center;color:var(--ink);flex:none}
 
 /* columns: left fluid (sections gap 40), right panel 360 */
-.bd-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
+.bd-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:var(--space-6);align-items:start}
 .bd-main{display:flex;flex-direction:column;gap:40px;min-width:0}
 /* section (298:5025): pad 20 0, gap 16; head 24/32 -0.3 with a ghost s action on the right edge */
-.bd-sec{display:flex;flex-direction:column;padding:var(--card) 0;border-radius:12px}
+.bd-sec{display:flex;flex-direction:column;padding:var(--card) 0;border-radius:var(--r-lg)}
 .bd-page .t-title{letter-spacing:-.3px}
-.bd-sh{display:flex;align-items:center;gap:8px;min-height:34px}
+.bd-sh{display:flex;align-items:center;gap:var(--space-2);min-height:34px}
 .bd-sh>h2,.bd-sh>h3{flex:1;margin:0}
 /* Figma "head" row (gap 8) is the title alone when a section has no action */
-.bd-sec>.bd-sh>h2{display:flex;align-items:center;column-gap:8px}
-.btn.bd-act{gap:8px;padding:8px 0 8px 12px;height:34px;font:500 13px/var(--lh-label) var(--sans)}
+.bd-sec>.bd-sh>h2{display:flex;align-items:center;column-gap:var(--space-2)}
+.btn.bd-act{gap:var(--space-2);padding:var(--space-2) 0 var(--space-2) var(--space-3);height:34px;font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .btn.bd-act:is(:hover,[data-state="hover"]){background:none;text-decoration:underline;text-underline-offset:3px}
 /* booking pages: section actions are Figma's ghost s button, pad 8 12; actions on a card's edge keep 8 0 8 12 */
-.bd-bk .btn.bd-act{padding:8px 12px}
-.bd-bk .bd-details>.bd-sh .btn.bd-act,.bd-bk .bd-card>.bd-sh .btn.bd-act,.bd-bk .bd-openbox>.bd-sh .btn.bd-act,.bd-bk .bd-open .btn.bd-act{padding:8px 0 8px 12px}
-.bd-bk .btn.bd-act.lead{padding:8px 12px 8px 0}
-.bd-body{display:flex;flex-direction:column;gap:12px}
-.bd-body.money{gap:4px}
+.bd-bk .btn.bd-act{padding:var(--space-2) var(--space-3)}
+.bd-bk .bd-details>.bd-sh .btn.bd-act,.bd-bk .bd-card>.bd-sh .btn.bd-act,.bd-bk .bd-openbox>.bd-sh .btn.bd-act,.bd-bk .bd-open .btn.bd-act{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
+.bd-bk .btn.bd-act.lead{padding:var(--space-2) var(--space-3) var(--space-2) 0}
+.bd-body{display:flex;flex-direction:column;gap:var(--space-3)}
+.bd-body.money{gap:var(--space-1)}
 .bd-body.list{gap:0}
-.bd-foot{margin:0;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-body:not(.flat)>.bd-foot{padding:0 12px}
-.bd-sec>.bd-foot{padding:0 12px}
+.bd-foot{margin:0;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-body:not(.flat)>.bd-foot{padding:0 var(--space-3)}
+.bd-sec>.bd-foot{padding:0 var(--space-3)}
 .bd-prose{margin:0;max-width:65ch}
-.bd-tones{display:flex;gap:8px;flex-wrap:wrap}
-.bd-tones .btn.s{font:500 13px/var(--lh-label) var(--sans)}
+.bd-tones{display:flex;gap:var(--space-2);flex-wrap:wrap}
+.bd-tones .btn.s{font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 
 /* key-value rows (298:5048): label 140 13/18 muted, gap 16, value 15/22; rows 12 apart, 12 side padding */
-.bd-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:12px 16px;margin:0;padding:0;align-items:baseline}
+.bd-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:var(--space-3) var(--space-4);margin:0;padding:0;align-items:baseline}
 /* row form (Figma Key-value "Row": label 140, gap 16, pad 0 12; rows 12 apart) */
-.bd-kv:has(>div){display:flex;flex-direction:column;gap:12px;padding:0}
-.bd-kv>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:0;align-items:baseline}  /* = Key-value row 298:5054: 120 label column, 12 gap (12 Nov; was 160 / 16, its own copy) */
-.bd-kv dt{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-kv dd{margin:0;font:400 15px/var(--lh-body) var(--sans);max-width:65ch}
+.bd-kv:has(>div){display:flex;flex-direction:column;gap:var(--space-3);padding:0}
+.bd-kv>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--space-3);padding:0;align-items:baseline}  /* = Key-value row 298:5054: 120 label column, 12 gap (12 Nov; was 160 / 16, its own copy) */
+.bd-kv dt{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-kv dd{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);max-width:65ch}
 /* Details on the Confirmed screen: rows 16 apart, no side padding */
-.bd-details .bd-kv{gap:16px;padding:0}.bd-details .bd-kv>div{padding:0}
-.bd-details{border-radius:8px}
-.bd-details>.field{gap:8px}.bd-details>.field label{font:400 13px/var(--lh-label) var(--sans)}
+.bd-details .bd-kv{gap:var(--space-4);padding:0}.bd-details .bd-kv>div{padding:0}
+.bd-details{border-radius:var(--r-md)}
+.bd-details>.field{gap:var(--space-2)}.bd-details>.field label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .bd-details>.bd-f-m{max-width:400px}
-.bd-stack{margin:0;display:flex;flex-direction:column;gap:12px}
-.bd-stack dt{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-stack dd{margin:-8px 0 0;font:400 15px/var(--lh-body) var(--sans)}.bd-stack dd:has(>.link){display:flex} /* a lone link button: no 22 px line box around it */
-.bd-panel .bd-stack{padding:0 12px}
+.bd-stack{margin:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.bd-stack dt{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-stack dd{margin:calc(-1 * var(--space-2)) 0 0;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.bd-stack dd:has(>.link){display:flex} /* a lone link button: no 22 px line box around it */
+.bd-panel .bd-stack{padding:0 var(--space-3)}
 /* row form (Figma "Row": label over value, gap 4, pad 0 12) */
 .bd-panel .bd-stack.rows{padding:0}
-.bd-stack.rows>div{display:flex;flex-direction:column;gap:4px;padding:0 12px}.bd-stack.rows dd{margin:0}
+.bd-stack.rows>div{display:flex;flex-direction:column;gap:var(--space-1);padding:0 var(--space-3)}.bd-stack.rows dd{margin:0}
 
 /* rows: money (299:5064) pad 12 gap 16, end 96, amount 96 mono 14/20; list rows (299:5019) pad 12 gap 12, avatar 32, divider inset 12 */
 .bd-rows{display:flex;flex-direction:column}
-.bd-mrow,.bd-frow{display:flex;align-items:center;gap:12px;padding:var(--row-y) 12px;border-radius:8px;position:relative;width:100%;text-align:left}
-.bd-mrow{gap:16px}
-.bd-frow:not(:last-child)::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--rule)}
-.bd-mrow .tx,.bd-frow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
+.bd-mrow,.bd-frow{display:flex;align-items:center;gap:var(--space-3);padding:var(--row-y) var(--space-3);border-radius:var(--r-md);position:relative;width:100%;text-align:left}
+.bd-mrow{gap:var(--space-4)}
+.bd-frow:not(:last-child)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:1px;background:var(--rule)}
+.bd-mrow .tx,.bd-frow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-mrow .tx>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bd-mrow small,.bd-frow small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted);display:flex;align-items:center;gap:4px}
+.bd-mrow small,.bd-frow small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted);display:flex;align-items:center;gap:var(--space-1)}
 .bd-mrow .st{width:96px;display:flex;justify-content:flex-end;flex:none}
 .bd-mrow .amt{width:96px;text-align:right;flex:none}
-.amt.mono{font:400 14px/20px var(--mono);font-variant-numeric:tabular-nums}
-.bd-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 13px/var(--lh-label) var(--sans);flex:none}
+.amt.mono{font:400 var(--fs-small)/20px var(--mono);font-variant-numeric:tabular-nums}
+.bd-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 var(--fs-label)/var(--lh-label) var(--sans);flex:none}
 .bd-av.obj{background:var(--signal);color:var(--on-lime)}
 .bd-frow:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bd-frow>svg{color:var(--muted)}
 /* split rows: no left padding, amount right after the text */
-.bd-split{display:flex;flex-direction:column;gap:12px}
+.bd-split{display:flex;flex-direction:column;gap:var(--space-3)}
 /* Figma "split row" (gap 12, centred): List row (pad 12 12 12 0) then the amount */
-.bd-srow{display:flex;align-items:center;gap:12px}
-.bd-split .bd-prow{padding:12px 12px 12px 0;flex:1;width:auto;min-width:0}
+.bd-srow{display:flex;align-items:center;gap:var(--space-3)}
+.bd-split .bd-prow{padding:var(--space-3) var(--space-3) var(--space-3) 0;flex:1;width:auto;min-width:0}
 .bd-split .bd-prow::after{display:none}
 
 /* side panel: pad 20, gap 28; its sections indent the head and body by 12 */
 .bd-panel{display:flex;flex-direction:column;gap:28px}
-.bd-pgroup{display:flex;flex-direction:column;gap:16px;padding:20px 0;border-radius:12px}
-.bd-actg.open{border-radius:8px}
-.bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:12px}
-.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:12px}
-.bd-check{display:flex;flex-direction:column;gap:8px;padding:0 12px}
-.bd-check label{display:flex;align-items:center;gap:8px;cursor:pointer;font:400 15px/18px var(--sans)}
+.bd-pgroup{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5) 0;border-radius:var(--r-lg)}
+.bd-actg.open{border-radius:var(--r-md)}
+.bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:var(--space-3)}
+.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:var(--space-3)}
+.bd-check{display:flex;flex-direction:column;gap:var(--space-2);padding:0 var(--space-3)}
+.bd-check label{display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font:400 var(--fs-body)/18px var(--sans)}
 .bd-check input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
-.bd-check .bx{width:18px;height:18px;border-radius:4px;flex:none;display:grid;place-items:center;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--surface)}
+.bd-check .bx{width:18px;height:18px;border-radius:var(--r-sm);flex:none;display:grid;place-items:center;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--surface)}
 .bd-check .bx svg.i.s{width:14px;height:14px;visibility:hidden;stroke-width:2.86} /* Figma Checkbox: the check line is 1.67 px at 14 */
 /* checked: ink box with the check in the page colour. Figma 142:626 strokes the check in ink on an ink box, so it never shows (Vit 21 Oct) */
 .bd-check input:checked+.bx{background:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);color:var(--surface)}
@@ -148,116 +148,116 @@
 .bd-acth{text-align:left;width:100%}
 .bd-acth h2{display:block}
 .bd-actg.open>.bd-acth{padding-left:0}
-.bd-acts{display:flex;flex-direction:column;gap:16px}
-.bd-acts div{display:grid;grid-template-columns:56px 1fr;gap:12px;font:400 15px/var(--lh-body) var(--sans)}
-.bd-acts .d{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-acts{display:flex;flex-direction:column;gap:var(--space-4)}
+.bd-acts div{display:grid;grid-template-columns:56px 1fr;gap:var(--space-3);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-acts .d{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 /* Activity event 299:5127 (6 Nov, component gate): Kind icon in a 28 px well, the line, then when and who; the booking page's two-span rows above move to this markup in a later pass */
-.bd-acts .activity-event{display:flex;gap:12px;padding:0 12px;align-items:flex-start}
+.bd-acts .activity-event{display:flex;gap:var(--space-3);padding:0 var(--space-3);align-items:flex-start}
 .activity-event .ic{width:28px;height:28px;border-radius:50%;background:var(--well);color:var(--ink);display:grid;place-items:center;flex:none}
 .activity-event.assistant .ic{background:var(--accent-tint);color:var(--accent-ink)}
 .activity-event .ic svg.i{width:14px;height:14px}
-.activity-event .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans);color:var(--ink)}
-.activity-event .tx small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.activity-event .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
+.activity-event .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* rate the venue: border 1 rule, pad 24, radius 16, gap 16 */
-.bd-rate{display:flex;flex-direction:column;gap:16px}
-.bd-rh{display:flex;align-items:center;gap:12px}.bd-rh img{width:48px;height:48px;border-radius:8px;object-fit:cover}
+.bd-rate{display:flex;flex-direction:column;gap:var(--space-4)}
+.bd-rh{display:flex;align-items:center;gap:var(--space-3)}.bd-rh img{width:48px;height:48px;border-radius:var(--r-md);object-fit:cover}
 .bd-rh>div{display:flex;flex-direction:column;gap:2px}
 .bd-rh .t-heading{letter-spacing:-.1px}
-.bd-stars{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.bd-stars b{font:500 15px/var(--lh-body) var(--sans)}
-.bd-stars .stars{gap:8px}
+.bd-stars{display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap}
+.bd-stars b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-stars .stars{gap:var(--space-2)}
 .bd-stars .stars button{color:var(--faint);display:block;height:32px}.bd-stars .stars button svg{width:32px;height:32px;display:block}
 .bd-stars .stars button.on{color:var(--break)}.bd-stars .stars button.on svg{fill:var(--break)}
-.bd-rate .field{gap:8px}.bd-rate .field label{font:400 13px/var(--lh-label) var(--sans)}
-.bd-lock{display:flex;align-items:center;gap:4px;font:400 12px/16px var(--sans)}.bd-lock svg.i.s{width:12px;height:12px}
-.bd-rf{display:flex;justify-content:flex-end;gap:12px}
+.bd-rate .field{gap:var(--space-2)}.bd-rate .field label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
+.bd-lock{display:flex;align-items:center;gap:var(--space-1);font:400 var(--fs-meta)/16px var(--sans)}.bd-lock svg.i.s{width:12px;height:12px}
+.bd-rf{display:flex;justify-content:flex-end;gap:var(--space-3)}
 
 /* modals: send preview 720 (Figma "Send preview": pad 20 24, gap 16, radius 12, border rule-strong on --top), dialogs 560 */
-.bd-modal.w720{width:min(var(--layout-dialog-wide),calc(100% - 32px));padding:20px 24px;gap:16px;border:1px solid var(--rule-strong);border-radius:12px}
+.bd-modal.w720{width:min(var(--layout-dialog-wide),calc(100% - 32px));padding:var(--space-5) var(--space-6);gap:var(--space-4);border:1px solid var(--rule-strong);border-radius:var(--r-lg)}
 .bd-modal.w560{width:min(var(--layout-dialog),calc(100% - 32px));top:72px;max-height:calc(100% - 96px)}
 .bd-scrim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent)}
-.bd-send{display:flex;flex-direction:column;gap:16px}
-.bd-send>div:first-child{display:flex;flex-direction:column;row-gap:4px;column-gap:12px}
+.bd-send{display:flex;flex-direction:column;gap:var(--space-4)}
+.bd-send>div:first-child{display:flex;flex-direction:column;row-gap:var(--space-1);column-gap:var(--space-3)}
 .bd-send .t-heading{letter-spacing:-.1px}
 .bd-send p{margin:0}
-.bd-to{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:400 13px/var(--lh-label) var(--sans)}
-.bd-to>span:nth-child(2){font:400 15px/var(--lh-body) var(--sans)}
-.bd-to .link{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
+.bd-to{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;font:400 var(--fs-label)/var(--lh-label) var(--sans)}
+.bd-to>span:nth-child(2){font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-to .link{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
 .bd-to .input{flex:1;min-width:200px;height:32px}
-.bd-send .msg{padding:14px 16px;gap:8px;border-radius:8px}
-.bd-send .msg b{font:500 15px/var(--lh-body) var(--sans)}
-.bd-send .msg p{color:var(--muted);font:400 15px/var(--lh-body) var(--sans)}
-.bd-send .msg .link{font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
-.bd-sf{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bd-send .msg{padding:14px var(--space-4);gap:var(--space-2);border-radius:var(--r-md)}
+.bd-send .msg b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-send .msg p{color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-send .msg .link{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
+.bd-sf{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap}
 .bd-sf .btn.secondary{background:var(--surface)}
-.bd-sf .btn.ghost.flush{padding:8px 16px 8px 0!important}
+.bd-sf .btn.ghost.flush{padding:var(--space-2) var(--space-4) var(--space-2) 0!important}
 .bd-sf .btn svg.i{width:20px;height:20px}
 /* record a payment (dialog 560): pad 24 24 20, gap 20, radius 16, surface, border rule-strong, shadow 0 16 48 */
-.bd-modal.bd-rec{top:120px;gap:20px;padding:24px 24px 20px;border-radius:16px;background:var(--surface);border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
+.bd-modal.bd-rec{top:120px;gap:var(--space-5);padding:var(--space-6) var(--space-6) var(--space-5);border-radius:var(--r-xl);background:var(--surface);border:1px solid var(--rule-strong);box-shadow:var(--elev-3)}
 .bd-scrim55{background:color-mix(in srgb,var(--scrim-base) 55%,transparent)}
-.bd-mh{display:flex;align-items:center;gap:12px}.bd-mh>div{flex:1;display:flex;flex-direction:column;gap:4px}
+.bd-mh{display:flex;align-items:center;gap:var(--space-3)}.bd-mh>div{flex:1;display:flex;flex-direction:column;gap:var(--space-1)}
 .bd-mh .t-title{letter-spacing:-.3px}
-.bd-mx{width:40px;height:32px;padding:8px 12px}
-.bd-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
-.bd-rec .field,.bd-told .field{gap:8px}
-.bd-rec .field label,.bd-told .field label{font:400 13px/var(--lh-label) var(--sans)}
-.bd-rec .field .help,.bd-told .field .help{font:400 12px/16px var(--sans)}
-.bd-form{display:flex;flex-direction:column;gap:12px;padding:0 12px}.bd-form .bd-f-m{max-width:400px}
-.bd-ic-in{position:relative}.bd-ic-in svg{position:absolute;left:12px;top:10px;color:var(--muted)}.bd-ic-in .input{padding-left:38px}
-.bd-gapq{display:flex;flex-direction:column;gap:8px}
-.bd-gapq>p{margin:0;font:400 15px/var(--lh-body) var(--sans)}
-.bd-opt{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--rule);text-align:left;width:100%}
+.bd-mx{width:40px;height:32px;padding:var(--space-2) var(--space-3)}
+.bd-2col{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);align-items:start}
+.bd-rec .field,.bd-told .field{gap:var(--space-2)}
+.bd-rec .field label,.bd-told .field label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
+.bd-rec .field .help,.bd-told .field .help{font:400 var(--fs-meta)/16px var(--sans)}
+.bd-form{display:flex;flex-direction:column;gap:var(--space-3);padding:0 var(--space-3)}.bd-form .bd-f-m{max-width:400px}
+.bd-ic-in{position:relative}.bd-ic-in svg{position:absolute;left:var(--space-3);top:10px;color:var(--muted)}.bd-ic-in .input{padding-left:38px}
+.bd-gapq{display:flex;flex-direction:column;gap:var(--space-2)}
+.bd-gapq>p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-opt{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3);border-radius:var(--r-md);border:1px solid var(--rule);text-align:left;width:100%}
 .bd-opt i{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none}
-.bd-opt>span{display:flex;flex-direction:column;gap:2px;font:400 15px/var(--lh-body) var(--sans)}
-.bd-opt small{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-opt.on{background:var(--accent-tint);border:0;padding:12px}
+.bd-opt>span{display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-opt small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-opt.on{background:var(--accent-tint);border:0;padding:var(--space-3)}
 .bd-opt.on i{box-shadow:inset 0 0 0 5px var(--accent-strong)}
 .bd-opt.on>span>span{color:var(--accent-ink)}
 .bd-opt:not(.on):is(:hover,[data-state="hover"]){background:var(--raised)}
-.bd-mf{display:flex;align-items:center;gap:8px}.bd-mf>span{flex:1;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-mf{display:flex;align-items:center;gap:var(--space-2)}.bd-mf>span{flex:1;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-mf .btn svg.i{width:20px;height:20px}
-.bd-rules{display:flex;flex-direction:column;gap:16px}.bd-rules p{margin:0}
+.bd-rules{display:flex;flex-direction:column;gap:var(--space-4)}.bd-rules p{margin:0}
 
 /* pay page preview: the article is the Figma frame "Pay page · venue" (720, pad 48 80 64, gap 32, canvas); the ring only marks it as a preview */
 .page.bd-paywrap{max-width:var(--layout-page-detail);margin:0 auto;align-items:center}
-.bd-prev{align-self:stretch;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.bd-pay{width:min(720px,100%);background:var(--canvas);box-shadow:0 0 0 1px var(--rule);border-radius:16px;padding:48px 80px 64px;display:flex;flex-direction:column;gap:32px}
+.bd-prev{align-self:stretch;display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap}
+.bd-pay{width:min(720px,100%);background:var(--canvas);box-shadow:0 0 0 1px var(--rule);border-radius:var(--r-xl);padding:var(--space-12) 80px 64px;display:flex;flex-direction:column;gap:var(--space-8)}
 .bd-payhead{display:flex;align-items:center;gap:34px;height:18px}
 .bd-logo svg{width:83px;height:16px;fill:var(--ink);display:block}
-.bd-payhero{display:flex;flex-direction:column;gap:8px}
+.bd-payhero{display:flex;flex-direction:column;gap:var(--space-2)}
 .bd-payhero .t-display{text-wrap:wrap}
 .bd-payhero p{margin:0}
-.bd-amount{display:flex;flex-direction:column;gap:16px}
-.bd-amt{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule);height:57px}
+.bd-amount{display:flex;flex-direction:column;gap:var(--space-4)}
+.bd-amt{display:flex;align-items:center;gap:var(--space-3);padding-bottom:var(--space-4);border-bottom:1px solid var(--rule);height:57px}
 .bd-amt .n{font:400 32px/40px var(--sans);letter-spacing:-.5px}.bd-amt .c{font:400 24px/32px var(--sans);letter-spacing:-.3px;color:var(--muted);align-self:baseline}
 /* amount and currency share one baseline at any size (Vit 22 Oct: "alignment of the currency needs to be fixed", it sat 5 px low on phones); the copy button stays centred */
 .bd-amt .n{align-self:baseline}.bd-amt>.btn{align-self:center}
-.bd-amt .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
-.bd-told{background:var(--sunken);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:12px}
+.bd-amt .btn.secondary{background:var(--surface);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
+.bd-told{background:var(--sunken);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:var(--space-3)}
 .bd-told p{margin:0}.bd-pay .t-title{letter-spacing:-.3px}
 .bd-told .bd-2col .input{max-width:none}
-.bd-told .bd-plan{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-btns{display:flex;gap:8px;flex-wrap:wrap}.bd-btns label{cursor:pointer}
+.bd-told .bd-plan{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-btns{display:flex;gap:var(--space-2);flex-wrap:wrap}.bd-btns label{cursor:pointer}
 .bd-btns .btn.secondary{background:var(--surface)}
 .bd-btns .btn svg.i{width:20px;height:20px}
-.bd-pay footer{display:flex;flex-direction:column;gap:8px;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-pay footer{display:flex;flex-direction:column;gap:var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-pay footer p{margin:0}.bd-pay footer p:last-child{color:var(--accent-ink)}
-.bd-acc{color:var(--accent-ink);text-decoration:none;font:400 13px/var(--lh-label) var(--sans)}.bd-acc:is(:hover,[data-state="hover"]){text-decoration:underline}
+.bd-acc{color:var(--accent-ink);text-decoration:none;font:400 var(--fs-label)/var(--lh-label) var(--sans)}.bd-acc:is(:hover,[data-state="hover"]){text-decoration:underline}
 
 /* gig day (Gig day · timeline 421:19199) */
-.bd-pill.plain.dot{padding:4px 12px;font-weight:500;gap:8px}
+.bd-pill.plain.dot{padding:var(--space-1) var(--space-3);font-weight:500;gap:var(--space-2)}
 /* day strip: pad 20 24, gap 16; head on a baseline; track 84 with blocks 32 (radius 4, tint 32 %, unconfirmed 14 % + 1 px outline) */
-.bd-strip{gap:16px;padding:20px 24px;border-radius:12px}
-.bd-nowr{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.bd-nowr b{flex:1;font:500 15px/var(--lh-body) var(--sans)}
-.bd-now{color:var(--accent-ink);font:400 14px/20px var(--mono)}
+.bd-strip{gap:var(--space-4);padding:var(--space-5) var(--space-6);border-radius:var(--r-lg)}
+.bd-nowr{display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap}
+.bd-nowr b{flex:1;font:500 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-now{color:var(--accent-ink);font:400 var(--fs-small)/20px var(--mono)}
 .bd-strip .track{height:84px}
-.bd-strip .track .h{font:400 12px/16px var(--sans);color:var(--faint)}
+.bd-strip .track .h{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
 .bd-strip .track .h.last{transform:translateX(-100%)}
 .bd-strip .track .tick{top:22px;height:52px}
 .bd-strip .track .tick.last{transform:translateX(-1px)}
-.bd-strip .track .blk{top:32px;height:32px;border-radius:4px;padding:0 4px 0 8px;font:400 12px/16px var(--sans);color:var(--ink);background:none;isolation:isolate}
+.bd-strip .track .blk{top:var(--space-8);height:32px;border-radius:var(--r-sm);padding:0 var(--space-1) 0 var(--space-2);font:400 var(--fs-meta)/16px var(--sans);color:var(--ink);background:none;isolation:isolate}
 .bd-strip .track .blk::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--c);opacity:.32;z-index:-1}
 .bd-strip .track .blk>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bd-strip .track .blk.stage{background:var(--accent-strong);color:var(--on-accent)}
@@ -266,73 +266,73 @@
 .bd-strip .track .blk.ap::before{opacity:.14}
 .bd-strip .track .curfew{position:absolute;top:22px;height:52px;width:2px;background:var(--bad)}
 .bd-strip .track .now{top:18px;height:60px;width:2px}
-.bd-strip .track .now:before{top:-4px;left:-4px;width:10px;height:10px}
-.bd-strip .legend{gap:20px;font:400 12px/16px var(--sans);color:var(--muted)}
-.bd-strip .legend span{display:inline-flex;align-items:center;gap:8px}
+.bd-strip .track .now:before{top:calc(-1 * var(--space-1));left:calc(-1 * var(--space-1));width:10px;height:10px}
+.bd-strip .legend{gap:var(--space-5);font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bd-strip .legend span{display:inline-flex;align-items:center;gap:var(--space-2)}
 .bd-strip .legend i{width:12px;height:12px;border-radius:3px;margin:0;vertical-align:0}
 .bd-strip .legend i.nc{box-shadow:inset 0 0 0 1px var(--muted)}
 /* columns: timeline card fluid, rail 380 */
-.bd-gdgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
-.bd-card{background:var(--surface);border-radius:12px;padding:var(--card) var(--section);display:flex;flex-direction:column;gap:var(--section);min-width:0}
-.bd-card>.bd-sh{min-height:34px;gap:12px}
+.bd-gdgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:var(--space-6);align-items:start}
+.bd-card{background:var(--surface);border-radius:var(--r-lg);padding:var(--card) var(--section);display:flex;flex-direction:column;gap:var(--section);min-width:0}
+.bd-card>.bd-sh{min-height:34px;gap:var(--space-3)}
 .bd-card .t-heading,.bd-openbox .t-heading{letter-spacing:-.1px}
-.bd-tl>.bd-foot{font:400 12px/16px var(--sans);padding:0}
+.bd-tl>.bd-foot{font:400 var(--fs-meta)/16px var(--sans);padding:0}
 /* steps: time 64 mono 14/20, spine 16 (dot 12 from 4 px, line 2 rule), content 15/22 gap 8 pad-bottom 24 */
 .bd-steps{display:flex;flex-direction:column}
-.bd-step{display:grid;grid-template-columns:64px 16px minmax(0,1fr);gap:12px}
-.bd-step .time{font:400 14px/20px var(--mono);color:var(--muted)}
-.bd-step .spine{display:flex;flex-direction:column;align-items:center;padding-top:4px;gap:4px}
+.bd-step{display:grid;grid-template-columns:64px 16px minmax(0,1fr);gap:var(--space-3)}
+.bd-step .time{font:400 var(--fs-small)/20px var(--mono);color:var(--muted)}
+.bd-step .spine{display:flex;flex-direction:column;align-items:center;padding-top:var(--space-1);gap:var(--space-1)}
 .bd-step .spine i{width:12px;height:12px;border-radius:50%;flex:none;background:var(--c)}
 .bd-step.approx .spine i{background:var(--surface);box-shadow:inset 0 0 0 2px var(--c)}
 /* the ring is a box-shadow and takes no space: the margin keeps the line from running into it (Vit 22 Oct) */
 .bd-step.next .spine i{width:10px;height:10px;margin:2px 0;box-shadow:0 0 0 2px var(--c)}
 .bd-step .spine b{flex:1;width:2px;background:var(--rule)}
-.bd-step .content{padding-bottom:24px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.bd-step .content>p{margin:0;font:400 15px/var(--lh-body) var(--sans);color:var(--muted)}
-.bd-sth{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:24px}
-.bd-sth h4{margin:0;flex:1;font:500 15px/var(--lh-body) var(--sans)}
+.bd-step .content{padding-bottom:var(--space-6);display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
+.bd-step .content>p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}
+.bd-sth{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;min-height:24px}
+.bd-sth h4{margin:0;flex:1;font:500 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-step.next .time{color:var(--ink)}.bd-step.next h4{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
-.bd-step.nowrow{display:flex;align-items:center;gap:12px;padding-bottom:16px}
+.bd-step.nowrow{display:flex;align-items:center;gap:var(--space-3);padding-bottom:var(--space-4)}
 .bd-step.nowrow .time{width:64px;color:var(--accent-ink)}
 .bd-step.nowrow .spine{width:16px;height:16px;padding:0;justify-content:center;flex:none}
 /* the Now row is flex, not the step grid: keep its time and dot columns at the grid widths so the dot sits on the same line as the step dots (Vit 23 Oct) */
 .bd-step.nowrow .time{flex:none}
 .bd-step.nowrow .spine i.nowdot{width:8px;height:8px;background:var(--accent)}
-.bd-step.nowrow .muted{font:400 15px/var(--lh-body) var(--sans)}
-.bd-nowtag{gap:8px;padding:4px 8px;background:var(--accent);color:var(--on-accent);font:400 13px/var(--lh-label) var(--sans)}
+.bd-step.nowrow .muted{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-nowtag{gap:var(--space-2);padding:var(--space-1) var(--space-2);background:var(--accent);color:var(--on-accent);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .bd-sx{display:flex}.bd-sx a.btn{text-decoration:none;color:var(--ink)}
-.bd-sx .btn.secondary{background:var(--surface);font:500 13px/var(--lh-label) var(--sans)}
-.btn.bd-act.lead{padding:8px 12px 8px 0}
-.bd-open{flex:1;display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;background:var(--bad-tint);color:var(--bad)}
-.bd-open>span{flex:1;min-width:0;font:400 15px/var(--lh-body) var(--sans)}
+.bd-sx .btn.secondary{background:var(--surface);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
+.btn.bd-act.lead{padding:var(--space-2) var(--space-3) var(--space-2) 0}
+.bd-open{flex:1;display:flex;align-items:flex-start;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--bad-tint);color:var(--bad)}
+.bd-open>span{flex:1;min-width:0;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-open .btn{color:var(--ink)}
 /* the action is a text link in the sentence, like the banner actions (Vit 26 Oct: "Call Kasper as a link, in the same line as the text") */
 .bd-open>span>.link{font:inherit;font-weight:500;color:inherit;padding:0;background:none;border:0;cursor:pointer}
-.bd-tin{height:30px;padding:0 8px;font-size:13px;line-height:var(--lh-label);width:64px}
+.bd-tin{height:30px;padding:0 var(--space-2);font-size:var(--fs-label);line-height:var(--lh-label);width:64px}
 /* rail: pad 20, gap 28; still-open box pad 20 24, gap 16, border att */
-.bd-rail{padding:20px;gap:28px}
-.bd-openbox{--ring:var(--att);display:flex;flex-direction:column;gap:16px}
+.bd-rail{padding:var(--space-5);gap:28px}
+.bd-openbox{--ring:var(--att);display:flex;flex-direction:column;gap:var(--space-4)}
 .bd-openbox.done{--ring:var(--rule)}
-.bd-openbox>.bd-sh{min-height:34px;gap:12px}
+.bd-openbox>.bd-sh{min-height:34px;gap:var(--space-3)}
 .bd-openbox>p{margin:0}
-.bd-oi{display:flex;flex-direction:column;gap:8px}
-.bd-oi .bd-sth>span:first-child{flex:1;font:500 15px/var(--lh-body) var(--sans)}
+.bd-oi{display:flex;flex-direction:column;gap:var(--space-2)}
+.bd-oi .bd-sth>span:first-child{flex:1;font:500 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-oi .bd-act{align-self:flex-start}
 .bd-rail .bd-pgroup .bd-body.list{gap:0}
 
 @media (max-width:1100px){.bd-grid,.bd-gdgrid{grid-template-columns:1fr}}
 @media (max-width:839.98px){
- .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:8px}
- .bd-kv>div{grid-template-columns:1fr;gap:4px}.bd-kv>div dd{margin-bottom:0}
+ .bd-kv{grid-template-columns:1fr;gap:2px}.bd-kv dd{margin-bottom:var(--space-2)}
+ .bd-kv>div{grid-template-columns:1fr;gap:var(--space-1)}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}
  /* same as the Money line on phones (Vit 26 Oct): amount on top, status tag under it, both in the right column */
- .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:12px;row-gap:var(--space-1);align-items:start}
+ .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:var(--space-3);row-gap:var(--space-1);align-items:start}
  .bd-mrow:has(>.st .tag)>.tx{grid-area:tx}.bd-mrow:has(>.st .tag)>.amt{grid-area:amt;width:auto;justify-self:end}.bd-mrow:has(>.st .tag)>.st{grid-area:st;width:auto;justify-self:end}
- .bd-pay{padding:32px 20px}.bd-2col{grid-template-columns:1fr}
+ .bd-pay{padding:var(--space-8) var(--space-5)}.bd-2col{grid-template-columns:1fr}
 
  .bd-banner{flex-wrap:wrap}.bd-banner .tx{flex:1 1 200px}
  .bd-strip{overflow-x:auto}.bd-strip .track{min-width:640px}
- .bd-step{grid-template-columns:48px 16px minmax(0,1fr);gap:8px}.bd-step.nowrow{gap:8px}.bd-step.nowrow .time{width:48px}
+ .bd-step{grid-template-columns:48px 16px minmax(0,1fr);gap:var(--space-2)}.bd-step.nowrow{gap:var(--space-2)}.bd-step.nowrow .time{width:48px}
  .abar [data-act=bdnew]{display:none}
  .abar .rec{min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:40%}
 }
@@ -340,13 +340,13 @@
 /* send preview: values now in core components.css (.send) */
 
 /* section headers: the action's label ends on the section's right edge, like the heading starts on its left (Vit 21 Oct, "alignment") */
-.bd-bk .bd-sec>.bd-sh>.btn.bd-act{padding:8px 0 8px 12px}
+.bd-bk .bd-sec>.bd-sh>.btn.bd-act{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
 /* side panel: 12 px + the rows' own 12 px = 24 px, the same inset as the main blocks */
 .bd-open>svg.i{margin-top:3px;flex:none} /* icon on the first line when the text wraps */
 
 /* a moved step: its status tag stays on the left under the title, the move is a note beside it, not a second badge (Vit 26 Oct) */
-.bd-smeta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px}
-.bd-smeta>span:not(.tag){font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.bd-smeta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-1)}
+.bd-smeta>span:not(.tag){font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 /* an approximate time keeps its digits on the time column; the ~ hangs to the left (Vit 26 Oct) */
 .bd-step .time .tl{font-style:normal;margin-left:-1ch}
 

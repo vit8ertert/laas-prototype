@@ -25,7 +25,7 @@
 /* rows that open something say so on hover (Vit 21 Oct, from the Mail list; applied to every list that opens a page):
    a 2 px lilac bar on the left edge and the row's title underlined. Only rows that open something get it (Vit 21 Oct) */
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow){position:relative}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:var(--space-2);bottom:var(--space-2);width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"])::before{opacity:1}
 :is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
 
@@ -34,20 +34,20 @@
   background:color-mix(in srgb,var(--bc) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bc) 22%,transparent)}
 
 /* fact grid used for file details and royalties (views/brands.js L.factsDl) */
-.facts-dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
-.facts-h{margin:8px 0 0;font:500 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.facts-dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3) var(--space-6)}
+.facts-h{margin:var(--space-2) 0 0;font:500 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 
 
 /* light theme: detail-page sections (booking, social post, gig day) sit in white blocks. Canvas #f4f3ef on sunken #ebe8e5 gives
    too little depth for open sections, which dark mode gets from its panel contrast (Vit 21 Oct: "not blocked content on light theme") */
-:root[data-theme="light"] .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:20px 24px}}
+:root[data-theme="light"] .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:var(--space-5) var(--space-6)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bd-main>.bd-sec{background:var(--surface);border:1px solid var(--rule);padding:var(--space-5) var(--space-6)}}
 
 /* light Metal and Electronic, and faint text at 3:1 in light mode: now in Figma (LAAS · Theme) and generated into tokens.css (T477, 4 Nov) */
 
 /* detail sections: text and rows line up with the section heading (Vit 21 Oct: "alignment is bad").
    Rows keep 12 px inside for their hover box and bleed 12 px out; plain text and footnotes have no inset */
-.bd-sec :is(.bd-prow,.bd-mrow){margin-inline:-12px}
+.bd-sec :is(.bd-prow,.bd-mrow){margin-inline:calc(-1 * var(--space-3))}
 .bd-sec>:is(.bd-prose,.bd-foot),.bd-sec .bd-body>:is(.bd-prose,.bd-foot){padding-inline:0}
 
 
@@ -68,23 +68,23 @@
    so card text and headings sit 24 px in. Table rows (bordered tables) stay 12 16 with a divider. */
 /* --row-x and --row-y come from tokens.css (Figma LAAS · Width: 16/12 desktop, 12/8 phones) */
 :is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.aud-rel,.m-ev,.cat-row,.cv-cvrrow,.cv-irow){
-  padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:8px}
+  padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:var(--r-md)}
 .acc-row{padding-block:var(--row-y)!important}
 /* cards that hold rows */
-.acc-sec>.acc-sh{padding-inline:16px}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:16px}
+.acc-sec>.acc-sh{padding-inline:var(--space-4)}.acc-sec>:is(.acc-list,.acc-rows,.aud-body){padding-inline:var(--space-4)}
 .acc-card{padding:var(--card)}
-.cv-vlist{padding:8px 24px}
-.bd-panel{padding:20px 8px}.bd-panel .bd-pgroup{padding-inline:16px}
+.cv-vlist{padding:var(--space-2) var(--space-6)}
+.bd-panel{padding:var(--space-5) var(--space-2)}.bd-panel .bd-pgroup{padding-inline:var(--space-4)}
 .bd-pgroup>.bd-sh,.bd-pgroup>h2{padding-left:0}.bd-pgroup>.bd-sh>.btn.bd-act{padding-right:0}.bd-panel .bd-check{padding-inline:0}
 /* padded cards (forms plus rows) keep 24 px; their rows fill to 8 px from the edge, text on the 24 px line */
 .acc-sec:is(.pad,.inset)>:is(.acc-list,.acc-rows,.aud-body){padding-inline:0}
 /* rows placed straight in a card (no wrapper) fill the card's 8 px padding instead of extending past it */
 .acc-sec:not(.pad):not(.inset)>:is(.acc-li,.acc-row,.acc-si){margin-inline:0!important;width:100%!important}
-.cv-panel{padding:20px 8px}.cv-panel>*{padding-inline:16px}.cv-panel .cv-sh{padding-left:0}
+.cv-panel{padding:var(--space-5) var(--space-2)}.cv-panel>*{padding-inline:var(--space-4)}.cv-panel .cv-sh{padding-left:0}
 .cv-panel .cv-pbody{padding-inline:0}
 
 /* Mail rows use ::before for their divider, so their hover bar is the same 2 px bar on ::after (was a full-height edge line) */
-.ml-row{position:relative}.ml-row::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
+.ml-row{position:relative}.ml-row::after{content:"";position:absolute;left:0;top:var(--space-2);bottom:var(--space-2);width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
 .ml-row:is(:hover,[data-state="hover"])::after{opacity:1}
 .ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:none!important}
 /* rows that open nothing get no hover fill either, so a hover always means "this opens" (settings rows keep their Figma hover) */
@@ -94,10 +94,10 @@
 :root[data-genre="electronic"][data-theme="light"]{--row-bar:var(--accent-ink)}
 @media (prefers-color-scheme: light){:root[data-genre="electronic"]:not([data-theme="dark"]){--row-bar:var(--accent-ink)}}
 /* more cards that hold rows: the Money side panel (Needs you, Pay page) and the duplicate list in New contact */
-.m-right{padding:20px 8px}.m-right>.m-sec{padding-inline:16px}.m-right .m-sh{padding-left:0}
+.m-right{padding:var(--space-5) var(--space-2)}.m-right>.m-sec{padding-inline:var(--space-4)}.m-right .m-sh{padding-left:0}
 .cv-cvr>.cv-cvrrow{margin-inline:0!important;width:100%!important}
 .m-inv .m-right .m-sh{padding-left:0}
-.m-tot{padding:8px}.m-tot>.m-line{margin-inline:0!important;width:100%!important} /* totals box in invoice and journal drawers: a card holding rows */
+.m-tot{padding:var(--space-2)}.m-tot>.m-line{margin-inline:0!important;width:100%!important} /* totals box in invoice and journal drawers: a card holding rows */
 
 /* ===== Hover (Vit 21 Oct: "check the hover states and improve consistency") =====
    Neutral controls (secondary and ghost buttons, chips, the Ask mode picker, chat history items) keep their own
@@ -127,7 +127,7 @@
 .sidebar .nav .count,.sidebar .nav .alert{margin-right:0;box-sizing:border-box;min-width:24px;height:20px;padding:2px 7px;justify-content:center;text-align:center;font-variant-numeric:tabular-nums;flex:none}
 /* one column for numbers (Vit 21 Oct: Catalogue's number sat left of the others): chevrons keep the right column,
    numbers end 32 px before the row edge in every row, so sub-row counts line up with group alerts */
-.sidebar .nav.sub :is(.count,.alert){margin-right:32px}
+.sidebar .nav.sub :is(.count,.alert){margin-right:var(--space-8)}
 /* banners: icon and text start at the top, the action button sits in the vertical middle (Vit 21 Oct) */
 .banner>.btn,.banner>.ml-bact,.banner>div:last-child:has(>.btn){align-self:center}
 /* text fields show focus once: their own 2 px inner ring, no outer outline on top (Vit 21 Oct: "two focus borders") */
@@ -141,24 +141,24 @@
    sidebar and page meet the window's left, right and bottom edges; only their inner top corners stay rounded */
 @media (min-width:840px){
  .body{padding:0!important}
- .sidebar{border-radius:0 12px 0 0!important}
- .main{border-radius:12px 0 0 0!important}
- .m-tint,.cv-tint{border-radius:12px 0 0 0!important}
+ .sidebar{border-radius:0 var(--r-lg) 0 0!important}
+ .main{border-radius:var(--r-lg) 0 0 0!important}
+ .m-tint,.cv-tint{border-radius:var(--r-lg) 0 0 0!important}
 }
 
 /* ---------- Side card, one recipe (Vit 21 Oct: "so many places and they look different, audit and align") ----------
    The right-hand card on detail pages (contact, venue, booking, social post, release, mail thread, money, settle,
    dashboard): padding 24, radius 12, surface; sections 32 apart; section heading 18 / 24 medium with its action on the
    right; 12 px from heading to content; content starts on the heading's left edge (rows bleed 16 and pad 16). */
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){padding:var(--card)!important;display:flex;flex-direction:column;gap:32px;border-radius:12px}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right){padding:var(--card)!important;display:flex;flex-direction:column;gap:var(--space-8);border-radius:var(--r-lg)}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right)>:is(section,.sec,.cv-sec,.m-sec,.bd-pgroup,.d-sec,div:not([class])):not(.bd-openbox):not(.cx-folded){padding:0!important;margin:0!important}
 /* boxed things inside a side card keep their own padding (Vit 21 Oct: the open-items box lost it) */
 
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(h2,h3):not(.ex-empty h3){font:500 var(--fs-heading)/var(--lh-heading) var(--sans)!important;letter-spacing:0!important;margin:0!important}
-:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 12px!important;padding:0!important;min-height:34px;align-items:center}
+:is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 var(--space-3)!important;padding:0!important;min-height:34px;align-items:center}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}
 /* empty lines and plain text in a side card start on the heading edge */
-.cv-in{padding:0!important;margin:0;font:400 14px/20px var(--sans)}
+.cv-in{padding:0!important;margin:0;font:400 var(--fs-small)/20px var(--sans)}
 /* key-value lines that open nothing sit on the heading edge too, label on the value's baseline */
 .cv-fn{padding-left:0!important;padding-right:0!important}
 .bd-panel .bd-stack,.bd-stack.rows>div{padding:0!important}
@@ -172,14 +172,14 @@
 :is(.ml-photo,.cat-tilewrap .st,.hero,.bd-hero,.d-hero,.d-tonight,.cv-hero,.so-photo,.bk-gig .cv) .tag.tag,.tag.filled.filled{
  background:color-mix(in srgb,var(--scrim-base) 50%,transparent)!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important;color:var(--on-photo)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--on-photo) 19%,transparent)!important}
 /* clickable list rows use the List row inset, so the hover bar never touches the avatar (Vit 21 Oct) */
-.list-row:is(button,a,[data-go],[data-act]):not([style*="cursor:default"]){padding:var(--row-y) 16px!important;margin-inline:-16px;width:calc(100% + 32px)!important;border-radius:8px;box-sizing:border-box}
+.list-row:is(button,a,[data-go],[data-act]):not([style*="cursor:default"]){padding:var(--row-y) var(--space-4)!important;margin-inline:calc(-1 * var(--space-4));width:calc(100% + 32px)!important;border-radius:var(--r-md);box-sizing:border-box}
 /* calendar days with a photo: their event chips use the Filled tag too (Vit 21 Oct: "badge not visible here too") */
 .d-day.photo .d-ev.d-ev{background:linear-gradient(color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent),color-mix(in srgb,var(--tc,var(--muted)) 16%,transparent)),var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:var(--elev-1),inset 0 0 0 1px color-mix(in srgb,var(--tc,var(--muted)) 24%,transparent)!important}
 /* key-value lists in dialogs and cards start on the text edge, label on the value's baseline (Vit 21 Oct) */
 .bk-chg{padding:0!important;background:none!important;align-items:baseline}
 .kv{align-items:baseline}
 /* collapsible section headers say they open: a chevron on the right, the whole line is the button (Vit 21 Oct) */
-.bd-acth{display:flex!important;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
+.bd-acth{display:flex!important;align-items:center;justify-content:space-between;gap:var(--space-2);cursor:pointer}
 .bd-acth .bd-chev{display:grid;place-items:center;width:20px;height:20px;color:var(--muted);flex:none}
 .bd-acth:is(:hover,[data-state="hover"]) .bd-chev{color:var(--ink)}
 /* money lines on a booking open nothing: no hover inset, text on the heading edge, amounts on the card's right edge
@@ -188,37 +188,37 @@
 
 /* event header (booking, gig day, social post): a tile that says what kind of thing this is, then the title and facts;
    the venue is a chip with its photo that opens the venue page (Vit 21 Oct) */
-.ev-head{display:flex;align-items:center;gap:var(--section);margin:8px 0 var(--card)}
-.ev-date{width:88px;height:96px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px;text-align:center}
-.ev-date span{font:400 13px/var(--lh-label) var(--sans);text-transform:uppercase;color:var(--muted)}
+.ev-head{display:flex;align-items:center;gap:var(--section);margin:var(--space-2) 0 var(--card)}
+.ev-date{width:88px;height:96px;border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px;text-align:center}
+.ev-date span{font:400 var(--fs-label)/var(--lh-label) var(--sans);text-transform:uppercase;color:var(--muted)}
 .ev-date b{font:400 32px/40px var(--sans);letter-spacing:-.5px;color:var(--ink)}
 .ev-date.today{background:var(--accent);box-shadow:none}.ev-date.today :is(span,b){color:var(--on-accent)}
 .ev-date.ev-post{height:88px}
 .ev-tx{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
-.ev-k{font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
+.ev-k{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .ev-tx h1{margin:0}
 .ev-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-top:var(--space-1)}
-.ev-venue{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 3px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 13px/var(--lh-label) var(--sans);color:var(--ink)}
+.ev-venue{display:inline-flex;align-items:center;gap:var(--space-2);height:28px;padding:0 var(--space-3) 0 3px;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
 .ev-venue img{width:22px;height:22px;border-radius:50%;object-fit:cover}
 .ev-venue:is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 /* booking progress: six steps, done filled, current half, late red, cancelled stops */
-.bk-prog{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-.bk-prog li{display:flex;flex-direction:column;gap:4px;min-width:0}
+.bk-prog{list-style:none;margin:0 0 var(--space-4);padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-2)}
+.bk-prog li{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
 .bk-prog i{height:6px;border-radius:3px;background:var(--well)}
 .bk-prog li.done i{background:var(--ok)}.bk-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
 .bk-prog li.att i{background:var(--att)}.bk-prog li.att span{color:var(--att)}
 .bk-prog.cancelled li.done i{background:var(--muted)}.bk-prog.cancelled li:nth-child(4) span{color:var(--bad)}
-.bk-prog span{font:400 12px/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-prog span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bk-prog li:is(.done,.now) span{color:var(--ink)}
 .bk-prog.cancelled li.done:not(:nth-child(4)) span{color:var(--muted)}/* a cancelled booking greys its steps (Figma Step=Cancelled, 7 Nov) */
-@media (max-width:599.98px){.ev-head{gap:var(--space-3);margin:0}.ev-date,.ev-date.ev-post{width:52px;height:60px;border-radius:12px;gap:0}.ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:20px;line-height:26px;letter-spacing:-.2px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
+@media (max-width:599.98px){.ev-head{gap:var(--space-3);margin:0}.ev-date,.ev-date.ev-post{width:52px;height:60px;border-radius:var(--r-lg);gap:0}.ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:20px;line-height:26px;letter-spacing:-.2px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
 /* booking and gig day open without a photo now, so they use the shared detail-page tint, not the venue-photo brown */
 .main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)!important}
 
 /* checkbox and toggle states, matching Figma (21–22 Oct audit, gate 6 Nov): hover lays the 4 % state layer over the box or
    track, disabled is 45 % and inert; keyboard focus is the global 2 px ink ring */
 :is(input[type=checkbox],[role=checkbox],[role=switch]):not(:disabled):not([aria-disabled=true]):is(:hover,[data-state="hover"]){background-image:linear-gradient(var(--state-hover),var(--state-hover))}
-input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radius:4px}
+input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radius:var(--r-sm)}
 :is(input[type=checkbox],[role=checkbox],[role=switch]):is(:disabled,[aria-disabled=true]){opacity:.45;cursor:not-allowed;pointer-events:none}
 :is(label,.row):has(>input[type=checkbox]:disabled){cursor:not-allowed;opacity:.45}
 
@@ -233,7 +233,7 @@ input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radiu
    centre on that same line instead of sitting at the row's top. */
 .bd-step{--st-line:26px}
 .bd-step .bd-sth{min-height:var(--st-line)}
-.bd-step:not(.nowrow) .time{padding-top:calc((var(--st-line) - 20px) / 2)}
+.bd-step:not(.nowrow) .time{padding-top:calc((var(--st-line) - var(--space-5)) / 2)}
 .bd-step:not(.nowrow) .spine{padding-top:calc(var(--st-line) / 2 - 6px)}
 .bd-step.next .spine{padding-top:calc(var(--st-line) / 2 - 7px)}
 @media (max-width:599.98px){.bd-step{--st-line:24px}}
@@ -255,7 +255,7 @@ input[type=checkbox]:not(:disabled):is(:hover,[data-state="hover"]){border-radiu
 
 /* Venues map city card (Vit 22 Oct: "we need to fix padding?"): the card has no inner padding, so its rows do not bleed;
    they take the row inset and line up with the city heading (16) */
-.cv-mapl .cv-vrow{margin:0!important;width:100%!important;padding:var(--row-y) 16px!important}
+.cv-mapl .cv-vrow{margin:0!important;width:100%!important;padding:var(--row-y) var(--space-4)!important}
 
 /* Solid tag (Vit 4 Nov, theme tiles: "not transparent badge"): the full status colour with dark-on-light / light-on-dark
    text, for a badge that sits over two surfaces (a tile edge). Figma: Tag Style=Solid. Accent uses the lilac accent. */

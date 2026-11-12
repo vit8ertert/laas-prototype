@@ -9,19 +9,19 @@
   .sidebar,.menu-btn{display:none!important}
   /* M4: no permanent assistant bar; Ask lives in the tab bar */
   .abar,.abar-mini-wrap{display:none!important}
-  .sheet{bottom:16px}
-  .tabbar{display:flex;align-items:center;gap:8px;padding:6px max(12px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:var(--z-nav)}
+  .sheet{bottom:var(--space-4)}
+  .tabbar{display:flex;align-items:center;gap:var(--space-2);padding:6px max(var(--space-3),env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(var(--space-3),env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:var(--z-nav)}
   .tabbar .tb-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:560px;margin:0 auto}
-  .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 12px/16px var(--sans);border-radius:var(--r-lg)}
+  .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 var(--fs-meta)/16px var(--sans);border-radius:var(--r-lg)}
   .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background var(--dur-1)}
   .tb-tab .tl{white-space:nowrap}
   .tb-tab:is(:hover,[data-state="hover"]) .ti{background:var(--state-hover)}
   .tb-tab.on{color:var(--ink)}.tb-tab.on .ti{background:var(--well)}
-  .tb-n{position:absolute;top:-2px;left:28px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);font:500 11px/16px var(--sans);text-align:center}
+  .tb-n{position:absolute;top:-2px;left:28px;min-width:16px;height:16px;padding:0 var(--space-1);border-radius:var(--r-md);background:var(--accent);color:var(--on-accent);font:500 var(--fs-badge)/16px var(--sans);text-align:center}
   /* Ask: the lime of the assistant, the same in every theme */
-  .tb-ask{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:56px;height:52px;border-radius:var(--r-xl);background:var(--poster-lime);color:var(--on-lime);font:400 12px/16px var(--sans)}
+  .tb-ask{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:56px;height:52px;border-radius:var(--r-xl);background:var(--poster-lime);color:var(--on-lime);font:400 var(--fs-meta)/16px var(--sans)}
   .tb-ask svg{width:20px;height:20px}
-  .page{padding-bottom:24px}
+  .page{padding-bottom:var(--space-6)}
 }
 
 /* ---------- compact: one primary action in the header, sheets for menus and drawers ---------- */
@@ -31,7 +31,7 @@
   .cx-group:not(.ph):not(.bk-ph){flex-wrap:nowrap}
 
   /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
-  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up var(--dur-3) var(--ease-emphasized) both!important}
+  .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:var(--space-5) var(--space-2) calc(var(--space-3) + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up var(--dur-3) var(--ease-emphasized) both!important}
   .pop:not(.pal)::before{content:"";position:absolute;top:13px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
   .scrim[style*="transparent"]{background:var(--scrim)!important}
@@ -39,34 +39,34 @@
   .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}
   /* drawers rise from the bottom as tall sheets, the action bar stays at the bottom */
   .drawer{top:auto;left:0;width:100%;height:calc(100% - var(--layout-sheet-gap) - env(safe-area-inset-top,0px));border-radius:var(--r-xl) var(--r-xl) 0 0;animation:cx-up var(--dur-4) var(--ease-emphasized) both}
-  .drawer .dh,.drawer .df{padding-inline:16px}.drawer .db{padding-inline:16px}
+  .drawer .dh,.drawer .df{padding-inline:var(--space-4)}.drawer .db{padding-inline:var(--space-4)}
   /* Drawer Compact (1821:36997): a grab handle row of 16 over the head, like the sheets */
-  .drawer{padding-top:16px}.drawer::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
-  .drawer .df{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .drawer{padding-top:var(--space-4)}.drawer::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
+  .drawer .df{padding-bottom:calc(var(--space-4) + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:36px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:36px var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
   /* Dialog Compact (1821:37049, Vit 7 Nov): a 16 px grab-handle row, handle at 10, then the 20 px head padding */
   :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg)::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
-  .modal:has(>.cf-acts){padding-top:24px}.modal:has(>.cf-acts)::before{content:none} /* Confirmation Compact 1841:37499: no handle, 24 top */
+  .modal:has(>.cf-acts){padding-top:var(--space-6)}.modal:has(>.cf-acts)::before{content:none} /* Confirmation Compact 1841:37499: no handle, 24 top */
 }
 @keyframes cx-up{from{transform:translateY(100%)}}
 
 /* ---------- sheets of our own (More, Ask, ⋯) ---------- */
-.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 8px calc(12px + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+.cx-sheet{left:0;right:0;bottom:0;width:auto;max-height:80vh;overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:var(--space-5) var(--space-2) calc(var(--space-3) + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
 @media (min-width:600px){.cx-sheet{left:50%;right:auto;width:min(560px,100%);margin-left:max(-280px,-50%)}}
 /* sheet rows 44 high (Vit 26 Oct: less space between the More sheet rows; 44 keeps a comfortable tap target) */
-.cx-it{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0 12px;border-radius:var(--r-md);text-align:left}
-.cx-it>span{display:flex;align-items:center;gap:12px}
+.cx-it{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);width:100%;min-height:44px;padding:0 var(--space-3);border-radius:var(--r-md);text-align:left}
+.cx-it>span{display:flex;align-items:center;gap:var(--space-3)}
 .cx-it:is(:hover,[data-state="hover"]){background:var(--well)}.cx-it>svg{color:var(--faint)}
-.cx-g{padding:4px 0;border-top:1px solid var(--rule)}.cx-g:first-of-type{border-top:0}
-.cx-gl{padding:8px 12px 4px;color:var(--faint);font:500 12px/16px var(--sans)}
-.cx-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 4px 12px}
-.cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 14px/18px var(--sans);text-align:left}
+.cx-g{padding:var(--space-1) 0;border-top:1px solid var(--rule)}.cx-g:first-of-type{border-top:0}
+.cx-gl{padding:var(--space-2) var(--space-3) var(--space-1);color:var(--faint);font:500 var(--fs-meta)/16px var(--sans)}
+.cx-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2);padding:var(--space-1) var(--space-1) var(--space-3)}
+.cx-tile{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);padding:var(--space-3);min-height:76px;border-radius:var(--r-lg);background:var(--well);font:500 var(--fs-small)/18px var(--sans);text-align:left}
 .cx-tile>svg.i{width:16px;height:16px}
 .cx-tile:is(:hover,[data-state="hover"]){background:var(--state-hover)}.cx-tile.on{box-shadow:inset 0 0 0 1px var(--ink)}
 .cx-it.on{background:var(--well)}
 /* Add to chat (sheet on a phone, popover on desktop): a round close, the title centred, attach tiles, then rows */
-.cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 8px 12px}
+.cx-add-h{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 var(--space-2) var(--space-3)}
 .cx-add-h b{text-align:center}
 .cx-add-h .btn{width:40px;height:40px;padding:0;border-radius:var(--r-pill)}
 .cx-add-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
@@ -75,20 +75,20 @@
 .cx-add-mode .settings-row>.tx{flex:1;min-width:0}.cx-add-mode .settings-row>.ctl{flex:none;width:auto!important}
 /* desktop: the same content as a popover anchored to + (Vit 5 Nov, after Claude's + menu); no header, Esc or a click
    outside closes it */
-.cx-addpop{position:fixed;width:340px;max-width:calc(100vw - 16px);padding:8px;border-radius:var(--r-lg)}
+.cx-addpop{position:fixed;width:340px;max-width:calc(100vw - 16px);padding:var(--space-2);border-radius:var(--r-lg)}
 .cx-addpop .cx-add-h{display:none}
-.cx-addpop .cx-add-tiles{padding:0 0 8px}
+.cx-addpop .cx-add-tiles{padding:0 0 var(--space-2)}
 .cx-addpop .cx-tile{min-height:64px}
-.cx-sep{height:1px;margin:4px 4px;background:var(--rule)}
-.cx-band{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px 12px;text-align:left}
-.cx-band .sq{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 13px var(--sans)}
-.cx-band .tx{flex:1;min-width:0;display:flex;flex-direction:column}.cx-band small{color:var(--muted);font-size:13px;line-height:var(--lh-label)}
-.pop.cx-ask{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
-.cx-ask-h{display:flex;align-items:center;gap:8px}.cx-ask-h .grow{flex:1}
+.cx-sep{height:1px;margin:var(--space-1) var(--space-1);background:var(--rule)}
+.cx-band{display:flex;align-items:center;gap:var(--space-2);width:100%;padding:var(--space-2) var(--space-3) var(--space-3);text-align:left}
+.cx-band .sq{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:500 var(--fs-label) var(--sans)}
+.cx-band .tx{flex:1;min-width:0;display:flex;flex-direction:column}.cx-band small{color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-label)}
+.pop.cx-ask{display:flex;flex-direction:column;gap:var(--space-3);padding-inline:var(--space-4)!important}
+.cx-ask-h{display:flex;align-items:center;gap:var(--space-2)}.cx-ask-h .grow{flex:1}
 .cx-ask .rec{align-self:flex-start}
-.cx-ask-f{display:flex;gap:8px;align-items:center;background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-xl);padding:8px 8px 8px 14px}
-.cx-ask-f input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font-size:16px;line-height:22px}
-.cx-ask-s{display:flex;flex-wrap:wrap;gap:8px}
+.cx-ask-f{display:flex;gap:var(--space-2);align-items:center;background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-xl);padding:var(--space-2) var(--space-2) var(--space-2) 14px}
+.cx-ask-f input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font-size:var(--fs-card);line-height:22px}
+.cx-ask-s{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 
 /* ---------- compact density (Vit 22 Oct: headings, icons and elements much smaller on a phone) ----------
    Type: hero 52 → 28, display 32 → 24, title 24 → 20, heading 18 → 16; body stays 15 (legibility).
@@ -108,46 +108,46 @@
   svg.i{width:16px;height:16px}svg.i.s{width:14px;height:14px}
   .tabbar svg.i{width:20px;height:20px}
   /* buttons on phones are Figma Button S: 34 high, 13/18 Medium, 12 side padding, 16 icon */
-  .btn,.btn.s{height:34px;padding:0 12px;font-size:13px;line-height:var(--lh-label);gap:6px}
+  .btn,.btn.s{height:34px;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label);gap:6px}
   .btn>svg.i,.btn.s>svg.i{width:16px;height:16px}
-  .btn.icon{width:auto;min-width:34px;padding:0 8px}
-  .btn.lg{min-height:44px;padding:8px 20px}
+  .btn.icon{width:auto;min-width:34px;padding:0 var(--space-2)}
+  .btn.lg{min-height:44px;padding:var(--space-2) var(--space-5)}
   .thumb{width:36px;height:36px}.thumb.s{width:28px;height:28px}
 
   .drawer .dh,.drawer .db,.send,.sheet,.acc-card,.bd-card,.bd-pay,.cv-main,
   :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right),.strip,.drop:not(.drop-row){padding:var(--card)!important}
-  .drawer .dh,.drawer .db{padding:20px 16px!important}  /* Drawer Compact 1821:36997: head and body 20 16, not the card inset */
+  .drawer .dh,.drawer .db{padding:var(--space-5) var(--space-4)!important}  /* Drawer Compact 1821:36997: head and body 20 16, not the card inset */
   /* columns with no card behind them on a phone sit on the page edge, like the page header (sweep 22 Oct: Today, Money, Settle, booking pages, past release) */
   :is(.d-left,.m-left,.bd-main>.bd-sec,.cat-col,.cat-ov){padding:0!important}
   .bd-main,.acc-grid,.cv-main,.cat-ov,.cat-col,.d-left,.m-left,.d-first{gap:var(--section)!important}
 
   /* rows of like cards scroll sideways with the next one peeking (research 31, findings 6 and 12):
      KPI tiles, money tasks, release shelves. Lists of records stay vertical lists. */
-  .m-kpis,.cat-kpis,.aud-kpis,.m-g12:has(>.m-task){display:flex!important;flex-direction:row!important;gap:12px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}
+  .m-kpis,.cat-kpis,.aud-kpis,.m-g12:has(>.m-task){display:flex!important;flex-direction:row!important;gap:var(--space-3)!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1 * var(--space-4));padding-inline:var(--space-4);scroll-padding-inline:var(--space-4)}
   :is(.m-kpis,.cat-kpis,.aud-kpis)>*,.m-g12>.m-task{flex:0 0 72%;scroll-snap-align:start;min-width:0}
   :is(.m-kpis,.cat-kpis,.aud-kpis,.m-g12)::-webkit-scrollbar{display:none}
   /* inside a card the sideways row bleeds to the card edges, not the page gutter: margin and padding are the card padding, so the first card lines up with the heading and the row runs to the card edge (Vit 26 Oct) */
   .m-sec>.m-g12:has(>.m-task){margin-inline:calc(-1 * var(--card))!important;padding-inline:var(--card)!important;scroll-padding-inline:var(--card)}
   /* release tiles: two per row instead of one 234 px tile per screen third */
-  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
   /* page tabs and filter chips scroll in one line; the current tab is kept in view (compact.js) */
-  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:16px!important;margin-inline:-16px;padding-inline:16px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:var(--space-4)!important;margin-inline:calc(-1 * var(--space-4));padding-inline:var(--space-4)}
   .tabs::-webkit-scrollbar{display:none}.tabs>*{flex:none}
-  .tabs button{font-size:14px;line-height:20px}
+  .tabs button{font-size:var(--fs-small);line-height:20px}
   /* the Catalogue tabs drop the row padding (.tabs.cat-tabs{padding:0}), so the -16 pull left them on the screen edge; on the gutter like every other tab row (Vit 2 Nov, Releases) */
   .tabs.cat-tabs{margin-inline:0}
 }
 @media (max-width:599.98px){
   /* fact chips and filter chips: one scrolling line instead of three wrapped lines */
-  .cat-filters,.ml-chips,.cv-chips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .cat-filters,.ml-chips,.cv-chips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--space-4));padding-right:var(--space-4);mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
   .cat-filters>*,.ml-chips>*,.cv-chips>*{flex:none}
 
 }
-@media (max-width:599.98px){.kpi-tile{gap:4px!important}}  /* every KPI tile, the Dashboard ones too (census 19) */
+@media (max-width:599.98px){.kpi-tile{gap:var(--space-1)!important}}  /* every KPI tile, the Dashboard ones too (census 19) */
 @media (max-width:599.98px){
   .acc-row{row-gap:var(--space-2)!important}
   /* inputs at 16 px: iOS Safari zooms the page into any field set smaller */
-  .input,input.input,select.input,textarea.input,.cx-ask-f input{font-size:16px;line-height:var(--lh-body)}
+  .input,input.input,select.input,textarea.input,.cx-ask-f input{font-size:var(--fs-card);line-height:var(--lh-body)}
 }
 /* icons on phones: one cap for every view, whatever size the view set (Vit 22 Oct: the 32 px sign-in icon is far too big).
    Content and buttons 16, small 14; icons that lead a row 20 (were 24-32); stars and cover placeholders 28; tab bar 20. */
@@ -155,7 +155,7 @@
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i{width:16px!important;height:16px!important}
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i.s{width:14px!important;height:14px!important}
   .acc-si svg.acc-i32,.cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
-  .acc-si{gap:12px!important}
+  .acc-si{gap:var(--space-3)!important}
   .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.drop-ph svg{width:28px!important;height:28px!important}
   .acc-appicon svg{width:36px}
   .bell svg{width:18px;height:18px}
@@ -168,22 +168,22 @@
 
 /* facts summary line and Gig day on phones (research 31 §8) */
 @media (max-width:599.98px){
-  .ev-meta.cx-sum{flex-wrap:wrap;gap:4px 8px;align-items:center}
-  .main .ev-head .ev-meta.cx-sum>.tag{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:400 13px/var(--lh-label) var(--sans);color:var(--muted)}
-  .ev-meta.cx-sum>.tag::before{content:"·";margin-right:8px;color:var(--faint)}
+  .ev-meta.cx-sum{flex-wrap:wrap;gap:var(--space-1) var(--space-2);align-items:center}
+  .main .ev-head .ev-meta.cx-sum>.tag{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+  .ev-meta.cx-sum>.tag::before{content:"·";margin-right:var(--space-2);color:var(--faint)}
   .ev-meta.cx-sum>.tag:first-child::before{content:none}
-  .main .ev-head .ev-meta.cx-sum>.ev-venue{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:500 13px/var(--lh-label) var(--sans);color:var(--ink)}
+  .main .ev-head .ev-meta.cx-sum>.ev-venue{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;height:auto;font:500 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
   .ev-meta.cx-sum>.ev-venue img{display:none}
   /* "+N" more-details chip = a tag-shaped pill (Figma Event header "More facts"): 24 high, 10 px sides, Label 13 (Vit: the 31 x 24 oval looked squeezed) */
-  .cx-facts{height:24px;padding:0 12px;border-radius:var(--r-pill);background:var(--well);color:var(--ink);font:400 13px/var(--lh-label) var(--sans)}
+  .cx-facts{height:24px;padding:0 var(--space-3);border-radius:var(--r-pill);background:var(--well);color:var(--ink);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
   /* the day strip repeats the timeline list below it: on a phone only its Now line stays */
   .bd-strip>.track,.bd-strip>.legend{display:none}
 }
-.cx-factsheet{display:flex;flex-direction:column;gap:8px}
-.pop.cx-factsheet{padding-inline:16px!important}
+.cx-factsheet{display:flex;flex-direction:column;gap:var(--space-2)}
+.pop.cx-factsheet{padding-inline:var(--space-4)!important}
 .cx-kv{display:grid;grid-template-columns:auto 1fr;margin:0}
-.cx-kv dt,.cx-kv dd{margin:0;padding:12px 0;border-top:1px solid var(--rule)}
-.cx-kv dt{color:var(--muted);padding-right:16px}.cx-kv dd{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.cx-kv dt,.cx-kv dd{margin:0;padding:var(--space-3) 0;border-top:1px solid var(--rule)}
+.cx-kv dt{color:var(--muted);padding-right:var(--space-4)}.cx-kv dd{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .cx-kv dt:first-of-type,.cx-kv dt:first-of-type+dd{border-top:0}
 
 /* Gig day on phones (M5 step 2) */
@@ -192,15 +192,15 @@
   .bd-gdgrid>.bd-rail{display:contents}
   /* Vit 22 Oct (comment on Figma 727:44272: "this is better than the proto, use this positioning"): on phones the
      timeline comes first, the open items after it, as in Figma; the Now card stacks time, next step, curfew */
-  .bd-strip .bd-nowr{flex-direction:column;align-items:flex-start;gap:4px}
+  .bd-strip .bd-nowr{flex-direction:column;align-items:flex-start;gap:var(--space-1)}
   .bd-strip .bd-nowr b{flex:none}
   .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{background:var(--surface);border-radius:var(--r-lg);padding:var(--card)}
   .bd-pgroup.cx-folded>:not(.bd-sh){display:none}
   .bd-steps>.bd-step.cx-later{display:none}
-  .cx-showall{align-self:flex-start;margin:0 0 4px}
-  .cx-fold-b{display:inline-flex;align-items:center;gap:8px;margin-left:auto;min-height:32px;padding:0 4px 0 12px;border-radius:var(--r-pill);color:var(--muted);font:400 13px/var(--lh-label) var(--sans)}
+  .cx-showall{align-self:flex-start;margin:0 0 var(--space-1)}
+  .cx-fold-b{display:inline-flex;align-items:center;gap:var(--space-2);margin-left:auto;min-height:32px;padding:0 var(--space-1) 0 var(--space-3);border-radius:var(--r-pill);color:var(--muted);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
   .cx-fold-b:is(:hover,[data-state="hover"]){background:var(--state-hover)}
-  .bd-pgroup>.bd-sh{display:flex;align-items:center;gap:8px}
+  .bd-pgroup>.bd-sh{display:flex;align-items:center;gap:var(--space-2)}
   /* (Vit 9 Nov, "cards padding are 0px"): tags.css zeroes sections inside a side card, but on phones the rail is
      display:contents and each group is its own card; a folded group escapes that rule, an unfolded one (short or
      empty) lost its padding. one class more specific than that rule. The timeline card stretches even with no steps. */
@@ -209,21 +209,21 @@
 }
 @media (max-width:599.98px){
   .bd-gdgrid .bd-openbox,.bd-gdgrid>.bd-rail>.bd-pgroup{align-self:stretch;width:100%}
-  .bd-pgroup>.bd-sh>:first-child{font:500 16px/22px var(--sans)}
+  .bd-pgroup>.bd-sh>:first-child{font:500 var(--fs-card)/22px var(--sans)}
   .bd-open{flex-wrap:wrap}.bd-open>span{flex:1 1 200px}
   /* the notation footnote repeats what the Approximate and Moved tags already say */
   .bd-tl>.bd-foot{display:none}
   .bd-step.next h4{font-size:var(--fs-heading)!important;line-height:var(--lh-heading)!important}
-  .bd-step .content>p{font-size:14px;line-height:20px}
-  .bd-step .content{padding-bottom:20px}
+  .bd-step .content>p{font-size:var(--fs-small);line-height:20px}
+  .bd-step .content{padding-bottom:var(--space-5)}
 }
-@media (max-width:599.98px){.bd-pgroup.cx-folded{padding:8px 12px 8px 16px!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:34px}.bd-pgroup>.bd-sh>*{margin-block:0}}
+@media (max-width:599.98px){.bd-pgroup.cx-folded{padding:var(--space-2) var(--space-3) var(--space-2) var(--space-4)!important}.bd-pgroup>.bd-sh{margin:0!important;min-height:34px}.bd-pgroup>.bd-sh>*{margin-block:0}}
 
 /* width-aware spacing on compact: Figma LAAS · Width, mode Compact (Vit 22 Oct: far less spacing on phones) */
 @media (max-width:599.98px){
   /* the Compact values of LAAS · Width come from tokens.css (generated from Figma) */
-  .page{padding-top:12px!important}
-  .bd-bar.hd{gap:8px!important}
+  .page{padding-top:var(--space-3)!important}
+  .bd-bar.hd{gap:var(--space-2)!important}
   .acc-row{padding-inline:0!important}
 }
 
@@ -234,10 +234,10 @@
   /* Figma Page header Width=Compact: title block to actions on space/w/stack (8), buttons 8 apart (Action group) */
   :is(.page>.ph,.bk-ph,.acc-ph,.m-ph,.aud-ph){gap:var(--stack)!important}  /* one page header on phones: title block and actions 8 apart (census 7, Figma Page header Compact) */
   /* Banner: icon, text and dismiss on the first line, the action below the text */
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:8px;padding:var(--row-y) var(--row-x)!important}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner){flex-wrap:wrap;row-gap:var(--space-2);padding:var(--row-y) var(--row-x)!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{flex:1 1 calc(100% - 64px);min-width:0}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:24px;margin-right:auto}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:12px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){order:3;margin-left:var(--space-6);margin-right:auto}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:var(--space-3)}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.icon,:is(.banner,.bd-banner,.acc-banner,.cv-banner)>[aria-label*="ismiss"]{order:2}
   /* Booking progress: segments only; the current step's label runs under the whole bar instead of under its segment */
   .bk-prog{position:relative;padding-bottom:22px!important}.bk-prog li{position:static!important}
@@ -263,17 +263,17 @@
   .acc-rows{padding-inline:0!important}
   .acc-foot{padding-inline:0!important}
   .acc-card{gap:var(--stack)!important}
-  .acc-card>h2,.acc-sh h2{font-size:16px!important;line-height:22px!important}
+  .acc-card>h2,.acc-sh h2{font-size:var(--fs-card)!important;line-height:22px!important}
   /* LAAS on your iPhone: one row, icon 44, two lines of text, a smaller badge */
-  .acc-app{flex-direction:row!important;align-items:flex-start!important;gap:12px!important}
+  .acc-app{flex-direction:row!important;align-items:flex-start!important;gap:var(--space-3)!important}
   .acc-appicon{width:44px!important;height:44px!important;border-radius:10px!important}.acc-appicon svg{width:30px!important}
-  .acc-app p{font-size:13px!important;line-height:16px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .acc-store{padding:4px 8px 4px 8px!important;border-radius:6px!important}.acc-store svg{width:16px!important;height:16px!important}
-  .acc-store span{font-size:14px!important;line-height:16px!important}.acc-store small{font-size:8px!important;line-height:10px!important;margin-bottom:0!important}
+  .acc-app p{font-size:var(--fs-label)!important;line-height:16px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .acc-store{padding:var(--space-1) var(--space-2) var(--space-1) var(--space-2)!important;border-radius:6px!important}.acc-store svg{width:16px!important;height:16px!important}
+  .acc-store span{font-size:var(--fs-small)!important;line-height:16px!important}.acc-store small{font-size:8px!important;line-height:10px!important;margin-bottom:0!important}
   /* banners: less padding and space between lines */
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner){gap:8px!important;row-gap:4px!important}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner){gap:var(--space-2)!important;row-gap:var(--space-1)!important}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx{gap:2px!important}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span,:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{font-size:13px;line-height:16px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span,:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{font-size:var(--fs-label);line-height:16px}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn{height:30px}
 }
 /* page-level containers on the width tokens (audit of every page at 390, 22 Oct): grids and side panels use the
@@ -292,14 +292,14 @@
   .iv-prog ol{position:relative;padding-bottom:36px!important}.iv-prog li{position:static!important}
   .iv-prog li>b,.iv-prog li>small{display:none}
   .iv-prog li:is(.att,.now,.bad,.late)>b,.iv-prog li:is(.att,.now,.bad,.late)>small{display:block;position:absolute;left:0;right:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .iv-prog li:is(.att,.now,.bad,.late)>b{bottom:16px}.iv-prog li:is(.att,.now,.bad,.late)>small{bottom:0}
+  .iv-prog li:is(.att,.now,.bad,.late)>b{bottom:var(--space-4)}.iv-prog li:is(.att,.now,.bad,.late)>small{bottom:0}
   .iv-prog{gap:var(--stack)!important;margin-bottom:0!important}
 }
 /* onboarding on phones and tablets: one column, no photo panel (account.css:403 set two columns at every width) */
 @media (max-width:839.98px){
   .acc-ob{grid-template-columns:minmax(0,1fr)!important;padding:0!important}
   .acc-ob .r{display:none!important}
-  .acc-ob .l,.acc-ob.snd .l{padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px))!important;align-items:stretch!important;gap:24px!important}
+  .acc-ob .l,.acc-ob.snd .l{padding:var(--space-6) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom,0px))!important;align-items:stretch!important;gap:var(--space-6)!important}
   .acc-ob .l>*{max-width:none!important}
   .acc-obform{width:100%!important;max-width:560px!important;margin:0!important}
   /* onboarding fields are 38 like every other field (30 Oct, one Input / Select component; were 44 here only) */
@@ -313,7 +313,7 @@
   .main{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
   body:has(.bk-nbe) .tabbar{display:none}
   /* the editor's assistant bar starts collapsed to its Ask button; a tap opens the full bar (M4) */
-  .bk-abar:not(.cx-open){position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:auto;width:auto!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:calc(var(--z-nav) + 2)}
+  .bk-abar:not(.cx-open){position:fixed;right:var(--space-4);bottom:calc(var(--space-4) + env(safe-area-inset-bottom,0px));left:auto;width:auto!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:calc(var(--z-nav) + 2)}
   .bk-abar:not(.cx-open)>:not([data-act="nbask"]){display:none!important}
   .bk-abar:not(.cx-open)>[data-act="nbask"]{height:48px;padding:0 18px;box-shadow:var(--elev-2)}
 }
@@ -323,16 +323,16 @@
   .main{overflow-x:hidden;scrollbar-width:none}.main::-webkit-scrollbar{display:none}
   /* Bookings: search on its own full-width line, filters below; the table becomes list rows (title and fee,
      then when · where and status), so nothing scrolls sideways */
-  .bk-filters{flex-wrap:wrap!important;row-gap:8px!important;overflow:visible!important;mask-image:none!important;margin-right:0!important;padding-right:0!important}
+  .bk-filters{flex-wrap:wrap!important;row-gap:var(--space-2)!important;overflow:visible!important;mask-image:none!important;margin-right:0!important;padding-right:0!important}
   .bk-filters>.bk-search{order:-1;flex:1 1 100%!important;max-width:none!important;width:100%!important}
   .bk-filters>.bk-search input{width:100%!important;padding-left:36px}
   .bk-table{min-width:0!important;overflow:visible!important}
   .bk-table>.bk-th{display:none!important}
-  .bk-table>.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h,.bk-th)){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
+  .bk-table>.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h,.bk-th)){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:var(--space-2)!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.tt{grid-area:tt;min-width:0}.bk-tr>.tt b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.n{grid-area:n;align-self:center}
-  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.w{grid-area:w;font-size:13px;line-height:16px;color:var(--muted);padding-left:48px}
-  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.w{grid-area:w;font-size:var(--fs-label);line-height:16px;color:var(--muted);padding-left:var(--space-12)}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4){grid-area:wh;display:block!important;font-size:var(--fs-label);line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"·";margin-right:6px}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>span:nth-child(5){grid-area:s;justify-self:end}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(3),.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(6){display:none!important}
@@ -341,22 +341,22 @@
      vertically aligned with content"); the title keeps its 48 px start, the same as the line under it */
   .bk-table>.bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h)){position:relative}
   .bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h))>.tt>:is(img,.bk-thumb){position:absolute;left:var(--row-x);top:50%;transform:translateY(-50%)}
-  .bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h))>.tt:has(>:is(img,.bk-thumb)){padding-left:48px}
+  .bk-tr:not(.ex-r):where(:not(.so-d,.so-p,.so-k,.iv-r,.po-m,.po-g,.po-h))>.tt:has(>:is(img,.bk-thumb)){padding-left:var(--space-12)}
   /* Send preview: Not now and Edit on one line, the send action full width below it */
   /* "Change" belongs to the address above it (4 px), the message card starts a new group (16 px) (Vit 26 Oct) */
-  .send>.row.t-label>.link{margin-top:calc(var(--space-1) - 8px)}
-  .send>.row.t-label{margin-bottom:calc(var(--space-4) - 8px)}
+  .send>.row.t-label>.link{margin-top:calc(var(--space-1) - var(--space-2))}
+  .send>.row.t-label{margin-bottom:calc(var(--space-4) - var(--space-2))}
   /* first-run dashboard: room above the heading; start cards scroll sideways; suggestions wrap, smaller */
-  .main>.page.d-first{padding-top:24px!important}
-  :is(.d-choices,.choices){display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px!important;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+  .main>.page.d-first{padding-top:var(--space-6)!important}
+  :is(.d-choices,.choices){display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:var(--space-3)!important;margin-inline:calc(-1 * var(--space-4));padding-inline:var(--space-4);scrollbar-width:none}
   :is(.d-choices,.choices)>*{flex:0 0 78%!important;scroll-snap-align:start;min-width:0}
   :is(.d-choices,.choices) img{height:120px!important;aspect-ratio:auto!important;object-fit:cover}
-  .d-chips{flex-wrap:wrap!important;gap:8px!important;overflow:visible!important;mask-image:none!important}
+  .d-chips{flex-wrap:wrap!important;gap:var(--space-2)!important;overflow:visible!important;mask-image:none!important}
   /* welcome sheet */
-  .pop.cx-welcome{display:flex;flex-direction:column;gap:12px;padding-inline:16px!important}
-  .cx-wl{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:20px}.cx-wl svg{margin-top:2px;flex:none}
+  .pop.cx-welcome{display:flex;flex-direction:column;gap:var(--space-3);padding-inline:var(--space-4)!important}
+  .cx-wl{display:flex;gap:var(--space-3);align-items:flex-start;font-size:var(--fs-body);line-height:20px}.cx-wl svg{margin-top:2px;flex:none}
   /* full-width sheet button = Figma Button Size=L (Body strong 15, 46 high in Compact) */
-  .cx-full{width:100%;justify-content:center;height:44px!important;font:500 15px/var(--lh-body) var(--sans)!important}
+  .cx-full{width:100%;justify-content:center;height:44px!important;font:500 var(--fs-body)/var(--lh-body) var(--sans)!important}
 }
 @media (max-width:599.98px){
   .bk-table>.bk-tr.bk-th{display:none!important}
@@ -364,7 +364,7 @@
   .cx-group>.btn{flex:0 0 auto!important;width:auto!important}
   .cx-group>[aria-label="More"]{min-width:52px}
 }
-@media (max-width:599.98px){.bk-nbe .bk-ebar{padding:12px 16px 8px!important}}
+@media (max-width:599.98px){.bk-nbe .bk-ebar{padding:var(--space-3) var(--space-4) var(--space-2)!important}}
 
 /* Vit's third phone review (22 Oct) */
 @media (max-width:599.98px){
@@ -373,45 +373,45 @@
   .iv-paper{width:680px!important;max-width:none!important;aspect-ratio:210/297!important;padding:40px 44px 36px!important;gap:28px!important;justify-self:start!important}
   .iv-grid{display:block!important}.iv-grid>.iv-side{margin-top:var(--section)}
   /* filter chips scroll on one line; search is its own full-width line, never inside the scroll */
-  .ex-bar{flex-direction:column!important;align-items:stretch!important;gap:8px!important}
-  .ex-fs,.cx-chiprow{display:flex;flex:none;flex-wrap:nowrap!important;gap:8px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .ex-bar{flex-direction:column!important;align-items:stretch!important;gap:var(--space-2)!important}
+  .ex-fs,.cx-chiprow{display:flex;flex:none;flex-wrap:nowrap!important;gap:var(--space-2);overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--space-4));padding-right:var(--space-4);mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
   .ex-fs>*,.cx-chiprow>*{flex:none}
   /* never wider than the screen plus its bleed, so the fade sits on the screen's edge (Vit 9 Nov: "some have the
      gradient on the right edge, some not": in a column the row grew to its chips' width, 490 on a 390 screen) */
   .ex-fs,.cx-chiprow{max-width:calc(100% + 16px);min-width:0}
   .ex-search{width:100%!important;order:-1}
-  :is(.bk-filters,.ml-filters){display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:8px!important}
+  :is(.bk-filters,.ml-filters){display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:var(--space-2)!important}
   :is(.bk-filters,.ml-filters)>:is(.bk-search,.search){order:-1;width:100%!important;max-width:none!important}
   /* banners: title, at most two lines of text, a small action */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>span:not(:first-child),:is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>.t-label{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>b{font-size:14px;line-height:18px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>b{font-size:var(--fs-small);line-height:18px}
   /* the trailing × centres on the 18 px phone title line; the action sits below the text here, so it needs no line offset */
   :is(.banner,.bd-banner,.acc-banner,.cv-banner){--bn-line:18px}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){margin-top:0}
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){margin-right:-8px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){margin-right:calc(-1 * var(--space-2))}
   /* Mail list like Gmail on a phone: avatar, sender and time; subject; one line of preview. Unread is bold, no dot;
      the booking link, status and row actions live in the thread */
-  .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:12px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;align-items:start!important}
+  .ml-row{display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;grid-template-areas:"av from time" "av text text";column-gap:var(--space-3)!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;align-items:start!important}
   .ml-row>.ml-dot,.ml-row>.ml-linkcol,.ml-row>.ml-status,.ml-row>.ml-acts{display:none!important}
-  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:13px;line-height:var(--lh-label);align-self:center}  /* centred on the row like every leading picture (Compact row, 10 Nov; was top + 2) */
-  .ml-row>.ml-from{grid-area:from;display:block!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;line-height:var(--lh-body)}
-  .ml-row>.ml-from small{display:inline!important;margin-left:4px;font-size:13px;line-height:var(--lh-label);color:var(--muted)}
-  .ml-row>.ml-time{grid-area:time;font-size:12px;line-height:var(--lh-body);color:var(--muted);display:flex;gap:4px;align-items:center;white-space:nowrap}
+  .ml-row>.ml-av{grid-area:av;width:40px;height:40px;font-size:var(--fs-label);line-height:var(--lh-label);align-self:center}  /* centred on the row like every leading picture (Compact row, 10 Nov; was top + 2) */
+  .ml-row>.ml-from{grid-area:from;display:block!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs-body);line-height:var(--lh-body)}
+  .ml-row>.ml-from small{display:inline!important;margin-left:var(--space-1);font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted)}
+  .ml-row>.ml-time{grid-area:time;font-size:var(--fs-meta);line-height:var(--lh-body);color:var(--muted);display:flex;gap:var(--space-1);align-items:center;white-space:nowrap}
   .ml-row>.ml-text{grid-area:text;min-width:0;display:flex;flex-direction:column;gap:0}
-  .ml-row>.ml-text>b{font-weight:400;font-size:15px;line-height:var(--lh-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ml-row>.ml-text>b{font-weight:400;font-size:var(--fs-body);line-height:var(--lh-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ml-row>.ml-text>b::after{display:none!important}
-  .ml-row>.ml-text>span{font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important}
+  .ml-row>.ml-text>span{font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important}
   .ml-row.unread>.ml-from,.ml-row.unread>.ml-text>b{font-weight:500;color:var(--ink)}.ml-row.unread>.ml-time{color:var(--ink)}
-  .ml-row+.ml-row::before{left:64px!important;right:12px!important}
+  .ml-row+.ml-row::before{left:64px!important;right:var(--space-3)!important}
   /* contact and venue header: avatar and name on one line, facts wrap under the name, actions below */
   /* Vit 22 Oct (comment on the phone Contact): the fact tags run the full width, from the avatar's left edge to the right;
      avatar beside name and role, then the tags, then the actions */
-  .cv-actions.cv-person{display:grid!important;grid-template-columns:56px minmax(0,1fr)!important;grid-template-areas:"av name" "av role" "facts facts" "acts acts";column-gap:12px!important;row-gap:0!important;align-items:start!important}
+  .cv-actions.cv-person{display:grid!important;grid-template-columns:56px minmax(0,1fr)!important;grid-template-areas:"av name" "av role" "facts facts" "acts acts";column-gap:var(--space-3)!important;row-gap:0!important;align-items:start!important}
   .cv-actions.cv-person>.cv-who{display:contents!important}
   .cv-actions.cv-person>.cv-who>h1{grid-area:name;min-width:0}
-  .cv-actions.cv-person>.cv-who>.cv-role{grid-area:role;min-width:0;margin-top:4px}
-  .cv-actions.cv-person>.cv-who>.cv-facts{grid-area:facts;margin-top:12px;gap:8px!important}
-  .cv-actions.cv-person>.cv-acts{margin-top:12px}
+  .cv-actions.cv-person>.cv-who>.cv-role{grid-area:role;min-width:0;margin-top:var(--space-1)}
+  .cv-actions.cv-person>.cv-who>.cv-facts{grid-area:facts;margin-top:var(--space-3);gap:var(--space-2)!important}
+  .cv-actions.cv-person>.cv-acts{margin-top:var(--space-3)}
   .cv-actions.cv-person>.cv-av{grid-area:av;width:56px!important;height:56px!important}
   .cv-actions.cv-person>.cv-acts{grid-area:acts;justify-content:flex-start!important}
   .cv-who h1{font-size:var(--fs-display)!important;line-height:var(--lh-display)!important}
@@ -437,14 +437,14 @@
   :is(.ph,.bk-ph,.m-acts,.aud-acts,.cv-acts,.bd-hacts,.cat-actions)>.btn{flex:0 0 auto!important;width:auto!important}
   /* expense rows as list rows: what and amount, then date · who paid and status; select, category and receipt
      live in the expense itself */
-  .bk-table>.bk-tr.ex-r{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "d who s";column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
+  .bk-table>.bk-tr.ex-r{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "d who s";column-gap:var(--space-2)!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
   .ex-r>.ex-cb,.ex-r>span:nth-child(5),.ex-r>span:nth-child(6){display:none!important}
   .ex-r>.ex-tt{grid-area:tt;min-width:0;display:flex;flex-direction:column}
   .ex-r>.ex-tt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ex-r>.ex-tt small{display:none}
   .ex-r>.n{grid-area:n;align-self:center}
-  .ex-r>.m{grid-area:d;font-size:13px;line-height:16px;color:var(--muted)}
-  .ex-r>.ex-who{grid-area:who;min-width:0;font-size:13px;line-height:16px;color:var(--muted)}
+  .ex-r>.m{grid-area:d;font-size:var(--fs-label);line-height:16px;color:var(--muted)}
+  .ex-r>.ex-who{grid-area:who;min-width:0;font-size:var(--fs-label);line-height:16px;color:var(--muted)}
   .ex-r>.ex-who>.ex-av,.ex-r>.ex-who small{display:none}
   .ex-r>.ex-who::before{content:"·";margin-right:6px}
   .ex-r>span:nth-child(7){grid-area:s;justify-self:end}
@@ -478,11 +478,11 @@
   /* Today: the day sheet header on one line; the record row wraps instead of overlapping */
   .d-sh{flex-wrap:nowrap!important;min-width:0}.d-sh h3{white-space:nowrap;flex:none}.d-sh>h3+*{margin-left:auto}  /* the trailing meta or button stays flush right (Figma Section header Heading Compact) */
   .d-sh>:not(h3){min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .d-dh{column-gap:8px!important}
+  .d-dh{column-gap:var(--space-2)!important}
   .d-dh>.btn{width:34px;padding:0!important;justify-content:center;font-size:0;gap:0}  /* phones: Share is its icon (the menu says what it does) */
   /* tonight's card: facts above, the button on its own line */
-  .d-tonight .d-tm{flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
-  .d-tonight .d-tm>span:first-child{font-size:13px;line-height:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .d-tonight .d-tm{flex-direction:column!important;align-items:flex-start!important;gap:var(--space-2)!important}
+  .d-tonight .d-tm>span:first-child{font-size:var(--fs-label);line-height:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .d-tonight h2{font-size:20px!important;line-height:26px!important}
 }
 @media (max-width:599.98px){.aud-rel{margin-inline:0!important;padding-inline:0!important;width:100%!important}}
@@ -490,11 +490,11 @@
 /* Vit's fifth phone review (22 Oct): fixed as patterns, not spots */
 @media (max-width:839.98px){
   /* onboarding: room between the logo row and the step title */
-  .acc-obform{margin-top:16px!important}
+  .acc-obform{margin-top:var(--space-4)!important}
 }
 @media (max-width:599.98px){
   /* every banner kind: the text under the title stops after two lines, whatever element holds it (span, small, p) */
-  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>:not(:first-child){display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:16px}
+  :is(.banner,.bd-banner,.acc-banner,.cv-banner) .tx>:not(:first-child){display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:var(--fs-label);line-height:16px}
   /* Assistant on a phone (Vit 4 Nov: "the suggestion bubbles not working on mobile"; Claude, ChatGPT and Gemini):
      the mark and greeting centred in the free space; three suggestions as plain rows (topic icon + text, no box) right
      above the composer, where the thumb is; Chats is a round icon button */
@@ -542,7 +542,7 @@
   .bk-tr.so-p>.n:last-child{display:none!important}
   .bk-tr.so-p>span:nth-child(4){grid-area:s;justify-self:end}
   .bk-tr.so-p>.n:nth-child(5){grid-area:n}
-  .bk-tr.so-p>.m:nth-child(3){grid-area:wh;display:block!important;font-size:13px;line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk-tr.so-p>.m:nth-child(3){grid-area:wh;display:block!important;font-size:var(--fs-label);line-height:16px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bk-tr.so-p>.m:nth-child(3)::before{content:"·";margin-right:6px}
   .bk-tr.so-p .so-pt small{display:none}
   /* the picture is a 40 px column beside both lines, centred, as on Deliveries (Compact row, 10 Nov) */
@@ -550,32 +550,32 @@
   .bk-tr.so-p>.tt{display:contents}
   .bk-tr.so-p>.tt>img{grid-area:img;align-self:center;width:40px;height:40px;border-radius:var(--r-sm)}
   .bk-tr.so-p>.tt>.so-pt{grid-area:tt;min-width:0}
-  .bk-tr.so-p>.w{grid-area:w;justify-self:start!important;text-align:left!important;padding-left:0!important;font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
+  .bk-tr.so-p>.w{grid-area:w;justify-self:start!important;text-align:left!important;padding-left:0!important;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
   /* Contacts table becomes list rows: name and status, then kind · where · last contact */
   .table-wrap.cv-table{overflow:visible!important}
   .cv-table table,.cv-table tbody{display:block;width:100%;min-width:0!important}
   .cv-table thead{display:none}
-  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc s";column-gap:4px;row-gap:2px;padding:var(--row-y) var(--row-x);border-bottom:1px solid var(--rule)}
+  .cv-table tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"n n n s" "k w lc s";column-gap:var(--space-1);row-gap:2px;padding:var(--row-y) var(--row-x);border-bottom:1px solid var(--rule)}
   /* Vit 22 Oct ("on code this needs to be fixed in paddings"): the rows sit inside the card, so they take the row inset; the card edge closes the last row */
   .cv-table tbody tr:last-child{border-bottom:0}
   .cv-foot .btn.cv-link{padding-left:0}
   .cv-table td{padding:0!important;border:0!important;min-width:0}
   .cv-table td:nth-child(1){grid-area:n;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cv-table td:nth-child(2){grid-area:k}.cv-table td:nth-child(3){grid-area:w}.cv-table td:nth-child(4){grid-area:lc}
-  .cv-table td:is(:nth-child(2),:nth-child(3),:nth-child(4)){font-size:13px;line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cv-table td:is(:nth-child(2),:nth-child(3),:nth-child(4)){font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cv-table td:is(:nth-child(3),:nth-child(4))::before{content:"·\00a0"}  /* a flex item drops a trailing space */
   .cv-table td:nth-child(5){grid-area:s;justify-self:end;align-self:center}  /* phones: a contact row is a List row (title, meta, trailing tag) */
   .cv-table td:nth-child(6){display:none}
   /* settings fields never wider than the row */
   .acc-row .ctl,.acc-row .ctl .input{min-width:0!important;max-width:100%!important}
 }
-@media (max-width:599.98px){.d-conv{padding-bottom:24px!important}}
+@media (max-width:599.98px){.d-conv{padding-bottom:var(--space-6)!important}}
 /* Today on phones (prototype and Django alike): day-sheet notes stop after one line, the tonight card grows
    with its title instead of a fixed 240 px */
 @media (max-width:599.98px){
   .d-row .d-rt small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
   .d-row{min-height:0;padding:var(--row-y) var(--row-x)}
-  .d-tonight{height:auto!important;min-height:200px;gap:8px}
+  .d-tonight{height:auto!important;min-height:200px;gap:var(--space-2)}
 }
 
 /* ---------- Banner on phones: Option B (Vit 22 Oct, research: GOV.UK, Atlassian Banner, Carbon "View more") ----------
@@ -584,18 +584,18 @@
    the × is a 32 px box centred on line 1, 4 px from the edge. Icon 16 on line 1. Padding 8 / 40 / 8 / 36.
    Figma: Banner Width=Compact. Same markup for .banner, .bd-banner, .acc-banner, .cv-banner (and Django bd-banner). */
 @media (max-width:599.98px){
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:8px 40px 8px 36px!important;min-height:40px;font:400 13px/18px var(--sans)}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>svg.i{position:absolute;left:12px;top:9px;width:16px!important;height:16px!important;margin:0!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:var(--space-2) 40px var(--space-2) 36px!important;min-height:40px;font:400 var(--fs-label)/18px var(--sans)}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>svg.i{position:absolute;left:var(--space-3);top:9px;width:16px!important;height:16px!important;margin:0!important}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{display:block!important}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>*{display:inline!important;font:400 13px/18px var(--sans)!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child{font-weight:500!important;margin-right:4px}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>*{display:inline!important;font:400 var(--fs-label)/18px var(--sans)!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child{font-weight:500!important;margin-right:var(--space-1)}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>:first-child:not(:only-child)::after{content:"."}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline-block!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 13px/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label]){display:inline-block!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;color:inherit!important;font:500 var(--fs-label)/18px var(--sans)!important;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn:not(.icon):not([aria-label])>svg{display:none}
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:4px;margin:0!important}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>:is(.bd-x,.acc-x,.cv-x){position:absolute!important;top:1px;right:var(--space-1);margin:0!important}
   /* longer than three lines (views/overflow.js): two lines, then the action and "Show more" on the next line */
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner).cx-clamp>.tx{display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-  .main .cx-showmore{display:inline;margin-left:12px;padding:0;font:400 13px/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+  .main .cx-showmore{display:inline;margin-left:var(--space-3);padding:0;font:400 var(--fs-label)/18px var(--sans);color:inherit;opacity:.75;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
   .main .cx-clamp>.tx+.cx-showmore{margin-left:0}  /* the banner's Show more link; was .cx-more, which the header ⋯ button also carries (it took 75 % opacity, 8 Nov) */
 }
 /* Contact and venue pages on phones (Vit 22 Oct): the Bookings and People sections have no card, so their rows do not
@@ -611,7 +611,7 @@
 /* Ledger tools (report chips, period, VAT) on phones (Vit 22 Oct: "can we make them scrollable horizontally"): one line
    that scrolls sideways, like the tab and chip rows; the edge fade comes from views/overflow.js */
 @media (max-width:599.98px){
-  .main .ml-tools{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:8px}
+  .main .ml-tools{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:var(--space-2)}
   .main .ml-tools::-webkit-scrollbar{display:none}
   .main .ml-tools>*,.main .ml-tools .m-modes>*{flex:none!important}
   .main .ml-tools .m-modes{flex-wrap:nowrap!important;flex:none!important}
@@ -620,9 +620,9 @@
    but the same tab row as Money, Catalogue and Mail: muted labels 20 apart, the current one in ink with a 2 px accent
    underline, a hairline under the row */
 @media (max-width:839.98px){
-  .main .acc-nav{gap:20px!important;padding-bottom:0!important;box-shadow:inset 0 -1px 0 var(--rule);scrollbar-width:none}
+  .main .acc-nav{gap:var(--space-5)!important;padding-bottom:0!important;box-shadow:inset 0 -1px 0 var(--rule);scrollbar-width:none}
   .main .acc-nav::-webkit-scrollbar{display:none}
-  .main .acc-nav .nav{min-height:0!important;padding:12px 4px 14px!important;border-radius:0!important;background:none!important;color:var(--muted);font:400 15px/var(--lh-body) var(--sans)!important;box-shadow:inset 0 -2px 0 transparent}
+  .main .acc-nav .nav{min-height:0!important;padding:var(--space-3) var(--space-1) 14px!important;border-radius:0!important;background:none!important;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)!important;box-shadow:inset 0 -2px 0 transparent}
   .main .acc-nav .nav>svg.i{display:none}
   .main .acc-nav .nav:is(:hover,[data-state="hover"]){color:var(--ink);box-shadow:inset 0 -2px 0 var(--rule-strong)}
   .main .acc-nav .nav.active{color:var(--ink);font-weight:500!important;box-shadow:inset 0 -2px 0 var(--accent-strong)}
@@ -630,9 +630,9 @@
 /* Release header on phones (Vit 22 Oct, comment on Figma 740:49152: "this is better layout-wise, use this part like in
    Figma"): the cover sits beside the title block, 96 px, and the actions take their own row under both */
 @media (max-width:599.98px){
-  .main .cat-rhead{display:grid!important;grid-template-columns:96px minmax(0,1fr);column-gap:12px;row-gap:12px;align-items:start}
+  .main .cat-rhead{display:grid!important;grid-template-columns:96px minmax(0,1fr);column-gap:var(--space-3);row-gap:var(--space-3);align-items:start}
   .main .cat-rhead>.cat-cover{width:96px!important;height:96px!important}
-  .main .cat-rhead>.id{min-width:0!important;gap:4px}
+  .main .cat-rhead>.id{min-width:0!important;gap:var(--space-1)}
   .main .cat-rhead{grid-template-rows:auto auto}.main .cat-rhead>.cat-cover{grid-row:auto}
   .main .cat-rhead>.acts{grid-column:1/-1;padding-top:0!important}
   .main .cat-rhead .id h1{font-size:var(--fs-title)!important;line-height:var(--lh-title)!important}
@@ -641,7 +641,7 @@
    level: title in the Title size, "Already paid?" in the Heading size, running text 13/18 */
 @media (max-width:599.98px){
   .bd-pay .bd-payhero h1{font-size:var(--fs-title)!important;line-height:var(--lh-title)!important}
-  .bd-pay .bd-payhero p,.bd-pay .bd-told>p{font-size:13px!important;line-height:18px!important}
+  .bd-pay .bd-payhero p,.bd-pay .bd-told>p{font-size:var(--fs-label)!important;line-height:18px!important}
   .bd-pay .bd-told h2{font-size:var(--fs-heading)!important;line-height:var(--lh-heading)!important;font-weight:500!important}
 }
 /* Release checks summary on phones (Vit 26 Oct, Late Shift EP: "make Before delivery and 1 blocker… stacked, not
@@ -663,28 +663,28 @@
    top (wrap-reverse), and a tertiary ghost (Full editor, Copy invite link, Reset) gets its own row under them.
    Inline actions (header, list rows, settings rows, banners) keep their content width. */
 @media (max-width:599.98px){
-  .acc-obform>.row{flex-wrap:nowrap;gap:8px}
+  .acc-obform>.row{flex-wrap:nowrap;gap:var(--space-2)}
   .acc-obform>.row>.btn{flex:1 1 0;min-width:0;justify-content:center;height:44px}
-  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:8px}
-  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px;font:500 15px/var(--lh-body) var(--sans)} /* 15 px labels at 44 (Figma Dialog / Drawer Compact, 7 Nov) */
+  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf){flex-wrap:wrap-reverse;justify-content:stretch;gap:var(--space-2)}
+  :is(.drawer .df,.modal>.row,.acc-upg .row,.bd-mf)>.btn{flex:1 1 calc(50% - 4px);min-width:fit-content;justify-content:center;height:44px;font:500 var(--fs-body)/var(--lh-body) var(--sans)} /* 15 px labels at 44 (Figma Dialog / Drawer Compact, 7 Nov) */
   .drawer .df>span:empty{display:none}
   .drawer .df>.btn:first-child:has(~span:empty){order:-1;flex-basis:100%}
   .bd-mf>span{order:9;flex:1 1 100%}
   /* form footers in the page (Compose, the Booking and Thread send panels; Vit 2 Nov, Compose): the two main actions 50/50,
      the ghost (Discard, Snooze, Not now) full width under them, the note above */
-  :is(.send>.row:last-child,.ml-cfoot){flex-wrap:wrap;gap:8px}
+  :is(.send>.row:last-child,.ml-cfoot){flex-wrap:wrap;gap:var(--space-2)}
   :is(.send>.row:last-child,.ml-cfoot)>span:empty{display:none}
-  :is(.send>.row:last-child,.ml-cfoot)>.btn{flex:1 1 calc(50% - 4px);min-width:0;margin-left:0;justify-content:center;height:44px;order:2;font:500 15px/var(--lh-body) var(--sans)}
+  :is(.send>.row:last-child,.ml-cfoot)>.btn{flex:1 1 calc(50% - 4px);min-width:0;margin-left:0;justify-content:center;height:44px;order:2;font:500 var(--fs-body)/var(--lh-body) var(--sans)}
   :is(.send>.row:last-child,.ml-cfoot)>.btn>svg.i:is(.s,*){width:16px!important;height:16px!important}  /* 44 high = Button L on phones: 15 px label like Dialog and Drawer rows (8 Nov) */
   :is(.send>.row:last-child,.ml-cfoot)>.btn.ghost{order:3;flex-basis:100%}
   .drawer .df>.btn:not(.s)>svg.i:is(.s,*){width:16px!important;height:16px!important}  /* the same in a Drawer footer: Button L on phones carries a 16 icon (12 Nov; an 's' icon came out 14) */
   /* found on the sweep: the New booking sheet kept its desktop 24 px inset on a phone */
-  .drawer:has(.bk-nbd) .df{padding-inline:16px}
+  .drawer:has(.bk-nbd) .df{padding-inline:var(--space-4)}
 }
 /* T476 phone: table checkboxes only while selecting (a long press starts it); confirmation actions 50/50 at Button L */
 @media (max-width:599.98px){
   .cv-table:not(.selecting) .cb{display:none}
-  .cf-acts>.btn{flex:1;justify-content:center;height:48px;padding:13px 24px;font-size:15px;line-height:22px}  /* Confirmation dialog Compact 1841:37499: Button L, 48 high, 50/50 */
+  .cf-acts>.btn{flex:1;justify-content:center;height:48px;padding:13px var(--space-6);font-size:var(--fs-body);line-height:22px}  /* Confirmation dialog Compact 1841:37499: Button L, 48 high, 50/50 */
   .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:10px}
   .batch{border-radius:0;margin:0 calc(-1 * var(--space-4)) var(--space-2);padding-inline:var(--space-4) var(--space-2)}
 }
@@ -693,11 +693,11 @@
    On phones a Money table row is two lines: what it is and its amount; which or when, and its state. No picture, no
    checkbox, no buttons. A row with more (details or actions) shows a chevron and opens in place (.cx-open, views/rows.js). */
 @media (max-width:599.98px){
-  .bk-table>:is(.iv-r,.po-m,.po-g,.po-h):not(.bk-th):not(.ex-tot){display:grid!important;column-gap:8px!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important;align-items:center}
+  .bk-table>:is(.iv-r,.po-m,.po-g,.po-h):not(.bk-th):not(.ex-tot){display:grid!important;column-gap:var(--space-2)!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important;align-items:center}
   .bk-table>:is(.iv-r,.po-m,.po-g,.po-h).bk-th{display:none!important}
   :is(.iv-r,.po-m,.po-g,.po-h) :is(.bk-thumb,.ex-av,img){display:none!important}
-  :is(.iv-r,.po-m,.po-g,.po-h) b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
-  :is(.iv-r,.po-m,.po-g,.po-h) small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 12px/16px var(--sans);color:var(--muted)}
+  :is(.iv-r,.po-m,.po-g,.po-h) b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/20px var(--sans)}
+  :is(.iv-r,.po-m,.po-g,.po-h) small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
   :is(.iv-r,.po-m,.po-g,.po-h)>.n{justify-self:end;text-align:right}
   .cx-more::after,:is(.iv-r,.po-m):not(.bk-th):not(.ex-tot)::after{content:"";width:16px;height:16px;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/16px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/16px no-repeat;transition:transform var(--dur-1,.15s) var(--ease-standard,ease)}
   :is(.iv-r,.po-m).cx-open::after{transform:rotate(180deg)}
@@ -706,10 +706,10 @@
   /* Invoices: venue · amount / number · due · status ⌄ ; open: the gig, then Approve / Remind / PDF and Open */
   .bk-table>.iv-r:not(.bk-th):not(.ex-tot){grid-template-columns:auto minmax(0,1fr) auto 16px!important;grid-template-areas:"tt tt n n" "no due s cv"}
   .iv-r>.ex-cb{display:none!important}
-  .iv-r>:nth-child(2){grid-area:no;font:400 12px/16px var(--mono);color:var(--muted)}
+  .iv-r>:nth-child(2){grid-area:no;font:400 var(--fs-meta)/16px var(--mono);color:var(--muted)}
   .iv-r>.ex-tt{grid-area:tt;min-width:0}
   .iv-r>.ex-tt small{display:none}
-  .iv-r>:nth-child(4){grid-area:due;font:400 12px/16px var(--sans);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .iv-r>:nth-child(4){grid-area:due;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .iv-r>:nth-child(4)::before{content:"·";margin-right:6px}
   .iv-r>:nth-child(5){grid-area:s;justify-self:end}
   .iv-r>:nth-child(6){grid-area:n}
@@ -721,7 +721,7 @@
   .bk-table>.iv-r.late:not(.bk-th)>:nth-child(5){display:none!important}
   .bk-table>.iv-r.cx-open{grid-template-areas:"tt tt n n" "no due s cv" "x x x x"!important}
   .iv-r.cx-open>.ex-tt small{display:block}
-  .iv-r.cx-open>:nth-child(7){display:flex!important;grid-area:x;flex-wrap:wrap;gap:8px;padding-top:8px;justify-self:start}
+  .iv-r.cx-open>:nth-child(7){display:flex!important;grid-area:x;flex-wrap:wrap;gap:var(--space-2);padding-top:var(--space-2);justify-self:start}
 
   /* Payouts · Members: name · to pay out / bank · state ⌄ ; open: shares, expenses, paid in 30 days, Record payout */
   .bk-table>.po-m:not(.bk-th):not(.ex-tot){grid-template-columns:minmax(0,1fr) auto 16px!important;grid-template-areas:"who due due" "who s cv"}
@@ -733,12 +733,12 @@
   .po-m::after{grid-area:cv}
   .bk-table>.po-m.cx-open{grid-template-areas:"who due due" "who s cv" "a a a" "b b b" "c c c" "f f f"!important}
   .po-m.cx-open>:nth-child(2){display:flex!important;grid-area:a}.po-m.cx-open>:nth-child(3){display:flex!important;grid-area:b}.po-m.cx-open>:nth-child(5){display:flex!important;grid-area:c}
-  .po-m.cx-open>:is(:nth-child(2),:nth-child(3),:nth-child(5)){justify-self:stretch;justify-content:space-between;font:400 13px/20px var(--mono)}
+  .po-m.cx-open>:is(:nth-child(2),:nth-child(3),:nth-child(5)){justify-self:stretch;justify-content:space-between;font:400 var(--fs-label)/20px var(--mono)}
   .po-m.cx-open>:nth-child(2)::before{content:"Gig shares";font-family:var(--sans);color:var(--muted)}
   .po-m.cx-open>:nth-child(3)::before{content:"Expenses paid";font-family:var(--sans);color:var(--muted)}
   .po-m.cx-open>:nth-child(5)::before{content:"Paid, last 30 days";font-family:var(--sans);color:var(--muted)}
   .po-m.cx-open>:nth-child(6)>form{display:block;grid-area:f}
-  .po-m.cx-open>:nth-child(6){grid-area:f;justify-self:start;padding-top:8px}
+  .po-m.cx-open>:nth-child(6){grid-area:f;justify-self:start;padding-top:var(--space-2)}
 
   /* Payouts · Gigs: gig · each / date, venue · state (net and split stay on the gig) */
   .bk-table>.po-g:not(.bk-th){grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"tt n" "tt s"}
@@ -750,47 +750,47 @@
   /* Journal: description · amount / date · no. · state (reference, file and the long note stay on the entry) */
   .ml-table:has(>.ml-j),.ml-table:has(>.ml-a),.cat-table:has(>.gear-r){overflow:visible!important}
   .ml-tr.ml-th,.cat-gr.gear-r.head{display:none!important}
-  .ml-tr.ml-j:not(.ml-th){grid-template-columns:auto auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt tt n" "d no . s";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
-  .ml-j>.ml-d{grid-area:d;font:400 12px/16px var(--sans);color:var(--muted)}
-  .ml-j>.ml-no{grid-area:no;font:400 12px/16px var(--mono)!important;color:var(--muted)}
+  .ml-tr.ml-j:not(.ml-th){grid-template-columns:auto auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt tt n" "d no . s";min-width:0!important;column-gap:var(--space-2)!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
+  .ml-j>.ml-d{grid-area:d;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+  .ml-j>.ml-no{grid-area:no;font:400 var(--fs-meta)/16px var(--mono)!important;color:var(--muted)}
   .ml-j>.ml-no::before{content:"·";margin-right:6px}
   .ml-j>.ml-tt{grid-area:tt;min-width:0}
-  .ml-j>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
+  .ml-j>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/20px var(--sans)}
   .ml-j>.ml-tt small,.ml-j>.ml-m,.ml-j>.ml-att{display:none!important}
   .ml-j>:nth-child(6){grid-area:s;justify-self:end}
   .ml-j>.n{grid-area:n;justify-self:end}
   /* Chart of accounts: name · balance / no. · type; the group rows stay one line */
-  .ml-tr.ml-a:not(.ml-th){grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "no ty .";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
-  .ml-a>.ml-no{grid-area:no;font:400 12px/16px var(--mono)!important;color:var(--muted)}
+  .ml-tr.ml-a:not(.ml-th){grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "no ty .";min-width:0!important;column-gap:var(--space-2)!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
+  .ml-a>.ml-no{grid-area:no;font:400 var(--fs-meta)/16px var(--mono)!important;color:var(--muted)}
   .ml-a>.ml-tt{grid-area:tt;min-width:0}
-  .ml-a>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
-  .ml-a>:nth-child(3){grid-area:ty;font:400 12px/16px var(--sans)!important}
+  .ml-a>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/20px var(--sans)}
+  .ml-a>:nth-child(3){grid-area:ty;font:400 var(--fs-meta)/16px var(--sans)!important}
   .ml-a>:nth-child(3)::before{content:"·";margin-right:6px}
   .ml-a>:nth-child(4),.ml-a>:nth-child(5){display:none!important}
   .ml-a>:nth-child(6){grid-area:n;justify-self:end}
   .ml-tr.ml-gh.ml-a{grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"no tt n"}
-  .ml-gh.ml-a>:first-child{grid-area:no;font:500 13px/18px var(--mono)!important;color:inherit}
+  .ml-gh.ml-a>:first-child{grid-area:no;font:500 var(--fs-label)/18px var(--mono)!important;color:inherit}
   .ml-gh.ml-a>:nth-child(2){grid-area:tt}
   .ml-gh.ml-a>:nth-child(3),.ml-gh.ml-a>:nth-child(3)::before{display:none!important;content:none}
   /* Gear: item · value / category · owner · status (insured and last service stay on the item) */
   .cat-gr.gear-r:not(.head),.ml-tr.ml-j:not(.ml-th){grid-template-rows:20px minmax(24px,auto)}
-  .cat-gr.gear-r:not(.head){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "c o s";min-width:0!important;column-gap:8px!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important;align-items:center}
+  .cat-gr.gear-r:not(.head){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "c o s";min-width:0!important;column-gap:var(--space-2)!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important;align-items:center}
   .gear-r>.tt{grid-area:tt;min-width:0}
-  .gear-r>.tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 15px/20px var(--sans)}
-  .gear-r>:nth-child(2){grid-area:c;font:400 12px/16px var(--sans)!important}
-  .gear-r>:nth-child(5){grid-area:o;font:400 12px/16px var(--sans)!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gear-r>.tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/20px var(--sans)}
+  .gear-r>:nth-child(2){grid-area:c;font:400 var(--fs-meta)/16px var(--sans)!important}
+  .gear-r>:nth-child(5){grid-area:o;font:400 var(--fs-meta)/16px var(--sans)!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .gear-r>:nth-child(5)::before{content:"·";margin-right:6px}
   .gear-r>:nth-child(3),.gear-r>:nth-child(4){display:none!important}
   .gear-r>:nth-child(6){grid-area:s;justify-self:end}
   .gear-r>.n{grid-area:n;justify-self:end}
 
   /* the totals row: what it counts on the left, the total on the right */
-  .bk-table>:is(.iv-r,.po-m).ex-tot{display:flex!important;justify-content:space-between;align-items:center;gap:8px;min-width:0!important;padding:var(--row-y) var(--row-x)!important}
+  .bk-table>:is(.iv-r,.po-m).ex-tot{display:flex!important;justify-content:space-between;align-items:center;gap:var(--space-2);min-width:0!important;padding:var(--row-y) var(--row-x)!important}
   .bk-table>:is(.iv-r,.po-m).ex-tot>:empty,.bk-table>.iv-r.ex-tot>.m,.bk-table>.po-m.ex-tot>:nth-child(5){display:none!important}
   /* Payout history: who · amount / what · date (how stays on the payout) */
   .bk-table>.po-h:not(.bk-th){grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"tt n" "tt d"}
   .po-h>.ex-tt{grid-area:tt;min-width:0}
-  .po-h>:nth-child(1){grid-area:d;justify-self:end;font:400 12px/16px var(--sans);color:var(--muted)}
+  .po-h>:nth-child(1){grid-area:d;justify-self:end;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
   .po-h>:nth-child(3){display:none!important}
   .po-h>:nth-child(4){grid-area:n}
 }
