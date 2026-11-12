@@ -188,7 +188,7 @@ L.VIEWS.mail=()=>{
  if(!M.connected)return `<div class="page ml-page">${header('Not connected yet','')}
   <div class="ml-empty"><span class="ml-emptyic">${ic('mail')}</span><h2 class="t-title">Connect your mail</h2>
   <p class="muted">LAAS reads the threads with your venues and contacts and links each one to its booking, venue and people. It only reads: nothing is sent unless you press Send.</p>
-  <div class="row" style="justify-content:center"><button class="btn accent" data-act="mailconnect" data-svc="Gmail">${GOOGLE}Connect Gmail</button><button class="btn secondary" data-act="mloauth" data-kind="m365">${MSFT}Connect Microsoft 365</button></div>
+  <div class="row" style="justify-content:center"><button class="btn secondary" data-act="mailconnect" data-svc="Gmail">${GOOGLE}Connect Gmail</button><button class="btn secondary" data-act="mloauth" data-kind="m365">${MSFT}Connect Microsoft 365</button></div>
   <button class="link" data-act="mlsmtp">Other mail, with SMTP and IMAP</button>
   <ul class="ml-points"><li>${ic('users','s')}Only threads with people in Contacts</li><li>${ic('send','s')}Never sends on its own</li><li>${ic('plug','s')}Disconnect any time in Mail accounts</li></ul></div></div>${L.abar()}`;
  const f=M.folder,c=counts(),q=M.q,l=filtered(),u=unreadN(),n=list('inbox').filter(t=>t.needs).length;
