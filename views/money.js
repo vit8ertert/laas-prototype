@@ -515,7 +515,7 @@ L.VIEWS.journal=()=>{const list=jRows();const q=M.jq.trim();const nd=drafts();co
  const table=`<div class="ml-table" role="table" aria-label="Journal entries"><div class="table-row ml-tr ml-th ml-j" role="row"><span>Date</span><span>No.</span><span>Description</span><span>Reference</span><span>File</span><span>Status</span><span class="n">DKK</span></div>${rows}</div>`;
  const filtered=q||M.jf!=='all';
  const footer=`<div class="ml-foot"><span>${q?`${list.length} of ${total} match “${esc(q)}” in text, reference, account or contact`:filtered?`${list.length} ${M.jf==='draft'?'drafts':'posted entries shown, newest first'}`:`Showing ${list.length} of ${total}, newest first. Drafts stay out of the reports until posted.`}</span>${filtered?ghostBtn('Show all','data-act="jall"'):ghostBtn('Show older','data-act="jolder"')}</div>`;
- const none=`<div class="ml-empty"><h2 class="t-title">${q?`No entry matches “${esc(q)}”`:'No drafts'}</h2><p>${q?'Nothing in text, reference, account or contact. Check the spelling, or start an entry with this text.':'Everything is posted. New drafts come from Expenses, Gear and the bank, or from New entry.'}</p><div class="ml-acts">${q?btn('secondary','New entry “'+esc(q)+'”','data-act="jnew" data-desc="'+esc(q)+'"','plus')+btn('ghost','Clear search','data-act="jall"'):btn('ghost','Show all','data-act="jall"')}</div></div>`;
+ const none=`<div class="bk-empty"><div class="hd"><h2 class="t-title">${q?`No entry matches “${esc(q)}”`:'No drafts'}</h2><p>${q?'Nothing in text, reference, account or contact. Check the spelling, or start an entry with this text.':'Everything is posted. New drafts come from Expenses, Gear and the bank, or from New entry.'}</p></div><div class="acts">${q?btn('secondary','New entry “'+esc(q)+'”','data-act="jnew" data-desc="'+esc(q)+'"','plus')+btn('ghost','Clear search','data-act="jall"'):btn('ghost','Show all','data-act="jall"')}</div></div>`;
  return `<div class="page m-page">${lhead('Journal',`Jan–Oct 2026, ${total} entries, ${nd?nd+(nd===1?' draft':' drafts')+' to post':'all posted'}`,btn('secondary','Export','data-act="lexport" data-what="journal"','download')+btn('accent','New entry','data-act="jnew"','plus')+more('jmore'))}
  ${L.ledgerTabs('journal')}
  ${nd&&M.jf!=='draft'&&!q?banner(`${nd} ${nd===1?'draft waits':'drafts wait'} to be posted`,'Drafts are not in the reports yet. Post them when the lines are right; posted entries are locked and can only be reversed.',btn('secondary s','Show drafts','data-act="jfilt" data-f="draft"')):''}
@@ -585,9 +585,9 @@ L.CHANGE.push(t=>{if(t.dataset&&t.dataset.jfile!==undefined){const f=t.files&&t.
 
 /* ---------- Chart of accounts ---------- */
 function accEmpty(){
- return `<div class="ml-empty"><h2 class="t-title">No chart of accounts yet</h2><p>The journal needs accounts to post to. The default chart is made for bands: ${ACC0.length} accounts from 1000 Bank to 5400 Fees, with the moms codes set. Rename, add or hide accounts afterwards.</p>
+ return `<div class="bk-empty"><div class="hd"><h2 class="t-title">No chart of accounts yet</h2><p>The journal needs accounts to post to. The default chart is made for bands: ${ACC0.length} accounts from 1000 Bank to 5400 Fees, with the moms codes set. Rename, add or hide accounts afterwards.</p></div>
  <div class="ml-preview" aria-hidden="true">${[1,2,3,4,5].map(c=>`<div><span class="mono">${c}xxx</span><b>${CLS[c]}</b><small>${ACC0.filter(a=>cls(a[0])===c).slice(0,3).map(a=>a[1].split(',')[0]).join(', ')}</small></div>`).join('')}</div>
- <div class="ml-acts">${btn('accent','Install the default chart','data-act="jinstall"','check')}${btn('secondary','Import from Dinero or e-conomic','data-act="jimportcoa"','upload')}</div></div>`;}
+ <div class="acts">${btn('accent','Install the default chart','data-act="jinstall"','check')}${btn('secondary','Import from Dinero or e-conomic','data-act="jimportcoa"','upload')}</div></div>`;}
 L.VIEWS.accounts=()=>{
  if(!M.coa)return `<div class="page m-page">${lhead('Chart of accounts','No accounts yet, install the default chart to start the books',btn('secondary','New account','data-act="jnewacct"','plus')+more('accmore'))}${L.ledgerTabs('accounts')}${accEmpty()}</div>${ledAbar()}`;
  const q=M.aq.trim().toLowerCase();const match=a=>!q||(a[0]+' '+a[1]).toLowerCase().includes(q);
@@ -600,7 +600,7 @@ L.VIEWS.accounts=()=>{
  <div class="ml-content ml-narrow"><div class="ml-tools"><span class="ml-note">Expenses show these in plain words: Travel is 5000, Rehearsal is 5100.</span><span class="sp"></span>${search('asearch','Number or name',M.aq,'Search accounts')}</div>
  ${groups?`<div class="ml-table" role="table" aria-label="Chart of accounts"><div class="table-row ml-tr ml-th ml-a" role="row"><span>No.</span><span>Name</span><span>Type</span><span>Moms</span><span class="n">Entries</span><span class="n">Balance</span></div>${groups}</div>
  <div class="ml-foot"><span>Balances include posted entries only. Debit-side accounts (assets, expenses) and credit-side accounts (liabilities, equity, income) both show as positive.</span></div>`
- :`<div class="ml-empty"><h2 class="t-title">No account matches “${esc(M.aq.trim())}”</h2><p>Search by number or name. Add it as a new account if it is missing.</p><div class="ml-acts">${btn('secondary','New account','data-act="jnewacct"','plus')}${btn('ghost','Clear search','data-act="aclear"')}</div></div>`}</div></div>${ledAbar()}`;};
+ :`<div class="bk-empty"><div class="hd"><h2 class="t-title">No account matches “${esc(M.aq.trim())}”</h2><p>Search by number or name. Add it as a new account if it is missing.</p></div><div class="acts">${btn('secondary','New account','data-act="jnewacct"','plus')}${btn('ghost','Clear search','data-act="aclear"')}</div></div>`}</div></div>${ledAbar()}`;};
 
 L.DR.jacct=n=>{n=+n;const a=M.acc.find(x=>x[0]===n);if(!a)return null;const c=cls(n);
  const ents=M.je.filter(e=>e.lines.some(l=>l[0]===n));

@@ -77,7 +77,7 @@ const evHead=({tile,kicker,title,facts,today})=>`<header class="event-header ev-
  <div class="ev-date ${today?'today':''}" aria-hidden="true">${tile}</div>
  <div class="ev-tx"><span class="ev-k">${kicker}</span><h1 class="t-display">${title}</h1>
   <div class="ev-meta"><button class="ev-venue" data-go="venue" data-id="royal"><img src="${IMG(VEN.img)}" alt="">Hotel Royal, Aarhus</button>${facts.map(f=>`<span class="tag">${f}</span>`).join('')}</div></div></header>`;
-const BK_STEPS=['Enquiry','Hold','Offer','Confirmed','Played','Settled'];
+const BK_STEPS=['Enquiry','Hold','Offer out','Confirmed','Played','Settled'];  /* = Booking progress 609:40003 and the status name (12 Nov; was Offer) */
 const bkProg=k=>{if(k==='cancelled')return `<ol class="booking-progress bk-prog cancelled" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<4?'done':'off'}"><i></i><span>${i===3?'Cancelled 14 Oct':t}</span></li>`).join('')}</ol>`;
  const cur={enquiry:0,hold:1,offer:2,declined:2,counter:2,expired:2,overdue:3,paid:4,completed:S.booking.settled?6:5}[k]??0;
  return `<ol class="booking-progress bk-prog" aria-label="Booking progress">${BK_STEPS.map((t,i)=>`<li class="${i<cur?'done':i===cur?(k==='overdue'?'att':'now'):'todo'}" ${i===cur?'aria-current="step"':''}><i></i><span>${t}${i===cur&&k==='overdue'?', deposit late':''}${i===cur&&k==='paid'?', 25 Oct':''}</span></li>`).join('')}</ol>`;};

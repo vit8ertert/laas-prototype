@@ -286,9 +286,6 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-foot>span{flex:1;font-size:12px;line-height:16px;color:var(--muted);max-width:75ch}
 
 /* empty and no-results, as bookings */
-.ml-empty{display:flex;flex-direction:column;align-items:center;gap:24px;padding:48px 32px;border-radius:16px;background:var(--surface);border:1px dashed var(--rule);text-align:center}
-.ml-empty>p{margin:-16px 0 0;max-width:560px;color:var(--muted)}
-.ml-acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .ml-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;width:100%;max-width:832px;text-align:left}
 .ml-preview>div{background:var(--canvas);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
 .ml-preview .mono{font-size:12px;line-height:16px;color:var(--faint)}.ml-preview b{font-weight:500}.ml-preview small{font-size:12px;line-height:16px;color:var(--muted)}
@@ -332,7 +329,6 @@ button.ml-ltr:is(:hover,[data-state="hover"]){background:var(--raised)}
 
 @media (max-width:599.98px){
  .ml-tools .sp{display:none}.ml-search{width:100%}
- .ml-empty{padding:32px 16px}
  .ml-ltr{grid-template-columns:minmax(0,1fr) 72px 72px;gap:8px}
  .ml-w120,.ml-w120 .input{width:100%}.ml-jl2 .ml-w120{flex:1 1 120px}
 }
