@@ -89,7 +89,8 @@
 /* key-value rows (298:5048): label 140 13/18 muted, gap 16, value 15/22; rows 12 apart, 12 side padding */
 .bd-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:var(--space-3) var(--space-4);margin:0;padding:0;align-items:baseline}
 /* row form (Figma Key-value "Row": label 140, gap 16, pad 0 12; rows 12 apart) */
-.bd-kv:has(>div){display:flex;flex-direction:column;gap:var(--space-3);padding:0}
+.bd-kv:has(>div){display:flex;flex-direction:column;gap:var(--space-3);padding:0;align-items:stretch}
+.bd-body.kv{align-items:stretch}  /* 13 Nov: .kv's baseline made the rows hug their text, so Figma (a wider render) wrapped them; full width looks the same in code */
 .bd-kv>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--space-3);padding:0;align-items:baseline}  /* = Key-value row 298:5054: 120 label column, 12 gap (12 Nov; was 160 / 16, its own copy) */
 .bd-kv dt{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .bd-kv dd{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);max-width:65ch}
@@ -326,7 +327,7 @@
  .bd-kv>div{grid-template-columns:1fr;gap:var(--space-1)}.bd-kv>div dd{margin-bottom:0}
  .bd-mrow .st{width:auto}.bd-mrow .amt{width:72px}
  /* same as the Money line on phones (Vit 26 Oct): amount on top, status tag under it, both in the right column */
- .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:var(--space-3);row-gap:var(--space-1);align-items:start}
+ .bd-mrow:has(>.st .tag){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"tx amt" "tx st";column-gap:var(--space-3);row-gap:var(--space-1);align-items:center}  /* 13 Nov: centred like Money line 299:5085 Compact and the money page rows (was start, 5 px off the component) */
  .bd-mrow:has(>.st .tag)>.tx{grid-area:tx}.bd-mrow:has(>.st .tag)>.amt{grid-area:amt;width:auto;justify-self:end}.bd-mrow:has(>.st .tag)>.st{grid-area:st;width:auto;justify-self:end}
  .bd-pay{padding:var(--space-8) var(--space-5)}.bd-2col{grid-template-columns:1fr}
 
