@@ -145,7 +145,7 @@
 .bd-acth h2{display:block}
 .bd-actg.open>.bd-acth{padding-left:0}
 .bd-acts{display:flex;flex-direction:column;gap:var(--space-4)}
-.bd-acts div{display:grid;grid-template-columns:56px 1fr;gap:var(--space-3);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.bd-acts>div:not([class]){display:grid;grid-template-columns:56px 1fr;gap:var(--space-3);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-acts .d{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 /* Activity event 299:5127 (6 Nov, component gate): Kind icon in a 28 px well, the line, then when and who; the booking page's two-span rows above move to this markup in a later pass */
 .bd-acts .activity-event{display:flex;gap:var(--space-3);padding:0 var(--space-3);align-items:flex-start}
@@ -238,7 +238,7 @@
 .bd-btns .btn.secondary{background:var(--surface)}
 .bd-btns .btn svg.i{width:20px;height:20px}
 .bd-pay footer{display:flex;flex-direction:column;gap:var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
-.bd-pay footer p{margin:0}.bd-pay footer p:last-child{color:var(--accent-ink)}
+.bd-pay footer p{margin:0}.bd-pay footer p+p{color:var(--accent-ink)}
 .bd-acc{color:var(--accent-ink);text-decoration:none;font:400 var(--fs-label)/var(--lh-label) var(--sans)}.bd-acc:is(:hover,[data-state="hover"]){text-decoration:underline}
 
 /* gig day (Gig day · timeline 421:19199) */
