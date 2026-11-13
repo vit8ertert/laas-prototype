@@ -178,7 +178,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-search input::placeholder{color:var(--muted)}
 .cat-table{border:1px solid var(--rule);border-radius:var(--r-lg);background:var(--surface);overflow-x:auto;overflow-y:hidden}
 /* the Gear table: columns only; head, hover and cell kinds are the shared table (components.css, Table) */
-.cat-gr{display:grid;grid-template-columns:minmax(220px,1fr) 120px 72px 120px 96px 110px 96px;gap:var(--space-6);align-items:center;padding:var(--space-3) var(--space-4);box-shadow:inset 0 1px 0 var(--rule);width:100%;min-width:980px;text-align:left}
+.cat-gr{display:grid;grid-template-columns:minmax(220px,1fr) 120px 72px 120px 96px 110px 96px;gap:var(--space-6);align-items:center;padding:var(--space-3) var(--space-4);box-shadow:inset 0 1px 0 var(--rule);width:100%;min-width:min-content;text-align:left}
 .cat-gr.head{box-shadow:none;padding:var(--space-2) var(--space-4)}
 .cat-gr.att{background:var(--att-tint)}
 .cat-gr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

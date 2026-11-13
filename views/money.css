@@ -271,8 +271,8 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ml-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-tr .n{text-align:right}
 .ml-tr .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono)}
-.ml-j{grid-template-columns:56px 40px minmax(220px,1fr) 96px 72px 84px 88px;min-width:860px}
-.ml-a{grid-template-columns:48px minmax(200px,1fr) 80px 72px 64px 104px;min-width:680px;min-height:44px}
+.ml-j{grid-template-columns:56px 40px minmax(220px,1fr) 96px 72px 84px 88px;min-width:min-content}
+.ml-a{grid-template-columns:48px minmax(200px,1fr) 80px 72px 64px 104px;min-width:min-content;min-height:44px}
 .ml-d{font-size:var(--fs-label);line-height:var(--lh-label)}
 .ml-no{color:var(--muted)}
 .ml-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -388,7 +388,7 @@ button.ml-ltr:is(:hover,[data-state="hover"]){background:var(--raised)}
 .ex-search .input{padding:var(--space-2) var(--space-3) var(--space-2) var(--space-10);background-image:none}
 .ex-selbar{padding:0 var(--space-2) 0 var(--space-4);border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ex-selbar>b{font-weight:500;margin-right:var(--space-2)}.ex-selbar .grow{flex:1}
-.bk-tr.ex-r{grid-template-columns:20px 56px minmax(220px,1fr) 170px 124px 130px 116px 104px;column-gap:var(--space-4);min-width:1060px}
+.bk-tr.ex-r{grid-template-columns:20px 56px minmax(220px,1fr) 170px 124px 130px 116px 104px;column-gap:var(--space-4);min-width:min-content}
 .bk-tr.ex-r.sel{background:var(--state-hover,var(--hover))}
 .ex-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .ex-tt b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -466,9 +466,9 @@ button.ml-fcard:is(:hover,[data-state="hover"]){background-image:linear-gradient
 /* Payouts: three tables, Table row recipe (Vit 21 Oct: "looks very raw") */
 .po-sec{display:flex;flex-direction:column;gap:var(--space-3);margin-top:var(--space-8)}
 .po-sec .m-sh{margin:0}
-.bk-tr.po-m{grid-template-columns:minmax(200px,1fr) 120px 130px 120px 130px 150px;column-gap:var(--space-4);min-width:920px}
-.bk-tr.po-g{grid-template-columns:minmax(240px,1fr) 120px 140px 120px 120px;column-gap:var(--space-4);min-width:820px}
-.bk-tr.po-h{grid-template-columns:72px minmax(260px,1fr) 160px 130px;column-gap:var(--space-4);min-width:700px}
+.bk-tr.po-m{grid-template-columns:minmax(200px,1fr) 120px 130px 120px 130px 150px;column-gap:var(--space-4);min-width:min-content}
+.bk-tr.po-g{grid-template-columns:minmax(240px,1fr) 120px 140px 120px 120px;column-gap:var(--space-4);min-width:min-content}
+.bk-tr.po-h{grid-template-columns:72px minmax(260px,1fr) 160px 130px;column-gap:var(--space-4);min-width:min-content}
 .po-t .n{text-align:right;justify-self:end}
 .po-t .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono);font-variant-numeric:tabular-nums}
 .po-due{font-weight:500!important}
@@ -551,7 +551,7 @@ button.ml-fcard:is(:hover,[data-state="hover"]){background-image:linear-gradient
 @media (max-width:599.98px){.iv-steps{margin-bottom:var(--space-4)}.iv-steps li{padding-right:var(--space-1)}.iv-steps b{font-size:var(--fs-meta);line-height:var(--lh-16)}.iv-steps small{display:none}.iv-steps li:is(.att,.now) small{display:block;font-size:var(--fs-meta);line-height:var(--lh-16);white-space:nowrap}
  .iv-paper{padding:var(--space-6) var(--space-5);gap:var(--space-5)}.iv-meta,.iv-pf{grid-template-columns:1fr}.iv-tot{width:100%}.iv-ph{flex-direction:column}.iv-pt{text-align:left}}
 /* Invoices list, Table row recipe */
-.bk-tr.iv-r{grid-template-columns:20px 84px minmax(240px,1fr) 120px 150px 110px 110px;column-gap:var(--space-4);min-width:960px}
+.bk-tr.iv-r{grid-template-columns:20px 84px minmax(240px,1fr) 120px 150px 110px 110px;column-gap:var(--space-4);min-width:min-content}
 .bk-tr.iv-r.sel{background:var(--state-hover,var(--hover))}
 .iv-table .n{text-align:right;justify-self:end}.iv-table .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono);font-variant-numeric:tabular-nums}
 .c-bad{color:var(--bad)!important}
@@ -603,3 +603,12 @@ button.ml-fcard:is(:hover,[data-state="hover"]){background-image:linear-gradient
 .iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
 @media (max-width:599.98px){.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
 .iv-labrow{display:flex;align-items:baseline;gap:var(--space-2)}.iv-labrow .iv-edit{margin:0;font-size:var(--fs-meta);line-height:var(--lh-16)}
+
+/* Expand (13 Nov 2026, Vit: "when I hover there is also the expand icon … brings you to the full report graph"; Figma KPI tile and
+   Chart strip, Show expand, icon/maximize-2): an icon-only Secondary S button, top right of a tile with a chart and centred at the
+   right of the strip, shown on hover or keyboard focus; touch screens have no hover, so it stays hidden there (as the phone frames) */
+.m-kpi>.m-expand,.m-strip>.m-expand{position:absolute;z-index:var(--z-raised);opacity:0;pointer-events:none;transition:opacity var(--dur-1) var(--ease-standard)}
+.m-kpi>.m-expand{top:var(--space-3);right:var(--space-3)}
+.m-strip>.m-expand{right:var(--space-2);top:50%;transform:translateY(-50%)}
+.has-spark:is(:hover,[data-state="hover"])>.m-expand,.has-spark:is(:focus-within,[data-state="focus"])>.m-expand,.m-strip:is(:hover,[data-state="hover"])>.m-expand,.m-strip:is(:focus-within,[data-state="focus"])>.m-expand{opacity:1;pointer-events:auto}
+@media (hover:none){.m-kpi>.m-expand,.m-strip>.m-expand{display:none}}

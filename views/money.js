@@ -35,7 +35,8 @@ let SPK=0;
 const spark=(vals,cls='',tip)=>{const n=vals.length,mx=Math.max(...vals),mn=Math.min(...vals),W=200,H=60,y=v=>H-4-(v-mn)/((mx-mn)||1)*(H-12),x=i=>i/(n-1)*W;
  const pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`),id='spk'+(SPK++);
  return `<svg class="m-spark ${cls}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true" ${tip?`data-pts="${vals.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(';')}" data-tips="${esc(tip.join('|'))}"`:''}><defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".32"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path d="M${pts.join('L')}L${W},${H}L0,${H}Z" fill="url(#${id})"/><path d="M${pts.join('L')}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;};
-const kpi=(label,value,delta,tone='',stroke='',sp,tip)=>`<div class="kpi-tile m-kpi ${stroke} ${sp?'has-spark':''}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span>${sp?spark(sp,'',tip):''}</div>`;
+const expBtn=()=>`<button class="btn secondary icon s m-expand" type="button" data-mtab="reports" aria-label="Open the full chart" title="Open the full chart">${ic('maximize','s')}</button>`;
+const kpi=(label,value,delta,tone='',stroke='',sp,tip)=>`<div class="kpi-tile m-kpi ${stroke} ${sp?'has-spark':''}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span>${sp?spark(sp,'',tip)+expBtn():''}</div>`;
 const kpis=list=>`<div class="m-kpis">${list.join('')}</div>`;
 const banner=(title,body,action)=>`<div class="banner attention m-banner">${ic('alert','s')}<div class="tx"><span>${title}</span><small>${body}</small></div>${action}</div>`;
 const tag=(cls,label)=>cls?`<span class="tag ${cls}">${label}</span>`:'';
@@ -77,7 +78,7 @@ function owed(){
     <div class="m-body m-g12">
      ${line({img:'odense',label:'Odense Live, fee',note:'2026-028, paid 14 Oct',tg:tag('paid','Paid'),amt:'6.000',attrs:'data-go="invoice" data-id="2026-028"',cls:'m-flush'})}
      ${line({img:null,label:'Private party, balance',note:'2026-027, paid 3 Oct',tg:tag('paid','Paid'),amt:'3.000',attrs:'data-go="invoice" data-id="2026-027"',cls:'m-flush'})}
-     <div class="m-strip">${spark(CH.map(r=>r[1]),'wide',paidTips())}</div>
+     <div class="m-strip">${spark(CH.map(r=>r[1]),'wide',paidTips())}${expBtn()}</div>
      <p class="m-foot m-nopad">Paid in, last 12 months, November to October. The full chart by type is in <button class="link" data-mtab="reports">Reports</button>.</p>
     </div></section>
   </div>

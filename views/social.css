@@ -6,10 +6,10 @@
 .so-av{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--well);color:var(--ink);font:500 var(--fs-badge)/1 var(--sans);flex:none;letter-spacing:.2px}
 
 /* ---------- tables: own columns on the shared bk-table ---------- */
-.so .bk-tr.so-p{grid-template-columns:150px minmax(240px,1fr) 170px 110px 72px 88px;min-width:960px}
-.so .bk-tr.so-k{grid-template-columns:minmax(180px,1fr) 240px 160px 110px 110px;min-width:860px}
+.so .bk-tr.so-p{grid-template-columns:150px minmax(240px,1fr) 170px 110px 72px 88px;min-width:min-content}
+.so .bk-tr.so-k{grid-template-columns:minmax(180px,1fr) 240px 160px 110px 110px;min-width:min-content}
 .so-d>span:has(>.trk-fmt){display:flex} /* the format tag alone: no 22 px line box */
-.so .bk-tr.so-d{grid-template-columns:minmax(200px,1fr) 120px 100px 150px 170px 80px;min-width:920px}
+.so .bk-tr.so-d{grid-template-columns:minmax(200px,1fr) 120px 100px 150px 170px 80px;min-width:min-content}
 .so .bk-tr.so-k.sel{background:var(--well)}
 .so .bk-tr.so-k.sel:is(:hover,[data-state="hover"]){background:var(--well)}
 .so-pt{display:flex;flex-direction:column;min-width:0}
@@ -148,7 +148,7 @@
 .so-acc .btn.bd-act{padding:var(--space-2) var(--space-3)!important;margin-right:calc(-1 * var(--space-2));flex:none}
 .so-acc .btn.bd-act:is(:hover,[data-state="hover"]){background:var(--hover)!important}
 /* Deliveries: destination with its logo, a Format column (Vit 21 Oct) */
-.so .bk-tr.so-d{grid-template-columns:minmax(180px,1fr) 140px 100px 80px 140px 150px 72px;min-width:960px}
+.so .bk-tr.so-d{grid-template-columns:minmax(180px,1fr) 140px 100px 80px 140px 150px 72px;min-width:min-content}
 .so-dest{display:inline-flex;align-items:center;gap:var(--space-2)}
 /* Keyword watch: the networks a keyword watches as their 20 px marks, not words (Vit 22 Oct: "IG and FB take too much
    space"); the full names stay in the label and tooltip */
