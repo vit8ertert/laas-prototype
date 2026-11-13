@@ -119,7 +119,7 @@
 .bd-mrow .amt{width:96px;text-align:right;flex:none}
 .amt.mono{font:400 var(--fs-small)/20px var(--mono);font-variant-numeric:tabular-nums}
 .bd-av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 var(--fs-label)/var(--lh-label) var(--sans);flex:none}
-.bd-av.obj{background:var(--signal);color:var(--on-lime)}
+/* .bd-av.obj (lime venue avatar) removed 13 Nov: venue rows use the Venue avatar (.cv-sq = Avatar Kind=Venue) */
 .bd-frow:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bd-frow>svg{color:var(--muted)}
 /* split rows: no left padding, amount right after the text */
