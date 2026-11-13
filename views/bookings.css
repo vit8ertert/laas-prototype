@@ -163,9 +163,9 @@
 .bk-editor .bk-idx,.bk-editor .bk-live{top:0!important}
 .bk-idx{position:sticky;top:0;width:200px;flex:none;display:flex;flex-direction:column;gap:2px}
 .bk-idx .k,.bk-live .k{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
-.bk-idx button{display:flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink);text-align:left}
-.bk-idx button:is(:hover,[data-state="hover"]){background:var(--surface)}
-.bk-idx button.on{background:var(--well);font-weight:500}
+.bk-idx :is(button,a){text-decoration:none;display:flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink);text-align:left}
+.bk-idx :is(button,a):is(:hover,[data-state="hover"]){background:var(--surface)}
+.bk-idx :is(button,a).on{background:var(--well);font-weight:500}
 .bk-idx p{margin:var(--space-5) 0 0;max-width:184px;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-form{flex:1;min-width:0;max-width:796px;display:flex;flex-direction:column;gap:var(--space-8);padding-bottom:var(--space-6)}
 .bk-form section{display:flex;flex-direction:column;gap:var(--space-4);scroll-margin-top:var(--space-2)}
@@ -221,7 +221,7 @@
 .bk-gig .who{display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-4)}
 .bk-gig .who i{width:20px;height:20px;border-radius:50%;background:var(--well)}
 .bk-gig>.tag{align-self:flex-start}
-.bk-gig.picked{background:var(--tint)}
+.bk-gig.picked{background:var(--tint,var(--photo-backdrop))}  /* a venue without its own tint: the photo backdrop token (13 Nov, Django) */
 .bk-gig.picked .when{color:rgba(255,255,255,.7)}.bk-gig.picked .ti{color:var(--on-photo)}.bk-gig.picked .wh{color:rgba(255,255,255,.85)}
 .bk-gig.picked hr{border-color:rgba(255,255,255,.16)}.bk-gig.picked .facts b{color:var(--on-photo)}
 .bk-gig.picked .facts small{color:rgba(255,255,255,.65)}.bk-gig.picked .who{color:rgba(255,255,255,.75)}.bk-gig.picked .who i{background:rgba(255,255,255,.2)}
