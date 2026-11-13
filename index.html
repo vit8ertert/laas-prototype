@@ -5,7 +5,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="tokens.css?v=f852eec">
+<link rel="stylesheet" href="tokens.css?v=d2e49bb">
 <script>/* light password gate for the public GitHub Pages copy (a lock screen, not server security: the files stay public) */
 (function(){const host=location.hostname;if(!/github\.io$/.test(host)&&!(host==='localhost'&&/[?&]gate\b/.test(location.search)))return;
 const H='e3b44429e3c025f46bb3df2ac2f630bc78d254845fabfd20850fd70a78e4c20a';let ok=false;try{ok=localStorage.getItem('laas-gate')===H}catch(e){}if(ok)return;
@@ -21,21 +21,21 @@ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('laas-prot
 if(hx===H){try{localStorage.setItem('laas-gate',H)}catch(e){}document.documentElement.classList.remove('gated');d.remove();}
 else{d.querySelector('.gate-err').hidden=false;d.querySelector('input').select();}});});})();</script>
 
-<link rel="stylesheet" href="shell.css?v=f852eec">
-<link rel="stylesheet" href="components.css?v=f852eec">
-<link rel="stylesheet" href="views/tour.css?v=f852eec">
-<link rel="stylesheet" href="views/dashboard.css?v=f852eec">
-<link rel="stylesheet" href="views/bookings.css?v=f852eec">
-<link rel="stylesheet" href="views/booking.css?v=f852eec">
-<link rel="stylesheet" href="views/contacts.css?v=f852eec">
-<link rel="stylesheet" href="views/money.css?v=f852eec">
-<link rel="stylesheet" href="views/catalogue.css?v=f852eec">
-<link rel="stylesheet" href="views/account.css?v=f852eec">
-<link rel="stylesheet" href="views/mail.css?v=f852eec">
-<link rel="stylesheet" href="views/social.css?v=f852eec">
-<link rel="stylesheet" href="views/logomotion.css?v=f852eec">
-<link rel="stylesheet" href="tags.css?v=f852eec">
-<link rel="stylesheet" href="views/compact.css?v=f852eec">
+<link rel="stylesheet" href="shell.css?v=d2e49bb">
+<link rel="stylesheet" href="components.css?v=d2e49bb">
+<link rel="stylesheet" href="views/tour.css?v=d2e49bb">
+<link rel="stylesheet" href="views/dashboard.css?v=d2e49bb">
+<link rel="stylesheet" href="views/bookings.css?v=d2e49bb">
+<link rel="stylesheet" href="views/booking.css?v=d2e49bb">
+<link rel="stylesheet" href="views/contacts.css?v=d2e49bb">
+<link rel="stylesheet" href="views/money.css?v=d2e49bb">
+<link rel="stylesheet" href="views/catalogue.css?v=d2e49bb">
+<link rel="stylesheet" href="views/account.css?v=d2e49bb">
+<link rel="stylesheet" href="views/mail.css?v=d2e49bb">
+<link rel="stylesheet" href="views/social.css?v=d2e49bb">
+<link rel="stylesheet" href="views/logomotion.css?v=d2e49bb">
+<link rel="stylesheet" href="tags.css?v=d2e49bb">
+<link rel="stylesheet" href="views/compact.css?v=d2e49bb">
 
 <div id="app"></div>
 
@@ -713,7 +713,7 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
  ACTIONS:{},OVERLAYS:{},INPUT:[],CHANGE:[],ONBOARDING:null,
  AREAS:{gigs:['bookings','booking','gigday','calendar','calsync','contacts','contact','venues','venue','mail','thread','mailaccounts','compose','rate','paypage'],money:['money','settle','invoice','ledger','journal','accounts','ledgerreport'],catalogue:['catalogue','release','pastrelease','gear'],audience:['audience','social','post','comments','keywords','deliveries']},
  areaOf(v){for(const [a,list] of Object.entries(this.AREAS))if(list.includes(v))return a;return ''},
- boot(){const q=new URLSearchParams(location.search);const qv=q.get('view'),qt=q.get('theme');const h=decodeURIComponent(location.hash.slice(1));if(qv&&(VIEWS[qv]||qv==='onboarding'))S.view=qv;else if(h&&(VIEWS[h]||h==='onboarding'))S.view=h;if(['dark','light','system'].includes(qt))S.appearance=qt;render();
+ boot(){const q=new URLSearchParams(location.search);const qv=q.get('view'),qt=q.get('theme');const h=decodeURIComponent(location.hash.slice(1));if(qv&&(VIEWS[qv]||qv==='onboarding'))S.view=qv;else if(h&&(VIEWS[h]||h==='onboarding'))S.view=h;if(['dark','light','system'].includes(qt))S.appearance=qt;const ql=q.get('look');if(ql&&THEMES.some(t=>t[0]===ql))S.genre=ql;render();
   /* Figma capture: only on the local dev server, only for #figmacapture links; loads Figma's fixed capture script */
   /* each capture id runs once: a reload or a kept-open tab no longer re-submits it ("Capture already submitted", Vit 21 Oct) */
   const capId=(location.hash.match(/figmacapture=([^&]+)/)||[])[1];let capSeen=false;try{capSeen=!!capId&&localStorage.getItem('laas-cap-'+capId)==='1';if(capId)localStorage.setItem('laas-cap-'+capId,'1');}catch(e){}
@@ -722,21 +722,21 @@ const LAAS=window.LAAS={radio,drop,skel,progress,ailabel,batch,TNAMES,tokCls,S,P
 window.__laas={S,go,render,DR,VIEWS};
 })();
 </script>
-<script src="views/dashboard.js?v=f852eec"></script>
-<script src="views/bookings.js?v=f852eec"></script>
-<script src="views/booking.js?v=f852eec"></script>
-<script src="views/denmark.js?v=f852eec"></script>
-<script src="views/contacts.js?v=f852eec"></script>
-<script src="views/money.js?v=f852eec"></script>
-<script src="views/catalogue.js?v=f852eec"></script>
-<script src="views/brands.js?v=f852eec"></script>
-<script src="views/account.js?v=f852eec"></script>
-<script src="views/mail.js?v=f852eec"></script>
-<script src="views/social.js?v=f852eec"></script>
-<script src="views/tour.js?v=f852eec"></script>
-<script src="views/motion.js?v=f852eec"></script>
-<script src="views/logomotion.js?v=f852eec"></script>
-<script src="views/compact.js?v=f852eec"></script>
-<script src="views/picker.js?v=f852eec"></script>
-<script src="views/overflow.js?v=f852eec"></script><script src="views/files.js?v=f852eec"></script><script src="views/rows.js?v=f852eec"></script>
+<script src="views/dashboard.js?v=d2e49bb"></script>
+<script src="views/bookings.js?v=d2e49bb"></script>
+<script src="views/booking.js?v=d2e49bb"></script>
+<script src="views/denmark.js?v=d2e49bb"></script>
+<script src="views/contacts.js?v=d2e49bb"></script>
+<script src="views/money.js?v=d2e49bb"></script>
+<script src="views/catalogue.js?v=d2e49bb"></script>
+<script src="views/brands.js?v=d2e49bb"></script>
+<script src="views/account.js?v=d2e49bb"></script>
+<script src="views/mail.js?v=d2e49bb"></script>
+<script src="views/social.js?v=d2e49bb"></script>
+<script src="views/tour.js?v=d2e49bb"></script>
+<script src="views/motion.js?v=d2e49bb"></script>
+<script src="views/logomotion.js?v=d2e49bb"></script>
+<script src="views/compact.js?v=d2e49bb"></script>
+<script src="views/picker.js?v=d2e49bb"></script>
+<script src="views/overflow.js?v=d2e49bb"></script><script src="views/files.js?v=d2e49bb"></script><script src="views/rows.js?v=d2e49bb"></script>
 <script>LAAS.boot();addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==LAAS.S.view&&(LAAS.VIEWS[h]||h==='onboarding'))LAAS.go(h);});</script>
