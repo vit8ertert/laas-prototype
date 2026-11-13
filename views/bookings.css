@@ -68,7 +68,7 @@
 .bk-foot .bk-fb:is(:hover,[data-state="hover"]){background:none;text-decoration:underline}
 
 /* ---------- empty states (no results, filters, first run) ---------- */
-.bk-empty{display:flex;flex-direction:column;align-items:center;gap:var(--space-6);padding:47px 31px;border-radius:var(--r-xl);background:var(--surface);border:1px dashed var(--rule);text-align:center}
+.bk-empty{display:flex;flex-direction:column;align-items:center;gap:var(--section);padding:calc(var(--hero-y) - 1px) calc(var(--hero-x) - 1px);border-radius:var(--r-xl);background:var(--surface);border:1px dashed var(--rule);text-align:center}
 /* the core .choice card rules (padding on inner divs, hover lift) must not reach the start box, which carries .choice for social.js */
 .bk-empty.choice{overflow:visible;transform:none;box-shadow:none}.bk-empty.choice div{padding:0}
 .bk-empty .hd{display:flex;flex-direction:column;gap:var(--space-2);width:100%}
@@ -243,7 +243,6 @@
 }
 @media (max-width:599.98px){
  .bk-search{width:100%}.bk-filters .sp{display:none}
- .bk-empty{padding:31px 15px}  /* 32 / 16 with the 1 px border, as the desktop 47 / 31 (12 Nov) */
  .bk-form .g2{grid-template-columns:1fr}
  .bk-times{grid-template-columns:repeat(2,minmax(0,1fr))}.bk-times .date{grid-column:1/-1}
  .bk-ebar{height:auto;flex-wrap:wrap;padding:var(--space-2) var(--space-3)}.bk-ebar .ti{order:-1;flex-basis:100%;justify-content:flex-start}
@@ -256,3 +255,4 @@
 .bk-describe .r>svg.i{margin-top:3px;flex:none}.bk-describe .m>svg.i{margin-top:1px;flex:none}
 /* the assistant bar on New booking matches every other page: 720 wide, centred (was full width) */
 .bk-ebar2{padding:0 var(--space-2) var(--space-4)}.bk-abar{max-width:720px;margin:0 auto}
+/* .bk-empty = Empty state 140:400: padding and gap from the LAAS · Width tokens (hero-y, hero-x, section; the 1 px border inside), 48 / 32 / 24 on desktop, 24 / 16 / 16 on phones (13 Nov: the code had its own 32 / 24) */

@@ -47,7 +47,7 @@ L.OVERLAYS.moresheet=()=>{const b=(S.bands||[]).find(x=>x.id===S.bandId)||{ini:'
 L.OVERLAYS.asksheet=o=>`<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-ask" role="dialog" aria-label="Ask the assistant">
  <div class="cx-ask-h"><b class="t-heading">Ask</b><span class="grow"></span><button class="btn ghost s" data-go="assistant">Open Assistant</button><button class="btn ghost icon s" data-act="close" aria-label="Close">${ic('x','s')}</button></div>
  ${o.ctx?`<span class="rec">${esc(o.ctx)}</span>`:''}
- <div class="cx-ask-f"><input id="asksheetq" placeholder="${esc(o.ph||'Ask about Low Tide: gigs, contacts, money')}" aria-label="Ask the assistant" autocomplete="off"><button class="btn accent" data-act="asksheetgo">Ask</button></div>
+ <div class="cx-ask-f"><input id="asksheetq" placeholder="${esc(o.ph||'Ask about Low Tide: gigs, contacts, money')}" aria-label="Ask the assistant" autocomplete="off"><button class="btn accent s" data-act="asksheetgo">Ask</button></div>
  <div class="cx-ask-s">${(o.ctx?['What is still open?','Draft a reply','Summarise this']:['What needs me today?','Who owes us money?','Next gig details']).map(q=>`<button class="chip" data-act="asksheetq" data-q="${esc(q)}">${q}</button>`).join('')}</div>
 </div>`;
 
