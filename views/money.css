@@ -603,12 +603,10 @@ button.ml-fcard:is(:hover,[data-state="hover"]){background-image:linear-gradient
 .iv-prog li.todo b{color:var(--muted);font-weight:400}.iv-prog li.att :is(b,small){color:var(--bad)}
 @media (max-width:599.98px){.iv-ph1{flex-direction:column;gap:2px}.iv-prog small{display:none}.iv-prog li:is(.now,.att) small{display:block}}
 .iv-labrow{display:flex;align-items:baseline;gap:var(--space-2)}.iv-labrow .iv-edit{margin:0;font-size:var(--fs-meta);line-height:var(--lh-16)}
-
-/* Expand (13 Nov 2026, Vit: "when I hover there is also the expand icon … brings you to the full report graph"; Figma KPI tile and
-   Chart strip, Show expand, icon/maximize-2): an icon-only Secondary S button, top right of a tile with a chart and centred at the
-   right of the strip, shown on hover or keyboard focus; touch screens have no hover, so it stays hidden there (as the phone frames) */
-.m-kpi>.m-expand,.m-strip>.m-expand{position:absolute;z-index:var(--z-raised);opacity:0;pointer-events:none;transition:opacity var(--dur-1) var(--ease-standard)}
-.m-kpi>.m-expand{top:var(--space-3);right:var(--space-3)}
-.m-strip>.m-expand{right:var(--space-2);top:50%;transform:translateY(-50%)}
-.has-spark:is(:hover,[data-state="hover"])>.m-expand,.has-spark:is(:focus-within,[data-state="focus"])>.m-expand,.m-strip:is(:hover,[data-state="hover"])>.m-expand,.m-strip:is(:focus-within,[data-state="focus"])>.m-expand{opacity:1;pointer-events:auto}
+/* Expand (13 Nov 2026, Vit: "expand icon only when hover … at the corner, and nicely made"; Figma KPI tile and Chart strip, Show
+   expand, Icon button with icon/maximize-2): 8 px in from the top right corner, it fades and settles in on hover or keyboard focus,
+   above the line and its month tip; touch screens have no hover, so it stays hidden there (as the phone frames) */
+.m-kpi>.m-expand,.m-strip>.m-expand{position:absolute;top:var(--space-2);right:var(--space-2);z-index:3;opacity:0;transform:scale(.88);pointer-events:none;transition:opacity var(--dur-2) var(--ease-standard),transform var(--dur-2) var(--ease-standard),background var(--dur-1) var(--ease-standard)}
+.has-spark:is(:hover,[data-state="hover"])>.m-expand,.has-spark:is(:focus-within,[data-state="focus"])>.m-expand,.m-strip:is(:hover,[data-state="hover"])>.m-expand,.m-strip:is(:focus-within,[data-state="focus"])>.m-expand{opacity:1;transform:none;pointer-events:auto}
 @media (hover:none){.m-kpi>.m-expand,.m-strip>.m-expand{display:none}}
+@media (prefers-reduced-motion:reduce){.m-kpi>.m-expand,.m-strip>.m-expand{transition:opacity var(--dur-1) linear;transform:none}}

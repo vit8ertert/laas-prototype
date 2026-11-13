@@ -35,7 +35,7 @@ let SPK=0;
 const spark=(vals,cls='',tip)=>{const n=vals.length,mx=Math.max(...vals),mn=Math.min(...vals),W=200,H=60,y=v=>H-4-(v-mn)/((mx-mn)||1)*(H-12),x=i=>i/(n-1)*W;
  const pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`),id='spk'+(SPK++);
  return `<svg class="m-spark ${cls}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true" ${tip?`data-pts="${vals.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(';')}" data-tips="${esc(tip.join('|'))}"`:''}><defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".32"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path d="M${pts.join('L')}L${W},${H}L0,${H}Z" fill="url(#${id})"/><path d="M${pts.join('L')}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;};
-const expBtn=()=>`<button class="btn secondary icon s m-expand" type="button" data-mtab="reports" aria-label="Open the full chart" title="Open the full chart">${ic('maximize','s')}</button>`;
+const expBtn=()=>`<button class="icon-btn m-expand" type="button" data-mtab="reports" aria-label="Open the full chart">${ic('maximize')}</button>`;
 const kpi=(label,value,delta,tone='',stroke='',sp,tip)=>`<div class="kpi-tile m-kpi ${stroke} ${sp?'has-spark':''}"><span class="m-kl">${label}</span><span class="m-kv">${value}</span><span class="m-kd ${tone}">${delta}</span>${sp?spark(sp,'',tip)+expBtn():''}</div>`;
 const kpis=list=>`<div class="m-kpis">${list.join('')}</div>`;
 const banner=(title,body,action)=>`<div class="banner attention m-banner">${ic('alert','s')}<div class="tx"><span>${title}</span><small>${body}</small></div>${action}</div>`;
@@ -794,7 +794,7 @@ A.porecord=el=>{const k=el.dataset.who;const o=poOwed(k);const snapE=M.ex.map(e=
  o.ex.forEach(e=>{e.rf='done';(e.log??=[]).push(['21 Oct',`Paid back with the payout to ${EXWHO[k]}`]);});const p={id:'p'+Date.now(),d:21,who:k,items};M.po.push(p);S.overlay=null;L.render();
  L.toast(`Payout recorded: ${L.kr(poSum(p))} DKK to ${EXWHO[k]}`,()=>{M.ex=snapE;M.po=M.po.filter(x=>x!==p);L.render();});};
 const paidTips=()=>chartData().map(d=>`${d.m} ${d.y}: ${L.kr(d.inc)} DKK paid in`);
-document.addEventListener('pointermove',e=>{const host=e.target.closest&&e.target.closest('.has-spark,.m-strip');
+document.addEventListener('pointermove',e=>{const onExp=e.target.closest&&e.target.closest('.m-expand');const host=!onExp&&e.target.closest&&e.target.closest('.has-spark,.m-strip');  /* on the Expand button the month tip steps aside (Vit 13 Nov: they overlapped) */
  document.querySelectorAll('.m-sdot:not([hidden])').forEach(d=>{if(!host||!host.contains(d)){d.hidden=true;d.nextElementSibling.hidden=true;}});
  const sv=host&&host.querySelector('svg.m-spark[data-pts]');if(!sv)return;
  const pts=sv.dataset.pts.split(';').map(p=>p.split(',').map(Number)),tips=sv.dataset.tips.split('|');  /* data-tips, not data-tip: the app tooltip reads data-tip and showed every month at once (Vit 10 Nov) */

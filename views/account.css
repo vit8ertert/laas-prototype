@@ -479,3 +479,5 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-login .field{gap:var(--space-2)}
 .acc-login .gate-pw .input{width:100%}
 .acc-step{white-space:nowrap;flex:none}  /* "Step 2 of 5" never breaks over two lines (it did on phones beside the tagline) */
+/* Payment and Billing history rows (13 Nov 2026): List rows flush with the card title; the first row has no rule above it */
+.acc-pay{display:flex;flex-direction:column}.acc-pay>.list-row:first-child{border-top:0}.acc-prow .tx{flex:1;min-width:0}.acc-prow>.btn{margin-left:auto}

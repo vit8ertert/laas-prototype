@@ -243,6 +243,8 @@ L.VIEWS.notifications=()=>shell('Notifications','In-app always; email and push p
 
 /* ---------- Settings · Plan (435:21838) ---------- */
 const pcard=(title,inner,action='')=>`<section class="acc-card"><div class="acc-ch"><h2 class="t-heading">${title}</h2>${action}</div>${inner}</section>`;
+/* Payment and Billing history rows (13 Nov 2026, Vit: the 32 px icons were too big and did nothing; billing pages show the card's brand, the masked number and an inline action): List row 299:5063, Leading = Card brand 2201:53822, Trailing = Ghost S */
+const prow=(t,m,act='',lead='')=>`<div class="list-row acc-prow">${lead}<span class="tx"><b>${t}</b><small>${m}</small></span>${act}</div>`;
 const pli=(icon,t,m,attrs='')=>`<${attrs?'button':'div'} class="acc-si" ${attrs}>${ic(icon,'acc-i32')}<span class="tx"><span>${t}</span><small>${m}</small></span></${attrs?'button':'div'}>`;
 L.VIEWS.plan=()=>{const cur=S.plan,name={free:'Free',band:'Band',pro:'Pro'}[cur];
  const head={free:['0 DKK, free for one band. Up to 10 active bookings and 1 member.','Unlimited bookings and the whole band are on Band; invoices, reminders and settling are on Pro.'],
@@ -253,8 +255,8 @@ L.VIEWS.plan=()=>{const cur=S.plan,name={free:'Free',band:'Band',pro:'Pro'}[cur]
  `<section class="acc-cur"><h2 class="t-title">${name}</h2><p>${head[0]}</p><p class="acc-small">${head[1]}</p><div class="row acc-act">${cur!=='pro'?`<button class="btn accent" data-act="trypro">Try Pro free for 14 days</button>`:`<button class="btn secondary" data-act="endtrial">End trial</button>`}<button class="btn ghost" data-act="compare">Compare plans</button></div></section>`
  +`<div class="acc-plans" id="plancards">${plans.map(([id,n,p,w,f])=>{const on=id===cur;const a=on?null:id==='free'?gflush('Move to Free','movefree').replace('acc-gr','acc-gfl'):id==='band'?gflush('Move to Band','moveband').replace('acc-gr','acc-gfl'):`<button class="btn secondary s" data-act="trypro">Try Pro free</button>`;
   return `<div class="acc-plan ${on?'on':''}"><div class="nm"><span class="t-heading">${n}</span>${on?tag('accent','Current'):''}</div><span class="pr">${p}</span><span class="acc-small">${w}</span>${f.map(x=>`<span class="f">${ic('check','s')}${x}</span>`).join('')}<span class="sp"></span>${a||`<span class="acc-since">Your plan since 14 Sep</span>`}</div>`}).join('')}</div>`
- +pcard('Payment',`<div class="acc-signin">${pli('money','Card ending 4821','Expires 08/28, owner Vital Sinkevich')}${pli('mail','Receipts to vital@lowtide.dk','CVR and address on every receipt')}</div>`,gflush('Change card','acctoast','data-msg="Opens the secure card page"','pencil'))
- +pcard('Billing history',`<div class="acc-signin">${[['14 Oct 2026','October'],['14 Sep 2026','September']].map(([d,m])=>pli('file',d,'Band, 39 DKK, paid',`data-act="acctoast" data-msg="Receipt for ${m} downloaded"`)).join('')}</div>`));};
+ +pcard('Payment',`<div class="acc-pay">${prow('Visa ending 4821','Expires 08/28, Vital Sinkevich',gflush('Update','acctoast','data-msg="Opens the secure card page"'),'<span class="card-brand" aria-label="Visa">VISA</span>')}${prow('Billing email','vital@lowtide.dk, with CVR and address on every receipt',gflush('Edit','acctoast','data-msg="Billing email is changed in Band settings"'))}</div>`)
+ +pcard('Billing history',`<div class="acc-pay">${[['14 Oct 2026','October'],['14 Sep 2026','September']].map(([d,m])=>prow(d,`Band plan, ${m}, 39 DKK, paid`,gflush('Receipt','acctoast',`data-msg="Receipt for ${m} downloaded"`,'download'))).join('')}</div>`));};
 
 /* ---------- Upgrade · invoices are on Pro (435:22438) ---------- */
 L.OVERLAYS.accupgrade=()=>`<div class="scrim acc-scrim" data-act="close"></div><div class="modal acc-upg" role="dialog" aria-modal="true" aria-label="Invoices are on Pro"><h2 class="t-title">Invoices are on Pro</h2><p class="muted">Send this invoice with a pay link, and LAAS chases it for you. Your bookings and data stay the same on any plan.</p>

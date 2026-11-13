@@ -33,7 +33,7 @@
   /* menus become bottom sheets (Figma Bottom sheet): full width, 16 px top corners, grab handle 12 px from the top, 48 px rows */
   .pop:not(.pal){left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:min(80vh,calc(100% - 48px));overflow:auto;border-radius:var(--r-xl) var(--r-xl) 0 0!important;border-width:1px 0 0!important;padding:var(--space-5) var(--space-2) calc(var(--space-3) + env(safe-area-inset-bottom,0px))!important;--tx:0!important;transform:none!important;animation:cx-up var(--dur-3) var(--ease-emphasized) both!important}
   .pop:not(.pal)::before{content:"";position:absolute;top:13px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
-  .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px}
+  .pop:not(.pal) .it,.pop:not(.pal) [role=menuitem],.pop:not(.pal) label.row{min-height:48px;align-items:center}  /* the text sits in the middle of the 48 px touch row (Vit 13 Nov: hover area not equal top and bottom) */
   .scrim[style*="transparent"]{background:var(--scrim)!important}
   /* search takes the whole screen */
   .pal{left:0;top:0;width:100%;height:100%;max-height:none;border-radius:0;--tx:0;transform:none;overflow:auto}

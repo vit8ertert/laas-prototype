@@ -418,4 +418,11 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 .doc-tot{border-top-color:var(--rule-strong)}.doc-tot b{font-weight:500}
 .doc-note{margin:0;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .doc-img{margin:0}.doc-img img{display:block;width:100%;border-radius:var(--r-md)}
-
+/* Icon button (Figma: Icon button 2200:53824, State Default | Hover; 13 Nov 2026): a 28 px round button that floats on a card,
+   surface, hairline ring, elevation 1, a 14 px icon. Always labelled with aria-label. First use: Expand on charts (views/money.css). */
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--rule);box-shadow:var(--elev-1);color:var(--ink);cursor:pointer;transition:background var(--dur-1) var(--ease-standard),border-color var(--dur-1) var(--ease-standard),transform var(--dur-2) var(--ease-standard)}
+.icon-btn svg.i{width:14px;height:14px}
+.icon-btn:is(:hover,[data-state="hover"]){background:var(--hover);border-color:var(--rule-strong)}
+.icon-btn:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--accent);outline-offset:2px}
+/* Card brand (Figma: Card brand 2201:53822, Brand Visa | Mastercard; 13 Nov 2026): the saved card's brand, a 32 × 22 tile at the start of a payment row */
+.card-brand{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;height:22px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--rule);font:400 var(--fs-meta)/1 var(--mono);color:var(--ink)}
