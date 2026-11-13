@@ -347,7 +347,8 @@ L.CHANGE.push(t=>{
 
 /* ---------- track player and file details (Vit 21 Oct: "can a track be played here, a timeline when pressed; more info,
    bitrate, format; play and info on the release page too"). One row used by the Tracks tab, an imported release and a
-   new release. Playback is simulated: a timer moves the timeline, nothing is streamed. ---------- */
+   new release. Playback plays music made in the browser for each track (views/music.js, 13 Nov): original lo-fi or IDM
+   seeded by the track, so the same track always sounds the same; the timer moves the timeline. ---------- */
 (function(){const L=window.LAAS,S=L.S,ic=L.ic,esc=L.esc;
 L.P.play??='<path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/>';
 L.P.pause??='<rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/>';
@@ -380,16 +381,16 @@ function paint(){const P=S.player,el=document.querySelector(`[data-trk="${P.key}
   const pc=P.t/d*100,w=el.querySelector('.trk-done'),k=el.querySelector('.trk-knob');if(w)w.style.width=pc+'%';if(k)k.style.left=pc+'%';const n=el.querySelector('.trk-now');if(n)n.textContent=mmss(P.t);
   const sl=el.querySelector('[data-tseek]');if(sl)sl.setAttribute('aria-valuenow',Math.round(P.t));}
 function tick(){const P=S.player;if(!P.playing)return;const el=document.querySelector(`[data-trk="${P.key}"]`);const d=el?+el.dataset.dur:0;
-  P.t+=.25;if(d&&P.t>=d){P.t=d;P.playing=false;clearInterval(timer);timer=null;L.render();return;}paint();}
+  P.t+=.25;if(d&&P.t>=d){P.t=d;P.playing=false;clearInterval(timer);timer=null;L.music&&L.music.pause();L.render();return;}paint();}
 function play(key){const P=S.player;if(P.key===key){P.playing=!P.playing;}else{P.key=key;P.t=0;P.playing=true;}
-  clearInterval(timer);timer=P.playing?setInterval(tick,250):null;L.render();}
+  clearInterval(timer);timer=P.playing?setInterval(tick,250):null;if(L.music){P.playing?L.music.play(key,P.t):L.music.pause();}L.render();}
 document.addEventListener('click',e=>{
   const p=e.target.closest('[data-tplay]');if(p){e.stopPropagation();play(p.dataset.tplay);return;}
   const f=e.target.closest('[data-tinfo]');if(f){e.stopPropagation();const k=f.dataset.tinfo;S.player.open=S.player.open===k?null:k;L.render();return;}
-  const w=e.target.closest('[data-tseek]');if(w){e.stopPropagation();const r=w.getBoundingClientRect(),el=w.closest('[data-trk]');S.player.t=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*(+el.dataset.dur);paint();return;}
+  const w=e.target.closest('[data-tseek]');if(w){e.stopPropagation();const r=w.getBoundingClientRect(),el=w.closest('[data-trk]');S.player.t=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*(+el.dataset.dur);if(S.player.playing&&L.music)L.music.seek(S.player.key,S.player.t);paint();return;}
 },true);
 // stop playback when leaving the catalogue
-addEventListener('hashchange',()=>{if(!/catalogue|release|pastrelease/.test(location.hash)){S.player.playing=false;clearInterval(timer);timer=null;}});
+addEventListener('hashchange',()=>{if(!/catalogue|release|pastrelease/.test(location.hash)){S.player.playing=false;clearInterval(timer);timer=null;L.music&&L.music.pause();}});
 })();
 
 (function(){const L=window.LAAS,S=L.S,ic=L.ic,A=L.ACTIONS,PASTC=L.PASTC;
