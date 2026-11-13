@@ -40,7 +40,7 @@
 .cat-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)}
 .cat-kpi{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--card);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
 .cat-kpi.att{box-shadow:inset 0 0 0 1px var(--att)}
-.cat-kpi .t-meta{font:400 var(--fs-meta)/16px var(--sans)}
+.cat-kpi .t-meta{font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .cat-kpi .v{font:400 32px/40px var(--sans);letter-spacing:-.5px;color:var(--ink)}
 .c-att{color:var(--att)}.c-ok{color:var(--ok)}.c-bad{color:var(--bad)}
 
@@ -51,8 +51,8 @@
 .cat-tile{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-3);border-radius:var(--r-lg);background:var(--surface);text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
 .cat-tile:is(:hover,[data-state="hover"]){transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cat-tile .art{width:100%;height:152px;border-radius:var(--r-md);object-fit:cover;display:block}
-.cat-tile b{font:500 var(--fs-body)/18px var(--sans)}
-.cat-tile small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}  /* description at most 2 lines (Vit 2 Nov) */
+.cat-tile b{font:500 var(--fs-body)/var(--lh-18) var(--sans)}
+.cat-tile small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}  /* description at most 2 lines (Vit 2 Nov) */
 .cat-tilewrap .st{padding-left:var(--space-1);display:flex;gap:var(--space-2);align-items:center}
 .cat-note{margin:0;font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .tag.cat-acc{background:var(--accent-tint);color:var(--accent-ink)}
@@ -68,7 +68,7 @@
 .cat-choice:is(:hover,[data-state="hover"]){transform:translateY(-2px);box-shadow:var(--elev-2)}
 .cat-choice img{width:100%;height:96px;object-fit:cover;border-radius:var(--r-md);display:block}
 .cat-choice b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.cat-choice small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.cat-choice small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .cat-erow{justify-content:center;gap:var(--space-3)}
 .cat-empty{border-style:dashed}.cat-empty p{margin:0;max-width:560px}
 
@@ -81,11 +81,11 @@
 .cat-row .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .cat-row .tx small.c-att{color:var(--att)}
 .cat-row .n{width:24px;flex:none;color:var(--faint)}
-.cat-row .mono{font-size:var(--fs-small);line-height:20px}
+.cat-row .mono{font-size:var(--fs-small);line-height:var(--lh-20)}
 .cat-row.step{align-items:flex-start}
 .cat-row.step .d{width:64px;flex:none;color:var(--muted)}
 .cat-row.step.first .d{color:var(--ink)}.cat-row.step.first .tx b{font-weight:500}
-.cat-av{width:28px;height:28px;border-radius:50%;background:var(--well);display:grid;place-items:center;font:400 var(--fs-meta)/16px var(--sans);flex:none}
+.cat-av{width:28px;height:28px;border-radius:50%;background:var(--well);display:grid;place-items:center;font:400 var(--fs-meta)/var(--lh-16) var(--sans);flex:none}
 
 /* release header (Figma Release header): 176 cover, 28 gap, bottom-aligned */
 /* the actions are the header's own child (Vit 26 Oct, Late Shift EP: "on both move these to the left"), so phones can
@@ -118,7 +118,7 @@
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
 button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico svg.i{width:16px;height:16px}  /* Figma Leading icon: 16 Expanded, 14 Compact (6 Nov gate) */@media (max-width:599.98px){.cat-chk .ico svg.i{width:14px;height:14px}}.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
-.cat-sub{margin:0;padding:0 var(--space-5) 14px 70px;color:var(--muted);font-size:var(--fs-label);line-height:22px}
+.cat-sub{margin:0;padding:0 var(--space-5) 14px 70px;color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-22)}
 
 /* overview: 720 column + 348 panel, 48 apart */
 .cat-ov{gap:var(--space-12)}
@@ -138,7 +138,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:var(--space-2)}
 .cat-panel .grp>.t-label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .cat-avs{display:flex;padding-left:var(--space-2)}
-.cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 var(--fs-meta)/16px var(--sans)}
+.cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .cat-activity{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
 .cat-activity svg.i{width:16px;height:16px}
 .cat-activity:is(:hover,[data-state="hover"]){color:var(--ink)}
@@ -148,7 +148,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* drawers */
 .field.cat-f{gap:var(--space-2)}
 .field.cat-f label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
-.field.cat-f .help{font:400 var(--fs-meta)/16px var(--sans)}
+.field.cat-f .help{font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .cat-w160{max-width:160px}.cat-w240{max-width:240px}.cat-w320{max-width:320px}.cat-w400{max-width:400px}   /* width rule: fields by expected input */
 .cat-seg{grid-auto-columns:1fr}
 .cat-seg button{font-weight:400}.cat-seg button.on{font-weight:500}   /* Figma: Single 400 muted, EP 500 ink; pad 6 14 from core .seg */
@@ -184,7 +184,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-gr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cat-gr .ok{display:flex;color:var(--ink)}
 .cat-gfoot{display:flex;align-items:center;gap:var(--space-3);min-height:34px}
-.cat-gfoot>span{flex:1;font:400 var(--fs-meta)/16px var(--sans)}
+.cat-gfoot>span{flex:1;font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .cat-gfoot .btn{font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 
 @media (max-width:839.98px){
@@ -207,14 +207,14 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* one leading slot (Vit 10 Nov: "number seems in wrong position … make this row more intuitive"): the track number
    at rest, play when the row is hovered or focused, pause while it plays (Spotify, Apple Music). Touch screens have no
    hover, so they show play */
-.trk-play .trk-n{font-size:var(--fs-small);line-height:20px;color:var(--faint)}
+.trk-play .trk-n{font-size:var(--fs-small);line-height:var(--lh-20);color:var(--faint)}
 .trk-play>svg.i{display:none}
 .trk:not(.on) .trk-play{background:none;box-shadow:none}
 .trk:is(:hover,[data-state="hover"]) .trk-play>svg.i,.trk:is(:focus-within,[data-state="focus"]) .trk-play>svg.i,.trk.on .trk-play>svg.i{display:block}
 .trk:is(:hover,[data-state="hover"]) .trk-play .trk-n,.trk:is(:focus-within,[data-state="focus"]) .trk-play .trk-n,.trk.on .trk-play .trk-n{display:none}
 .trk:is(:hover,[data-state="hover"]):not(.on) .trk-play,.trk:is(:focus-within,[data-state="focus"]):not(.on) .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 @media (hover:none){.trk-play>svg.i{display:block}.trk-play .trk-n{display:none}.trk:not(.on) .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}}
-.trk-row .trk-d{font-size:var(--fs-small);line-height:20px}
+.trk-row .trk-d{font-size:var(--fs-small);line-height:var(--lh-20)}
 .trk-play,.trk-info{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
 .trk-play{background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .trk-play:is(:hover,[data-state="hover"]){background:var(--hover)}
@@ -254,7 +254,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-stores>.btn{align-self:flex-start}
 /* platform picker in the drawer */
 .cat-storepick{display:flex;flex-direction:column;gap:var(--space-3)}
-.cat-storepick .check{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-body)/18px var(--sans);cursor:pointer}
+.cat-storepick .check{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-body)/var(--lh-18) var(--sans);cursor:pointer}
 .cat-storepick input{width:18px;height:18px;accent-color:var(--ink);margin:0}
 /* platform rows lead with the service logo (views/brands.js); missing ones are greyed */
 .cat-storelist li{gap:var(--space-3)}
@@ -282,7 +282,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .ec-r:first-child{box-shadow:none}
 .ec-th{min-height:0;padding:var(--space-2) var(--space-4);background:var(--canvas);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .ec-st{display:flex;flex-direction:column}.ec-st b{font:400 var(--fs-body)/var(--lh-body) var(--sans)}.ec-st small{font:400 var(--fs-label)/var(--lh-label) var(--mono);color:var(--muted)}
-.ec-ok{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-small)/20px var(--sans);color:var(--muted)}.ec-ok .i{width:14px;height:14px;color:var(--ok)}
+.ec-ok{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-small)/var(--lh-20) var(--sans);color:var(--muted)}.ec-ok .i{width:14px;height:14px;color:var(--ok)}
 .ec-fix{display:inline-flex;align-items:center;gap:var(--space-1);cursor:pointer}.ec-fix .i{width:12px;height:12px}
 .ec-r .n{justify-self:end;text-align:right}.ec-why{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 @media (max-width:839.98px){.ec-t{overflow-x:auto}.ec-r{min-width:760px}}

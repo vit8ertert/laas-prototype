@@ -6,7 +6,7 @@
 .acc-ph{display:flex;align-items:flex-start;gap:var(--space-4)}
 .acc-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-1)}
 .acc-ph p{margin:0;color:var(--muted)}
-.acc-save{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--fs-meta);line-height:16px;color:var(--muted);opacity:0;transition:opacity var(--dur-4);white-space:nowrap}
+.acc-save{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted);opacity:0;transition:opacity var(--dur-4);white-space:nowrap}
 .acc-ph>.acc-save{padding-top:var(--space-3)} /* the page-header seat, not the component (Figma Save status 423:19572 has no padding) */
 .acc-save.on{opacity:1}.acc-save.saving svg{animation:spin var(--dur-loop) linear infinite}
 .acc-save.off{color:var(--att)} /* Figma State=Offline */
@@ -21,7 +21,7 @@
 .acc-search>svg{width:18px;height:18px;color:var(--ink)}
 .acc-search input::placeholder{color:var(--muted)}
 .acc-search:is(:focus-within,[data-state="focus"]){box-shadow:inset 0 0 0 2px var(--ink)}
-.acc-gl{font-size:var(--fs-meta);line-height:16px;color:var(--faint);padding:var(--space-4) 0 var(--space-2) var(--space-3)}
+.acc-gl{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--faint);padding:var(--space-4) 0 var(--space-2) var(--space-3)}
 .acc-body{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
 
 /* Section (Padding=M): 20/8 with 12 px head inset, so rows share one text edge */
@@ -50,7 +50,7 @@
 /* Settings row Control 240x40 (stroke in layout); type and padding from core .input */
 .acc-row .input{height:40px;background-size:14px;background-position:right 13px center}
 /* one field width, = Figma Value field 240 (Vit 29 Oct, fewer designs); long values truncate like a native select */
-.acc-sel.mono,.input.mono{font-family:var(--mono);font-size:var(--fs-small);line-height:20px}
+.acc-sel.mono,.input.mono{font-family:var(--mono);font-size:var(--fs-small);line-height:var(--lh-20)}
 .acc-in{max-width:100%}
 .acc-foot{margin:0;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);display:flex;gap:var(--space-2);align-items:flex-start}
 .acc-foot svg{margin-top:1px}
@@ -66,7 +66,7 @@
 button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-inv:not(:last-child)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:1px;background:var(--rule)}
 .acc-li>svg{color:var(--ink)}
-.acc-li .mono{font-size:var(--fs-small);line-height:20px;min-width:56px;text-align:right}
+.acc-li .mono{font-size:var(--fs-small);line-height:var(--lh-20);min-width:56px;text-align:right}
 .acc-av{width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 var(--fs-label)/var(--lh-label) var(--sans);flex:none}
 .acc-inv{display:flex;flex-direction:column;gap:var(--space-2);position:relative}
 .acc-inv:not(:last-child){padding-bottom:var(--space-2)}
@@ -96,21 +96,21 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-x svg.i{width:16px;height:16px;color:var(--ink)}
 .acc-explainer .acc-x svg.i{width:14px;height:14px}
 /* grows with its text, × in a 32 px box in the corner, like the dashboard Explainer (Vit 22 Oct: "this needs to be fixed", the text was cut at 80 px) */
-.acc-explainer{position:relative;display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3) 40px var(--space-3) var(--space-3);border-radius:var(--r-md);background:var(--well);min-height:80px;box-sizing:border-box}
+.acc-explainer{position:relative;display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3) var(--space-10) var(--space-3) var(--space-3);border-radius:var(--r-md);background:var(--well);min-height:80px;box-sizing:border-box}
 .acc-explainer>.acc-x{position:absolute!important;top:7px;right:var(--space-1);width:32px!important;height:32px!important;border-radius:var(--r-md);display:grid;place-items:center;margin:0!important}
 .acc-explainer .tx{flex:1;display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
 .acc-explainer b{font-weight:500;font-size:var(--fs-body);line-height:var(--lh-body)}
-.acc-explainer .tx span{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.acc-explainer .tx span{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-explainer img{width:56px;height:56px;border-radius:var(--r-md);object-fit:cover;flex:none}
 
 /* Feed URL well */
 .acc-url{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--sunken)}
-.acc-url code{flex:1;min-width:0;font:400 var(--fs-small)/20px var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-url code{flex:1;min-width:0;font:400 var(--fs-small)/var(--lh-20) var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* Theme page */
 .acc-fl{display:flex;flex-direction:column;gap:var(--space-2)}
 .acc-lbl{font-size:var(--fs-label);line-height:var(--lh-label);color:var(--ink)}
-.acc-help{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.acc-help{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-seg3{grid-auto-columns:minmax(max-content,1fr)}  /* the rest is the one Segmented control (components.css) */
 /* Account "Dashboard starts with": Segmented control component, hugs; padding and radius from core .seg */
 .acc-seg2{display:inline-grid;grid-auto-columns:max-content;align-self:flex-start}
@@ -142,7 +142,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-prof{display:flex;gap:var(--space-5);align-items:center}
 .acc-prof img{width:80px;height:80px;border-radius:50%;object-fit:cover;flex:none}
 .acc-prof>div{display:flex;flex-direction:column;gap:var(--space-2)}
-.acc-prof>div>span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-prof>div>span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-fields{display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:flex-start}
 .acc-fields .field{min-width:0}
 .acc-fields .input{max-width:100%}
@@ -156,14 +156,14 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-si .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .acc-nl{display:flex;flex-direction:column;gap:var(--space-4)}
 .acc-nr{display:flex;align-items:center;gap:var(--space-2)}
-.acc-nr>span{font:400 var(--fs-body)/18px var(--sans)}.acc-nr:has(>.acc-tg:disabled)>span{opacity:.45}
-.acc-small{margin:0;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-nr>span{font:400 var(--fs-body)/var(--lh-18) var(--sans)}.acc-nr:has(>.acc-tg:disabled)>span{opacity:.45}
+.acc-small{margin:0;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-band{display:flex;align-items:center;gap:var(--space-3);text-align:left;padding:var(--space-2);margin:calc(-1 * var(--space-2));border-radius:var(--r-md)}
 .acc-band:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-band img{width:40px;height:40px;border-radius:var(--r-md);object-fit:cover}
 .acc-band .tx{display:flex;flex-direction:column;gap:2px}
 .acc-band .tx>span{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.acc-band small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-band small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-app{flex-direction:row;align-items:center;gap:var(--space-5)}
 .acc-app>div{display:flex;flex-direction:column;gap:var(--space-1);align-items:flex-start}
 .acc-app p{margin:0;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
@@ -175,7 +175,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-store{display:inline-flex;align-items:center;gap:var(--space-2);width:fit-content;background:#000;color:#fff;border:1px solid #a6a6a6;border-radius:var(--r-md);padding:var(--space-2) 14px var(--space-2) var(--space-2);text-decoration:none}
 .acc-store svg{width:22px;fill:#fff}
 .acc-store span{display:flex;flex-direction:column;font:500 19px/24px var(--sans);letter-spacing:-.19px;text-align:left}
-.acc-store small{font:400 9px/16px var(--sans);letter-spacing:0;margin-bottom:-2px}
+.acc-store small{font:400 9px/var(--lh-16) var(--sans);letter-spacing:0;margin-bottom:-2px}
 .acc-card .row{gap:var(--space-3)}
 
 /* Plan (435:21838) */
@@ -187,7 +187,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-plan{display:flex;flex-direction:column;gap:var(--space-3)}
 .acc-plan.on{--ring:var(--accent)}
 .acc-plan .nm{display:flex;align-items:center;gap:var(--space-2)}.acc-plan .nm .t-heading:not(:only-child){flex:1}
-.acc-plan .pr{font:500 var(--fs-card)/22px var(--mono)}
+.acc-plan .pr{font:500 var(--fs-card)/var(--lh-22) var(--mono)}
 .acc-plan .f{display:flex;gap:var(--space-2);align-items:center;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .acc-plan .f svg{color:var(--ink)}
 .acc-plan .sp{flex:1}
@@ -204,8 +204,8 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* ---------- onboarding ---------- */
 .acc-ob{display:grid;grid-template-columns:600px minmax(0,1fr);height:100%;background:var(--canvas);padding:var(--space-4) var(--space-4) var(--space-4) 0;box-sizing:border-box}
-.acc-ob .l{padding:var(--space-12) 80px;display:flex;flex-direction:column;gap:var(--space-8);overflow:auto;min-height:0}
-.acc-ob.snd .l{padding:40px 80px var(--space-8);gap:var(--space-4)}
+.acc-ob .l{padding:var(--space-12) var(--space-20);display:flex;flex-direction:column;gap:var(--space-8);overflow:auto;min-height:0}
+.acc-ob.snd .l{padding:var(--space-10) var(--space-20) var(--space-8);gap:var(--space-4)}
 /* the tighter step keeps the same logo-to-progress-bar distance as every other step (32 px; Vit 22 Oct) */
 .acc-ob.snd .l>.acc-obtop+.bar4{margin-top:var(--space-4)}
 .acc-obtop{display:flex;align-items:center;gap:var(--space-3);height:24px}
@@ -218,24 +218,24 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-obh p{margin:0;color:var(--muted)}
 .acc-obstack{display:flex;flex-direction:column;gap:var(--space-3)}
 .acc-wide{width:100%;justify-content:center}
-.acc-or{display:flex;align-items:center;gap:var(--space-3);font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.acc-or{display:flex;align-items:center;gap:var(--space-3);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .acc-or i{flex:1;height:1px;background:var(--rule)}
-.acc-obfoot{margin:0;font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
-.acc-obfoot .link{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.acc-obfoot{margin:0;font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
+.acc-obfoot .link{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-code{display:flex;gap:var(--space-2)}
-.acc-code input{flex:none;width:48px;min-width:0;height:56px;text-align:center;font:500 var(--fs-card)/22px var(--mono);border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
+.acc-code input{flex:none;width:48px;min-width:0;height:56px;text-align:center;font:500 var(--fs-card)/var(--lh-22) var(--mono);border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
 .acc-code input:is(:focus,[data-state="focus"]){outline:none;border:2px solid var(--accent)}
 .acc-obphoto{display:flex;gap:var(--space-4);align-items:center}
 .acc-obphoto img{width:96px;height:96px;border-radius:var(--r-lg);object-fit:cover;flex:none}
 .acc-obphoto img.round{width:72px;height:72px;border-radius:50%}
 .acc-obphoto>div{display:flex;flex-direction:column;gap:var(--space-1);align-items:flex-start}
-.acc-obphoto .help{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-obphoto .help{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-obphoto b.strong{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
 .acc-two{display:flex;gap:var(--space-4);align-items:flex-start;flex-wrap:wrap}
 .acc-ob .field .input{max-width:100%}
 .acc-genres{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 /* genre chips are the standard chip (30 Oct, one Chip component; they were 13 px muted outline chips of their own) */
-.acc-gc{height:auto;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/18px var(--sans);color:var(--ink)}
+.acc-gc{height:auto;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink)}
 .acc-gc.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
 /* each bandmate is its own block (Vit 27 Oct: "email role email role" was hard to tell apart). 2 Nov, Vit: the number
    circles read as notification counts, so a rule now separates the pairs; order means nothing here (the numbered
@@ -249,7 +249,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-join{display:flex;gap:var(--space-4);align-items:center}
 .acc-join img{width:64px;height:64px;border-radius:var(--r-lg);object-fit:cover}
 .acc-join div{display:flex;flex-direction:column;gap:var(--space-1)}
-.acc-join span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-join span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-ob .r{position:relative;border-radius:var(--r-xl);overflow:hidden;background:var(--sunken)}
 /* only the panel's own photo covers it; a descendant selector also caught the card photos inside the Pick your look
    preview and laid them over its top bar (Vit 5 Nov, "this seems the preview is wrong") */
@@ -258,7 +258,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
    height because the page's 100 % height chain was missing); the photo never sets the height, it covers the panel */
 .acc-ob{min-height:100vh;min-height:100dvh}
 .acc-live{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:var(--space-6);padding:0 var(--space-12);background:linear-gradient(160deg,var(--surface),var(--sunken) 70%)!important}
-.acc-live .cap{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:#ffffff99}
+.acc-live .cap{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:color-mix(in srgb,var(--on-photo) 60%,transparent)}
 .acc-win{--k:.5;position:relative;width:100%;max-width:728px;height:455px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--elev-3)}
 .acc-win::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
 .acc-win>.acc-mini{transform:scale(var(--k));transform-origin:0 0;position:absolute;left:0;top:0}
@@ -271,25 +271,25 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Fits your genre badge: Figma's lime (color/poster/lime), the same in every theme and mode, like Ask (Vit 22 Oct, Q14) */
 .acc-obth .fits{position:absolute;left:var(--space-2);top:var(--space-2);padding:var(--space-1) var(--space-3);border-radius:var(--r-pill);background:var(--poster-lime);color:var(--on-lime);font:500 var(--fs-label)/var(--lh-label) var(--sans);box-shadow:var(--elev-1)}
 .acc-obth .nm{display:flex;align-items:center;gap:var(--space-2);font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.acc-obth .d{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.acc-obth .d{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 
 /* mini dashboard, drawn at 1456x910 and scaled */
 .acc-mini{width:1456px;height:910px;background:var(--sunken);color:var(--ink);display:flex;flex-direction:column;font-size:var(--fs-body);line-height:var(--lh-body);pointer-events:none;text-align:left}
 .acc-mini .mt{height:58px;display:flex;align-items:center;gap:var(--space-4);padding:0 var(--space-5);flex:none}
 .acc-mini .mt .lg svg{height:24px;width:auto;fill:var(--ink);display:block}
-.acc-mini .mt small{font-size:var(--fs-meta);line-height:16px;color:var(--faint)}
-.acc-mini .sp{display:flex;align-items:center;gap:var(--space-2);width:280px;height:34px;padding:0 var(--space-3);border-radius:var(--r-md);background:var(--well);color:var(--muted);font-size:var(--fs-small);line-height:20px}
-.acc-mini .you{width:28px;height:28px;border-radius:50%;background:var(--you);color:#000;display:grid;place-items:center;font-size:var(--fs-small);line-height:20px}
+.acc-mini .mt small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--faint)}
+.acc-mini .sp{display:flex;align-items:center;gap:var(--space-2);width:280px;height:34px;padding:0 var(--space-3);border-radius:var(--r-md);background:var(--well);color:var(--muted);font-size:var(--fs-small);line-height:var(--lh-20)}
+.acc-mini .you{width:28px;height:28px;border-radius:50%;background:var(--you);color:var(--you-ink);display:grid;place-items:center;font-size:var(--fs-small);line-height:var(--lh-20)}
 .acc-mini .mb{flex:1;display:flex;gap:var(--space-2);padding:0 var(--space-2) var(--space-2);min-height:0}
 .acc-mini .ms{width:236px;background:var(--canvas);border-radius:var(--r-lg);padding:var(--space-2);display:flex;flex-direction:column;gap:2px}
 .acc-mini .bd{display:flex;gap:var(--space-2);align-items:center;padding:var(--space-2);margin-bottom:var(--space-2)}
 .acc-mini .bd .sq{width:32px;height:32px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:var(--fs-label);line-height:var(--lh-label)}
-.acc-mini .bd span{display:flex;flex-direction:column}.acc-mini .bd b{font-weight:500}.acc-mini .bd small{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.acc-mini .bd span{display:flex;flex-direction:column}.acc-mini .bd b{font-weight:500}.acc-mini .bd small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-mini .ni{display:flex;align-items:center;gap:var(--space-2);height:34px;padding:0 var(--space-2);border-radius:var(--r-md)}
 .acc-mini .ni.sub{padding-left:var(--space-6)}
 .acc-mini .ni.on{background:var(--well);font-weight:500}
 .acc-mini .dot{width:14px;height:14px;border-radius:50%;background:var(--accent)}
-.acc-mini .mm{flex:1;background:var(--canvas);border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;padding:80px var(--space-8) var(--space-8);gap:var(--space-4);text-align:center}
+.acc-mini .mm{flex:1;background:var(--canvas);border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;padding:var(--space-20) var(--space-8) var(--space-8);gap:var(--space-4);text-align:center}
 .acc-mini h3{font:400 40px/48px var(--sans);margin:0}
 .acc-mini .mm>p{margin:0;color:var(--muted);max-width:620px}
 /* the composer is the pill, as on the dashboard since T487: + without a fill, the placeholder, Send only with text */
@@ -298,12 +298,12 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-mini .ask .ph{flex:1;padding:10px var(--space-1);font-size:var(--fs-body);line-height:var(--lh-body)}
 .acc-mini .chips{display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:center;width:760px}
 .acc-mini .chips span{display:inline-flex;align-items:center;gap:var(--space-2);height:32px;padding:0 var(--space-3);border-radius:var(--r-pill);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label)}
-.acc-mini h4{font:400 24px/32px var(--sans);margin:40px 0 0}
+.acc-mini h4{font:400 24px/32px var(--sans);margin:var(--space-10) 0 0}
 .acc-mini .sm{margin:0;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted)}
 .acc-mini .cards{display:flex;gap:var(--space-3)}
 .acc-mini .cards span{width:220px;background:var(--surface);border-radius:var(--r-lg);padding:var(--space-2);display:flex;flex-direction:column;gap:var(--space-1);text-align:left}
 .acc-mini .cards img{width:100%;height:120px;object-fit:cover;border-radius:var(--r-md);margin-bottom:var(--space-2)}
-.acc-mini .cards b{font-weight:500;font-size:var(--fs-small);line-height:20px}.acc-mini .cards small{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.acc-mini .cards b{font-weight:500;font-size:var(--fs-small);line-height:var(--lh-20)}.acc-mini .cards small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 
 /* other themes' token values for the theme-card previews (see note at the top) */
 
@@ -332,7 +332,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* ---------- Account: personal assistant prompt ---------- */
 .acc-pp{max-width:100%}
-.acc-pp textarea{width:100%;min-height:132px;line-height:20px}
+.acc-pp textarea{width:100%;min-height:132px;line-height:var(--lh-20)}
 .acc-pph{display:flex;gap:var(--space-3);align-items:flex-start;justify-content:space-between}
 .acc-pph .help{display:inline-flex;gap:var(--space-2);align-items:center}
 .acc-pph .help svg{flex:none}
@@ -350,7 +350,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-bandrow{display:flex;align-items:center;gap:var(--space-3)}
 .acc-bandrow .acc-band{flex:1;min-width:0;margin:calc(-1 * var(--space-2)) 0 calc(-1 * var(--space-2)) calc(-1 * var(--space-2))}
 .acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:var(--r-md);background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:500;overflow:hidden}
-.acc-bsq{width:40px;height:40px;font-size:var(--fs-small);line-height:20px}
+.acc-bsq{width:40px;height:40px;font-size:var(--fs-small);line-height:var(--lh-20)}
 
 /* ---------- New band drawer ---------- */
 .acc-nbprev{width:96px;height:96px;border-radius:var(--r-lg);font-size:28px}
@@ -379,7 +379,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4)}
 .aud-kpis.ghost{opacity:.5}
 .aud-kpi{background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule);padding:var(--card);display:flex;flex-direction:column;gap:var(--space-2)}
-.aud-kpi .l,.aud-kpi .d{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.aud-kpi .l,.aud-kpi .d{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .aud-kpi .d.ok{color:var(--ok)}
 .aud-kpi .v{font:400 32px/40px var(--sans);letter-spacing:-.5px}
 .aud-cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:var(--space-6);align-items:start}
@@ -396,13 +396,13 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-city>span:first-child{width:110px;flex:none;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .aud-city .tr{flex:1;min-width:0;height:8px;border-radius:var(--r-pill);background:var(--well);overflow:hidden;display:flex}
 .aud-city .tr i{display:block;height:8px;border-radius:var(--r-pill);background:var(--accent-strong);flex:none;max-width:100%}
-.aud-city .pc{width:48px;flex:none;text-align:right;font:400 var(--fs-small)/20px var(--mono)}
+.aud-city .pc{width:48px;flex:none;text-align:right;font:400 var(--fs-small)/var(--lh-20) var(--mono)}
 .aud-rel{display:flex;align-items:center;gap:var(--space-3);text-align:left;padding:var(--space-2) var(--space-3);margin:calc(-1 * var(--space-1)) calc(-1 * var(--space-3));width:calc(100% + 24px);border-radius:var(--r-md)}
 .aud-rel:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-rel .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .aud-rel .tx span{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .aud-rel .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
-.aud-rel .n{font:400 var(--fs-small)/20px var(--mono)}
+.aud-rel .n{font:400 var(--fs-small)/var(--lh-20) var(--mono)}
 .aud-i{width:20px}.aud-d{width:64px}
 .aud-empty{background:var(--surface);border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px var(--rule);padding:var(--space-12) var(--space-8);display:flex;flex-direction:column;align-items:center;gap:var(--space-6)}
 .aud-empty .hd{display:flex;flex-direction:column;gap:var(--space-2);text-align:center}
@@ -412,7 +412,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-choice:is(:hover,[data-state="hover"]){background:var(--raised)}
 .aud-choice img{width:100%;height:96px;border-radius:var(--r-md);object-fit:cover;display:block}
 .aud-choice b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.aud-choice span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.aud-choice span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 @media (max-width:1100px){.aud-cols{grid-template-columns:minmax(0,1fr)}.aud-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:839.98px){.aud-ph{flex-wrap:wrap}.aud-empty .ch{grid-template-columns:minmax(0,1fr)}.aud-empty{padding:var(--space-8) var(--space-4)}}
 @media (max-width:599.98px){.aud-kpis{grid-template-columns:minmax(0,1fr)}.aud-acts{flex-wrap:wrap;flex:1 1 100%}}
@@ -420,7 +420,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Onboarding layout (Vit 21 Oct: smaller photo, wider form side with more air on the sides):
    form side takes the larger share with a centred 480 px column; photo panel max 672 wide (20 % wider, Vit 21 Oct), inset 24 with radius 16 */
 .acc-ob{grid-template-columns:minmax(0,1fr) minmax(0,min(48vw,672px));padding:var(--space-6) var(--space-6) var(--space-6) 0}
-.acc-ob .l,.acc-ob.snd .l{padding:var(--space-12) clamp(40px,5vw,80px);align-items:center}
+.acc-ob .l,.acc-ob.snd .l{padding:var(--space-12) clamp(var(--space-10),5vw,var(--space-20));align-items:center}
 .acc-ob .l>*{width:100%;max-width:560px}
 .acc-obform{width:560px}
 /* rank numbers in Top songs: a 20 px column on the row's left edge (Vit 21 Oct: "bad alignment") */

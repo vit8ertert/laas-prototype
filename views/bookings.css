@@ -30,7 +30,7 @@
 .bk-content{display:flex;flex-direction:column;gap:var(--space-4)}
 .bk-filters{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
 .bk-filters .sp{flex:1}
-.bk-chip{display:inline-flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2) var(--space-3);border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/18px var(--sans);color:var(--ink);white-space:nowrap}
+.bk-chip{display:inline-flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2) var(--space-3);border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink);white-space:nowrap}
 .bk-chip:is(:hover,[data-state="hover"]){background:var(--hover)}
 .bk-chip.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
 .bk-search{position:relative;display:flex;align-items:center;width:280px;max-width:100%;height:38px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
@@ -52,7 +52,7 @@
 .bk-tr .tt{display:flex;align-items:center;gap:var(--space-3)}
 .bk-tr .tt b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis}
 .bk-tr .n{text-align:right}
-.bk-tr .mono{font:400 var(--fs-small)/20px var(--mono);color:var(--ink)}
+.bk-tr .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono);color:var(--ink)}
 .bk-tr .tag{font:400 var(--fs-label)/var(--lh-label) var(--sans)}  /* 6 Nov gate: the Tag master is 24 (Figma Table row Status tag 24), no 26 override */
 .bk-tr mark,.bk-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
 .bk-thumb{width:32px;height:32px;border-radius:var(--r-md);object-fit:cover;flex:none}
@@ -62,7 +62,7 @@
 
 /* ---------- footer ---------- */
 .bk-foot{display:flex;align-items:center;gap:var(--space-2);min-height:34px}
-.bk-foot>span{flex:1;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-foot>span{flex:1;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 /* Figma footer Button: pad 8 0 8 12 (83 wide); core's flush-right rule ([class$="-foot"]>.btn.ghost:last-child) zeroes the left too */
 .bk-foot>.btn.ghost.bk-fb:last-child{padding:var(--space-2) 0 var(--space-2) var(--space-3)!important;font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .bk-foot .bk-fb:is(:hover,[data-state="hover"]){background:none;text-decoration:underline}
@@ -82,27 +82,27 @@
 .bk-choice:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bk-choice img{width:100%;height:96px;object-fit:cover;border-radius:var(--r-md)}
 .bk-choice b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink);margin-top:0}
-.bk-choice small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-choice small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 
 /* ---------- Past: year in gigs tiles ---------- */
 .bk-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4)}
 @media (max-width:839.98px){.bk-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.bk-tile{position:relative;height:120px;border-radius:var(--r-lg);overflow:hidden;text-align:left;color:#fff}
+.bk-tile{position:relative;height:120px;border-radius:var(--r-lg);overflow:hidden;text-align:left;color:var(--on-photo)}
 .bk-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform var(--dur-5) var(--ease-standard)}
 .bk-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 10%,transparent),color-mix(in srgb,var(--scrim-base) 85%,transparent))}
 .bk-tile:is(:hover,[data-state="hover"]) img{transform:scale(1.03)}
 .bk-tile .tx{position:absolute;left:var(--space-4);right:var(--space-4);bottom:var(--space-4);z-index:1;display:flex;flex-direction:column;gap:var(--space-1)}
 .bk-tile b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}
-.bk-tile small{font:400 var(--fs-meta)/16px var(--sans);color:rgba(255,255,255,.8)}
+.bk-tile small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:rgba(255,255,255,.8)}
 
 /* ---------- filter menu ---------- */
 /* Filter menu: pad 6, radius 12, stroke 1 rule-strong included in layout (options 246 in 260), overlay, shadow 0 12 32 #00000066 */
 .pop.bk-menu{width:260px;padding:var(--space-2);border:1px solid var(--rule-strong);border-radius:var(--r-lg);box-shadow:var(--elev-2)}
-.bk-menu .hd{padding:var(--space-2) var(--space-2) var(--space-1);font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.bk-menu .hd{padding:var(--space-2) var(--space-2) var(--space-1);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-menu .opt{display:flex;align-items:center;gap:var(--space-2);width:100%;height:38px;padding:var(--space-2) var(--space-2);border-radius:var(--r-md);text-align:left}
 .bk-menu .opt:is(:hover,[data-state="hover"]){background:var(--well)}
 .bk-menu .l{flex:1;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
-.bk-menu .n{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.bk-menu .n{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-menu .ft{margin-top:0;padding:var(--space-1) var(--space-1) 0;border-top:1px solid var(--rule)}
 .bk-menu .box,.bk-cb .box{display:grid;place-items:center;width:16px;height:16px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1.5px var(--rule-strong);flex:none;color:var(--canvas)}
 .bk-menu .box.on,.bk-cb .box.on{background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
@@ -116,23 +116,23 @@
 
 /* ---------- new booking drawer ---------- */
 .drawer:has(.bk-nbd) .dh{align-items:center;padding:var(--space-5) var(--space-6);border-bottom:0;box-shadow:inset 0 -1px 0 var(--rule)}
-.drawer:has(.bk-nbd) .dh .btn{padding:var(--space-2) 0 var(--space-2) var(--space-3);line-height:18px}
+.drawer:has(.bk-nbd) .dh .btn{padding:var(--space-2) 0 var(--space-2) var(--space-3);line-height:var(--lh-18)}
 .drawer:has(.bk-nbd) .dh .grow{display:flex;flex-direction:column;gap:2px}.drawer:has(.bk-nbd) .dh .grow>*{margin:0}
 .drawer:has(.bk-nbd) .db{padding:var(--space-5) var(--space-6)}
 .drawer:has(.bk-nbd) .df{padding:var(--space-4) var(--space-6);gap:var(--space-2);background:var(--surface);border-top:0;box-shadow:inset 0 1px 0 var(--rule)}
-.drawer:has(.bk-nbd) .df .btn{line-height:18px}.drawer:has(.bk-nbd) .df .btn:not(.s){line-height:22px}
+.drawer:has(.bk-nbd) .df .btn{line-height:var(--lh-18)}.drawer:has(.bk-nbd) .df .btn:not(.s){line-height:var(--lh-22)}
 .drawer:has(.bk-nbd) .df .btn.accent svg.i{width:20px;height:20px}
 .bk-nbd{display:flex;flex-direction:column;gap:var(--space-5)}
 .bk-nbd .field,.bk-form .field{gap:var(--space-2)}
 .bk-nbd .field label,.bk-form .field label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .bk-nbd .input,.bk-form .input{border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 /* fields sized to their input (intentional, research note 27): the width goes on the control, so help text keeps the row */
-.bk-nbd .help{line-height:16px}
+.bk-nbd .help{line-height:var(--lh-16)}
 :is(.bk-nbd,.bk-form) .field.w-280>:is(.input,.bk-lead,.bk-sel){max-width:280px}:is(.bk-nbd,.bk-form) .field.w-240>:is(.input,.bk-lead,.bk-sel){max-width:240px}
 :is(.bk-nbd,.bk-form) .field.w-400>:is(.input,.bk-lead,.bk-sel){max-width:400px}:is(.bk-nbd,.bk-form) .field.w-200>:is(.input,.bk-lead,.bk-sel){max-width:200px}
 .bk-describe{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-radius:var(--r-lg);background:var(--canvas);border:1px solid var(--accent)}
 .bk-describe .r{display:flex;align-items:flex-start;gap:var(--space-2);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
-.bk-describe .m{display:flex;align-items:flex-start;gap:var(--space-2);font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-describe .m{display:flex;align-items:flex-start;gap:var(--space-2);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .bk-describe .m svg.i{width:14px;height:14px}
 .bk-lead{position:relative;display:block}
 .bk-lead>svg.i{position:absolute;left:var(--space-3);top:10px;color:var(--ink);pointer-events:none}
@@ -140,42 +140,42 @@
 .bk-lead.err .input{border-color:var(--bad)}
 .bk-lead.err>svg.i{color:var(--muted)}
 .bk-sel{position:relative;display:block}
-.bk-sel select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer}
+.bk-sel select{appearance:none;-webkit-appearance:none;padding-right:var(--space-10);cursor:pointer}
 .bk-sel>svg.i{position:absolute;right:var(--space-3);top:10px;pointer-events:none;color:var(--ink)}
 .help.err{color:var(--bad)!important}
 .bk-later{display:flex;flex-direction:column;gap:var(--space-2)}
-.bk-later>span{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.bk-later>span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-later>div{display:flex;gap:var(--space-2);flex-wrap:wrap}
-.bk-what{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);font:400 var(--fs-meta)/16px var(--sans)}
+.bk-what{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .bk-what svg.i{width:14px;height:14px;flex:none}
 
 /* ---------- new booking full editor (covers the shell, as in Figma) ---------- */
 .bk-nbe{position:fixed;inset:0;z-index:var(--z-nav);display:flex;flex-direction:column;background:var(--sunken);color:var(--ink)}
 .bk-ebar{display:flex;align-items:center;gap:var(--space-3);height:62px;padding:var(--space-3) var(--space-5);flex:none;background:var(--sunken)}
 .bk-ebar .ti{flex:1;display:flex;align-items:center;justify-content:center;gap:var(--space-3);min-width:0}
-.bk-ebar .id{font:400 var(--fs-small)/20px var(--mono);color:var(--muted)}
+.bk-ebar .id{font:400 var(--fs-small)/var(--lh-20) var(--mono);color:var(--muted)}
 .bk-ebar .ti b{font:500 var(--fs-body)/var(--lh-body) var(--sans);white-space:nowrap}
-.bk-ebar .saved{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);white-space:nowrap}
+.bk-ebar .saved{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);white-space:nowrap}
 .bk-ebar .btn.accent svg.i{width:20px;height:20px}
 .bk-ebody{flex:1;min-height:0;display:flex;gap:var(--space-2);padding:0 var(--space-2) var(--space-2)}
 .bk-editor{flex:1;min-width:0;overflow:auto;display:flex;gap:var(--space-8);padding:var(--space-6) var(--space-8);border-radius:var(--r-lg);background:var(--canvas);align-items:flex-start}
 /* Chrome sticks inside the scroller padding (24 px), so top:0 here already gives the 24 px of the sticky-column rule */
 .bk-editor .bk-idx,.bk-editor .bk-live{top:0!important}
 .bk-idx{position:sticky;top:0;width:200px;flex:none;display:flex;flex-direction:column;gap:2px}
-.bk-idx .k,.bk-live .k{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
-.bk-idx button{display:flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/18px var(--sans);color:var(--ink);text-align:left}
+.bk-idx .k,.bk-live .k{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
+.bk-idx button{display:flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink);text-align:left}
 .bk-idx button:is(:hover,[data-state="hover"]){background:var(--surface)}
 .bk-idx button.on{background:var(--well);font-weight:500}
-.bk-idx p{margin:18px 0 0;max-width:184px;font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.bk-idx p{margin:18px 0 0;max-width:184px;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-form{flex:1;min-width:0;max-width:796px;display:flex;flex-direction:column;gap:var(--space-8);padding-bottom:var(--space-6)}
 .bk-form section{display:flex;flex-direction:column;gap:var(--space-4);scroll-margin-top:var(--space-2)}
 .bk-form .sh{display:flex;align-items:baseline;gap:var(--space-2)}
 .bk-form .sh h2{flex:1;letter-spacing:-.1px}
 /* Figma draws the editor values in --muted */
 .bk-form .input{color:var(--muted)}
-.bk-form .sh>span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-form .sh>span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .bk-form .g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
-.bk-form .help{font-size:var(--fs-meta);line-height:16px}
+.bk-form .help{font-size:var(--fs-meta);line-height:var(--lh-16)}
 .bk-times{display:grid;grid-template-columns:180px repeat(5,minmax(96px,1fr));gap:var(--space-4);align-items:start}
 .bk-form{container-type:inline-size}
 @container (max-width:759.98px){.bk-times{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}.bk-times>.date{grid-column:span 2}}  /* the times wrap inside the form column (Vit 10 Nov: "full booking editor has overlaps on desktop": six fixed columns needed 740 px, the column is ~560 between the index and the preview) */
@@ -186,11 +186,11 @@
 .bk-vlist button:is(:hover,[data-state="hover"]){background:var(--well)}
 .bk-vlist img{width:32px;height:32px;border-radius:var(--r-md);object-fit:cover}
 .bk-vlist b{display:block;font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.bk-vlist small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-vlist small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .bk-vlist .none{padding:var(--space-2) var(--space-2);color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-label)}
 .bk-vlist .add{border-top:1px solid var(--rule);border-radius:0 0 var(--r-md) var(--r-md);font:500 var(--fs-label)/var(--lh-label) var(--sans);margin-top:var(--space-1)}
 .bk-people{display:flex;gap:var(--space-4);flex-wrap:wrap}
-.bk-cb{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-body)/18px var(--sans);color:var(--ink)}
+.bk-cb{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink)}
 .bk-cb .box{width:18px;height:18px;box-shadow:inset 0 0 0 1px var(--rule-strong);background:var(--surface)}
 .bk-cb .box.on{box-shadow:inset 0 0 0 1px var(--ink)}
 .bk-cb .box svg.i{width:14px;height:14px;stroke-width:2.86}
@@ -198,13 +198,13 @@
 .bk-file{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-4);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left}
 .bk-file:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bk-file>span:first-child{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
-.bk-file b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}.bk-file small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-file b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}.bk-file small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .bk-live{position:sticky;top:0;width:300px;flex:none;display:flex;flex-direction:column;gap:var(--space-3);padding-bottom:var(--space-5);border-radius:var(--r-lg)}
-.bk-live p{margin:0;max-width:260px;font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.bk-live p{margin:0;max-width:260px;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-gig{display:flex;flex-direction:column;gap:var(--stack);padding:var(--row-x);border-radius:var(--r-lg);background:var(--surface);position:relative}
 .bk-gig .cv{position:relative;aspect-ratio:1;border-radius:var(--r-md);overflow:hidden}
 .bk-gig .cv img{width:100%;height:100%;object-fit:cover}
-.bk-gig .cv.none{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2);background:var(--well);color:var(--muted);font:400 var(--fs-meta)/16px var(--sans);text-align:center;padding:0}
+.bk-gig .cv.none{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2);background:var(--well);color:var(--muted);font:400 var(--fs-meta)/var(--lh-16) var(--sans);text-align:center;padding:0}
 .bk-gig .cv.none svg.i{width:24px;height:24px;color:var(--ink)}
 .bk-gig .cv .tag{position:absolute;left:var(--space-3);top:var(--space-3)} /* look: the shared On photo tag (tags.css) */
 .bk-gig .tx{display:flex;flex-direction:column}
@@ -216,14 +216,14 @@
 .bk-gig hr{width:100%;margin:var(--space-4) 0;border:0;border-top:1px solid var(--rule)}
 .bk-gig .facts{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
 .bk-gig .facts span{display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0;border:0;height:auto}
-.bk-gig .facts b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}.bk-gig .facts b.mono{font:500 var(--fs-card)/22px var(--mono);letter-spacing:0}
-.bk-gig .facts small,.bk-gig .who{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.bk-gig .facts b{font:500 var(--fs-heading)/var(--lh-heading) var(--sans);letter-spacing:-.1px}.bk-gig .facts b.mono{font:500 var(--fs-card)/var(--lh-22) var(--mono);letter-spacing:0}
+.bk-gig .facts small,.bk-gig .who{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .bk-gig .who{display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-4)}
 .bk-gig .who i{width:20px;height:20px;border-radius:50%;background:var(--well)}
 .bk-gig>.tag{align-self:flex-start}
 .bk-gig.picked{background:var(--tint)}
-.bk-gig.picked .when{color:rgba(255,255,255,.7)}.bk-gig.picked .ti{color:#fff}.bk-gig.picked .wh{color:rgba(255,255,255,.85)}
-.bk-gig.picked hr{border-color:rgba(255,255,255,.16)}.bk-gig.picked .facts b{color:#fff}
+.bk-gig.picked .when{color:rgba(255,255,255,.7)}.bk-gig.picked .ti{color:var(--on-photo)}.bk-gig.picked .wh{color:rgba(255,255,255,.85)}
+.bk-gig.picked hr{border-color:rgba(255,255,255,.16)}.bk-gig.picked .facts b{color:var(--on-photo)}
 .bk-gig.picked .facts small{color:rgba(255,255,255,.65)}.bk-gig.picked .who{color:rgba(255,255,255,.75)}.bk-gig.picked .who i{background:rgba(255,255,255,.2)}
 .bk-ebar2{flex:none;padding:0 var(--space-2) var(--space-2)}
 .bk-abar{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border-radius:var(--r-xl);background:var(--raised);box-shadow:inset 0 0 0 1px var(--rule-strong)}

@@ -30,7 +30,7 @@
 /* Chip 153:948: gap 8, pad 8 12, radius pill, inside stroke 1 rule, surface; hover fill hover; label Body tight 15/18; icon 14 */
 /* Chip 153:948: one chip for every chip-shaped choice (30 Oct, census checklist 2: the Rate tone tags .qtag, the Gear filters
    .cat-chip and the assistant suggestions .d-chip were their own chips; phones keep the empty chat's stacked suggestions) */
-.chip{height:auto;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/18px var(--sans);color:var(--ink)}
+.chip{height:auto;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink)}
 .chip:is(:hover,[data-state="hover"]){background:var(--hover)}
 .chip>svg.i{width:14px;height:14px}
 
@@ -38,7 +38,7 @@
    Focus inside stroke 2 ink; Error stroke 1 bad + help in bad; Help Meta 12/16 muted */
 .field{gap:var(--space-2)}
 .field label{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
-.field .help{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.field .help{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .input{height:38px;padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
 .input:is(:focus,[data-state="focus"]){outline:none;box-shadow:inset 0 0 0 2px var(--ink)}
 .input.err,.field.err .input{box-shadow:inset 0 0 0 1px var(--bad)}
@@ -47,7 +47,7 @@
 textarea.input{height:auto;padding:var(--space-2) var(--space-3)}
 
 /* Tag 132:131: pad 4 8, radius pill, Label 13/18; tint + ink per status */
-.tag{height:auto;padding:3px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/18px var(--sans)}
+.tag{height:auto;padding:3px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/var(--lh-18) var(--sans)}
 .tag.draft{background:var(--draft-tint);color:var(--draft)}
 .tag.confirmed{background:var(--ok-tint);color:var(--ok)}
 .tag.paid{background:var(--paid-tint);color:var(--paid)}
@@ -96,12 +96,12 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 
 /* Drawer (screen 203:3658): 480 wide, top, inside left stroke 1 rule-strong, shadow -16 0 48 #00000080;
    head pad 20 24 gap 12 (90 high); scroll pad 20 24 gap 20; footer pad 16 24 gap 8, inside top stroke 1 rule, surface */
-.drawer{background:var(--top);box-shadow:inset 1px 0 0 var(--rule-strong),-16px 0 48px #00000080}
+.drawer{background:var(--top);box-shadow:inset 1px 0 0 var(--rule-strong),-16px 0 48px color-mix(in srgb,var(--scrim-base) 50%,transparent)}
 .drawer .dh{gap:var(--space-3);padding:var(--space-5) var(--space-6);border-bottom:0;align-items:center}
 .drawer .db{padding:var(--space-5) var(--space-6);gap:var(--space-5)}
 .drawer .df{gap:var(--space-2);padding:var(--space-4) var(--space-6);border-top:0;box-shadow:inset 0 1px 0 var(--rule);background:var(--surface)}
 /* Scrim: #000 at 35% */
-.scrim{background:#00000059}
+.scrim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent)}
 
 /* Popover (screen 438:21857): radius 12, inside stroke 1 rule-strong, overlay, shadow 0 16 48 #00000073 */
 .pop{border:0;border-radius:var(--r-lg);background:var(--overlay);box-shadow:inset 0 0 0 1px var(--rule-strong),var(--elev-3)}
@@ -111,13 +111,13 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 
 /* Band avatar in the sidebar: 32, radius 8, initials Body strong tight 15/18. Figma uses accent-tint / accent-ink on 82 screens
    (only Dashboard 167:1894 has artwork-base / on-dark), so the majority wins */
-.band .sq{width:32px;height:32px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);font:500 var(--fs-body)/18px var(--sans)}
+.band .sq{width:32px;height:32px;border-radius:var(--r-md);background:var(--accent-tint);color:var(--accent-ink);font:500 var(--fs-body)/var(--lh-18) var(--sans)}
 
 /* Nav item 132:153: pad 8, gap 8, radius 8; label Body tight 15/18; hover surface; active well + Body strong tight 500;
    count pad 2 8, radius pill, Meta 12/16 faint (20 high, so a row with a count is 36) */
-.nav{min-height:0;flex:none;padding:var(--space-2);gap:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/18px var(--sans)}
+.nav{min-height:0;flex:none;padding:var(--space-2);gap:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans)}
 /* rows are 34 (pad 8 + 18) and 36 only when a count or alert shows (20 high): measured over ~1400 Figma nav rows */
-.sidebar .nav .count,.sidebar .nav .alert{display:inline-flex;align-items:center;height:20px;padding:2px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-meta)/16px var(--sans)}
+.sidebar .nav .count,.sidebar .nav .alert{display:inline-flex;align-items:center;height:20px;padding:2px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .sidebar .nav .count{color:var(--faint);background:none}
 .sidebar .nav .alert{background:var(--accent);color:var(--on-accent)}
 .sidebar .nav>svg.i{width:18px;height:18px;flex:none}
@@ -185,7 +185,7 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 .send>div:first-child p.muted{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .send>.row.t-label{gap:var(--space-2)}
 .send>.row.t-label>span:nth-child(2){font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.send .msg .link{line-height:18px}
+.send .msg .link{line-height:var(--lh-18)}
 .send>.row:last-child{gap:var(--space-3)}
 .send>.row:last-child>.btn.ghost.flush{padding:var(--space-2) var(--space-4) var(--space-2) 0!important}
 
@@ -277,7 +277,7 @@ html.gated body>*:not(.gate){display:none!important}
    Figma: Table cell 1141:62568 */
 :is(.bk-th,.ml-th){background:var(--canvas);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 :is(.bk-tr:not(.bk-th),.ml-tr:not(.ml-th):not(.ml-gh)):is(:hover,[data-state="hover"]){background:var(--hover);outline:none}
-:is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 var(--fs-body)/18px var(--sans);color:var(--muted)}:is(.bk-tr,.ml-tr) :is(.m,.ml-m).s{font:400 var(--fs-label)/18px var(--sans)}  /* Table cell Meta S (1596:72651) */
+:is(.bk-tr,.ml-tr) :is(.m,.ml-m){font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--muted)}:is(.bk-tr,.ml-tr) :is(.m,.ml-m).s{font:400 var(--fs-label)/var(--lh-18) var(--sans)}  /* Table cell Meta S (1596:72651) */
 .avatar.band{background:var(--accent-strong);color:var(--on-accent)}  /* Avatar Kind=Band (298:5024): the lilac disc */
 .ml-tr.ml-gh{font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 /* 30 Oct (drawn-sweep card 3, Vit: "every screen is lacking" on a Gear row): the Gear table (.cat-gr), the Contacts table
@@ -288,8 +288,8 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.cat-gr:not(.head),.cv-table td,.ml-rep td){font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) .w{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) .tt b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
-:is(.cat-gr,.cv-table,.ml-rep) .m{font:400 var(--fs-body)/18px var(--sans);color:var(--muted)}
-:is(.cat-gr,.cv-table,.ml-rep) .mono{font:400 var(--fs-small)/20px var(--mono);color:var(--muted)}
+:is(.cat-gr,.cv-table,.ml-rep) .m{font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--muted)}
+:is(.cat-gr,.cv-table,.ml-rep) .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono);color:var(--muted)}
 :is(.cat-gr,.cv-table,.ml-rep) .mono:is(.n,.num){color:var(--ink)}
 :is(.cat-gr,.cv-table,.ml-rep) :is(.n,.num){text-align:right}
 :is(.cat-gr:not(.head),.cv-table tbody tr):is(:hover,[data-state="hover"]){background:var(--hover);outline:none}
@@ -325,7 +325,7 @@ html.gated body>*:not(.gate){display:none!important}
 :is(.m-kvr,.facts-dl>div,.trk-dl>div){display:flex;flex-direction:column;gap:var(--space-1);min-width:0;padding:0}
 :is(.m-kvr,.facts-dl>div,.trk-dl>div)>:first-child{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 :is(.m-kvr,.facts-dl>div,.trk-dl>div)>:nth-child(2){margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink);overflow-wrap:anywhere}
-:is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>.mono:nth-child(2){font-size:var(--fs-small);line-height:20px}
+:is(.cv-kv>div,.cat-panel .fact,.bd-payrow)>.mono:nth-child(2){font-size:var(--fs-small);line-height:var(--lh-20)}
 @media (max-width:599.98px){.bd-pay .bd-payrow{flex-wrap:wrap;align-items:center;row-gap:var(--space-1)}.bd-pay .bd-payrow>.l:first-child{width:100%}}  /* only the pay page stacks label over value on phones; Key-value row Compact (666:41362) keeps the 120 label column */
 
 /* Date and time picker (T473): a pop under the field. 7 x 36 day grid, Monday first; today ringed, selected filled with the
@@ -334,7 +334,7 @@ html.gated body>*:not(.gate){display:none!important}
 .pk-cal{display:flex;flex-direction:column;gap:var(--space-2);width:268px}
 .pk-head{display:flex;align-items:center;gap:var(--space-1);padding-left:var(--space-2)}.pk-head b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
 .pk-dow,.pk-grid{display:grid;grid-template-columns:repeat(7,36px);justify-content:space-between}
-.pk-dow span{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint);text-align:center;padding-block:var(--space-1)}
+.pk-dow span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint);text-align:center;padding-block:var(--space-1)}
 .pk-day{width:36px;height:36px;border-radius:50%;font:400 var(--fs-small)/1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums;transition:background var(--dur-1) var(--ease-standard)}
 .pk-day:is(:hover,[data-state="hover"]){background:var(--state-hover)}.pk-day.out{color:var(--faint)}
 .pk-day.today{box-shadow:inset 0 0 0 1px var(--muted)}
@@ -392,7 +392,7 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 /* Pagination (Figma 2022:38151; notes/page-states.md rule 1): desktop = range + Previous/Next, phones = Load more */
 .pager{padding:var(--space-3) 0}
 .pager-x{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
-.pager-range,.pager-shown{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.pager-range,.pager-shown{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .pager-btns{display:flex;gap:var(--space-2)}
 .pager-c{display:none;flex-direction:column;align-items:center;gap:var(--space-2)}
 .pager-c>.pager-more{align-self:stretch;justify-content:center}
@@ -408,14 +408,14 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 .doc-h{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4)}
 .doc-h .logo svg{width:60px;height:16px}
 .doc-hr{display:flex;flex-direction:column;align-items:flex-end;text-align:right;min-width:0}
-.doc-hr b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}.doc-hr small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.doc-hr b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}.doc-hr small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .doc-kv{margin:0;display:flex;flex-direction:column;gap:var(--space-1)}
 .doc-kv>div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:var(--space-3)}
-.doc-kv dt{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}.doc-kv dd{margin:0;font:400 var(--fs-label)/var(--lh-label) var(--sans)}
+.doc-kv dt{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}.doc-kv dd{margin:0;font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .doc-lines{display:flex;flex-direction:column}
 .doc-line{display:flex;justify-content:space-between;gap:var(--space-4);padding:var(--space-2) 0;border-top:1px solid var(--rule);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
-.doc-line .mono{font:400 var(--fs-small)/20px var(--mono);white-space:nowrap}  /* the amount style of every table (LAAS/Mono) */
+.doc-line .mono{font:400 var(--fs-small)/var(--lh-20) var(--mono);white-space:nowrap}  /* the amount style of every table (LAAS/Mono) */
 .doc-tot{border-top-color:var(--rule-strong)}.doc-tot b{font-weight:500}
-.doc-note{margin:0;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.doc-note{margin:0;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .doc-img{margin:0}.doc-img img{display:block;width:100%;border-radius:var(--r-md)}
 

@@ -108,7 +108,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-sug button{display:flex;align-items:center;gap:var(--space-2);width:100%;padding:var(--space-2);border-radius:var(--r-md);text-align:left}
 .ml-sug button:is(:hover,[data-state="hover"]),.ml-sug button:is(:focus-visible,[data-state="focus"]){background:var(--raised)}
 .ml-sug .tx{min-width:0;display:flex;flex-direction:column}
-.ml-sug .tx b{font-weight:500;font-size:var(--fs-small);line-height:20px}
+.ml-sug .tx b{font-weight:500;font-size:var(--fs-small);line-height:var(--lh-20)}
 .ml-sug .tx small{font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-ccb{display:flex;gap:var(--space-3);flex:none}
 .ml-fromsel{border:0;background-color:transparent;height:38px;padding-left:0;width:100%;min-width:0;flex:1 1 0;text-overflow:ellipsis}
@@ -116,7 +116,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-attrow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-top:1px solid var(--rule)}
 .ml-file{display:inline-flex;align-items:center;gap:var(--space-2);height:32px;max-width:100%;padding:0 var(--space-1) 0 var(--space-2);border-radius:var(--r-md);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label)}
 .ml-file .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.ml-file small{color:var(--muted);font-size:var(--fs-meta);line-height:16px;white-space:nowrap}
+.ml-file small{color:var(--muted);font-size:var(--fs-meta);line-height:var(--lh-16);white-space:nowrap}
 .ml-file button{width:24px;height:24px;display:grid;place-items:center;border-radius:6px;color:var(--muted);flex:none}
 .ml-file button:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--raised)}
 .ml-attsug{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:0 var(--space-4) 14px}
@@ -139,7 +139,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-prov{display:inline-flex;align-items:center;gap:var(--space-3)}
 .ml-accend{display:flex;align-items:center;gap:var(--space-2);flex:none}
 .ml-errtx{color:var(--bad)!important}
-.ml-perm{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--r-md);background:var(--well);font-size:var(--fs-small);line-height:20px}
+.ml-perm{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--r-md);background:var(--well);font-size:var(--fs-small);line-height:var(--lh-20)}
 .ml-perm svg{flex:none;color:var(--muted)}
 .ml-srv{display:flex;flex-direction:column;gap:var(--space-2)}
 .ml-srv .row .field:first-child{flex:1 1 200px}

@@ -20,7 +20,7 @@
 .schip.cancelled{--tc:var(--muted)}
 .schip.cancelled{border:0}
 /* fact chips on photos (booking and gig-day heroes): the same recipe in white, so they read on any photo */
-.hero .facts>span,.bd-hero .facts>span{background:rgba(255,255,255,.063)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.19)!important;color:#fff!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hero .facts>span,.bd-hero .facts>span{background:rgba(255,255,255,.063)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.19)!important;color:var(--on-photo)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 
 /* rows that open something say so on hover (Vit 21 Oct, from the Mail list; applied to every list that opens a page):
    a 2 px lilac bar on the left edge and the row's title underlined. Only rows that open something get it (Vit 21 Oct) */
@@ -158,7 +158,7 @@
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-sh,.cv-sh,.bd-sh,.d-sh,.cat-sh,.ml-sh){margin:0 0 var(--space-3)!important;padding:0!important;min-height:34px;align-items:center}
 :is(.cv-panel,.bd-panel,.m-right,.cat-panel,.ml-panel,.d-right) :is(.m-body,.cv-pbody,.bd-body,.cv-rows){padding:0!important}
 /* empty lines and plain text in a side card start on the heading edge */
-.cv-in{padding:0!important;margin:0;font:400 var(--fs-small)/20px var(--sans)}
+.cv-in{padding:0!important;margin:0;font:400 var(--fs-small)/var(--lh-20) var(--sans)}
 /* key-value lines that open nothing sit on the heading edge too, label on the value's baseline */
 .cv-fn{padding-left:0!important;padding-right:0!important}
 .bd-panel .bd-stack,.bd-stack.rows>div{padding:0!important}
@@ -208,7 +208,7 @@
 .bk-prog li.done i{background:var(--ok)}.bk-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
 .bk-prog li.att i{background:var(--att)}.bk-prog li.att span{color:var(--att)}
 .bk-prog.cancelled li.done i{background:var(--muted)}.bk-prog.cancelled li:nth-child(4) span{color:var(--bad)}
-.bk-prog span{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-prog span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bk-prog li:is(.done,.now) span{color:var(--ink)}
 .bk-prog.cancelled li.done:not(:nth-child(4)) span{color:var(--muted)}/* a cancelled booking greys its steps (Figma Step=Cancelled, 7 Nov) */
 @media (max-width:599.98px){.ev-head{gap:var(--space-3);margin:0}.ev-date,.ev-date.ev-post{width:52px;height:60px;border-radius:var(--r-lg);gap:0}.ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:20px;line-height:26px;letter-spacing:-.2px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}

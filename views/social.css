@@ -13,8 +13,8 @@
 .so .bk-tr.so-k.sel{background:var(--well)}
 .so .bk-tr.so-k.sel:is(:hover,[data-state="hover"]){background:var(--well)}
 .so-pt{display:flex;flex-direction:column;min-width:0}
-.so-pt b{font:500 var(--fs-body)/20px var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.so-pt small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.so-pt b{font:500 var(--fs-body)/var(--lh-20) var(--sans);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.so-pt small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so .bk-tr.so-p{height:64px}
 /* phones: the row sizes to its content like the booking rows (78), the fixed 64 squeezed the thumb and meta 6 px high (gate finding, 26 Oct) */
 @media (max-width:599.98px){.so .bk-tr.so-p{height:auto}}
@@ -28,7 +28,7 @@
 .so-acc{display:flex;align-items:center;gap:var(--space-3);min-height:64px;padding:var(--space-3) var(--space-4);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);max-width:360px}
 .so-acc .tx{flex:1;min-width:0;display:flex;flex-direction:column}
 .so-acc b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.so-acc small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.so-acc small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .so-acc .bd-act{margin-right:calc(-1 * var(--space-2))}
 
 /* ---------- empty state: connect choices ---------- */
@@ -42,8 +42,8 @@
 .so-cb{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-1)}
 .so-ch{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
 .so-ch b{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.so-ch small{font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
-.so-ch small .link{font-size:var(--fs-meta);line-height:16px;color:var(--muted)}
+.so-ch small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
+.so-ch small .link{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .so-ch small .link:is(:hover,[data-state="hover"]){color:var(--ink)}
 .so-ch .tag{margin-left:auto}
 .so-c p{margin:0;max-width:65ch;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
@@ -52,11 +52,11 @@
 .so-cacts .bd-act{margin-right:0}
 .so-yours{display:flex;gap:var(--space-2);align-items:flex-start;max-width:65ch;padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--well);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
 .so-yours svg.i{margin-top:2px;color:var(--muted)}
-.so-yours b{display:block;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted);margin-bottom:2px}
+.so-yours b{display:block;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);margin-bottom:2px}
 .so-reply{display:flex;flex-direction:column;gap:var(--space-2);max-width:640px;margin-top:var(--space-1)}
 .so-rl{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
 .so-reply textarea{min-height:84px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.so-rn{display:flex;gap:var(--space-2);align-items:flex-start;font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.so-rn{display:flex;gap:var(--space-2);align-items:flex-start;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .so-rn svg.i{width:14px;height:14px;margin-top:1px;color:var(--accent-ink)}
 .so-rf{display:flex;align-items:center;gap:var(--space-2)}
 
@@ -81,8 +81,8 @@
 .so-bars{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-1);height:184px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
 .so-bars>div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:var(--space-1);min-width:40px;flex:1;height:100%}
 .so-bars i{display:block;width:20px;border-radius:var(--r-sm) var(--r-sm) 0 0;background:var(--accent);transition:height var(--dur-3) var(--ease-standard)}
-.so-bars .v{font:400 var(--fs-meta)/16px var(--mono);color:var(--muted);min-height:16px}
-.so-bars small{font:400 var(--fs-meta)/16px var(--sans);color:var(--faint);white-space:nowrap;padding-bottom:var(--space-2)}
+.so-bars .v{font:400 var(--fs-meta)/var(--lh-16) var(--mono);color:var(--muted);min-height:16px}
+.so-bars small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint);white-space:nowrap;padding-bottom:var(--space-2)}
 .so-chart .table-wrap{max-width:420px}
 /* the app table keeps a 820 px minimum for wide lists; this two-column table fits its box (Vit 21 Oct: Hits column hidden) */
 .so-chart .table-wrap table{min-width:0}
@@ -93,13 +93,13 @@
 .so-dr .field{gap:var(--space-2)}
 .so-dr .field label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .so-grp{display:flex;flex-direction:column;gap:var(--space-1)}
-.so-k:not(.bk-th){font:400 var(--fs-meta)/16px var(--sans);color:var(--faint)}
+.so-k:not(.bk-th){font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .so-grp .bd-prow{padding-inline:0}
 .so-grp .bd-prow::before{left:0!important;right:0!important}
 .so-grp .bd-prow .btn.ghost{margin-right:calc(-1 * var(--space-2))}
 .so-dr .bk-describe .r .grow{flex:1}
 .so-dr .bk-describe .r .btn{margin:-6px calc(-1 * var(--space-2)) -6px 0}
-.so-off{display:inline-flex;align-items:center;gap:var(--space-1);font:400 var(--fs-body)/18px var(--sans);color:var(--muted)}
+.so-off{display:inline-flex;align-items:center;gap:var(--space-1);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--muted)}
 .so-off .link{font-size:var(--fs-body);line-height:var(--lh-body)}
 .so-dr textarea.input{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .so-picks{display:flex;gap:var(--space-2);flex-wrap:wrap}
@@ -114,7 +114,7 @@
 .seg.so-fit{align-self:flex-start}
 .so-when{display:flex;gap:var(--space-4);flex-wrap:wrap}
 .so-w160{width:160px}.so-w240{width:240px}.so-w320{max-width:320px}.so-w400{max-width:400px}
-.so-best{display:flex;align-items:center;gap:var(--space-2);margin-top:calc(-1 * var(--space-3));font:400 var(--fs-meta)/16px var(--sans);color:var(--muted)}
+.so-best{display:flex;align-items:center;gap:var(--space-2);margin-top:calc(-1 * var(--space-3));font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .so-best svg.i{width:14px;height:14px}
 .so-dest{gap:var(--space-2)}
 .so-dst{display:flex;align-items:center;gap:var(--space-3)}
