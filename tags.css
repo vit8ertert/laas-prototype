@@ -124,7 +124,7 @@
 /* sidebar numbers (Vit 21 Oct: some stuck out over the hover fill, alignment differed): every count and alert
    ends on the row's 8 px padding, the same line as the chevrons; same 20 px height, at least 24 wide, digits centred,
    so 1, 12 and 123 sit on one right edge. Grey = how many; lilac = needs you (unread mail, a catalogue problem). */
-.sidebar .nav .count,.sidebar .nav .alert{margin-right:0;box-sizing:border-box;min-width:24px;height:20px;padding:2px 7px;justify-content:center;text-align:center;font-variant-numeric:tabular-nums;flex:none}
+.sidebar .nav .count,.sidebar .nav .alert{margin-right:0;box-sizing:border-box;min-width:24px;height:20px;padding:2px var(--space-2);justify-content:center;text-align:center;font-variant-numeric:tabular-nums;flex:none}
 /* one column for numbers (Vit 21 Oct: Catalogue's number sat left of the others): chevrons keep the right column,
    numbers end 32 px before the row edge in every row, so sub-row counts line up with group alerts */
 .sidebar .nav.sub :is(.count,.alert){margin-right:var(--space-8)}
@@ -191,7 +191,7 @@
 .ev-head{display:flex;align-items:center;gap:var(--section);margin:var(--space-2) 0 var(--card)}
 .ev-date{width:88px;height:96px;border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:2px;text-align:center}
 .ev-date span{font:400 var(--fs-label)/var(--lh-label) var(--sans);text-transform:uppercase;color:var(--muted)}
-.ev-date b{font:400 32px/40px var(--sans);letter-spacing:-.5px;color:var(--ink)}
+.ev-date b{font:400 var(--fs-display)/var(--lh-display) var(--sans);letter-spacing:-.5px;color:var(--ink)}
 .ev-date.today{background:var(--accent);box-shadow:none}.ev-date.today :is(span,b){color:var(--on-accent)}
 .ev-date.ev-post{height:88px}
 .ev-tx{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
@@ -204,14 +204,14 @@
 /* booking progress: six steps, done filled, current half, late red, cancelled stops */
 .bk-prog{list-style:none;margin:0 0 var(--space-4);padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-2)}
 .bk-prog li{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
-.bk-prog i{height:6px;border-radius:3px;background:var(--well)}
+.bk-prog i{height:6px;border-radius:var(--r-sm);background:var(--well)}
 .bk-prog li.done i{background:var(--ok)}.bk-prog li.now i{background:linear-gradient(90deg,var(--ink) 0 45%,var(--well) 45%)}
 .bk-prog li.att i{background:var(--att)}.bk-prog li.att span{color:var(--att)}
 .bk-prog.cancelled li.done i{background:var(--muted)}.bk-prog.cancelled li:nth-child(4) span{color:var(--bad)}
 .bk-prog span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bk-prog li:is(.done,.now) span{color:var(--ink)}
 .bk-prog.cancelled li.done:not(:nth-child(4)) span{color:var(--muted)}/* a cancelled booking greys its steps (Figma Step=Cancelled, 7 Nov) */
-@media (max-width:599.98px){.ev-head{gap:var(--space-3);margin:0}.ev-date,.ev-date.ev-post{width:52px;height:60px;border-radius:var(--r-lg);gap:0}.ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:20px;line-height:26px;letter-spacing:-.2px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
+@media (max-width:599.98px){.ev-head{gap:var(--space-3);margin:0}.ev-date,.ev-date.ev-post{width:52px;height:60px;border-radius:var(--r-lg);gap:0}.ev-date:not(.ev-post)>*+*{margin-top:-2px}.ev-date b{font-size:var(--fs-heading);line-height:26px;letter-spacing:-.2px}.bk-prog span{display:none}.bk-prog li:is(.now,.att) span{display:block}}
 /* booking and gig day open without a photo now, so they use the shared detail-page tint, not the venue-photo brown */
 .main:has(.bd-tint){background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 22%,transparent),transparent) 0 0/100% 320px no-repeat local,var(--canvas)!important}
 

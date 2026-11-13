@@ -14,7 +14,7 @@
 .btn.center{justify-content:center}  /* a full-width button in a panel keeps its label centred (12 Nov; was an inline style) */
 .btn.s{height:auto;padding:var(--space-2) var(--space-3);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 /* Size=L (Vit 21 Oct: the sign-up buttons felt small): 48 high, for full-width calls to action on sign-up and onboarding */
-.btn.lg{height:auto;min-height:48px;padding:13px var(--space-6);font:500 var(--fs-body)/var(--lh-body) var(--sans);gap:var(--space-2)}.btn.lg>svg{width:20px;height:20px}
+.btn.lg{height:auto;min-height:48px;padding:var(--space-3) var(--space-6);font:500 var(--fs-body)/var(--lh-body) var(--sans);gap:var(--space-2)}.btn.lg>svg{width:20px;height:20px}
 .btn.s>svg.i{width:16px;height:16px}
 .btn.primary{background:var(--ink);color:var(--on-dark)}
 .btn.secondary{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong);color:var(--ink)}
@@ -47,7 +47,7 @@
 textarea.input{height:auto;padding:var(--space-2) var(--space-3)}
 
 /* Tag 132:131: pad 4 8, radius pill, Label 13/18; tint + ink per status */
-.tag{height:auto;padding:3px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/var(--lh-18) var(--sans)}
+.tag{height:auto;padding:var(--space-1) var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/var(--lh-16) var(--sans)}  /* 4 + 16 + 4 = 24, the Tag height in Figma (13 Nov snap: was 3 + 18 + 3) */
 .tag.draft{background:var(--draft-tint);color:var(--draft)}
 .tag.confirmed{background:var(--ok-tint);color:var(--ok)}
 .tag.paid{background:var(--paid-tint);color:var(--paid)}
@@ -197,7 +197,7 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 .sheet-h{display:flex;align-items:center;gap:var(--space-2)}
 .sheet-h .grow{flex:1}
 .sheet-rec{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-2) var(--space-1) var(--space-1);border-radius:var(--r-md);background:var(--well);color:var(--ink);font:500 var(--fs-label)/var(--lh-label) var(--sans);white-space:nowrap}
-.sheet-rec img{width:24px;height:24px;border-radius:5px;object-fit:cover;flex:none}
+.sheet-rec img{width:24px;height:24px;border-radius:var(--r-sm);object-fit:cover;flex:none}
 .sheet .sheet-x{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
 .sheet-you{display:flex;justify-content:flex-end}
 .sheet-you .bubble{margin:0;padding:var(--space-2) var(--space-4);border-radius:var(--r-md);background:var(--well);color:var(--ink);font:400 var(--fs-body)/var(--lh-body) var(--sans);max-width:none}
@@ -218,8 +218,8 @@ body:has(.d-theme) .sidebar .nav[data-act=thememenu]{background:color-mix(in srg
 /* Collapsed rail (466:23760 "Rail"): 64 wide, no fill (on the sunken page), gap 4; band square 36, initials Label 13/18 */
 .collapsed .sidebar{background:none;gap:var(--space-1)}
 .collapsed .sidebar .band .sq{width:36px;height:36px;font:500 var(--fs-label)/var(--lh-label) var(--sans)}
-.collapsed .sidebar{gap:var(--space-1)}.collapsed .sb-rail{gap:var(--space-1)}.collapsed .sidebar .band{padding:0;width:36px;height:36px;min-height:0;align-self:center;justify-content:center;margin-bottom:14px}  /* Sidebar State=Collapsed (526:25160): 36 band, 4 between rail items, 10 + gaps under the band */
-.sidebar .band{margin-bottom:10px} /* + the 2 px gap = 12 under the switcher, the same step as an .sb-gap between groups (Figma Sidebar, 7 Nov) */
+.collapsed .sidebar{gap:var(--space-1)}.collapsed .sb-rail{gap:var(--space-1)}.collapsed .sidebar .band{padding:0;width:36px;height:36px;min-height:0;align-self:center;justify-content:center;margin-bottom:var(--space-4)}  /* Sidebar State=Collapsed (526:25160): 36 band, 4 between rail items, 10 + gaps under the band */
+.sidebar .band{margin-bottom:var(--space-3)} /* + the 2 px gap = 12 under the switcher, the same step as an .sb-gap between groups (Figma Sidebar, 7 Nov) */
 
 /* Password gate on the public GitHub Pages copy: card on the sunken page, popover values */
 html.gated body>*:not(.gate){display:none!important}
@@ -230,7 +230,7 @@ html.gated body>*:not(.gate){display:none!important}
 .app:has(.gate) .tabbar{display:none}  /* a page with no shell has no tab bar either (12 Nov: it showed through on phones) */
 .gate-err{color:var(--bad)}
 .gate-card .btn{align-self:flex-start}
-.gate-pw{position:relative;display:block}.gate-pw .input{width:100%;padding-right:44px}
+.gate-pw{position:relative;display:block}.gate-pw .input{width:100%;padding-right:var(--space-12)}
 .gate-eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-md);background:none;color:var(--ink);cursor:pointer}  /* = Input 132:118 Action icon: 18, ink (12 Nov; was 14, muted) */
 .gate-eye:is(:hover,[data-state="hover"]){background:var(--state-hover);color:var(--ink)}
 .gate-eye svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}

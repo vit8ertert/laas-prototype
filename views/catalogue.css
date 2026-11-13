@@ -2,7 +2,7 @@
    Exact pass 21 Oct 2026: every size below is from design/figma-dump/digest (section "UX · Catalogue & gear").
    Figma borders that sit inside the box (not counted in the frame size) are drawn as inset box-shadows. */
 .cat-page{gap:var(--space-6)}
-.cat-detail{max-width:var(--layout-page-detail);gap:28px}                       /* width rule: detail pages max 1200 */
+.cat-detail{max-width:var(--layout-page-detail);gap:var(--space-8)}                       /* width rule: detail pages max 1200 */
 .cat-ph .grow{min-width:min(240px,100%)}
 .cat-ph .grow p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}
 .cat-actions{display:flex;gap:var(--space-2);align-items:flex-start;flex-wrap:wrap}
@@ -41,7 +41,7 @@
 .cat-kpi{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--card);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
 .cat-kpi.att{box-shadow:inset 0 0 0 1px var(--att)}
 .cat-kpi .t-meta{font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
-.cat-kpi .v{font:400 32px/40px var(--sans);letter-spacing:-.5px;color:var(--ink)}
+.cat-kpi .v{font:400 var(--fs-display)/var(--lh-display) var(--sans);letter-spacing:-.5px;color:var(--ink)}
 .c-att{color:var(--att)}.c-ok{color:var(--ok)}.c-bad{color:var(--bad)}
 
 /* release grid (width rule: cards 240–360, auto-fill); grid and note 16 apart */
@@ -61,7 +61,7 @@
 /* empty state (Figma Empty state 140:373) */
 .cat-emptystate{display:flex;flex-direction:column;align-items:center;gap:var(--space-6);padding:var(--space-12) var(--space-8);border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:center}
 .cat-emptystate .hd{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);width:100%}
-.cat-emptystate .hd h2{font:400 24px/32px var(--sans);letter-spacing:-.3px}
+.cat-emptystate .hd h2{font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px}
 .cat-emptystate .hd p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans)}   /* Figma Body fills the head (1052 at 1440) */
 .cat-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);width:100%}
 .cat-choice{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--r-lg);background:var(--canvas);text-align:left;transition:transform var(--dur-2) var(--ease-standard),box-shadow var(--dur-2)}
@@ -90,7 +90,7 @@
 /* release header (Figma Release header): 176 cover, 28 gap, bottom-aligned */
 /* the actions are the header's own child (Vit 26 Oct, Late Shift EP: "on both move these to the left"), so phones can
    give them a full-width row at the left edge; on wider screens they stay under the title, beside the cover */
-.cat-rhead{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:1fr auto;column-gap:28px}
+.cat-rhead{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:1fr auto;column-gap:var(--space-8)}
 .cat-rhead>.cat-cover{grid-row:1/3}
 .cat-rhead>.id{align-self:end}
 .cat-rhead>.acts{grid-column:2}
@@ -107,7 +107,7 @@
 
 /* before delivery (Figma "Needs you"): border counted in the frame, summary 14/20, rows 12/20 */
 .cat-checks{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden}
-.cat-checks .sum{display:flex;align-items:center;gap:var(--space-3);padding:14px var(--space-5);flex-wrap:wrap}
+.cat-checks .sum{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-5);flex-wrap:wrap}
 .cat-checks .sum h3{letter-spacing:-.1px}
 .cat-checks .sum .grow{flex:1;min-width:160px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .cat-checks .meter{gap:2px}
@@ -118,7 +118,7 @@
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
 button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico svg.i{width:16px;height:16px}  /* Figma Leading icon: 16 Expanded, 14 Compact (6 Nov gate) */@media (max-width:599.98px){.cat-chk .ico svg.i{width:14px;height:14px}}.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
-.cat-sub{margin:0;padding:0 var(--space-5) 14px 70px;color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-22)}
+.cat-sub{margin:0;padding:0 var(--space-5) var(--space-4) var(--space-16);color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-22)}
 
 /* overview: 720 column + 348 panel, 48 apart */
 .cat-ov{gap:var(--space-12)}
@@ -129,7 +129,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-sec .hd{display:flex;align-items:center;gap:var(--space-3);height:34px}.cat-sec .hd h3{flex:1;letter-spacing:-.1px}
 .cat-sec .hd .btn{font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .cat-sec .cat-row{border-top:1px solid var(--rule)}
-.cat-drop{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-5) var(--space-4);border:1px solid var(--rule-strong);border-radius:10px;cursor:pointer}
+.cat-drop{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-5) var(--space-4);border:1px solid var(--rule-strong);border-radius:var(--r-lg);cursor:pointer}
 .cat-drop>svg.i{width:20px;height:20px}
 .cat-drop:is(:hover,[data-state="hover"]){background:var(--surface)}
 .cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.cat-drop small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
@@ -142,7 +142,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-activity{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
 .cat-activity svg.i{width:16px;height:16px}
 .cat-activity:is(:hover,[data-state="hover"]){color:var(--ink)}
-.cat-acts{display:flex;flex-direction:column;gap:var(--space-1);padding-left:26px;margin-top:calc(-1 * var(--space-4))}
+.cat-acts{display:flex;flex-direction:column;gap:var(--space-1);padding-left:var(--space-6);margin-top:calc(-1 * var(--space-4))}
 .cat-acts div{display:flex;gap:var(--space-3)}.cat-acts .muted{width:72px;flex:none}
 
 /* drawers */
@@ -193,7 +193,7 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
  .cat-cover{width:120px;height:120px}
  .cat-tilewrap{max-width:none}
  .cat-emptystate{padding:var(--space-8) var(--space-4)}
- .cat-banner{align-items:flex-start}.cat-banner .btn{margin-left:30px}
+ .cat-banner{align-items:flex-start}.cat-banner .btn{margin-left:var(--space-8)}
 }
 
 /* ---------- track row with player and file details (tokens only) ---------- */

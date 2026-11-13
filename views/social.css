@@ -108,8 +108,8 @@
 .so-picks button.on{box-shadow:0 0 0 2px var(--canvas),0 0 0 4px var(--accent)}
 .so-up{display:grid;place-items:center;border:1px dashed var(--rule-strong);color:var(--muted);cursor:pointer}
 .so-up:is(:hover,[data-state="hover"]){color:var(--ink);border-color:var(--ink)}
-.so-seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:2px;padding:3px;border-radius:var(--r-md);background:var(--well)}
-.so-seg button{padding:0 var(--space-3);height:30px;border-radius:7px;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
+.so-seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:2px;padding:var(--space-1);border-radius:var(--r-md);background:var(--well)}
+.so-seg button{padding:0 var(--space-3);height:30px;border-radius:var(--r-md);font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);white-space:nowrap}
 .so-seg button.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--elev-1)}
 .seg.so-fit{align-self:flex-start}
 .so-when{display:flex;gap:var(--space-4);flex-wrap:wrap}
@@ -188,7 +188,7 @@
     bar stay on the delivery */
  .so .bk-tr.so-d>.m:not(.so-dest){display:none!important}
  .so .bk-tr.so-d>.w{justify-self:start!important;text-align:left!important;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
- .so .bk-tr.so-d>.w::before{content:"·";margin-right:6px}
+ .so .bk-tr.so-d>.w::before{content:"·";margin-right:var(--space-2)}
  .so .bk-tr.so-d>:nth-child(6){justify-self:end!important}
  .so .bk-tr.so-d>:nth-child(6) .so-prog{display:none}
  .so .bk-tr.so-d>.tt>b{grid-area:tt;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

@@ -17,7 +17,7 @@
 .ml-text b{font-weight:400}.ml-text span{color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-label)}
 .ml-row.unread .ml-from,.ml-row.unread .ml-text b{font-weight:500}
 .ml-row:not(.unread) .ml-from{color:var(--muted)}
-.ml-link{display:inline-flex;align-items:center;gap:var(--space-2);max-width:100%;height:26px;padding:0 var(--space-3) 0 3px;border-radius:var(--r-pill);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.ml-link{display:inline-flex;align-items:center;gap:var(--space-2);max-width:100%;height:26px;padding:0 var(--space-3) 0 var(--space-1);border-radius:var(--r-pill);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
 button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ml-link img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
 .ml-status{display:flex;justify-content:flex-start;align-items:center;gap:var(--space-2)}
@@ -35,7 +35,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-msgs{display:flex;flex-direction:column}
 .ml-msg{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4) 0;border-top:1px solid var(--rule)}
 .ml-msg:first-child{border-top:0;padding-top:0}
-.ml-msg p{margin:0 0 0 44px;max-width:65ch}
+.ml-msg p{margin:0 0 0 var(--space-12);max-width:65ch}
 .ml-msg .avatar-you{width:32px;height:32px}
 .ml-send{max-width:720px}
 .ml-sent{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--r-md);background:var(--ok-tint);color:var(--ok)}
@@ -68,7 +68,7 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 /* folder tabs: same as the bookings tabs (bookings.css .bk-tabs) */
 .ml-tabs{max-width:100%}
 .ml-tabs::-webkit-scrollbar{display:none}
-.ml-tabs button{position:relative;display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) 14px;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
+.ml-tabs button{position:relative;display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 .ml-tabs button.on{color:var(--ink);font-weight:500}
 .ml-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent-strong);animation:tabline var(--dur-3) var(--ease-standard) both}
 .ml-tabs .c{display:inline-flex;align-items:center;padding:2px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
@@ -112,14 +112,14 @@ button.ml-link:is(:hover,[data-state="hover"]){box-shadow:inset 0 0 0 1px var(--
 .ml-sug .tx small{font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-ccb{display:flex;gap:var(--space-3);flex:none}
 .ml-fromsel{border:0;background-color:transparent;height:38px;padding-left:0;width:100%;min-width:0;flex:1 1 0;text-overflow:ellipsis}
-.ml-body{display:block;width:100%;min-height:220px;padding:var(--space-4);border:0;background:transparent;color:var(--ink);font:400 var(--fs-body)/24px var(--sans);resize:vertical;outline:none}
+.ml-body{display:block;width:100%;min-height:220px;padding:var(--space-4);border:0;background:transparent;color:var(--ink);font:400 var(--fs-body)/var(--lh-22) var(--sans);resize:vertical;outline:none}
 .ml-attrow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-top:1px solid var(--rule)}
 .ml-file{display:inline-flex;align-items:center;gap:var(--space-2);height:32px;max-width:100%;padding:0 var(--space-1) 0 var(--space-2);border-radius:var(--r-md);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label)}
 .ml-file .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .ml-file small{color:var(--muted);font-size:var(--fs-meta);line-height:var(--lh-16);white-space:nowrap}
-.ml-file button{width:24px;height:24px;display:grid;place-items:center;border-radius:6px;color:var(--muted);flex:none}
+.ml-file button{width:24px;height:24px;display:grid;place-items:center;border-radius:var(--r-md);color:var(--muted);flex:none}
 .ml-file button:is(:hover,[data-state="hover"]){color:var(--ink);background:var(--raised)}
-.ml-attsug{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:0 var(--space-4) 14px}
+.ml-attsug{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:0 var(--space-4) var(--space-4)}
 .ml-attsug .chip{height:30px;background:var(--well)}
 .ml-errmsg{display:flex;align-items:center;gap:var(--space-2);margin:0;padding:var(--space-2) var(--space-4);font-size:var(--fs-label);line-height:var(--lh-label);color:var(--bad);border-bottom:1px solid var(--rule)}
 .ml-errmsg.inl{border:0;padding:0;display:inline-flex}

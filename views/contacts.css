@@ -23,7 +23,7 @@
 .cv-search{width:280px;flex:none}
 .cv-search svg{left:var(--space-3);top:10px;width:18px;height:18px}
 .cv-search svg{color:var(--muted)}.cv-search:has(.input:not(:placeholder-shown)) svg{color:var(--ink)}
-.cv .cv-search .input{padding:var(--space-2) var(--space-3) var(--space-2) 38px;background-image:none}
+.cv .cv-search .input{padding:var(--space-2) var(--space-3) var(--space-2) var(--space-10);background-image:none}
 .cv .cv-search .input:not(:placeholder-shown){box-shadow:inset 0 0 0 2px var(--ink)}
 .cv-search .input::placeholder{color:var(--muted)}
 
@@ -61,7 +61,7 @@
 /* no results and empty: radius 16, padding 48 32, gap 24; head gap 8 */
 .cv-none,.cv-empty{box-shadow:inset 0 0 0 1px var(--rule);border-radius:var(--r-xl);background:var(--surface);display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--space-6);padding:var(--space-12) var(--space-8)}
 .cv-eh{display:flex;flex-direction:column;gap:var(--space-2);align-items:center;width:100%}
-.cv-eh h3{font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0;color:var(--ink)}
+.cv-eh h3{font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;margin:0;color:var(--ink)}
 .cv-eh p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}
 .cv-none .row{justify-content:center;gap:var(--space-3);margin:0}
 .cv-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);width:100%}
@@ -79,25 +79,25 @@
 .cv .btn.cv-back{align-self:flex-start;height:34px;gap:var(--space-2)}
 .cv-hero{min-height:var(--photo-hero);height:var(--photo-hero);border-radius:var(--r-lg);background:var(--photo-backdrop)} /* Width token: 280 desktop, 200 phones (Vit 22 Oct: "use less height for the banner") */
 .cv-hero:after{background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 5%,transparent),color-mix(in srgb,var(--scrim-base) 25%,transparent) 45%,color-mix(in srgb,var(--scrim-base) 85%,transparent))}
-.cv-hero .tx{padding:0 var(--space-8) 28px;gap:var(--space-2)}
+.cv-hero .tx{padding:0 var(--space-8) var(--space-8);gap:var(--space-2)}
 .cv-hero .k{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:rgba(255,255,255,.85);opacity:1}
-.cv-hero h1{font:400 52px/52px var(--sans);letter-spacing:-1.04px}
+.cv-hero h1{font:400 var(--fs-hero)/var(--lh-hero) var(--sans);letter-spacing:-1.04px}
 .cv-hero .facts{display:flex;gap:var(--space-2);flex-wrap:wrap}
 .cv-hero .facts span{height:24px;padding:var(--space-1) var(--space-3);border-radius:var(--r-pill);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--on-photo);background:rgba(255,255,255,.16);box-shadow:none}
 .cv-actions{display:flex;align-items:center;gap:var(--space-4);min-height:48px}
 .cv-vact{min-height:38px}
 .cv-who{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2)}
-.cv-who .tag{height:24px;padding:3px var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans)}  /* 24 like every Tag (Figma Contact header 681:41371 facts, gate 6 Nov) */
+.cv-who .tag{height:24px;padding:var(--space-1) var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans)}  /* 24 like every Tag (Figma Contact header 681:41371 facts, gate 6 Nov) */
 .cv-acts{display:flex;align-items:center;gap:var(--space-2);flex:none}
-.cv-av{width:48px;height:48px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 24px/32px var(--sans);letter-spacing:-.3px;flex:none}
+.cv-av{width:48px;height:48px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;flex:none}
 .cv-av.s{width:32px;height:32px;font:400 var(--fs-label)/var(--lh-label) var(--sans);letter-spacing:0}
 .cv-save{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);transition:opacity var(--dur-3)}
 .cv-save svg{width:16px;height:16px;color:var(--muted);animation:spin var(--dur-loop) linear infinite}.cv-save.done svg{animation:none;color:var(--ok)}
 .cv-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:var(--space-6);align-items:start}
 .cv-main{display:flex;flex-direction:column;gap:var(--space-10)}
-.cv-panel{display:flex;flex-direction:column;gap:28px}
+.cv-panel{display:flex;flex-direction:column;gap:var(--space-8)}
 .cv-sec{display:flex;flex-direction:column;padding:var(--space-5) 0;border-radius:var(--r-lg)}
-.cv-sh{display:flex;align-items:center;gap:var(--space-2);min-height:34px}.cv-sh h2{flex:1;font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0}
+.cv-sh{display:flex;align-items:center;gap:var(--space-2);min-height:34px}.cv-sh h2{flex:1;font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;margin:0}
 .cv-panel .cv-sh{padding-left:var(--space-3)}
 .cv .btn.cv-act{height:34px;padding:var(--space-2) var(--space-3);gap:var(--space-2)}
 .cv .btn.cv-act:is(:hover,[data-state="hover"]){background:var(--surface)}
@@ -128,7 +128,7 @@ svg.cv-star,svg.i.s.cv-star{color:var(--faint);width:14px;height:14px;stroke-wid
 
 /* ---- drawers: head 90 (20 24), scroll padding 20 24 gap 20, footer 70 (16 24) ---- */
 .cv-drawer .dh .grow{display:flex;flex-direction:column;gap:2px}
-.cv-drawer .dh h2{font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0}
+.cv-drawer .dh h2{font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;margin:0}
 .cv-drawer .dh .t-meta{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 /* head close: Button S ghost, pad 8 0 8 12 (flush right) */
 .cv-drawer .btn.cv-close{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
@@ -151,7 +151,7 @@ svg.cv-star,svg.i.s.cv-star{color:var(--faint);width:14px;height:14px;stroke-wid
 .cv-match b{font:400 var(--fs-body)/var(--lh-body) var(--sans)}.cv-match .tx>span{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .cv-orgf{width:100%}
 .cv-drawer .cv-orgf svg{left:var(--space-3);top:10px;width:18px;height:18px;color:var(--faint)}
-.cv-drawer .cv-orgf .input{padding-left:38px;background-image:none}
+.cv-drawer .cv-orgf .input{padding-left:var(--space-10);background-image:none}
 .cv-cvr{display:flex;flex-direction:column;padding:var(--space-2);border:1px solid var(--rule-strong);box-shadow:var(--elev-2);border-radius:var(--r-lg);background:var(--surface)}
 .cv-cvr>.cv-cvrh{padding:var(--space-2) var(--space-3) var(--space-1);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-cvr>.cv-cvrf{white-space:nowrap;padding:var(--space-1) var(--space-3) var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--faint)}
@@ -193,7 +193,7 @@ svg.cv-star,svg.i.s.cv-star{color:var(--faint);width:14px;height:14px;stroke-wid
 .cv-irow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .cv-irow b{font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}.cv-irow small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
-.cv-file{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) 14px;border:1px solid var(--rule-strong);border-radius:10px}
+.cv-file{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:1px solid var(--rule-strong);border-radius:var(--r-lg)}
 .cv-file>svg{width:32px;height:32px;color:var(--accent-ink);flex:none;stroke-width:1.25}
 .cv-file .tx{display:flex;flex-direction:column;gap:2px;min-width:0}.cv-file b{font:400 var(--fs-body)/var(--lh-body) var(--sans)}.cv-file small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .cv-p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}
@@ -227,7 +227,7 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
  .cv-actions{flex-wrap:wrap}
  .cv-photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.cv-ph-t{width:auto;aspect-ratio:1;height:auto}
  .cv-none,.cv-empty{padding:var(--space-8) var(--space-4)}
- .cv-hero h1{font-size:36px;line-height:40px}
+ .cv-hero h1{font-size:var(--fs-display);line-height:40px}
 }
 .cv-drawer .help svg{width:12px;height:12px;color:var(--muted);vertical-align:top;margin:2px 2px 0 0}
 .cv-cvrrow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -270,7 +270,7 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 @media (max-width:839.98px){.cv-map{grid-template-columns:1fr}}
 /* contact header: the person, not a venue photo */
 .cv-person{align-items:flex-start;gap:var(--space-5);margin:var(--space-2) 0 var(--space-2)}
-.cv-av.cv-av-l{width:72px;height:72px;font:400 28px/36px var(--sans)}
+.cv-av.cv-av-l{width:72px;height:72px;font:400 var(--fs-display)/var(--lh-display) var(--sans)}
 .cv-person .cv-who{gap:var(--space-1)}.cv-person h1{margin:0}
 .cv-role{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}.cv-role .link{color:var(--ink)}
 .cv-facts{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-2)}
@@ -280,7 +280,7 @@ button.cv-irow:is(:hover,[data-state="hover"]) b{text-decoration:underline}
 
 /* the avatar's top lines up with the top of the name's capitals, not with its line box (Vit 22 Oct): Display 32/40 caps start 8.6 px down, 24/30 on phones 6.2 px */
 .cv-actions.cv-person{align-items:flex-start}
-.cv-actions.cv-person>.cv-av{margin-top:9px}
+.cv-actions.cv-person>.cv-av{margin-top:var(--space-2)}
 .cv-actions.cv-person>.cv-acts{align-self:center}
 @media (max-width:599.98px){.cv-actions.cv-person>.cv-av{margin-top:var(--space-1)!important}}
 /* the Name column never goes under 200: between phone and desktop widths the table scrolls sideways instead of crushing it (12 Nov, Vit: "overlap columns on table") */

@@ -3,12 +3,12 @@
 .tour{position:fixed;inset:0;z-index:var(--z-toast);pointer-events:none}
 .tour.tour-dim{background:color-mix(in srgb,var(--scrim-base) 35%,transparent);pointer-events:auto}
 .tour-spot{position:fixed;border-radius:var(--r-lg);box-shadow:0 0 0 2px var(--accent-strong),0 0 0 9999px color-mix(in srgb,var(--scrim-base) 35%,transparent);transition:left var(--dur-3) var(--ease-standard),top var(--dur-3) var(--ease-standard),width var(--dur-3) var(--ease-standard),height var(--dur-3) var(--ease-standard)}
-.tour-card{position:fixed;width:340px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:var(--space-2);padding:21px;border-radius:var(--r-lg);background:var(--overlay);
+.tour-card{position:fixed;width:340px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-5);border-radius:var(--r-lg);background:var(--overlay);
   box-shadow:inset 0 0 0 1px var(--rule-strong),var(--elev-3);pointer-events:auto;animation:tour-in var(--dur-3) var(--ease-standard) both;
   transition:left var(--dur-3) var(--ease-standard),top var(--dur-3) var(--ease-standard)}
 .tour-card h3{margin:0}
 .tour-card p{margin:0}
-.tour-card.tour-center{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:400px;padding:25px;gap:var(--space-3);animation:tour-pop var(--dur-3) var(--ease-standard) both}
+.tour-card.tour-center{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:400px;padding:var(--space-6);gap:var(--space-3);animation:tour-pop var(--dur-3) var(--ease-standard) both}
 .tour-mark{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;background:var(--accent-tint);color:var(--accent-ink)}
 .tour-mark svg.i{width:20px;height:20px}
 .tour-foot{display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-2)}

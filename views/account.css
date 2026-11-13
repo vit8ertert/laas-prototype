@@ -91,7 +91,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-banner.att{background:var(--att-tint);color:var(--att)}
 .acc-banner.att .tx span{color:var(--att)}
 .acc-x{width:16px;height:16px;display:grid;place-items:center;color:var(--ink);flex:none;position:relative}
-.acc-x::before{content:"";position:absolute;inset:-6px;border-radius:6px}
+.acc-x::before{content:"";position:absolute;inset:-6px;border-radius:var(--r-md)}
 .acc-x:is(:hover,[data-state="hover"])::before{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .acc-x svg.i{width:16px;height:16px;color:var(--ink)}
 .acc-explainer .acc-x svg.i{width:14px;height:14px}
@@ -213,7 +213,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-obtop .t-meta{color:var(--muted)}
 .acc-obtop .logo svg{height:24px;width:auto;fill:var(--ink);display:block}
 .acc-obform{margin:auto 0;width:440px;max-width:100%;display:flex;flex-direction:column;gap:var(--space-5)}
-.acc-ob.snd .acc-obform{gap:14px}
+.acc-ob.snd .acc-obform{gap:var(--space-4)}
 .acc-obh{display:flex;flex-direction:column;gap:var(--space-2)}
 .acc-obh p{margin:0;color:var(--muted)}
 .acc-obstack{display:flex;flex-direction:column;gap:var(--space-3)}
@@ -266,7 +266,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-obth{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-2);border-radius:var(--r-md);border:1px solid var(--rule);text-align:left}
 .acc-obth:is(:hover,[data-state="hover"]){border-color:var(--rule-strong)}
 .acc-obth.on{border:2px solid var(--ink)}
-.acc-obth .pv{position:relative;display:block;height:96px;border-radius:6px;overflow:hidden;background:var(--sunken)}
+.acc-obth .pv{position:relative;display:block;height:96px;border-radius:var(--r-md);overflow:hidden;background:var(--sunken)}
 .acc-obth .pv>.acc-mini{transform:scale(.3);transform-origin:0 0;position:absolute;left:0;top:0}
 /* Fits your genre badge: Figma's lime (color/poster/lime), the same in every theme and mode, like Ask (Vit 22 Oct, Q14) */
 .acc-obth .fits{position:absolute;left:var(--space-2);top:var(--space-2);padding:var(--space-1) var(--space-3);border-radius:var(--r-pill);background:var(--poster-lime);color:var(--on-lime);font:500 var(--fs-label)/var(--lh-label) var(--sans);box-shadow:var(--elev-1)}
@@ -290,15 +290,15 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-mini .ni.on{background:var(--well);font-weight:500}
 .acc-mini .dot{width:14px;height:14px;border-radius:50%;background:var(--accent)}
 .acc-mini .mm{flex:1;background:var(--canvas);border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;padding:var(--space-20) var(--space-8) var(--space-8);gap:var(--space-4);text-align:center}
-.acc-mini h3{font:400 40px/48px var(--sans);margin:0}
+.acc-mini h3{font:400 var(--fs-display)/var(--lh-display) var(--sans);margin:0}
 .acc-mini .mm>p{margin:0;color:var(--muted);max-width:620px}
 /* the composer is the pill, as on the dashboard since T487: + without a fill, the placeholder, Send only with text */
-.acc-mini .ask{width:760px;min-height:52px;background:var(--surface);border-radius:28px;padding:6px;display:flex;align-items:center;gap:var(--space-1);color:var(--faint);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
+.acc-mini .ask{width:760px;min-height:52px;background:var(--surface);border-radius:var(--r-xl);padding:var(--space-2);display:flex;align-items:center;gap:var(--space-1);color:var(--faint);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
 .acc-mini .ask .add{width:40px;height:40px;display:grid;place-items:center;border-radius:var(--r-pill);color:var(--ink)}
-.acc-mini .ask .ph{flex:1;padding:10px var(--space-1);font-size:var(--fs-body);line-height:var(--lh-body)}
+.acc-mini .ask .ph{flex:1;padding:var(--space-3) var(--space-1);font-size:var(--fs-body);line-height:var(--lh-body)}
 .acc-mini .chips{display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:center;width:760px}
 .acc-mini .chips span{display:inline-flex;align-items:center;gap:var(--space-2);height:32px;padding:0 var(--space-3);border-radius:var(--r-pill);background:var(--well);font-size:var(--fs-label);line-height:var(--lh-label)}
-.acc-mini h4{font:400 24px/32px var(--sans);margin:var(--space-10) 0 0}
+.acc-mini h4{font:400 var(--fs-title)/var(--lh-title) var(--sans);margin:var(--space-10) 0 0}
 .acc-mini .sm{margin:0;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted)}
 .acc-mini .cards{display:flex;gap:var(--space-3)}
 .acc-mini .cards span{width:220px;background:var(--surface);border-radius:var(--r-lg);padding:var(--space-2);display:flex;flex-direction:column;gap:var(--space-1);text-align:left}
@@ -353,11 +353,11 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-bsq{width:40px;height:40px;font-size:var(--fs-small);line-height:var(--lh-20)}
 
 /* ---------- New band drawer ---------- */
-.acc-nbprev{width:96px;height:96px;border-radius:var(--r-lg);font-size:28px}
+.acc-nbprev{width:96px;height:96px;border-radius:var(--r-lg);font-size:var(--fs-display)}
 .acc-nbprev img{width:100%;height:100%;object-fit:cover}
 .acc-nblogo>div{gap:var(--space-2)}
 .sidebar .band .sq .acc-sqimg{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
-@media (max-width:599.98px){.acc-nbprev{width:72px;height:72px;font-size:22px}.acc-pph{flex-direction:column;gap:var(--space-1)}}
+@media (max-width:599.98px){.acc-nbprev{width:72px;height:72px;font-size:var(--fs-title)}.acc-pph{flex-direction:column;gap:var(--space-1)}}
 
 /* ---------- Audience (330:12770 overview, 330:13413 empty) ---------- */
 .aud-ph{display:flex;align-items:flex-start;gap:var(--space-4)}
@@ -381,7 +381,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-kpi{background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule);padding:var(--card);display:flex;flex-direction:column;gap:var(--space-2)}
 .aud-kpi .l,.aud-kpi .d{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .aud-kpi .d.ok{color:var(--ok)}
-.aud-kpi .v{font:400 32px/40px var(--sans);letter-spacing:-.5px}
+.aud-kpi .v{font:400 var(--fs-display)/var(--lh-display) var(--sans);letter-spacing:-.5px}
 .aud-cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:var(--space-6);align-items:start}
 .aud-cols>.col{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
 .aud-body{display:flex;flex-direction:column;gap:var(--space-3);padding:0 var(--space-3)}
@@ -453,7 +453,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-gnone{display:none;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}.acc-genres.nohit .acc-gnone{display:block}
 /* onboarding: the Back / Continue row sits apart from the form, 40 px below the last field on every step (Vit 21 Oct) */
 .acc-obform>.row:last-child{margin-top:var(--space-5)}
-.acc-ob.snd .acc-obform>.row:last-child{margin-top:26px}
+.acc-ob.snd .acc-obform>.row:last-child{margin-top:var(--space-6)}
 
 /* sign-up: the button stack sits 32 px under the intro (Vit 21 Oct: "button needs padding on top") */
 .acc-obh+.acc-obstack{margin-top:var(--space-3)}

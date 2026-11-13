@@ -40,7 +40,7 @@
 button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:underline}
 .d-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:var(--space-6);align-items:start}
 .d-left{display:flex;flex-direction:column;gap:var(--space-10);min-width:0}
-.d-right{display:flex;flex-direction:column;gap:28px;min-width:0}
+.d-right{display:flex;flex-direction:column;gap:var(--space-8);min-width:0}
 .d-banner{border-radius:var(--r-md);padding:var(--space-3) var(--space-4);gap:var(--space-3)}.d-banner .tx{display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.d-banner .tx .t-label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}.d-banner>svg.i{width:18px;height:18px;margin:0;fill:currentColor}
 
 /* tonight */
@@ -50,7 +50,7 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 .d-tonight::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--scrim-base) 0%,transparent),color-mix(in srgb,var(--scrim-base) 85%,transparent));z-index:0}
 .d-tonight>*:not(img){position:relative;z-index:1}
 .d-tt{display:flex;align-items:center;gap:var(--space-3)}.d-tt .tag{height:24px;font:400 var(--fs-label)/var(--lh-label) var(--sans)}  /* 24 like every Tag (Figma Tonight card 676:41318, gate 6 Nov) */.d-k{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--on-photo-accent)}
-.d-tonight h2{font:400 24px/32px var(--sans);letter-spacing:-.3px;margin:0;max-width:640px}
+.d-tonight h2{font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;margin:0;max-width:640px}
 .d-tm{display:flex;align-items:center;gap:var(--space-3);min-height:34px;font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--on-photo-time)}.d-tm>span:first-child{flex:1;min-width:0}
 .d-tm .btn{flex:none}
 
@@ -72,7 +72,7 @@ button.d-shm:is(:hover,[data-state="hover"]){color:var(--ink);text-decoration:un
 .d-v:is(:hover,[data-state="hover"]),.d-pill:is(:hover,[data-state="hover"]){background:var(--hover)}
 :root{--d-head:var(--surface)}  /* Gig sheet header on surface in every mode (Figma 1176:64960); the old rule left "Match system" with the default look on a hard-coded #1f1f1f, dark under light text (found building the Django Dashboard, 8 Nov) */
 :root[data-theme="light"],:root[data-genre]{--d-idc:var(--accent-ink)}@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--d-idc:var(--accent-ink)}}
-.d-row{display:flex;align-items:center;gap:var(--space-4);padding:11px var(--space-4) var(--space-3);border-top:1px solid var(--rule);width:100%;text-align:left;min-height:60px}
+.d-row{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-4) var(--space-3);border-top:1px solid var(--rule);width:100%;text-align:left;min-height:60px}
 .d-row:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-time{width:72px;flex:none;font:500 var(--fs-card)/var(--lh-22) var(--mono)}
 .d-when{flex:none;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
@@ -104,7 +104,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-kpi.ghost{background:none;align-items:flex-start;padding:var(--space-5);box-shadow:none;outline:1px dashed var(--rule);outline-offset:-1px}.d-kpi.ghost>.muted{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .d-kv.faint{color:var(--faint)}
 .d-kl{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
-.d-kv{font:400 32px/40px var(--sans);letter-spacing:-.5px}
+.d-kv{font:400 var(--fs-display)/var(--lh-display) var(--sans);letter-spacing:-.5px}
 .d-kd{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}.d-kd.attc{color:var(--att)}.d-kd.okc{color:var(--ok)}
 .d-list{display:flex;flex-direction:column;gap:var(--space-2)}
 .d-card{display:flex;align-items:center;gap:var(--space-3);padding:var(--row-y) var(--row-x);border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);text-align:left;width:100%}
@@ -120,10 +120,10 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-sub{margin:0;max-width:600px;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 /* the composer is one pill at every width (Vit 5 Nov, after Claude and ChatGPT: "yes, all three"): + (opens Add to chat:
    attach, context, the Plan switch), the text, Send ↑ only once there is text. Context pills wrap above the text */
-.d-comp{width:100%;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1);padding:6px;border-radius:28px;background:var(--surface);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
-.d-comp>.d-ctxs{flex:1 0 100%;padding:var(--space-1) 6px 2px}
+.d-comp{width:100%;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:var(--space-1);padding:var(--space-2);border-radius:var(--r-xl);background:var(--surface);text-align:left;box-shadow:inset 0 0 0 1px var(--rule-strong),0 8px 24px #1a1a1a0f}
+.d-comp>.d-ctxs{flex:1 0 100%;padding:var(--space-1) var(--space-2) 2px}
 .d-comp>.d-compbar{display:contents}
-.d-comp textarea{order:2;flex:1 1 0;min-width:0;min-height:40px;max-height:160px;resize:none;border:0;outline:none;background:none;color:var(--ink);font:400 var(--fs-body)/var(--lh-body) var(--sans);padding:10px var(--space-1);field-sizing:content}
+.d-comp textarea{order:2;flex:1 1 0;min-width:0;min-height:40px;max-height:160px;resize:none;border:0;outline:none;background:none;color:var(--ink);font:400 var(--fs-body)/var(--lh-body) var(--sans);padding:var(--space-3) var(--space-1);field-sizing:content}
 .d-comp textarea::placeholder{color:var(--faint)}
 .d-comp textarea:placeholder-shown{height:40px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.d-comp textarea::placeholder{text-overflow:ellipsis}  /* an empty box stays one line, a long placeholder ends in … (= Figma Composer Compact, 12 Nov) */
 .d-comp .d-addctx{order:1;width:40px;height:40px;padding:0;justify-content:center;border-radius:var(--r-pill)}  /* no fill (Vit 4 Nov: "plus without a BG") */
@@ -168,7 +168,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-table th{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted);text-align:left}
 .d-table td{font:400 var(--fs-body)/var(--lh-18) var(--sans)}
 .d-table td.d-tw{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--ink)}
-.d-table .title-cell{display:flex;align-items:center;gap:var(--space-3);font:500 var(--fs-body)/var(--lh-body) var(--sans)}.d-table .title-cell .thumb{width:32px;height:32px;border-radius:6px}.d-table .thumb.r8{border-radius:var(--r-md)}
+.d-table .title-cell{display:flex;align-items:center;gap:var(--space-3);font:500 var(--fs-body)/var(--lh-body) var(--sans)}.d-table .title-cell .thumb{width:32px;height:32px;border-radius:var(--r-md)}.d-table .thumb.r8{border-radius:var(--r-md)}
 .d-table td.num{font:400 var(--fs-small)/var(--lh-20) var(--mono)}
 .d-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6);align-items:start}
 .d-tiles{display:flex;flex-wrap:wrap;gap:var(--space-3)}.d-tiles>.d-kpi{width:266px}
@@ -238,7 +238,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-newc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);text-align:center;padding:var(--space-12) 0}.d-newc p{margin:0}
 .d-record{position:sticky;top:0;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--rule);min-height:min(682px,calc(100vh - 120px))}
 .d-rh{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}.d-rh b{flex:1;min-width:0}
-.d-kvr{display:flex;flex-direction:column;gap:2px;padding:var(--space-2) 0 7px;border-bottom:1px solid var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans)}.d-kvr small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
+.d-kvr{display:flex;flex-direction:column;gap:2px;padding:var(--space-2) 0 var(--space-2);border-bottom:1px solid var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans)}.d-kvr small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .d-rh .d-id{font:400 var(--fs-meta)/var(--lh-16) var(--mono);color:var(--accent-ink)}.d-rh{flex-wrap:nowrap}  /* title, then id · venue, date; the tag beside them (10 Nov, the Gig sheet head pattern) */.d-rh b.t-heading{letter-spacing:-.1px}
 .d-record>.btn{justify-content:flex-start!important}
 .main:has(.d-asst)>.abar{display:none}
@@ -324,7 +324,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-hist{min-height:calc(100vh - 120px)}
 .d-hsp{flex:1}
 .d-hfoot{display:flex;align-items:flex-start;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);border:1px solid var(--rule);text-align:left;width:100%}
-.d-hfoot:is(:hover,[data-state="hover"]){background:var(--surface)}.d-hfoot svg{margin-top:3px;flex:none}
+.d-hfoot:is(:hover,[data-state="hover"]){background:var(--surface)}.d-hfoot svg{margin-top:var(--space-1);flex:none}
 .d-hfoot span{display:flex;flex-direction:column;gap:2px;min-width:0}.d-hfoot b{font-weight:500}.d-hfoot small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 
 /* calendar sync (settings column, 720 px) */
@@ -360,7 +360,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .tl-row{align-items:center}
 .tl-row .tag{flex:none}.tl-row>svg{color:var(--muted)}
 .tl-side{position:sticky;top:0;display:flex;flex-direction:column;gap:var(--space-4)}
-.tl-side{margin-top:52px}  /* starts level with the first card, under the filter (36 + 16); Vit 2 Nov */
+.tl-side{margin-top:var(--space-12)}  /* starts level with the first card, under the filter (36 + 16); Vit 2 Nov */
 .tl-card{display:flex;flex-direction:column;gap:var(--space-3)}
 .tl-card:first-child{border-color:var(--accent)}
 .tl-card p{margin:0;font-size:var(--fs-small);line-height:var(--lh-20);color:var(--muted)}
@@ -371,7 +371,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .tl-steps li::before{content:counter(s);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);display:grid;place-items:center;font-size:var(--fs-meta);line-height:var(--lh-16)}
 .tl-steps b,.tl-out b{font-weight:500}.tl-steps small,.tl-out small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .tl-out{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
-.tl-out li{display:flex;gap:var(--space-2);align-items:flex-start}.tl-out li>svg{margin-top:3px;flex:none;color:var(--bad)}
+.tl-out li{display:flex;gap:var(--space-2);align-items:flex-start}.tl-out li>svg{margin-top:var(--space-1);flex:none;color:var(--bad)}
 .tl-out span{display:flex;flex-direction:column;gap:2px}
 @media (max-width:1100px){.tl-grid{grid-template-columns:1fr}.tl-side{position:static;margin-top:0}}
 @media (max-width:839.98px){.d-hist{min-height:0}.cs-dir{width:100%}.cs-dir button{flex:1;justify-content:center;white-space:nowrap;padding:0 var(--space-2)}
@@ -493,7 +493,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-mark{display:grid!important;place-items:center;color:var(--accent-ink);margin-bottom:var(--space-1)}
 .d-newc .d-mark svg.i{width:32px!important;height:32px!important}
 .d-newc .d-chips{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:0!important}
-.d-newc .d-chip{justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important;height:auto!important;min-height:44px;gap:var(--space-3)!important;padding:10px var(--space-1)!important;border-radius:var(--r-md)!important;background:none!important;box-shadow:none!important;white-space:normal;font:400 var(--fs-body)/var(--lh-body) var(--sans)!important;color:var(--ink)!important}
+.d-newc .d-chip{justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important;height:auto!important;min-height:44px;gap:var(--space-3)!important;padding:var(--space-3) var(--space-1)!important;border-radius:var(--r-md)!important;background:none!important;box-shadow:none!important;white-space:normal;font:400 var(--fs-body)/var(--lh-body) var(--sans)!important;color:var(--ink)!important}
 .d-newc .d-chip:nth-child(n+4){display:none!important}
 .d-newc .d-ci-ai{display:none!important}
 .d-newc .d-ci-t{display:inline-flex!important;color:var(--muted);margin-top:2px}

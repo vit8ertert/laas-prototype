@@ -14,10 +14,10 @@
 /* Figma "Tabs · bookings" 49 = "tab row" 48 (gap 20) + a 1 px rule rectangle. Tab 298:5098: pad 0, "inner" 46 (pad 12 4,
    gap 8) + indicator 2 (hover rule-strong, active accent-strong). social.js renders tabs without .in, so it keeps the old padding */
 
-.bk-tabs>button{position:relative;display:flex;align-items:center;gap:var(--space-2);height:auto;min-height:46px;padding:var(--space-3) var(--space-1) 14px;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
+.bk-tabs>button{position:relative;display:flex;align-items:center;gap:var(--space-2);height:auto;min-height:46px;padding:var(--space-3) var(--space-1) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 /* 46 high like the DS Tab (298:5098) and the Money tabs: 44 content + the 2 px indicator (Vit 26 Oct, one tab height everywhere) */
 .bk-tabs>button:has(>.in){flex-direction:column;align-items:stretch;gap:0;padding:0}
-.bk-tabs .in{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) 14px}
+.bk-tabs .in{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) var(--space-4)}
 .bk-tabs button.on{color:var(--ink);font-weight:500}
 .bk-tabs>button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px}
 .bk-tabs>button:is(:hover,[data-state="hover"]):not(.on)::after{background:var(--rule-strong)}
@@ -35,7 +35,7 @@
 .bk-chip.on{background:var(--well);box-shadow:inset 0 0 0 1px var(--ink)}
 .bk-search{position:relative;display:flex;align-items:center;width:280px;max-width:100%;height:38px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .bk-search svg.i{position:absolute;left:var(--space-3);color:var(--muted);pointer-events:none}
-.bk-search input{width:100%;height:100%;padding:var(--space-2) var(--space-3) var(--space-2) 38px;background:none;border:0;outline:none;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
+.bk-search input{width:100%;height:100%;padding:var(--space-2) var(--space-3) var(--space-2) var(--space-10);background:none;border:0;outline:none;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-search input::placeholder{color:var(--muted)}
 .bk-search:is(:focus-within,[data-state="focus"]),.bk-search:has(input:not(:placeholder-shown)){box-shadow:inset 0 0 0 2px var(--ink)}
 .bk-search:is(:focus-within,[data-state="focus"]) svg.i{color:var(--ink)}
@@ -56,7 +56,7 @@
 .bk-tr .tag{font:400 var(--fs-label)/var(--lh-label) var(--sans)}  /* 6 Nov gate: the Tag master is 24 (Figma Table row Status tag 24), no 26 override */
 .bk-tr mark,.bk-table mark{background:none;color:var(--accent-ink);font-weight:inherit}
 .bk-thumb{width:32px;height:32px;border-radius:var(--r-md);object-fit:cover;flex:none}
-.bk-thumb.none{display:grid;place-items:center;background:var(--well);border-radius:6px;color:var(--ink)}
+.bk-thumb.none{display:grid;place-items:center;background:var(--well);border-radius:var(--r-md);color:var(--ink)}
 .bk-thumb.none svg.i{width:10px;height:10px}
 
 
@@ -136,7 +136,7 @@
 .bk-describe .m svg.i{width:14px;height:14px}
 .bk-lead{position:relative;display:block}
 .bk-lead>svg.i{position:absolute;left:var(--space-3);top:10px;color:var(--ink);pointer-events:none}
-.bk-lead .input{padding-left:38px}
+.bk-lead .input{padding-left:var(--space-10)}
 .bk-lead.err .input{border-color:var(--bad)}
 .bk-lead.err>svg.i{color:var(--muted)}
 .bk-sel{position:relative;display:block}
@@ -166,7 +166,7 @@
 .bk-idx button{display:flex;align-items:center;gap:var(--space-2);height:34px;padding:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink);text-align:left}
 .bk-idx button:is(:hover,[data-state="hover"]){background:var(--surface)}
 .bk-idx button.on{background:var(--well);font-weight:500}
-.bk-idx p{margin:18px 0 0;max-width:184px;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
+.bk-idx p{margin:var(--space-5) 0 0;max-width:184px;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .bk-form{flex:1;min-width:0;max-width:796px;display:flex;flex-direction:column;gap:var(--space-8);padding-bottom:var(--space-6)}
 .bk-form section{display:flex;flex-direction:column;gap:var(--space-4);scroll-margin-top:var(--space-2)}
 .bk-form .sh{display:flex;align-items:baseline;gap:var(--space-2)}
@@ -179,7 +179,7 @@
 .bk-times{display:grid;grid-template-columns:180px repeat(5,minmax(96px,1fr));gap:var(--space-4);align-items:start}
 .bk-form{container-type:inline-size}
 @container (max-width:759.98px){.bk-times{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}.bk-times>.date{grid-column:span 2}}  /* the times wrap inside the form column (Vit 10 Nov: "full booking editor has overlaps on desktop": six fixed columns needed 740 px, the column is ~560 between the index and the preview) */
-.bk-times .input{padding:0 var(--space-3)}.bk-times .bk-lead .input{padding-left:38px}
+.bk-times .input{padding:0 var(--space-3)}.bk-times .bk-lead .input{padding-left:var(--space-10)}
 .bk-vf{position:relative}
 .bk-vlist{position:absolute;left:0;right:0;top:72px;z-index:5;max-width:400px;padding:var(--space-2);border-radius:var(--r-lg);background:var(--overlay);border:1px solid var(--rule-strong);box-shadow:var(--elev-2);display:flex;flex-direction:column;gap:2px}
 .bk-vlist button{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-2);border-radius:var(--r-md);text-align:left}
@@ -209,7 +209,7 @@
 .bk-gig .cv .tag{position:absolute;left:var(--space-3);top:var(--space-3)} /* look: the shared On photo tag (tags.css) */
 .bk-gig .tx{display:flex;flex-direction:column}
 .bk-gig .when{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
-.bk-gig .ti{margin-top:var(--space-1);font:400 24px/28px var(--sans);letter-spacing:-.3px;color:var(--ink)}
+.bk-gig .ti{margin-top:var(--space-1);font:400 var(--fs-title)/var(--lh-title) var(--sans);letter-spacing:-.3px;color:var(--ink)}
 .bk-gig .wh{display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-2);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink)}
 .bk-gig .wh svg.i{width:14px;height:14px}
 .bk-gig .wh.err{color:var(--bad)}
@@ -252,7 +252,7 @@
 }
 
 /* icons sit on the first line of the text, not the middle of a wrapped block (Vit 21 Oct) */
-.bk-describe .r>svg.i{margin-top:3px;flex:none}.bk-describe .m>svg.i{margin-top:1px;flex:none}
+.bk-describe .r>svg.i{margin-top:var(--space-1);flex:none}.bk-describe .m>svg.i{margin-top:1px;flex:none}
 /* the assistant bar on New booking matches every other page: 720 wide, centred (was full width) */
 .bk-ebar2{padding:0 var(--space-2) var(--space-4)}.bk-abar{max-width:720px;margin:0 auto}
 /* .bk-empty = Empty state 140:400: padding and gap from the LAAS · Width tokens (hero-y, hero-x, section; the 1 px border inside), 48 / 32 / 24 on desktop, 24 / 16 / 16 on phones (13 Nov: the code had its own 32 / 24) */

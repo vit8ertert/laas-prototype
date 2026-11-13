@@ -10,7 +10,7 @@
   /* M4: no permanent assistant bar; Ask lives in the tab bar */
   .abar,.abar-mini-wrap{display:none!important}
   .sheet{bottom:var(--space-4)}
-  .tabbar{display:flex;align-items:center;gap:var(--space-2);padding:6px max(var(--space-3),env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(var(--space-3),env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:var(--z-nav)}
+  .tabbar{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) max(var(--space-3),env(safe-area-inset-right,0px)) calc(var(--space-2) + env(safe-area-inset-bottom,0px)) max(var(--space-3),env(safe-area-inset-left,0px));background:var(--sunken);border-top:1px solid var(--rule);z-index:var(--z-nav)}
   .tabbar .tb-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:560px;margin:0 auto}
   .tb-tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;color:var(--muted);font:400 var(--fs-meta)/var(--lh-16) var(--sans);border-radius:var(--r-lg)}
   .tb-tab .ti{position:relative;display:grid;place-items:center;width:48px;height:28px;border-radius:var(--r-pill);transition:background var(--dur-1)}
@@ -44,7 +44,7 @@
   .drawer{padding-top:var(--space-4)}.drawer::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .drawer .df{padding-bottom:calc(var(--space-4) + env(safe-area-inset-bottom,0px))}
   /* the size variants (.bd-modal.w560/.w720, .acc-upg) are sheets too (found on the T459 sweep: they kept their desktop box) */
-  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:36px var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
+  :is(.modal,.modal:has(>.cf-acts),.bd-modal.w560,.bd-modal.w720,.modal.acc-upg){left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100% - var(--layout-sheet-gap));border-radius:var(--r-xl) var(--r-xl) 0 0;--tx:0;transform:none;padding:var(--space-10) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom,0px));animation:cx-up var(--dur-3) var(--ease-emphasized) both}
   /* Dialog Compact (1821:37049, Vit 7 Nov): a 16 px grab-handle row, handle at 10, then the 20 px head padding */
   :is(.modal,.bd-modal.w560,.bd-modal.w720,.modal.acc-upg)::before{content:"";position:absolute;top:10px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:var(--rule-strong)}
   .modal:has(>.cf-acts){padding-top:var(--space-6)}.modal:has(>.cf-acts)::before{content:none} /* Confirmation Compact 1841:37499: no handle, 24 top */
@@ -86,7 +86,7 @@
 .pop.cx-ask{display:flex;flex-direction:column;gap:var(--space-3);padding-inline:var(--space-4)!important}
 .cx-ask-h{display:flex;align-items:center;gap:var(--space-2)}.cx-ask-h .grow{flex:1}
 .cx-ask .rec{align-self:flex-start}
-.cx-ask-f{display:flex;gap:var(--space-2);align-items:center;background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-xl);padding:var(--space-2) var(--space-2) var(--space-2) 14px}
+.cx-ask-f{display:flex;gap:var(--space-2);align-items:center;background:var(--raised);border:1px solid var(--rule-strong);border-radius:var(--r-xl);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4)}
 .cx-ask-f input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font-size:var(--fs-card);line-height:var(--lh-22)}
 .cx-ask-s{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 
@@ -98,17 +98,17 @@
   /* sizes and line heights come from tokens.css (Figma LAAS · Width); only the tighter tracking is set here */
   .t-display{letter-spacing:-.3px}
   .t-title{letter-spacing:-.2px}
-  .bd-hero h1,.cv-hero h1,.ev-tx h1{font-size:28px!important;line-height:32px!important;letter-spacing:-.4px!important}
-  .acc-mini h3{font-size:28px;line-height:34px}
-  .aud-kpi .v,.cat-kpi .v,.d-kv,.m-kv,.bd-amt .n,.iv-due{font-size:24px;line-height:30px;letter-spacing:-.3px}
-  .bd-amt .c,.bk-gig .ti,.cat-emptystate .hd h2,.cv-eh h3,.cv-sh h2,.cv-drawer .dh h2,.d-tonight h2,.acc-mini h4{font-size:20px;line-height:26px}
-  .ml-eamt{font-size:22px;line-height:28px}
+  .bd-hero h1,.cv-hero h1,.ev-tx h1{font-size:var(--fs-hero)!important;line-height:32px!important;letter-spacing:-.4px!important}
+  .acc-mini h3{font-size:var(--fs-hero);line-height:34px}
+  .aud-kpi .v,.cat-kpi .v,.d-kv,.m-kv,.bd-amt .n,.iv-due{font-size:var(--fs-display);line-height:30px;letter-spacing:-.3px}
+  .bd-amt .c,.bk-gig .ti,.cat-emptystate .hd h2,.cv-eh h3,.cv-sh h2,.cv-drawer .dh h2,.d-tonight h2,.acc-mini h4{font-size:var(--fs-title);line-height:26px}
+  .ml-eamt{font-size:var(--fs-display);line-height:28px}
   .cv-av.cv-av-l{width:56px;height:56px;font-size:var(--fs-title);line-height:var(--lh-title)}
 
   svg.i{width:16px;height:16px}svg.i.s{width:14px;height:14px}
   .tabbar svg.i{width:20px;height:20px}
   /* buttons on phones are Figma Button S: 34 high, 13/18 Medium, 12 side padding, 16 icon */
-  .btn,.btn.s{height:34px;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label);gap:6px}
+  .btn,.btn.s{height:34px;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label);gap:var(--btn-m-gap)}
   .btn>svg.i,.btn.s>svg.i{width:16px;height:16px}
   .btn.icon{width:auto;min-width:34px;padding:0 var(--space-2)}
   .btn.lg{min-height:44px;padding:var(--space-2) var(--space-5)}
@@ -240,7 +240,7 @@
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.ghost:not(.icon):not([aria-label]){margin-left:var(--space-3)}
   :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.btn.icon,:is(.banner,.bd-banner,.acc-banner,.cv-banner)>[aria-label*="ismiss"]{order:2}
   /* Booking progress: segments only; the current step's label runs under the whole bar instead of under its segment */
-  .bk-prog{position:relative;padding-bottom:22px!important}.bk-prog li{position:static!important}
+  .bk-prog{position:relative;padding-bottom:var(--space-6)!important}.bk-prog li{position:static!important}
   .bk-prog li:is(.now,.att) span{position:absolute;left:0;right:0;bottom:0;text-align:left!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none!important;width:auto!important}
   /* Settings row with a field: label above, the field full width (rows with a toggle keep it on the right) */
   .acc-row:has(.ctl .input,.ctl select){flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:var(--stack)!important}
@@ -266,7 +266,7 @@
   .acc-card>h2,.acc-sh h2{font-size:var(--fs-card)!important;line-height:var(--lh-22)!important}
   /* LAAS on your iPhone: one row, icon 44, two lines of text, a smaller badge */
   .acc-app{flex-direction:row!important;align-items:flex-start!important;gap:var(--space-3)!important}
-  .acc-appicon{width:44px!important;height:44px!important;border-radius:10px!important}.acc-appicon svg{width:30px!important}
+  .acc-appicon{width:44px!important;height:44px!important;border-radius:var(--r-lg)!important}.acc-appicon svg{width:30px!important}
   .acc-app p{font-size:var(--fs-label)!important;line-height:var(--lh-16)!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .acc-store{padding:var(--space-1) var(--space-2) var(--space-1) var(--space-2)!important;border-radius:6px!important}.acc-store svg{width:16px!important;height:16px!important}
   .acc-store span{font-size:var(--fs-small)!important;line-height:var(--lh-16)!important}.acc-store small{font-size:8px!important;line-height:10px!important;margin-bottom:0!important}
@@ -289,7 +289,7 @@
 
 @media (max-width:599.98px){
   /* invoice progress: as Booking progress Compact, bars only and the current step under the bar */
-  .iv-prog ol{position:relative;padding-bottom:36px!important}.iv-prog li{position:static!important}
+  .iv-prog ol{position:relative;padding-bottom:var(--space-10)!important}.iv-prog li{position:static!important}
   .iv-prog li>b,.iv-prog li>small{display:none}
   .iv-prog li:is(.att,.now,.bad,.late)>b,.iv-prog li:is(.att,.now,.bad,.late)>small{display:block;position:absolute;left:0;right:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .iv-prog li:is(.att,.now,.bad,.late)>b{bottom:var(--space-4)}.iv-prog li:is(.att,.now,.bad,.late)>small{bottom:0}
@@ -315,7 +315,7 @@
   /* the editor's assistant bar starts collapsed to its Ask button; a tap opens the full bar (M4) */
   .bk-abar:not(.cx-open){position:fixed;right:var(--space-4);bottom:calc(var(--space-4) + env(safe-area-inset-bottom,0px));left:auto;width:auto!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:calc(var(--z-nav) + 2)}
   .bk-abar:not(.cx-open)>:not([data-act="nbask"]){display:none!important}
-  .bk-abar:not(.cx-open)>[data-act="nbask"]{height:48px;padding:0 18px;box-shadow:var(--elev-2)}
+  .bk-abar:not(.cx-open)>[data-act="nbask"]{height:48px;padding:0 var(--space-5);box-shadow:var(--elev-2)}
 }
 
 /* Vit's second phone review (22 Oct) */
@@ -325,7 +325,7 @@
      then when · where and status), so nothing scrolls sideways */
   .bk-filters{flex-wrap:wrap!important;row-gap:var(--space-2)!important;overflow:visible!important;mask-image:none!important;margin-right:0!important;padding-right:0!important}
   .bk-filters>.bk-search{order:-1;flex:1 1 100%!important;max-width:none!important;width:100%!important}
-  .bk-filters>.bk-search input{width:100%!important;padding-left:36px}
+  .bk-filters>.bk-search input{width:100%!important;padding-left:var(--space-10)}
   .bk-table{min-width:0!important;overflow:visible!important}
   .bk-table>.bk-th{display:none!important}
   .bk-table>.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h,.bk-th)){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt n" "w wh s";column-gap:var(--space-2)!important;row-gap:2px!important;padding:var(--row-y) var(--row-x)!important;min-width:0!important}
@@ -333,7 +333,7 @@
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.n{grid-area:n;align-self:center}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.w{grid-area:w;font-size:var(--fs-label);line-height:var(--lh-16);color:var(--muted);padding-left:var(--space-12)}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4){grid-area:wh;display:block!important;font-size:var(--fs-label);line-height:var(--lh-16);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"·";margin-right:6px}
+  .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(4)::before{content:"·";margin-right:var(--space-2)}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>span:nth-child(5){grid-area:s;justify-self:end}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(3),.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h))>.m:nth-child(6){display:none!important}
   .bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .tt img,.bk-tr:not(.ex-r):where(:not(.iv-r,.po-m,.po-g,.po-h)) .bk-thumb{width:36px;height:36px}
@@ -370,7 +370,7 @@
 @media (max-width:599.98px){
   /* the invoice keeps its desktop look on a phone: the A4 paper is laid out at 680 px and scaled to fit, like a PDF
      preview (compact.js sets the zoom); its text stays the document's, not the app's */
-  .iv-paper{width:680px!important;max-width:none!important;aspect-ratio:210/297!important;padding:var(--space-10) 44px 36px!important;gap:28px!important;justify-self:start!important}
+  .iv-paper{width:680px!important;max-width:none!important;aspect-ratio:210/297!important;padding:var(--space-10) var(--space-12) var(--space-10)!important;gap:var(--space-8)!important;justify-self:start!important}
   .iv-grid{display:block!important}.iv-grid>.iv-side{margin-top:var(--section)}
   /* filter chips scroll on one line; search is its own full-width line, never inside the scroll */
   .ex-bar{flex-direction:column!important;align-items:stretch!important;gap:var(--space-2)!important}
@@ -446,7 +446,7 @@
   .ex-r>.m{grid-area:d;font-size:var(--fs-label);line-height:var(--lh-16);color:var(--muted)}
   .ex-r>.ex-who{grid-area:who;min-width:0;font-size:var(--fs-label);line-height:var(--lh-16);color:var(--muted)}
   .ex-r>.ex-who>.ex-av,.ex-r>.ex-who small{display:none}
-  .ex-r>.ex-who::before{content:"·";margin-right:6px}
+  .ex-r>.ex-who::before{content:"·";margin-right:var(--space-2)}
   .ex-r>span:nth-child(7){grid-area:s;justify-self:end}
   .bk-table:has(.ex-r)>.bk-th{display:none!important}
 }
@@ -483,7 +483,7 @@
   /* tonight's card: facts above, the button on its own line */
   .d-tonight .d-tm{flex-direction:column!important;align-items:flex-start!important;gap:var(--space-2)!important}
   .d-tonight .d-tm>span:first-child{font-size:var(--fs-label);line-height:var(--lh-16);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .d-tonight h2{font-size:20px!important;line-height:26px!important}
+  .d-tonight h2{font-size:var(--fs-title)!important;line-height:26px!important}
 }
 @media (max-width:599.98px){.aud-rel{margin-inline:0!important;padding-inline:0!important;width:100%!important}}
 
@@ -543,7 +543,7 @@
   .bk-tr.so-p>span:nth-child(4){grid-area:s;justify-self:end}
   .bk-tr.so-p>.n:nth-child(5){grid-area:n}
   .bk-tr.so-p>.m:nth-child(3){grid-area:wh;display:block!important;font-size:var(--fs-label);line-height:var(--lh-16);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bk-tr.so-p>.m:nth-child(3)::before{content:"·";margin-right:6px}
+  .bk-tr.so-p>.m:nth-child(3)::before{content:"·";margin-right:var(--space-2)}
   .bk-tr.so-p .so-pt small{display:none}
   /* the picture is a 40 px column beside both lines, centred, as on Deliveries (Compact row, 10 Nov) */
   .so .bk-table>.bk-tr.so-p:not(.bk-th){grid-template-columns:40px auto minmax(0,1fr) auto!important;grid-template-areas:"img tt tt n" "img w wh s"!important;grid-template-rows:20px minmax(24px,auto);column-gap:var(--space-2)!important;row-gap:2px!important;align-items:center}
@@ -584,7 +584,7 @@
    the × is a 32 px box centred on line 1, 4 px from the edge. Icon 16 on line 1. Padding 8 / 40 / 8 / 36.
    Figma: Banner Width=Compact. Same markup for .banner, .bd-banner, .acc-banner, .cv-banner (and Django bd-banner). */
 @media (max-width:599.98px){
-  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:var(--space-2) var(--space-10) var(--space-2) 36px!important;min-height:40px;font:400 var(--fs-label)/var(--lh-18) var(--sans)}
+  .main :is(.banner,.bd-banner,.acc-banner,.cv-banner){display:block!important;position:relative;padding:var(--space-2) var(--space-10) var(--space-2) var(--space-10)!important;min-height:40px;font:400 var(--fs-label)/var(--lh-18) var(--sans)}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>svg.i{position:absolute;left:var(--space-3);top:9px;width:16px!important;height:16px!important;margin:0!important}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx{display:block!important}
   .main :is(.banner,.bd-banner,.acc-banner,.cv-banner)>.tx>*{display:inline!important;font:400 var(--fs-label)/var(--lh-18) var(--sans)!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important}
@@ -622,7 +622,7 @@
 @media (max-width:839.98px){
   .main .acc-nav{gap:var(--space-5)!important;padding-bottom:0!important;box-shadow:inset 0 -1px 0 var(--rule);scrollbar-width:none}
   .main .acc-nav::-webkit-scrollbar{display:none}
-  .main .acc-nav .nav{min-height:0!important;padding:var(--space-3) var(--space-1) 14px!important;border-radius:0!important;background:none!important;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)!important;box-shadow:inset 0 -2px 0 transparent}
+  .main .acc-nav .nav{min-height:0!important;padding:var(--space-3) var(--space-1) var(--space-4)!important;border-radius:0!important;background:none!important;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)!important;box-shadow:inset 0 -2px 0 transparent}
   .main .acc-nav .nav>svg.i{display:none}
   .main .acc-nav .nav:is(:hover,[data-state="hover"]){color:var(--ink);box-shadow:inset 0 -2px 0 var(--rule-strong)}
   .main .acc-nav .nav.active{color:var(--ink);font-weight:500!important;box-shadow:inset 0 -2px 0 var(--accent-strong)}
@@ -684,8 +684,8 @@
 /* T476 phone: table checkboxes only while selecting (a long press starts it); confirmation actions 50/50 at Button L */
 @media (max-width:599.98px){
   .cv-table:not(.selecting) .cb{display:none}
-  .cf-acts>.btn{flex:1;justify-content:center;height:48px;padding:13px var(--space-6);font-size:var(--fs-body);line-height:var(--lh-22)}  /* Confirmation dialog Compact 1841:37499: Button L, 48 high, 50/50 */
-  .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:10px}
+  .cf-acts>.btn{flex:1;justify-content:center;height:48px;padding:var(--space-3) var(--space-6);font-size:var(--fs-body);line-height:var(--lh-22)}  /* Confirmation dialog Compact 1841:37499: Button L, 48 high, 50/50 */
+  .batch b{white-space:nowrap}.batch .btn[aria-label] span{display:none}.batch .btn[aria-label]{padding-inline:var(--space-3)}
   .batch{border-radius:0;margin:0 calc(-1 * var(--space-4)) var(--space-2);padding-inline:var(--space-4) var(--space-2)}
 }
 
@@ -710,7 +710,7 @@
   .iv-r>.ex-tt{grid-area:tt;min-width:0}
   .iv-r>.ex-tt small{display:none}
   .iv-r>:nth-child(4){grid-area:due;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .iv-r>:nth-child(4)::before{content:"·";margin-right:6px}
+  .iv-r>:nth-child(4)::before{content:"·";margin-right:var(--space-2)}
   .iv-r>:nth-child(5){grid-area:s;justify-self:end}
   .iv-r>:nth-child(6){grid-area:n}
   .iv-r>:nth-child(7){display:none!important}
@@ -753,7 +753,7 @@
   .ml-tr.ml-j:not(.ml-th){grid-template-columns:auto auto minmax(0,1fr) auto!important;grid-template-areas:"tt tt tt n" "d no . s";min-width:0!important;column-gap:var(--space-2)!important;row-gap:2px;padding:var(--row-y) var(--row-x)!important}
   .ml-j>.ml-d{grid-area:d;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
   .ml-j>.ml-no{grid-area:no;font:400 var(--fs-meta)/var(--lh-16) var(--mono)!important;color:var(--muted)}
-  .ml-j>.ml-no::before{content:"·";margin-right:6px}
+  .ml-j>.ml-no::before{content:"·";margin-right:var(--space-2)}
   .ml-j>.ml-tt{grid-area:tt;min-width:0}
   .ml-j>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/var(--lh-20) var(--sans)}
   .ml-j>.ml-tt small,.ml-j>.ml-m,.ml-j>.ml-att{display:none!important}
@@ -765,7 +765,7 @@
   .ml-a>.ml-tt{grid-area:tt;min-width:0}
   .ml-a>.ml-tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/var(--lh-20) var(--sans)}
   .ml-a>:nth-child(3){grid-area:ty;font:400 var(--fs-meta)/var(--lh-16) var(--sans)!important}
-  .ml-a>:nth-child(3)::before{content:"·";margin-right:6px}
+  .ml-a>:nth-child(3)::before{content:"·";margin-right:var(--space-2)}
   .ml-a>:nth-child(4),.ml-a>:nth-child(5){display:none!important}
   .ml-a>:nth-child(6){grid-area:n;justify-self:end}
   .ml-tr.ml-gh.ml-a{grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"no tt n"}
@@ -779,7 +779,7 @@
   .gear-r>.tt b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 var(--fs-body)/var(--lh-20) var(--sans)}
   .gear-r>:nth-child(2){grid-area:c;font:400 var(--fs-meta)/var(--lh-16) var(--sans)!important}
   .gear-r>:nth-child(5){grid-area:o;font:400 var(--fs-meta)/var(--lh-16) var(--sans)!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .gear-r>:nth-child(5)::before{content:"·";margin-right:6px}
+  .gear-r>:nth-child(5)::before{content:"·";margin-right:var(--space-2)}
   .gear-r>:nth-child(3),.gear-r>:nth-child(4){display:none!important}
   .gear-r>:nth-child(6){grid-area:s;justify-self:end}
   .gear-r>.n{grid-area:n;justify-self:end}
