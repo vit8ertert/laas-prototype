@@ -290,3 +290,9 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .ec-note{padding:0;margin-top:var(--space-5)}
 .ec-list{display:flex;flex-direction:column}
 
+/* Credits & splits rows are List rows (14 Nov 2026: they were drawn .cat-row): Avatar, name, role and share, the Signed Tag */
+.cat-rows>.list-row:first-child{border-top:0}.cat-crow .tx{flex:1;min-width:0}
+/* the release line in an earning card clamps its second line, as the List row it is (Figma Is every song earning, 14 Nov 2026) */
+.ec-gh .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ec-grp>.list-row{border-top:0}.ec-grp.card{padding:0}
+.cat-page .ec .ec-grp>a.list-row.ec-gh{margin-inline:0!important;width:100%!important;padding:var(--space-4)!important}.ec-grp>.list-row.ec-gh>svg.i{display:block!important;flex:none;color:var(--muted)}  /* a clickable List row bleeds past a plain list (tags.css); inside its card it keeps the card's inset */
+
