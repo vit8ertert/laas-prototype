@@ -296,3 +296,4 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .ec-gh .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ec-grp>.list-row{border-top:0}.ec-grp.card{padding:0}
 .cat-page .ec .ec-grp>a.list-row.ec-gh{margin-inline:0!important;width:100%!important;padding:var(--space-4)!important}.ec-grp>.list-row.ec-gh>svg.i{display:block!important;flex:none;color:var(--muted)}  /* a clickable List row bleeds past a plain list (tags.css); inside its card it keeps the card's inset */
 
+.cat-sform{display:contents}   /* Django: the Gear search sits in a GET form; the form adds no box */
