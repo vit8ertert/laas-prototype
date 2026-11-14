@@ -65,6 +65,8 @@ const GEAR=[
  G('g38','Toolbox and spares','LT-GEAR-038','Cases',1,'','Band','',900)];
 
 S.cat??={tab:'releases',more:false};
+/* a link can open one tab (?view=catalogue&tab=tracks; Django links its tabs that are not built yet here, 14 Nov 2026) */
+{const qt=new URLSearchParams(location.search).get('tab');if(qt&&S.cat&&['releases','tracks','credits','earning'].includes(qt)&&!S._catq){S.cat.tab=qt;S._catq=1;}}
 S.rel??={check:false,passed:false,activity:false};
 S.gear??={q:'',filter:'all',cat:'all',owner:'band',all:false,added:0};
 const BASE_GEAR=GEAR.length,BASE_VALUE=184600;
