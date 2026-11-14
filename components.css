@@ -427,3 +427,20 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 /* Card brand (Figma: Card brand 2201:53822, Brand Visa | Mastercard; 13 Nov 2026): the saved card's brand, a 32 × 22 tile at the start of a payment row */
 .card-brand{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;height:22px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--rule);font:400 var(--fs-meta)/1 var(--mono);color:var(--ink)}
 .card-brand.mc i{width:12px;height:12px;border-radius:var(--r-pill);background:var(--bad)}.card-brand.mc i+i{margin-left:calc(-1 * var(--space-1));background:var(--c-merch);opacity:.9}  /* the brand's red and orange from the status and chart tokens */
+/* Ask bar fold and twinkle (14 Nov 2026, views/abarfold.js; Figma Assistant bar State Collapsed): the bar keeps its right
+   edge and shrinks into the lime Ask pill with the emphasized spring; the sparkle twinkles once when the pill nudges */
+.abar.abar-anim{transition:width var(--dur-5) var(--ease-emphasized),margin-left var(--dur-5) var(--ease-emphasized),padding var(--dur-5) var(--ease-emphasized),background var(--dur-3) var(--ease-standard),box-shadow var(--dur-3) var(--ease-standard)}
+.abar.abar-folded{background:var(--poster-lime);border-color:transparent;box-shadow:none;cursor:pointer;overflow:hidden;gap:var(--space-1);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-4)}
+.abar.abar-folded>:not(svg.i):not([data-act=ask]){display:none}
+.abar.abar-folded>svg.i{color:var(--on-lime)}
+.abar.abar-folded [data-act=ask]{background:transparent;color:var(--on-lime);padding-inline:var(--space-2)}
+.abar svg.i.abar-tw{overflow:visible;animation:abar-glow 1.4s var(--ease-standard) 1}
+.abar svg.i.abar-tw path:first-child{transform-box:view-box;transform-origin:9.9px 14.4px;animation:abar-tw 1.2s var(--ease-emphasized) 1}
+.abar svg.i.abar-tw path:last-child{transform-box:view-box;transform-origin:17.5px 5.7px;animation:abar-bloom 1s var(--ease-emphasized) .16s 1 both}
+/* the twinkle: the big star turns a quarter with a soft lift, the small one blooms in after it, a brief glow around both */
+@keyframes abar-tw{0%{transform:rotate(0) scale(1)}35%{transform:rotate(55deg) scale(.84)}70%{transform:rotate(90deg) scale(1.06)}100%{transform:rotate(90deg) scale(1)}}
+@keyframes abar-bloom{0%{transform:scale(1);opacity:1}25%{transform:scale(.4) rotate(-30deg);opacity:.2}65%{transform:scale(1.3) rotate(10deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes abar-glow{0%,100%{filter:none}45%{filter:drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 1px var(--on-lime))}}
+/* hovering the pill gives the sparkle a small turn before it opens */
+.abar.abar-folded>svg.i{transition:transform var(--dur-4) var(--ease-emphasized)}.abar.abar-folded:is(:hover,[data-state="hover"])>svg.i{transform:rotate(18deg) scale(1.08)}
+@media (prefers-reduced-motion:reduce){.abar.abar-anim{transition:none}.abar svg.i.abar-tw,.abar svg.i.abar-tw path{animation:none}.abar.abar-folded>svg.i{transition:none;transform:none}}
