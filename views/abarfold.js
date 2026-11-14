@@ -43,7 +43,7 @@ function open(b,animate){if(!b||!b.classList.contains('abar-folded'))return;
  setTimeout(()=>{if(!b.classList.contains('abar-folded')){b.classList.remove('abar-anim');b.style.width='';b.style.marginLeft='';b.style.marginRight='';}},animate&&!reduce.matches?700:0);}
 function twinkle(b){if(reduce.matches)return;const ic=b.querySelector(':scope > svg.i');if(!ic)return;
  ic.classList.remove('abar-tw');void ic.getBoundingClientRect();ic.classList.add('abar-tw');
- setTimeout(()=>ic.classList.remove('abar-tw'),1500);lastTw=Date.now();twinkles++;}
+ setTimeout(()=>ic.classList.remove('abar-tw'),1700);lastTw=Date.now();twinkles++;}
 
 /* hover, focus or a click opens it; leaving it empty folds it back */
 document.addEventListener('pointerover',e=>{const b=e.target.closest&&e.target.closest('.abar.assistant-bar');if(b&&folded){clearTimeout(leaveT);open(b,true);}});
