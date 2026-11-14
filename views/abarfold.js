@@ -3,7 +3,7 @@
    A: after 20 s with no typing, clicking, scrolling, pointer near the bar or focus in it (and an empty field), the bar
       shrinks into the lime Ask pill at its right edge with a spring; hover, focus or a click opens it again the same way,
       and leaving it empty folds it back after a moment.
-   B: folded for 45 s, the sparkle twinkles once (the big star turns a quarter, the small one pops); at most once a
+   B: folded for 45 s, the sparkle twinkles once (the big star turns a quarter, the small one blooms in, no glow); at most once a
       minute, never while the page scrolls, at most three times per page visit.
    Wide screens only (phones have the Ask button in the tab bar). With reduced motion the bar folds without the spring
    and never twinkles. One standalone script for the prototype and Django: it finds .abar in the page each time, so a
