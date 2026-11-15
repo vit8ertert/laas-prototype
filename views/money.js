@@ -84,7 +84,7 @@ function owed(){
   </div>
   <aside class="m-right">
    <section class="m-sec">${secHead('Needs you')}
-    <div class="m-body m-g12">${tasks.length?tasks.map(([k,t,s,b,a])=>`<div class="m-task"><div class="m-task-h">${ic('ai','s')}<span>${t}</span></div><p>${s}</p><div class="m-tacts">${btn('secondary s',b,`data-act="${a}"`,'check')}</div></div>`).join(''):`<p class="m-foot m-nopad">Nothing needs you. New items show up here when money moves.</p>`}</div></section>
+    <div class="m-body m-g12">${tasks.length?tasks.map(([k,t,s,b,a])=>`<div class="m-task"><div class="bd-oi"><div class="bd-sth"><span>${t}</span></div><span class="t-meta muted">${s}</span>${btn('ghost s bd-act lead',b,`data-act="${a}"`,'check')}</div></div>`).join(''):`<p class="m-foot m-nopad">Nothing needs you. New items show up here when money moves.</p>`}</div></section>
    <section class="m-sec">${secHead('Payouts',ghostBtn('Settle a gig','data-go="settle"','plus'))}
     <div class="m-body">
      ${line({label:'Odense Live',tg:tag('attention','Attention'),amt:'5.360',attrs:'data-go="settle"'})}

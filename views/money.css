@@ -75,9 +75,6 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 
 /* Needs you tasks */
 .m-task{background:var(--sunken);border-radius:var(--r-lg);padding:var(--card);display:flex;flex-direction:column;gap:var(--space-3)}
-.m-task-h{display:flex;align-items:center;gap:var(--space-2)}
-.m-task p{margin:0;font-size:var(--fs-label);line-height:var(--lh-label);color:var(--muted)}
-.m-tacts{display:flex;gap:var(--space-2)}
 
 /* key-value rows */
 
