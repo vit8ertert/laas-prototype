@@ -411,7 +411,7 @@ function account(id){
 function conflicts(){const n=CS.conf.length;
  const body=n?`<div class="cs-cfs">${CS.conf.map(id=>{const c=CONF[id];return `<div class="cs-cf"><div class="cs-cfh"><span class="mono">${c.d}</span><b>${c.t}</b>${tag('attention',c.k)}</div>
   <div class="cs-sides"><span>${ic('calendar','s')}${c.a}</span><span>${ic('calendar','s')}${c.b}</span></div>
-  <div class="cs-cfa">${c.opts.map(([l,h],i)=>`<button class="btn secondary s" data-act="csresolve" data-id="${id}" data-i="${i}" data-tip="${esc(h)}">${l}</button>`).join('')}<span style="flex:1"></span><button class="btn ghost s" ${c.go}>${ic('chevr','s')}Open booking</button></div></div>`;}).join('')}</div>`
+  <div class="cs-cfa">${c.opts.map(([l,h],i)=>`<button class="btn secondary s" data-act="csresolve" data-id="${id}" data-i="${i}" data-tip="${esc(h)}">${l}</button>`).join('')}<span class="sp"></span><button class="btn ghost s" ${c.go}>${ic('chevr','s')}Open booking</button></div></div>`;}).join('')}</div>`
   :`<p class="acc-note acc-in12">No conflicts. When the same event changes on both sides, or a gig lands on a busy time, it waits here for you. Sync never picks a side by itself.</p>`;
  return csSec(`Conflicts`,body+(n?csFoot('Sync never picks a side by itself. Until you choose, LAAS keeps its own version.'):''),n?tag('attention',n+' to decide'):'');}
 L.VIEWS.calsync=()=>{const g=CS.g;
