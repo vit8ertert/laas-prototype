@@ -485,7 +485,6 @@
   .d-tonight .d-tm>span:first-child{font-size:var(--fs-label);line-height:var(--lh-16);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .d-tonight h2{font-size:var(--fs-title)!important;line-height:26px!important}
 }
-@media (max-width:599.98px){.aud-rel{margin-inline:0!important;padding-inline:0!important;width:100%!important}}
 
 /* Vit's fifth phone review (22 Oct): fixed as patterns, not spots */
 @media (max-width:839.98px){
@@ -530,11 +529,11 @@
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}
 /* touch screens get a pressed state instead of hover: a brief tint while the finger is down (Material state layer) */
 @media (hover:none){
-  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
+  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
   .tb-tab:is(:active,[data-state="pressed"]) .ti{background:var(--state-pressed)}
 }
 /* the static Pressed state (Figma State=Pressed, the gate and the catalogue) shows at every width: only the live press stays touch-only */
-:is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.aud-rel,.d-hi)[data-state="pressed"]{background-color:var(--state-pressed)!important}
+:is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.d-hi)[data-state="pressed"]{background-color:var(--state-pressed)!important}
 .tb-tab[data-state="pressed"] .ti{background:var(--state-pressed)}
 
 @media (max-width:599.98px){

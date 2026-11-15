@@ -24,10 +24,10 @@
 
 /* rows that open something say so on hover (Vit 21 Oct, from the Mail list; applied to every list that opens a page):
    a 2 px lilac bar on the left edge and the row's title underlined. Only rows that open something get it (Vit 21 Oct) */
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow){position:relative}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:var(--space-2);bottom:var(--space-2);width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"])::before{opacity:1}
-:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.aud-rel,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow){position:relative}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button])::before{content:"";position:absolute;left:0;top:var(--space-2);bottom:var(--space-2);width:2px;border-radius:2px;background:var(--row-bar,var(--accent-strong));opacity:0;transition:opacity var(--dur-1);pointer-events:none}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"])::before{opacity:1}
+:is(.bk-tr:not(.bk-th),.cv-vrow,.cat-gr,.m-line,.cv-table tbody tr,.d-row,.bd-frow,.cv-row,.acc-si,.acc-li,.ml-tr:not(.ml-th),.list-row,.m-erow,.cv-cvrrow,.cv-irow):is(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]) b:first-of-type,.cv-table tbody tr[data-go]:is(:hover,[data-state="hover"]) td:first-child b{text-decoration:underline;text-underline-offset:3px}
 
 /* brand logo tile (views/brands.js): Para recipe in the brand colour */
 .brand{display:inline-grid;place-items:center;flex:none;border-radius:var(--r-md);color:var(--bc);
@@ -67,7 +67,7 @@
    Containers give it that room: open sections need nothing; cards use 8 px padding plus 16 px on the content,
    so card text and headings sit 24 px in. Table rows (bordered tables) stay 12 16 with a divider. */
 /* --row-x and --row-y come from tokens.css (Figma LAAS · Width: 16/12 desktop, 12/8 phones) */
-:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.aud-rel,.m-ev,.cat-row,.cv-cvrrow,.cv-irow){
+:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.bd-frow,.cv-row,.cv-vrow,.acc-si,.acc-row,.acc-li,.m-ev,.cat-row,.cv-cvrrow,.cv-irow){
   padding:var(--row-y) var(--row-x)!important;margin-inline:calc(-1 * var(--row-x))!important;width:calc(100% + 2 * var(--row-x))!important;max-width:none!important;flex-shrink:0;box-sizing:border-box;border-radius:var(--r-md)}
 .acc-row{padding-block:var(--row-y)!important}
 /* cards that hold rows */
@@ -88,7 +88,7 @@
 .ml-row:is(:hover,[data-state="hover"])::after{opacity:1}
 .ml-row:is(:hover,[data-state="hover"]),.ml-row:is(:focus-visible,[data-state="focus"]){box-shadow:none!important}
 /* rows that open nothing get no hover fill either, so a hover always means "this opens" (settings rows keep their Figma hover) */
-:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.cv-row,.acc-si,.acc-li,.aud-rel):not(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]){background:transparent!important}
+:is(.m-line,.m-erow,.bd-mrow,.bd-prow,.cv-row,.acc-si,.acc-li):not(button,a,[data-go],[data-act],[role=button]):is(:hover,[data-state="hover"]){background:transparent!important}
 
 /* Electronic light: lime is too faint as a 2 px line on cool white, so the row line uses the olive accent ink */
 :root[data-genre="electronic"][data-theme="light"]{--row-bar:var(--accent-ink)}
