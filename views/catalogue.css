@@ -114,7 +114,7 @@
 .cat-checks .cat-chk::after{left:0;right:0}
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
 button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
-.cat-chk .ico{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center}  /* the List row leading column (28), icon centred: Figma Leading icon */.cat-chk .ico svg.i{width:16px;height:16px}  /* Figma Leading icon: 16 Expanded, 14 Compact (6 Nov gate) */@media (max-width:599.98px){.cat-chk .ico svg.i{width:14px;height:14px}}.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
+/* the Leading icon box is in components.css (.leading-icon, 15 Nov) */.cat-chk .ico.bad{color:var(--bad)}.cat-chk .ico.ok{color:var(--ok)}.cat-chk .ico.muted{color:var(--muted)}
 .cat-sub{margin:0;padding:0 var(--space-5) var(--space-4) var(--space-16);color:var(--muted);font-size:var(--fs-label);line-height:var(--lh-22)}
 
 /* overview: 720 column + 348 panel, 48 apart */
@@ -236,13 +236,9 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* platforms list on an imported release */
 .cat-stores{display:flex;flex-direction:column;gap:var(--space-2)}
-.cat-storelist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.cat-storelist li{display:flex;align-items:center;gap:var(--space-2);min-height:34px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.cat-storelist li>.brand+span{flex:1}
-.cat-storelist li i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
-.cat-storelist li.missing i{background:none;box-shadow:inset 0 0 0 1px var(--rule-strong)}
-.cat-storelist li.missing>.brand+span{color:var(--muted)}
-.cat-storelist li.pending i{background:var(--att)}
+.cat-storelist{display:flex;flex-direction:column}
+.cat-storelist .list-row{cursor:default}  /* a platform row is a List row (15 Nov): Platform icon leading, the name, a Tag (Live, Requested) or Add */
+.cat-storelist .missing .tx b{color:var(--muted)}
 .cat-storelist .btn.ghost.s{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
 .cat-stores>.btn{align-self:flex-start}
 /* platform picker in the drawer */
@@ -250,9 +246,8 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-storepick .check{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-body)/var(--lh-18) var(--sans);cursor:pointer}
 .cat-storepick input{width:18px;height:18px;accent-color:var(--ink);margin:0}
 /* platform rows lead with the service logo (views/brands.js); missing ones are greyed */
-.cat-storelist li{gap:var(--space-3)}
-.cat-storelist li.missing .brand{filter:grayscale(1);opacity:.5}
-.cat-storelist li.pending .brand{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--att) 50%,transparent)}
+.cat-storelist .missing .brand{filter:grayscale(1);opacity:.5}
+.cat-storelist .pending .brand{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--att) 50%,transparent)}
 /* royalties under a track's file details */
 .trk-roy{padding:0 0 var(--space-4) var(--space-12)}
 @media (max-width:839.98px){.trk-roy{padding-left:0}}

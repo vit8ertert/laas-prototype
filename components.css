@@ -457,3 +457,9 @@ svg.i.ai-wink path:last-child{transform-box:view-box;transform-origin:17.5px 5.7
    hover of the pill (abarfold.js); here it only eases its size and colour with the fold */
 .abar.abar-folded>svg.i{transition:width var(--dur-5) var(--ease-emphasized),height var(--dur-5) var(--ease-emphasized),margin var(--dur-5) var(--ease-emphasized),color var(--dur-3) var(--ease-standard)}
 @media (prefers-reduced-motion:reduce){.abar.abar-anim{transition:none}.abar svg.i.abar-tw path{animation:none}.abar.abar-anim>*,.abar.abar-folded>svg.i{transition:none}}
+
+/* Leading icon (Figma: Leading icon, Width; 15 Nov: was scoped to the Release checks): the List row's 28 px leading column
+   with the icon centred, 16 on wide screens and 14 on phones. Used by the Release checks and the account sign-in rows. */
+.leading-icon{display:flex;flex:none;width:28px;height:28px;align-items:center;justify-content:center;color:var(--ink)}
+.leading-icon svg.i{width:16px;height:16px}
+@media (max-width:599.98px){.leading-icon svg.i{width:14px;height:14px}}

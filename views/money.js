@@ -347,7 +347,7 @@ L.VIEWS.settle=()=>{const mode=SPLIT[S.split]?S.split:'Equal';const sp=SPLIT[mod
    ${line({label:'Travel, 2 cars from Odense',note:'paid by Jonas, receipt',tg:tag('confirmed','Confirmed'),amt:'-640',cls:'m-fl'})}
    ${line({label:'Hotel, 2 rooms',note:'venue paid',tg:'',amt:'0',cls:'m-fl'})}
    ${line({label:'Commission',note:'no agent',tg:'',amt:'0',cls:'m-fl'})}<hr class="m-hr">
-   ${line({label:'Net to split',tg:'',amt:'4.360',cls:'m-fl'})}
+   ${line({label:'Net to split',amt:'4.360',cls:'m-fl'})}
    <p class="m-foot m-nopad">Gross → costs → commission → net, in one stack, like a promoter's settlement. Each line links to its invoice or receipt.</p></div></section>
   <section class="m-sec">${secHead('Split',ghostBtn('Change mode','data-act="mnymode"','pencil'))}<div class="m-body m-g8">
    <div class="m-modes">${Object.keys(SPLIT).map(k=>`<button class="chip m-chip ${mode===k?'on':''}" data-split="${k}">${k}</button>`).join('')}</div>

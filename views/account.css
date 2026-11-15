@@ -136,34 +136,16 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Account cards (custom sections: no border, 20 padding, heading 18/24) */
 .acc-card{display:flex;flex-direction:column;gap:var(--stack)}
 /* rows in a list touch; the divider separates them, as in the Figma List row (Vit 22 Oct: no extra spacing) */
-.acc-card>.acc-si+.acc-si,.acc-card>.acc-li+.acc-li{margin-top:calc(-1 * var(--stack))}
+.acc-card>.acc-li+.acc-li{margin-top:calc(-1 * var(--stack))}
 .acc-ch{display:flex;align-items:center;gap:var(--space-3)}
 .acc-ch h2:not(:only-child){flex:1}
-.acc-prof{display:flex;gap:var(--space-5);align-items:center}
-.acc-prof img{width:80px;height:80px;border-radius:50%;object-fit:cover;flex:none}
-.acc-prof>div{display:flex;flex-direction:column;gap:var(--space-2)}
-.acc-prof>div>span{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-fields{display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:flex-start}
 .acc-fields .field{min-width:0}
 .acc-fields .input{max-width:100%}
-.acc-signin{display:flex;flex-direction:column}  /* no gap: the row rule sits at the row bottom, so a gap made 8 above it and 24 below (Vit, 27 Oct) */
-.acc-si{display:flex;align-items:center;gap:var(--space-3);padding:var(--row-y) var(--space-3);margin:0 calc(-1 * var(--space-3));text-align:left;width:calc(100% + 24px);position:relative;border-radius:var(--r-md)}
-.acc-si:not(:last-child)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:1px;background:var(--rule)}
-.acc-si svg.acc-i32{width:32px;height:32px;flex:none;color:var(--ink);stroke-width:1.67}
-button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
-.acc-si .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.acc-si .tx span{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.acc-si .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .acc-nl{display:flex;flex-direction:column;gap:var(--space-4)}
 .acc-nr{display:flex;align-items:center;gap:var(--space-2)}
 .acc-nr>span{font:400 var(--fs-body)/var(--lh-18) var(--sans)}.acc-nr:has(>.acc-tg:disabled)>span{opacity:.45}
 .acc-small{margin:0;font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
-.acc-band{display:flex;align-items:center;gap:var(--space-3);text-align:left;padding:var(--space-2);margin:calc(-1 * var(--space-2));border-radius:var(--r-md)}
-.acc-band:is(:hover,[data-state="hover"]){background:var(--hover)}
-.acc-band img{width:40px;height:40px;border-radius:var(--r-md);object-fit:cover}
-.acc-band .tx{display:flex;flex-direction:column;gap:2px}
-.acc-band .tx>span{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
-.acc-band small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .acc-app{flex-direction:row;align-items:center;gap:var(--space-5)}
 .acc-app>div{display:flex;flex-direction:column;gap:var(--space-1);align-items:flex-start}
 .acc-app p{margin:0;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
@@ -192,7 +174,6 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-plan .f svg{color:var(--ink)}
 .acc-plan .sp{flex:1}
 .acc-plan .btn{align-self:flex-start}
-.acc-since{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 
 /* Upgrade modal (520, Figma 435:22438) */
 .modal.acc-upg{width:min(var(--layout-dialog),calc(100% - 32px));top:120px;padding:var(--space-6);gap:var(--space-4);border-radius:var(--r-xl);background:var(--top);box-shadow:var(--elev-3)}
@@ -347,8 +328,7 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 
 /* ---------- Account: your bands ---------- */
 .acc-bands{display:flex;flex-direction:column;gap:var(--space-3)}
-.acc-bandrow{display:flex;align-items:center;gap:var(--space-3)}
-.acc-bandrow .acc-band{flex:1;min-width:0;margin:calc(-1 * var(--space-2)) 0 calc(-1 * var(--space-2)) calc(-1 * var(--space-2))}
+
 .acc-bsq,.acc-nbprev{display:grid;place-items:center;flex:none;border-radius:var(--r-md);background:var(--accent);color:var(--on-accent,var(--canvas));font-weight:500;overflow:hidden}
 .acc-bsq{width:40px;height:40px;font-size:var(--fs-small);line-height:var(--lh-20)}
 
@@ -445,3 +425,8 @@ button.acc-si:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-step{white-space:nowrap;flex:none}  /* "Step 2 of 5" never breaks over two lines (it did on phones beside the tagline) */
 /* Payment and Billing history rows (13 Nov 2026): List rows flush with the card title; the first row has no rule above it */
 .acc-pay{display:flex;flex-direction:column}.acc-pay>.list-row:first-child{border-top:0}.acc-prow .tx{flex:1;min-width:0}.acc-prow>.btn{margin-left:auto}  /* Django settings_plan.html (list_row component); the prototype uses .acc-list since 15 Nov */
+
+/* photo leading in a List row (Profile, Your bands; 15 Nov: were the drawn .acc-prof and .acc-band): the Thumb at 40 */
+.acc-li>img.thumb,.acc-li>.acc-bsq{width:40px;height:40px;border-radius:var(--r-md);object-fit:cover;flex:none}
+.acc-me>img.thumb{border-radius:var(--r-pill)}
+.acc-me::after{display:none}  /* the profile row sits above its fields, no rule */
