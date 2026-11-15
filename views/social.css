@@ -78,11 +78,7 @@
 .so-chart{display:flex;flex-direction:column;gap:var(--space-4)}
 .so-chart .m-chh{display:flex;align-items:center;gap:var(--space-1);flex-wrap:wrap}
 .so-chart .m-chh h3{flex:1;min-width:200px}
-.so-bars{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-1);height:184px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
-.so-bars>div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:var(--space-1);min-width:40px;flex:1;height:100%}
-.so-bars i{display:block;width:20px;border-radius:var(--r-sm) var(--r-sm) 0 0;background:var(--accent);transition:height var(--dur-3) var(--ease-standard)}
-.so-bars .v{font:400 var(--fs-meta)/var(--lh-16) var(--mono);color:var(--muted);min-height:16px}
-.so-bars small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint);white-space:nowrap;padding-bottom:var(--space-2)}
+.m-single .m-stack i{--sc:var(--accent)}.m-single .m-xax small{white-space:nowrap}  /* Bar chart, Series=Single: one series in the accent; week labels stay on one line */
 .so-chart .table-wrap{max-width:420px}
 /* the app table keeps a 820 px minimum for wide lists; this two-column table fits its box (Vit 21 Oct: Hits column hidden) */
 .so-chart .table-wrap table{min-width:0}
@@ -136,8 +132,7 @@
  .so-acc{max-width:none}
  .so-c{padding:var(--space-3)}
  .so-ch .tag{margin-left:0}
- .so-bars>div{min-width:22px}.so-bars i{width:12px}.so-bars small{writing-mode:vertical-rl;transform:rotate(180deg);font-size:var(--fs-badge)}
- .so-w240,.so-w160{width:100%}
+  .so-w240,.so-w160{width:100%}
  .so .bk-ph .btn{flex:1;justify-content:center}
 }
 
@@ -173,9 +168,7 @@
    (the longest, "20 Oct"), so every bar stands on the same baseline. Each label ends right under its bar, and the
    chart is tall enough for the highest bar, its value and the label */
 @media (max-width:599.98px){
-  .so-bars{height:auto;min-height:222px}
-  .so-bars small{height:44px;padding-bottom:0;text-align:end;overflow:hidden}
-}
+    }
 /* Delivery rows on phones, take 2 (Vit 26 Oct: "improve the layout, too much on the left, remove some icons", both):
    the cover is the only picture, a 40 px column beside the three lines; the destination's logo goes (its name says it).
    Left column: title, destination, status. Right column: streams, date, visibility. The destination is a secondary line
