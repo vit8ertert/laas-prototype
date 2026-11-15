@@ -140,7 +140,7 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 :is(.acc-gsearch) input{font:400 var(--fs-body)/var(--lh-body) var(--sans)!important}
 :is(.acc-gsearch):is(:focus-within,[data-state="focus"]){box-shadow:inset 0 0 0 1px var(--ink)!important}
 /* table and list frames are the Card container's List kind (census 19, screen residue): the ring instead of a 1 px border, so rows span the card like the Figma slot, no padding */
-:is(.bk-table,.ml-table,.cv-table,.cat-table,.cv-vlist,.so-clist,.ml-list,.ml-repw,.cv-mapl,.m-bdl,.ml-ed,.cat-checks){border:0!important;background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule)}
+:is(.bk-table,.ml-table,.cv-table,.cat-table,.cv-vlist,.d-list,.so-clist,.ml-list,.ml-repw,.cv-mapl,.m-bdl,.ml-ed,.cat-checks){border:0!important;background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--rule)}
 @media (min-width:600px){.acc-sec:not(.pad):not(.inset){padding:var(--card) var(--space-2)}}  /* phones: rows add no inset, so 12 like any card */
 /* Page header actions (census 7, Figma Page header Actions): buttons 8 apart at every width; the title block keeps 16 to
    them. On phones the header gap is 8 already (compact.css). */
@@ -427,19 +427,33 @@ input[type=checkbox]:is(:focus-visible,[data-state="focus"]){outline:2px solid v
 /* Card brand (Figma: Card brand 2201:53822, Brand Visa | Mastercard; 13 Nov 2026): the saved card's brand, a 32 × 22 tile at the start of a payment row */
 .card-brand{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;height:22px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--rule);font:400 var(--fs-meta)/1 var(--mono);color:var(--ink)}
 .card-brand.mc i{width:12px;height:12px;border-radius:var(--r-pill);background:var(--bad)}.card-brand.mc i+i{margin-left:calc(-1 * var(--space-1));background:var(--c-merch);opacity:.9}  /* the brand's red and orange from the status and chart tokens */
-/* Ask bar fold and twinkle (14 Nov 2026, views/abarfold.js; Figma Assistant bar State Collapsed): the bar keeps its right
-   edge and shrinks into the lime Ask pill with the emphasized spring; the sparkle winks once when the pill nudges */
-.abar.abar-anim{transition:width var(--dur-5) var(--ease-emphasized),margin-left var(--dur-5) var(--ease-emphasized),padding var(--dur-5) var(--ease-emphasized),background var(--dur-3) var(--ease-standard),box-shadow var(--dur-3) var(--ease-standard)}
-.abar.abar-folded{background:var(--poster-lime);border-color:transparent;box-shadow:none;cursor:pointer;overflow:hidden;gap:var(--space-1);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-4)}
-.abar.abar-folded>:not(svg.i):not([data-act=ask]){display:none}
-.abar.abar-folded>svg.i{color:var(--on-lime)}
-.abar.abar-folded [data-act=ask]{background:transparent;color:var(--on-lime);padding-inline:var(--space-2)}
+/* Ask bar fold and twinkle (14 Nov 2026, views/abarfold.js; Figma Assistant bar State Collapsed 1144:62557): the bar keeps
+   its right edge and shrinks into the lime Ask pill with the emphasized spring; the sparkle winks once in a while.
+   15 Nov (Vit): the folded pill is Figma's Collapsed size, 40 high, padding 0 16, the 16 px sparkle, 8, "Ask" 15/18 (it was
+   104 x 46 with a 20 px icon and the padded Ask button), the same as the mini pill; the parts that go (context, New, Open,
+   the X) shrink and fade with the bar and the sparkle eases from 20 to 16 (they vanished at once); hover only lightens the
+   pill and winks the sparkle, a click or focus opens it */
+.abar.abar-anim{transition:width var(--dur-5) var(--ease-emphasized),margin-left var(--dur-5) var(--ease-emphasized),height var(--dur-5) var(--ease-emphasized),padding var(--dur-5) var(--ease-emphasized),border-radius var(--dur-5) var(--ease-emphasized),gap var(--dur-5) var(--ease-emphasized),background var(--dur-3) var(--ease-standard),box-shadow var(--dur-3) var(--ease-standard)}
+.abar.abar-anim>*{max-width:720px;transition:max-width var(--dur-5) var(--ease-emphasized),opacity var(--dur-2) var(--ease-standard),transform var(--dur-4) var(--ease-emphasized),padding var(--dur-5) var(--ease-emphasized),margin var(--dur-5) var(--ease-emphasized),width var(--dur-5) var(--ease-emphasized),height var(--dur-5) var(--ease-emphasized),color var(--dur-3) var(--ease-standard),background var(--dur-3) var(--ease-standard),visibility var(--dur-5)}
+.abar.abar-folded{background:var(--poster-lime);border-color:transparent;box-shadow:none;cursor:pointer;overflow:hidden;gap:0;height:40px;padding:0 var(--space-4);border-radius:var(--r-pill)}
+.abar.abar-folded>:not(svg.i):not([data-act=ask]){max-width:0;min-width:0;opacity:0;transform:scale(.6);padding-inline:0;margin:0;border-width:0;overflow:hidden;visibility:hidden;flex-shrink:1}
+.abar.abar-folded>svg.i{width:16px;height:16px;margin-right:var(--space-2);color:var(--on-lime)}
+.abar.abar-folded [data-act=ask]{background:transparent;color:var(--on-lime);padding:0;height:auto;font:500 var(--fs-body)/var(--lh-18) var(--sans)}
+.abar.abar-folded:is(:hover,[data-state="hover"]){filter:brightness(1.06)}
+.abar.abar-measure,.abar.abar-measure>*{transition:none!important}  /* abarfold.js measures the open bar with this on */  /* hover = the mini pill's hover; it does not open */
 .abar svg.i.abar-tw{overflow:visible}
 .abar svg.i.abar-tw path:first-child{transform-box:view-box;transform-origin:9.9px 14.4px;animation:abar-wink .9s var(--ease-wink) 1}
 .abar svg.i.abar-tw path:last-child{transform-box:view-box;transform-origin:17.5px 5.7px;animation:abar-wink .7s var(--ease-wink) .38s 1 both}
+/* the same classic wink on any AI sparkle (15 Nov, Vit: "the sparkles also have this animation when the Ask assistant page
+   opens"): .ai-wink on the svg plays it once; abarfold.js adds it to the assistant greeting mark when the page opens */
+svg.i.ai-wink{overflow:visible;--ease-wink:cubic-bezier(.45,0,.25,1)}
+svg.i.ai-wink path:first-child{transform-box:view-box;transform-origin:9.9px 14.4px;animation:abar-wink .9s var(--ease-wink) 1}
+svg.i.ai-wink path:last-child{transform-box:view-box;transform-origin:17.5px 5.7px;animation:abar-wink .7s var(--ease-wink) .38s 1 both}
+@media (prefers-reduced-motion:reduce){svg.i.ai-wink path{animation:none}}
 /* the wink (15 Nov 2026, Vit: "use classic wink", option U): each star goes out completely and flashes back in with a turn, the small one a beat later; no glow */
 .abar{--ease-wink:cubic-bezier(.45,0,.25,1)}
 @keyframes abar-wink{0%{transform:scale(1) rotate(0)}38%{transform:scale(0) rotate(45deg)}72%{transform:scale(1.14) rotate(150deg)}100%{transform:scale(1) rotate(180deg)}}
-/* hovering the pill gives the sparkle a small turn before it opens */
-.abar.abar-folded>svg.i{transition:transform var(--dur-4) var(--ease-emphasized)}.abar.abar-folded:is(:hover,[data-state="hover"])>svg.i{transform:rotate(18deg) scale(1.08)}
-@media (prefers-reduced-motion:reduce){.abar.abar-anim{transition:none}.abar svg.i.abar-tw path{animation:none}.abar.abar-folded>svg.i{transition:none;transform:none}}
+/* the sparkle only ever does the agreed classic wink (15 Nov, Vit: "strictly the agreed one"): at the end of every fold and on
+   hover of the pill (abarfold.js); here it only eases its size and colour with the fold */
+.abar.abar-folded>svg.i{transition:width var(--dur-5) var(--ease-emphasized),height var(--dur-5) var(--ease-emphasized),margin var(--dur-5) var(--ease-emphasized),color var(--dur-3) var(--ease-standard)}
+@media (prefers-reduced-motion:reduce){.abar.abar-anim{transition:none}.abar svg.i.abar-tw path{animation:none}.abar.abar-anim>*,.abar.abar-folded>svg.i{transition:none}}

@@ -471,7 +471,7 @@
   .acc-sec>:not(.acc-sh){padding-inline:0!important}
   .acc-li{margin-inline:0!important;padding-inline:0!important;width:100%!important}
   .acc-li:not(:last-child)::after{left:0!important;right:0!important}
-  :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk) .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}  /* one List row: the meta is one line on phones for every list row (pattern card 2) */
+  :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.list-row) .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}  /* one List row: the meta is one line on phones for every list row (pattern card 2) */
   .aud-body>*{margin-inline:0!important}
   /* long help under a field: one line on a phone, a tap shows all of it (Carbon: truncate descriptions, never labels) */
   .field .help:not(.err):not(.cx-full){display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
@@ -529,11 +529,11 @@
 :is([class$="-sh"],[class*="-sh "],.sec-h)>.btn.ghost:not(.icon):last-child:is(:hover,[data-state="hover"]){background:none!important;text-decoration:underline}
 /* touch screens get a pressed state instead of hover: a brief tint while the finger is down (Material state layer) */
 @media (hover:none){
-  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
+  :is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.cx-it,.cx-tile,.d-hi):is(:active,[data-state="pressed"]){background-color:var(--state-pressed)!important}
   .tb-tab:is(:active,[data-state="pressed"]) .ti{background:var(--state-pressed)}
 }
 /* the static Pressed state (Figma State=Pressed, the gate and the catalogue) shows at every width: only the live press stays touch-only */
-:is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.d-card,.cx-it,.cx-tile,.d-hi)[data-state="pressed"]{background-color:var(--state-pressed)!important}
+:is(.list-row,.acc-row,.acc-li,.acc-si,.cv-row,.m-line,.bd-prow,.bd-mrow,.bd-frow,.ml-row,.bk-tr,.cx-it,.cx-tile,.d-hi)[data-state="pressed"]{background-color:var(--state-pressed)!important}
 .tb-tab[data-state="pressed"] .ti{background:var(--state-pressed)}
 
 @media (max-width:599.98px){

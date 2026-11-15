@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ask bar</title>
+<!-- Ask bar alone (Vit 15 Nov 2026: "isolate only bar functional with all the logic I can test"). Nothing but the bar:
+     the markup of abar() in index.html, the real CSS and the real fold script views/abarfold.js, driven only by you.
+     Everything works as in the app: idle fold, hover (lightens, sparkle turns), focus or click to open, fold back on leave, the wink, the X and ⌘J (fold with the spring)
+     hide to the mini Ask pill and back. ?fast shortens the timings (3 s, 4 s, 5 s). The lab with buttons and a log is
+     lab/askbar.html. -->
+<script>(function(){if(!/github\.io$/.test(location.hostname))return;let ok=false;try{ok=!!localStorage.getItem('laas-gate')}catch(e){}if(!ok)location.replace('index.html');})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="components.css">
+<style>
+html,body{height:100%;margin:0}
+body{background:var(--canvas);color:var(--ink);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.main{height:100vh;overflow:auto;display:flex;flex-direction:column}
+.solo-space{flex:1;min-height:200vh}  /* room to scroll: scrolling counts as activity and holds back the wink */
+#slot{display:contents}  /* the bar sticks to the bottom of .main, as in the app */
+.solo-t{position:fixed;top:var(--space-3);right:max(var(--space-4),env(safe-area-inset-right,0px));font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint);display:flex;gap:var(--space-2);align-items:center;z-index:5}
+.solo-t a{color:var(--faint)}
+</style>
+<main class="main" id="main"><div class="solo-space"></div><div id="slot"></div></main>
+<div class="solo-t"><span id="tm"></span><a id="tg" href="#"></a></div>
+<script>
+const AI='<path fill="currentColor" stroke="none" d="M 10.427 5.833 C 10.413 5.766 10.354 5.718 10.285 5.718 L 9.583 5.718 C 9.515 5.718 9.456 5.766 9.442 5.833 L 8.481 10.503 C 8.267 11.546 7.493 12.386 6.47 12.686 L 2.47 13.86 C 2.409 13.878 2.367 13.935 2.367 13.998 L 2.367 14.719 C 2.367 14.783 2.409 14.839 2.47 14.857 L 6.47 16.031 C 7.493 16.331 8.267 17.171 8.481 18.215 L 9.442 22.885 C 9.456 22.952 9.515 23 9.583 23 L 10.285 23 C 10.354 23 10.413 22.952 10.427 22.885 L 11.387 18.215 C 11.602 17.171 12.376 16.331 13.399 16.031 L 17.399 14.857 C 17.46 14.839 17.502 14.783 17.502 14.719 L 17.502 13.998 C 17.502 13.935 17.46 13.878 17.399 13.86 L 13.399 12.686 C 12.376 12.386 11.602 11.546 11.387 10.503 L 10.427 5.833 Z"/><path fill="currentColor" stroke="none" d="M 17.771 1.063 C 17.763 1.026 17.731 1 17.694 1 L 17.31 1 C 17.273 1 17.241 1.026 17.233 1.063 L 16.709 3.612 C 16.592 4.182 16.169 4.641 15.611 4.804 L 13.427 5.445 C 13.394 5.455 13.371 5.486 13.371 5.521 L 13.371 5.914 C 13.371 5.949 13.394 5.98 13.427 5.99 L 15.611 6.63 C 16.169 6.794 16.592 7.253 16.709 7.823 L 17.233 10.372 C 17.241 10.409 17.273 10.435 17.31 10.435 L 17.694 10.435 C 17.731 10.435 17.763 10.409 17.771 10.372 L 18.295 7.823 C 18.412 7.253 18.835 6.794 19.393 6.63 L 21.577 5.99 C 21.61 5.98 21.633 5.949 21.633 5.914 L 21.633 5.521 C 21.633 5.486 21.61 5.455 21.577 5.445 L 19.393 4.804 C 18.835 4.641 18.412 4.182 18.295 3.612 L 17.771 1.063 Z"/>';
+const X='<path d="M18 6 6 18M6 6l12 12"/>';
+const ic=(p,n)=>`<svg class="i s" data-i="${n}" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+let hidden=false,ctx=true;
+/* fast timings: ?fast in the address, or the corner link (kept per browser) */
+let fast=/[?&]fast\b/.test(location.search);try{if(localStorage.getItem('askbar-fast')==='1')fast=true;}catch(e){}
+function timing(){window.ABAR_TIMING=fast?{idle:3000,first:4000,every:5000,max:3}:null;
+ document.getElementById('tm').textContent=fast?'Fast timings: fold 3 s, wink 4 s, then every 5 s':'Real timings: fold 20 s, wink 45 s, then every 60 s';
+ document.getElementById('tg').textContent=fast?'Use real':'Use fast';}
+/* the bar exactly as abar() writes it in index.html (keep in step) */
+function render(){document.getElementById('slot').innerHTML=hidden
+ ?`<div class="abar-mini-wrap"><button class="abar-mini" data-act="abarshow" data-tip="Show the assistant bar (⌘J)">${ic(AI,'ai')}<span>Ask</span></button></div>`
+ :`<div class="assistant-bar abar">${ic(AI,'ai')}${ctx?`<span class="rec">Saturday hotel gig<button class="rec-x" data-act="abarctxoff" aria-label="Remove context">${ic(X,'x')}</button></span>`:''}<input id="ask" placeholder="${ctx?'Ask about this, or say “send it”':'Ask about Low Tide: gigs, contacts, money'}" aria-label="Ask the assistant"><button class="btn ghost s" data-act="abarnew">New</button><button class="btn ghost s" data-act="abaropen">Open</button><button class="btn accent" data-act="ask">Ask</button><button class="btn ghost icon abar-hide" data-act="abarhide" aria-label="Hide the assistant bar" data-tip="Hide until you open it again (⌘J)">${ic(X,'x')}</button></div>`;}
+const show=()=>{hidden=false;render();setTimeout(()=>document.getElementById('ask')?.focus(),50);};
+const ACT={abarhide:()=>{hidden=true;render();},abarshow:show,abarctxoff:()=>{ctx=false;render();},
+ abarnew:()=>{ctx=true;const i=document.getElementById('ask');render();},abaropen:()=>{},ask:()=>{const i=document.getElementById('ask');if(i)i.value='';}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b&&ACT[b.dataset.act])ACT[b.dataset.act]();});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask'){e.target.value='';}
+ if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='j'){e.preventDefault();hidden?show():ACT.abarhide();}});
+document.getElementById('tg').addEventListener('click',e=>{e.preventDefault();fast=!fast;try{localStorage.setItem('askbar-fast',fast?'1':'0');}catch(_){}timing();});
+timing();render();
+</script>
+<script src="views/abarfold.js"></script>
+<script>/* opened without its files (a file preview, not the server or the artifact): say so instead of failing */
+addEventListener('load',()=>{if(window.LAAS&&window.LAAS.abarFold)return;const d=document.createElement('p');d.setAttribute('role','alert');
+d.style.cssText='position:fixed;inset:16px 16px auto;margin:0;padding:12px 16px;border-radius:12px;background:#ffe8d6;color:#b04a00;font:500 15px/22px system-ui,sans-serif;z-index:99';
+d.textContent='This page needs its stylesheets and views/abarfold.js next to it. Open it from the prototype server (localhost:8765), the artifact or GitHub Pages, not a file preview.';document.body.appendChild(d);});</script>

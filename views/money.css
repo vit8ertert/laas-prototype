@@ -93,11 +93,14 @@ button.m-line:is(:hover,[data-state="hover"]){background:var(--raised)}
 .m-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);align-items:start}
 .m-choice{background:var(--canvas);border-radius:var(--r-lg);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3);text-align:left;max-width:360px;width:100%;justify-self:center;transition:transform var(--dur-2) var(--ease-standard)}
 .m-choice:is(:hover,[data-state="hover"]){transform:translateY(-2px)}
-.m-prev{position:relative;isolation:isolate;height:96px;border-radius:var(--r-md);overflow:hidden;background:var(--raised);color:var(--c);padding:var(--space-4);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+/* 15 Nov (Vit: a two-line hint ran into the icon in a narrow card): the preview grows below the icon instead of a fixed 96,
+   and the cards share the row's tracks (subgrid), so previews, titles and texts stay level across a row */
+.m-choices>.m-choice{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:var(--space-3);align-content:start}
+.m-prev{position:relative;isolation:isolate;min-height:96px;gap:var(--space-2);border-radius:var(--r-md);overflow:hidden;background:var(--raised);color:var(--c);padding:var(--space-4);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
 .m-prev::before{content:"";position:absolute;inset:0;background:var(--c);opacity:.22;z-index:-1}
 .m-prev::after{content:"";position:absolute;left:158px;top:calc(-1 * var(--space-10));width:245px;height:140px;border-radius:50%;background:var(--c);opacity:.35;filter:blur(15px);z-index:-1}
 .m-prev svg{width:30px;height:30px;stroke-width:1.333}
-.m-hint{background:var(--surface);color:var(--ink);border-radius:var(--r-md);padding:var(--space-1) var(--space-2);font-size:var(--fs-meta);line-height:var(--lh-16)}
+.m-hint{background:var(--surface);color:var(--ink);border-radius:var(--r-md);padding:var(--space-1) var(--space-2);font-size:var(--fs-meta);line-height:var(--lh-16);max-width:100%;box-sizing:border-box}
 .m-ct{font-weight:500}.m-cb{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .m-ghosttiles{display:flex;flex-direction:column;gap:var(--space-4)}
 .m-ghosttiles .m-kpi{opacity:.5}

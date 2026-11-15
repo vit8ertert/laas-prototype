@@ -29,9 +29,10 @@ S.asstChat??='move';S.asstLog??={};S.asstWho??=null;S.asstCtxOff??={};S.askCtx??
 
 /* ---------- small building blocks ---------- */
 const tag=(k,l)=>`<span class="tag ${k}">${l}</span>`;
-const sh=(t,meta,act)=>`<div class="section-header d-sh"><h3 class="t-heading">${t}</h3>${meta?(act?`<button class="d-shm link-quiet" ${act}>${meta}</button>`:`<span class="d-shm">${meta}</span>`):''}</div>`;
+const sh=(t,meta,act)=>`<div class="section-header d-sh"><h3 class="t-heading">${t}</h3>${meta?(act?`<button class="btn ghost s" ${act}>${meta}</button>`:`<span class="d-shm">${meta}</span>`):''}</div>`;  /* an action is the Section header's trailing Ghost S button (15 Nov, was a quiet link) */
 const kpi=(label,val,delta,o={})=>`<${o.go?'button':'div'} class="kpi-tile d-kpi ${o.att?'att':''}" ${o.go||''}><span class="d-kl">${label}</span><span class="d-kv ${o.faint?'faint':''}">${val}</span><span class="d-kd ${o.att?'attc':o.ok?'okc':''}">${delta}</span></${o.go?'button':'div'}>`;
-const card=(title,meta,t,go)=>`<button class="d-card" ${go}><span class="d-cb"><b>${title}</b><small>${meta}</small></span>${t||''}${ic('chevr','s')}</button>`;
+/* a Needs you item is a List row (Opens=Yes) in the flush card list .d-list (15 Nov, was a drawn .d-card each) */
+const card=(title,meta,t,go)=>`<button class="list-row" ${go}><span class="tx"><b>${title}</b><small>${meta}</small></span>${t||''}${ic('right','s')}</button>`;
 const tile=(img,t,m,go,cls='')=>`<button class="release-tile d-tile ${cls}" ${go}><img src="${IMG(img)}" alt=""><b>${t}</b><small>${m}</small></button>`;
 const roleViewer=()=>S.role==='viewer';
 const curBand=()=>(S.bands&&(S.bands.find(b=>b.id===S.bandId)||S.bands[0]))||{id:'lt',name:'Low Tide',ini:'LT',meta:'Owner: 3 members'};
@@ -99,7 +100,7 @@ function needs(){const e=S.dashEdge.needs;const v=roleViewer();
  const rows=NEEDS.map(([t,m,g,go],i)=>[t,v&&i===0?'LT-INV-0117, Oldest 24 days':m,g,go]);
  if(e==='none')return `<section class="d-sec" data-sec="needs">${sh('Needs you')}<div class="d-line"><span class="muted">Nothing needs you today. Last: invoice LT-INV-0116 paid, Tuesday.</span></div></section>`;
  if(e==='some')return `<section class="d-sec" data-sec="needs">${sh('Needs you','2 things')}<div class="d-list">${[[rows[0][0],v?'LT-INV-0117, oldest 24 days':'LT-INV-0117, oldest 24 days, 13.500 DKK',rows[0][2],rows[0][3]],rows[4]].map(([t,m,g,go],i)=>card(t,m,tag(...(g||['draft','Draft'])),go)).join('')}</div></section>`;
- if(e==='many')return `<section class="d-sec" data-sec="needs">${sh('Needs you','9 things')}<div class="d-list">${rows.map(([t,m,g,go],i)=>card(t,[v?'oldest 24 days':'oldest 24 days, 13.500 DKK','Gear, logged 2 Oct','YouTube, processing','Instagram, Fri and Sun','Mette, yesterday'][i],tag(...(g||['draft','Draft'])),go)).join('')}<button class="btn ghost s d-andmore" data-go="bookings" data-tab="need">${ic('chevr','s')}and 4 more</button></div></section>`;
+ if(e==='many')return `<section class="d-sec" data-sec="needs">${sh('Needs you','9 things')}<div class="d-list">${rows.map(([t,m,g,go],i)=>card(t,[v?'oldest 24 days':'oldest 24 days, 13.500 DKK','Gear, logged 2 Oct','YouTube, processing','Instagram, Fri and Sun','Mette, yesterday'][i],tag(...(g||['draft','Draft'])),go)).join('')}</div><button class="btn ghost s d-andmore" data-go="bookings" data-tab="need">${ic('chevr','s')}and 4 more</button></section>`;
  return `<section class="d-sec" data-sec="needs">${sh('Needs you','5 things, nothing else is waiting')}<div class="d-list">${rows.map(([t,m,g,go])=>card(t,m,g?tag(...g):'',go)).join('')}</div></section>`;}
 
 function overview(){const v=roleViewer();const gig=S.dashEdge.next==='gig';
