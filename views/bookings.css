@@ -12,12 +12,12 @@
 
 /* ---------- tabs ---------- */
 /* Figma "Tabs · bookings" 49 = "tab row" 48 (gap 20) + a 1 px rule rectangle. Tab 298:5098: pad 0, "inner" 46 (pad 12 4,
-   gap 8) + indicator 2 (hover rule-strong, active accent-strong). social.js renders tabs without .in, so it keeps the old padding */
+   gap 8) + indicator 2 (hover rule-strong, active accent-strong). social.js uses .in too since 15 Nov */
 
-.bk-tabs>button{position:relative;display:flex;align-items:center;gap:var(--space-2);height:auto;min-height:46px;padding:var(--space-3) var(--space-1) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
+.bk-tabs>button{position:relative;display:flex;align-items:center;gap:var(--space-2);height:auto;min-height:46px;padding:var(--space-3) var(--space-1) calc(var(--space-3) + 2px);font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted);white-space:nowrap;flex:none}
 /* 46 high like the DS Tab (298:5098) and the Money tabs: 44 content + the 2 px indicator (Vit 26 Oct, one tab height everywhere) */
 .bk-tabs>button:has(>.in){flex-direction:column;align-items:stretch;gap:0;padding:0}
-.bk-tabs .in{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) var(--space-4)}
+.bk-tabs .in{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-1) calc(var(--space-3) + 2px)}  /* 12 + label + 12 + the 2 px indicator drawn inside the padding = Tab 298:5098 (15 Nov: was 16 at the bottom, every tab row 2 px taller than Figma) */
 .bk-tabs button.on{color:var(--ink);font-weight:500}
 .bk-tabs>button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px}
 .bk-tabs>button:is(:hover,[data-state="hover"]):not(.on)::after{background:var(--rule-strong)}

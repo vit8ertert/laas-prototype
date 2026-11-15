@@ -60,14 +60,14 @@ textarea.input{height:auto;padding:var(--space-2) var(--space-3)}
    hover indicator rule-strong, active accent-strong; count pad 2 8, radius pill, accent-tint / accent-ink, Label 13/18 */
 .tabs button{height:auto;padding:var(--space-3) var(--space-1);gap:var(--space-2);border-bottom:2px solid transparent;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .tabs button:is(:hover,[data-state="hover"]){border-bottom-color:var(--rule-strong)}
-:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs) button:is(:hover,[data-state="hover"]){color:var(--ink)} /* Figma Tab State=Hover: the label in ink (7 Nov) */
+:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow) button:is(:hover,[data-state="hover"]){color:var(--ink)} /* Figma Tab State=Hover: the label in ink (7 Nov) */
 /* a scrolling tab row clips anything outside it, so the focus ring sits 2 px inside the tab (Figma Tab State=Focus, 7 Nov) */
-:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs) button:is(:focus-visible,[data-state="focus"]){outline-offset:-2px}
+:is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow) button:is(:focus-visible,[data-state="focus"]){outline-offset:-2px}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
    the line under it an inset rule (no border that adds height, no separate rule element), scrolls sideways when full.
    Figma: Tabs */
-:is(.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow,.aud-tabs){display:flex;gap:var(--space-5);box-shadow:inset 0 -1px 0 var(--rule);overflow-x:auto;scrollbar-width:none}
+:is(.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow){display:flex;gap:var(--space-5);box-shadow:inset 0 -1px 0 var(--rule);overflow-x:auto;scrollbar-width:none}
 .tabs .c{padding:2px var(--space-2);border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-ink);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 
 /* Table row 140:357: pad 12 16, gap 24, bottom stroke 1 rule (inside), surface; hover fill hover */

@@ -79,7 +79,7 @@ const TOURS={
   {sel:()=>$('.main [data-act=logmaint]'),t:'Log maintenance',b:'Note a repair or a restring; the next date is set for you.',last:true},
  ],
  audience:[
-  {sel:()=>$('.aud-tabs','.main [class*=tabs]'),t:'Your listeners',b:'Streaming, figures you add by hand, releases and social in one view.'},
+  {sel:()=>$('.bk-tabs','.main [class*=tabs]'),t:'Your listeners',b:'Streaming, figures you add by hand, releases and social in one view.'},
   {sel:()=>$('.main .acc-sec','.main section'),t:'What is moving',b:'Changes since last month, from the services you connected. Nothing is posted from here.',last:true},
  ],
  social:[

@@ -117,7 +117,7 @@ const stopEnter=()=>{S.enter='tabenter';S.enterUntil=Date.now()+500;};
 
 /* ---------- shared parts ---------- */
 const header=(title,sub,btns)=>`<div class="page-header bk-ph"><div class="bk-tb"><h1 class="t-display">${title}</h1><p>${sub}</p></div>${btns}</div>`;
-const tabs=(list,cur,attr)=>`<div class="bk-tabs" role="tablist">${list.map(([k,l,n])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?'on':''}" data-act="${attr}" data-k="${k}"><span class="l">${l}</span><span class="c">${n}</span></button>`).join('')}</div>`;
+const tabs=(list,cur,attr)=>`<div class="bk-tabs" role="tablist">${list.map(([k,l,n])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?'on':''}" data-act="${attr}" data-k="${k}"><span class="in"><span class="l">${l}</span><span class="c">${n}</span></span></button>`).join('')}</div>`;
 const chip=(key,label,val)=>`<button class="bk-chip ${val.length?'on':''}" data-act="sofilter" data-key="${key}" aria-haspopup="dialog">${label}: ${val.length?esc(val.join(', ')):'all'}</button>`;
 const search=(id,ph,val,label)=>`<label class="bk-search">${ic('search')}<input id="${id}" placeholder="${ph}" value="${esc(val)}" aria-label="${label}" autocomplete="off"></label>`;
 const banner=(kind,icon,title,body,btn,x)=>`<div class="bd-banner ${kind}">${ic(icon,'s')}<div class="tx"><b>${title}</b><span>${body}</span></div>${btn||''}${x?`<button class="btn ghost icon s bd-x" data-act="${x}" aria-label="Dismiss">${ic('x','s')}</button>`:''}</div>`;
