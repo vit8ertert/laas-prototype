@@ -82,9 +82,6 @@
 .cat-row .tx small.c-att{color:var(--att)}
 .cat-row .n{width:24px;flex:none;color:var(--faint)}
 .cat-row .mono{font-size:var(--fs-small);line-height:var(--lh-20)}
-.cat-row.step{align-items:flex-start}
-.cat-row.step .d{width:64px;flex:none;color:var(--muted)}
-.cat-row.step.first .d{color:var(--ink)}.cat-row.step.first .tx b{font-weight:500}
 .cat-av{width:28px;height:28px;border-radius:50%;background:var(--well);display:grid;place-items:center;font:400 var(--fs-meta)/var(--lh-16) var(--sans);flex:none}
 
 /* release header (Figma Release header): 176 cover, 28 gap, bottom-aligned */
@@ -129,10 +126,6 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-sec .hd{display:flex;align-items:center;gap:var(--space-3);height:34px}.cat-sec .hd h3{flex:1;letter-spacing:-.1px}
 .cat-sec .hd .btn{font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .cat-sec .cat-row{border-top:1px solid var(--rule)}
-.cat-drop{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-5) var(--space-4);border:1px solid var(--rule-strong);border-radius:var(--r-lg);cursor:pointer}
-.cat-drop>svg.i{width:20px;height:20px}
-.cat-drop:is(:hover,[data-state="hover"]){background:var(--surface)}
-.cat-drop .tx{display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.cat-drop small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 .cat-panel{display:flex;flex-direction:column;gap:var(--space-6)}
 .cat-panel h3{letter-spacing:-.1px}
 .cat-panel .grp{display:flex;flex-direction:column;gap:var(--space-3)}.cat-panel .grp.tight{gap:var(--space-2)}
