@@ -146,7 +146,7 @@
 .bd-acts>div:not([class]){display:grid;grid-template-columns:56px 1fr;gap:var(--space-3);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .bd-acts .d{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 /* Activity event 299:5127 (6 Nov, component gate): Kind icon in a 28 px well, the line, then when and who; the booking page's two-span rows above move to this markup in a later pass */
-.bd-acts .activity-event{display:flex;gap:var(--space-3);padding:0 var(--space-3);align-items:flex-start}
+.activity-event{display:flex;gap:var(--space-3);align-items:flex-start}.bd-acts .activity-event{padding:0 var(--space-3)}  /* Activity event 299:5127: the base row anywhere (booking activity, the calendar sync log) */
 .activity-event .ic{width:28px;height:28px;border-radius:50%;background:var(--well);color:var(--ink);display:grid;place-items:center;flex:none}
 .activity-event.assistant .ic{background:var(--accent-tint);color:var(--accent-ink)}
 .activity-event .ic svg.i{width:14px;height:14px}
