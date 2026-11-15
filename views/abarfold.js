@@ -3,7 +3,8 @@
    A: after 20 s with no typing, clicking, scrolling, pointer near the bar or focus in it (and an empty field), the bar
       shrinks into the lime Ask pill at its right edge with a spring; hover, focus or a click opens it again the same way,
       and leaving it empty folds it back after a moment.
-   B: folded for 45 s, the sparkle twinkles once (the big star turns a quarter, the small one blooms in, no glow); at most once a
+   B: folded for 45 s, the sparkle winks once (15 Nov, Vit: "use classic wink": each star goes out and flashes back in with a
+      turn, the small one 0.38 s later, no glow); at most once a
       minute, never while the page scrolls, at most three times per page visit.
    Wide screens only (phones have the Ask button in the tab bar). With reduced motion the bar folds without the spring
    and never twinkles. One standalone script for the prototype and Django: it finds .abar in the page each time, so a
@@ -43,7 +44,7 @@ function open(b,animate){if(!b||!b.classList.contains('abar-folded'))return;
  setTimeout(()=>{if(!b.classList.contains('abar-folded')){b.classList.remove('abar-anim');b.style.width='';b.style.marginLeft='';b.style.marginRight='';}},animate&&!reduce.matches?700:0);}
 function twinkle(b){if(reduce.matches)return;const ic=b.querySelector(':scope > svg.i');if(!ic)return;
  ic.classList.remove('abar-tw');void ic.getBoundingClientRect();ic.classList.add('abar-tw');
- setTimeout(()=>ic.classList.remove('abar-tw'),1700);lastTw=Date.now();twinkles++;}
+ setTimeout(()=>ic.classList.remove('abar-tw'),1200);lastTw=Date.now();twinkles++;}
 
 /* hover, focus or a click opens it; leaving it empty folds it back */
 document.addEventListener('pointerover',e=>{const b=e.target.closest&&e.target.closest('.abar.assistant-bar');if(b&&folded){clearTimeout(leaveT);open(b,true);}});
