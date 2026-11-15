@@ -426,7 +426,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* Payment and Billing history rows (13 Nov 2026): List rows flush with the card title; the first row has no rule above it */
 .acc-pay{display:flex;flex-direction:column}.acc-pay>.list-row:first-child{border-top:0}.acc-prow .tx{flex:1;min-width:0}.acc-prow>.btn{margin-left:auto}  /* Django settings_plan.html (list_row component); the prototype uses .acc-list since 15 Nov */
 
-/* photo leading in a List row (Profile, Your bands; 15 Nov: were the drawn .acc-prof and .acc-band): the Thumb at 40 */
-.acc-li>img.thumb,.acc-li>.acc-bsq{width:40px;height:40px;border-radius:var(--r-md);object-fit:cover;flex:none}
+/* photo leading in a List row (Profile, Your bands; 15 Nov: were the drawn .acc-prof and .acc-band): the List row Thumb, 28 like every leading */
+.acc-li>img.thumb,.acc-li>.acc-bsq{width:28px;height:28px;border-radius:var(--r-md);object-fit:cover;flex:none}
 .acc-me>img.thumb{border-radius:var(--r-pill)}
 .acc-me::after{display:none}  /* the profile row sits above its fields, no rule */

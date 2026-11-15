@@ -237,7 +237,8 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* platforms list on an imported release */
 .cat-stores{display:flex;flex-direction:column;gap:var(--space-2)}
 .cat-storelist{display:flex;flex-direction:column}
-.cat-storelist .list-row{cursor:default}  /* a platform row is a List row (15 Nov): Platform icon leading, the name, a Tag (Live, Requested) or Add */
+.cat-storelist .list-row{cursor:default;border-top:0;position:relative}
+.cat-storelist .list-row:not(:last-child)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--rule)}  /* the List row flush divider, not a top border (Figma: Show flush divider) */  /* a platform row is a List row (15 Nov): Platform icon leading, the name, a Tag (Live, Requested) or Add */
 .cat-storelist .missing .tx b{color:var(--muted)}
 .cat-storelist .btn.ghost.s{padding:var(--space-2) 0 var(--space-2) var(--space-3)}
 .cat-stores>.btn{align-self:flex-start}
