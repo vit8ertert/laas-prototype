@@ -341,12 +341,6 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 @media (max-width:599.98px){.acc-nbprev{width:72px;height:72px;font-size:var(--fs-title)}.acc-pph{flex-direction:column;gap:var(--space-1)}}
 
 /* ---------- Audience (330:12770 overview, 330:13413 empty) ---------- */
-.aud-ph{display:flex;align-items:flex-start;gap:var(--space-4)}
-.aud-ph .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-1)}
-.aud-ph p{margin:0;color:var(--muted);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.aud-acts{display:flex;gap:var(--space-2);flex:none}
-.aud-acts .btn svg.i{width:20px;height:20px;color:currentColor}
-.btn.aud-more{width:52px;height:36px;padding:0;justify-content:center}
 
 .aud .acc-banner .btn{flex:none}
 .aud-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4)}
@@ -359,8 +353,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .aud-cols>.col{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
 .aud-i{width:20px}.aud-d{width:64px}
 @media (max-width:1100px){.aud-cols{grid-template-columns:minmax(0,1fr)}.aud-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:839.98px){.aud-ph{flex-wrap:wrap}}
-@media (max-width:599.98px){.aud-kpis{grid-template-columns:minmax(0,1fr)}.aud-acts{flex-wrap:wrap;flex:1 1 100%}}
+@media (max-width:599.98px){.aud-kpis{grid-template-columns:minmax(0,1fr)}}
 
 /* Onboarding layout (Vit 21 Oct: smaller photo, wider form side with more air on the sides):
    form side takes the larger share with a centred 480 px column; photo panel max 672 wide (20 % wider, Vit 21 Oct), inset 24 with radius 16 */

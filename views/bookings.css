@@ -25,6 +25,7 @@
 .bk-tabs .c{display:inline-flex;align-items:center;height:auto;padding:2px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-label)/var(--lh-label) var(--sans);background:var(--sunken);color:var(--muted)}
 .bk-tabs button.on .c{background:var(--accent-tint);color:var(--accent-ink)}
 .bk-tabs button:is(:hover,[data-state="hover"]):not(.on){color:var(--ink)}
+.tabs.bk-tabs{border-bottom:0}.tabs.bk-tabs>button{border-bottom:0}  /* Django: the Tabs component adds .tabs; its canonical borders made the row 50 high (16 Nov) */
 
 /* ---------- content, filters, search ---------- */
 .bk-content{display:flex;flex-direction:column;gap:var(--space-4)}
