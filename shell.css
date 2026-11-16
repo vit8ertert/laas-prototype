@@ -323,7 +323,7 @@ kbd.k{font:400 var(--fs-badge) var(--mono);border:1px solid var(--rule-strong);b
   .hero .tx{padding:0 var(--space-5) var(--space-5)}.kv{grid-template-columns:100px 1fr}.theme-grid{grid-template-columns:1fr}
   .main{border-radius:0}
   .banner{flex-wrap:wrap}.banner .tx{flex:1 1 200px}
-  .topbar{gap:var(--space-2);padding-inline:var(--space-4)}.tb-l,.tb-r{gap:var(--space-2)}.logo svg{width:72px}.me>svg{display:none}
+  .topbar{gap:var(--space-2);padding-inline:var(--space-4)}.tb-l,.tb-r{gap:var(--space-2)}.topbar .logo svg{width:72px}  /* only the top bar wordmark is 72 on phones; every other LAAS logo keeps 90 (16 Nov) */.me>svg{display:none}
   .setgrid{grid-template-columns:1fr!important}.setgrid>nav{flex-direction:row!important;overflow-x:auto}.setgrid>nav>span{display:none}
   .ph .btn{flex:none}
 }

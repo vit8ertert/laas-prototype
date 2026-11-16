@@ -469,7 +469,7 @@
 }
 @media (max-width:599.98px){
   /* settings and audience sections: every block on the card edge, rows without bleed */
-  .acc-sec>:not(.acc-sh){padding-inline:0!important}
+  .acc-sec>:not(.acc-sh,.acc-url){padding-inline:0!important}  /* a filled box (Copy field) keeps its own 12 px inside; one :not() keeps the old specificity, so the banner rule still wins */
   .acc-li{margin-inline:0!important;padding-inline:0!important;width:100%!important}
   .acc-li:not(:last-child)::after{left:0!important;right:0!important}
   :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.list-row) .tx small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}  /* one List row: the meta is one line on phones for every list row (pattern card 2) */

@@ -79,7 +79,7 @@
 .bk-start{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-height:560px}
 .bk-empty.choice{width:100%;max-width:760px}
 .bk-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);width:100%}
-.bk-choice{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--r-lg);background:var(--canvas);text-align:left;transition:background var(--dur-1)}
+.bk-choice{width:100%;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--r-lg);background:var(--canvas);text-align:left;transition:background var(--dur-1)}
 .bk-choice:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bk-choice img{width:100%;height:96px;object-fit:cover;border-radius:var(--r-md)}
 .bk-choice{align-items:stretch}.bk-choice>.brand{align-self:flex-start}  /* a Connect choice leads with its service's logo, 40, top left (Vit 16 Nov: logos, not photos) */
