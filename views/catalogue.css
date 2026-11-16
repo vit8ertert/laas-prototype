@@ -5,9 +5,7 @@
 .cat-detail{max-width:var(--layout-page-detail);gap:var(--space-8)}                       /* width rule: detail pages max 1200 */
 .cat-ph .grow{min-width:min(240px,100%)}
 .cat-ph .grow p{margin:0;font:400 var(--fs-body)/var(--lh-body) var(--sans);color:var(--muted)}
-.cat-actions{display:flex;gap:var(--space-2);align-items:flex-start;flex-wrap:wrap}
 .cat-page .btn:not(.s) svg.i{width:20px;height:20px}
-.btn.cat-more{width:52px;height:36px;padding:0;justify-content:center}
 .cat-back{align-self:flex-start;height:34px;font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .cat-page .btn.ghost.cat-back{padding:var(--space-2) var(--space-3)!important}      /* Figma Button 131:150 ghost S: pad 8 12 (101×34) */
 /* ghost S buttons at a row's right edge (Show all, Add track, Run again, Clear search): Figma pad 8 0 8 12 */
