@@ -130,9 +130,9 @@ function connectChoice(kind){
  const head={social:'Connect where you post',comments:'Comments come in once an account is connected',keywords:'Keyword watch needs a connected account',deliveries:'Connect where your audio goes'}[kind];
  const p=soc?'Posts, comments and keyword hits come in from Instagram, Facebook and TikTok. LAAS posts only what you publish or schedule.'
   :'Push a track’s audio from Catalogue to YouTube or SoundCloud. Nothing uploads until you press Deliver.';
- const list=soc?[['ig','band-collage'],['fb','loppen'],['tt','rehearsal']]:[['yt','stagedive'],['sc','studio-b']];
+ const list=soc?[['ig'],['fb'],['tt']]:[['yt'],['sc']];  /* each card leads with its service's logo, not a photo (Vit 16 Nov) */
  return `<div class="bk-start"><div class="bk-empty choice so-choice"><div class="hd"><h2 class="t-title">${head}</h2><p>${p}</p></div>
- <div class="bk-choices ${soc?'':'two'}">${list.map(([k,im])=>`<button class="bk-choice" data-act="soconnect" data-n="${k}"><img src="${IMG(im)}" alt=""><b>Connect ${NET[k].n}</b><small>${NET[k].what}</small></button>`).join('')}</div></div></div>`;
+ <div class="bk-choices ${soc?'':'two'}">${list.map(([k,im])=>`<button class="bk-choice svc" data-act="soconnect" data-n="${k}">${L.brand(NET[k].n,40)}<b>Connect ${NET[k].n}</b><small>${NET[k].what}</small></button>`).join('')}</div></div></div>`;
 }
 
 /* =====================================================================

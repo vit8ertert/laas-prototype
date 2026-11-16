@@ -81,6 +81,7 @@
 .bk-choice{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--r-lg);background:var(--canvas);text-align:left;transition:background var(--dur-1)}
 .bk-choice:is(:hover,[data-state="hover"]){background:var(--raised)}
 .bk-choice img{width:100%;height:96px;object-fit:cover;border-radius:var(--r-md)}
+.bk-choice{align-items:stretch}.bk-choice>.brand{align-self:flex-start}  /* a Connect choice leads with its service's logo, 40, top left (Vit 16 Nov: logos, not photos) */
 .bk-choice b{font:500 var(--fs-body)/var(--lh-body) var(--sans);color:var(--ink);margin-top:0}
 .bk-choice small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 
