@@ -81,8 +81,8 @@ L.OVERLAYS.cxsheet=()=>`<div class="scrim" data-act="close"></div><div class="po
    GOV.UK summary list for the full set). The desktop order is the priority order. ---------- */
 const FACTS_SHOWN=2;
 function summariseFacts(){if(!compact.matches)return;
- document.querySelectorAll('.main .ev-meta').forEach((m,mi)=>{const items=[...m.children].filter(c=>!c.matches('.cx-facts'));if(items.length<=FACTS_SHOWN)return;
-  m.classList.add('cx-sum');items.slice(FACTS_SHOWN).forEach(c=>c.classList.add('cx-over'));
+ document.querySelectorAll('.main .ev-meta').forEach((m,mi)=>{const items=[...m.children].filter(c=>!c.matches('.cx-facts'));m.classList.add('cx-sum');if(items.length<=FACTS_SHOWN)return;  /* the summary line on every phone header, as Figma Event header Compact (16 Nov) */
+  items.slice(FACTS_SHOWN).forEach(c=>c.classList.add('cx-over'));
   if(!m.querySelector('.cx-facts'))m.insertAdjacentHTML('beforeend',`<button class="cx-facts" data-act="cxfacts" data-m="${mi}" aria-label="All ${items.length} details">+${items.length-FACTS_SHOWN}</button>`);});}
 L.OVERLAYS.cxfacts=o=>{const rows=o.rows.map(t=>{const m=t.match(/^(.*?)\s+(\d[\d:.,]*(?:\s?(?:DKK|km|min|h))?)$/);return m?`<dt>${esc(m[1])}</dt><dd>${esc(m[2])}</dd>`:`<dt>${esc(t)}</dt><dd></dd>`}).join('');
  return `<div class="scrim" data-act="close"></div><div class="pop cx-sheet cx-factsheet" role="dialog" aria-label="Details"><div class="cx-ask-h"><b class="t-heading">${esc(o.title||'Details')}</b><span class="grow"></span><button class="btn ghost icon s" data-act="close" aria-label="Close">${ic('x','s')}</button></div><dl class="cx-kv">${rows}</dl>${o.venue?`<button class="sheet-item cx-it" data-go="venue" data-id="${esc(o.venue)}"><span>${ic('pin','s')}Open the venue</span>${ic('right','s')}</button>`:''}</div>`;};
