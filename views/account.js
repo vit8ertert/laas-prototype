@@ -18,7 +18,7 @@ Object.assign(L.P,{
 
 /* ---------- state ---------- */
 S.acc??={
- q:'',savedUntil:0,hide:{},size:'3–4',obRows:3,
+ q:'',savedUntil:0,hide:{},size:'3–4',obEmails:['jonas@lowtide.dk','mia.bass@gmail.com'],obTyped:'',obErr:'',
  members:[
   {id:'vs',ini:'VS',name:'Vital Sinkevich',role:'Owner',meta:'you, joined 14 Sep 2026'},
   {id:'mr',ini:'MR',name:'Mette Ravn',role:'Admin',meta:'vocals, guitar, joined 14 Sep, sees fees'},
@@ -517,12 +517,15 @@ function obSteps(st){const ob=S.onboarding;
   +`<div class="acc-obpick-l">${lookPicker(order,match)}</div>
   <div class="field"><span class="acc-lbl">Do you prefer light or dark?</span>${appearSeg()}</div>
   <div class="row"><button class="btn secondary" data-act="accobsub" data-sub="1">Back</button><button class="btn accent" data-ob="5">Continue</button></div>`;}
- case 5:{const rows=[['jonas@lowtide.dk','Admin'],['mia.bass@gmail.com','Member']];while(rows.length<A.obRows)rows.push(['','Member']);
+ case 5:{/* Bring the band (Figma 2413:64548 / 64666 / 64837, approved by Vit 16 Nov): one Emails field for many addresses,
+   each added person a removable chip, everyone joins as Member, the band's join link, Send N invites (never greyed out).
+   Django: web/ob_team.html with the same markup. */
+  const em=A.obEmails,n=em.length,err=A.obErr;
   return head('Bring the band','They get an email to join Low Tide. Nobody pays per member.')
-  +`<ol class="acc-obinv" aria-label="Bandmates to invite">${rows.map(([m,r],i)=>`<li><div class="acc-two">${fld('acc-oe'+i,'Email',m,268,'',m?'':'Another bandmate')}<div class="field"><label for="acc-or${i}">Role</label><select class="input" id="acc-or${i}" style="width:160px">${['Admin','Member','Viewer'].map(o=>`<option ${o===r?'selected':''}>${o}</option>`).join('')}</select></div></div></li>`).join('')}</ol>
-  <button class="btn ghost s acc-add" data-act="accobrow">${ic('plus','s')}Add another</button>
-  <p class="acc-obfoot">Owner and Admin see money and can send. Member sees gigs, the day sheet and their own payouts. Viewer sees dates only, good for a manager or family.</p>
-  <div class="row"><button class="btn secondary" data-act="accobskip">Skip for now</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}Send 2 invites</button></div>`;}
+  +`<div class="acc-obinv"><div class="field${err?' err':''}"><label for="acc-oe">Emails</label><input class="input${err?' err':''}" id="acc-oe" placeholder="${n?'Add more':'Paste or type emails'}" value="${esc(A.obTyped||'')}" autocomplete="off">${err?`<span class="help err">${esc(err)}</span>`:'<span class="help">Separate with commas. Everyone joins as Member.</span>'}</div>
+  ${n?`<div class="acc-chips">${em.map(e=>`<span class="chip rm">${esc(e)}<button class="chip-x" type="button" data-act="accobrm" data-e="${esc(e)}" aria-label="Remove ${esc(e)}">${ic('x','s')}</button></span>`).join('')}</div>`:''}</div>
+  <div class="acc-oblink"><div class="section-header d-sh"><h3 class="t-heading">Or share a join link</h3></div>${feedUrl('laas.app/join/lowtide-7kq2','A new link is made; the old one stops working')}<p class="acc-obfoot">Drop it in the band chat. Anyone with the link joins Low Tide as Member; it stops working on 23 Nov.</p></div>
+  <div class="row"><button class="btn secondary" data-act="accobskip">Do it later</button><button class="btn accent" data-act="accobsend" id="acc-obsend">${ic('send','s')}${n?`Send ${n} invite${n===1?'':'s'}`:'Send invites'}</button></div>`;}
  /* Sign in and password recovery (Vit 10 Nov: "create a login page … more into our brand and professional. maybe logo.
     and the password recovery? view password icon in the field?"). The sign-up layout: logo on top, the form, the photo
     on the right on desktop. Django: web/login.html and web/password_*.html with the same markup. */
@@ -557,19 +560,26 @@ AC.accoblink2=()=>{S.onboarding.step=10;L.render();};
 AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the link in your inbox');};
 AC.accobsub=t=>{S.onboarding.sub=+t.dataset.sub;S.onboarding.step=3;L.render();};
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
-AC.accobrow=()=>{A.obRows++;L.render();};
+/* Bring the band: what was typed becomes chips (commas, spaces or new lines); a wrong one stays in the field with why */
+const OB_EMAIL=/^[^@\s,;]+@[^@\s,;]+\.[^@\s,;.]{2,}$/;
+const obAdd=()=>{const f=document.getElementById('acc-oe');const parts=(f?f.value:'').split(/[,;\s]+/).filter(Boolean);
+ const bad=parts.filter(p=>!OB_EMAIL.test(p));parts.filter(p=>OB_EMAIL.test(p)&&!A.obEmails.includes(p)).forEach(p=>A.obEmails.push(p));
+ A.obTyped=bad.join(' ');A.obErr=bad.length?`“${bad[0]}” ${bad[0].includes('@')?'is missing an ending, like .com':'has no @'}${bad.length>1?`, and ${bad.length-1} more to fix`:''}`:'';return !bad.length;};
+AC.accobrm=t=>{A.obEmails=A.obEmails.filter(e=>e!==t.dataset.e);L.render();};
 /* the intro's three exits into the app; with ?lab=knob the Soundcheck plays first, the first time each band comes up */
 const enterApp=(msg)=>{const go=()=>{L.go('dashboard');L.toast(msg);};const b=curBand();
  /* returns a promise while the Soundcheck plays, so the first-run tour (tour.js) waits for the dashboard */
  if(LAB_KNOB&&window.LAAS_SOUNDCHECK){return new Promise(res=>window.LAAS_SOUNDCHECK.play(b.name,()=>{go();res();}));}go();};
 AC.accobskip=()=>enterApp('Welcome to LAAS. Invite the band any time from Members');
-AC.accobsend=()=>{const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;return enterApp(n?`Welcome to LAAS. ${n} invite${n===1?'':'s'} sent`:'Welcome to LAAS');};
+AC.accobsend=()=>{const ok=obAdd();const n=A.obEmails.length;if(!ok||!n){if(!n&&ok)A.obErr='Add at least one email, or choose Do it later';L.render();document.getElementById('acc-oe')?.focus();return;}return enterApp(`Welcome to LAAS. ${n} invite${n===1?'':'s'} sent`);};
+/* Enter adds what was typed as chips */
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target&&e.target.id==='acc-oe'){e.preventDefault();obAdd();L.render();document.getElementById('acc-oe')?.focus();}});
 AC.accnotme=()=>{S.onboarding.step=0;L.render();L.toast('Invite left as it was. Sign in with your own email');};
 AC.accjoin=()=>enterApp('You joined Low Tide as Member');
 L.INPUT.push(t=>{
  if(t.dataset&&t.dataset.digit!==undefined){t.value=t.value.replace(/\D/g,'').slice(-1);const i=+t.dataset.digit;if(t.value&&i<5)document.querySelector(`[data-digit="${i+1}"]`)?.focus();
   const all=[...document.querySelectorAll('[data-digit]')].every(x=>x.value);if(all){S.onboarding.step=2;setTimeout(()=>{L.render();L.toast('Email confirmed');},150);}return true;}
- if(t.closest&&t.closest('.acc-obinv')){const n=[...document.querySelectorAll('.acc-obinv input')].filter(i=>i.value.includes('@')).length;const b=document.getElementById('acc-obsend');if(b)b.innerHTML=ic('send','s')+(n?`Send ${n} invite${n===1?'':'s'}`:'Send invites');return true;}
+ if(t.id==='acc-oe'){A.obTyped=t.value;return true;}
 });
 AC.accbgenre=t=>{const g=t.dataset.g,l=A.genres;const i=l.indexOf(g);if(i>=0){if(l.length===1)return L.toast('Keep at least one genre');l.splice(i,1);}else l.push(g);L.render();L.toast('Genres saved');};
 AC.accgall=()=>{A.allGenres=!A.allGenres;L.render();};

@@ -202,6 +202,8 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-wide{width:100%;justify-content:center}
 .acc-or{display:flex;align-items:center;gap:var(--space-3);font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--faint)}
 .acc-or i{flex:1;height:1px;background:var(--rule)}
+.acc-obinv,.acc-oblink{display:flex;flex-direction:column;gap:var(--space-3)}  /* Bring the band (16 Nov): Emails with its chips, the join link with its line */
+.acc-chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 .acc-obfoot{margin:0;font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-obfoot .link{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-code{display:flex;gap:var(--space-2)}
@@ -223,12 +225,6 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* each bandmate is its own block (Vit 27 Oct: "email role email role" was hard to tell apart). 2 Nov, Vit: the number
    circles read as notification counts, so a rule now separates the pairs; order means nothing here (the numbered
    Step stays for real sequences, .tl-steps) */
-.acc-obinv{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--space-5)}
-.acc-obinv>li+li{border-top:1px solid var(--rule);padding-top:var(--space-5)}
-.acc-obinv .acc-two{gap:var(--space-3);flex-wrap:nowrap}
-.acc-obinv .acc-two>.field:first-child{flex:1 1 auto;min-width:0}.acc-obinv .acc-two>.field:first-child .input{width:100%!important}  /* email takes what the role leaves */
-.acc-obinv .acc-two>.field:last-child{flex:none}.acc-obinv .acc-two>.field:last-child .input{width:140px!important}
-.btn.s.acc-add{align-self:flex-start;padding:var(--space-2) var(--space-3);margin-left:calc(-1 * var(--space-3))} /* hugs its label; bleeds 12 px so the plus lines up with the fields (Vit 21 Oct) */
 .acc-join{display:flex;gap:var(--space-4);align-items:center}
 .acc-join img{width:64px;height:64px;border-radius:var(--r-lg);object-fit:cover}
 .acc-join div{display:flex;flex-direction:column;gap:var(--space-1)}
@@ -310,7 +306,6 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
  .acc-url{flex-wrap:wrap}.acc-url code{flex:1 1 100%}
  .acc-obthemes{grid-template-columns:1fr 1fr}
  .acc-two{flex-direction:column;gap:var(--space-3)}.acc-two .field,.acc-two .input{width:100%!important}
- .acc-obinv .acc-two>.field:last-child,.acc-obinv .acc-two>.field:last-child .input{width:100%!important}
  .acc-ob .field .input{width:100%!important}
 }
 

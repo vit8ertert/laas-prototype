@@ -33,6 +33,8 @@
 .chip{height:auto;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:0;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule);font:400 var(--fs-body)/var(--lh-18) var(--sans);color:var(--ink)}
 .chip:is(:hover,[data-state="hover"]){background:var(--hover)}
 .chip>svg.i{width:14px;height:14px}
+.chip.rm{display:inline-flex;align-items:center;cursor:default}  /* Chip Removable (16 Nov): the label, then the x that takes it off */
+.chip-x{display:grid;place-items:center;width:14px;height:14px;margin:0;padding:0;border:0;background:none;color:inherit;cursor:pointer;border-radius:var(--r-sm)}.chip-x svg.i{width:14px;height:14px}.chip-x:is(:focus-visible,[data-state="focus"]){outline:2px solid var(--accent);outline-offset:2px}
 
 /* Input / Select 132:118 / 142:616: column gap 8; Label 13/18 ink; Field pad 8 12, radius 8, inside stroke 1 rule-strong, surface;
    Focus inside stroke 2 ink; Error stroke 1 bad + help in bad; Help Meta 12/16 muted */
