@@ -23,6 +23,7 @@
 .acc-search:is(:focus-within,[data-state="focus"]){box-shadow:inset 0 0 0 2px var(--ink)}
 .acc-gl{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--faint);padding:var(--space-4) 0 var(--space-2) var(--space-3)}
 .acc-body{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+.acc-body>form{display:contents}  /* Django wraps a settings page's cards in its form: the cards keep the body's gap (16 Nov) */
 
 /* Section (Padding=M): 20/8 with 12 px head inset, so rows share one text edge */
 .acc-sec{display:flex;flex-direction:column;gap:var(--space-4)}
@@ -396,7 +397,9 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-genres.q .acc-gall{display:none}
 .acc-gnone{display:none;font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}.acc-genres.nohit .acc-gnone{display:block}
 /* onboarding: the Back / Continue row sits apart from the form, 40 px below the last field on every step (Vit 21 Oct) */
-.acc-obform>.row:last-child{margin-top:var(--space-5)}
+.acc-obform>.row:last-child,.acc-obform>form:last-child>.row:last-child{margin-top:var(--space-5)}
+.acc-obform>form.ob-step{display:contents}  /* Django wraps a step's fields in its form: they stay the column's items (B8, 16 Nov) */
+.acc-obtop>.acc-step{margin-left:auto}
 .acc-ob.snd .acc-obform>.row:last-child{margin-top:var(--space-6)}
 
 /* sign-up: the button stack sits 32 px under the intro (Vit 21 Oct: "button needs padding on top") */

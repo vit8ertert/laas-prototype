@@ -26,7 +26,7 @@ S.acc??={
   {id:'jh',ini:'JH',name:'Jonas Holm',role:'Member',meta:'drums, joined 16 Sep, owed 1.787 DKK from Odense Live',owed:true}],
  invites:[{email:'anna.b@gmail.com',meta:'Viewer, bookkeeper, sent 18 Oct by you, expires 25 Oct, not opened'}],
  tg:{fees:false,confirm:false,interest:false,b2b:true,fholds:true,fday:true,pub:true,ipub:true,iholds:true,iday:true,motion:false,n1:false,n2:false,n3:false,n4:false},
- conn:{spotify:false,bandcamp:false,mobilepay:false,dinero:false}
+ cals:[['Google Calendar, Vital','Two-way, 14 events matched to bookings, last sync 2 min ago','confirmed','Connected'],['Band rehearsal calendar (.ics)','Read-only, 6 rehearsals shown as busy, refreshed hourly','confirmed','Connected'],['Jonas\' day job (.ics)','Read-only, busy blocks only, used for availability asks','attention','Not refreshed 3 days']],conn:{gcal:true,gmail:true,bank:true,spotify:false,bandcamp:false,mobilepay:false,dinero:false}
 };
 const A=S.acc;
 /* personal assistant prompt (LaaS 0.5 /account/profile/), private to the user, used in every band */
@@ -165,20 +165,17 @@ L.VIEWS['calendar-feed']=()=>shell('Calendar feed','A band feed and a public one
   row('Lead time','Gigs appear this long before the date',sel('Lead time',['As soon as confirmed','2 weeks before','1 month before'])),
   foot('What leaves the band: dates, venues, set times. What never leaves: fees, notes, contacts, riders, holds.','lock')),
   `<button class="btn ghost s" data-act="copytext" data-text="https://laas.dk/lowtide/gigs.ics">${ic('copy','s')}Copy link</button>`,'inset')
- +sec('Imports',`<div class="acc-list">${[
-  ['Google Calendar, Vital','Two-way, 14 events matched to bookings, last sync 2 min ago',tag('confirmed','Connected')],
-  ['Band rehearsal calendar (.ics)','Read-only, 6 rehearsals shown as busy, refreshed hourly',tag('confirmed','Connected')],
-  ['Jonas\' day job (.ics)','Read-only, busy blocks only, used for availability asks',tag('attention','Not refreshed 3 days')]].map(([t,m,tg2],i)=>li('',t,m,tg2+ic('right','s'),`data-act="acccal" data-i="${i}"`)).join('')}${foot('Imported calendars only ever create "busy" and hold suggestions. Nothing is written back to them.')}</div>`,act('plus','Add calendar','accaddcal')));
+ +sec('Imports',A.cals.length?`<div class="acc-list">${A.cals.map(([t,m,k,l],i)=>li('',t,m,tag(k,l)+ic('right','s'),`data-act="acccal" data-i="${i}"`)).join('')}${foot('Imported calendars only ever create "busy" and hold suggestions. Nothing is written back to them.')}</div>`
+  :`<div class="empty-inline"><span>No calendars imported. Add one to see busy times next to your gigs; nothing is written back to it.</span></div>`,act('plus','Add calendar','accaddcal')));
 
 /* ---------- Settings · Integrations (316:11090) ---------- */
 L.VIEWS.integrations=()=>{const c=A.conn;
  const avail=(k,name,desc,missing)=>row(name,desc,c[k]?tag('confirmed','Connected'):missing?`<button class="acc-tagbtn" data-act="accconnect" data-k="${k}" data-n="${name}" aria-label="Add credentials for ${name}">${tag('attention','Credentials missing')}</button>`:sbtn('Connect','accconnect',`data-k="${k}" data-n="${name}"`));
  return shell('Integrations','What is connected and what it shares',
- sec('Connected',rows(
-  row('Google Calendar','Two-way, Low Tide gigs, last sync 2 min ago',tag('confirmed','Connected')),
-  row('Gmail','Reads threads you pick, never sends without Confirm',tag('confirmed','Connected')),
-  row('Danske Bank','Reads payments in, matches to invoices, high confidence only',tag('confirmed','Connected'))))
+ sec('Connected',(()=>{const on=[['gcal','Google Calendar','Two-way, Low Tide gigs, last sync 2 min ago'],['gmail','Gmail','Reads threads you pick, never sends without Confirm'],['bank','Danske Bank','Reads payments in, matches to invoices, high confidence only']].filter(x=>c[x[0]]);
+  return on.length?rows(...on.map(([k,n,d])=>row(n,d,tag('confirmed','Connected')))):`<div class="empty-inline"><span>Nothing is connected yet. Connect a calendar, mail or your bank below.</span></div>`;})())
  +sec('Available',rows(
+  ...[['gcal','Google Calendar','Two-way: holds go out as tentative, busy times come back'],['gmail','Gmail','Reads threads with people in Contacts, never sends without Confirm'],['bank','Danske Bank','Reads payments in and matches them to invoices']].filter(x=>!c[x[0]]).map(([k,n,d])=>avail(k,n,d)),
   avail('mobilepay','MobilePay Business','Shows payments in, needs your business number and a login',1),
   avail('dinero','Dinero','Pushes approved invoices and payments to your books',1),
   avail('spotify','Spotify for Artists','Pulls release dates and listener numbers, read-only'),
@@ -398,7 +395,7 @@ L.VIEWS.audience=()=>{const t=S.atab,AUD=L.AUD,kr=L.kr;
  const head=`<div class="page-header aud-ph"><div class="grow"><h1 class="t-display">Audience</h1><p>${S.audConnected?'Spotify for Artists and your own figures':'Nothing connected yet, read-only in v1'}</p></div><div class="aud-acts"><button class="btn secondary" data-act="addfigures">${ic('plus')}Add figures</button><button class="btn accent" data-act="connectsvc">${ic('plug')}Connect a service</button><button class="btn secondary aud-more" aria-label="More" data-act="audmore">${ic('more')}</button></div></div>`;
  const kpi=(l,v,sub,ok)=>`<div class="kpi-tile aud-kpi"><span class="l">${l}</span><span class="v">${v}</span><span class="d ${ok?'ok':''}">${sub}</span></div>`;
  if(!S.audConnected)return `<div class="page aud">${head}<div class="bk-start"><div class="bk-empty choice"><div class="hd"><h2 class="t-title">No audience numbers yet</h2><p>Connect Spotify for Artists or YouTube (read-only), or type in the figures you have. LAAS never posts for you and never shows these numbers to venues.</p></div>
-  <div class="bk-choices">${[['Connect Spotify for Artists','Read-only, listeners, followers, streams, cities','connectspotify','stagedive'],['Connect YouTube','Read-only, subscribers and views','connectyoutube','studio-b'],['Type a figure in','Apple Music, Tidal, Deezer, Bandcamp: one number a month is enough','addfigures','notebook']].map(([a,b,act,im])=>`<button class="bk-choice" data-act="${act}"><img src="${IMG(im)}" alt=""><b>${a}</b><small>${b}</small></button>`).join('')}</div></div></div>
+  <div class="bk-choices">${[['Connect Spotify for Artists','Read-only, listeners, followers, streams, cities','connectspotify','Spotify'],['Connect YouTube','Read-only, subscribers and views','connectyoutube','YouTube'],['Type a figure in','Apple Music, Tidal, Deezer, Bandcamp: one number a month is enough','addfigures','By hand']].map(([a,b,act,br])=>`<button class="bk-choice logo" data-act="${act}">${L.brand(br,40)}<b>${a}</b><small>${b}</small></button>`).join('')}</div></div></div>
   <div class="aud-kpis ghost">${kpi('Monthly listeners','—','from Spotify')}${kpi('Followers','—','Spotify and YouTube')}${kpi('Streams, last 28 days','—','from Spotify')}${kpi('Figures by hand','—','anything without an API')}</div></div>${L.audAbar()}`;
  const tabs=`<div class="bk-tabs" role="tablist">${[['overview','Overview'],['streaming','Streaming'],['hand','Figures by hand',S.figures.length],['releases','Releases']].map(([k,l,c])=>`<button role="tab" aria-selected="${t===k}" class="${t===k?'on':''}" data-atab="${k}"><span class="in"><span class="l">${l}</span>${c?`<span class="c">${c}</span>`:''}</span></button>`).join('')}</div>`;  /* the one tab row (.bk-tabs, Tab 298:5098), 15 Nov: was its own .aud-tabs */
  const max=Math.max(...AUD.listeners);
