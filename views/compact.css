@@ -132,7 +132,8 @@
   .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
   /* page tabs and filter chips scroll in one line; the current tab is kept in view (compact.js) */
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:var(--space-4)!important;margin-inline:calc(-1 * var(--space-4));padding-inline:var(--space-4)}
-  .tabs.bk-tabs{gap:var(--space-5)!important;margin-inline:0;padding-inline:0}.tabs.bk-tabs button{font-size:inherit;line-height:inherit}  /* Django: the Tabs component adds .tabs to a .bk-tabs row; the row keeps its own spacing (16 Nov) */
+  .tabs.bk-tabs{gap:var(--space-5)!important;margin-inline:0;padding-inline:0}.tabs.bk-tabs button{font-size:inherit;line-height:inherit}
+  .so-hits>.list-row{padding-inline:0}.so-hits>.list-row::after{left:0;right:0}  /* Django: keyword hits sit flush on phones, as the prototype .bd-prow rows (16 Nov) */  /* Django: the Tabs component adds .tabs to a .bk-tabs row; the row keeps its own spacing (16 Nov) */
   .tabs::-webkit-scrollbar{display:none}.tabs>*{flex:none}
   .tabs button{font-size:var(--fs-small);line-height:var(--lh-20)}
   /* the Catalogue tabs drop the row padding (.tabs.cat-tabs{padding:0}), so the -16 pull left them on the screen edge; on the gutter like every other tab row (Vit 2 Nov, Releases) */
