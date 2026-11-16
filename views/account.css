@@ -212,6 +212,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-obphoto img.round{width:72px;height:72px;border-radius:50%}
 .acc-obphoto>div{display:flex;flex-direction:column;gap:var(--space-1);align-items:flex-start}
 .acc-obphoto .help{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
+.acc-obphoto label.btn{cursor:pointer}.acc-obphoto .help.err{color:var(--bad)}  /* Photo field (16 Nov): the picker is a label around the file input */
 .acc-obphoto b.strong{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
 .acc-two{display:flex;gap:var(--space-4);align-items:flex-start;flex-wrap:wrap}
 .acc-ob .field .input{max-width:100%}
@@ -258,6 +259,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 /* mini dashboard, drawn at 1456x910 and scaled */
 .acc-mini{width:1456px;height:910px;background:var(--sunken);color:var(--ink);display:flex;flex-direction:column;font-size:var(--fs-body);line-height:var(--lh-body);pointer-events:none;text-align:left}
 .acc-mini .mt{height:58px;display:flex;align-items:center;gap:var(--space-4);padding:0 var(--space-5);flex:none}
+.gr{flex:1}  /* a spacer that pushes what follows to the end (16 Nov; was inline style="flex:1" in account.js footers and the mini dashboard) */
 .acc-mini .mt .lg svg{height:24px;width:auto;fill:var(--ink);display:block}
 .acc-mini .mt small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--faint)}
 .acc-mini .sp{display:flex;align-items:center;gap:var(--space-2);width:280px;height:34px;padding:0 var(--space-3);border-radius:var(--r-md);background:var(--well);color:var(--muted);font-size:var(--fs-small);line-height:var(--lh-20)}
@@ -375,6 +377,9 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-look .nm{font:500 var(--fs-body)/var(--lh-body) var(--sans)}
 .acc-look .fits{position:absolute;top:-11px;right:var(--space-2);padding:2px var(--space-2);border-radius:var(--r-pill);background:var(--poster-lime);color:var(--on-lime);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .acc-obpick-l{display:none}
+.ob-gfield{display:flex;flex-direction:column;gap:var(--space-3)}  /* Django What do you play?: the search over the genre chips, 12 apart as Figma 2094:41351 */
+.ob-narrow{display:none}  /* Django Pick your look: "on the right" or "below", as the prototype words it per width (16 Nov) */
+@media (max-width:839.98px){.ob-wide{display:none}.ob-narrow{display:inline}}
 @media (max-width:839.98px){.acc-obpick-l{display:block}.acc-looks{grid-template-columns:1fr 1fr}}
 
 /* Your band: two flexible columns, genre search, first 8 genres plus picked ones until "Show all" */
