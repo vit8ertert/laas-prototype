@@ -231,9 +231,9 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-amb>span{flex:1;min-width:160px}.d-amb .btn{color:var(--ink);background:var(--surface)}
 .d-amb.ok{background:var(--ok-tint);color:var(--ok)}.d-amb.ok .btn{background:none}
 .d-acts{display:flex;justify-content:flex-end;gap:var(--space-2);flex-wrap:wrap}
-.d-user{align-self:flex-end;width:520px;max-width:85%;background:var(--raised);border-radius:var(--r-lg);padding:var(--space-3) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+.d-user{align-self:flex-end;width:var(--chat-bubble);max-width:85%;background:var(--raised);border-radius:var(--r-lg);padding:var(--space-3) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .d-turn{display:flex;flex-direction:column;gap:var(--space-3)}
-.d-ah{display:flex;gap:var(--space-2);align-items:flex-start;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.d-ah b{font-weight:500}.d-ah svg.i{width:18px;height:18px;margin-top:2px;fill:currentColor}
+.d-ah{display:flex;gap:var(--space-2);align-items:flex-start;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.d-ah b{font-weight:500}.d-ah svg.i{flex:none;width:var(--icon-s);height:var(--icon-s);margin-block:calc((var(--lh-body) - var(--icon-s)) / 2);fill:currentColor}  /* Chat message: the AI mark on icon/w/size-s, centred on the first line (17 Nov; was 18, top 2) */
 .d-checked{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-radius:var(--r-lg);background:var(--surface);font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .d-checked>span:not(.faint){display:flex;align-items:center;gap:var(--space-2);color:var(--muted)}.d-checked svg.i.s{width:14px;height:14px}
 .d-note{margin:0}
