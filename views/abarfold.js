@@ -35,6 +35,10 @@ function pillSize(b){/* the folded size from the CSS (Figma Collapsed: 40 high, 
 /* the pill sits in the bottom-right corner of the main area, on the content edge (--abar-fold-inset = --space-8, the inset of
    the mini Ask pill too), not under the bar's own right end (17 Nov, Vit: "closer to the bottom right") */
 const inset=b=>parseFloat(getComputedStyle(b).getPropertyValue('--abar-fold-inset'))||32;
+/* once folded, the pill's place comes from the CSS (.abar-folded: margin-left auto, --abar-fold-inset from the right), not
+   from the pixels of the moment it folded, so a resize, the sidebar or a side panel cannot strand it (17 Nov, Vit: "stays
+   in a random place of the screen") */
+function settle(b){if(!b.classList.contains('abar-folded'))return;b.style.width='';b.style.height='';b.style.marginLeft='';b.style.marginRight='';}
 function fold(b,animate){if(!b||b.classList.contains('abar-folded'))return;
  b.classList.remove('abar-anim');  /* measure without a running transition (an open still in flight) */
  const g=geometry(b),h0=b.getBoundingClientRect().height,p=pillSize(b);
@@ -45,11 +49,12 @@ function fold(b,animate){if(!b||b.classList.contains('abar-folded'))return;
  b.setAttribute('aria-label','Ask the assistant (folded, click or focus to open)');
  if(!folded||animate)foldedAt=Date.now();folded=true;  /* carrying the fold to a new page keeps its time */
  try{sessionStorage.setItem('laas-abar','folded');}catch(e){}  /* Django pages are full loads: the next page starts folded */
- if(animate)setTimeout(()=>{b.classList.remove('abar-anim');if(b.classList.contains('abar-folded'))twinkle(b,false);},620);}  /* every fold ends with the wink */
+ if(animate&&!reduce.matches)setTimeout(()=>{b.classList.remove('abar-anim');if(b.classList.contains('abar-folded')){settle(b);twinkle(b,false);}},620);else settle(b);}  /* every fold ends with the wink */
 function open(b,animate){if(!b||!b.classList.contains('abar-folded'))return;
  b.classList.remove('abar-anim');  /* measure without a running transition (a fold still in flight) */
  /* measure the open bar, then go back to the pill (no paint in between) and animate to it, so the parts grow back in */
- const prevW=b.style.width,prevL=b.style.marginLeft,prevH=b.style.height;
+ const r0=b.getBoundingClientRect(),p0=b.parentElement.getBoundingClientRect();  /* the pill where it is now (its place comes from the CSS) */
+ const prevW=r0.width+'px',prevL=(r0.left-p0.left)+'px',prevH=r0.height+'px';
  b.classList.add('abar-measure');  /* no transitions while measuring, or the sparkle's own transition cancels its growth */
  b.classList.remove('abar-folded');b.style.width='';b.style.marginLeft='';b.style.marginRight='';b.style.height='';
  const g=geometry(b),h=b.getBoundingClientRect().height;
