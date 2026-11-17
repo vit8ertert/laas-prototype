@@ -454,7 +454,7 @@ svg.i.ai-wink path:first-child{transform-box:view-box;transform-origin:9.9px 14.
 svg.i.ai-wink path:last-child{transform-box:view-box;transform-origin:17.5px 5.7px;animation:abar-wink .7s var(--ease-wink) .38s 1 both}
 @media (prefers-reduced-motion:reduce){svg.i.ai-wink path{animation:none}}
 /* the wink (15 Nov 2026, Vit: "use classic wink", option U): each star goes out completely and flashes back in with a turn, the small one a beat later; no glow */
-.abar{--ease-wink:cubic-bezier(.45,0,.25,1)}
+.abar{--ease-wink:cubic-bezier(.45,0,.25,1);--abar-fold-inset:var(--space-8)}
 @keyframes abar-wink{0%{transform:scale(1) rotate(0)}38%{transform:scale(0) rotate(45deg)}72%{transform:scale(1.14) rotate(150deg)}100%{transform:scale(1) rotate(180deg)}}
 /* the sparkle only ever does the agreed classic wink (15 Nov, Vit: "strictly the agreed one"): at the end of every fold and on
    hover of the pill (abarfold.js); here it only eases its size and colour with the fold */

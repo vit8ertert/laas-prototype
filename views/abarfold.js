@@ -26,19 +26,22 @@ addEventListener('scroll',()=>{touch();lastScroll=Date.now();},{passive:true,cap
 addEventListener('pointermove',e=>{const b=bar();if(!b||folded)return;const r=b.getBoundingClientRect();
  if(e.clientX>r.left-NEAR&&e.clientX<r.right+NEAR&&e.clientY>r.top-NEAR&&e.clientY<r.bottom+NEAR)touch();},{passive:true});
 
-/* the fold: the bar keeps its right edge and shrinks to the pill; margins and width animate (CSS on .abar-anim) */
+/* the fold: the bar shrinks to the pill and slides to the bottom-right corner; margins and width animate (CSS on .abar-anim) */
 function geometry(b){const p=b.parentElement.getBoundingClientRect(),r=b.getBoundingClientRect();return {left:r.left-p.left,width:r.width,parent:p.width};}
 function pillSize(b){/* the folded size from the CSS (Figma Collapsed: 40 high, padding 16, sparkle, 8, Ask), measured on a hidden copy */
  const c=b.cloneNode(true);c.classList.remove('abar-anim');c.classList.add('abar-folded');c.removeAttribute('id');c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
  c.style.cssText='position:absolute;visibility:hidden;pointer-events:none;width:max-content;margin:0;bottom:0';b.parentElement.appendChild(c);
  const r=c.getBoundingClientRect();c.remove();return {w:Math.ceil(r.width),h:Math.round(r.height)};}
+/* the pill sits in the bottom-right corner of the main area, on the content edge (--abar-fold-inset = --space-8, the inset of
+   the mini Ask pill too), not under the bar's own right end (17 Nov, Vit: "closer to the bottom right") */
+const inset=b=>parseFloat(getComputedStyle(b).getPropertyValue('--abar-fold-inset'))||32;
 function fold(b,animate){if(!b||b.classList.contains('abar-folded'))return;
  b.classList.remove('abar-anim');  /* measure without a running transition (an open still in flight) */
  const g=geometry(b),h0=b.getBoundingClientRect().height,p=pillSize(b);
  b.style.width=g.width+'px';b.style.height=h0+'px';b.style.marginLeft=g.left+'px';b.style.marginRight='0px';
  void b.offsetWidth;  /* lock the start size first, or the width runs from 100 % (clamped at 720) and the bar slides right at full width (Vit, 17 Nov) */
  if(animate&&!reduce.matches){b.classList.add('abar-anim');void b.offsetWidth;}
- b.classList.add('abar-folded');b.style.width=p.w+'px';b.style.height=p.h+'px';b.style.marginLeft=(g.left+g.width-p.w)+'px';
+ b.classList.add('abar-folded');b.style.width=p.w+'px';b.style.height=p.h+'px';b.style.marginLeft=Math.max(g.left,g.parent-inset(b)-p.w)+'px';
  b.setAttribute('aria-label','Ask the assistant (folded, click or focus to open)');
  if(!folded||animate)foldedAt=Date.now();folded=true;  /* carrying the fold to a new page keeps its time */
  try{sessionStorage.setItem('laas-abar','folded');}catch(e){}  /* Django pages are full loads: the next page starts folded */
