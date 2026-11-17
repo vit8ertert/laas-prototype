@@ -36,6 +36,7 @@ function fold(b,animate){if(!b||b.classList.contains('abar-folded'))return;
  b.classList.remove('abar-anim');  /* measure without a running transition (an open still in flight) */
  const g=geometry(b),h0=b.getBoundingClientRect().height,p=pillSize(b);
  b.style.width=g.width+'px';b.style.height=h0+'px';b.style.marginLeft=g.left+'px';b.style.marginRight='0px';
+ void b.offsetWidth;  /* lock the start size first, or the width runs from 100 % (clamped at 720) and the bar slides right at full width (Vit, 17 Nov) */
  if(animate&&!reduce.matches){b.classList.add('abar-anim');void b.offsetWidth;}
  b.classList.add('abar-folded');b.style.width=p.w+'px';b.style.height=p.h+'px';b.style.marginLeft=(g.left+g.width-p.w)+'px';
  b.setAttribute('aria-label','Ask the assistant (folded, click or focus to open)');
