@@ -13,7 +13,7 @@
 :is(.tag,.schip).danger{--tc:var(--bad)}
 :is(.tag,.schip,.bd-pill,.d-ev).draft,.schip.enquiry{--tc:var(--draft)}
 .schip.completed,.bd-pill.completed{--tc:var(--ink)}  /* Status chip 301:5131 Completed: ink in both forms (gate, 6 Nov) */
-.tag.accent,.tag.cat-acc,.schip.offer,.bd-pill.offer,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c{--tc:var(--accent-ink)}
+.tag.accent,.schip.offer,.bd-pill.offer,.rec,.tabs .c,.bk-tabs button.on .c,.cat-tabs button.on .c,.m-tabs button.on .c,.ml-tabs button.on .c{--tc:var(--accent-ink)}
 /* "Needs you" count in the notifications panel: attention, it is the work waiting on you */
 .d-nf .c{--tc:var(--att)}
 /* the cancelled chip keeps its outline look, now in the same recipe */

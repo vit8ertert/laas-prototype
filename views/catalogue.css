@@ -53,7 +53,6 @@
 .cat-tile small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}  /* description at most 2 lines (Vit 2 Nov) */
 .cat-tilewrap .st{padding-left:var(--space-1);display:flex;gap:var(--space-2);align-items:center}
 .cat-note{margin:0;font:400 var(--fs-label)/var(--lh-label) var(--sans)}
-.tag.cat-acc{background:var(--accent-tint);color:var(--accent-ink)}
 .cat-page .tag{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 
 /* empty state (Figma Empty state 140:373) */
