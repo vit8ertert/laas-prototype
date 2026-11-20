@@ -157,7 +157,8 @@
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i{width:16px!important;height:16px!important}
   :is(.main,.drawer,.pop,.modal,.sheet) svg.i.s{width:14px!important;height:14px!important}
   .cv-irow>svg:first-child,.cv-file>svg,.d-pal svg.i.d-big,.m-prev svg,.bk-gig .cv.none svg.i,.acc-store svg{width:20px!important;height:20px!important;stroke-width:1.75}
-  .stars button svg,.bd-stars .stars button svg,.cat-cover-ph svg,.drop-ph svg{width:28px!important;height:28px!important}
+  .stars button svg,.bd-stars .stars button svg{width:28px!important;height:28px!important}
+  :is(.main,.drawer,.pop,.modal,.sheet) :is(.cat-cover-ph,.drop-ph) svg{width:var(--icon-placeholder)!important;height:var(--icon-placeholder)!important}  /* beats the phone svg.i 16 rule; 28 from icon/w/placeholder (20 Nov) */
   .acc-appicon svg{width:36px}
   .bell svg{width:18px;height:18px}
 }
@@ -634,8 +635,8 @@
 /* Release header on phones (Vit 22 Oct, comment on Figma 740:49152: "this is better layout-wise, use this part like in
    Figma"): the cover sits beside the title block, 96 px, and the actions take their own row under both */
 @media (max-width:599.98px){
-  .main .cat-rhead{display:grid!important;grid-template-columns:96px minmax(0,1fr);column-gap:var(--space-3);row-gap:var(--space-3);align-items:start}
-  .main .cat-rhead>.cat-cover{width:96px!important;height:96px!important}
+  .main .cat-rhead{display:grid!important;grid-template-columns:var(--release-cover) minmax(0,1fr);column-gap:var(--space-3);row-gap:var(--space-3);align-items:start}
+  .main .cat-rhead>.cat-cover{width:var(--release-cover)!important;height:var(--release-cover)!important}
   .main .cat-rhead>.id{min-width:0!important;gap:var(--space-1)}
   .main .cat-rhead{grid-template-rows:auto auto}.main .cat-rhead>.cat-cover{grid-row:auto}
   .main .cat-rhead>.acts{grid-column:1/-1;padding-top:0!important}

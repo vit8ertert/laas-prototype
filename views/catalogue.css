@@ -88,10 +88,10 @@
 .cat-rhead>.cat-cover{grid-row:1/3}
 .cat-rhead>.id{align-self:end}
 .cat-rhead>.acts{grid-column:2}
-.cat-cover{width:176px;height:176px;border-radius:var(--r-md);object-fit:cover;flex:none;display:block}
+.cat-cover{width:var(--release-cover);height:var(--release-cover);border-radius:var(--r-md);object-fit:cover;flex:none;display:block}
 .cat-cover-ph{background:var(--hover);display:grid;place-items:center;color:var(--muted)}  /* surface/hover like Figma Release tile 171:2528 Artwork (gate 6 Nov; was raised = white on a white tile) */
 .cat-cover.cat-cover-ph{border-radius:0}
-.cat-cover-ph svg{width:40px;height:40px;stroke-width:1}
+.cat-cover-ph svg{width:var(--icon-placeholder);height:var(--icon-placeholder);stroke-width:1}
 .cat-tile .art.cat-cover-ph{height:152px;display:grid}  /* .cat-tile .art{display:block} beat the placeholder's grid: the disc sat top left; Figma centres it (gate 6 Nov) */
 .cat-rhead .id{min-width:0;display:flex;flex-direction:column;gap:var(--space-1)}
 .cat-rhead .id>.t-label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
