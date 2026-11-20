@@ -107,7 +107,7 @@
 .cat-checks .meter{gap:2px}
 .btn.cat-run{padding:0 0 0 var(--space-3)}.cat-run:is(:hover,[data-state="hover"]){background:none;text-decoration:underline}
 /* a check is a List row (components.css), flush in its card: the card's 20 inset, the rule across the card */
-.cat-checks .cat-chk{padding:var(--space-3) var(--space-5);border-radius:0}
+.cat-checks .cat-chk{padding:var(--row-y) var(--space-5);border-radius:0}  /* the List row's own row-y (8 phone / 12 desktop), as Figma (20 Nov; was space-3 at both) */
 .cat-checks .cat-chk::after{left:0;right:0}
 .cat-checks .sum:not(:last-child){box-shadow:inset 0 -1px 0 var(--rule)}
 button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
