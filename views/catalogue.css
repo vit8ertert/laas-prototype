@@ -129,9 +129,6 @@ button.cat-chk:is(:hover,[data-state="hover"]){background:var(--hover)}
 .cat-panel .grp>.t-label{font:400 var(--fs-label)/var(--lh-label) var(--sans)}
 .cat-avs{display:flex;padding-left:var(--space-2)}
 .cat-avs span{width:28px;height:28px;margin-left:-6px;border-radius:50%;background:var(--well);box-shadow:inset 0 0 0 2px var(--surface);display:grid;place-items:center;font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
-.cat-activity{display:flex;align-items:center;gap:var(--space-2);font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted);align-self:flex-start;text-align:left}
-.cat-activity svg.i{width:16px;height:16px}
-.cat-activity:is(:hover,[data-state="hover"]){color:var(--ink)}
 .cat-acts{display:flex;flex-direction:column;gap:var(--space-1);padding-left:var(--space-6);margin-top:calc(-1 * var(--space-4))}
 .cat-acts div{display:flex;gap:var(--space-3)}.cat-acts .muted{width:72px;flex:none}
 
