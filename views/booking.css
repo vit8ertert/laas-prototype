@@ -292,7 +292,7 @@
 .bd-step.nowrow .time{flex:none}
 .bd-step.nowrow .spine i.nowdot{width:8px;height:8px;background:var(--accent)}
 .bd-step.nowrow .muted{font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-.bd-nowtag{gap:var(--space-2);padding:var(--space-1) var(--space-2);background:var(--accent);color:var(--on-accent);font:400 var(--fs-label)/var(--lh-label) var(--sans)}
+.bd-nowtag{gap:var(--space-2);background:var(--accent);color:var(--on-accent)}  /* size and type from .tag (24 px, 13/16), like the Tag in Now marker 680:41380 */
 .bd-sx{display:flex}.bd-sx a.btn{text-decoration:none;color:var(--ink)}
 .bd-sx .btn.secondary{background:var(--surface);font:500 var(--fs-label)/var(--lh-label) var(--sans)}
 .btn.bd-act.lead{padding:var(--space-2) var(--space-3) var(--space-2) 0}
