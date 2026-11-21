@@ -207,7 +207,7 @@ button.acc-li:is(:hover,[data-state="hover"]){background:var(--hover)}
 .acc-obfoot{margin:0;font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-obfoot .link{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
 .acc-code{display:flex;gap:var(--space-2)}
-.acc-code input{flex:none;width:48px;min-width:0;height:56px;text-align:center;font:500 var(--fs-card)/var(--lh-22) var(--mono);border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
+.acc-code input{flex:none;width:var(--space-12);min-width:0;height:var(--code-cell-h);text-align:center;font:500 var(--fs-card)/var(--lh-22) var(--mono);border-radius:var(--r-md);border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink)}
 .acc-code input:is(:focus,[data-state="focus"]){outline:none;border:2px solid var(--accent)}
 .acc-obphoto{display:flex;gap:var(--space-4);align-items:center}
 .acc-obphoto img{width:96px;height:96px;border-radius:var(--r-lg);object-fit:cover;flex:none}
