@@ -191,16 +191,18 @@ const payouts=()=>{const owed=PO_MEM.map(([k])=>poOwed(k)),now=owed.reduce((a,o)
  <section class="po-sec">${secHead('Payout history')}
  <div class="bk-table po-t" role="table" aria-label="Payouts"><div class="table-row bk-tr bk-th po-h" role="row"><span>Date</span><span>Paid to</span><span>How</span><span class="n">Amount, DKK</span></div>${hist}</div></section>
  <p class="m-foot m-nopad">LAAS records payouts; the money moves in your bank app. A payout clears the member's shares and the expenses they paid, and books it from the band account.</p>`;};
+/* payout drawers (21 Nov, Figma Money · Payout): what it covers as Money lines with a Total, like Settle; the facts as Key-value rows */
+const poLines=(items,t)=>`<div class="m-body">${items.map(x=>line({label:esc(x[0]),amt:L.kr(x[1]),cls:'m-fl'})).join('')}<hr class="m-hr">${line({label:'Total',amt:L.kr(t),cls:'m-fl'})}</div>`;
 L.DR.popay=k=>{const o=poOwed(k);const m=PO_MEM.find(x=>x[0]===k);const items=[...(o.sh?[['Saturday hotel gig, share',o.sh]]:[]),...o.ex.map(e=>[`${e.what}, paid back`,e.amt])];
  return {type:'mnydrawer',title:`Pay out to ${m[1]}`,sub:`${L.kr(o.t)} DKK, to bank ${m[2]}`,
- body:items.length?`<div class="ml-lt po-lines" role="table" aria-label="What the payout covers"><div class="ml-ltr ml-lth" role="row"><span>For</span><span></span><span class="n">DKK</span></div>${items.map(x=>`<div class="ml-ltr" role="row"><span>${esc(x[0])}</span><span></span><span class="n mono">${L.kr(x[1])}</span></div>`).join('')}<div class="ml-ltr ml-ltt" role="row"><span>Total</span><span></span><span class="n mono">${L.kr(o.t)}</span></div></div>
-  <div class="ml-facts"><div class="ml-fact"><span>From</span><span>Band account, Danske Bank</span></div><div class="ml-fact"><span>To</span><span>${m[1]}, bank ${m[2]}</span></div><div class="ml-fact"><span>Date</span><span>21 Oct 2026</span></div><div class="ml-fact"><span>Booked as</span><span>Owed to members, from Bank account</span></div></div>
+ body:items.length?`${poLines(items,o.t)}
+  <div class="m-body m-g12">${kvRow('From','Band account, Danske Bank')}${kvRow('To',`${m[1]}, bank ${m[2]}`)}${kvRow('Date','21 Oct 2026')}${kvRow('Booked as','Owed to members, from Bank account')}</div>
   <p class="m-foot m-nopad">Make the transfer in your bank app first, then record it here. Recording marks the expenses paid back and writes the entry to the journal.</p>`
   :`<p class="muted">${m[1]} is paid up. Nothing to pay out.</p>`,
  foot:`<span style="flex:1"></span>${btn('secondary','Cancel','data-act="close"')}${items.length?btn('accent',`Record ${L.kr(o.t)} DKK`,`data-act="porecord" data-who="${k}"`,'check'):''}`};};
 L.DR.poview=id=>{const p=M.po.find(x=>x.id===id);return {type:'mnydrawer',title:`Payout to ${EXWHO[p.who]}`,sub:`${p.d} Oct 2026, bank transfer, ${L.kr(poSum(p))} DKK`,
- body:`<div class="ml-lt po-lines" role="table"><div class="ml-ltr ml-lth" role="row"><span>For</span><span></span><span class="n">DKK</span></div>${p.items.map(x=>`<div class="ml-ltr" role="row"><span>${esc(x[0])}</span><span></span><span class="n mono">${L.kr(x[1])}</span></div>`).join('')}<div class="ml-ltr ml-ltt" role="row"><span>Total</span><span></span><span class="n mono">${L.kr(poSum(p))}</span></div></div>
- <div class="ml-facts"><div class="ml-fact"><span>From</span><span>Band account, Danske Bank</span></div><div class="ml-fact"><span>Recorded by</span><span>Vital, ${p.d} Oct</span></div></div>`,
+ body:`${poLines(p.items,poSum(p))}
+ <div class="m-body m-g12">${kvRow('From','Band account, Danske Bank')}${kvRow('Recorded by',`Vital, ${p.d} Oct`)}</div>`,
  foot:`${ghostBtn('Payslip as PDF','data-act="popdf"','download')}<span style="flex:1"></span>${btn('secondary','Close','data-act="close"')}`};};
 
 /* ---------- Ledger content (Ledger view, Books and Reports tabs) ---------- */
