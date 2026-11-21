@@ -66,6 +66,9 @@ textarea.input{height:auto;padding:var(--space-2) var(--space-3)}
 /* a scrolling tab row clips anything outside it, so the focus ring sits 2 px inside the tab (Figma Tab State=Focus, 7 Nov) */
 :is(.tabs,.bk-tabs,.m-tabs,.ml-tabs,.cat-tabrow) button:is(:focus-visible,[data-state="focus"]){outline-offset:-2px}
 .tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--accent-strong)}
+.tabs:not(.bk-tabs,.ml-tabs,.m-tabs,.cat-tabs) button.on{border-bottom-color:transparent}
+.tabs:not(.bk-tabs,.ml-tabs,.m-tabs,.cat-tabs) button.on::after{bottom:-2px;background:var(--accent-strong)}  /* one 2 px indicator in the button's border band, like Figma Tab Active (21 Nov: the border and shell.css's animated bar both showed, 3 px in two lilacs) */
+.tabs:is(.m-tabs,.cat-tabs) button.on{border-bottom-color:transparent}.tabs:is(.m-tabs,.cat-tabs) button.on::after{content:none}  /* the per-view rows draw their own .ind under the label; Django's Tabs component also adds .tabs, which stacked a second bar under it */
 /* Tab row (census 4, 31 Oct): one row for every tab strip (Bookings, Money and Books, Mail, Catalogue, Audience): gap 20,
    the line under it an inset rule (no border that adds height, no separate rule element), scrolls sideways when full.
    Figma: Tabs */
