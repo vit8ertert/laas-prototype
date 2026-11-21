@@ -532,13 +532,12 @@ function obSteps(st){const ob=S.onboarding;
  case 7:return head('Welcome back','Sign in to your band’s gigs, money and music.')
   +`<form class="acc-obstack acc-login" data-act="obsignin" onsubmit="return false">${pwFld('acc-le','Email','email','you@band.dk','email')}${pwFld('acc-lp','Password','password','','current-password',`<button class="link acc-forgot" type="button" data-ob="8">Forgot password?</button>`)}
   <button class="btn accent lg acc-wide" type="submit" data-act="obsignin">Sign in</button></form>
-  <p class="acc-obfoot">New to LAAS? <button class="link" data-ob="0">Create an account</button>.</p>`;
+  <p class="acc-obfoot">New to LAAS? <button class="link" data-ob="0">Sign up</button>, or ask whoever runs your band here to invite you.</p>`;
  case 8:return head('Reset your password','Type the email you sign in with. We send a link to set a new password.')
   +`<form class="acc-obstack acc-login" onsubmit="return false">${pwFld('acc-fe','Email','email','you@band.dk','email')}<button class="btn accent lg acc-wide" type="submit" data-ob="9">Send the link</button></form>
   <p class="acc-obfoot"><button class="link" data-ob="7">Back to sign in</button></p>`;
- case 9:return head('Check your inbox','If an account uses vital@lowtide.dk, a link to set a new password is on its way. It works for 3 days.')
-  +`<div class="row"><button class="btn secondary" data-act="accoblink2">${ic('mail')}Open Gmail</button><button class="btn accent" data-ob="10">I have the link</button></div>
-  <p class="acc-obfoot">Nothing came? Check spam, or <button class="link" data-ob="8">send it again</button>.</p>`;
+ case 9:return head('Check your inbox','If an account uses that address, a link to set a new password is on its way. It works for 3 days.')  /* 21 Nov: as Django and Figma; naming the address would tell whether an account exists */
+  +`<p class="acc-obfoot">Nothing came? Check spam, or <button class="link" data-ob="8">send it again</button>. <button class="link" data-ob="7">Back to sign in</button></p>`;
  case 10:return head('Set a new password','At least 10 characters. Your other devices stay signed in until they next ask.')
   +`<form class="acc-obstack acc-login" onsubmit="return false">${pwFld('acc-n1','New password','password','','new-password')}${pwFld('acc-n2','Type it again','password','','new-password')}<button class="btn accent lg acc-wide" type="submit" data-act="obpwdone">Save and sign in</button></form>`;
  case 6:return `<div class="acc-join"><img src="${S.photos.band||IMG('band-collage')}" alt=""><div><b class="t-heading">Low Tide</b><span>Indie rock, Odense, 3 members</span></div></div>`
@@ -556,7 +555,6 @@ L.ONBOARDING=function(){obPreload();setTimeout(()=>document.querySelectorAll('.o
 AC.pweye=t=>{const i=t.previousElementSibling,on=i.type==='password';i.type=on?'text':'password';t.setAttribute('aria-pressed',on);t.setAttribute('aria-label',on?'Hide password':'Show password');t.innerHTML=L.ic(on?'eyeoff':'eye','s');};
 AC.obsignin=()=>{L.go('dashboard');L.toast('Signed in as Vital');};
 AC.obpwdone=()=>{L.go('dashboard');L.toast('Password saved. You are signed in');};
-AC.accoblink2=()=>{S.onboarding.step=10;L.render();};
 AC.accoblink=()=>{S.onboarding.step=2;L.render();L.toast('Signed in from the link in your inbox');};
 AC.accobsub=t=>{S.onboarding.sub=+t.dataset.sub;S.onboarding.step=3;L.render();};
 AC.accobband=()=>{S.genre=GENRE_THEME[S.onboarding.genre]||'label';S.onboarding.step=4;L.render();};
