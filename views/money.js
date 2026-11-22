@@ -135,7 +135,8 @@ const exDate=d=>`${d} Oct`;
 const exList=()=>M.ex.slice().sort((a,b)=>b.d-a.d);
 const exShown=()=>{const q=M.exq.trim().toLowerCase();return exList().filter(e=>(M.exf==='all'||(M.exf==='rcpt'&&!e.rc)||(M.exf==='back'&&e.rf==='to'))&&(!M.exfor||e.for===M.exfor)&&(!M.exby||e.by===M.exby)&&(!q||[e.what,e.shop,e.for,e.cat,EXWHO[e.by]].join(' ').toLowerCase().includes(q)));};
 const exOwed=()=>{const o={};for(const e of M.ex)if(e.rf==='to')o[e.by]=(o[e.by]||0)+e.amt;return o;};
-const exWho=e=>`<span class="ex-who"><span class="ex-av ${e.by==='Band'?'band':''}">${e.by==='Band'?ic('money','s'):e.by[0]}</span><span class="ex-wt"><span>${e.by==='Band'?'Band account':e.by}</span><small>${esc(e.how)}</small></span></span>`;
+const bandIni=()=>((S.bands&&(S.bands.find(b=>b.id===S.bandId)||S.bands[0]))||{ini:'LT'}).ini;  // the band account pays: Avatar Kind=Band with the band's initials (22 Nov: the drawn .ex-av disc became the Avatar component)
+const exWho=e=>`<span class="ex-who"><span class="avatar acc-av ${e.by==='Band'?'band':''}">${e.by==='Band'?bandIni():e.by[0]}</span><span class="ex-wt"><span>${e.by==='Band'?'Band account':e.by}</span><small>${esc(e.how)}</small></span></span>`;
 const exBox=(on,attrs,label)=>`<button class="ex-cb ${on?'on':''}" role="checkbox" aria-checked="${on}" aria-label="${label}" ${attrs}>${on?ic('check','s'):''}</button>`;
 function expenses(){
  const all=exList(),rows=exShown(),miss=all.filter(e=>!e.rc),owed=exOwed(),owedT=Object.values(owed).reduce((a,b)=>a+b,0);
@@ -176,7 +177,7 @@ const poOwed=k=>{const ex=M.ex.filter(e=>e.by===k&&e.rf==='to');const sh=poShare
 const poPaid=k=>M.po.filter(p=>p.who===k).reduce((a,p)=>a+poSum(p),0);
 const payouts=()=>{const owed=PO_MEM.map(([k])=>poOwed(k)),now=owed.reduce((a,o)=>a+o.t,0),who=owed.filter(o=>o.t).length,paid=M.po.reduce((a,p)=>a+poSum(p),0);
  const open=PO_GIGS.filter(g=>g[0]==='royal'&&!S.booking.settled);
- const mem=PO_MEM.map(([k,name,acct],i)=>{const o=owed[i];return `<div class="table-row bk-tr po-m" role="row" tabindex="0" data-act="popay" data-who="${k}" style="--i:${i}"><span class="ex-who"><span class="ex-av">${k[0]}</span><span class="ex-wt"><b class="po-n">${name}</b><small>bank ${acct}</small></span></span>
+ const mem=PO_MEM.map(([k,name,acct],i)=>{const o=owed[i];return `<div class="table-row bk-tr po-m" role="row" tabindex="0" data-act="popay" data-who="${k}" style="--i:${i}"><span class="ex-who"><span class="avatar acc-av">${k[0]}</span><span class="ex-wt"><b class="po-n">${name}</b><small>bank ${acct}</small></span></span>
   <span class="n mono">${o.sh?L.kr(o.sh):'<span class="faint">0</span>'}</span><span class="n mono">${o.ex.length?L.kr(o.ex.reduce((a,e)=>a+e.amt,0)):'<span class="faint">0</span>'}</span><span class="n mono po-due">${L.kr(o.t)}</span><span class="n mono muted">${L.kr(poPaid(k))}</span>
   <span class="n">${o.t?`<button class="btn secondary s" data-act="popay" data-who="${k}">Record payout</button>`:tag('paid','Paid up')}</span></div>`;}).join('');
  const gigs=PO_GIGS.map((g,i)=>{const done=g[0]!=='royal'||S.booking.settled;return `<div class="table-row bk-tr po-g" role="row" tabindex="0" data-go="settle" style="--i:${i}"><span class="ex-tt po-gt"><img class="bk-thumb" src="${IMG(V(g[0]).img)}" alt=""><span class="ex-tt"><b>${g[1]}</b><small>${g[2]}, ${g[3]}</small></span></span><span class="n mono">${L.kr(g[4])}</span><span class="m">3 ways, equal</span><span>${done?tag('paid','Settled'):tag('attention','To settle')}</span><span class="n mono">${L.kr(Math.round(g[4]/3))}</span></div>`;}).join('');
