@@ -38,7 +38,8 @@ const roleViewer=()=>S.role==='viewer';
 const curBand=()=>(S.bands&&(S.bands.find(b=>b.id===S.bandId)||S.bands[0]))||{id:'lt',name:'Low Tide',ini:'LT',meta:'Owner: 3 members'};
 const bn=()=>esc(curBand().name);
 
-/* ---------- aurora wash (bg/aurora · config and its theme variants) ---------- */
+/* ---------- aurora wash (bg/aurora · config and its theme variants) ----------
+   22 Nov: in the Assistant only on the new-chat screen, behind the prompt; never behind a chat or a plan to confirm (the component's rule) */
 const aurora=()=>`<div class="d-aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="a5"></i><b class="grid"></b></div>`;
 
 /* ---------- composer (Prompt hero) ---------- */
@@ -214,7 +215,7 @@ L.VIEWS.assistant=()=>{
     with a topic icon right above the composer; desktop keeps the chips with the assistant mark */
  const conv=isNew?`<div class="d-newc"><div class="d-greet"><span class="d-mark" aria-hidden="true">${ic('ai')}</span><h2 class="t-title">What do you need?</h2><p class="muted">Ask about gigs, contacts or money. Nothing is sent without your OK.</p></div><div class="d-chips">${sugg.map(([q,k,i])=>`<button class="chip d-chip" data-act="asksugg" data-q="${k}"><span class="d-ci-ai">${ic('ai','s')}</span><span class="d-ci-t">${ic(i,'s')}</span>${q}</button>`).join('')}</div></div>`:chatBody(id)+extra(id);
  const rec=isNew?'':record(id);
- return `<div class="page d-page d-asst ${rec&&S.asstPanel?'withrec':''}">${aurora()}${hist}
+ return `<div class="page d-page d-asst ${rec&&S.asstPanel?'withrec':''}">${isNew?aurora():''}${hist}
  <div class="d-center"><div class="d-ahd"><button class="btn secondary s d-histbtn" data-act="assthist" aria-label="Chats">${ic('msgs','s')}<span class="lbl">Chats</span></button>${isNew?'<span class="grow"></span>':`<div class="grow"><h1 class="t-title">${esc((list.find(c=>c[0]===id)||[])[2]||'Conversation')}</h1><p class="muted t-body">${esc((list.find(c=>c[0]===id)||[])[3]||bn())}, remembered for you</p></div>`}${rec?`<button class="btn ghost s icon" data-act="asstpanel" aria-label="${S.asstPanel?'Hide':'Show'} the record">${ic('panel','s')}</button>`:''}</div>
   <div class="d-conv">${conv}</div>
   <div class="d-dock">${composer(id==='move'&&!isNew?'Reply, or ask about this booking…':`Ask about ${bn()}: gigs, contacts, gear, money`,isNew?null:ctx)}</div></div>
