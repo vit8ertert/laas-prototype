@@ -410,18 +410,10 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-hist{gap:var(--space-1);padding-right:var(--space-8)}
 .d-hh{display:flex;align-items:center;gap:var(--space-1);margin:0 0 var(--space-1) 0}.d-hh .grow{flex:1}
 .d-hh .btn.on{background-image:linear-gradient(var(--state-hover),var(--state-hover))}
-.d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:var(--space-2) var(--space-3)!important;margin-bottom:0}  /* Claude's sidebar (Vit 2 Nov): New and Search are quiet rows, icon + label, no fill or ring */
-.d-hsearch{display:flex;align-items:center;gap:var(--space-2);height:38px;padding:0 var(--space-3);border-radius:var(--r-pill);background:none;box-shadow:none;color:var(--muted);margin-bottom:var(--space-1)}
-.d-hsearch:is(:hover,[data-state="hover"]){background:var(--surface)}
-/* New and Search draw their icons alike: 20, ink, at the same x with the labels on one line (Vit 5 Nov: "the plus icon is
-   thicker than search"; search was 16 muted beside the button's 20 ink plus, so its 2 px stroke on the 24 grid came out
-   1.33 against 1.67). 20 is the M button's icon, so the DS Button stays as it is */
-.d-hsearch svg.i{width:20px!important;height:20px!important;color:var(--ink)}
-.d-hsearch input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--ink);font:400 var(--fs-body)/var(--lh-22) var(--sans)}
-.d-hsearch input::placeholder{color:var(--ink)}
-.d-hsearch:is(:focus-within,[data-state="focus"]){background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule-strong)}
+.d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:var(--space-2) var(--space-3)!important;margin-bottom:0}  /* Claude's sidebar (Vit 2 Nov): New is a quiet row, icon + label, no fill or ring */
+/* chat search = the DS search Input (label.search, Figma Input 132:118), not a borderless row (21 Nov, approved) */
 .d-hg{gap:2px;margin-top:var(--space-3)}.d-hg .d-hgl{padding:0 var(--space-3) var(--space-1)}
-.d-hg.miss,.d-hi.miss{display:none}
+.d-hist .miss{display:none}  /* chat search: Django Nav items and prototype .d-hi */
 .d-hnone{margin:var(--space-3) 0 0;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label)}
 .d-hist>.d-hfoot{margin-top:var(--space-3)}
 /* collapsed: a narrow rail with the toggle, search and new conversation */
