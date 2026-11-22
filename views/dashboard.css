@@ -221,17 +221,17 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-dock{position:sticky;bottom:0;padding:var(--space-2) 0 var(--space-4);background:linear-gradient(transparent,var(--canvas) 24px);z-index:5}
 .d-confirm{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
 .d-confirm.past{opacity:.7}
-.d-confirm.live{box-shadow:inset 0 0 0 2px var(--accent)}
+.d-confirm.live{box-shadow:inset 0 0 0 1px var(--accent)}  /* the Card container ring in accent (22 Nov: was 2 px, the component draws 1) */
 .d-ch{display:flex;align-items:center;gap:var(--space-2)}.d-ch>svg.i{width:20px;height:20px}.d-ch>svg.i.ai{fill:currentColor}.d-ch h3{letter-spacing:-.1px}
 .d-acts .btn svg.i{width:20px;height:20px}
 .d-acts{display:flex;justify-content:flex-end;gap:var(--space-2);flex-wrap:wrap}
-/* plan-and-confirm on components (22 Nov): changes and checks are flush List rows (Leading icon, title, meta); the
+/* plan-and-confirm on components (22 Nov; Django: list_row kind="check" extra="d-change", the same List row): changes and checks are flush List rows (Leading icon, title, meta); the
    question is a Banner (Attention, then Success once a contact is chosen) with the choices as Buttons under it */
 .d-acts.left{justify-content:flex-start}
 .d-checks{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--card);border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
-.d-confirm>.list-row,.d-checks>.list-row{padding-left:0;padding-right:0;border-top:0}  /* 54 high with the rule inside, as the List row component */
-.d-conv :is(.d-confirm,.d-checks)>.list-row.d-change::after{left:0;right:0}  /* the rule spans the row: Figma Show flush divider */
-.d-conv .d-confirm>.list-row.d-change:has(+ :not(.list-row))::after{content:none}  /* no rule under the last change */
+.d-confirm>.d-change,.d-checks>.d-change{padding-left:0;padding-right:0;border-top:0}  /* 54 high with the rule inside, as the List row component */
+.d-conv :is(.d-confirm,.d-checks)>.d-change::after{left:0;right:0}  /* the rule spans the row: Figma Show flush divider */
+.d-conv .d-confirm>.d-change:has(+ :not(.d-change))::after{content:none}  /* no rule under the last change */
 .leading-icon.ok{color:var(--ok)}
 .d-edits{display:flex;flex-direction:column;gap:var(--space-2)}
 .d-user{align-self:flex-end;width:var(--chat-bubble);max-width:85%;background:var(--raised);border-radius:var(--r-lg);padding:var(--space-3) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans)}

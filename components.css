@@ -121,6 +121,7 @@ tbody tr:is(:hover,[data-state="hover"]) td{background:var(--hover)}
 /* Nav item 132:153: pad 8, gap 8, radius 8; label Body tight 15/18; hover surface; active well + Body strong tight 500;
    count pad 2 8, radius pill, Meta 12/16 faint (20 high, so a row with a count is 36) */
 .nav{min-height:0;flex:none;padding:var(--space-2);gap:var(--space-2);border-radius:var(--r-md);font:400 var(--fs-body)/var(--lh-18) var(--sans)}
+a.nav{text-decoration:none}  /* a Nav item that is a link (Django chat list, 22 Nov) is not underlined: the Figma Nav item has no underline */
 /* rows are 34 (pad 8 + 18) and 36 only when a count or alert shows (20 high): measured over ~1400 Figma nav rows */
 .sidebar .nav .count,.sidebar .nav .alert{display:inline-flex;align-items:center;height:20px;padding:2px var(--space-2);border-radius:var(--r-pill);font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
 .sidebar .nav .count{color:var(--faint);background:none}
