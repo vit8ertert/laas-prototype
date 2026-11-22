@@ -308,11 +308,11 @@ html.gated body>*:not(.gate){display:none!important}
    30 Oct (T421): the Release checks (.cat-chk) are this row too, the status icon leading, flush in their card.
    Figma: List row 299:5063 */
 .acc-list>.list-row{border-top:0}  /* Django: a List row in a settings card is the prototype .acc-li (inset hairline inside the row, 16 Nov: the border-top made every row 1 px taller than Figma) */
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row){display:flex;align-items:center;gap:var(--space-3);padding:var(--row-y) var(--space-3);border-radius:var(--r-md);width:100%;text-align:left;position:relative}
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row):not(:last-child)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:1px;background:var(--rule)}
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row) .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row) .tx>b{font-weight:inherit}  /* a <b> title (Contacts rows, for the hover underline) is Body like every List row title */
-:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row) .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row,.d-change){display:flex;align-items:center;gap:var(--space-3);padding:var(--row-y) var(--space-3);border-radius:var(--r-md);width:100%;text-align:left;position:relative}
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row,.d-change):not(:last-child)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:1px;background:var(--rule)}
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row,.d-change) .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font:400 var(--fs-body)/var(--lh-body) var(--sans)}
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row,.d-change) .tx>b{font-weight:inherit}  /* a <b> title (Contacts rows, for the hover underline) is Body like every List row title */
+:is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk,.acc-list>.list-row,.d-change) .tx small{font:400 var(--fs-label)/var(--lh-label) var(--sans);color:var(--muted)}
 :is(.acc-li,.bd-prow,.cv-row,.cv-vrow,.cat-chk)>:is(.acc-av,.bd-av,.cv-av.s,.cv-sq){width:28px;height:28px}  /* one list-row avatar size, the List row component's 28 (30 Oct: booking rows drew 32) */
 .list-row>:is(.ml-av,.thumb.s){width:28px;height:28px}  /* the same 28 in a plain List row (Mail thread panel, 8 Nov: was 32, the Mail row avatar) */
 

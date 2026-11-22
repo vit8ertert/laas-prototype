@@ -223,19 +223,20 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-confirm.past{opacity:.7}
 .d-confirm.live{box-shadow:inset 0 0 0 2px var(--accent)}
 .d-ch{display:flex;align-items:center;gap:var(--space-2)}.d-ch>svg.i{width:20px;height:20px}.d-ch>svg.i.ai{fill:currentColor}.d-ch h3{letter-spacing:-.1px}
-.d-changes{background:var(--canvas);border-radius:var(--r-lg)}
-.d-change{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);min-height:60px}.d-change>svg.i{width:18px;height:18px}
-.d-change .d-rt b{font:500 var(--fs-body)/var(--lh-18) var(--sans)}.d-change .d-rt small{font:400 var(--fs-meta)/var(--lh-16) var(--sans);color:var(--muted)}
 .d-acts .btn svg.i{width:20px;height:20px}
-.d-amb{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--r-md);background:var(--att-tint);color:var(--att);font:400 var(--fs-meta)/var(--lh-16) var(--sans);flex-wrap:wrap}.d-amb .btn.s{height:34px;font:500 var(--fs-label)/var(--lh-label) var(--sans)}
-.d-amb>span{flex:1;min-width:160px}.d-amb .btn{color:var(--ink);background:var(--surface)}
-.d-amb.ok{background:var(--ok-tint);color:var(--ok)}.d-amb.ok .btn{background:none}
 .d-acts{display:flex;justify-content:flex-end;gap:var(--space-2);flex-wrap:wrap}
+/* plan-and-confirm on components (22 Nov): changes and checks are flush List rows (Leading icon, title, meta); the
+   question is a Banner (Attention, then Success once a contact is chosen) with the choices as Buttons under it */
+.d-acts.left{justify-content:flex-start}
+.d-checks{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--card);border-radius:var(--r-xl);background:var(--surface);box-shadow:inset 0 0 0 1px var(--rule)}
+.d-confirm>.list-row,.d-checks>.list-row{padding-left:0;padding-right:0;border-top:0}  /* 54 high with the rule inside, as the List row component */
+.d-conv :is(.d-confirm,.d-checks)>.list-row.d-change::after{left:0;right:0}  /* the rule spans the row: Figma Show flush divider */
+.d-conv .d-confirm>.list-row.d-change:has(+ :not(.list-row))::after{content:none}  /* no rule under the last change */
+.leading-icon.ok{color:var(--ok)}
+.d-edits{display:flex;flex-direction:column;gap:var(--space-2)}
 .d-user{align-self:flex-end;width:var(--chat-bubble);max-width:85%;background:var(--raised);border-radius:var(--r-lg);padding:var(--space-3) var(--space-4);font:400 var(--fs-body)/var(--lh-body) var(--sans)}
 .d-turn{display:flex;flex-direction:column;gap:var(--space-3)}
 .d-ah{display:flex;gap:var(--space-2);align-items:flex-start;font:400 var(--fs-body)/var(--lh-body) var(--sans)}.d-ah b{font-weight:500}.d-ah svg.i{flex:none;width:var(--icon-s);height:var(--icon-s);margin-block:calc((var(--lh-body) - var(--icon-s)) / 2);fill:currentColor}  /* Chat message: the AI mark on icon/w/size-s, centred on the first line (17 Nov; was 18, top 2) */
-.d-checked{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-radius:var(--r-lg);background:var(--surface);font:400 var(--fs-meta)/var(--lh-16) var(--sans)}
-.d-checked>span:not(.faint){display:flex;align-items:center;gap:var(--space-2);color:var(--muted)}.d-checked svg.i.s{width:14px;height:14px}
 .d-note{margin:0}
 .d-newc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);text-align:center;padding:var(--space-12) 0}.d-newc p{margin:0}
 .d-record{position:sticky;top:0;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--rule);min-height:min(682px,calc(100vh - 120px))}
@@ -428,7 +429,6 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
    change rows 12 16; 24 px between turns, 12 px inside a turn */
 .d-conv{gap:var(--space-6)}.d-turn{gap:var(--space-3)}
 .d-confirm{padding:var(--space-4)}
-.d-change{padding:var(--space-3) var(--space-4)}
 .d-record{padding:var(--space-4);border-radius:var(--r-xl)}
 /* new chat: no page title; "What do you need?" is the heading in the middle. In a chat the header names it (Vit 21 Oct) */
 .d-asst .d-ahd:not(:has(.grow h1)):not(:has(.btn:not(.d-histbtn))){display:none}
