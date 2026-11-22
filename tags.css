@@ -103,10 +103,10 @@
    Neutral controls (secondary and ghost buttons, chips, the Ask mode picker, chat history items) keep their own
    background and get the same state overlay on hover: 4 % ink in light, 6 % white in dark (--state-hover).
    Accent and lime buttons brighten; rows keep fill + line; edge-flush text buttons underline. */
-:is(.btn.secondary,.btn.ghost,.d-chip,.d-mode,.d-hi,.d-hfoot,.qtag,.chip):not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]){
+:is(.btn.secondary,.btn.ghost,.d-chip,.d-mode,.d-hfoot,.qtag,.chip):not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]){
   background-image:linear-gradient(var(--state-hover),var(--state-hover))}
 .btn.secondary:not([disabled]):is(:hover,[data-state="hover"]){background-color:var(--surface)}
-.btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]),.d-hi:is(:hover,[data-state="hover"]),.d-hfoot:is(:hover,[data-state="hover"]){background-color:transparent}
+.btn.ghost:not([disabled]):not(.flush,.acc-gr,.acc-gfl,.m-gb,.bk-fb,.cv-link,.bd-act,.cv-back):is(:hover,[data-state="hover"]),.d-hfoot:is(:hover,[data-state="hover"]){background-color:transparent}
 .d-chip:is(:hover,[data-state="hover"]){background-color:var(--surface)}
 
 /* focus ring (Vit 21 Oct, "Continue with email" looked double-bordered): keyboard focus only, 2 px in the text colour,

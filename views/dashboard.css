@@ -211,9 +211,6 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-hist{position:sticky;top:0;display:flex;flex-direction:column;gap:var(--space-4);max-height:calc(100vh - 120px);overflow:auto;padding-right:var(--space-4);border-right:1px solid var(--rule)}
 .d-newchat{justify-content:flex-start;align-self:flex-start}
 .d-hg{display:flex;flex-direction:column;gap:2px}.d-hg>span{font-size:var(--fs-meta);line-height:var(--lh-16);padding:var(--space-1) var(--space-3)}
-.d-hi{display:flex;flex-direction:column;gap:2px;padding:var(--space-2) var(--space-3);border-radius:var(--r-md);text-align:left;width:100%}
-.d-hi span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.d-hi small{font-size:var(--fs-meta);line-height:var(--lh-16);color:var(--muted)}
-.d-hi:is(:hover,[data-state="hover"]){background:var(--surface)}.d-hi.on{background:var(--well);font-weight:500}
 .d-center{width:100%;max-width:732px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-4);min-height:calc(100vh - 120px)}
 .d-ahd{display:flex;align-items:flex-end;gap:var(--space-4)}.d-ahd .grow{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-1)}.d-ahd h1,.d-ahd p{margin:0}
 .d-histbtn{display:none}
@@ -414,7 +411,7 @@ button.d-kpi:is(:hover,[data-state="hover"]){background:var(--raised)}
 .d-newchat{align-self:stretch!important;justify-content:flex-start!important;padding:var(--space-2) var(--space-3)!important;margin-bottom:0}  /* Claude's sidebar (Vit 2 Nov): New is a quiet row, icon + label, no fill or ring */
 /* chat search = the DS search Input (label.search, Figma Input 132:118), not a borderless row (21 Nov, approved) */
 .d-hg{gap:2px;margin-top:var(--space-3)}.d-hg .d-hgl{padding:0 var(--space-3) var(--space-1)}
-.d-hist .miss{display:none}  /* chat search: Django Nav items and prototype .d-hi */
+.d-hist .miss{display:none}  /* chat search: Nav items (prototype and Django) */
 .d-hnone{margin:var(--space-3) 0 0;padding:0 var(--space-3);font-size:var(--fs-label);line-height:var(--lh-label)}
 .d-hist>.d-hfoot{margin-top:var(--space-3)}
 /* collapsed: a narrow rail with the toggle, search and new conversation */
